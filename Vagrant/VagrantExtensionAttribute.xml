@@ -15,8 +15,7 @@
     fi&#13;
     &#13;
     echo "&lt;result&gt;$vagrantVersion&lt;/result&gt;"&#13;
-    &#13;
-    exit0</script>
+    &#13;</script>
     	</input_type>
     	<inventory_display>Extension Attributes</inventory_display>
     	<recon_display>Extension Attributes</recon_display>
