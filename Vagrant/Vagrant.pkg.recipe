@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads Vagrant installer and extracts the embedded package. No repackaging done.</string>
+    <key>Identifier</key>
+    <string>com.github.datajar-recipes.pkg.Vagrant</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Vagrant</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>ParentRecipe</key>
+    <string>io.github.hjuutilainen.download.Vagrant</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Comment</key>
+            <string>Copy the embedded package out of the disk image.</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%pathname%/vagrant.pkg</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

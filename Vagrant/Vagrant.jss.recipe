@@ -28,7 +28,7 @@
 	<key>MinimumVersion</key>
 	<string>0.2.0</string>
 	<key>ParentRecipe</key>
-	<string>io.github.hjuutilainen.download.Vagrant</string>
+	<string>com.github.datajar-recipes.pkg.Vagrant</string>
 	<key>Process</key>
 	<array>
 		<dict>
