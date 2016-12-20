@@ -1,8 +1,8 @@
 <computer_extension_attribute>
-	<name>AWS CLI Tools Version</name>
-	<description />
-	<data_type>String</data_type>
-	<input_type>
+  <name>AWS CLI Tools Version</name>
+  <description>Returns the version number of AWS CLI Tools if installed, if not returns "Not Installed"</description>
+  <dataType>string</dataType>
+  <input_type>
 		<type>script</type>
 		<platform>Mac</platform>
 		<script>#!/bin/bash
