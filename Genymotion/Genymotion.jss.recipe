@@ -58,6 +58,8 @@
 				<key>self_service_icon</key>
 				<string>%SELF_SERVICE_ICON%</string>
 			</dict>
+			<key>version</key>
+			<string>%genymotion_version%</string>
 			<key>Processor</key>
 			<string>JSSImporter</string>
 		</dict>
