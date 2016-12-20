@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+    <options customize="never" rootVolumeOnly="true" require-scripts="false"/>
+    <pkg-ref id="com.github.autopkg.cgerke-recipes.pkg.PIP">
+        <bundle-version/>
+    </pkg-ref>
+    <conclusion file="conclusion.html" mime-type="text/html" />
+    <license file="license.html" mime-type="text/html" />
+    <welcome file="welcome.html" mime-type="text/html" />
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.github.autopkg.cgerke-recipes.pkg.PIP"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="com.github.autopkg.cgerke-recipes.pkg.PIP" visible="false">
+        <pkg-ref id="com.github.autopkg.cgerke-recipes.pkg.PIP"/>
+    </choice>
+    <pkg-ref id="com.github.autopkg.cgerke-recipes.pkg.PIP" onConclusion="none">PIP.pkg</pkg-ref>
+</installer-gui-script>
