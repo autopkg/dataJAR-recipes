@@ -13,9 +13,9 @@
 		<key>GROUP_NAME</key>
 		<string>%NAME%-update-smart</string>
 		<key>GROUP_TEMPLATE</key>
-		<string>AWSCLI-SmartGroupTemplate.xml</string>
+		<string>AWSCLISmartGroupTemplate.xml</string>
 		<key>NAME</key>
-		<string>AWS CLI Tools</string>
+		<string>AWSCLI</string>
 		<key>POLICY_CATEGORY</key>
 		<string>Testing</string>
 		<key>POLICY_TEMPLATE</key>
@@ -40,7 +40,7 @@
 				<array>
 					<dict>
 						<key>ext_attribute_path</key>
-						<string>AWSCLI-ExtensionAttribute.xml</string>
+						<string>AWSCLIExtensionAttribute.xml</string>
 					</dict>
 				</array>
 				<key>groups</key>
