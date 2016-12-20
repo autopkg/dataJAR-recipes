@@ -12,8 +12,8 @@
 		<criterion>
 			<name>Vagrant Version</name>
 			<priority>1</priority>
-			<and_or>or</and_or>
-			<search_type>is</search_type>
+			<and_or>and</and_or>
+			<search_type>is not</search_type>
 			<value>Not Installed</value>
 		</criterion>
 		<criterion>
