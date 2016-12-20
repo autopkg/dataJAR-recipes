@@ -10,7 +10,7 @@
 			<value>%VERSION%</value>
 		</criterion>
 		<criterion>
-			<name>ChefDK Version</name>
+			<name>Vagrant Version</name>
 			<priority>1</priority>
 			<and_or>or</and_or>
 			<search_type>is</search_type>
