@@ -28,7 +28,7 @@
 	<key>MinimumVersion</key>
 	<string>0.2.0</string>
 	<key>ParentRecipe</key>
-	<string>com.github.homebysix.pkg.Genymotion</string>
+	<string>com.github.datajar.pkg.Genymotion</string>
 	<key>Process</key>
 	<array>
 		<dict>
