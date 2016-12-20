@@ -1,0 +1,22 @@
+<computer_extension_attribute>
+	<name>AWS CLI Tools Version</name>
+	<description />
+	<data_type>String</data_type>
+	<input_type>
+		<type>script</type>
+		<platform>Mac</platform>
+		<script>#!/bin/bash
+
+if [ -e "/usr/local/aws/bin/aws" ]
+then
+	awsVersion=$(/usr/local/aws/bin/aws --version 2>&1 | /usr/bin/awk -F ' ' '/aws-cli/{ print $1}' | /usr/bin/awk -F / '{ print $2 }'')
+else
+	awsVersion="Not Installed"
+fi
+
+echo "&lt;result&gt;$awsVersion&lt;/result&gt;"
+</script>
+	</input_type>
+	<inventory_display>Extension Attributes</inventory_display>
+	<recon_display>Extension Attributes</recon_display>
+</computer_extension_attribute>
