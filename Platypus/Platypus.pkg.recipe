@@ -8,6 +8,8 @@
 	<string>com.github.datajar-recipes.pkg.Platypus</string>
 	<key>Input</key>
 	<dict>
+		<key>BUNDLE_ID</key>
+		<string>org.sveinbjorn.Platypus</string>
 		<key>NAME</key>
 		<string>Platypus</string>
 	</dict>
