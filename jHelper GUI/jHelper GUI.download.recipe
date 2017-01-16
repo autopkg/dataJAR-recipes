@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of jHelper GUI.</string>
+	<key>Identifier</key>
+	<string>com.github.datajar-recipes.download.jHelper GUI</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>jHelper GUI</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.6.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>github_repo</key>
+				<string>JAMFSupport/jHelper-GUI</string>
+				<key>include_prereleases</key>
+				<string>true</string>
+			</dict>
+			<key>Processor</key>
+			<string>GitHubReleasesInfoProvider</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%-%version%.zip</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>archive_path</key>
+				<string>%pathname%</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>Unarchiver</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/jHelper GUI %version%.app</string>
+				<key>requirement</key>
+				<string>cdhash H"c3ea48dd412ac641b9ce409aa5b3f55d01b9b776" or cdhash H"c1992ca8e3898276a1a18c22b852c2f9ddbe25e5"</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/jHelper GUI %version%.app/Contents/Info.plist</string>
+				<key>plist_version_key</key>
+				<string>CFBundleShortVersionString</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>
+	</array>
+</dict>
+</plist>
