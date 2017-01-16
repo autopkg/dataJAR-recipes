@@ -3,11 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of jHelper GUI.</string>
+	<string>Downloads the latest version of jHelper GUI.
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
 	<key>Identifier</key>
 	<string>com.github.datajar-recipes.download.jHelper GUI</string>
 	<key>Input</key>
 	<dict>
+		<key>PRERELEASE</key>
+        <string></string>
 		<key>NAME</key>
 		<string>jHelper GUI</string>
 	</dict>
@@ -21,7 +26,7 @@
 				<key>github_repo</key>
 				<string>JAMFSupport/jHelper-GUI</string>
 				<key>include_prereleases</key>
-				<string>true</string>
+				<string>%PRERELEASE%</string>
 			</dict>
 			<key>Processor</key>
 			<string>GitHubReleasesInfoProvider</string>
