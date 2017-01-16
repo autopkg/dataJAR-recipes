@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of iOSConsole and builds a package. Then, uploads to the JSS.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.jss.iOSConsole</string>
+	<string>com.github.datajar-recipes.jss.iOS Console</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>
@@ -28,7 +28,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.pkg.iOSConsole</string>
+	<string>com.github.datajar-recipes.pkg.iOS Console</string>
 	<key>Process</key>
 	<array>
 		<dict>

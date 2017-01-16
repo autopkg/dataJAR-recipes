@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of iOS Console and creates a package.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.pkg.iOSConsole</string>
+	<string>com.github.datajar-recipes.pkg.iOS Console</string>
 	<key>Input</key>
 	<dict>
 		<key>BUNDLE_ID</key>
@@ -16,7 +16,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.download.iOSConsole</string>
+	<string>com.github.datajar-recipes.download.iOS Console</string>
 	<key>Process</key>
 	<array>
 		<dict>
