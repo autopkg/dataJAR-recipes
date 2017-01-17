@@ -19,9 +19,9 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>JPEGMini allows you to view iOS console logs directly from your Mac, and now with built in textual filtering, finding a specific log message has never been easier!</string>
+            <string>With JPEGmini for Mac you can reduce the file size of your photos by up to 5x, while keeping their original quality and JPEG format.</string>
             <key>developer</key>
-			<string>Lemonjar</string>
+			<string>Beamr Imaging Ltd</string>
             <key>display_name</key>
             <string>JPEGMini</string>
             <key>name</key>
