@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Blue Jeans Scheduler for Mac and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.datajar-recipes.munki.Blue Jeans Scheduler for Mac</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Blue Jeans Scheduler for Mac</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Blue Jeans Scheduler for Mac allows you to view iOS console logs directly from your Mac, and now with built in textual filtering, finding a specific log message has never been easier!</string>
+            <key>developer</key>
+			<string>Bluejeans</string>
+            <key>display_name</key>
+            <string>Blue Jeans Scheduler for Mac</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+		<key>pkginfo_keys_to_copy_from_sparkle_feed</key>
+		<array>
+			<string>minimum_os_version</string>
+		</array>  
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.datajar-recipes.download.Blue Jeans Scheduler for Mac</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/%filename%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+    </array>
+</dict>
+</plist>
