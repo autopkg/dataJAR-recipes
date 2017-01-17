@@ -1,0 +1,21 @@
+<computer_extension_attribute>
+	<name>JPEGminiVersion</name>
+	<description>Returns the CFBundleVersion of JPEGmini if installed, as this is incremented &amp; not CFBundleShortVersionString.</description>
+	<data_type>String</data_type>
+	<input_type>
+		<type>script</type>
+		<platform>Mac</platform>
+		<script>#!/bin/bash
+JPEGminiVersion=""
+if [ -f /Applications/JPEGmini.app/Contents/Info.plist ]
+	then
+		JPEGminiVersion=$(/usr/bin/defaults read /Applications/JPEGmini.app/Contents/Info.plist CFBundleVersion)
+fi
+
+/bin/echo "&lt;result&gt;$JPEGminiVersion&lt;/result&gt;"
+
+exit 0</script>
+	</input_type>
+	<inventory_display>Extension Attributes</inventory_display>
+	<recon_display>Extension Attributes</recon_display>
+</computer_extension_attribute>
