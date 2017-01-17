@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of Post Haste.</string>
+    <key>Identifier</key>
+    <string>com.github.datajar-recipes.download.Post Haste</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Post Haste</string>
+        <key>SPARKLE_FEED_URL</key>
+        <string>http://www.digitalrebellion.com/rss/appcasts/post_haste_appcast.xml</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>SparkleUpdateInfoProvider</string>
+            <key>Arguments</key>
+            <dict>
+                <key>appcast_url</key>
+                <string>%SPARKLE_FEED_URL%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/%filename%/Post Haste.app</string>
+                <key>requirement</key>
+                <string>identifier "com.digitalrebellion.PostHaste" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "7F8QJ989JE"</string>
+            </dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/%filename%/Post Haste.app/Contents/Info.plist</string>
+				<key>plist_version_key</key>
+				<string>CFBundleVersion</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>
+    </array>
+</dict>
+</plist>
