@@ -28,7 +28,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.pkg.JPEGMini-Trial</string>
+	<string>com.github.datajar-recipes.pkg.JPEGmini-Trial</string>
 	<key>Process</key>
 	<array>
 		<dict>
