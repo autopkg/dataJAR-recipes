@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of The MUT and creates a package.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.pkg.The MUT</string>
+	<string>com.github.dataJAR-recipes.pkg.The MUT</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
@@ -14,7 +14,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.download.The MUT</string>
+	<string>com.github.dataJAR-recipes.download.The MUT</string>
 	<key>Process</key>
 	<array>
 		<dict>

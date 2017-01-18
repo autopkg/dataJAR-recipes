@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of The MUT.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.download.The MUT</string>
+	<string>com.github.dataJAR-recipes.download.The MUT</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>

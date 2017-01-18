@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest trial version of JPEGmini.</string>
     <key>Identifier</key>
-    <string>com.github.datajar-recipes.download.JPEGmini-Trial</string>
+    <string>com.github.dataJAR-recipes.download.JPEGmini-Trial</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
