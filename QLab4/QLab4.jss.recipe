@@ -21,8 +21,8 @@
 		<key>POLICY_TEMPLATE</key>
 		<string>PolicyTemplate.xml</string>
 		<key>SELF_SERVICE_DESCRIPTION</key>
-		<string>QLab4 is an app that automates the creation of NetBoot Images (NBIs) for use with Imagr.</string>
-		<key>SELF_SERVICE_ICON</key>
+		<string>QLab® 4 combines powerful audio, video, and lighting control in one elegant package. With an all-new Light cue, a major upgrade to QLab Remote for iOS, and over 40 new features, this is the best version of QLab we’ve ever made.</string>
+        <key>SELF_SERVICE_ICON</key>
 		<string>QLab4.png</string>
 	</dict>
 	<key>MinimumVersion</key>
