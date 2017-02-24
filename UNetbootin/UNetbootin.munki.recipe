@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of UNetbootin and imports into munki.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.munki.UNetbootin</string>
+	<string>com.github.dataJAR-recipes.munki.UNetbootin</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>

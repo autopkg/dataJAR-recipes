@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of Post Haste and creates a package.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.pkg.Post Haste</string>
+	<string>com.github.dataJAR-recipes.pkg.Post Haste</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
@@ -14,7 +14,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.download.Post Haste</string>
+	<string>com.github.dataJAR-recipes.download.Post Haste</string>
 	<key>Process</key>
 	<array>
 		<dict>

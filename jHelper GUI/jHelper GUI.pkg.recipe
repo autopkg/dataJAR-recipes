@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of jHelper GUI and creates a package.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.pkg.jHelper GUI</string>
+	<string>com.github.dataJAR-recipes.pkg.jHelper GUI</string>
 	<key>Input</key>
 	<dict>
 		<key>BUNDLE_ID</key>
@@ -16,7 +16,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.download.jHelper GUI</string>
+	<string>com.github.dataJAR-recipes.download.jHelper GUI</string>
 	<key>Process</key>
 	<array>
 		<dict>

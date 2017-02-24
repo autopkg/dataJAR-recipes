@@ -8,7 +8,7 @@ Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.download.jHelper GUI</string>
+	<string>com.github.dataJAR-recipes.download.jHelper GUI</string>
 	<key>Input</key>
 	<dict>
 		<key>PRERELEASE</key>

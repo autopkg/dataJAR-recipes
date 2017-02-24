@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of CocoaPods and builds a package. Then, uploads to the JSS.</string>
 	<key>Identifier</key>
-	<string>com.github.jss-recipes.jss.CocoaPods</string>
+	<string>com.github.dataJAR-recipes.jss.CocoaPods</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>

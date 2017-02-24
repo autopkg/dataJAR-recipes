@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads Vagrant installer and extracts the embedded package. No repackaging done.</string>
     <key>Identifier</key>
-    <string>com.github.datajar-recipes.pkg.Vagrant</string>
+    <string>com.github.dataJAR-recipes.pkg.Vagrant</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>

@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of Blue Jeans Scheduler for Mac.</string>
     <key>Identifier</key>
-    <string>com.github.datajar-recipes.download.Blue Jeans Scheduler for Mac</string>
+    <string>com.github.dataJAR-recipes.download.Blue Jeans Scheduler for Mac</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>

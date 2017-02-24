@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of UNetbootin and makes a package.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.pkg.UNetbootin</string>
+	<string>com.github.dataJAR-recipes.pkg.UNetbootin</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>

@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest trial version of JPEGmini Pro and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.datajar-recipes.munki.JPEGmini Pro-Trial</string>
+    <string>com.github.dataJAR-recipes.munki.JPEGmini Pro-Trial</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -37,7 +37,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.datajar-recipes.download.JPEGmini Pro-Trial</string>
+    <string>com.github.dataJAR-recipes.download.JPEGmini Pro-Trial</string>
     <key>Process</key>
     <array>
 		<dict>

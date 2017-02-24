@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of Platypus and makes a package.</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.pkg.Platypus</string>
+	<string>com.github.dataJAR-recipes.pkg.Platypus</string>
 	<key>Input</key>
 	<dict>
 		<key>BUNDLE_ID</key>

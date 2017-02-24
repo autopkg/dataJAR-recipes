@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of iOS Console.</string>
     <key>Identifier</key>
-    <string>com.github.datajar-recipes.download.iOS Console</string>
+    <string>com.github.dataJAR-recipes.download.iOS Console</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>

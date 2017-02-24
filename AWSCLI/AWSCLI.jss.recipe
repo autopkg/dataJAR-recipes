@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of AWS CLI tools and makes a pkg of it then uploads it to the JSS.</string>
 	<key>Identifier</key>
-	<string>com.github.jss-recipes.jss.AWSCLI</string>
+	<string>com.github.dataJAR-recipes.jss.AWSCLI</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>

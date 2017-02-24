@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of Post Haste.</string>
     <key>Identifier</key>
-    <string>com.github.datajar-recipes.download.Post Haste</string>
+    <string>com.github.dataJAR-recipes.download.Post Haste</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
