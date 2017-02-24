@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the current release version of AutoImagrNBI and then uploads to the JSS</string>
 	<key>Identifier</key>
-	<string>com.github.datajar-recipes.jss.AutoImagrNBI</string>
+	<string>com.github.dataJAR-recipes.jss.AutoImagrNBI</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>
@@ -28,7 +28,7 @@
 	<key>MinimumVersion</key>
 	<string>0.2.0</string>
 	<key>ParentRecipe</key>
-	<string>com.github.datajar-recipes.pkg.AutoImagrNBI</string>
+	<string>com.github.dataJAR-recipes.pkg.AutoImagrNBI</string>
 	<key>Process</key>
 	<array>
 		<dict>
