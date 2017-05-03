@@ -23,7 +23,7 @@
 				<key>url</key>
 				<string>http://jssmut.weebly.com</string>
 				<key>re_pattern</key>
-				<string>(http://m-lev.com/uploads/The_MUT_[0-9a-z\.]+\_[0-9a-z\.]+\_[0-9a-z\.]+\.dmg)</string>
+				<string>(http://m-lev.com/uploads/TheMUT[0-9a-z\.]+\[0-9a-z\.]+\[0-9a-z\.]+\.dmg)</string>
 				<key>result_output_var_name</key>
 				<string>url</string>
 			</dict>
