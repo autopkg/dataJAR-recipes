@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the current release version of Suitcase Fusion 7 and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.SuitcaseFusion5</string>
+    <string>com.github.dataJAR-recipes.munki.Suitcase Fusion 7</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -39,7 +39,7 @@
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.SuitcaseFusion5</string>
+	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 7</string>
     <key>Process</key>
 	<array>
         <dict>
