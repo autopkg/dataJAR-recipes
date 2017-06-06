@@ -46,14 +46,10 @@
 					<string>/Applications/GDevelop.app/Contents/MacOS/GDIDE_launcher</string>
 				</array>
 			</dict>
-			<key>Comment</key>
-			<string>Use processor to obtain hashes.</string>
 			<key>Processor</key>
 			<string>MunkiInstallsItemsCreator</string>
 		</dict>
 		<dict>
-			<key>Comment</key>
-			<string>Merge hashes so following additional_pkginfo does't clobber them.</string>
 			<key>Processor</key>
 			<string>MunkiPkginfoMerger</string>
 		</dict>
@@ -69,13 +65,6 @@
 							<string>/Applications</string>
 							<key>source_item</key>
 							<string>GDevelop.app</string>
-						</dict>
-					</array>
-					<key>installs</key>
-					<array>
-						<dict>
-							<key>CFBundleName</key>
-							<string>GDIDE_launcher</string>
 						</dict>
 					</array>
 					<key>version</key>
