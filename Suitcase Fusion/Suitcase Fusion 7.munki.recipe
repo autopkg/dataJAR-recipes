@@ -32,8 +32,6 @@
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>maximum_os_version</key>
-			<string>10.9.6</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
