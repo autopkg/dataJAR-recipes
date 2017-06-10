@@ -27,7 +27,7 @@ Removed superfluous CodeSignatureVerification from PKG.
 			<key>description</key>
 			<string>Bring 3D models to life in mixed reality, and step into a powerful new way to explore, understand, and share your work.</string>
 			<key>display_name</key>
-			<string>SketchUp Viewer</string>
+			<string>SketchUp Viewer 2017</string>
 			<key>developer</key>
 			<string>Trimble Navigation Ltd.</string>
 			<key>name</key>
