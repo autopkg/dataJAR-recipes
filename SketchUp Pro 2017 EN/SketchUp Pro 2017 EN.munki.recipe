@@ -29,7 +29,7 @@ Removed superfluous CodeSignatureVerification from PKG.
 			<key>display_name</key>
 			<string>SketchUp Pro 2017</string>
 			<key>developer</key>
-			<string>Trimble Navigation Ltd.</string>
+			<string>Trimble Navigation Ltd</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>blocking_applications</key>
