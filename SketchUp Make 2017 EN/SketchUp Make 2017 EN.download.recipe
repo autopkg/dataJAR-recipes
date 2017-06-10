@@ -12,7 +12,7 @@ Locales can be specified.
 Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.
 </string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.SketchUp Make 2017</string>
+	<string>com.github.dataJAR-recipes.download.SketchUp Make 2017 EN</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
