@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/ViewerpertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Cubase 9 and imports into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.Cubase 9</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Cubase9</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>blocking_applications</key>
+			<array>
+				<string>Cubase 9.app</string>
+			</array>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Ground-breaking new features, streamlined workflows and stunning new plug-ins — the latest update enhances your favorite digital audio workstation in every direction and underlines Cubase’s claim of being the most complete DAW available. The new Lower Zone gives you direct access to editors and the MixConsole without leaving the Project window; the perfectly integrated Sampler Track opens up new creative possibilities; and the surgically precise frequency EQ takes your mix to the next level. The new Plug-in Sentinel, Multiple Marker Tracks, the improved Maximizer — Cubase 9 introduces loads of new features that you won’t want to miss in future music productions.</string>
+			<key>display_name</key>
+			<string>Cubase 9</string>
+			<key>developer</key>
+			<string>Steinberg Media Technologies GmbH</string>
+			<key>minimum_os_version</key>
+			<string>10.9</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.6.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.Cubase 9</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+			    <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/Cubase 9.app</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pkg_path%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+		<dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>                              
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict> 
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for the latest version of Cubase 9.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Cubase 9</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Cubase9</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>https://www.steinberg.net/en/support/downloads/downloads_cubase_pro_9.html</string>
+				<key>re_pattern</key>
+				<string>http://download.steinberg.net/downloads_software/Cubase_Pro_9_and_Cubase_Artist_9/+[0-9]+\.+[0-9]+\.+[0-9][0-9]/Mac/Cubase_+[0-9]+\.+[0-9]+\.+[0-9][0-9]_Update_mac.dmg</string>
+			</dict>
+		</dict>
+        <dict>
+        	<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>%match%</string>
+			</dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+        	<key>Processor</key>
+        	<string>PkgCopier</string>
+        	<key>Arguments</key>
+        	<dict>
+        		<key>source_pkg</key>
+        		<string>%pathname%/Cubase 9 Update.pkg</string>
+        		<key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+        	</dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pkg_path%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Steinberg Media Technologies GmbH</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/</string>
+				<key>flat_pkg_path</key>
+				<string>%pkg_path%</string>
+				<key>purge_destination</key>
+				<string>true</string>
+			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+		</dict>
+		<dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+				<key>pkg_payload_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/Cubase 9.pkg/Payload</string>
+				<key>purge_destination</key>
+				<string>true</string>
+			</dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/Cubase 9.app/Contents/Info.plist</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>       
+    </array>
+</dict>
+</plist>
