@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for the latest version of CrashPlan for Enterprise 6 and extracts the Pkg</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.CrashPlan for Enterprise 6</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>CrashPlanForEnterprise 6</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>https://support.code42.com/Administrator/6/Planning_And_Installing/Code42_server_and_app_downloads</string>
+				<key>re_pattern</key>
+				<string>https://download.code42.com/installs/mac/install/Code42CrashPlan/Code42CrashPlan_+[0-9]+\.+[0-9]+\.+[0-9]+\_Mac.dmg</string>
+			</dict>
+		</dict>
+        <dict>
+        	<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>%match%</string>
+				<key>filename</key>
+                <string>%NAME%.dmg</string>
+			</dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Install Code42 CrashPlan.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Code 42 Software (9YV9435DHD)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

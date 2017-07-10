@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version CrashPlan for Enterprise 6 and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.CrashPlan for Enterprise 6</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>CrashPlanForEnterprise6</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Silently and continuously back up all distributed end-user data for complete visibility and control on a single, secure platform.</string>
+			<key>developer</key>
+			<string>Code42</string>
+			<key>display_name</key>
+			<string>CrashPlan for Enterprise 6</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.pkg.CrashPlan for Enterprise 6</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+			    <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>uninstall_method</key>
+					<string>/Library/Application Support/CrashPlan/Uninstall.app/Contents/Resources/uninstall.sh</string>
+                </dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/CrashPlan.app</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%target%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+		<dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>                              
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict> 
+    </array>
+</dict>
+</plist>
