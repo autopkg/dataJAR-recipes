@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for the latest version of MacTeX Ghostscript.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.MacTeX Ghostscript</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>MacTeXGhostscript</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>http://pages.uoregon.edu/koch/</string>
+				<key>re_pattern</key>
+				<string>Ghostscript-+[0-9]+\.+[0-9]+\.pkg</string>
+			</dict>
+		</dict>
+        <dict>
+        	<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>%url%%match%</string>
+			</dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+			<key>Processor</key>
+			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>version</key>
+				<string>%match%</string>
+				<key>index</key>
+        		<integer>1</integer>
+				<key>split_on</key>
+				<string>-</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>version</key>
+				<string>%version%</string>
+				<key>index</key>
+        		<integer>0</integer>
+				<key>split_on</key>
+				<string>.pkg</string>
+			</dict>
+		</dict>
+    </array>
+</dict>
+</plist>
