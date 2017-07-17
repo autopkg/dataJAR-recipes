@@ -33,13 +33,6 @@
 			<string>PLT Inc</string>
 			<key>name</key>
 			<string>%NAME%</string>
-			<key>preinstall_script</key>
-			<string>#!/bin/sh
-
-/bin/echo "Removing old copies of Racket v6.x from the /Applications folder..."
-/bin/rm -rf /Applications/Racket v6.*/
-
-exit $?</string>
 			<key>unattended_install</key>
 			<true/>
 			<key>unattended_uninstall</key>
