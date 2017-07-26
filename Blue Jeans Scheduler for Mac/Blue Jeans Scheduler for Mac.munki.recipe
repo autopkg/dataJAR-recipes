@@ -19,7 +19,16 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Blue Jeans Scheduler for Mac allows you to view iOS console logs directly from your Mac, and now with built in textual filtering, finding a specific log message has never been easier!</string>
+			<string>&lt;p&gt;Compatible with both iCal and Outlook, the BlueJeans Scheduler for Mac gives you one-click entry to upcoming meetings, lets you schedule future meetings and invite participants, and even start an instant meeting for ad hoc collaboration.&lt;/p&gt;
+&lt;p&gt;With the BlueJeans Scheduler for Mac, you can:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Connect with iCal, Outlook, and BlueJeans Scheduling to display upcoming BlueJeans meetings in the Mac toolbar&lt;/li&gt;
+	&lt;li&gt;Launch your browser and join meetings with one click&lt;/li&gt;
+	&lt;li&gt;Schedule upcoming meetings and invite participants&lt;/li&gt;
+	&lt;li&gt;Specify default and per-meeting advanced options&lt;/li&gt;
+	&lt;li&gt;Review and cancel upcoming meetings&lt;/li&gt;
+&lt;/ul&gt;
+</string>
             <key>developer</key>
 			<string>Bluejeans</string>
             <key>display_name</key>
