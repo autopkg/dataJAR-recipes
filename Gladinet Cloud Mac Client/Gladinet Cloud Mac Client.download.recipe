@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for Gladinet Cloud Mac Client.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Gladinet Cloud Mac Client</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Gladinet Cloud Mac Client</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>http://www.centrestack.com/p/download_gce.htm</string>
+				<key>re_pattern</key>
+				<string>(http://gcbuild.gladinet.com/releases/gladinet/build(\S+)/MacClient.9_[\S]+\.dmg)</string>
+				<key>result_output_var_name</key>
+				<string>url</string>
+			</dict>
+		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Install Cloud Drive Mac Client.pkg</string>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Gladinet, Inc. (CX8U2YJ96P)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+			</dict>
+		</dict>
+    </array>
+</dict>
+</plist>
