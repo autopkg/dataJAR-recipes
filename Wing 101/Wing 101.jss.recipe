@@ -3,32 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the current release version of The MUT and then uploads to the JSS</string>
+	<string>Downloads the current release version of Wing 101 and builds a package. Then, uploads to the JSS.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.The MUT</string>
+	<string>com.github.dataJAR-recipes.jss.Wing 101</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>
-		<string>Productivity</string>
+		<string>Development</string>
 		<key>GROUP_NAME</key>
 		<string>%NAME%-update-smart</string>
 		<key>GROUP_TEMPLATE</key>
-		<string>SmartGroupTemplate.xml</string>
+		<string>Wing 101-SmartGroupTemplate.xml</string>
 		<key>NAME</key>
-		<string>The MUT</string>
+		<string>Wing 101</string>
 		<key>POLICY_CATEGORY</key>
 		<string>Testing</string>
 		<key>POLICY_TEMPLATE</key>
 		<string>PolicyTemplate.xml</string>
 		<key>SELF_SERVICE_DESCRIPTION</key>
-		<string>The unofficial all-in-one mass update tool designed to be the perfect companion to the JSS Admin.</string>
+        <string>Wing is a Python IDE with powerful debugger and intelligent editor that make interactive Python development fast, accurate, and fun.</string>
 		<key>SELF_SERVICE_ICON</key>
-		<string>TheMUT.png</string>
+		<string>Wing 101.png</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.The MUT</string>
+	<string>com.github.dataJAR-recipes.pkg.Wing 101</string>
 	<key>Process</key>
 	<array>
 		<dict>
@@ -36,6 +36,13 @@
 			<dict>
 				<key>category</key>
 				<string>%CATEGORY%</string>
+				<key>extension_attributes</key>
+				<array>
+					<dict>
+						<key>ext_attribute_path</key>
+						<string>Wing 101-ExtensionAttribute.xml</string>
+					</dict>
+				</array>
 				<key>groups</key>
 				<array>
 					<dict>
@@ -57,6 +64,8 @@
 				<string>%SELF_SERVICE_DESCRIPTION%</string>
 				<key>self_service_icon</key>
 				<string>%SELF_SERVICE_ICON%</string>
+				<key>version</key>
+				<string>%version%</string>
 			</dict>
 			<key>Processor</key>
 			<string>JSSImporter</string>

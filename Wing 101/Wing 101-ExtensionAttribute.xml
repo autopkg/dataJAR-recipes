@@ -1,0 +1,21 @@
+<computer_extension_attribute>
+	<name>Wing101Version</name>
+	<description>Returns the CFBundleVersion of Wing 101 if installed.</description>
+	<data_type>String</data_type>
+	<input_type>
+		<type>script</type>
+		<platform>Mac</platform>
+		<script>#!/bin/bash
+Wing101Version=""
+if [ -f /Applications/Wing101.app/Contents/Info.plist ]
+	then
+		Wing101Version=$(/usr/bin/defaults read /Applications/Wing101.app/Contents/Info.plist CFBundleVersion)
+fi
+
+/bin/echo "&lt;result&gt;$Wing101Version&lt;/result&gt;"
+
+exit 0</script>
+	</input_type>
+	<inventory_display>Extension Attributes</inventory_display>
+	<recon_display>Extension Attributes</recon_display>
+</computer_extension_attribute>
