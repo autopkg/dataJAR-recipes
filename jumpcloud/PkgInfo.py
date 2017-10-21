@@ -39,9 +39,7 @@ class PkgInfo(Processor):
             "description": ("The package ID.."),
         },
         "version": {
-            "description": ("The value of CFBundleShortVersionString for the app bundle. "
-                            "This may match user_facing_version, but it may also be more "
-                            "specific and add another version component."),
+            "description": ("The version of the pkg from it's info"),
         },
     }
 
