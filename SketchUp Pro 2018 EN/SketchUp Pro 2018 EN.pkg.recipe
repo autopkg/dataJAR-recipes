@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/MakepertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Description</key>
-	<string>Downloads the latest version of SketchUp Make 2017 EN and creates a PKG.
+	<string>Downloads the latest version of SketchUp Pro 2018 EN and creates a PKG.
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -11,16 +11,16 @@ Locales can be specified.
 
 Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.</string>
 	<key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.SketchUp Make 2017 EN</string>
+    <string>com.github.dataJAR-recipes.pkg.SketchUp Pro 2018 EN</string>
     <key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>SketchUpMake2017-EN</string>
+		<string>SketchUpPro2018-EN</string>
 	</dict>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.SketchUp Make 2017 EN</string>
+    <string>com.github.dataJAR-recipes.download.SketchUp Pro 2018 EN</string>
     <key>Process</key>
     <array>
         <dict>
@@ -43,9 +43,9 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
             <key>Arguments</key>
             <dict>
                 <key>source_path</key>
-                <string>%pathname%/SketchUp 2017/</string>
+                <string>%pathname%/SketchUp 2018/</string>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2017/</string>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2018/</string>
                 <key>overwrite</key>
                 <true/>
             </dict>
@@ -56,7 +56,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2017/SketchUp.app/Contents/Info.plist</string>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2018/SketchUp.app/Contents/Info.plist</string>
                 <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>

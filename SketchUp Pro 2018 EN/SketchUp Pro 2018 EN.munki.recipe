@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/MakepertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of SketchUp Make 2017 EN and imports into Munki.
+	<string>Downloads the latest version of SketchUp Pro 2018 EN and imports into Munki.
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -11,11 +11,11 @@ Main changes are non-overridable year and locale.
 Removed superfluous CodeSignatureVerification from PKG.
 </string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.SketchUp Make 2017 EN</string>
+	<string>com.github.dataJAR-recipes.munki.SketchUp Pro 2018 EN</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>SketchUpMake2017-EN</string>
+		<string>SketchUpPro2018-EN</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>pkginfo</key>
@@ -25,9 +25,9 @@ Removed superfluous CodeSignatureVerification from PKG.
 				<string>testing</string>
 			</array>
 			<key>description</key>
-			<string>The easy, fun, and free way to draw in 3D.</string>
+			<string>The most intuitive way to design, document and communicate your ideas in 3D</string>
 			<key>display_name</key>
-			<string>SketchUp Make 2017</string>
+			<string>SketchUp Pro 2018</string>
 			<key>developer</key>
 			<string>Trimble Navigation Ltd</string>
 			<key>name</key>
@@ -47,7 +47,7 @@ Removed superfluous CodeSignatureVerification from PKG.
 	<key>MinimumVersion</key>
 	<string>0.4.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.SketchUp Make 2017 EN</string>
+	<string>com.github.dataJAR-recipes.pkg.SketchUp Pro 2018 EN</string>
 	<key>Process</key>
 	<array>
 		<dict>
@@ -73,9 +73,9 @@ Removed superfluous CodeSignatureVerification from PKG.
 				<string>CFBundleVersion</string>
 				<key>installs_item_paths</key>
 				<array>
-					<string>/Applications/SketchUp 2017/SketchUp.app</string>
-					<string>/Applications/SketchUp 2017/Layout.app</string>
-					<string>/Applications/SketchUp 2017/Style Builder.app</string>
+					<string>/Applications/SketchUp 2018/SketchUp.app</string>
+					<string>/Applications/SketchUp 2018/Layout.app</string>
+					<string>/Applications/SketchUp 2018/Style Builder.app</string>
 				</array>
 			</dict>
 		</dict>
