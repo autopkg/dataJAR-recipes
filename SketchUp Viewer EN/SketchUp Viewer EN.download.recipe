@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of SketchUp Viewer 2017 EN. 
+	<string>Downloads the latest version of SketchUp Viewer EN. 
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -12,7 +12,7 @@ Locales can be specified.
 Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.
 </string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.SketchUp Viewer 2017 EN</string>
+	<string>com.github.dataJAR-recipes.download.SketchUp Viewer EN</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>

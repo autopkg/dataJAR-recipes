@@ -32,7 +32,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
 				<key>result_output_var_name</key>
 				<string>url</string>
 				<key>re_pattern</key>
-				<string>&quot;((?:https?:)?//.+/SketchUpPro.en.*.dmg)&quot;</string>
+				<string>http://dl.trimble.com/sketchup/2017/en/sketchuppro-2017-.+-en.dmg</string>
 				<key>re_flags</key>
 				<array>
 					<string>IGNORECASE</string>

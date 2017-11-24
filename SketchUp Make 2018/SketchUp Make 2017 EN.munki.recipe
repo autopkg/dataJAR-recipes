@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/ViewerpertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/MakepertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of SketchUp Viewer 2017 and imports into Munki.
+	<string>Downloads the latest version of SketchUp Make 2017 EN and imports into Munki.
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -11,11 +11,11 @@ Main changes are non-overridable year and locale.
 Removed superfluous CodeSignatureVerification from PKG.
 </string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.SketchUp Viewer 2017 EN</string>
+	<string>com.github.dataJAR-recipes.munki.SketchUp Make 2017 EN</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>SketchUpViewer2017-EN</string>
+		<string>SketchUpMake2017-EN</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>pkginfo</key>
@@ -25,13 +25,19 @@ Removed superfluous CodeSignatureVerification from PKG.
 				<string>testing</string>
 			</array>
 			<key>description</key>
-			<string>Bring 3D models to life in mixed reality, and step into a powerful new way to explore, understand, and share your work.</string>
+			<string>The easy, fun, and free way to draw in 3D.</string>
 			<key>display_name</key>
-			<string>SketchUp Viewer 2017</string>
+			<string>SketchUp Make 2017</string>
 			<key>developer</key>
 			<string>Trimble Navigation Ltd</string>
 			<key>name</key>
 			<string>%NAME%</string>
+			<key>blocking_applications</key>
+			<array>
+				<string>SketchUp</string>
+				<string>Style Builder</string>
+				<string>Layout</string>
+			</array>
 			<key>unattended_install</key>
 			<true/>
 			<key>unattended_uninstall</key>
@@ -41,21 +47,10 @@ Removed superfluous CodeSignatureVerification from PKG.
 	<key>MinimumVersion</key>
 	<string>0.4.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.SketchUp Viewer 2017 EN</string>
+	<string>com.github.dataJAR-recipes.pkg.SketchUp Make 2017 EN</string>
 	<key>Process</key>
 	<array>
-        <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%pathname%/SketchUpViewer.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleVersion</string>
-            </dict>
-        </dict>
-    	<dict>
+		<dict>
 			<key>Processor</key>
 			<string>MunkiPkginfoMerger</string>
 			<key>Arguments</key>
@@ -68,10 +63,31 @@ Removed superfluous CodeSignatureVerification from PKG.
 			</dict>
 		</dict>
 		<dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+				<string>%RECIPE_CACHE_DIR%/pkgroot</string>
+				<key>version_comparison_key</key>
+				<string>CFBundleVersion</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/SketchUp 2017/SketchUp.app</string>
+					<string>/Applications/SketchUp 2017/Layout.app</string>
+					<string>/Applications/SketchUp 2017/Style Builder.app</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%pathname%</string>
+				<string>%pkg_path%</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 			</dict>
