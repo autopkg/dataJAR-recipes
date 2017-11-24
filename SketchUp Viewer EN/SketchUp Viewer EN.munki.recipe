@@ -15,7 +15,7 @@ Removed superfluous CodeSignatureVerification from PKG.
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>SketchUpViewer2017-EN</string>
+		<string>SketchUpViewer-EN</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>pkginfo</key>
@@ -27,7 +27,7 @@ Removed superfluous CodeSignatureVerification from PKG.
 			<key>description</key>
 			<string>Bring 3D models to life in mixed reality, and step into a powerful new way to explore, understand, and share your work.</string>
 			<key>display_name</key>
-			<string>SketchUp Viewer 2017</string>
+			<string>SketchUp Viewer</string>
 			<key>developer</key>
 			<string>Trimble Navigation Ltd</string>
 			<key>name</key>

@@ -16,7 +16,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>SketchUpViewer2017-EN</string>
+		<string>SketchUpViewer-EN</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>0.4.1</string>
