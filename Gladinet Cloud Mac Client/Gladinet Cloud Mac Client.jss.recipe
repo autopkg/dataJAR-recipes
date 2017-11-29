@@ -64,9 +64,9 @@
 			<key>Arguments</key>
 			<dict>
 				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+				<string>%RECIPE_CACHE_DIR%/application_payload/</string>
 				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/GladinetClient.pkg/Payload</string>
+				<string>%RECIPE_CACHE_DIR%/unpack/Gladinet.pkg/Payload</string>
 				<key>purge_destination</key>
 				<string>true</string>
 			</dict>
@@ -77,7 +77,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/Cloud Drive.app/Contents/Info.plist</string>
+				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/Gladinet Cloud Mac Client.app/Contents/Info.plist</string>
 			</dict>
 		</dict>
 		<dict>
