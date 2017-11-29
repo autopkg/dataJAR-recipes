@@ -47,7 +47,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>input_path</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Install Cloud Drive Mac Client.pkg</string>
+				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Cloud Drive.pkg</string>
 				<key>expected_authority_names</key>
 				<array>
 					<string>Developer ID Installer: Gladinet, Inc. (CX8U2YJ96P)</string>
