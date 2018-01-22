@@ -49,8 +49,8 @@ else
 	/bin/mkdir -p /opt/jc
 	/bin/cat &lt;&lt;-EOF &gt; /opt/jc/agentBootstrap.json
 	{
-	"publicKickstartUrl": "https://kickstart.JumpCloud.com:443",
-	"privateKickstartUrl": "https://private-kickstart.JumpCloud.com:443",
+	"publicKickstartUrl": "https://kickstart.jumpcloud.com:443",
+	"privateKickstartUrl": "https://private-kickstart.jumpcloud.com:443",
 	"connectKey": "${connectKey}"
 	}
 	EOF
