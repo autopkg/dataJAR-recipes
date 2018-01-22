@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the current release version of JumpCloud and then uploads to the munki.
+	<string>Downloads the current release version of the JumpCloud Agent and then uploads to munki.
 	
 	NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
 	installing this PKG, else you'll be prompted for the connect_key. 
@@ -12,13 +12,13 @@
 	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 	</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.JumpCloud</string>
+	<string>com.github.dataJAR-recipes.munki.JumpCloud Agent</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>NAME</key>
-		<string>JumpCloud</string>
+		<string>JumpCloud Agent</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
@@ -30,7 +30,7 @@
 			<key>developer</key>
 			<string>JumpCloud</string>
 			<key>display_name</key>
-			<string>JumpCloud</string>
+			<string>JumpCloud Agent</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>preinstall_script</key>
@@ -62,7 +62,7 @@ fi</string>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.JumpCloud</string>
+	<string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Process</key>
     <array>
     	<dict>
