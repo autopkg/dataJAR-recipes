@@ -11,7 +11,7 @@
 	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 	</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.JumpCloud Agent/string>
+	<string>com.github.dataJAR-recipes.jss.JumpCloud Agent</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>
