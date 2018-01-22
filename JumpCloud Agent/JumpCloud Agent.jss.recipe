@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the current release version of JumpCloud and then uploads to the JSS.
+	<string>Downloads the current release version of the JumpCloud Agent and then uploads to the JSS.
 	
 	NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
 	installing this PKG, else you'll be prompted for the connect_key.
@@ -11,7 +11,7 @@
 	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 	</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.JumpCloud</string>
+	<string>com.github.dataJAR-recipes.jss.JumpCloud Agent/string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>
@@ -19,9 +19,9 @@
 		<key>GROUP_NAME</key>
 		<string>%NAME%-update-smart</string>
 		<key>GROUP_TEMPLATE</key>
-		<string>JumpCloudSmartGroupTemplate.xml</string>
+		<string>JumpCloudAgent-SmartGroupTemplate.xml</string>
 		<key>NAME</key>
-		<string>JumpCloud</string>
+		<string>JumpCloud Agent</string>
 		<key>POLICY_CATEGORY</key>
 		<string>Testing</string>
 		<key>POLICY_TEMPLATE</key>
@@ -34,7 +34,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.JumpCloud</string>
+	<string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Process</key>
     <array>
 		<dict>
@@ -61,7 +61,7 @@
 				<array>
 					<dict>
 						<key>ext_attribute_path</key>
-						<string>JumpCloudExtensionAttribute.xml</string>
+						<string>JumpCloudAgent-ExtensionAttribute.xml</string>
 					</dict>
 				</array>
 				<key>groups</key>
