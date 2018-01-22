@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Download recipe for the latest version of JumpCloud.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.JumpCloud</string>
+    <string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
