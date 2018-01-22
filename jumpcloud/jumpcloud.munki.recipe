@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the current release version of jumpcloud and then uploads to the munki.
+	
+	NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
+	installing this PKG, else you'll be prompted for the connect_key. 
+	Amend the preinstall_script for this.
+	
+	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
+	</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.jumpcloud</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>jumpcloud</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>A fully managed directory to rule your infrastructure whether on-premise or in the cloud. JumpCloud is your central source to authenticate, authorize, and manage employees, their devices and IT applications.</string>
+			<key>developer</key>
+			<string>jumpcloud</string>
+			<key>display_name</key>
+			<string>jumpcloud</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>preinstall_script</key>
+			<string>#!/bin/sh
+#
+# Adapted from:https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
+#
+
+connectKey=
+
+if [ -z "${connectKey}" ]
+then
+	/bin/echo "No connect key defined... exiting..."
+	exit 1
+else
+	/bin/mkdir -p /opt/jc
+	/bin/cat &lt;&lt;-EOF &gt; /opt/jc/agentBootstrap.json
+	{
+	"publicKickstartUrl": "https://kickstart.jumpcloud.com:443",
+	"privateKickstartUrl": "https://private-kickstart.jumpcloud.com:443",
+	"connectKey": "${connectKey}"
+	}
+	EOF
+fi</string>
+			<key>unattended_install</key>
+			<true/>
+		</dict>
+	</dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.jumpcloud</string>
+    <key>Process</key>
+    <array>
+    	<dict>
+			<key>Processor</key>
+			<string>PkgInfo</string>
+		</dict>
+        <dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/</string>
+				<key>flat_pkg_path</key>
+				<string>%pathname%</string>
+				<key>purge_destination</key>
+				<string>true</string>
+			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/payload/</string>
+				<key>pkg_payload_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/agent.pkg/Payload</string>
+				<key>purge_destination</key>
+				<string>true</string>
+			</dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/opt/jc/version.txt</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+    </array>
+</dict>
+</plist>
