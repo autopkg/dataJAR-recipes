@@ -1,6 +1,6 @@
 <computer_extension_attribute>
-  <name>jumpcloud Agent Version</name>
-  <description>Returns the version number of the jumpcloud Agent installed, if not returns "Not Installed"</description>
+  <name>JumpCloud Agent Version</name>
+  <description>Returns the version number of the JumpCloud Agent installed, if not returns "Not Installed"</description>
   <dataType>string</dataType>
   <input_type>
 		<type>script</type>
@@ -9,12 +9,12 @@
 
 if [ -e "/opt/jc/version.txt" ]
 then
-	jumpcloudVersion=$(/bin/cat /opt/jc/version.txt)
+	JumpCloudVersion=$(/bin/cat /opt/jc/version.txt)
 else
-	jumpcloudVersion="Not Installed"
+	JumpCloudVersion="Not Installed"
 fi
 
-echo "&lt;result&gt;$jumpcloudVersion&lt;/result&gt;"
+echo "&lt;result&gt;$JumpCloudVersion&lt;/result&gt;"
 </script>
 	</input_type>
 	<inventory_display>Extension Attributes</inventory_display>

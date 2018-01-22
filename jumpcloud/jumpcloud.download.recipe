@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of jumpcloud.</string>
+    <string>Download recipe for the latest version of JumpCloud.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.jumpcloud</string>
+    <string>com.github.dataJAR-recipes.download.JumpCloud</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>jumpcloud</string>
+        <string>JumpCloud</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.3</string>

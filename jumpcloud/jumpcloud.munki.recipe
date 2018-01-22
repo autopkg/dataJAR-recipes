@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the current release version of jumpcloud and then uploads to the munki.
+	<string>Downloads the current release version of JumpCloud and then uploads to the munki.
 	
 	NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
 	installing this PKG, else you'll be prompted for the connect_key. 
@@ -12,13 +12,13 @@
 	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 	</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.jumpcloud</string>
+	<string>com.github.dataJAR-recipes.munki.JumpCloud</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>NAME</key>
-		<string>jumpcloud</string>
+		<string>JumpCloud</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
@@ -28,15 +28,15 @@
 			<key>description</key>
 			<string>A fully managed directory to rule your infrastructure whether on-premise or in the cloud. JumpCloud is your central source to authenticate, authorize, and manage employees, their devices and IT applications.</string>
 			<key>developer</key>
-			<string>jumpcloud</string>
+			<string>JumpCloud</string>
 			<key>display_name</key>
-			<string>jumpcloud</string>
+			<string>JumpCloud</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>preinstall_script</key>
 			<string>#!/bin/sh
 #
-# Adapted from:https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
+# Adapted from:https://support.JumpCloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 #
 
 connectKey=
@@ -49,8 +49,8 @@ else
 	/bin/mkdir -p /opt/jc
 	/bin/cat &lt;&lt;-EOF &gt; /opt/jc/agentBootstrap.json
 	{
-	"publicKickstartUrl": "https://kickstart.jumpcloud.com:443",
-	"privateKickstartUrl": "https://private-kickstart.jumpcloud.com:443",
+	"publicKickstartUrl": "https://kickstart.JumpCloud.com:443",
+	"privateKickstartUrl": "https://private-kickstart.JumpCloud.com:443",
 	"connectKey": "${connectKey}"
 	}
 	EOF
@@ -62,7 +62,7 @@ fi</string>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.jumpcloud</string>
+	<string>com.github.dataJAR-recipes.download.JumpCloud</string>
     <key>Process</key>
     <array>
     	<dict>

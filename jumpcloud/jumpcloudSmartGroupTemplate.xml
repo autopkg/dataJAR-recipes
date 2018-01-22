@@ -3,7 +3,7 @@
 	<is_smart>true</is_smart>
 	<criteria>
 		<criterion>
-			<name>jumpcloud Agent Version</name>
+			<name>JumpCloud Agent Version</name>
 			<priority>0</priority>
 			<and_or>and</and_or>
 			<search_type>is not</search_type>
@@ -12,7 +12,7 @@
             <closing_paren>false</closing_paren>
 		</criterion>
 		<criterion>
-			<name>jumpcloud Agent Version</name>
+			<name>JumpCloud Agent Version</name>
 			<priority>1</priority>
 			<and_or>or</and_or>
 			<search_type>is not</search_type>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the current release version of jumpcloud and then uploads to the JSS.
+	<string>Downloads the current release version of JumpCloud and then uploads to the JSS.
 	
 	NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
 	installing this PKG, else you'll be prompted for the connect_key.
@@ -11,7 +11,7 @@
 	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 	</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.jumpcloud</string>
+	<string>com.github.dataJAR-recipes.jss.JumpCloud</string>
 	<key>Input</key>
 	<dict>
 		<key>CATEGORY</key>
@@ -19,9 +19,9 @@
 		<key>GROUP_NAME</key>
 		<string>%NAME%-update-smart</string>
 		<key>GROUP_TEMPLATE</key>
-		<string>jumpcloudSmartGroupTemplate.xml</string>
+		<string>JumpCloudSmartGroupTemplate.xml</string>
 		<key>NAME</key>
-		<string>jumpcloud</string>
+		<string>JumpCloud</string>
 		<key>POLICY_CATEGORY</key>
 		<string>Testing</string>
 		<key>POLICY_TEMPLATE</key>
@@ -29,12 +29,12 @@
 		<key>SELF_SERVICE_DESCRIPTION</key>
 		<string>A fully managed directory to rule your infrastructure whether on-premise or in the cloud. JumpCloud is your central source to authenticate, authorize, and manage employees, their devices and IT applications.</string>
         <key>SELF_SERVICE_ICON</key>
-		<string>jumpcloud.png</string>
+		<string>JumpCloud.png</string>
 	</dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.jumpcloud</string>
+	<string>com.github.dataJAR-recipes.download.JumpCloud</string>
     <key>Process</key>
     <array>
 		<dict>
@@ -61,7 +61,7 @@
 				<array>
 					<dict>
 						<key>ext_attribute_path</key>
-						<string>jumpcloudExtensionAttribute.xml</string>
+						<string>JumpCloudExtensionAttribute.xml</string>
 					</dict>
 				</array>
 				<key>groups</key>
