@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the Gladinet Cloud Mac Client 9 dmg and then uploads to the JSS</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.jss.Gladinet Cloud Mac Client</string>
+    <string>com.github.dataJAR-recipes.jss.Gladinet Cloud Mac Client 9</string>
     <key>Input</key>
     <dict>
 		<key>CATEGORY</key>
@@ -15,7 +15,7 @@
 		<key>GROUP_TEMPLATE</key>
 		<string>SmartGroupTemplate.xml</string>
 		<key>NAME</key>
-		<string>Gladinet Cloud Mac Client</string>
+		<string>Gladinet Cloud Mac Client 9</string>
 		<key>POLICY_CATEGORY</key>
 		<string>Testing</string>
 		<key>POLICY_TEMPLATE</key>
@@ -23,63 +23,14 @@
 		<key>SELF_SERVICE_DESCRIPTION</key>
 		<string>Gladinet Cloud Mac OS X client integrates with Mac Finder with a drive volume. Inside the drive volume, you can see the backend storage files and folders from Gladinet Cloud Enterprise.</string>
         <key>SELF_SERVICE_ICON</key>
-		<string>GladinetCloudMacClient.png</string>
+		<string>GladinetCloudMacClient9.png</string>
 	</dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.Gladinet Cloud Mac Client</string>
+    <string>com.github.dataJAR-recipes.download.Gladinet Cloud Mac Client 9</string>
     <key>Process</key>
     <array>
-        <dict>
-        	<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack</string>
-				<key>flat_pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-		</dict>
-		<dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-                <key>pkgdirs</key>
-                <dict>
-					<key>Applications</key>
-					<string>0755</string>
-				</dict>
-            </dict>
-        </dict>
-		<dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/Gladinet.pkg/Payload</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/Gladinet Cloud Mac Client.app/Contents/Info.plist</string>
-			</dict>
-		</dict>
 		<dict>
 			<key>Processor</key>
 			<string>FileMover</string>
