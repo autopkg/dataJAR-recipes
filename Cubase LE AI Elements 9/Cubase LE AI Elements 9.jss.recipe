@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/ViewerpertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Cubase LE AI Elements 9 and then uploads to the JSS.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.jss.Cubase LE AI Elements 9</string>
+	<key>Input</key>
+	<dict>
+		<key>CATEGORY</key>
+		<string>Music</string>
+		<key>GROUP_NAME</key>
+		<string>%NAME%-update-smart</string>
+		<key>GROUP_TEMPLATE</key>
+		<string>SmartGroupTemplate.xml</string>
+		<key>NAME</key>
+		<string>Cubase LE AI Elements 9</string>
+		<key>POLICY_CATEGORY</key>
+		<string>Testing</string>
+		<key>POLICY_TEMPLATE</key>
+		<string>PolicyTemplate.xml</string>
+		<key>SELF_SERVICE_DESCRIPTION</key>
+		<string>Cubase Elements welcomes you to the world of Cubase, offering a streamlined music production environment with plenty of features that help seize the moment when musical creativity strikes. Sharing the same pristine audio quality as its larger siblings in the Cubase family, Cubase Elements provides the perfect starting point for intuitive song writing, studio-grade recordings and finalizing your mix. Do you want to elevate your sound to a new level? Cubase Elements is your next step.</string>
+		<key>SELF_SERVICE_ICON</key>
+		<string>CubaseLEAIElements9.png</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.6.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.Cubase LE AI Elements 9</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>FileMover</string>
+			<key>Arguments</key>
+			<dict>
+				<key>source</key>
+				<string>%pkg_path%</string>
+				<key>target</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>category</key>
+				<string>%CATEGORY%</string>
+				<key>groups</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>%GROUP_NAME%</string>
+						<key>smart</key>
+						<true/>
+						<key>template_path</key>
+						<string>%GROUP_TEMPLATE%</string>
+					</dict>
+				</array>
+				<key>pkg_path</key>
+				<string>%target%</string>
+				<key>policy_category</key>
+				<string>%POLICY_CATEGORY%</string>
+				<key>policy_template</key>
+				<string>%POLICY_TEMPLATE%</string>
+				<key>prod_name</key>
+				<string>Cubase LE AI Elements 9</string>
+				<key>self_service_description</key>
+				<string>%SELF_SERVICE_DESCRIPTION%</string>
+				<key>self_service_icon</key>
+				<string>%SELF_SERVICE_ICON%</string>
+			</dict>
+			<key>Processor</key>
+			<string>JSSImporter</string>
+		</dict>
+		<dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>                              
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict> 
+	</array>
+</dict>
+</plist>
