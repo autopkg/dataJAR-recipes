@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of LogMeIn Installer and creates a package
+	
+	NOTE: This installs "/Applications/LogMeIn Installer *.app", postinstall a script will be needed that follows the below:
+	
+	https://www.jamf.com/jamf-nation/discussions/16802/deploying-logmein-via-casper</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.LogMeIn Installer</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>LogMeIn Installer</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.LogMeIn Installer</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>path</key>
+                            <string>Applications</string>
+                            <key>user</key>
+                            <string>root</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>com.logmein.LogMeInInstaller</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                	<string>%RECIPE_CACHE_DIR%/application_payload</string> 
+                	<string>%RECIPE_CACHE_DIR%/%NAME%</string>                              
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict> 
+    </array>
+</dict>
+</plist>
