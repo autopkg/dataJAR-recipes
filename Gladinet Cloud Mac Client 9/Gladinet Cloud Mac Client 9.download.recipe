@@ -15,7 +15,7 @@
         <key>SEARCH_PATTERN</key>
         <string>[0-9a-z\.]+\/gladinet/MacClient.9_[0-9a-z\.]+\.dmg</string>
         <key>DOWNLOAD_URL</key>
-        <string>http://www.centrestack.com/management/releases/getfile.aspx?f=</string>
+        <string>https://s3.amazonaws.com/gladinetsupport</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
