@@ -8,11 +8,11 @@
 		<script>#!/bin/assh
 CFBundleVersion=""
 if [ -f "/Applications/ShareFile Desktop.app/Contents/Info.plist" ]; then
-    CFBundleVersion=$(defaults read "/Applications/ShareFile Desktop.app/Contents/Info.plist" CFBundleVersion)
+	CFBundleVersion=$(defaults read "/Applications/ShareFile Desktop.app/Contents/Info.plist" CFBundleVersion)
 fi
 echo "&lt;result&gt;$CFBundleVersion&lt;/result&gt;"
 exit 0
-        </script>
+		</script>
 	</input_type>
 	<inventory_display>Extension Attributes</inventory_display>
 	<recon_display>Extension Attributes</recon_display>

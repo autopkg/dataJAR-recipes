@@ -22,7 +22,7 @@
 		<string>PolicyTemplate.xml</string>
 		<key>SELF_SERVICE_DESCRIPTION</key>
 		<string>Secure, one-click access to ShareFile without opening a web browser. Focused on speed and convenience, this app is a flexible way to manage your ShareFile account with drag and drop functionality, keyboard shortcut support, native interactions and adjustable, modular windows.</string>
-        <key>SELF_SERVICE_ICON</key>
+		<key>SELF_SERVICE_ICON</key>
 		<string>ShareFileDesktop.png</string>
 	</dict>
 	<key>MinimumVersion</key>
