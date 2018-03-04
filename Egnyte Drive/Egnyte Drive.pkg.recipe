@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Pkg recipe for Egnyte Drive.</string>
+	<string>PKG recipe for Egnyte Drive.</string>
 	<key>Identifier</key>
 	<string>com.github.dataJAR-recipes.pkg.Egnyte Drive</string>
 	<key>Input</key>
