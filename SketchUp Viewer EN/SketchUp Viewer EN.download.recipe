@@ -40,6 +40,11 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
 			</dict>
 		</dict>
 		<dict>
+			<key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
 			<key>Processor</key>
 			<string>URLDownloader</string>
 		</dict>
