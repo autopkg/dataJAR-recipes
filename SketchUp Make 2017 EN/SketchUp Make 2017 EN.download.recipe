@@ -32,7 +32,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
 				<key>result_output_var_name</key>
 				<string>url</string>
 				<key>re_pattern</key>
-				<string>http://dl.trimble.com/sketchup/2017/en/sketchupmake-2017-.+-en.dmg</string>			
+				<string>https://www.sketchup.com/sketchup/2017/en/sketchupmake-2017-[\S]+\-en-dmg</string>			
 				<key>re_flags</key>
 				<array>
 					<string>IGNORECASE</string>
@@ -40,6 +40,11 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
 			</dict>
 		</dict>
 		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%.dmg</string>
+			</dict>
 			<key>Processor</key>
 			<string>URLDownloader</string>
 		</dict>
