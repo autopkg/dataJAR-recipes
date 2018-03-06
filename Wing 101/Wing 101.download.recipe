@@ -25,7 +25,7 @@
 				<key>url</key>
 				<string>https://wingware.com/downloads/wingide-101</string>
 				<key>re_pattern</key>
-				<string>(http://wingware.com/pub/wingide-[0-9][0-9][0-9]/[0-9].[0-9].[0-9]/wingide-[0-9][0-9][0-9]-[0-9].[0-9].[0-9]-[0-9].dmg)</string>
+				<string>(http://wingware.com/pub/wingide-101/[\S]+\/wingide-101-[\S]+\-[\S]+\.dmg)</string>
 	      		<key>result_output_var_name</key>
 				<string>url</string>
 	      		<key>request_headers</key>
