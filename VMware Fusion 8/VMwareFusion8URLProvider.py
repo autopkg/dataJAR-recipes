@@ -6,7 +6,7 @@
 # https://github.com/autopkg/justinrummel-recipes/pull/7
 # https://github.com/autopkg/justinrummel-recipes/pull/14
 #
-# Thanks fuzzlogic & Sterling
+# Thanks fuzzylogiq & Sterling
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
