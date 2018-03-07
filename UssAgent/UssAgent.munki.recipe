@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of UssAgent and imports into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.UssAgent</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>UssAgent</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>blocking_applications</key>
+			<array>
+				<string>Firefox</string>
+			</array>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Unified Security Service (USS) is a platform for delivering multiple, integrated, Internet security products that are more powerful together than as standalone solutions. As a platform, USS is built as a multi-tiered and multi-tenanted SaaS application with an API layer for 3rd party integration, which makes it an ideal solution for Managed Services.</string>
+			<key>display_name</key>
+			<string>UssAgent</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>postinstall_script</key>
+			<string>#!/bin/sh
+#
+# Taken from http://help.clouduss.com/mac-os-x-command-line-parameters$preinstall, amend as needed
+#
+
+/Applications/UssAgent\ Installer.app/Contents/MacOS/UssAgent\ Installer -q -u -p -h -d</string>
+			<key>RestartAction</key>
+			<string>RequireLogout</string>
+			<key>requires</key>
+			<array>
+				<string>Firefox</string>
+			</array>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+			<key>uninstall_script</key>
+			<string>#!/bin/sh
+#
+# Taken from /UssAgent Uninstaller.app/Contents/Resources/Packages/Uninstall.pkg/postinstall
+#
+
+PRODUCTNAME=UssAgent
+
+APPLICATION_DIR="/Applications"
+APPLICATION_SUPPORT_DIR="/Library/Application Support"
+LAUNCH_AGENTS_DIR="/Library/LaunchAgents"
+LAUNCH_DAEMONS_DIR="/Library/LaunchDaemons"
+COMPANY_NAME="Censornet"
+
+USS_AGENT_PLIST=com.censornet.${PRODUCTNAME}.plist
+USS_DAEMON_PLIST=com.censornet.${PRODUCTNAME}Proxy.plist
+
+USS_AGENT_ID="$LAUNCH_AGENTS_DIR"/"$USS_AGENT_PLIST"
+USS_DAEMON_ID="$LAUNCH_DAEMONS_DIR"/"$USS_DAEMON_PLIST"
+
+/bin/launchctl unload -F "$USS_DAEMON_ID" 2>/dev/null
+
+# bundles
+rm -rf "$APPLICATION_DIR"/"$PRODUCTNAME".app
+rm -rf "$APPLICATION_SUPPORT_DIR"/"$COMPANY_NAME"
+rm -rf "$USS_AGENT_ID"
+rm -rf "$USS_DAEMON_ID"
+
+#=================Firefox=========================
+
+FIREFOX_RES_DIR="/Applications/Firefox.app/Contents/Resources/"
+FIREFOX_DEF_DIR="/Applications/Firefox.app/Contents/Resources/defaults/pref"
+FIREFOX_CFG="mozilla.cfg"
+FIREFOX_PREF="all.js"
+
+rm -rf "$FIREFOX_DEF_DIR/$FIREFOX_PREF"
+rm -rf "$FIREFOX_RES_DIR/$FIREFOX_CFG"</string>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.6.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.UssAgent</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+				<string>%RECIPE_CACHE_DIR%/application_payload/</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/UssAgent.app</string>
+				</array>
+				<key>version_comparison_key</key>
+				<string>CFBundleVersion</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
+</dict>
+</plist>
