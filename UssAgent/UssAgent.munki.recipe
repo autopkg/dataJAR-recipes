@@ -45,6 +45,8 @@
 			<true/>
 			<key>unattended_uninstall</key>
 			<true/>
+			<key>uninstall_method</key>
+			<string>uninstall_script</string>
 			<key>uninstall_script</key>
 			<string>#!/bin/sh
 #
