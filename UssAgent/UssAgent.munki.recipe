@@ -68,10 +68,10 @@ USS_DAEMON_ID="$LAUNCH_DAEMONS_DIR"/"$USS_DAEMON_PLIST"
 /bin/launchctl unload -F "$USS_DAEMON_ID" 2>/dev/null
 
 # bundles
-rm -rf "$APPLICATION_DIR"/"$PRODUCTNAME".app
-rm -rf "$APPLICATION_SUPPORT_DIR"/"$COMPANY_NAME"
-rm -rf "$USS_AGENT_ID"
-rm -rf "$USS_DAEMON_ID"
+/bin/rm -rf "$APPLICATION_DIR"/"$PRODUCTNAME".app
+/bin/rm -rf "$APPLICATION_SUPPORT_DIR"/"$COMPANY_NAME"
+/bin/rm -rf "$USS_AGENT_ID"
+/bin/rm -rf "$USS_DAEMON_ID"
 
 #=================Firefox=========================
 
@@ -80,8 +80,31 @@ FIREFOX_DEF_DIR="/Applications/Firefox.app/Contents/Resources/defaults/pref"
 FIREFOX_CFG="mozilla.cfg"
 FIREFOX_PREF="all.js"
 
-rm -rf "$FIREFOX_DEF_DIR/$FIREFOX_PREF"
-rm -rf "$FIREFOX_RES_DIR/$FIREFOX_CFG"</string>
+/bin/rm -rf "$FIREFOX_DEF_DIR/$FIREFOX_PREF"
+/bin/rm -rf "$FIREFOX_RES_DIR/$FIREFOX_CFG"
+
+# Modified from https://macmule.com/2014/12/07/how-to-change-the-automatic-proxy-configuration-url-in-system-preferences-via-a-script/
+
+# Detects all network hardware & creates services for all installed network hardware
+/usr/sbin/networksetup -detectnewhardware
+
+IFS=$'\n'
+
+#Loops through the list of network services
+for i in $(/usr/sbin/networksetup -listallnetworkservices | tail +2 ); 
+
+	do	
+		
+		# Turn off auto proxy
+		/usr/sbin/networksetup -setsocksfirewallproxystate "$i" off
+		/bin/echo "Turned off Socks Firewall Proxy for interface $i"
+	
+	done
+
+unset IFS
+
+/bin/echo "Socks Firewall Proxy for all interfaces turned off"
+</string>
 		</dict>
 	</dict>
 	<key>MinimumVersion</key>
