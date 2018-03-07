@@ -85,13 +85,13 @@ FIREFOX_PREF="all.js"
 
 # Modified from https://macmule.com/2014/12/07/how-to-change-the-automatic-proxy-configuration-url-in-system-preferences-via-a-script/
 
-# Detects all network hardware & creates services for all installed network hardware
+# Detects all network hardware and creates services for all installed network hardware
 /usr/sbin/networksetup -detectnewhardware
 
 IFS=$'\n'
 
 #Loops through the list of network services
-for i in $(/usr/sbin/networksetup -listallnetworkservices | tail +2 ); 
+for i in $(/usr/sbin/networksetup -listallnetworkservices | /usr/bin/tail +2 ); 
 
 	do	
 		
@@ -103,8 +103,7 @@ for i in $(/usr/sbin/networksetup -listallnetworkservices | tail +2 );
 
 unset IFS
 
-/bin/echo "Socks Firewall Proxy for all interfaces turned off"
-</string>
+/bin/echo "Socks Firewall Proxy for all interfaces turned off"</string>
 		</dict>
 	</dict>
 	<key>MinimumVersion</key>
