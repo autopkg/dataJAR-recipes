@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Traffic and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Traffic</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Traffic</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>TrafficLIVE: Integrated Agency Management Software. Transform the way your agency focuses on people, profits, clients and the creative process.</string>
+            <key>display_name</key>
+            <string>Traffic</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>requires</key>
+            <array>
+                <string>AdobeAIR</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Adobe AIR apps need uninstalling before installing, because reasons. So we need to check
+# for Adobe AIR first.
+#
+
+if [ ! -e /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer ]
+then
+    /bin/echo "Adobe AIR not installed..."
+    exit 1
+fi
+
+# If Traffic.app is installed, uninstall 1st
+if [ -d /Applications/Traffic.app/ ]
+then
+    /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -uninstall -silent /Applications/Traffic.app
+fi</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Traffic</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>installs_item_paths</key>
+					<array>
+						<dict>
+							<key>path</key>
+							<string>/Applications/Traffic.app</string>
+							<key>CFBundleIdentifier</key>
+							<string>%bundleid%</string>
+							<key>CFBundleShortVersionString</key>
+							<string>%version%</string>
+							<key>minosversion</key>
+							<string>10.9</string>
+							<key>type</key>
+							<string>application</string>
+							<key>version_comparison_key</key>
+							<string>CFBundleShortVersionString</string>
+						</dict>
+					</array>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

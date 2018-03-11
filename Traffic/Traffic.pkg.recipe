@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest trial version of Traffic and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Traffic</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Traffic</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Traffic</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>private</key>
+                    <string>0777</string>
+					<key>private/tmp</key>
+					<string>0777</string>
+					<key>private/tmp/Traffic</key>
+					<string>0777</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/TrafficApplication-Installer.air</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/private/tmp/Traffic/</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/scripts</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+            <key>file_content</key>
+            <string>#!/bin/bash
+#
+# Adobe AIR apps need uninstalling before installing, because reasons. So we need to check
+# for Adobe AIR first.
+#
+
+if [ ! -e /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer ]
+then
+    /bin/echo "Adobe AIR not installed..."
+    exit 1
+fi
+
+# If Traffic.app is installed, uninstall 1st
+if [ -d /Applications/Traffic.app/ ]
+then
+    /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -uninstall -silent /Applications/Traffic.app
+fi
+</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/scripts/preinstall</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+            <key>file_content</key>
+            <string>#!/bin/bash
+#
+# Call Adobe Air to install the app from /private/tmp/Traffic/TrafficApplication-Installer.air
+#
+
+if [ -e /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer ]
+then
+    /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -silent -eulaAccepted -location /Applications /private/tmp/Traffic/TrafficApplication-Installer.air
+else
+    /bin/echo "Adobe AIR not installed..."
+    exit 1
+fi</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>path</key>
+                            <string>private/tmp/Traffic/</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>mode</key>
+							<string>0777</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>%bundleid%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgname</key>
+                    <string>%NAME%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <key>scripts</key>
+                    <string>%RECIPE_CACHE_DIR%/scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>     
+                    <string>%RECIPE_CACHE_DIR%/scripts</string> 
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
