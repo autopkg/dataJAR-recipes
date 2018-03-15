@@ -21,7 +21,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>re_pattern</key>
-				<string>"https:\/\/egnyte-cdn\.egnyte\.com\/desktopsync\/mac\/%LOCALE%\/(?P&lt;version&gt;[\d\.]+)\/EgnyteDesktopSync_[\d\.]+_(?P&lt;match&gt;[\w]+)\.pkg"</string>
+				<string>"https?:\/\/egnyte-cdn\.egnyte\.com\/desktopsync\/mac\/%LOCALE%\/(?P&lt;version&gt;[\d\.]+)\/EgnyteDesktopSync_[\d\.]+_(?P&lt;match&gt;[\w]+)\.pkg"</string>
 				<key>url</key>
 				<string>https://helpdesk.egnyte.com/hc/%LOCALE%/articles/201636844</string>
 			</dict>
