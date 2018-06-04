@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Post Haste and imports it into Munki.</string>
+    <string>Downloads the latest version of VIA and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Post Haste</string>
+    <string>com.github.dataJAR-recipes.munki.VIA</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Post Haste</string>
+        <string>VIA</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -19,11 +19,11 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Post Haste is a free project management tool that allows you to setup file and folder templates for your projects. Create a new project and everything's organized, ready for you to start.</string>
+            <string>VIA turns any screen into a potential meeting point for ideas to stream freely without conventional restrictions that consume or constrict a meeting’s resources. Independent of wires and cables for total connectivity, VIA is an audio- visual integrator. The box connects to and works off an existing wireless network and links every device in a meeting space with the primary presentation screen.</string>
             <key>developer</key>
-			<string>Digital Rebellion</string>
+			<string>Kramer Electronics</string>
             <key>display_name</key>
-            <string>Post Haste</string>
+            <string>VIA</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -37,7 +37,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Post Haste</string>
+    <string>com.github.dataJAR-recipes.download.VIA</string>
     <key>Process</key>
     <array>
 		<dict>
@@ -60,7 +60,7 @@
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 				<key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
+                <string>CFBundleShortVersionString</string>
 			</dict>
 			<key>Processor</key>
 			<string>MunkiImporter</string>
