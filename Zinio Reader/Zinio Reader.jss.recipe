@@ -21,7 +21,7 @@
 		<key>POLICY_TEMPLATE</key>
 		<string>PolicyTemplate.xml</string>
 		<key>SELF_SERVICE_DESCRIPTION</key>
-         <string>Crowded shelves and piles of magazines are history - the new home library is sleeker and more brilliant than ever. Enjoy your favorite magazines on your computer and sync your library easily to your smartphone or tablet devices too.</string>
+        <string>Crowded shelves and piles of magazines are history - the new home library is sleeker and more brilliant than ever. Enjoy your favorite magazines on your computer and sync your library easily to your smartphone or tablet devices too.</string>
         <key>SELF_SERVICE_ICON</key>
 		<string>ZinioReader.png</string>
 	</dict>
