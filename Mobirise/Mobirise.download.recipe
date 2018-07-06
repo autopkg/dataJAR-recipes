@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>Mobirise</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://mobirise.com/mobirise-free-mac.zip</string>
+        <string>http://download.mobirise.com/mobirise-free-mac.zip</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
