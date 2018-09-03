@@ -23,7 +23,7 @@
 				<key>url</key>
 				<string>https://api.goabstract.com/releases/latest</string>
 				<key>re_pattern</key>
-				<string>(https://s3.amazonaws.com/propeller-internal-releases/Abstract-[\S]+\.dmg)</string>
+				<string>(https://downloads.goabstract.com/Abstract-[\S]+\.dmg)</string>
 				<key>result_output_var_name</key>
 				<string>url</string>
 			</dict>
