@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>This recipe downloads and imports the full installer pkg for Microsoft Excel 2019 into Munki
+    
+	This is accomplished via the Office 365 recipes from rtrouton-recipes.
+	
+    These in turn, utilise the fwlink's found on macadmins.software
+    
+    These can have a volume license applied using appropriate pkg downloadable from Microsofts VLSC</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Microsoft Excel 2019</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Microsoft Excel 2019</string>
+        <key>PRODUCTID</key>
+        <string>525135</string>
+        <key>DOWNLOADURL</key>
+        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>MINIMUM_OS_VERSION</key>
+        <string>10.12.0</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Auto Update</string>
+                <string>Microsoft Error Reporting</string>
+                <string>Microsoft Excel</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>See your data in new, intuitive ways. Powerful charts, graphs, and keyboard shortcuts turn columns of numbers into valuable information, so you can work easier.</string>
+            <key>display_name</key>
+            <string>Microsoft Excel</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.pkg.microsoftexcel365</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%MINIMUM_OS_VERSION%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
