@@ -18,6 +18,9 @@
 			<array>
 				<string>testing</string>
 			</array>
+    			<array>
+    				<string>Egnyte Drive</string>
+    			</array>
 			<key>category</key>
 			<string>Applications</string>
 			<key>developer</key>
