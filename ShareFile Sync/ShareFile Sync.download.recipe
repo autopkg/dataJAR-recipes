@@ -2,72 +2,72 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Download recipe for ShareFile Sync.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.ShareFile Sync</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>ShareFileSync</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.2.0</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>http://dl.sharefile.com/sync2mac</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/Install ShareFile Sync.app/Contents/Library/ShareFile.app</string>
-				<key>requirement</key>
-				<string>identifier "com.citrix.sharefileFL.ShareFile" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RM4N8HY7K5</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>PkgRootCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkgroot</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>pkgdirs</key>
-				<dict>
-					<key>Applications</key>
-					<string>0775</string>
-				</dict>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>Copier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>source_path</key>
-				<string>%pathname%/Install ShareFile Sync.app/Contents/Library/ShareFile.app</string>
-				<key>destination_path</key>
-				<string>%pkgroot%/Applications/ShareFile.app</string>
-			</dict>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Download recipe for ShareFile Sync.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.ShareFile Sync</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ShareFileSync</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>http://dl.sharefile.com/sync2mac</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Install ShareFile Sync.app/Contents/Library/ShareFile.app</string>
+                <key>requirement</key>
+                <string>identifier "com.citrix.sharefileFL.ShareFile" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RM4N8HY7K5</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/Install ShareFile Sync.app/Contents/Library/ShareFile.app</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/ShareFile.app</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>
