@@ -2,21 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of ShareFile Desktop and creates a package.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.pkg.ShareFile Desktop</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>ShareFileDesktop</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.ShareFile Desktop</string>
-	<key>Process</key>
- 	<array>
+    <key>Description</key>
+    <string>Downloads the latest version of ShareFile Desktop and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.ShareFile Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ShareFileDesktop</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.ShareFile Desktop</string>
+    <key>Process</key>
+    <array>
         <dict>
             <key>Processor</key>
             <string>AppDmgVersioner</string>
@@ -41,16 +41,16 @@
             </dict>
         </dict>
         <dict>
-        	<key>Processor</key>
-			<string>Versioner</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%pathname%/%app_name%/Contents/Info.plist</string>
-				<key>plist_version_key</key>
-				<string>CFBundleVersion</string>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/%app_name%/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -91,17 +91,17 @@
                 </dict>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>PathDeleter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>path_list</key>
-				<array>
-					<string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
