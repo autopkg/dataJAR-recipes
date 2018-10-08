@@ -14,20 +14,20 @@
 		<string>Digital Pigeon 4</string>
 		<key>pkginfo</key>
 		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>Pigeon your files faster and easier than ever from your desktop. The desktop app has been specially designed to maximise your transfer speed and minimise your waiting time! It includes the ability to integrate with your address book and advanced error recovery features.</string>
-			<key>developer</key>
-			<string>Sixty Digits Pty Ltd</string>
-			<key>display_name</key>
-			<string>Digital Pigeon 4</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Pigeon your files faster and easier than ever from your desktop. The desktop app has been specially designed to maximise your transfer speed and minimise your waiting time! It includes the ability to integrate with your address book and advanced error recovery features.</string>
+            <key>developer</key>
+            <string>Sixty Digits Pty Ltd</string>
+            <key>display_name</key>
+            <string>Digital Pigeon 4</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
 		</dict>
     </dict>
     <key>MinimumVersion</key>
