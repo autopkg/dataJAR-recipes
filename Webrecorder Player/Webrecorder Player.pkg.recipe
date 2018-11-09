@@ -2,21 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of Webrecorder Player and creates a package.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.pkg.Webrecorder Player</string>
-	<key>Input</key>
-	<dict>
-		<key>BUNDLE_ID</key>
-		<string>org.webrecorder.webrecorderplayer</string>
-		<key>NAME</key>
-		<string>WebrecorderPlayer</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Webrecorder Player</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Webrecorder Player and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Webrecorder Player</string>
+    <key>Input</key>
+    <dict>
+        <key>BUNDLE_ID</key>
+        <string>org.webrecorder.webrecorderplayer</string>
+        <key>NAME</key>
+        <string>WebrecorderPlayer</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Webrecorder Player</string>
     <key>Process</key>
     <array>
         <dict>
