@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.Desktoppr</string>
+	<key>Input</key>
+   <dict>
+        <key>NAME</key>
+        <string>Desktoppr</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>production</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>developer</key>
+            <string>scriptingosx</string>
+            <key>description</key>
+            <string>Simple command line tool which can read and set the desktop picture</string>
+            <key>display_name</key>
+            <string>Desktoppr</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+	<string>com.github.moofit-recipes.pkg.Desktoppr</string>
+	<key>ParentRecipeTrustInfo</key>
+	<dict>
+		<key>non_core_processors</key>
+		<dict/>
+		<key>parent_recipes</key>
+		<dict>
+			<key>com.github.moofit-recipes.download.Desktoppr</key>
+			<dict>
+				<key>git_hash</key>
+				<string>31fe88d2b63e2875cda898796af3529650b9be89</string>
+				<key>path</key>
+				<string>~/Library/AutoPkg/RecipeRepos/com.github.autopkg.moofit-recipes/Desktoppr/Desktoppr.download.recipe</string>
+				<key>sha256_hash</key>
+				<string>643b9df8257b94f1c048258a0eb3cb6a11518a4044293cc9ded97f066bdcfad0</string>
+			</dict>
+			<key>com.github.moofit-recipes.pkg.Desktoppr</key>
+			<dict>
+				<key>git_hash</key>
+				<string>31fe88d2b63e2875cda898796af3529650b9be89</string>
+				<key>path</key>
+				<string>~/Library/AutoPkg/RecipeRepos/com.github.autopkg.moofit-recipes/Desktoppr/Desktoppr.pkg.recipe</string>
+				<key>sha256_hash</key>
+				<string>b6cd37c52a03597393ab8e1f95c12ce1452e2b77dfb94886adaa01bf3923a75d</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
