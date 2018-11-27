@@ -75,15 +75,15 @@
 				</dict>
 			</dict>
 		</dict>
-		<dict>
+        <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/%NAME%-pkg</string>
-            	</array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-pkg</string>
+                </array>
             </dict>
         </dict>
 	</array>
