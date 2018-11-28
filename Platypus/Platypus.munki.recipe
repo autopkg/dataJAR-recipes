@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Platypus is a developer tool for the Mac OS X operating system. It creates native Mac OS X applications from interpreted scripts such as shell scripts or Perl, Ruby and Python programs. This is done by wrapping the script in an application bundle along with a native executable binary that runs the script.</string>
+            <string>Platypus is a developer tool for the macOS operating system. It creates native macOS applications from interpreted scripts such as shell scripts or Perl, Ruby and Python programs. This is done by wrapping the script in an application bundle along with a native executable binary that runs the script.</string>
             <key>developer</key>
             <string>Sveinbjorn Thordarson</string>
             <key>display_name</key>
