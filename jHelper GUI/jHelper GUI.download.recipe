@@ -24,7 +24,7 @@ i.e.: `-k PRERELEASE=yes`</string>
 			<key>Arguments</key>
 			<dict>
 				<key>github_repo</key>
-				<string>JAMFSupport/jHelper-GUI</string>
+				<string>jamf/jHelper-GUI</string>
 				<key>include_prereleases</key>
 				<string>%PRERELEASE%</string>
 			</dict>

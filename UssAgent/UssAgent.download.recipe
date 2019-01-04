@@ -15,27 +15,27 @@
     <string>0.6.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://downloads.clouduss.com/macosx/?C=M;O=D</string>
-				<key>re_pattern</key>
-				<string>([0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.][0-9a-z\.][0-9a-z\.][0-9a-z\.]/)</string>
-				<key>result_output_var_name</key>
-				<string>match</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://downloads.clouduss.com/macosx/%match%UssAgent.dmg</string>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-			</dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://downloads.clouduss.com/macosx/?C=M;O=D</string>
+                <key>re_pattern</key>
+                <string>([0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.][0-9a-z\.][0-9a-z\.][0-9a-z\.])</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://downloads.clouduss.com/macosx/%match%/UssAgent%20%match%.dmg</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -43,69 +43,69 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/UssAgent Installer.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and identifier "com.censornet.UssAgent-Installer" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U28J9L66UM)</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/UssAgent Uninstaller.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and identifier "com.censornet.UssAgent-Uninstaller" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U28J9L66UM)</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/</string>
-				<key>flat_pkg_path</key>
-				<string>%pathname%/UssAgent Installer.app/Contents/Resources/Packages/Install.pkg</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-		<dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/UssAgent Installer.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.censornet.UssAgent-Installer" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U28J9L66UM)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/UssAgent Uninstaller.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.censornet.UssAgent-Uninstaller" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U28J9L66UM)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/UssAgent Installer.app/Contents/Resources/Packages/Install.pkg</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkgroot</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
                 <key>pkgdirs</key>
                 <dict>
-					<key>Applications</key>
-					<string>0755</string>
-				</dict>
+                    <key>Applications</key>
+                    <string>0755</string>
+                </dict>
             </dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/Payload</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Payload</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PlistReader</string>
             <key>Arguments</key>
