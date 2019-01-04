@@ -89,8 +89,10 @@
 			<string>%RECIPE_CACHE_DIR%/unpack/root</string>
 			<key>installs_item_paths</key>
 			<array>
-				<string>/Applications/US-20x20_SettingsPanel.app/Contents/MacOS/US-20x20_SettingsPanel</string>
+				<string>/Applications/US-20x20_SettingsPanel.app</string>
 			</array>
+			<key>version_comparison_key</key>
+            <string>CFBundleVersion</string>
 		</dict>
 		<key>Comment</key>
 		<string>Use processor to obtain hashes.</string>
