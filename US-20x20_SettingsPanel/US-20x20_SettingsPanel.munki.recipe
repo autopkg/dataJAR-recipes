@@ -36,21 +36,82 @@
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipe.pkg.US-20x20SettingsPanel</string>
+     <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipe.download.US-20x20SettingsPanel</string>
     <key>Process</key>
-    <array>
+    <array> 
+    <dict>
+        <key>Processor</key>
+        <string>Unarchiver</string>
+        <key>Arguments</key>
+        <dict>
+            <key>destination_path</key>
+            <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            <key>purge_destination</key>
+            <true/>
+        </dict>
+    </dict>
+    <dict>
+        <key>Processor</key>
+        <string>FileFinder</string>
+        <key>Arguments</key>
+        <dict>
+            <key>pattern</key>
+            <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
+        </dict>
+    </dict> 
+    <dict>
+		<key>Processor</key>
+        <string>FlatPkgUnpacker</string>
+        <key>Arguments</key>
+        <dict>
+           <key>flat_pkg_path</key>
+           <string>%found_filename%/US-20x20.pkg</string>
+           <key>destination_path</key>
+           <string>%RECIPE_CACHE_DIR%/unpack</string>
+        </dict>
+    </dict>
+    <dict>
+        <key>Arguments</key>
+        <dict>
+            <key>pkg_payload_path</key>
+            <string>%RECIPE_CACHE_DIR%/unpack/Settings Panel.pkg/Payload</string>
+            <key>destination_path</key>
+            <string>%RECIPE_CACHE_DIR%/unpack/root</string>
+        </dict>
+        <key>Processor</key>
+        <string>PkgPayloadUnpacker</string>
+    </dict> 
+  	<dict>
+		<key>Arguments</key>
 		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
+			<key>faux_root</key>
+			<string>%RECIPE_CACHE_DIR%/unpack/root</string>
+			<key>installs_item_paths</key>
+			<array>
+				<string>/Applications/US-20x20_SettingsPanel.app/Contents/MacOS/US-20x20_SettingsPanel</string>
+			</array>
 		</dict>
+		<key>Comment</key>
+		<string>Use processor to obtain hashes.</string>
+		<key>Processor</key>
+		<string>MunkiInstallsItemsCreator</string>
+	</dict>   
+    <dict>
+    	<key>Processor</key>
+    	<string>MunkiPkginfoMerger</string>
+    </dict>     
+	<dict>
+		<key>Arguments</key>
+		<dict>
+			<key>pkg_path</key>
+			<string>%pathname%</string>
+			<key>repo_subdirectory</key>
+			<string>%MUNKI_REPO_SUBDIR%</string>
+		</dict>
+		<key>Processor</key>
+		<string>MunkiImporter</string>
+	</dict>
     </array>
 </dict>
 </plist>
