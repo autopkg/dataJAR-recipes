@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest DVDStyler installer. Cannot be public due to TOS https://www.fosshub.com/tos.html</string>
+    <string>Downloads latest LXFree installer in a disk image. </string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.LXFree</string>
     <key>Input</key>
