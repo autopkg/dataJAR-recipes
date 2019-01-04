@@ -50,6 +50,42 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%found_filename%/US-20x20.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: TEAC CORPORATION (L74GZE5N6S)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>      
+        
     </array>
 </dict>
 </plist>
