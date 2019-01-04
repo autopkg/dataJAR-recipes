@@ -59,48 +59,7 @@
             <key>pattern</key>
             <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
         </dict>
-    </dict> 
-    <dict>
-		<key>Processor</key>
-        <string>FlatPkgUnpacker</string>
-        <key>Arguments</key>
-        <dict>
-           <key>flat_pkg_path</key>
-           <string>%found_filename%/US-20x20.pkg</string>
-           <key>destination_path</key>
-           <string>%RECIPE_CACHE_DIR%/unpack</string>
-        </dict>
-    </dict>
-    <dict>
-        <key>Arguments</key>
-        <dict>
-            <key>pkg_payload_path</key>
-            <string>%RECIPE_CACHE_DIR%/unpack/Settings Panel.pkg/Payload</string>
-            <key>destination_path</key>
-            <string>%RECIPE_CACHE_DIR%/unpack/root</string>
-        </dict>
-        <key>Processor</key>
-        <string>PkgPayloadUnpacker</string>
-    </dict> 
-  	<dict>
-		<key>Arguments</key>
-		<dict>
-			<key>faux_root</key>
-			<string>%RECIPE_CACHE_DIR%/unpack/root</string>
-			<key>installs_item_paths</key>
-			<array>
-				<string>/Applications/US-20x20_SettingsPanel.app</string>
-			</array>
-		</dict>
-		<key>Comment</key>
-		<string>Use processor to obtain hashes.</string>
-		<key>Processor</key>
-		<string>MunkiInstallsItemsCreator</string>
-	</dict>   
-    <dict>
-    	<key>Processor</key>
-    	<string>MunkiPkginfoMerger</string>
-    </dict>     
+    </dict>    
 	<dict>
 		<key>Arguments</key>
 		<dict>
