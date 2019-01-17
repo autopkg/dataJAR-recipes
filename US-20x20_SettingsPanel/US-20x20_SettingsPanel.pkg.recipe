@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads LFXFree Disk image and extracts the embedded package. No repackaging done.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipe.pkg.US-20x20SettingsPanel</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>US-20x20_SettingsPanel</string>
+        <key>DOWNLOAD_URL</key>
+        <string>https://www.tascam.eu/en/downloads/US-20x20</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.2 Safari/605.1.15</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipe.download.US-20x20SettingsPanel</string>
+    <key>Process</key>
+    <array> 
+    <dict>
+        <key>Processor</key>
+        <string>Unarchiver</string>
+        <key>Arguments</key>
+        <dict>
+            <key>destination_path</key>
+            <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            <key>purge_destination</key>
+            <true/>
+        </dict>
+    </dict>
+    <dict>
+        <key>Processor</key>
+        <string>FileFinder</string>
+        <key>Arguments</key>
+        <dict>
+            <key>pattern</key>
+            <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
+        </dict>
+    </dict>   
+    <dict>
+        <key>Arguments</key>
+        <dict>
+            <key>source_pkg</key>
+            <string>%found_filename%/US-20x20.pkg</string>
+            <key>pkg_path</key>
+            <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+        </dict>
+        <key>Processor</key>
+        <string>PkgCopier</string>
+    </dict>
+    </array>
+</dict>
+</plist>
