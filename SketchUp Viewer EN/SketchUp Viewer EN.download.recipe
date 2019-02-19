@@ -32,7 +32,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
 				<key>result_output_var_name</key>
 				<string>url</string>
 				<key>re_pattern</key>
-				<string>&quot;((?:https?:)?//.+/SketchUpViewer.en.*.dmg)&quot;</string>
+				<string>/sketchup/SketchUpViewer-en-dmg</string>
 				<key>re_flags</key>
 				<array>
 					<string>IGNORECASE</string>
@@ -44,6 +44,8 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+				<key>url</key>
+				<string>https://www.sketchup.com%url%</string>
             </dict>
 			<key>Processor</key>
 			<string>URLDownloader</string>
