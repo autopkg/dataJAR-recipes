@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for version 1 of Luxafor.</string>
+    <string>Download recipe for version 2 of Luxafor.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Luxafor</string>
     <key>Input</key>
@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://pro.luxafor.com/download/</string>
                 <key>re_pattern</key>
-                <string>luxafor_mac_v[\S]+\.zip</string>
+                <string>/[\S]+\/[\S]+\/luxafor_mac_v[\S]+\.zip</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
             </dict>
@@ -32,7 +32,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://luxafor.com/uploads/%match%</string>
+                <string>https:%match%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
             </dict>
@@ -76,7 +76,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%destination_path%/Luxafor.app</string>
+                <string>%destination_path%/Luxafor 2.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.ideabits.Luxafor" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UB463X3CTK)</string>
             </dict>
