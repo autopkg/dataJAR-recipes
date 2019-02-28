@@ -12,6 +12,8 @@
         <string>Mobirise</string>
         <key>DOWNLOAD_URL</key>
         <string>http://download.mobirise.com/mobirise-free-mac.zip</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -26,6 +28,11 @@
                 <string>%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>request_headers</key>
+                <dict>
+                        <key>user-agent</key>
+                        <string>%USER_AGENT%</string>
+                </dict>
             </dict>
         </dict>
         <dict>
