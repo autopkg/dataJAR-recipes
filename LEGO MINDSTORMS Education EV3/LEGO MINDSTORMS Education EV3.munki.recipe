@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Description</key>
+    <string>Downloads the latest version of LEGO MINDSTORMS Education EV3 and imports it into Munki.
+    
+    Based on: https://github.com/autopkg/aysiu-recipes/blob/master/LegoMindstorms/LegoMindstorms.munki.recipe</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-private.munki.LEGO MINDSTORMS Education EV3</string>
     <key>Input</key>
@@ -35,19 +39,21 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Arguments</key>
-                <dict>
-                    <key>flat_pkg_path</key>
-                    <string>%pathname%/LEGO*.*pkg</string>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                    <key>purge_destination</key>
-                    <true/>
-                </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+			<dict>
+				<key>flat_pkg_path</key>
+				<string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
             <key>Arguments</key>
                 <dict>
                 <key>pkgroot</key>
@@ -55,23 +61,23 @@
                 <key>pkgdirs</key>
                 <dict/>
             </dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Arguments</key>
-                <dict>
-                    <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_Core.pkg/Payload</string>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-                    <key>purge_destination</key>
-                    <true/>
-                </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+			<dict>
+				<key>pkg_payload_path</key>
+				<string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
             <key>Comment</key>
             <string>LEGO Mindstorms' receipts lead to an install loop, so there has to be an installs array, but the .app bundle version seems to always be 1, so we're going to make an installs array out of the executable.</string>
             <key>Arguments</key>
@@ -80,11 +86,9 @@
                 <string>%RECIPE_CACHE_DIR%/application_payload</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/LEGO MINDSTORMS EV3 Home Edition.app/Contents/MacOS/MindstormsEV3</string>
+                    <string>/Applications/LEGO MINDSTORMS Education EV3.app/Contents/MacOS/MindstormsEV3</string>
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
