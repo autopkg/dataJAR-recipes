@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://godotengine.org/download/osx</string>
                 <key>re_pattern</key>
-                <string>https://downloads.tuxfamily.org/godotengine/3[\S]+\/Godot_v[\S]+\-stable_osx.fat.zip</string>
+                <string>https://downloads.tuxfamily.org/godotengine/3[\S]+\/Godot_v[\S]+\-stable_osx.64.zip</string>
             </dict>
         </dict>
         <dict>
