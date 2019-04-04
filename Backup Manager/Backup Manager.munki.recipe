@@ -16,7 +16,7 @@
         <dict> 
             <key>blocking_applications</key>
             <array>
-                <string>BackupManager</string>
+                <string>Backup Manager</string>
             </array>
             <key>catalogs</key>
             <array>
