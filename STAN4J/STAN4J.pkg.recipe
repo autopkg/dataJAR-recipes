@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of STAN4J and builds a package. Taken from bnpl-recipes repo</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.stan4j</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>STAN4J</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.8</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.stan4j</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>purge_destination</key>
+                <true/>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/zip/stan/stan.app</string>
+                <key>target</key>
+                <string>%pkgroot%/Applications/STAN.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/zip/stan/configuration</string>
+                <key>target</key>
+                <string>%pkgroot%/Applications/STAN.app/configuration</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/zip/stan/features</string>
+                <key>target</key>
+                <string>%pkgroot%/Applications/STAN.app/features</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/zip/stan/plugins</string>
+                <key>target</key>
+                <string>%pkgroot%/Applications/STAN.app/plugins</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>-startup
+../../plugins/org.eclipse.equinox.launcher_1.3.0.v20120522-1813.jar
+--launcher.library
+../../plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.1.200.v20120913-144807
+-vmargs
+-Xmx512M
+-Djava.awt.headless=true
+-Dorg.eclipse.swt.internal.carbon.smallFonts
+</string>
+                <key>file_path</key>
+                <string>%pkgroot%/Applications/STAN.app/Contents/MacOS/stan.ini</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#Product Runtime Configuration File
+osgi.splashPath=platform:/base/plugins/de.odysseus.stan.eclipse.rcp
+eclipse.product=de.odysseus.stan.eclipse.rcp.product
+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.core.runtime@start,org.eclipse.update.configurator@3:start
+osgi.bundles.defaultStartLevel=4
+osgi.instance.area.default=@user.home/Documents/workspace
+</string>
+                <key>file_path</key>
+                <string>%pkgroot%/Applications/STAN.app/configuration/config.ini</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%pkgroot%/Applications/STAN.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                    <key>CFBundleIdentifier</key>
+                    <string>PKG_ID</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgname</key>
+                <string>%NAME%-%version%</string>
+                <key>pkg_request</key>
+                <dict>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>id</key>
+                    <string>%PKG_ID%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>path</key>
+                            <string>Applications</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>admin</string>
+                        </dict>
+                        <dict>
+                            <key>path</key>
+                            <string>Applications/STAN.app/Contents/MacOS/stan</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>mode</key>
+                            <string>755</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
