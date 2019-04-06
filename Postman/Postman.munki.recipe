@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Postman, builds a package and imports it to Munki. Taken from bnpl-recipes repo</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.postman</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Postman</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>developer</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Postman</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Developer Tools</string>
+            <key>description</key>
+            <string>Create and send any HTTP request using the awesome Postman request builder. Write your own test cases to validate response data, response times, and more!</string>
+            <key>developer</key>
+            <string>Postdot Technologies, Inc.</string>
+            <key>display_name</key>
+            <string>Postman</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.3</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.postman</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
