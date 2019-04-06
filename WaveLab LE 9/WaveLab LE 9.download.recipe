@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of WaveLab LE 9.</string>
+    <string>Download recipe for the latest version of WaveLab LE 9. 
+    
+    WaveLab LE 9.5 whilst an update for this, it is also a seperate .app so there are new recipes at:
+    
+    https://github.com/autopkg/dataJAR-recipes/tree/master/WaveLab%20LE%209.5</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.WaveLab LE 9</string>
     <key>Input</key>
