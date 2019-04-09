@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for version 2 of Luxafor.</string>
+    <string>Download recipe for Luxafor.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Luxafor</string>
     <key>Input</key>
@@ -29,6 +29,8 @@
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
@@ -36,12 +38,6 @@
                 <key>filename</key>
                 <string>%NAME%.zip</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -76,7 +72,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%destination_path%/Luxafor 2.app</string>
+                <string>%destination_path%/Luxafor.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.ideabits.Luxafor" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UB463X3CTK)</string>
             </dict>
