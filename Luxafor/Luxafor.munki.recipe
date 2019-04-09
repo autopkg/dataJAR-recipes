@@ -28,6 +28,13 @@
             <string>Luxafor</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+# Delete 2.app bundle
+if [ -d /Applications/Luxafor\ 2.app ]
+then
+    /bin/rm -rf /Applications/Luxafor\ 2.app
+fi</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
