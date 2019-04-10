@@ -15,24 +15,24 @@
     <string>0.6.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://mirror.racket-lang.org/installers/recent/</string>
-				<key>re_pattern</key>
-				<string>racket-7.+[0-9]+\-x86_64-macosx.dmg(?=")</string>
-			</dict>
-		</dict>
-		<dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download.racket-lang.org</string>
+                <key>re_pattern</key>
+                <string>https://www.cs.utah.edu/plt/installers/7.[\S]+\/racket-7.[\S]+\-x86_64-macosx.dmg</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%url%%match%</string>
+                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
@@ -50,59 +50,59 @@
                 <string>%pathname%/Racket v7.*/DrRacket.app</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/%dmg_found_filename%</string>
-				<key>requirement</key>
-				<string>identifier "org.racket-lang.DrRacket" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%pathname%/%dmg_found_filename%/Contents/Info.plist</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/Racket v%version%/PLT Games.app</string>
-				<key>requirement</key>
-				<string>identifier "org.racket-lang.PLT Games" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/Racket v%version%/Racket Documentation.app</string>
-				<key>requirement</key>
-				<string>identifier "org.racket-lang.Racket Documentation" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/Racket v%version%/Slideshow.app</string>
-				<key>requirement</key>
-				<string>identifier "org.racket-lang.Slideshow" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/%dmg_found_filename%</string>
+                <key>requirement</key>
+                <string>identifier "org.racket-lang.DrRacket" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/%dmg_found_filename%/Contents/Info.plist</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Racket v%version%/PLT Games.app</string>
+                <key>requirement</key>
+                <string>identifier "org.racket-lang.PLT Games" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Racket v%version%/Racket Documentation.app</string>
+                <key>requirement</key>
+                <string>identifier "org.racket-lang.Racket Documentation" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Racket v%version%/Slideshow.app</string>
+                <key>requirement</key>
+                <string>identifier "org.racket-lang.Slideshow" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
