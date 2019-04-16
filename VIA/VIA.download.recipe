@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://k.kramerav.com/support/download.asp?f=54713</string>
+                <string>https://k.kramerav.com/support/download.asp?f=55519</string>
                 <key>re_pattern</key>
                 <string>(/downloads/setups/via_mac_dmg_v.2.[\S]+\.zip)</string>
                 <key>result_output_var_name</key>
@@ -34,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://k.kramerav.com/%match%</string>
+                <string>https://cdn.kramerav.com/web%match%</string>
             </dict>
         </dict>
         <dict>
@@ -125,10 +125,10 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/unzip/</string>                          
+                	<string>%RECIPE_CACHE_DIR%/unzip/</string>
                 </array>
             </dict>
-        </dict> 
+        </dict>
     </array>
 </dict>
 </plist>
