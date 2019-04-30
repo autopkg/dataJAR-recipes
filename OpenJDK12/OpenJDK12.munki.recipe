@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Identifier</key>
+	<string>local.munki.OpenJDK12</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>OpenJDK 12</string>
+		<key>SEARCH_PATTERN</key>
+		<string>(?P&lt;url&gt;https://download.oracle.com/java/GA/jdk12.*?/GPL/openjdk-12\.[0-9\.]+_osx-x64_bin\.tar\.gz)</string>
+		<key>SEARCH_URL</key>
+		<string>https://jdk.java.net/12/index.html</string>
+		<key>SOFTWARETITLE</key>
+		<string>Java</string>
+		<key>SOFTWARETYPE</key>
+		<string>JDK</string>
+		<key>VENDOR</key>
+		<string>OpenJDK</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+        <string>%VENDOR%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%SOFTWARETYPE%</string>
+            <key>description</key>
+            <string>OpenJDK is a free and open-source implementation of the Java Platform, Standard Edition.</string>
+            <key>developer</key>
+            <string>%VENDOR%</string>
+            <key>display_name</key>
+            <string>OpenJDK 12</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>        
+	</dict>
+	<key>ParentRecipe</key>
+	<string>com.github.rtrouton.pkg.OpenJDK12</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
