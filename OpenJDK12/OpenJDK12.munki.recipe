@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Identifier</key>
-	<string>local.munki.OpenJDK12</string>
+	<string>com.github.dataJAR-recipes.munki.OpenJDK12</string>
+	<key>Description</key>
+    <string>Downloads the current release version of OpenJDK 12, builds a package and imports it to Munki.</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
