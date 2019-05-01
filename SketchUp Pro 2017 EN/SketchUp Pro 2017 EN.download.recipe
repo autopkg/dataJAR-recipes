@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of SketchUp Pro 2017 EN. 
+    <key>Description</key>
+    <string>Downloads the latest version of SketchUp Pro 2017 EN. 
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -11,82 +11,76 @@ Locales can be specified.
 
 Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.
 </string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.SketchUp Pro 2017 EN</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>SketchUpPro2017-EN</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.4.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://www.sketchup.com/download/all</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-				<key>re_pattern</key>
-				<string>/sketchup/2017/en/sketchuppro-2017-[\S]+\-en-dmg</string>
-				<key>re_flags</key>
-				<array>
-					<string>IGNORECASE</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-				<key>url</key>
-				<string>https://www.sketchup.com%url%</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/SketchUp 2017/LayOut.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/SketchUp 2017/SketchUp.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/SketchUp 2017/Style Builder.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
-			</dict>
-		</dict>
-	</array>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.SketchUp Pro 2017 EN</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SketchUpPro2017-EN</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://help.sketchup.com/en/downloading-older-versions</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>re_pattern</key>
+                <string>https://www.sketchup.com/sketchup/2017/en/sketchuppro-2017-[\S]+\-[\S]+\-[\S]+\-en-dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/SketchUp 2017/LayOut.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/SketchUp 2017/SketchUp.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/SketchUp 2017/Style Builder.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>
