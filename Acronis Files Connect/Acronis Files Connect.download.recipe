@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of Acronis Files Connect.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Acronis Files Connect</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Acronis Files Connect</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>http://www.grouplogic.com/files/aac/AcronisFilesConnectMacClient.zip</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://support.grouplogic.com/?page_id=63</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%destination_path%/Acronis Files Connect.dmg/Acronis Files Connect.app</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/Acronis Files Connect.app</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%destination_path%</string>
+                <key>requirement</key>
+                <string>identifier "com.acronis.AcronisFilesConnect" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = ZU2TV78AA6</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
