@@ -17,11 +17,22 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.axure.com/release-history/rp8</string>
+                <key>re_pattern</key>
+                <string>https://axure.cachefly.net/versions/8-0/AxureRP-Setup-[\S]+\.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://axure.cachefly.net/AxureRP-Setup.dmg</string>
+                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
