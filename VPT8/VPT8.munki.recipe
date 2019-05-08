@@ -10,6 +10,23 @@
 		<string>http://nervousvision.com/vpt/vpt8-osx.zip</string>
 		<key>NAME</key>
 		<string>VPT8</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/VPT8</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Video Projection Tool (VPT) is a free multipurpose realtime projection software tool for Mac and Windows.</string>
+            <key>display_name</key>
+            <string>VPT8</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
 	</dict>
 	<key>ParentRecipe</key>
 	<string>com.github.haircut.pkg.VPT8</string>
