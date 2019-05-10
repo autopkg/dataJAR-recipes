@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download the latest version of MakerBot Print and imports it into Munki.</string>
+    <key>Comment</key>
+    <string>Originally sourced from https://github.com/autopkg/joshua-d-miller-recipes/tree/master/MakerBot</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.autopkg.munki.MakerBotPrint</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/MakerBotPrint</string>
+        <key>NAME</key>
+        <string>MakerBotPrint</string>
+		<key>DOWNLOAD_URL</key>
+		<string>https://s3.amazonaws.com/downloads-makerbot-com/installer/release/MakerBotPrintInstaller.pkg</string>
+    	<key>pkginfo</key>
+    	<dict>
+    		<key>catalogs</key>
+    		<array>
+    			<string>testing</string>
+    		</array>
+            <key>category</key>
+            <string>Mathematics</string>
+            <key>developer</key>
+            <string>MakerBot Industries, LLC</string>
+            <key>display_name</key>
+            <string>MakerBot</string>
+    		<key>description</key>
+    		<string>A complete, free 3D printing solution for discovering, managing, and sharing your 3D prints.
+            </string>
+    		<key>name</key>
+    		<string>%NAME%</string>
+            <key>display_name</key>
+            <string>%NAME%</string>
+    		<key>unattended_install</key>
+    		<true/>
+    	</dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.3.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.MakerBotPrint</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
