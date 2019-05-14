@@ -15,7 +15,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
     <key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>SketchUpPro2018-EN</string>
+		<string>SketchUpPro2019-EN</string>
 	</dict>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
