@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://download.racket-lang.org</string>
                 <key>re_pattern</key>
-                <string>https://www.cs.utah.edu/plt/installers/7.[\S]+\/racket-7.[\S]+\-x86_64-macosx.dmg</string>
+                <string>https://mirror.racket-lang.org/installers/7.[\S]+\/racket-7.[\S]+\-x86_64-macosx.dmg</string>
             </dict>
         </dict>
         <dict>
