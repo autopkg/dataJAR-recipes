@@ -2,39 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of the JumpCloud Agent and then uploads to munki.
-	
-	NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
-	installing this PKG, else you'll be prompted for the connect_key. 
-	Amend the preinstall_script for this.
-	
-	See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
-	</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.JumpCloud Agent</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>JumpCloud Agent</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>A fully managed directory to rule your infrastructure whether on-premise or in the cloud. JumpCloud is your central source to authenticate, authorize, and manage employees, their devices and IT applications.</string>
-			<key>developer</key>
-			<string>JumpCloud</string>
-			<key>display_name</key>
-			<string>JumpCloud Agent</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>preinstall_script</key>
-			<string>#!/bin/sh
+    <key>Description</key>
+    <string>Downloads the current release version of the JumpCloud Agent and then uploads to munki.
+    
+    NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
+    installing this PKG, else you'll be prompted for the connect_key. 
+    Amend the preinstall_script for this.
+    
+    See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
+    </string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.JumpCloud Agent</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>JumpCloud Agent</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>A fully managed directory to rule your infrastructure whether on-premise or in the cloud. JumpCloud is your central source to authenticate, authorize, and manage employees, their devices and IT applications.</string>
+            <key>developer</key>
+            <string>JumpCloud</string>
+            <key>display_name</key>
+            <string>JumpCloud Agent</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/sh
 #
 # Adapted from:https://support.JumpCloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
 #
@@ -43,81 +43,129 @@ connectKey=
 
 if [ -z "${connectKey}" ]
 then
-	/bin/echo "No connect key defined... exiting..."
-	exit 1
+    /bin/echo "No connect key defined... exiting..."
+    exit 1
 else
-	/bin/mkdir -p /opt/jc
-	/bin/cat &lt;&lt;-EOF &gt; /opt/jc/agentBootstrap.json
-	{
-	"publicKickstartUrl": "https://kickstart.jumpcloud.com:443",
-	"privateKickstartUrl": "https://private-kickstart.jumpcloud.com:443",
-	"connectKey": "${connectKey}"
-	}
-	EOF
+    /bin/mkdir -p /opt/jc
+    /bin/cat &lt;&lt;-EOF &gt; /opt/jc/agentBootstrap.json
+    {
+    "publicKickstartUrl": "https://kickstart.jumpcloud.com:443",
+    "privateKickstartUrl": "https://private-kickstart.jumpcloud.com:443",
+    "connectKey": "${connectKey}"
+    }
+    EOF
 fi</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+# Script downloaded from: https://support.jumpcloud.com/customer/portal/articles/2426853--all-oses-how-to-uninstall-the-jumpcloud-agent
+
+if [[ $(id -u) -ne 0 ]]; then
+    echo "Must run as root!"
+    exit 1
+fi
+
+AGENT_UNINSTALL_SCRIPT="/opt/jc/bin/removeAgent"
+
+if [[ -f $AGENT_UNINSTALL_SCRIPT ]]; then
+    chmod 0700 $AGENT_UNINSTALL_SCRIPT
+    $AGENT_UNINSTALL_SCRIPT
+    exit $?
+fi
+
+launchctl remove com.jumpcloud.darwin-agent
+rm /Library/LaunchDaemons/com.jumpcloud.darwin-agent.plist
+
+sw_vers -productVersion | cut -d'.' -f1-2  | grep '^10.9$' &amp;> /dev/null
+if [[ $? -ne 0 ]]; then
+    security authorizationdb read system.login.console | \
+        sed 's# &lt;string>jumpcloud-loginwindow:invoke &lt;/string>#&lt;string>loginwindow:login&lt;/string>;#' | \
+        security authorizationdb write system.login.console
+fi
+
+rm -rf /Library/Security/SecurityAgentPlugins/jumpcloud-loginwindow.bundle
+rm -rf /opt/jc
+
+# if the service account is present, delete it:
+if (id -u _jumpcloudserviceaccount > /dev/null 2>&amp;1); then
+    dscl . -delete /Users/_jumpcloudserviceaccount
+fi
+
+# uninstall the tray-app
+# first unload the app for all console users (logged in on UI)
+for uid in $(ps -axo uid,args | grep -i "[l]oginwindow.app" | awk '{ print $1 }')
+do
+    if launchctl asuser "$uid" launchctl list 'com.jumpcloud.jcagent-tray' &amp;> /dev/null; then
+        launchctl bootout gui/"$uid" '/Library/LaunchAgents/com.jumpcloud.jcagent-tray.plist'
+    fi
+done
+# then delete the app plist and app folder
+rm /Library/LaunchAgents/com.jumpcloud.jcagent-tray.plist
+rm -rf /Applications/Jumpcloud.app</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
+    <string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Process</key>
     <array>
-    	<dict>
-			<key>Processor</key>
-			<string>PkgInfo</string>
-		</dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/</string>
-				<key>flat_pkg_path</key>
-				<string>%pathname%</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/payload/</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/agent.pkg/Payload</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
+            <key>Processor</key>
+            <string>PkgInfo</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/agent.pkg/Payload</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>
