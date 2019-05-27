@@ -19,35 +19,21 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>SparkleUpdateInfoProvider</string>
+            <string>com.github.gregneagle.autopkg.sharedprocessors/DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
-                <key>appcast_url</key>
-                <string>%SPARKLE_FEED_URL%</string>
+                <key>warning_message</key>
+                <string>This title has been replaced with Citrix Files for Mac, as such please use: https://github.com/autopkg/dataJAR-recipes/tree/master/Citrix%20Files%20for%20Mac </string>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%/ShareFile Desktop.app</string>
-                <key>requirement</key>
-                <string>anchor apple generic and identifier "com.sharefile.desktop.widget" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RM4N8HY7K5)</string>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
     </array>
 </dict>
