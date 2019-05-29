@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of MediaHuman YouTube Downloader and then uploads to the JSS</string>
+    <string>Downloads the current release version of MediaHuman YouTube Downloader-Trial and then uploads to the JSS</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.jss.MediaHuman YouTube Downloader</string>
+    <string>com.github.dataJAR-recipes.jss.MediaHuman YouTube Downloader-Trial</string>
     <key>Input</key>
     <dict>
         <key>CATEGORY</key>
@@ -15,7 +15,7 @@
         <key>GROUP_TEMPLATE</key>
         <string>SmartGroupTemplate.xml</string>
         <key>NAME</key>
-        <string>MediaHuman YouTube Downloader</string>
+        <string>MediaHuman YouTube Downloader-Trial</string>
         <key>POLICY_CATEGORY</key>
         <string>Testing</string>
         <key>POLICY_TEMPLATE</key>
@@ -28,7 +28,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.MediaHuman YouTube Downloader</string>
+    <string>com.github.dataJAR-recipes.pkg.MediaHuman YouTube Downloader-Trial</string>
     <key>Process</key>
     <array>
         <dict>
@@ -56,7 +56,7 @@
                 <key>policy_template</key>
                 <string>%POLICY_TEMPLATE%</string>
                 <key>prod_name</key>
-                <string>MediaHuman YouTube Downloader</string>
+                <string>MediaHuman YouTube Downloader-Trial</string>
                 <key>self_service_description</key>
                 <string>%SELF_SERVICE_DESCRIPTION%</string>
                 <key>self_service_icon</key>

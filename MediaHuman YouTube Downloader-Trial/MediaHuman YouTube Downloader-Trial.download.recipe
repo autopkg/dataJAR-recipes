@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of MediaHuman YouTube Downloader.</string>
+    <string>Downloads latest version of MediaHuman YouTube Downloader-Trial.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.MediaHuman YouTube Downloader</string>
+    <string>com.github.dataJAR-recipes.download.MediaHuman YouTube Downloader-Trial</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>MediaHuman YouTube Downloader</string>
+        <string>MediaHuman YouTube Downloader-Trial</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>

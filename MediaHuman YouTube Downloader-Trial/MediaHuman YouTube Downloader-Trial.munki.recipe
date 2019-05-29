@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of MediaHuman YouTube Downloader and imports it into Munki.</string>
+    <string>Downloads the latest version of MediaHuman YouTube Downloader-Trial and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.MediaHuman YouTube Downloader</string>
+    <string>com.github.dataJAR-recipes.munki.MediaHuman YouTube Downloader-Trial</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>MediaHuman YouTube Downloader</string>
+        <string>MediaHuman YouTube Downloader-Trial</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -23,7 +23,7 @@
             <key>developer</key>
             <string>MediaHuman</string>
             <key>display_name</key>
-            <string>MediaHuman YouTube Downloader</string>
+            <string>MediaHuman YouTube Downloader-Trial</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.MediaHuman YouTube Downloader</string>
+    <string>com.github.dataJAR-recipes.download.MediaHuman YouTube Downloader-Trial</string>
     <key>Process</key>
     <array>
         <dict>  
