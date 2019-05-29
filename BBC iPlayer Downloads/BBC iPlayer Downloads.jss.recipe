@@ -21,7 +21,7 @@
         <key>POLICY_TEMPLATE</key>
         <string>PolicyTemplate.xml</string>
         <key>SELF_SERVICE_DESCRIPTION</key>
-        <string>British Broadcasting Corporation</string>
+        <string>Watch your favourite shows anywhere.</string>
         <key>SELF_SERVICE_ICON</key>
         <string>BBCiPlayerDownloads.png</string>
     </dict>
