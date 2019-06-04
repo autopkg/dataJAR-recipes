@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.AmazonCorrettoJava8</string>
+	<key>Description</key>
+	<string>Downloads the current release version of Amazon Coretto 8, builds a package and imports it into Munki. This is based from the tar version rather than the signed pkg version, so that the true version number can be obtained.</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Amazon Coretto 8</string>
+		<key>SEARCH_PATTERN</key>
+		<string>(?P&lt;url&gt;https://.*?amazon-corretto-8.*?-macosx-x64\.tar\.gz)</string>
+		<key>SEARCH_URL</key>
+		<string>https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html</string>
+		<key>SOFTWARETITLE</key>
+		<string>Java</string>
+		<key>SOFTWARETYPE</key>
+		<string>JDK</string>
+		<key>VENDOR</key>
+		<string>OpenJDK</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+        <string>%VENDOR%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%SOFTWARETYPE%</string>
+            <key>description</key>
+            <string>Java is one of the most popular languages in use by AWS customers, and we are committed to supporting Java and keeping it free.</string>
+            <key>developer</key>
+            <string>%VENDOR%</string>
+            <key>display_name</key>
+            <string>OpenJDK 12</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>        
+	</dict>
+	<key>ParentRecipe</key>
+	<string>com.github.grahampugh.recipes.pkg.AmazonCorrettoJava8</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
