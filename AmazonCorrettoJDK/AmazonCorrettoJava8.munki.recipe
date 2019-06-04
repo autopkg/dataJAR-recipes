@@ -35,7 +35,7 @@
             <key>developer</key>
             <string>%VENDOR%</string>
             <key>display_name</key>
-            <string>OpenJDK 12</string>
+            <string>Amazon Coretto 8</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
