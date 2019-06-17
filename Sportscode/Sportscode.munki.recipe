@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Gaining an edge on the competition requires flexible workflows that adapt to any situation.</string>
+            <string>Gaining an edge on the competition requires flexible workflows that adapt to any situation</string>
             <key>display_name</key>
             <string>SportsCode</string>
             <key>name</key>
