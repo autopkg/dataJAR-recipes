@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of Aspera Connect.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AsperaConnect</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://downloads.asperasoft.com/en/downloads/8?list</string>
+                <key>re_pattern</key>
+                <string>https:\/\/download\.asperasoft\.com\/download\/sw\/connect\/.*?/IBMAsperaConnectInstaller-.*?.dmg</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+                <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
+        <dict>
+        <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+                <dict>
+                    <key>source_pkg</key>
+                    <string>%pathname%/IBMAsperaConnectInstaller.pkg</string>
+                    <key>pkg_path</key>
+                    <string>%RECIPE_CACHE_DIR%/installer_pkg/%NAME%.pkg</string>
+                </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pkg_path%</string>
+                <key>requirement</key>
+                <string>identifier IBMAsperaConnectInstaller and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RJ747GSBCT</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
