@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Steam and imports it into Munki.
+    
+NOTE: This simply installs Steam.app to /Applications, upon first launch the Steam update process will download about 180 MB of assets to complete the installation. 
+These support files are downloaded to ~/Library/Application Support/Steam for the current user opening the app. These assets must be downloaded for each user on the system.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Steam</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Steam</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Steam is the ultimate destination for playing, discussing, and creating games.</string>
+            <key>developer</key>
+            <string>Valve Software</string>
+            <key>display_name</key>
+            <string>Steam</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.haircut.download.Steam</string>
+    <key>Process</key>
+    <array>
+        <dict>  
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
