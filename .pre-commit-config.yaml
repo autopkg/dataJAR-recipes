@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/homebysix/pre-commit-macadmin
-  rev: v1.1.1
+  rev: v1.2.1
   hooks:
   - id: check-autopkg-recipes
     args: [--recipe-prefix=com.github.dataJAR-recipes.]
