@@ -3,6 +3,6 @@ repos:
   rev: v1.2.1
   hooks:
   - id: check-autopkg-recipes
-    args: [--recipe-prefix=com.github.data]
+    args: [--recipe-prefix=com.github.dataJAR-recipes.]
   - id: forbid-autopkg-overrides
   - id: forbid-autopkg-trust-info
