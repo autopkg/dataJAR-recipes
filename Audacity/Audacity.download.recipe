@@ -30,9 +30,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://university.fosshub.com/projects.json</string>
+                <string>%SEARCH_URL%</string>
                 <key>re_pattern</key>
-                <string>https://university.fosshub.com/Protected/[\S]+\/[\S]+\/audacity-macos-[\S]+\.dmg</string>
+                <string>%SEARCH_PATTERN%</string>
             </dict>
         </dict>
         <dict>
