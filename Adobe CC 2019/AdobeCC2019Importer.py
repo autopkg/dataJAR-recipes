@@ -54,16 +54,14 @@ def main():
 
     adobe_folders = []
 
-    download_path = os.path.expanduser('~/Downloads')
-
-    for some_item in os.listdir(download_path):
-        some_path = os.path.join(download_path, some_item)
+    for some_item in os.listdir(DOWNLOADS_PATH):
+        some_path = os.path.join(DOWNLOADS_PATH, some_item)
         if os.path.isdir(some_path):
             if some_item.startswith('Adobe') and some_item.endswith('CC2019'):
                 adobe_folders.append(some_item)
 
     if not len(adobe_folders):
-        print 'No Adobe*CC2019 folders found in %s, exiting...' % download_path
+        print 'No Adobe*CC2019 folders found in %s, exiting...' % DOWNLOADS_PATH
         sys.exit(1)
 
     if len(adobe_folders) == 1:
@@ -71,26 +69,24 @@ def main():
     else:
         print '%s Adobe CC 2019 recipes found, creating recipe list...' % len(adobe_folders)
 
-    recipe_list = os.path.expanduser('~/Library/Application Support/AutoPkgr/recipe_list.txt')
-    recipe_dir = os.path.join(os.path.dirname(recipe_list) + '/')
-    _ = open(os.path.join(recipe_dir + 'adobe_list.txt'), 'w')
-    pkg_checker(download_path, adobe_folders)
+    open(ADOBE_LIST, 'w')
+    pkg_checker(adobe_folders)
 
 
-def file_len(run_day, recipe_dir):
+def file_len(run_day):
     ''' For each weekdays recipe list, return a count '''
 
-    line_count = len(open(os.path.join(recipe_dir + run_day + '_list.txt')).readlines())
+    line_count = len(open(ADOBE_LIST).readlines())
 
     return line_count
 
 
-def pkg_checker(download_path, adobe_folders):
+def pkg_checker(adobe_folders):
     ''' Check that we have the Install_pkg's & proceed if we do'''
 
     for adobe_folder in sorted(adobe_folders):
         try:
-            install_pkg = glob.glob(os.path.join(download_path, adobe_folder, \
+            install_pkg = glob.glob(os.path.join(DOWNLOADS_PATH, adobe_folder, \
                                                'Build', '*_Install.pkg'))[0]
             if os.path.exists(install_pkg):
                 create_list(adobe_folder)
@@ -114,9 +110,7 @@ def create_list(adobe_folder):
     if not os.path.isfile(override_path):
         print 'Skipping {0}, as cannot find override...'.format(override_path)
 
-    recipe_list = os.path.expanduser('~/Library/Application Support/AutoPkgr/recipe_list.txt')
-    recipe_dir = os.path.join(os.path.dirname(recipe_list) + '/')
-    list_file = open(os.path.join(recipe_dir + 'adobe_list.txt'), 'a+')
+    list_file = open(ADOBE_LIST, 'a+')
     list_file.write(override_name + '\n')
     list_file.close()
 
@@ -124,16 +118,11 @@ def create_list(adobe_folder):
 def run_list():
     '''Run recipe list'''
 
-    recipe_list = os.path.expanduser('~/Library/Application Support/AutoPkgr/recipe_list.txt')
-    recipe_dir = os.path.join(os.path.dirname(recipe_list) + '/')
-    adobe_list = os.path.join(recipe_dir + 'adobecc2019_list.txt')
-    report_path = os.path.join(recipe_dir + 'adobecc2019_report.plist')
-
-    if os.path.exists(adobe_list):
-        print 'Running recipe_list: `{0}`'.format(adobe_list)
+    if os.path.exists(ADOBE_LIST):
+        print 'Running recipe_list: `{0}`'.format(ADOBE_LIST)
         print
-        cmd_args = ['/usr/local/bin/autopkg', 'run', '-v', '--recipe-list', adobe_list, \
-                                                         '--report-plist', report_path]
+        cmd_args = ['/usr/local/bin/autopkg', 'run', '-v', '--recipe-list', ADOBE_LIST, \
+                                                         '--report-plist', REPORT_PATH]
         print 'Running `{0}`...'.format(cmd_args)
         subprocess.call(cmd_args)
     else:
@@ -142,4 +131,8 @@ def run_list():
 
 if __name__ == '__main__':
 
+    # Constants
+    DOWNLOADS_PATH = os.path.expanduser('~/Downloads/')
+    ADOBE_LIST = os.path.join(DOWNLOADS_PATH + 'adobecc2019_list.txt')
+    REPORT_PATH = os.path.join(DOWNLOADS_PATH + 'adobecc2019_report.plist')
     main()
