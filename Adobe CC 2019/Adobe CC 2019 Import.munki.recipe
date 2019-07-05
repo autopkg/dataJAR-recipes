@@ -5,7 +5,7 @@
         <key>Description</key>
         <string>Import a Creative Cloud Application's pkg into Munki</string>
         <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Some Adobe CC 2019 Title</string>
+        <string>com.github.dataJAR-recipes.munki.Import Adobe CC 2019 Title</string>
         <key>Input</key>
         <dict>
             <key>MINIMUM_OS_VERSION</key>
