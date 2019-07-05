@@ -48,7 +48,7 @@
         <array>
             <dict>
                 <key>Processor</key>
-                <string>AdobeCC2019Importer</string>
+                <string>AdobeCC2019Versioner</string>
             </dict>
             <dict>
                 <key>Processor</key>
