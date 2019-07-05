@@ -39,8 +39,8 @@ These will need to be unzipped, if your browser does not unzip the downloads fro
 
 For example:
 
-AdobeAcrobatDCCC2019.jss.recipe
-AdobeAcrobatDCCC2019.munki.recipe
+`AdobeAcrobatDCCC2019.jss.recipe`
+`AdobeAcrobatDCCC2019.munki.recipe`
 
 ## Usage
 With the pre-reqs met, you can run the [AdobeCC2019Importer.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20CC%202019/AdobeCC2019Importer.py) script found in this repo.
