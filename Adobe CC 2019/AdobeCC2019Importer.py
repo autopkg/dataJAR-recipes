@@ -92,6 +92,7 @@ def pkg_checker(adobe_folders):
             print 'Found {0}...'.format(install_pkg)
             if os.path.exists(install_pkg):
                 create_list(adobe_folder)
+                found_pkgs += 1
             else:
                 print 'Cannot find pkg ({0}), for {1}... Skipping...'.format\
                                                (install_pkg, adobe_folder)
