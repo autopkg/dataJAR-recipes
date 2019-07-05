@@ -38,14 +38,11 @@ __version__ = '1.0'
 
 
 # Standard Imports
+import argparse
 import glob
 import os
 import subprocess
 import sys
-
-# pylint: disable=wrong-import-position
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) \
-                                                                     + '/' + 'scripts'))
 
 
 # Script
@@ -65,11 +62,11 @@ def main():
         sys.exit(1)
 
     if len(adobe_folders) == 1:
-        print '1 Adobe CC 2019 recipe found, creating recipe list...'
+        print '1 Adobe CC 2019 folder found, creating recipe list...'
     else:
-        print '%s Adobe CC 2019 recipes found, creating recipe list...' % len(adobe_folders)
-
-    open(ADOBE_LIST, 'w')
+        print '%s Adobe CC 2019 folder found, creating recipe list...' % len(adobe_folders)
+    
+    open(ADOBE_LIST, 'w').close()
     pkg_checker(adobe_folders)
 
 
@@ -84,10 +81,15 @@ def file_len(run_day):
 def pkg_checker(adobe_folders):
     ''' Check that we have the Install_pkg's & proceed if we do'''
 
+    found_pkgs = 0
+
+    print 'Looking for pkgs...'
+
     for adobe_folder in sorted(adobe_folders):
         try:
             install_pkg = glob.glob(os.path.join(DOWNLOADS_PATH, adobe_folder, \
                                                'Build', '*_Install.pkg'))[0]
+            print 'Found {0}...'.format(install_pkg)
             if os.path.exists(install_pkg):
                 create_list(adobe_folder)
             else:
@@ -96,7 +98,11 @@ def pkg_checker(adobe_folders):
         except IndexError as err_msg:
             print 'Skipping {0}, as cannot find Install.pkg: {1}...'.format(adobe_folder, err_msg)
 
-    run_list()
+    if found_pkgs == 0:
+        print 'No pkgs found, exiting...'
+        sys.exit(1)
+    else:
+        run_list()
 
 
 def create_list(adobe_folder):
@@ -104,8 +110,9 @@ def create_list(adobe_folder):
 
     library_dir = os.path.expanduser('~/Library/')
     override_path = os.path.join(library_dir, 'AutoPkg', 'RecipeOverrides', \
-                                            adobe_folder + '.munki.recipe')
-    override_name = 'local.munki.' + adobe_folder
+                                                         adobe_folder + '.' \
+                                                 + RECIPE_TYPE + '.recipe')
+    override_name = 'local.' + RECIPE_TYPE + '.' + adobe_folder
 
     if not os.path.isfile(override_path):
         print 'Skipping {0}, as cannot find override...'.format(override_path)
@@ -131,8 +138,20 @@ def run_list():
 
 if __name__ == '__main__':
 
+    # Try to locate autopkg
+    if not os.path.exists('/usr/local/bin/autopkg'):
+        print 'Cannot find autopkg'
+        sys.exit(1)
+        
+    # Parse recipe type argument
+    parser = argparse.ArgumentParser()
+    parser.add_argument('type', type=str, help='Recipe type, either "munki" or "jss"')
+    args = parser.parse_args()
+    RECIPE_TYPE = args.type.lower()
+
     # Constants
     DOWNLOADS_PATH = os.path.expanduser('~/Downloads/')
     ADOBE_LIST = os.path.join(DOWNLOADS_PATH + 'adobecc2019_list.txt')
     REPORT_PATH = os.path.join(DOWNLOADS_PATH + 'adobecc2019_report.plist')
+    
     main()
