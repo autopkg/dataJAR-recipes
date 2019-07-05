@@ -8,6 +8,8 @@
         <string>com.github.dataJAR-recipes.jss.Some Adobe CC 2019 Title</string>
         <key>Input</key>
         <dict>
+            <key>NAME</key>
+            <string>SomeAdobeCC2019Title</string>
             <key>CATEGORY</key>
             <string>Productivity</string>
             <key>GROUP_NAME</key>
