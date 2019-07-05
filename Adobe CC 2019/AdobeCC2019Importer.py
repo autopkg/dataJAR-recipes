@@ -66,7 +66,11 @@ def main():
         print 'No Adobe*CC2019 folders found in %s, exiting...' % download_path
         sys.exit(1)
 
-    notify_team(len(adobe_folders))
+    if len(adobe_folders) == 1:
+        print '1 Adobe CC 2019 recipe found, creating recipe list...'
+    else:
+        print '%s Adobe CC 2019 recipes found, creating recipe list...' % len(adobe_folders)
+
     recipe_list = os.path.expanduser('~/Library/Application Support/AutoPkgr/recipe_list.txt')
     recipe_dir = os.path.join(os.path.dirname(recipe_list) + '/')
     _ = open(os.path.join(recipe_dir + 'adobe_list.txt'), 'w')
@@ -75,16 +79,10 @@ def main():
 
 def file_len(run_day, recipe_dir):
     ''' For each weekdays recipe list, return a count '''
+
     line_count = len(open(os.path.join(recipe_dir + run_day + '_list.txt')).readlines())
+
     return line_count
-
-
-def notify_team(recipe_count):
-    ''' Send Notifications as appropirate '''
-
-    os.system('clear')
-    msg_text = '%s Adobe CC 2019 recipes found, creating recipe list...' % recipe_count
-    print msg_text
 
 
 def pkg_checker(download_path, adobe_folders):
@@ -110,8 +108,8 @@ def create_list(adobe_folder):
 
     library_dir = os.path.expanduser('~/Library/')
     override_path = os.path.join(library_dir, 'AutoPkg', 'RecipeOverrides', \
-                             adobe_folder + '-dataJAR-manual.munki.recipe')
-    override_name = 'local.munki.' + adobe_folder + '-dataJAR-manual'
+                                            adobe_folder + '.munki.recipe')
+    override_name = 'local.munki.' + adobe_folder
 
     if not os.path.isfile(override_path):
         print 'Skipping {0}, as cannot find override...'.format(override_path)
@@ -131,18 +129,15 @@ def run_list():
     adobe_list = os.path.join(recipe_dir + 'adobecc2019_list.txt')
     report_path = os.path.join(recipe_dir + 'adobecc2019_report.plist')
 
-    os.system('clear')
     if os.path.exists(adobe_list):
-        msg_text = 'Running recipe_list: `{0}`'.format(adobe_list)
-        print msg_text
+        print 'Running recipe_list: `{0}`'.format(adobe_list)
         print
         cmd_args = ['/usr/local/bin/autopkg', 'run', '-v', '--recipe-list', adobe_list, \
                                                          '--report-plist', report_path]
-        msg_text = 'Running `{0}`...'.format(cmd_args)
+        print 'Running `{0}`...'.format(cmd_args)
         subprocess.call(cmd_args)
     else:
-        msg_text = 'Cannot find recipe_list: `{0}`'.format(adobe_list)
-        print msg_text
+        print 'Recipe list not populated, make sure you have the needed overrides in place....'
 
 
 if __name__ == '__main__':
