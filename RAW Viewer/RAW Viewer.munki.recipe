@@ -91,6 +91,20 @@
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unzip/</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
