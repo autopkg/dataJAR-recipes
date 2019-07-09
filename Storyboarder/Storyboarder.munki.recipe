@@ -31,7 +31,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Storyboarder</string>
+    <string>com.github.amsysuk-recipes.download.Storyboarder</string>
     <key>Process</key>
     <array>
         <dict>
