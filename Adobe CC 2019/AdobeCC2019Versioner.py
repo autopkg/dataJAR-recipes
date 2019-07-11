@@ -180,6 +180,8 @@ class AdobeCC2019Versioner(Processor):
         self.env['display_name'] = app_path + ' CC 2019'
         self.output('display_name: %s' % self.env['display_name'])
 
+        self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+
         self.create_pkginfo(app_bundle, app_version, installed_path)
 
 
@@ -262,7 +264,7 @@ class AdobeCC2019Versioner(Processor):
                                                 self.env['vers_compare_key'] = 'CFBundleVersion'
                                             else:
                                                 self.env['vers_compare_key'] = \
-                                            	  'CFBundleShortVersionString'
+                                                  'CFBundleShortVersionString'
                                             self.output('vers_compare_key: %s' % \
                                                    self.env['vers_compare_key'])
                                             app_version = data[self.env['vers_compare_key']]
