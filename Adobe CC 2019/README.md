@@ -35,6 +35,8 @@ AdobeXDCC2019
 
 These will need to be unzipped, if your browser does not unzip the downloads from the Adobe Admin Console.
 
+*Please Note:* Keep the name of the unzipped directory the same as the the installer/uninstaller package within. 
+
 2. Create the respective munki or jss recipe overrides, & name them the same as the Adobe CC 2019 pkg.
 
 For example:
