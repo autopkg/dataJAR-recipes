@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads thev latest ersion of AirParrot 2 and imports into Munki.</string>
+    <string>Downloads the latest version of Transcribe! and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.AirParrot 2-Trial</string>
+    <string>com.github.dataJAR-recipes.munki.Transcribe</string>
     <key>Input</key>
     <dict>
+        <key>NAME</key>
+        <string>Transcribe!</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>AirParrot 2</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -19,9 +19,11 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>AirParrot allows you to wirelessly beam your screen or media files to a variety of media receivers. AirParrot quickly discovers available receivers on your network, and uses Quick Connect® to connect directly to a device running Reflector 2™. Easily share your screen, videos, audio, presentations and so much more.</string>
+            <string>The Transcribe! application is an assistant for people who want to work out a piece of music from a recording, in order to write it out, or play it themselves, or both. It doesn't do the transcribing for you, but it is essentially a specialised player program which is optimised for the purpose of transcription. It has many transcription-specific features not found on conventional music players.</string>
+            <key>developer</key>
+            <string>Seventh String Software</string>
             <key>display_name</key>
-            <string>AirParrot 2</string>
+            <string>Transcribe!</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -31,12 +33,14 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.AirParrot 2-Trial</string>
+    <string>com.github.dataJAR-recipes.download.Transcribe</string>
     <key>Process</key>
     <array>
-        <dict>
+        <dict>  
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -44,8 +48,6 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

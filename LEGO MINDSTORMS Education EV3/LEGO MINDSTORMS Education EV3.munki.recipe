@@ -7,7 +7,7 @@
     
     Based on: https://github.com/autopkg/aysiu-recipes/blob/master/LegoMindstorms/LegoMindstorms.munki.recipe</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-private.munki.LEGO MINDSTORMS Education EV3</string>
+    <string>com.github.dataJAR-recipes.munki.LEGO MINDSTORMS Education EV3</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>

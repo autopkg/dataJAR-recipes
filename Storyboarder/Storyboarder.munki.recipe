@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads thev latest ersion of AirParrot 2 and imports into Munki.</string>
+    <string>Downloads the latest version of Storyboarder and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.AirParrot 2-Trial</string>
+    <string>com.github.dataJAR-recipes.munki.Storyboarder</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>AirParrot 2</string>
+        <string>Storyboarder</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -19,33 +19,33 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>AirParrot allows you to wirelessly beam your screen or media files to a variety of media receivers. AirParrot quickly discovers available receivers on your network, and uses Quick Connect® to connect directly to a device running Reflector 2™. Easily share your screen, videos, audio, presentations and so much more.</string>
+            <string>Storyboarder makes it easy to visualize a story as fast you can draw stick figures. Quickly draw to test if a story idea works. Create and show animatics to others. Express your story idea without making a movie.</string>
             <key>display_name</key>
-            <string>AirParrot 2</string>
+            <string>Storyboarder</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.AirParrot 2-Trial</string>
+    <string>com.github.amsysuk-recipes.download.Storyboarder</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

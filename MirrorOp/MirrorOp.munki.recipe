@@ -3,49 +3,62 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads thev latest ersion of AirParrot 2 and imports into Munki.</string>
+    <string>Downloads the current release version of MirrorOp and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.AirParrot 2-Trial</string>
+    <string>com.github.dataJAR-recipes.munki.MirrorOp</string>
     <key>Input</key>
     <dict>
+        <key>NAME</key>
+        <string>MirrorOp</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>AirParrot 2</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>developer</key>
+            <string>Barco NV</string>
             <key>description</key>
-            <string>AirParrot allows you to wirelessly beam your screen or media files to a variety of media receivers. AirParrot quickly discovers available receivers on your network, and uses Quick Connect® to connect directly to a device running Reflector 2™. Easily share your screen, videos, audio, presentations and so much more.</string>
+            <string>With MirrorOp sender installed on your computer, you can not only watch videos or surf the internet on a larger display with friends, but also remotely operate your computer as if you were in front of it.</string>
             <key>display_name</key>
-            <string>AirParrot 2</string>
+            <string>MirrorOp</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.AirParrot 2-Trial</string>
+    <string>com.github.moofit-recipes.download.MirrorOp</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/MirrorOp.dmg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>
