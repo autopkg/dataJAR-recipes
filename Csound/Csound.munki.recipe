@@ -84,6 +84,21 @@
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
+                    <key>receipts</key>
+                    <array>
+                        <dict>
+                            <key>packageid</key>
+                            <string>com.csound.csound6Environment.csoundApps64</string>
+                            <key>version</key>
+                            <string>%version%</string>
+                        </dict>
+                        <dict>
+                            <key>packageid</key>
+                            <string>com.csound.csound6Environment.csoundLib64</string>
+                            <key>version</key>
+                            <string>%version%</string>
+                        </dict>
+                    </array>
                 </dict>
             </dict>
         </dict>
