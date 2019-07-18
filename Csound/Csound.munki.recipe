@@ -36,7 +36,7 @@
     <string>com.github.dataJAR-recipes.pkg.Csound</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -63,18 +63,22 @@
             <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
-				<string>%RECIPE_CACHE_DIR%/payload/</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/usr/local/bin/csound</string>
-				</array>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/usr/local/bin/csound</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
