@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest Hudl SportsCode disk image.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.HudlSportsCode12</string>
+    <string>com.github.dataJAR-recipes.download.Hudl SportsCode 12</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -58,9 +58,34 @@
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <string>%RECIPE_CACHE_DIR%/dmg_unpack/</string>
                 <key>purge_destination</key>
                 <true/>
+            </dict>
+        </dict>
+    	<dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/Hudl Sportscode.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/dmg_unpack/HudlSportscode.dmg/Hudl Sportscode.app</string>
             </dict>
         </dict>
         <dict>
@@ -69,7 +94,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/HudlSportscode.dmg/Hudl Sportscode.app</string>
+                <string>%destination_path%</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.hudl.Sportscode64" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4M6T2C723P")</string>
                 <key>strict_verification</key>

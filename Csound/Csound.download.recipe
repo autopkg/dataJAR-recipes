@@ -21,6 +21,8 @@ i.e.: `-k PRERELEASE=yes`</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>github_repo</key>
@@ -30,17 +32,15 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>asset_regex</key>
                 <string>[\S]+\.dmg</string>
             </dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%-%version%.dmg</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
