@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Verify recipe for KeePassXC.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.verify.KeePassXC</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>KeePassXC</string>
+            <key>KEYID</key>
+            <string>CFB4C2166397D0D2</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>1.0.4</string>
+        <key>ParentRecipe</key>
+        <string>com.github.dataJAR-recipes.download.KeePassXC</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>%url%.sig</string>
+                    <key>filename</key>
+                    <string>%NAME%.dmg.sig</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>com.github.autopkg.gerardkok-recipes.SharedProcessors/GPGSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>public_key_id</key>
+                    <string>%KEYID%</string>
+                    <key>distribution_file</key>
+                    <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
+                    <key>signature_file</key>
+                    <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg.sig</string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>

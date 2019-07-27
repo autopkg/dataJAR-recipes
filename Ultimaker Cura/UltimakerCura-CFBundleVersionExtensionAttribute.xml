@@ -5,7 +5,7 @@
 	<input_type>
 		<type>script</type>
 		<platform>Mac</platform>
-		<script>#!/bin/assh
+		<script>#!/bin/bash
 CFBundleVersion=""
 if [ -f "/Applications/Ultimaker Cura.app/Contents/Info.plist" ]; then
 	CFBundleVersion=$(defaults read "/Applications/Ultimaker Cura.app/Contents/Info.plist" CFBundleVersion)
