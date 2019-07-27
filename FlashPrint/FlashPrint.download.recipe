@@ -21,25 +21,23 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.flashforge.com/support-center/flashprint-support/</string>
+                <string>http://www.ishare3d.com/3dapp/public/FlashPrint-ii/appInfo1</string>
                 <key>re_pattern</key>
-                <string>www.flashforge.com/wp-content/uploads/[\S]+\/[\S]+\/FlashPrint_[\S]+\_mac.zip</string>
+                <string>http://www.ishare3d.com/3dapp/public/FlashPrint-ii/FlashPrint/FlashPrint_[\S]+\_mac.zip</string>
                 <key>result_output_var_name</key>
-                <string>match</string>
+                <string>url</string>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>download_dir</key>
                 <string>%RECIPE_CACHE_DIR%/downloads</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
-                <key>url</key>
-                <string>https://%match%</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
