@@ -12,9 +12,7 @@
         <string>Pencil</string>
         <key>DOWNLOAD_URL</key>
         <string>https://pencil.evolus.vn</string>
-        <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
-    </dict>
+   	</dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
