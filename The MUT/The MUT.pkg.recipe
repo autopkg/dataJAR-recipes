@@ -35,9 +35,9 @@
 			<key>Arguments</key>
 			<dict>
 				<key>destination_path</key>
-				<string>%pkgroot%/Applications/The MUT.app</string>
+				<string>%pkgroot%/Applications/MUT.app</string>
 				<key>source_path</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/The MUT.app</string>
+				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/MUT.app</string>
 			</dict>
 			<key>Processor</key>
 			<string>Copier</string>
