@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Admin Installer for Blue Jeans. This package also installs the Blue Jeans sound driver
+	More Details on the Admin installer: https://support.bluejeans.com/s/article/BlueJeans-App-2-x-Centralized-Deployment</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.Blue Jeans Admin Installer</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Blue Jeans Admin Installer</string>
+        <key>URL</key>
+        <string>https://swdl.bluejeans.com/desktop-app/mac/ga.appcast.xml</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.4.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>%URL%</string>
+				<key>re_pattern</key>
+				<string>(\/[0-9\.]+\.[0-9\.]+\.[0-9\.]+\/[0-9\.]+\.[0-9\.]+\.[0-9\.]+\/)</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>https://swdl.bluejeans.com/desktop-app/mac%match%BlueJeansAdminInstaller.pkg</string>
+				<key>filename</key>
+				<string>%NAME%.pkg</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Blue Jeans Network, Inc. (HE4P42JBGN)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
+</dict>
+</plist>
