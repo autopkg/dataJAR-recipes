@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest Unity3D disk image and builds a package.</string>
+    <string>Downloads latest UnityHub disk image and builds a package.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.Unity3D</string>
+    <string>com.github.dataJAR-recipes.pkg.UnityHub</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Unity3D</string>
+        <string>UnityHub</string>
         <key>DOWNLOAD_URL</key>
         <string>https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg</string>    
     </dict>
     <key>ParentRecipe</key>
-    <string>com.github.hansen-m.download.Unity3D</string>
+    <string>com.github.hansen-m.download.UnityHub</string>
     <key>Process</key>
     <array>
         <dict>
