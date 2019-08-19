@@ -65,8 +65,10 @@
                             <string>ARRIRAWConverter.app</string>
                         </dict>
                     </array>
+                    <key>maximum_os_version</key>
+                    <string>10.%MAJOR_OS_VERSION%.99</string>
                     <key>minimum_os_version</key>
-                    <string>10.%MAJOR_OS_VERSION%</string>
+                    <string>10.%MAJOR_OS_VERSION%.0</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
