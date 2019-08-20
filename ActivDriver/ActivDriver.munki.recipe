@@ -27,7 +27,7 @@
             <key>RestartAction</key>
 			<string>RequireRestart</string>
             <key>unattended_install</key>
-            <true/>
+            <false/>
             <key>unattended_uninstall</key>
             <true/>
         </dict>
