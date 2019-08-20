@@ -13,7 +13,9 @@
         <key>NAME</key>
         <string>ActivDriver</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
+            <key>RestartAction</key>
+            <string>RequireRestart</string>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -24,8 +26,6 @@
             <string>ActivDriver</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>RestartAction</key>
-			<string>RequireRestart</string>
             <key>unattended_install</key>
             <false/>
             <key>unattended_uninstall</key>
