@@ -24,6 +24,8 @@
             <string>ActivDriver</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>RestartAction</key>
+			<string>RequireRestart</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
