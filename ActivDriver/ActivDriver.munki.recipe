@@ -24,6 +24,10 @@
             <string>ActivDriver</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>requires</key>
+			<array>
+				<string>AdobeFlashPlayer</string>
+			</array>
             <key>RestartAction</key>
 			<string>RequireRestart</string>
             <key>unattended_install</key>
