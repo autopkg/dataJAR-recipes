@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the version of ActivDriver.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.ActivDriver</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ActivDriver</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://support.prometheanworld.com/product/-activdriver-</string>
+                <key>re_pattern</key>
+                <string>'ActivDriver for macOS'[\S].* href="(https:\/\/support.prometheanworld.com\/download\/[\d].*\/)"</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+		<dict>   
+			<key>Processor</key>   
+			<string>CodeSignatureVerifier</string>   
+			<key>Arguments</key>   
+			<dict>   
+				<key>input_path</key>   
+				<string>%pathname%/ActivDriver.pkg</string>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Promethean (PQ96WVYU2E)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+			</dict>
+		</dict>
+    </array>
+</dict>
+</plist>
