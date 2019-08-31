@@ -16,6 +16,8 @@
 
 """See docstring for PkgInfo class"""
 
+from __future__ import absolute_import
+from __future__ import print_function
 import os.path
 import subprocess
 
@@ -64,9 +66,9 @@ class PkgInfo(Processor):
                 try:
                     os.mkdir('file_path')
                 except OSError as err:
-                    print(
+                    print((
                         "Can't create %s: %s"
-                        % ('file_path', err.strerror))
+                        % ('file_path', err.strerror)))
 
             for toc_entry in [item for item in toc
                               if item.startswith('Distribution')]:
