@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2014 Justin Rummel, 
+# Copyright 2014 Justin Rummel,
 #
 # Updates added 2018 by macmule:
 # https://github.com/autopkg/justinrummel-recipes/pull/7
@@ -20,14 +20,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import print_function
-import urllib, urllib2, gzip
+from __future__ import absolute_import, print_function
 
-from xml.etree import ElementTree
-from StringIO import StringIO
-from autopkglib import Processor, ProcessorError
+import gzip
+import urllib2
 from distutils.version import LooseVersion
+from StringIO import StringIO
+from xml.etree import ElementTree
+
+from autopkglib import Processor, ProcessorError
 
 __all__ = ["VMwareFusion8URLProvider"]
 
