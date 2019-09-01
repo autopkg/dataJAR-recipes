@@ -23,12 +23,16 @@
 from __future__ import absolute_import, print_function
 
 import gzip
-import urllib2
 from distutils.version import LooseVersion
 from StringIO import StringIO
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError
+
+try:
+    from urllib.request import urlopen  # For Python 3
+except ImportError:
+    from urllib2 import urlopen  # For Python 2
 
 __all__ = ["VMwareFusion11URLProvider"]
 
@@ -63,12 +67,11 @@ class VMwareFusion11URLProvider(Processor):
     __doc__ = description
 
     def core_metadata(self, base_url, product_name, major_version):
-        request = urllib2.Request(base_url+product_name)
         # print(base_url)
 
         try:
-            vsus = urllib2.urlopen(request)
-        except URLError as e:
+            vsus = urlopen(base_url + product_name)
+        except Exception as e:
             print(e.reason)
 
         data = vsus.read()
@@ -103,10 +106,8 @@ class VMwareFusion11URLProvider(Processor):
 
         vsus.close()
 
-        request = urllib2.Request(base_url+core[0])
-
         try:
-            vLatest = urllib2.urlopen(request)
+            vLatest = urlopen(base_url + core[0])
         except URLError as e:
             print(e.reason)
 
