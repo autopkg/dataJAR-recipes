@@ -64,7 +64,7 @@ class VMwareFusion11URLProvider(Processor):
 
     def core_metadata(self, base_url, product_name, major_version):
         request = urllib2.Request(base_url+product_name)
-        # print base_url
+        # print(base_url)
 
         try:
             vsus = urllib2.urlopen(request)
@@ -72,7 +72,7 @@ class VMwareFusion11URLProvider(Processor):
             print(e.reason)
 
         data = vsus.read()
-        # print data
+        # print(data)
 
         try:
             metaList = ElementTree.fromstring(data)
@@ -90,7 +90,7 @@ class VMwareFusion11URLProvider(Processor):
                                   major_version '%s'." % major_version)
         versions.sort(key=LooseVersion)
         self.latest = versions[-1]
-        # print latest
+        # print(latest)
 
         urls = []
         for metadata in metaList:
@@ -99,7 +99,7 @@ class VMwareFusion11URLProvider(Processor):
 
         matching = [s for s in urls if self.latest in s]
         core = [s for s in matching if "core" in s]
-        # print core[0]
+        # print(core[0])
 
         vsus.close()
 
@@ -113,7 +113,7 @@ class VMwareFusion11URLProvider(Processor):
         buf = StringIO(vLatest.read())
         f = gzip.GzipFile(fileobj=buf)
         data = f.read()
-        # print data
+        # print(data)
 
         try:
             metadataResponse = ElementTree.fromstring(data)
@@ -121,7 +121,7 @@ class VMwareFusion11URLProvider(Processor):
             print("Unable to parse XML data from string")
 
         relativePath = metadataResponse.find("bulletin/componentList/component/relativePath")
-        # print core[0].replace("metadata.xml.gz", relativePath.text)
+        # print(core[0].replace("metadata.xml.gz", relativePath.text))
         return base_url+core[0].replace("metadata.xml.gz", relativePath.text)
 
     def main(self):
