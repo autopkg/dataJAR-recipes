@@ -17,8 +17,8 @@
 # pylint: disable= import-error, invalid-name, missing-docstring, too-few-public-methods
 
 from __future__ import absolute_import
-import os
 
+import os
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError

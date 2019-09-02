@@ -38,6 +38,7 @@ https://github.com/autopkg/adobe-ccp-recipes/blob/master/Adobe/CreativeCloudVers
 
 # Standard Imports
 from __future__ import absolute_import
+
 import glob
 import json
 import os

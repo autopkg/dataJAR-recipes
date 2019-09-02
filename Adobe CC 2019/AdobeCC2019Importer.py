@@ -34,10 +34,7 @@ Imports Adobe CC 2019 titles found in running users ~/Downloads
 
 
 # Version
-from __future__ import absolute_import
-from __future__ import print_function
-__version__ = '1.0'
-
+from __future__ import absolute_import, print_function
 
 # Standard Imports
 import argparse
@@ -45,6 +42,10 @@ import glob
 import os
 import subprocess
 import sys
+
+__version__ = '1.0'
+
+
 
 
 # Script

@@ -16,15 +16,13 @@
 
 """See docstring for PkgInfo class"""
 
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import absolute_import, print_function
+
 import os.path
 import subprocess
-
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError
-
 
 __all__ = ["PkgInfo"]
 
