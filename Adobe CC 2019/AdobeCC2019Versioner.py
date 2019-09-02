@@ -59,7 +59,7 @@ __version__ = ['1.1']
 # Class
 class AdobeCC2019Versioner(Processor):
     '''
-    Parses generated Adobe Admin Console CC 2019 pkgs for 
+    Parses generated Adobe Admin Console CC 2019 pkgs for
     detailed application path and bundle version info
     '''
 
@@ -134,7 +134,7 @@ class AdobeCC2019Versioner(Processor):
 
         # If Application.json exists, we're looking at a HD installer
         if os.path.exists(self.env['app_json']):
-            if not self.env['sap_code'] is 'APRO':
+            if not self.env['sap_code'] == 'APRO':
                 self.output('Installer is HyperDrive')
                 self.output('app_json: %s' % self.env['app_json'])
                 self.process_hd_installer()
