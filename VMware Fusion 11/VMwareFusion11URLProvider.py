@@ -31,8 +31,10 @@ from autopkglib import Processor, ProcessorError
 
 try:
     from urllib.request import urlopen  # For Python 3
+    from urllib.error import URLError
 except ImportError:
     from urllib2 import urlopen  # For Python 2
+    from urllib2 import URLError
 
 __all__ = ["VMwareFusion11URLProvider"]
 
@@ -71,7 +73,7 @@ class VMwareFusion11URLProvider(Processor):
 
         try:
             vsus = urlopen(base_url + product_name)
-        except BaseException as e:
+        except URLError as e:
             print(e.reason)
 
         data = vsus.read()
