@@ -32,8 +32,6 @@ Imports Adobe CC 2019 titles found in running users ~/Downloads
 
 '''
 
-
-# Version
 from __future__ import absolute_import, print_function
 
 # Standard Imports
@@ -43,9 +41,8 @@ import os
 import subprocess
 import sys
 
+# Version
 __version__ = '1.0'
-
-
 
 
 # Script
@@ -68,7 +65,7 @@ def main():
         print('1 Adobe CC 2019 folder found, creating recipe list...')
     else:
         print('%s Adobe CC 2019 folder found, creating recipe list...' % len(adobe_folders))
-    
+
     open(ADOBE_LIST, 'w').close()
     pkg_checker(adobe_folders)
 
@@ -146,7 +143,7 @@ if __name__ == '__main__':
     if not os.path.exists('/usr/local/bin/autopkg'):
         print('Cannot find autopkg')
         sys.exit(1)
-        
+
     # Parse recipe type argument
     parser = argparse.ArgumentParser()
     parser.add_argument('type', type=str, help='Recipe type, either "munki" or "jss"')
@@ -157,5 +154,5 @@ if __name__ == '__main__':
     DOWNLOADS_PATH = os.path.expanduser('~/Downloads/')
     ADOBE_LIST = os.path.join(DOWNLOADS_PATH + 'adobecc2019_list.txt')
     REPORT_PATH = os.path.join(DOWNLOADS_PATH + 'adobecc2019_report.plist')
-    
+
     main()
