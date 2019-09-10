@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Webrecorder Player.
+    <string>Downloads the latest version of Fritzing.
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Webrecorder Player</string>
+    <string>com.github.dataJAR-recipes.download.Fritzing</string>
     <key>Input</key>
     <dict>
         <key>PRERELEASE</key>
-        <string></string>
+        <string>true</string>
         <key>NAME</key>
-        <string>WebrecorderPlayer</string>
+        <string>Fritzing</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -24,11 +24,11 @@ i.e.: `-k PRERELEASE=yes`</string>
             <key>Arguments</key>
             <dict>
                 <key>github_repo</key>
-                <string>webrecorder/webrecorder-player</string>
+                <string>fritzing/fritzing-app</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
-                <string>[\S]+\.dmg</string>
+                <string>[\S]+\.mojave\.[\S]+\.dmg</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
@@ -37,7 +37,7 @@ i.e.: `-k PRERELEASE=yes`</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%-%version%.dmg</string>
+                <string>%NAME%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -45,17 +45,6 @@ i.e.: `-k PRERELEASE=yes`</string>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%/Webrecorder Player.app</string>
-                <key>requirements</key>
-                <string>identifier "org.webrecorder.webrecorderplayer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = NBPRTCWAX7</string>
-            </dict>
         </dict>
     </array>
 </dict>

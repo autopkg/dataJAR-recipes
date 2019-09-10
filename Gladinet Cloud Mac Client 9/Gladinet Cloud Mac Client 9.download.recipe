@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>Gladinet Cloud Mac Client 9</string>
         <key>SEARCH_URL</key>
-        <string>http://www.centrestack.com/management1/releases/latestdownloads.aspx</string>
+        <string>https://www.centrestack.com/management1/releases/latestdownloads.aspx</string>
         <key>SEARCH_PATTERN</key>
         <string>[0-9a-z\.]+\/gladinet/MacClient.9_[0-9a-z\.]+\.dmg</string>
         <key>DOWNLOAD_URL</key>
