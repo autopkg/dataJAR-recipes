@@ -58,7 +58,7 @@
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpack</string>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
                 <key>flat_pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
                 <key>purge_destination</key>
@@ -79,13 +79,13 @@
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/SteelSeries Engine 3.app/Contents/Info.plist</string>
             </dict>
-            <key>Processor</key>
-            <string>Versioner</string>
         </dict>
     </array>
 </dict>
