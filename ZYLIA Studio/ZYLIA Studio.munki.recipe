@@ -19,9 +19,10 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>The ZYLIA Studio application is an Electronic Design Automation software with a low entry barrier, suited for the needs of makers and hobbyists. It offers a unique real-life "breadboard" view, and a parts library with many commonly used high-level components. ZYLIA Studio makes it very easy to communicate about circuits, as well as to turn them into PCB layouts ready for production. It is particularly popular among Arduino and Raspberry Pi users, and is widely used in education and creative tinkering.</string>
+            <string>ZYLIA Studio is a dedicated application which enables recording and processing of every tune created by the band. 
+​You can also separate your tracks using ZYLIA Studio.</string>
             <key>developer</key>
-            <string>Friends-of-ZYLIA Studio e.V.</string>
+            <string>ZYLIA</string>
             <key>display_name</key>
             <string>ZYLIA Studio</string>
             <key>name</key>
