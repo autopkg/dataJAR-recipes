@@ -19,9 +19,9 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>The Pd-l2ork application is an Electronic Design Automation software with a low entry barrier, suited for the needs of makers and hobbyists. It offers a unique real-life "breadboard" view, and a parts library with many commonly used high-level components. Pd-l2ork makes it very easy to communicate about circuits, as well as to turn them into PCB layouts ready for production. It is particularly popular among Arduino and Raspberry Pi users, and is widely used in education and creative tinkering.</string>
+            <string>Jonathan Wilkes’ Purr Data a.k.a. Pd-l2ork 2 is an improved version of Miller Puckette’s Pd. It is based on Ico Bukvic’s Pd-l2ork, which in turn is a fork of Hans-Christoph Steiner’s Pd-extended.</string>
             <key>developer</key>
-            <string>Friends-of-Pd-l2ork e.V.</string>
+            <string>Albert Graef</string>
             <key>display_name</key>
             <string>Pd-l2ork</string>
             <key>name</key>
