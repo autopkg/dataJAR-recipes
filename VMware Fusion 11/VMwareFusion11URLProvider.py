@@ -31,7 +31,7 @@ __all__ = ["VMwareFusion11URLProvider"]
 
 
 # variables
-VMWARE_BASE_URL = 'https://softwareupdate.vmware.com/cds/vmw-desktop/'
+VMWARE_BASE_URL = 'http://softwareupdate.vmware.com/cds/vmw-desktop/'
 FUSION = 'fusion.xml'
 MAJOR_VERSION = '11' # lock version in
 
