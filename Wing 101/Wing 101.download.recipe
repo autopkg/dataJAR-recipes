@@ -25,9 +25,9 @@
                 <key>url</key>
                 <string>https://wingware.com/downloads/wingide-101</string>
                 <key>re_pattern</key>
-                <string>(https://wingware.com/pub/wing-101/[\S]+\/wing-101-[\S]+\.dmg)</string>
+                <string>get&amp;prod=wing101&amp;target=(pub/wing-101/\S.*/wing-101-\S.*.dmg)</string>
                 <key>result_output_var_name</key>
-                <string>url</string>
+                <string>match</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -40,6 +40,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+            	<key>url</key>
+            	<string>https://wingware.com/%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
