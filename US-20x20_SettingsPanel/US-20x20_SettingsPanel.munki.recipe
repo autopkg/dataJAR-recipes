@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of LXFree and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipe.munki.US-20x20SettingsPanel</string>
+    <string>com.github.dataJAR-recipes.munki.US-20x20SettingsPanel</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -23,9 +23,9 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-			<string>US-20x20 - 20-Channel USB Audio Interface / Digital Mixer Settings Panel</string>
+            <string>US-20x20 - 20-Channel USB Audio Interface / Digital Mixer Settings Panel</string>
             <key>developer</key>
-			<string>Tascam</string>
+            <string>Tascam</string>
             <key>display_name</key>
             <string>US-20x20_SettingsPanel</string>
             <key>name</key>
@@ -37,9 +37,9 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
      <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipe.download.US-20x20SettingsPanel</string>
+    <string>com.github.dataJAR-recipes.download.US-20x20SettingsPanel</string>
     <key>Process</key>
-    <array> 
+    <array>
     <dict>
         <key>Processor</key>
         <string>Unarchiver</string>
@@ -59,8 +59,8 @@
             <key>pattern</key>
             <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
         </dict>
-    </dict> 
-	<dict>
+    </dict>
+    <dict>
         <key>Arguments</key>
         <dict>
             <key>source_pkg</key>
@@ -70,18 +70,18 @@
         </dict>
         <key>Processor</key>
         <string>PkgCopier</string>
-    </dict>   
-	<dict>
-		<key>Arguments</key>
-		<dict>
-			<key>pkg_path</key>
-			<string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-			<key>repo_subdirectory</key>
-			<string>%MUNKI_REPO_SUBDIR%</string>
-		</dict>
-		<key>Processor</key>
-		<string>MunkiImporter</string>
-	</dict>
+    </dict>
+    <dict>
+        <key>Arguments</key>
+        <dict>
+            <key>pkg_path</key>
+            <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+            <key>repo_subdirectory</key>
+            <string>%MUNKI_REPO_SUBDIR%</string>
+        </dict>
+        <key>Processor</key>
+        <string>MunkiImporter</string>
+    </dict>
     </array>
 </dict>
 </plist>
