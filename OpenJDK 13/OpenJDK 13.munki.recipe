@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.OpenJDK13</string>
+    <key>Description</key>
+    <string>Downloads the current release version of OpenJDK 13, builds a package and imports it to Munki.</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>OpenJDK 13</string>
+        <key>SOFTWARETITLE</key>
+        <string>Java</string>
+        <key>SOFTWARETYPE</key>
+        <string>JDK</string>
+        <key>VENDOR</key>
+        <string>OpenJDK</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>%VENDOR%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%SOFTWARETYPE%</string>
+            <key>description</key>
+            <string>OpenJDK is a free and open-source implementation of the Java Platform, Standard Edition.</string>
+            <key>developer</key>
+            <string>%VENDOR%</string>
+            <key>display_name</key>
+            <string>OpenJDK 13</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>        
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.pkg.OpenJDK13</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
