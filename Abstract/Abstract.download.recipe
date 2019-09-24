@@ -37,6 +37,10 @@
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
 		<dict>
 			<key>Arguments</key>
 			<dict>
