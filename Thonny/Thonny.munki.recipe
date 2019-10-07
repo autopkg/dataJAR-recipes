@@ -3,57 +3,44 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of Rhinoceros and imports into Munki.</string>
+    <string>Downloads the latest version of Thonny and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Rhinoceros</string>
-    <key>Input</key>
+    <string>com.github.dataJAR-recipes.munki.Thonny</string>
+      <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>Rhinoceros</string>
+        <string>Thonny</string>
         <key>pkginfo</key>
         <dict>
-            <key>blocking_applications</key>
-            <array>
-                <string>Rhinoceros</string>
-            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
+			<key>developer</key>
+			<string>Aivar Annamaa</string>
             <key>description</key>
-            <string>Rhino can create, edit, analyze, document, render, animate, and translate NURBS curves, surfaces, and solids, point clouds, and polygon meshes.</string>
+            <string>Python IDE for beginners.</string>
             <key>display_name</key>
-            <string>Rhinoceros</string>
+            <string>Thonny</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0</string>
+    <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.hansen-m.download.Rhinoceros</string>
+	<string>com.github.dataJAR-recipes.download.Thonny</string>
     <key>Process</key>
 	<array>
-		<dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/rhino_*.dmg</string>
-            </dict>
-        </dict>
 		<dict>
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%found_filename%</string>
+				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 				<key>version_comparison_key</key>

@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads LFXFree Disk image and extracts the embedded package. No repackaging done.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipe.pkg.US-20x20SettingsPanel</string>
+    <string>com.github.dataJAR-recipes.pkg.US-20x20SettingsPanel</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -18,7 +18,7 @@
     <key>MinimumVersion</key>
     <string>0.6.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipe.download.US-20x20SettingsPanel</string>
+    <string>com.github.dataJAR-recipes.download.US-20x20SettingsPanel</string>
     <key>Process</key>
     <array> 
     <dict>

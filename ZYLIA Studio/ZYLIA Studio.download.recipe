@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ZYLIA Studio.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.ZYLIA Studio</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ZYLIAStudio</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>&lt;div class=&quot;paragraph&quot; style=&quot;text-align:center;&quot;&gt;&lt;a href=&quot;(https:\/\/oc.zylia.pl\/index.php\/s\/\S.*)&quot; target=&quot;_blank&quot;&gt;ZYLIA Studio&lt;br \/&gt;&amp;#8203;for Mac OS X&lt;\/a&gt;&lt;\/div&gt;</string>
+                <key>url</key>
+                <string>https://www.zylia.co/zylia-studio-download.html</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>&lt;a href=\&quot;(https://oc.zylia.pl/index.php/s/1iEaysZ2WzunGYQ/download)\&quot; id=\&quot;downloadFile\&quot; class=\&quot;button\&quot;&gt;</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+            	<key>filename</key>
+            	<string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>   
+			<key>Processor</key>   
+			<string>CodeSignatureVerifier</string>   
+			<key>Arguments</key>   
+			<dict>   
+				<key>input_path</key>   
+				<string>%pathname%</string>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: ZYLIA SP Z O O (2J3Y9E4AS7)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+			</dict>
+		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg-unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%destination_path%/zylia-studio.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/ZYLIA Studio.app</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%destination_path%/Contents/Info.plist</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

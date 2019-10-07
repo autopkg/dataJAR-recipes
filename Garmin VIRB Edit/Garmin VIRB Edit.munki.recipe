@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Stream Deck and imports it into Munki.</string>
+    <string>Downloads the latest version of Garmin VIRB Edit and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Stream Deck</string>
+    <string>com.github.dataJAR-recipes.munki.Garmin VIRB Edit</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>StreamDeck</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>GarminVIRBEdit</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -19,11 +19,11 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>You are creating quality content backed by the best tech on the planet. But you want to do more. With Stream Deck, unleash your creative genius and make waves across Twitch and YouTube. All while focusing on what matters most: your audience.</string>
+            <string>The VIRB Edit desktop app combines your VIRB video footage with GPS and other data from any VIRB action camera or a compatible Garmin device. The result is a rich, memorable, video experience that you can easily share and post online.</string>
             <key>developer</key>
-            <string>Corsair Memory, Inc</string>
+            <string>Garmin Ltd</string>
             <key>display_name</key>
-            <string>Stream Deck</string>
+            <string>Garmin VIRB Edit</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Stream Deck</string>
+    <string>com.github.dataJAR-recipes.download.Garmin VIRB Edit</string>
     <key>Process</key>
     <array>
         <dict>
@@ -44,25 +44,16 @@
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                <string>%RECIPE_CACHE_DIR%/payload_unpack</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Stream Deck.app</string>
+                    <string>/Applications/Garmin VIRB Edit.app</string>
                 </array>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%destination_path%Applications/Stream Deck.app/Contents/Info.plist</string>
-            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -77,10 +68,6 @@
             </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>  
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
@@ -98,8 +85,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/payload_unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
                 </array>
             </dict>
         </dict>

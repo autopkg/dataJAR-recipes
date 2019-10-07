@@ -41,6 +41,10 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
