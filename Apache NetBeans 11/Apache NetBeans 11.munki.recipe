@@ -24,10 +24,6 @@
             <string>Apache NetBeans 11</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>requires</key>            
-            <array>
-                <string>OpenJDK12</string>
-            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
