@@ -43,6 +43,8 @@
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
+                <key>munkiimport_appname</key>
+                <string>PreForm.app</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
