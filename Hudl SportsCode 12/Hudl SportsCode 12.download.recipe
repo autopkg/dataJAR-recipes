@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/HudlSportscode12.*?.dmg.zip\?mtime=.*?)"</string>
+                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/HudlSportscode_12.*?.dmg.zip\?mtime=.*?)"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -83,7 +83,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/dmg_unpack/HudlSportscode*.dmg</string>
+                <string>%RECIPE_CACHE_DIR%/dmg_unpack/Users/rocky.huang/Documents/ReleaseBuilds/HudlSportscode*.dmg</string>
             </dict>
         </dict>
         <dict>
