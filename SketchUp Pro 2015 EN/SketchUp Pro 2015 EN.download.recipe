@@ -24,7 +24,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
     <array>
         <dict>
             <key>Processor</key>
-            <string>com.github.gregneagle.autopkg.sharedprocessors/DeprecationWarning</string>
+            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
