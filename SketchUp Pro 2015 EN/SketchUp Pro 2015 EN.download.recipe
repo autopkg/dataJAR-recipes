@@ -19,7 +19,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
         <string>SketchUpPro2015-EN</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
