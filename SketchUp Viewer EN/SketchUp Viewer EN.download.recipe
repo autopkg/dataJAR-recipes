@@ -19,12 +19,12 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
         <string>SketchUpViewer-EN</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Processor</key>
-            <string>com.github.gregneagle.autopkg.sharedprocessors/DeprecationWarning</string>
+            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>

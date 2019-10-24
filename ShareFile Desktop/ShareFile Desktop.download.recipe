@@ -14,12 +14,12 @@
         <string>https://dl.sharefile.com/sfdesktopmac/updates.xml</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Processor</key>
-            <string>com.github.gregneagle.autopkg.sharedprocessors/DeprecationWarning</string>
+            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
