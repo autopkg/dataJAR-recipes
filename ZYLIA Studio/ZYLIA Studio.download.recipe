@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>&lt;div class=&quot;paragraph&quot; style=&quot;text-align:center;&quot;&gt;&lt;a href=&quot;(https:\/\/oc.zylia.pl\/index.php\/s\/\S.*)&quot; target=&quot;_blank&quot;&gt;ZYLIA Studio&lt;br \/&gt;&amp;#8203;for Mac OS X&lt;\/a&gt;&lt;\/div&gt;</string>
+                <string>&lt;div class=&quot;paragraph&quot; style=&quot;text-align:center;&quot;&gt;&lt;a href=&quot;(https://oc.zylia.pl/index.php/s/\S.*)&quot; target=&quot;_blank&quot;&gt;ZYLIA Studio&lt;br /&gt;&amp;#8203;for Mac OS X&lt;/a&gt;&lt;br /&gt;&lt;/div&gt;</string>
                 <key>url</key>
                 <string>https://www.zylia.co/zylia-studio-download.html</string>
             </dict>
@@ -32,7 +32,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>&lt;a href=\&quot;(https://oc.zylia.pl/index.php/s/1iEaysZ2WzunGYQ/download)\&quot; id=\&quot;downloadFile\&quot; class=\&quot;button\&quot;&gt;</string>
+                <string>&lt;a href=\&quot;(https://oc.zylia.pl/index.php/s/\S.*/download)\&quot; id=\&quot;downloadFile\&quot; class=\&quot;button\&quot;&gt;</string>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
