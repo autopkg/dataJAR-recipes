@@ -9,7 +9,7 @@
         <key>Input</key>
         <dict>
             <key>MINIMUM_OS_VERSION</key>
-            <string>10.12.0</string>
+            <string>10.13.0</string>
             <key>MUNKI_CATEGORY</key>
             <string>Applications</string>
             <key>MUNKI_DESCRIPTION</key>
