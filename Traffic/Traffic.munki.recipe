@@ -50,7 +50,14 @@ fi
 # If Traffic.app is installed, uninstall 1st
 if [ -d /Applications/Traffic.app/ ]
 then
-    /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -uninstall -silent /Applications/Traffic.app
+    loggedInUser=$( /usr/sbin/scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }' )
+    if [ -n "${loggedInUser}" ]
+    then
+        /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -uninstall -silent /Applications/Traffic.app
+    else
+        /bin/echo "No user logged in, exiting..."
+        exit 1
+    fi
 fi</string>
         </dict>
     </dict>
@@ -70,22 +77,22 @@ fi</string>
                     <key>version</key>
                     <string>%version%</string>
                     <key>installs_item_paths</key>
-					<array>
-						<dict>
-							<key>path</key>
-							<string>/Applications/Traffic.app</string>
-							<key>CFBundleIdentifier</key>
-							<string>%bundleid%</string>
-							<key>CFBundleShortVersionString</key>
-							<string>%version%</string>
-							<key>minosversion</key>
-							<string>10.9</string>
-							<key>type</key>
-							<string>application</string>
-							<key>version_comparison_key</key>
-							<string>CFBundleShortVersionString</string>
-						</dict>
-					</array>
+                    <array>
+                        <dict>
+                            <key>path</key>
+                            <string>/Applications/Traffic.app</string>
+                            <key>CFBundleIdentifier</key>
+                            <string>%bundleid%</string>
+                            <key>CFBundleShortVersionString</key>
+                            <string>%version%</string>
+                            <key>minosversion</key>
+                            <string>10.9</string>
+                            <key>type</key>
+                            <string>application</string>
+                            <key>version_comparison_key</key>
+                            <string>CFBundleShortVersionString</string>
+                        </dict>
+                    </array>
                 </dict>
             </dict>
         </dict>
