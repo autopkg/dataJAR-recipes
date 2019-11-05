@@ -9,7 +9,7 @@
         <key>Input</key>
         <dict>
             <key>MINIMUM_OS_VERSION</key>
-            <string>10.13.0</string>
+            <string>10.12.0</string>
             <key>MUNKI_CATEGORY</key>
             <string>Applications</string>
             <key>MUNKI_DESCRIPTION</key>
@@ -19,7 +19,7 @@
             <key>NAME</key>
             <string>SomeAdobe2020Title</string>
             <key>MUNKI_REPO_SUBDIR</key>
-            <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
+            <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%MUNKI_NAME%</string>
             <key>pkginfo</key>
             <dict>
                 <key>catalogs</key>
