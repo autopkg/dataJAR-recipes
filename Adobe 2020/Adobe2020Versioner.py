@@ -238,7 +238,8 @@ class Adobe2020Versioner(Processor):
                         # Break when found .app/Contents/Info.plist
                         for elem in tree.findall('Assets'):
                             for i in  elem.getchildren():
-                                if i.attrib['target'].upper().startswith('[INSTALLDIR]'):
+                                # Below special tweak for the non-Classic Lightroom bundle
+                                if i.attrib['target'].upper().startswith('[INSTALLDIR]') and not i.attrib['target'].endswith('Icons'):
                                     bundle_location = i.attrib['source']
                                     self.output('bundle_location: %s' % bundle_location)
                                 else:
@@ -260,7 +261,8 @@ class Adobe2020Versioner(Processor):
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
                                             data = FoundationPlist.readPlistFromString(plist)
-                                            if self.env['sap_code'] == 'LTRM':
+                                            # If the App is Lightroom (Classic or non-Classic) we need to compare a different value in Info.plist
+                                            if self.env['sap_code'] == 'LTRM' or self.env['sap_code'] == 'LRCC':
                                                 self.env['vers_compare_key'] = 'CFBundleVersion'
                                             else:
                                                 self.env['vers_compare_key'] = \
