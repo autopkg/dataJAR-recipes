@@ -78,7 +78,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%destination_path%*.dmg</string>
+                <string>%destination_path%*/*.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -113,7 +113,7 @@
 				<key>version</key>
 				<string>%%found_filename%%</string>
 				<key>index</key>
-        		<integer>1</integer>
+        		<integer>10</integer>
 				<key>split_on</key>
 				<string>_</string>
 			</dict>
