@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>(https://download.kde.org/stable/krita/[0-9.]*/krita-[0-9.]*\.dmg)</string>
+                <string>(https://download.kde.org/stable/krita/[0-9.]*/b/krita-[0-9.]*\.dmg)</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
