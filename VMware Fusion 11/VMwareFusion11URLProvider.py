@@ -1,12 +1,7 @@
 #!/usr/bin/python
 #
-# Copyright 2014 Justin Rummel, 
+# Copyright 2019 dataJAR Ltd, 
 #
-# Updates added 2018 by macmule:
-# https://github.com/autopkg/justinrummel-recipes/pull/7
-# https://github.com/autopkg/justinrummel-recipes/pull/14
-#
-# Thanks fuzzylogiq & Sterling
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -61,7 +56,11 @@ class VMwareFusion11URLProvider(Processor):
 
     def core_metadata(self, base_url, product_name, major_version):
         request = urllib2.Request(base_url+product_name)
-        # print base_url
+
+
+        foundUrls = {}
+        urls = []
+        xmlVers = []
 
         try:
             vsus = urllib2.urlopen(request)
@@ -69,38 +68,35 @@ class VMwareFusion11URLProvider(Processor):
             print e.reason
 
         data = vsus.read()
-        # print data
 
         try:
             metaList = ElementTree.fromstring(data)
         except ExpatData:
             print "Unable to parse XML data from string"
 
-        versions = []
-        for metadata in metaList:
-            version = metadata.find("version")
-            if (major_version == 'latest' or
-                    major_version == version.text.split('.')[0]):
-                versions.append(version.text)
-        if len(versions) == 0:
-            raise ProcessorError("Could not find any versions for the \
-                                  major_version '%s'." % major_version)
-        versions.sort(key=LooseVersion)
-        self.latest = versions[-1]
-        # print latest
-
-        urls = []
         for metadata in metaList:
             url = metadata.find("url")
             urls.append(url.text)
 
-        matching = [s for s in urls if self.latest in s]
-        core = [s for s in matching if "core" in s]
-        # print core[0]
+        for someUrl in urls:
+            if someUrl.split('/')[1].startswith(major_version):
+                foundUrls[someUrl.split('/')[1]] = someUrl
+
+        for foundVer in foundUrls.keys():
+            xmlVers.append(foundVer)
+    
+        if len(xmlVers) == 0:
+            raise ProcessorError("Could not find any versions for the \
+                                  major_version '%s'." % major_version)
+    
+        xmlVers.sort(key=LooseVersion)
+        self.output(xmlVers[-1])
+        self.latest = xmlVers[-1]
+        core = foundUrls[xmlVers[-1]]
 
         vsus.close()
 
-        request = urllib2.Request(base_url+core[0])
+        request = urllib2.Request(base_url+core)
 
         try:
             vLatest = urllib2.urlopen(request)
@@ -110,7 +106,6 @@ class VMwareFusion11URLProvider(Processor):
         buf = StringIO(vLatest.read())
         f = gzip.GzipFile(fileobj=buf)
         data = f.read()
-        # print data
 
         try:
             metadataResponse = ElementTree.fromstring(data)
@@ -118,11 +113,9 @@ class VMwareFusion11URLProvider(Processor):
             print "Unable to parse XML data from string"
 
         relativePath = metadataResponse.find("bulletin/componentList/component/relativePath")
-        # print core[0].replace("metadata.xml.gz", relativePath.text)
-        return base_url+core[0].replace("metadata.xml.gz", relativePath.text)
+        return base_url+core.replace("metadata.xml.gz", relativePath.text)
 
     def main(self):
-        # Determine product_name, and base_url.
         product_name = self.env.get("product_name", FUSION)
         base_url = self.env.get("base_url", VMWARE_BASE_URL)
         major_version = self.env.get("major_version", MAJOR_VERSION)
