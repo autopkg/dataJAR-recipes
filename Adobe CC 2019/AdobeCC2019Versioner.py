@@ -260,7 +260,7 @@ class AdobeCC2019Versioner(Processor):
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
                                             data = FoundationPlist.readPlistFromString(plist)
-                                            if self.env['sap_code'] == 'LTRM':
+                                            if self.env['sap_code'] == 'LTRM' or self.env['sap_code'] == 'LRCC':
                                                 self.env['vers_compare_key'] = 'CFBundleVersion'
                                             else:
                                                 self.env['vers_compare_key'] = \
