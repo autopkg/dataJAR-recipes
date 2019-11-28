@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Fritzing.
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Fritzing</string>
+    <key>Input</key>
+    <dict>
+        <key>PRERELEASE</key>
+        <string>true</string>
+        <key>NAME</key>
+        <string>Fritzing</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>github_repo</key>
+                <string>fritzing/fritzing-app</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
+                <key>asset_regex</key>
+                <string>[\S]+\.mojave\.[\S]+\.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>

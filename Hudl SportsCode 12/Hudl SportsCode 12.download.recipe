@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/Hudlsportscode.*?.Dmg.zip\?mtime=.*?)"</string>
+                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/HudlSportscode12.*?.dmg.zip\?mtime=.*?)"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -63,7 +63,7 @@
                 <true/>
             </dict>
         </dict>
-    	<dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
@@ -79,13 +79,22 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/dmg_unpack/HudlSportscode*.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/Hudl Sportscode.app</string>
                 <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/dmg_unpack/HudlSportscode.dmg/Hudl Sportscode.app</string>
+                <string>%found_filename%/Hudl Sportscode.app</string>
             </dict>
         </dict>
         <dict>

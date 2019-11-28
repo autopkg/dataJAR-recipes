@@ -32,6 +32,10 @@
             </dict>
             <dict>
                 <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
                 <string>com.github.autopkg.gerardkok-recipes.SharedProcessors/GPGSignatureVerifier</string>
                 <key>Arguments</key>
                 <dict>

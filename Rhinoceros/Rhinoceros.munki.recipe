@@ -11,7 +11,7 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>FlashPrint</string>
+        <string>Rhinoceros</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -46,7 +46,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Rhinoceros_*.dmg</string>
+                <string>%RECIPE_CACHE_DIR%/downloads/rhino_*.dmg</string>
             </dict>
         </dict>
 		<dict>

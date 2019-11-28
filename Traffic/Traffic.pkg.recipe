@@ -28,10 +28,10 @@
                 <dict>
                     <key>private</key>
                     <string>0777</string>
-					<key>private/tmp</key>
-					<string>0777</string>
-					<key>private/tmp/Traffic</key>
-					<string>0777</string>
+                    <key>private/tmp</key>
+                    <string>0777</string>
+                    <key>private/tmp/Traffic</key>
+                    <string>0777</string>
                 </dict>
             </dict>
         </dict>
@@ -78,9 +78,15 @@ fi
 # If Traffic.app is installed, uninstall 1st
 if [ -d /Applications/Traffic.app/ ]
 then
-    /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -uninstall -silent /Applications/Traffic.app
-fi
-</string>
+    loggedInUser=$( /usr/sbin/scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }' )
+    if [ -n "${loggedInUser}" ]
+    then
+        /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -uninstall -silent /Applications/Traffic.app
+    else
+        /bin/echo "No user logged in, exiting..."
+        exit 1
+    fi
+fi</string>
                 <key>file_mode</key>
                 <string>0755</string>
                 <key>file_path</key>
@@ -100,7 +106,14 @@ fi
 
 if [ -e /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer ]
 then
-    /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -silent -eulaAccepted -location /Applications /private/tmp/Traffic/TrafficApplication-Installer.air
+    loggedInUser=$( /usr/sbin/scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }' )
+    if [ -n "${loggedInUser}" ]
+    then
+        /Applications/Utilities/Adobe\ AIR\ Application\ Installer.app/Contents/MacOS/Adobe\ AIR\ Application\ Installer -silent -eulaAccepted -location /Applications /private/tmp/Traffic/TrafficApplication-Installer.air
+    else
+        /bin/echo "No user logged in, exiting..."
+        exit 1
+    fi
 else
     /bin/echo "Adobe AIR not installed..."
     exit 1
@@ -126,7 +139,7 @@ fi</string>
                             <key>group</key>
                             <string>admin</string>
                             <key>mode</key>
-							<string>0777</string>
+                            <string>0777</string>
                         </dict>
                     </array>
                     <key>id</key>
