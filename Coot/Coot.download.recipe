@@ -21,9 +21,9 @@
 			<key>Arguments</key>
 			<dict>
 				<key>url</key>
-				<string>http://psbmini.ucsc.edu/~wgscott/coot/stablereleases/</string>
+				<string>http://scottlab.ucsc.edu/coot/stable</string>
 				<key>re_pattern</key>
-				<string>(Coot-[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\-stable_64bit_[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.pkg.zip)</string>
+				<string>(coot_[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\_stable_[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.pkg.zip)</string>
 				<key>result_output_var_name</key>
 				<string>match</string>
 			</dict>
@@ -64,7 +64,7 @@
 				<key>index</key>
         		<integer>1</integer>
 				<key>split_on</key>
-				<string>-</string>
+				<string>_</string>
 			</dict>
 		</dict>
     </array>
