@@ -27,7 +27,7 @@
 				<key>url</key>
 				<string>%SEARCH_URL%</string>
 				<key>re_pattern</key>
-				<string>https://filestore.fortinet.com/forticlient/downloads/FortiClientVPNSetup_6.[\S]+\_macosx.dmg</string>
+				<string>https://filestore.fortinet.com/forticlient/downloads/FortiClientVPNOnlineInstaller_6.[\S].dmg</string>
                 <key>request_headers</key>
                 <dict>
                         <key>user-agent</key>
