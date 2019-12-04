@@ -14,6 +14,10 @@
 		<string>Microsoft Defender ATP</string>
 		<key>pkginfo</key>
 		<dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Auto Update</string>
+            </array>
 			<key>catalogs</key>
 			<array>
 				<string>testing</string>
