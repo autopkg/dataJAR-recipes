@@ -3,10 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Recipe stub for any Shared Processors in this directory.
-    </string>
+	<string>Recipe stub for any Shared Processors in this directory.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.shared</string>
+	<string>com.github.dataJAR-recipes.Shared Processors</string>
 	<key>Input</key>
 	<dict/>
 	<key>MinimumVersion</key>

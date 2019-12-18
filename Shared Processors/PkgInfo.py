@@ -32,6 +32,10 @@ class PkgInfo(Processor):
 
     description = __doc__
     input_variables = {
+        "pkg_path": {
+            "required": True,
+            "description": ("Path to the Pkg.."),
+        },
     }
 
     output_variables = {
@@ -51,7 +55,7 @@ class PkgInfo(Processor):
         # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/FlatPkgUnpacker.py#L72
         # Extract pkg info, pinched with <3 from:
         # https://github.com/munki/munki/blob/master/code/client/munkilib/pkgutils.py#L374
-        self.env["abspkgpath"] = os.path.join(self.env["pathname"])
+        self.env["abspkgpath"] = os.path.join(self.env["pkg_path"])
         file_path = os.path.join(self.env["RECIPE_CACHE_DIR"], "downloads")
         cmd_toc = ['/usr/bin/xar', '-tf', self.env["abspkgpath"]]
         proc = subprocess.Popen(cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -72,24 +76,38 @@ class PkgInfo(Processor):
                               if item.startswith('Distribution')]:
                 cmd_extract = ['/usr/bin/xar', '-xf', self.env["abspkgpath"], \
                                toc_entry, '-C', file_path]
-                result = subprocess.call(cmd_extract)
+                _ = subprocess.call(cmd_extract)
         else:
             raise ProcessorError("pkg not found at pkg_path")
 
         dist_path = os.path.join(file_path, "Distribution")
 
+        version = None
+        pkg_id = None
+
         if not os.path.exists(dist_path):
             raise ProcessorError("Cannot find Distribution")
         else:
             tree = ElementTree.parse(dist_path)
-            root = tree.getroot()
-            for elem in tree.iter(tag='product'):
-                version = elem.get("version")
-            for elem in tree.iter(tag='pkg-ref'):
-                pkg_id = elem.get("id")
+            _ = tree.getroot()
+            try:
+                for elem in tree.iter(tag='product'):
+                    version = elem.get("version")
+                for elem in tree.iter(tag='pkg-ref'):
+                    pkg_id = elem.get("id")
+            except xml.etree.ElementTree.ParseError as err:
+                print("Can't parse distruntion file %s: %s"
+                        % ('dist_path', err.strerror))
 
-        self.env["version"] = version
-        self.env["pkg_id"] = pkg_id
+        if not pkg_id:
+            raise ProcessorError("cannot get pkg_id")
+        else:
+            self.env["pkg_id"] = pkg_id
+
+        if not version:
+            raise ProcessorError("cannot get version")
+        else:
+            self.env["version"] = version
 
 if __name__ == '__main__':
     processor = PkgInfo()
