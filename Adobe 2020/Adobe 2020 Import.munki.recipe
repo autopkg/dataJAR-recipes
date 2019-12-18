@@ -19,7 +19,7 @@
             <key>NAME</key>
             <string>SomeAdobe2020Title</string>
             <key>MUNKI_REPO_SUBDIR</key>
-            <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%MUNKI_NAME%</string>
+            <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
             <key>pkginfo</key>
             <dict>
                 <key>catalogs</key>
