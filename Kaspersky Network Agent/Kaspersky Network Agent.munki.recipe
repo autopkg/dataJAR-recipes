@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Kaspersky Network Agent and imports into Munki.</string>
+    <string>Downloads the latest version of Kaspersky Network Agent and imports into Munki</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Kaspersky Network Agent</string>
     <key>Input</key>
