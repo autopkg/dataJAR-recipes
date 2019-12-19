@@ -37,10 +37,11 @@ then
 else
     /bin/echo "klnagent found, skipping..."
     exit 1
-fi
-
+fi</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/bash
 #
-# A config.ini file is needed too, we'll write this out here
+# A config.ini file is needed
 #
 
 configFolder="/tmp/klnagent/config.ini"
@@ -94,14 +95,14 @@ fi</string>
             </dict>
         </dict>
         <dict>
-        	<key>Processor</key>
+            <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/unzip</string>
-            	</array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
             </dict>
         </dict>
     </array>
