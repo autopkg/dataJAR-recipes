@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Kaspersky Network Agent and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Kaspersky Network Agent</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>KasperskyNetworkAgent</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Kaspersky Network Agent</string>
+    <key>Process</key>
+    <array>
+		<dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%input_path%</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
