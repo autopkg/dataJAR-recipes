@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://flow.polar.com/start</string>
                 <key>re_pattern</key>
-                <string>(\bhttps://flowsync\.cdn\.polar\.com/connect/download/FlowSync_.*?\.pkg\b)</string>
+                <string>href=\"(https://flowsync\.cdn\.polar\.com/connect/download/FlowSync_.*?\.pkg)\"</string>
             </dict>
         </dict>
         <dict>
