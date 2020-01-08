@@ -10,6 +10,8 @@
     <dict>
         <key>NAME</key>
         <string>VIA</string>
+        <key>URL</key>
+        <string>https://k.kramerav.com/support/download.asp?f=56977</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>

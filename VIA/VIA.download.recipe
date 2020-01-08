@@ -10,6 +10,8 @@
     <dict>
         <key>NAME</key>
         <string>VIA</string>
+        <key>URL</key>
+        <string>https://k.kramerav.com/support/download.asp?f=56977</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -21,7 +23,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://k.kramerav.com/support/download.asp?f=55519</string>
+                <string>%URL%</string>
                 <key>re_pattern</key>
                 <string>(/downloads/setups/via_mac_dmg_v.2.[\S]+\.zip)</string>
                 <key>result_output_var_name</key>
