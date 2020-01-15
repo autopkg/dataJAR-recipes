@@ -60,23 +60,23 @@ class PkgInfo(Processor):
         (toc, err) = proc.communicate()
         toc = toc.strip().split('\n')
 
-        if proc.returncode == 0:
-            # Walk trough the TOC entries
-            if not os.path.exists('file_path'):
-                try:
-                    os.mkdir('file_path')
-                except OSError as err:
-                    print(
-                        "Can't create %s: %s"
-                        % ('file_path', err.strerror))
-
-            for toc_entry in [item for item in toc
-                              if item.startswith('Distribution')]:
-                cmd_extract = ['/usr/bin/xar', '-xf', self.env["abspkgpath"], \
-                               toc_entry, '-C', file_path]
-                _ = subprocess.call(cmd_extract)
-        else:
+        if proc.returncode != 0:
             raise ProcessorError("pkg not found at pkg_path")
+
+        # Walk trough the TOC entries
+        if not os.path.exists('file_path'):
+            try:
+                os.mkdir('file_path')
+            except OSError as err:
+                print(
+                    "Can't create %s: %s"
+                    % ('file_path', err))
+
+        for toc_entry in [item for item in toc
+                          if item.startswith('Distribution')]:
+            cmd_extract = ['/usr/bin/xar', '-xf', self.env["abspkgpath"], \
+                           toc_entry, '-C', file_path]
+            _ = subprocess.call(cmd_extract)
 
         dist_path = os.path.join(file_path, "Distribution")
 
@@ -85,27 +85,27 @@ class PkgInfo(Processor):
 
         if not os.path.exists(dist_path):
             raise ProcessorError("Cannot find Distribution")
-        else:
-            tree = ElementTree.parse(dist_path)
-            _ = tree.getroot()
-            try:
-                for elem in tree.iter(tag='product'):
-                    version = elem.get("version")
-                for elem in tree.iter(tag='pkg-ref'):
-                    pkg_id = elem.get("id")
-            except xml.etree.ElementTree.ParseError as err:
-                print("Can't parse distruntion file %s: %s"
-                        % ('dist_path', err.strerror))
+
+        tree = ElementTree.parse(dist_path)
+        _ = tree.getroot()
+        try:
+            for elem in tree.iter(tag='product'):
+                version = elem.get("version")
+            for elem in tree.iter(tag='pkg-ref'):
+                pkg_id = elem.get("id")
+        except ElementTree.ParseError as err:
+            print("Can't parse distruntion file %s: %s"
+                  % ('dist_path', err))
 
         if not pkg_id:
             raise ProcessorError("cannot get pkg_id")
-        else:
-            self.env["pkg_id"] = pkg_id
+
+        self.env["pkg_id"] = pkg_id
 
         if not version:
             raise ProcessorError("cannot get version")
-        else:
-            self.env["version"] = version
+
+        self.env["version"] = version
 
 if __name__ == '__main__':
     processor = PkgInfo()
