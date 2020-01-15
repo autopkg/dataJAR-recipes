@@ -16,13 +16,11 @@
 
 """See docstring for PkgInfo class"""
 
-import os.path
+import os
 import subprocess
-
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError
-
 
 __all__ = ["PkgInfo"]
 
