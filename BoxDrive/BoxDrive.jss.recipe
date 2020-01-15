@@ -33,7 +33,7 @@
     <array>
 		<dict>
 			<key>Processor</key>
-			<string>PkgInfo</string>
+			<string>com.github.dataJAR-recipes.Shared Processors/PkgInfo</string>
 		</dict>
 		<dict>
 			<key>Processor</key>
