@@ -32,16 +32,16 @@ class PkgInfo(Processor):
     input_variables = {
         "pkg_path": {
             "required": True,
-            "description": ("Path to the Pkg.."),
+            "description": ("Path to the Pkg"),
         },
     }
 
     output_variables = {
         "pkg_id": {
-            "description": ("The package ID.."),
+            "description": ("The package ID"),
         },
         "version": {
-            "description": ("The version of the pkg from it's info"),
+            "description": ("The version of the pkg from its info"),
         },
     }
 
