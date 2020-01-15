@@ -108,4 +108,5 @@ class PkgInfo(Processor):
         self.env["version"] = version
 
 if __name__ == '__main__':
-    processor = PkgInfo()
+    PROCESSOR = PkgInfo()
+    PROCESSOR.execute_shell()
