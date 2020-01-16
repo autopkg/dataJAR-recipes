@@ -4,11 +4,11 @@
 <dict>
     <key>Description</key>
     <string>Downloads the current release version of the JumpCloud Agent and then uploads to munki.
-    
+
     NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
-    installing this PKG, else you'll be prompted for the connect_key. 
+    installing this PKG, else you'll be prompted for the connect_key.
     Amend the preinstall_script for this.
-    
+
     See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
     </string>
     <key>Identifier</key>
@@ -115,7 +115,7 @@ rm -rf /Applications/Jumpcloud.app</string>
     <array>
         <dict>
             <key>Processor</key>
-            <string>PkgInfo</string>
+            <string>com.github.dataJAR-recipes.Shared Processors/PkgInfo</string>
         </dict>
         <dict>
             <key>Arguments</key>
