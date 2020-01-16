@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for Luxafor.</string>
+    <string>Download recipe for Kaspersky Network Agent.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Luxafor</string>
+    <string>com.github.dataJAR-recipes.download.Kaspersky Network Agent</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Luxafor</string>
+        <string>KasperskyNetworkAgent</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://pro.luxafor.com/download/</string>
+                <string>https://support.kaspersky.com/kes11mac#downloads</string>
                 <key>re_pattern</key>
-                <string>/[\S]+\/[\S]+\/Luxafor-OSX-[\S]+\.zip</string>
+                <string>\"(https://products.s.kaspersky-labs.com/workstations/kesmac\d.*/.*/multilanguage-INT-.*/.*/klnagentmac1.*.zip)\"</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
             </dict>
@@ -34,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https:%match%</string>
+                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
             </dict>
@@ -45,27 +45,13 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.zip</string>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications/</string>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -76,9 +62,13 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%destination_path%/Luxafor.app</string>
-                <key>requirement</key>
-                <string>anchor apple generic and identifier "com.ideabits.Luxafor" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UB463X3CTK)</string>
+                <string>%destination_path%/klnagentmac.dmg/Kaspersky Network Agent.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Kaspersky Lab UK Limited (2Y8XE5CQ94)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
             </dict>
         </dict>
     </array>

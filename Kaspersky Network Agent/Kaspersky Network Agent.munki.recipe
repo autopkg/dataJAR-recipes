@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Kaspersky Network Agent and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Kaspersky Network Agent</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>KasperskyNetworkAgent</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Network Agent facilitates interaction between the Administration Server and Kaspersky products installed on workstations and servers.</string>
+            <key>display_name</key>
+            <string>Kaspersky Network Agent</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>installcheck_script</key>
+            <string>#!/bin/bash
+#
+# This agent will be updated from the server, so we just want to see if not installed before proceeding
+#
+
+if [ ! -f "/Library/Application Support/Kaspersky Lab/klnagent/Binaries/klnagent" ]
+then
+    /bin/echo "klnagent not found, proceeding..."
+    exit 0
+else
+    /bin/echo "klnagent found, skipping..."
+    exit 1
+fi</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/bash
+#
+# A config.ini file is needed
+#
+
+configFolder="/tmp/klnagent/config.ini"
+configPath="${configFolder}config.ini"
+
+/bin/mkdir -p "/tmp/klnagent/"
+
+/bin/echo "KLNAGENT_SERVER= -IP ADDRESS OR FQDN-" &gt; "${configPath}" # REQUIRED, Change -IP ADDRESS OR FQDN- as needed
+
+# Additional arguments can be made passed as per: https://support.kaspersky.co.uk/12332#block3
+# For additions, see the below example. This will append to the file:
+# /bin/echo "KLNAGENT_PORT= 14000" &gt;&gt; "${configPath}"</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Run the local uninstaller, if found
+#
+
+if [ ! -f "‘/Library/Application Support/Kaspersky Lab/klnagent/Binaries/UninstallScript’" ]
+then
+    /bin/echo "UninstallScript found, proceeding..."
+    "/Library/Application Support/Kaspersky Lab/klnagent/Binaries/UninstallScript"
+else
+    /bin/echo "UninstallScript found, erroring..."
+    exit 1
+fi</string>
+
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Kaspersky Network Agent</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

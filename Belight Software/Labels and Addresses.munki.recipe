@@ -2,36 +2,40 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Labels and Addresses and imports it into Munki.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Desktoppr</string>
+	<string>com.github.dataJAR-recipes.munki.LabelsandAddresses</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>NAME</key>
-		<string>Desktoppr</string>
+		<string>LabelsandAddresses</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
 			<array>
 				<string>testing</string>
 			</array>
-			<key>category</key>
-			<string>Applications</string>
 			<key>description</key>
-			<string>Simple command line tool which can read and set the desktop picture</string>
+			<string>Labels and Addresses is a home and office tool for designing and printing envelopes, postcards and diverse labels, such as address, shipping, file folder and barcode labels. The program can automatically take addresses from a list and insert them while printing for mass mailings.</string>
 			<key>developer</key>
-			<string>scriptingosx</string>
+			<string>Belight Software</string>
 			<key>display_name</key>
-			<string>Desktoppr</string>
+			<string>Labels and Addresses</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>unattended_install</key>
 			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
 		</dict>
 	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0.0</string>
 	<key>ParentRecipe</key>
-	<string>com.github.moofit-recipes.pkg.Desktoppr</string>
+	<string>com.github.neilmartin83.download.LabelsandAddresses</string>
 	<key>Process</key>
 	<array>
 		<dict>

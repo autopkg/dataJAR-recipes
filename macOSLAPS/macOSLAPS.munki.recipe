@@ -2,36 +2,40 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Labels and Addresses and imports it into Munki.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Desktoppr</string>
+	<string>com.github.dataJAR-recipes.munki.macOSLAPS</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>NAME</key>
-		<string>Desktoppr</string>
+		<string>macOSLAPS</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
 			<array>
 				<string>testing</string>
 			</array>
-			<key>category</key>
-			<string>Applications</string>
 			<key>description</key>
-			<string>Simple command line tool which can read and set the desktop picture</string>
+			<string>Swift binary that will change a local administrator password to a random generated password. Similar behavior to LAPS for Windows.</string>
 			<key>developer</key>
-			<string>scriptingosx</string>
+			<string>Penn State University</string>
 			<key>display_name</key>
-			<string>Desktoppr</string>
+			<string>macOSLAPS</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>unattended_install</key>
 			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
 		</dict>
 	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0.0</string>
 	<key>ParentRecipe</key>
-	<string>com.github.moofit-recipes.pkg.Desktoppr</string>
+	<string>com.github.neilmartin83.download.macOSLAPS</string>
 	<key>Process</key>
 	<array>
 		<dict>
