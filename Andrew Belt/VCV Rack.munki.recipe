@@ -2,43 +2,47 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Labels and Addresses and imports it into Munki.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Desktoppr</string>
+	<string>com.github.dataJAR-recipes.munki.VCVRack</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>NAME</key>
-		<string>Desktoppr</string>
+		<string>VCVRack</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
 			<array>
 				<string>testing</string>
 			</array>
-			<key>category</key>
-			<string>Applications</string>
 			<key>description</key>
-			<string>Simple command line tool which can read and set the desktop picture</string>
+			<string>VCV Rack is an free and open-source cross-platform software modular synthesizer.</string>
 			<key>developer</key>
-			<string>scriptingosx</string>
+			<string>Andrew Belt</string>
 			<key>display_name</key>
-			<string>Desktoppr</string>
+			<string>VCV Rack</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>unattended_install</key>
 			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
 		</dict>
 	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0.0</string>
 	<key>ParentRecipe</key>
-	<string>com.github.moofit-recipes.pkg.Desktoppr</string>
+	<string>com.github.neilmartin83.pkg.VCVRack</string>
 	<key>Process</key>
 	<array>
 		<dict>
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%pathname%</string>
+				<string>%pkg_path%</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 			</dict>

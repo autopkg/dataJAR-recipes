@@ -58,7 +58,6 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/downloads/Microsoft_Defender_ATP.pkg</string>
                 	<string>%RECIPE_CACHE_DIR%/Microsoft_Defender_ATP_%version%.pkg</string>
                 </array>
             </dict>

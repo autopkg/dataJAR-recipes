@@ -10,6 +10,8 @@
     <dict>
         <key>NAME</key>
         <string>FlowSync</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -23,7 +25,12 @@
                 <key>url</key>
                 <string>https://flow.polar.com/start</string>
                 <key>re_pattern</key>
-                <string>(\bhttps://flowsync\.cdn\.polar\.com/connect/download/FlowSync_.*?\.pkg\b)</string>
+                <string>href=\"(https://flowsync\.cdn\.polar\.com/connect/download/FlowSync_.*?\.pkg)\"</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
+                </dict>
             </dict>
         </dict>
         <dict>

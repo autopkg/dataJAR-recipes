@@ -3,36 +3,22 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of VIA and creates a flat PKG.</string>
+    <string>Downloads the latest version of Rectangle and creates a package.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.VIA</string>
+    <string>com.github.dataJAR-recipes.pkg.Rectangle</string>
     <key>Input</key>
     <dict>
+        <key>BUNDLE_ID</key>
+        <string>com.knollsoft.Rectangle</string>
         <key>NAME</key>
-        <string>VIA</string>
-        <key>URL</key>
-        <string>https://k.kramerav.com/support/download.asp?f=56977</string>
+        <string>Rectangle</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.VIA</string>
+    <string>com.github.dataJAR-recipes.download.Rectangle</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/VIASetup.dmg/VIA.app</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleIdentifier</key>
-                    <string>bundleid</string>
-                </dict>
-            </dict>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
@@ -53,11 +39,9 @@
             <key>Arguments</key>
             <dict>
                 <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/VIASetup.dmg/VIA.app</string>
+                <string>%pathname%/Rectangle.app</string>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications/VIA.app</string>
-                <key>overwrite</key>
-                <true/>
+                <string>%pkgroot%/Applications/Rectangle.app</string>
             </dict>
         </dict>
         <dict>
@@ -69,6 +53,12 @@
                 <string>%NAME%-%version%</string>
                 <key>pkg_request</key>
                 <dict>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>id</key>
+                    <string>%BUNDLE_ID%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -80,28 +70,9 @@
                             <string>admin</string>
                         </dict>
                     </array>
-                    <key>id</key>
-                    <string>%bundleid%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>pkgroot</key>
-                    <string>%pkgroot%</string>
                 </dict>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%pkgroot%</string>                          
-                </array>
-            </dict>
-        </dict> 
     </array>
 </dict>
 </plist>
