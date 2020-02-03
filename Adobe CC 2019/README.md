@@ -36,6 +36,7 @@ AdobeXDCC2019
 These will need to be unzipped, if your browser does not unzip the downloads from the Adobe Admin Console.
 
 *Please Note:* Keep the name of the unzipped directory the same as the the installer/uninstaller package within. 
+Also, these packages should only contain a maximum of the Creative Cloud Desktop App (CCDA) and one other App (e.g. CCDA and Photoshop) only. Most of the Adobe Templates for packages aren't compatible with this.
 
 2. Create the respective munki or jss recipe overrides, & name them the same as the Adobe CC 2019 pkg.
 
