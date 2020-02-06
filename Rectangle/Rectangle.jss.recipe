@@ -52,7 +52,7 @@
                 <key>policy_template</key>
                 <string>%POLICY_TEMPLATE%</string>
                 <key>prod_name</key>
-                <string>Webrecorder Player</string>
+                <string>%NAME%</string>
                 <key>self_service_description</key>
                 <string>%SELF_SERVICE_DESCRIPTION%</string>
                 <key>self_service_icon</key>
