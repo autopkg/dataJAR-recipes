@@ -15,7 +15,7 @@
         <key>GROUP_TEMPLATE</key>
         <string>SmartGroupTemplate.xml</string>
         <key>NAME</key>
-        <string>Milanote1</string>
+        <string>Milanote2</string>
         <key>POLICY_CATEGORY</key>
         <string>Testing</string>
         <key>POLICY_TEMPLATE</key>
@@ -23,7 +23,7 @@
         <key>SELF_SERVICE_DESCRIPTION</key>
         <string>Milanote is a tool for planning creative projects.</string>
         <key>SELF_SERVICE_ICON</key>
-        <string>Milanote1.png</string>
+        <string>Milanote2.png</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
