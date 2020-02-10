@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
 			<key>developer</key>
-			<string>Steel Series</string>
+			<string>Pritunl</string>
             <key>description</key>
             <string>Connect to OpenVPN servers with a free, open source and secure client. Additional integration available when connecting to a Pritunl server.</string>
             <key>display_name</key>
