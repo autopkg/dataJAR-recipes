@@ -11,7 +11,7 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>PritunlClient</string>
+        <string>Pritunl Client</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -23,7 +23,7 @@
             <key>description</key>
             <string>Connect to OpenVPN servers with a free, open source and secure client. Additional integration available when connecting to a Pritunl server.</string>
             <key>display_name</key>
-            <string>Pritunl Client</string>
+            <string>PritunlClient</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
