@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Milanote 1 and creates a package.</string>
+    <string>Downloads the latest version of Milanote 2 and creates a package.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.pkg.Milanote 2</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Milanote1</string>
+        <string>Milanote2</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.download.Milanote 2</string>
     <key>Process</key>
     <array>
         <dict>
