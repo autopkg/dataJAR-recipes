@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://pro.luxafor.com/download/</string>
                 <key>re_pattern</key>
-                <string>/[\S]+\/[\S]+\/Luxafor-OSX-[\S]+\.zip</string>
+                <string>/[\S]+\/[\S]+\/luxafor_mac_[\S]+\.zip</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
             </dict>
