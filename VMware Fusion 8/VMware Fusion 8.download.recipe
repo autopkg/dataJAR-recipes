@@ -15,13 +15,13 @@
 	<string>1.1</string>
 	<key>Process</key>
 	<array>
-	    <dict>
+        <dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>This title has not been updated since 2018 and has been superseded, please use a more current recipe.</string>
+                <string>This title has not been updated since 2018 and has been superseded by newer versions, please use a more current recipe.</string>
             </dict>
         </dict>
         <dict>   
