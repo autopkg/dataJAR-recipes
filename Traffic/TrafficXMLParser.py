@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2018 macmule
+# Copyright 2018 dataJAR
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ from xml.etree import ElementTree
 from autopkglib import Processor, ProcessorError
 
 __all__ = ["TrafficXMLParser"]
-
+__version__ = '1.1'
 
 class TrafficXMLParser(Processor):
     """ Parses /META-INF/AIR/application.xml from the copied .air installer """
