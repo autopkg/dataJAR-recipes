@@ -16,16 +16,20 @@
 
 """See docstring for VMwareFusion11URLProvider class"""
 
-# pylint: disable=import-error
+# pylint:disable=import-error
 
+from __future__ import absolute_import
+from __future__ import print_function
 import gzip
-import urllib2
-
 from xml.etree import ElementTree
-from StringIO import StringIO
 from distutils.version import LooseVersion
 
-from autopkglib import Processor, ProcessorError
+from autopkglib import ProcessorError, URLGetter
+
+try:
+    from StringIO import StringIO # For Python 2
+except ImportError:
+    from io import BytesIO as StringIO # For Python 3
 
 __all__ = ["VMwareFusion11URLProvider"]
 __version__ = 1.1
@@ -35,7 +39,7 @@ VMWARE_BASE_URL = 'https://softwareupdate.vmware.com/cds/vmw-desktop/'
 FUSION = 'fusion.xml'
 MAJOR_VERSION = '11' # lock version in
 
-class VMwareFusion11URLProvider(Processor):
+class VMwareFusion11URLProvider(URLGetter):
     """Provides URL to the latest VMware Fusion update release."""
 
     description = __doc__
@@ -63,23 +67,22 @@ class VMwareFusion11URLProvider(Processor):
     # pylint: disable=too-many-locals
     def core_metadata(self, base_url, product_name, major_version):
         """Get metadata from the XML"""
-        request = urllib2.Request(base_url+product_name)
+
+        request = base_url+product_name
 
         found_urls = {}
         urls = []
         xml_vers = []
 
         try:
-            vsus = urllib2.urlopen(request)
-        except urllib2.URLError, err_msg:
-            print err_msg.reason
-
-        data = vsus.read()
+            vsus = self.download(request)
+        except Exception as err:
+            raise ProcessorError("Can't download %s: %s" % (request, err))
 
         try:
-            meta_list = ElementTree.fromstring(data)
+            meta_list = ElementTree.fromstring(vsus)
         except ElementTree.ParseError:
-            print "Unable to parse XML data from string"
+            print("Unable to parse XML data from string")
 
         for metadata in meta_list:
             url = metadata.find("url")
@@ -89,7 +92,7 @@ class VMwareFusion11URLProvider(Processor):
             if some_url.split('/')[1].startswith(major_version):
                 found_urls[some_url.split('/')[1]] = some_url
 
-        for found_ver, _ in found_urls.iteritems():
+        for found_ver, _ in found_urls.items():
             xml_vers.append(found_ver)
 
         if len(xml_vers) == 0:
@@ -101,38 +104,35 @@ class VMwareFusion11URLProvider(Processor):
         self.output(self.env["version"])
         core = found_urls[xml_vers[-1]]
 
-        vsus.close()
-
-        request = urllib2.Request(base_url+core)
+        request = base_url+core
 
         try:
-            v_latest = urllib2.urlopen(request)
-        except urllib2.URLError, err_msg:
-            print err_msg.reason
+            v_latest = self.download(request)
+        except Exception as err:
+            raise ProcessorError("Can't download %s: %s" % (request, err))
 
-        buf = StringIO(v_latest.read())
+        buf = StringIO(v_latest)
         downloaded_file = gzip.GzipFile(fileobj=buf)
         data = downloaded_file.read()
 
         try:
             metadata_response = ElementTree.fromstring(data)
         except ElementTree.ParseError:
-            print "Unable to parse XML data from string"
+            print("Unable to parse XML data from string")
 
-        relative_path = metadata_response.find("bulletin/componentList/component/relative_path")
+        relative_path = metadata_response.find("bulletin/componentList/component/relativePath")
         return base_url+core.replace("metadata.xml.gz", relative_path.text)
 
 
     def main(self):
         """ Gimme some main """
+
         product_name = self.env.get("product_name", FUSION)
         base_url = self.env.get("base_url", VMWARE_BASE_URL)
         major_version = self.env.get("major_version", MAJOR_VERSION)
-
-        self.env["url"] = self.core_metadata(base_url, product_name,
-                                             major_version)
+        self.env["url"] = self.core_metadata(base_url, product_name, major_version)
         self.output("Found URL %s" % self.env["url"])
-        self.env["version"] = self.latest
+        self.env["version"] = self.env["version"]
         self.output("Found Version %s" % self.env["version"])
 
 
