@@ -32,12 +32,6 @@ Imports Adobe 2020 titles found in running users ~/Downloads
 
 '''
 
-
-# Version
-__version__ = '1.0'
-
-
-# Standard Imports
 import argparse
 import glob
 import os
@@ -45,7 +39,9 @@ import subprocess
 import sys
 
 
-# Script
+__version__ = '1.1'
+
+
 def main():
     '''Gimme some main'''
 
@@ -65,17 +61,9 @@ def main():
         print '1 Adobe 2020 folder found, creating recipe list...'
     else:
         print '%s Adobe 2020 folder found, creating recipe list...' % len(adobe_folders)
-    
+
     open(ADOBE_LIST, 'w').close()
     pkg_checker(adobe_folders)
-
-
-def file_len(run_day):
-    ''' For each weekdays recipe list, return a count '''
-
-    line_count = len(open(ADOBE_LIST).readlines())
-
-    return line_count
 
 
 def pkg_checker(adobe_folders):
@@ -143,16 +131,16 @@ if __name__ == '__main__':
     if not os.path.exists('/usr/local/bin/autopkg'):
         print 'Cannot find autopkg'
         sys.exit(1)
-        
+
     # Parse recipe type argument
-    parser = argparse.ArgumentParser()
-    parser.add_argument('type', type=str, help='Recipe type, either "munki" or "jss"')
-    args = parser.parse_args()
-    RECIPE_TYPE = args.type.lower()
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument('type', type=str, help='Recipe type, either "munki" or "jss"')
+    ARG_PARSER = PARSER.parse_args()
+    RECIPE_TYPE = ARG_PARSER.type.lower()
 
     # Constants
     DOWNLOADS_PATH = os.path.expanduser('~/Downloads/')
     ADOBE_LIST = os.path.join(DOWNLOADS_PATH + 'adobe2020_list.txt')
     REPORT_PATH = os.path.join(DOWNLOADS_PATH + 'adobe2020_report.plist')
-    
+
     main()
