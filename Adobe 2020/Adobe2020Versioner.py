@@ -18,6 +18,7 @@
 
 """See docstring for AdobeCC2019Versioner class"""
 
+from __future__ import absolute_import
 import glob
 import json
 import os
@@ -266,7 +267,6 @@ class Adobe2020Versioner(Processor):
               app_version (str): Bundle version
               installed_path (str): The path where the installed item will be installed.
         """
-
         self.env['jss_inventory_name'] = app_bundle
         self.env['pkg_path'] = self.env['PKG']
         self.env['version'] = app_version
