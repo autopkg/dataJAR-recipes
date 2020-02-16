@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# pylint: disable= import-error, invalid-name, too-few-public-methods
+# pylint: disable=import-error, too-few-public-methods
 
-"""See docstring for PkgInfo class"""
+"""See docstring for DistributionPkgInfo class"""
 
 from __future__ import absolute_import
 from __future__ import print_function
@@ -53,8 +53,8 @@ class DistributionPkgInfo(Processor):
 
     # pylint: disable=too-many-branches
     def main(self):
-        """ Cobbled together from various sources, should extract information from a
-            Distribution pkg"""
+        """Cobbled together from various sources, should extract information from a
+           Distribution pkg"""
         # Build dir as needed,pinched with <3 from:
         # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/FlatPkgUnpacker.py#L72
         # Extract pkg info, pinched with <3 from:
@@ -114,4 +114,4 @@ class DistributionPkgInfo(Processor):
             self.env["version"] = version
 
 if __name__ == '__main__':
-    processor = DistributionPkgInfo()
+    PROCESSOR = DistributionPkgInfo()
