@@ -14,18 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# pylint: disable=import-error, too-few-public-methods
+
 """See docstring for TrafficXMLParser class"""
 
-# pylint: disable=import-error, too-few-public-methods
 from __future__ import absolute_import
 import os
-
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError
 
+
 __all__ = ["TrafficXMLParser"]
 __version__ = '1.1'
+
 
 class TrafficXMLParser(Processor):
     """Parses /META-INF/AIR/application.xml from the copied .air installer"""

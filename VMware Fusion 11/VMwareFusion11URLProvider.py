@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""See docstring for VMwareFusion11URLProvider class"""
-
 # pylint:disable=import-error
+
+"""See docstring for VMwareFusion11URLProvider class"""
 
 from __future__ import absolute_import
 from __future__ import print_function
@@ -31,13 +31,10 @@ try:
 except ImportError:
     from io import BytesIO as StringIO # For Python 3
 
+
 __all__ = ["VMwareFusion11URLProvider"]
 __version__ = 1.1
 
-# variables
-VMWARE_BASE_URL = 'https://softwareupdate.vmware.com/cds/vmw-desktop/'
-FUSION = 'fusion.xml'
-MAJOR_VERSION = '11' # lock version in
 
 class VMwareFusion11URLProvider(URLGetter):
     """Provides URL to the latest VMware Fusion update release."""
@@ -137,5 +134,8 @@ class VMwareFusion11URLProvider(URLGetter):
 
 
 if __name__ == "__main__":
+	VMWARE_BASE_URL = 'https://softwareupdate.vmware.com/cds/vmw-desktop/'
+	FUSION = 'fusion.xml'
+	MAJOR_VERSION = '11'
     PROCESSOR = VMwareFusion11URLProvider()
     PROCESSOR.execute_shell()

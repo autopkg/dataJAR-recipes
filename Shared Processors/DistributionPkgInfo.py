@@ -22,7 +22,6 @@ from __future__ import absolute_import
 from __future__ import print_function
 import os.path
 import subprocess
-
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError
@@ -30,6 +29,7 @@ from autopkglib import Processor, ProcessorError
 
 __all__ = ["DistributionPkgInfo"]
 __version__ = '1.1'
+
 
 class DistributionPkgInfo(Processor):
     """Parses a distribution pkg to pull the info, other formats to be added later"""
