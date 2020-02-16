@@ -1,7 +1,6 @@
 #!/usr/bin/python
-#
-# Copyright 2019 dataJAR Ltd, 
-#
+
+# Copyright 2020 dataJAR
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,15 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import urllib, urllib2, gzip
+"""See docstring for VMwareFusion11URLProvider class"""
+
+# pylint: disable=import-error
+
+import gzip
+import urllib2
 
 from xml.etree import ElementTree
 from StringIO import StringIO
-from autopkglib import Processor, ProcessorError
 from distutils.version import LooseVersion
 
-__all__ = ["VMwareFusion11URLProvider"]
+from autopkglib import Processor, ProcessorError
 
+__all__ = ["VMwareFusion11URLProvider"]
+__version__ = 1.1
 
 # variables
 VMWARE_BASE_URL = 'https://softwareupdate.vmware.com/cds/vmw-desktop/'
@@ -31,7 +36,9 @@ FUSION = 'fusion.xml'
 MAJOR_VERSION = '11' # lock version in
 
 class VMwareFusion11URLProvider(Processor):
-    description = "Provides URL to the latest VMware Fusion update release."
+    """Provides URL to the latest VMware Fusion update release."""
+
+    description = __doc__
     input_variables = {
         "product_name": {
             "required": False,
@@ -52,70 +59,72 @@ class VMwareFusion11URLProvider(Processor):
         },
     }
 
-    __doc__ = description
 
+    # pylint: disable=too-many-locals
     def core_metadata(self, base_url, product_name, major_version):
+        """Get metadata from the XML"""
         request = urllib2.Request(base_url+product_name)
 
-
-        foundUrls = {}
+        found_urls = {}
         urls = []
-        xmlVers = []
+        xml_vers = []
 
         try:
             vsus = urllib2.urlopen(request)
-        except URLError, e:
-            print e.reason
+        except urllib2.URLError, err_msg:
+            print err_msg.reason
 
         data = vsus.read()
 
         try:
-            metaList = ElementTree.fromstring(data)
-        except ExpatData:
+            meta_list = ElementTree.fromstring(data)
+        except ElementTree.ParseError:
             print "Unable to parse XML data from string"
 
-        for metadata in metaList:
+        for metadata in meta_list:
             url = metadata.find("url")
             urls.append(url.text)
 
-        for someUrl in urls:
-            if someUrl.split('/')[1].startswith(major_version):
-                foundUrls[someUrl.split('/')[1]] = someUrl
+        for some_url in urls:
+            if some_url.split('/')[1].startswith(major_version):
+                found_urls[some_url.split('/')[1]] = some_url
 
-        for foundVer in foundUrls.keys():
-            xmlVers.append(foundVer)
-    
-        if len(xmlVers) == 0:
+        for found_ver, _ in found_urls.iteritems():
+            xml_vers.append(found_ver)
+
+        if len(xml_vers) == 0:
             raise ProcessorError("Could not find any versions for the \
                                   major_version '%s'." % major_version)
-    
-        xmlVers.sort(key=LooseVersion)
-        self.output(xmlVers[-1])
-        self.latest = xmlVers[-1]
-        core = foundUrls[xmlVers[-1]]
+
+        xml_vers.sort(key=LooseVersion)
+        self.env["version"] = xml_vers[-1]
+        self.output(self.env["version"])
+        core = found_urls[xml_vers[-1]]
 
         vsus.close()
 
         request = urllib2.Request(base_url+core)
 
         try:
-            vLatest = urllib2.urlopen(request)
-        except URLError, e:
-            print e.reason
+            v_latest = urllib2.urlopen(request)
+        except urllib2.URLError, err_msg:
+            print err_msg.reason
 
-        buf = StringIO(vLatest.read())
-        f = gzip.GzipFile(fileobj=buf)
-        data = f.read()
+        buf = StringIO(v_latest.read())
+        downloaded_file = gzip.GzipFile(fileobj=buf)
+        data = downloaded_file.read()
 
         try:
-            metadataResponse = ElementTree.fromstring(data)
-        except ExpatData:
+            metadata_response = ElementTree.fromstring(data)
+        except ElementTree.ParseError:
             print "Unable to parse XML data from string"
 
-        relativePath = metadataResponse.find("bulletin/componentList/component/relativePath")
-        return base_url+core.replace("metadata.xml.gz", relativePath.text)
+        relative_path = metadata_response.find("bulletin/componentList/component/relative_path")
+        return base_url+core.replace("metadata.xml.gz", relative_path.text)
+
 
     def main(self):
+        """ Gimme some main """
         product_name = self.env.get("product_name", FUSION)
         base_url = self.env.get("base_url", VMWARE_BASE_URL)
         major_version = self.env.get("major_version", MAJOR_VERSION)
@@ -126,6 +135,7 @@ class VMwareFusion11URLProvider(Processor):
         self.env["version"] = self.latest
         self.output("Found Version %s" % self.env["version"])
 
+
 if __name__ == "__main__":
-    processor = VMwareFusion11URLProvider()
-    processor.execute_shell()
+    PROCESSOR = VMwareFusion11URLProvider()
+    PROCESSOR.execute_shell()
