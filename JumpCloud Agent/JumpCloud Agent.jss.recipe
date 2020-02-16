@@ -39,7 +39,12 @@
     <array>
 		<dict>
 			<key>Processor</key>
-			<string>PkgInfo</string>
+			<string>com.github.dataJAR-recipes.Shared Processors/DistributionPkgInfo</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+			</dict>
 		</dict>
 		<dict>
 			<key>Processor</key>

@@ -113,10 +113,15 @@ rm -rf /Applications/Jumpcloud.app</string>
     <string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>PkgInfo</string>
-        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>com.github.dataJAR-recipes.Shared Processors/DistributionPkgInfo</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+			</dict>
+		</dict>
         <dict>
             <key>Arguments</key>
             <dict>
