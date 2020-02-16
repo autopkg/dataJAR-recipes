@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/SportsCode-Gamebreaker.*?.dmg.zip\?mtime=.*?)"</string>
+                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/SportsCode-Gamebreaker.dmg\?mtime=.*?)"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -43,25 +43,12 @@
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.dmg.zip</string>
+                <string>%NAME%.dmg</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/dmg_unpack/</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
         </dict>
     	<dict>
             <key>Processor</key>
@@ -85,7 +72,7 @@
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/SportsCode Gamebreaker.app</string>
                 <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/dmg_unpack/SportsCode Gamebreaker.dmg/SportsCode Gamebreaker.app</string>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/SportsCode Gamebreaker.app</string>
             </dict>
         </dict>
         <dict>

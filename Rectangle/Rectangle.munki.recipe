@@ -3,39 +3,39 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of MirrorOp and imports into Munki.</string>
+    <string>Downloads the latest version of Rectangle and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.MirrorOp</string>
+    <string>com.github.dataJAR-recipes.munki.Rectangle</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>MirrorOp</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Rectangle</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
-            <key>category</key>
-            <string>Applications</string>
-            <key>developer</key>
-            <string>Barco NV</string>
             <key>description</key>
-            <string>With MirrorOp sender installed on your computer, you can not only watch videos or surf the internet on a larger display with friends, but also remotely operate your computer as if you were in front of it.</string>
+            <string>Move and resize windows on macOS with keyboard shortcuts and snap areas.</string>
+            <key>developer</key>
+            <string>Knollsoft</string>
             <key>display_name</key>
-            <string>MirrorOp</string>
+            <string>Rectangle</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.moofit-recipes.download.MirrorOp</string>
+    <string>com.github.dataJAR-recipes.download.Rectangle</string>
     <key>Process</key>
     <array>
         <dict>
@@ -48,17 +48,6 @@
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/downloads/</string>
-                </array>
-            </dict>
         </dict>
     </array>
 </dict>

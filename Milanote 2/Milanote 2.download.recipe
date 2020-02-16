@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for version 1 of Milanote.</string>
+    <string>Download recipe for version 2 of Milanote.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.download.Milanote 2</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Milanote1</string>
+        <string>Milanote2</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.milanote.com/download-mac-app</string>
                 <key>re_pattern</key>
-                <string>https://milanote-app-releases.s3.amazonaws.com/Milanote-1.[\S]+\.dmg</string>
+                <string>https://milanote-app-releases.s3.amazonaws.com/Milanote-2.[\S]+\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>

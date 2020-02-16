@@ -3,29 +3,27 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Milanote 1 and imports into Munki.</string>
+    <string>Downloads the latest version of Pritunl Client and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Milanote 1</string>
-    <key>Input</key>
+    <string>com.github.dataJAR-recipes.munki.pritunlclient</string>
+      <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>Milanote1</string>
+        <string>PritunlClient</string>
         <key>pkginfo</key>
         <dict>
-            <key>blocking_applications</key>
-            <array>
-                <string>Milanote</string>
-            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
+			<key>developer</key>
+			<string>Pritunl</string>
             <key>description</key>
-            <string>Milanote is a tool for planning creative projects.</string>
+            <string>Connect to OpenVPN servers with a free, open source and secure client. Additional integration available when connecting to a Pritunl server.</string>
             <key>display_name</key>
-            <string>Milanote 1</string>
+            <string>Pritunl Client</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -35,21 +33,23 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.3.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Milanote 1</string>
+	<string>com.github.dataJAR-recipes.download.pritunlclient</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%RECIPE_CACHE_DIR%/package/Pritunl.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Milanote 1 and then uploads to the JSS</string>
+    <string>Downloads the latest version of Milanote 2 and then uploads to the JSS</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.jss.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.jss.Milanote 2</string>
     <key>Input</key>
     <dict>
         <key>CATEGORY</key>
@@ -15,7 +15,7 @@
         <key>GROUP_TEMPLATE</key>
         <string>SmartGroupTemplate.xml</string>
         <key>NAME</key>
-        <string>Milanote1</string>
+        <string>Milanote2</string>
         <key>POLICY_CATEGORY</key>
         <string>Testing</string>
         <key>POLICY_TEMPLATE</key>
@@ -23,12 +23,12 @@
         <key>SELF_SERVICE_DESCRIPTION</key>
         <string>Milanote is a tool for planning creative projects.</string>
         <key>SELF_SERVICE_ICON</key>
-        <string>Milanote1.png</string>
+        <string>Milanote2.png</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.pkg.Milanote 2</string>
     <key>Process</key>
     <array>
         <dict>
