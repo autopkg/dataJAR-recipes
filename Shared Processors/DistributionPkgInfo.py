@@ -31,7 +31,7 @@ from autopkglib import Processor, ProcessorError
 __all__ = ["DistributionPkgInfo"]
 __version__ = '1.1'
 
-class PkgInfo(Processor):
+class DistributionPkgInfo(Processor):
     """Parses a distribution pkg to pull the info, other formats to be added later"""
 
     description = __doc__
@@ -114,4 +114,4 @@ class PkgInfo(Processor):
             self.env["version"] = version
 
 if __name__ == '__main__':
-    processor = PkgInfo()
+    processor = DistributionPkgInfo()
