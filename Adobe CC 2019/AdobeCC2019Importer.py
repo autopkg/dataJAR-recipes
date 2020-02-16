@@ -1,6 +1,8 @@
 #!/usr/bin/python
+
 '''
-Copyright (c) 2019, dataJAR Ltd.  All rights reserved.
+Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+
      Redistribution and use in source and binary forms, with or without
      modification, are permitted provided that the following conditions are met:
              * Redistributions of source code must retain the above copyright
@@ -11,7 +13,8 @@ Copyright (c) 2019, dataJAR Ltd.  All rights reserved.
              * Neither data JAR Ltd nor the names of its contributors may be used to
                endorse or promote products derived from this software without specific
                prior written permission.
-     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD "AS IS" AND ANY
      EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
      WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
      DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
@@ -21,31 +24,25 @@ Copyright (c) 2019, dataJAR Ltd.  All rights reserved.
      ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
      SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 SUPPORT FOR THIS PROGRAM
-    This program is distributed 'as is' by DATA JAR LTD.
-    For more information or support, please utilise the following resources:
-            http://www.datajar.co.uk
+
+    This program is distributed "as is" by DATA JAR LTD.
 
 DESCRIPTION
 
 Imports Adobe CC 2019 titles found in running users ~/Downloads
-
 '''
 
-
-# Version
-__version__ = '1.0'
-
-
-# Standard Imports
 import argparse
 import glob
 import os
 import subprocess
 import sys
 
+__version__ = '1.1'
 
-# Script
+
 def main():
     '''Gimme some main'''
 
@@ -65,17 +62,9 @@ def main():
         print '1 Adobe CC 2019 folder found, creating recipe list...'
     else:
         print '%s Adobe CC 2019 folder found, creating recipe list...' % len(adobe_folders)
-    
+
     open(ADOBE_LIST, 'w').close()
     pkg_checker(adobe_folders)
-
-
-def file_len(run_day):
-    ''' For each weekdays recipe list, return a count '''
-
-    line_count = len(open(ADOBE_LIST).readlines())
-
-    return line_count
 
 
 def pkg_checker(adobe_folders):
@@ -143,16 +132,16 @@ if __name__ == '__main__':
     if not os.path.exists('/usr/local/bin/autopkg'):
         print 'Cannot find autopkg'
         sys.exit(1)
-        
+
     # Parse recipe type argument
-    parser = argparse.ArgumentParser()
-    parser.add_argument('type', type=str, help='Recipe type, either "munki" or "jss"')
-    args = parser.parse_args()
-    RECIPE_TYPE = args.type.lower()
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument('type', type=str, help='Recipe type, either "munki" or "jss"')
+    PARSER_ARGS = PARSER.parse_args()
+    RECIPE_TYPE = PARSER_ARGS.type.lower()
 
     # Constants
     DOWNLOADS_PATH = os.path.expanduser('~/Downloads/')
     ADOBE_LIST = os.path.join(DOWNLOADS_PATH + 'adobecc2019_list.txt')
     REPORT_PATH = os.path.join(DOWNLOADS_PATH + 'adobecc2019_report.plist')
-    
+
     main()
