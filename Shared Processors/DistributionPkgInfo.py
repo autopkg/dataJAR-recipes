@@ -64,7 +64,7 @@ class DistributionPkgInfo(Processor):
         cmd_toc = ['/usr/bin/xar', '-tf', self.env["abspkgpath"]]
         proc = subprocess.Popen(cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (toc, err) = proc.communicate()
-        toc = toc.strip().split('\n')
+        toc = toc.decode("utf-8") .strip().split('\n')
 
         if proc.returncode == 0:
             # Walk trough the TOC entries
