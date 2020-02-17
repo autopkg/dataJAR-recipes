@@ -68,7 +68,7 @@ def main():
 
 
 def pkg_checker(adobe_folders):
-    ''' Check that we have the Install_pkg's & proceed if we do'''
+    '''Check that we have the Install_pkg's & proceed if we do'''
 
     found_pkgs = 0
 
