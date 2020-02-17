@@ -27,9 +27,9 @@ from distutils.version import LooseVersion
 from autopkglib import ProcessorError, URLGetter
 
 try:
-    from StringIO import StringIO # For Python 2
+    from StringIO import StringIO
 except ImportError:
-    from io import BytesIO as StringIO # For Python 3
+    from io import BytesIO as StringIO
 
 
 __all__ = ["VMwareFusion11URLProvider"]
