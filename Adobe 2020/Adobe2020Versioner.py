@@ -26,7 +26,10 @@ import re
 import zipfile
 from xml.etree import ElementTree
 
-import FoundationPlist
+try:
+    from plistlib import loads as load_plist
+except ImportError:
+    from FoundationPlist import readPlistFromString as load_plist
 from autopkglib import Processor, ProcessorError
 
 
@@ -235,7 +238,7 @@ class Adobe2020Versioner(Processor):
                                     try:
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
-                                            data = FoundationPlist.readPlistFromString(plist)
+                                            data = load_plist(plist)
                                             # If the App is Lightroom (Classic or non-Classic)
                                             # we need to compare a different value in Info.plist
                                             if self.env['sap_code'] == 'LTRM' or \
@@ -267,6 +270,7 @@ class Adobe2020Versioner(Processor):
               app_version (str): Bundle version
               installed_path (str): The path where the installed item will be installed.
         """
+
         self.env['jss_inventory_name'] = app_bundle
         self.env['pkg_path'] = self.env['PKG']
         self.env['version'] = app_version
