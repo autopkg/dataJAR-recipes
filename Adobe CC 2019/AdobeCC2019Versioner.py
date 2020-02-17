@@ -18,6 +18,7 @@
 
 """See docstring for AdobeCC2019Versioner class"""
 
+from __future__ import absolute_import
 import glob
 import json
 import os
@@ -25,7 +26,10 @@ import re
 import zipfile
 from xml.etree import ElementTree
 
-import FoundationPlist
+try:
+    from plistlib import loads as load_plist
+except ImportError:
+    from FoundationPlist import readPlistFromString as load_plist
 from autopkglib import Processor, ProcessorError
 
 
@@ -233,7 +237,7 @@ class AdobeCC2019Versioner(Processor):
                                     try:
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
-                                            data = FoundationPlist.readPlistFromString(plist)
+                                            data = load_plist(plist)
                                             if self.env['sap_code'] == 'LTRM' or \
                                                  self.env['sap_code'] == 'LRCC':
                                                 self.env['vers_compare_key'] = 'CFBundleVersion'
