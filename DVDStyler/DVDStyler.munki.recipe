@@ -36,7 +36,7 @@
     <key>MinimumVersion</key>
     <string>0.2.9</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-private.download.DVDStyler</string>
+    <string>com.github.dataJAR-recipes.download.DVDStyler</string>
     <key>Process</key>
     <array>
         <dict>
