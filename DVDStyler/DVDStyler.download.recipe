@@ -32,7 +32,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://university.fosshub.com/Protected/[\S]+\/[\S]+\/DVDStyler-[\S]+\MacOSX.dmg)</string>
+                <string>https://university\.fosshub\.com/Protected/\S*/DVDStyler-\S*-MacOSX\.dmg</string>
             </dict>
         </dict>
         <dict>
