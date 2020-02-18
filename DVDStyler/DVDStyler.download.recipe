@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>This recipe uses FossHub to check for available software updates. 
+    All users should contact FossHub directly (https://www.fosshub.com/contact.html) to seek permission to use an automated tool for the purpose of redistributing this software on their internal network, as specified in their Terms of Service (https://www.fosshub.com/tos.html#fh-tou-o7). 
+    You will need to provide them the IP address of the machine downloading FossHub software. 
+    This recipe does not perform any tracking (cookies, advertising identifiers, and similar technologies) and respects the EU General Data Protection Regulation (GDPR) guidelines.
+    This recipe downloads the latest Audacity dmg.
+    For more information see: https://macmule.com/2019/03/17/fosshub-autopkg</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.DVDStyler</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>DVDStyler</string>
+        <key>DOWNLOAD_URL</key>
+        <string>https://university.fosshub.com/projects.json</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.2 Safari/605.1.15</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+                <key>re_pattern</key>
+                <string>(?P&lt;url&gt;https://university.fosshub.com/Protected/[\S]+\/[\S]+\/DVDStyler-[\S]+\MacOSX.dmg)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>request_headers</key>
+                <dict>
+                        <key>User-Agent</key>
+                        <string>%USER_AGENT%</string>
+                </dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
+
