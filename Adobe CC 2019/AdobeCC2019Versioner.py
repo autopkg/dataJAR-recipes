@@ -1,42 +1,24 @@
 #!/usr/bin/python
 
-'''
-Copyright (c) 2019, dataJAR Ltd.  All rights reserved.
+# Copyright 2020 dataJAR
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-             * Redistributions of source code must retain the above copyright
-               notice, this list of conditions and the following disclaimer.
-             * Redistributions in binary form must reproduce the above copyright
-               notice, this list of conditions and the following disclaimer in the
-               documentation and/or other materials provided with the distribution.
-             * Neither data JAR Ltd nor the names of its contributors may be used to
-               endorse or promote products derived from this software without specific
-               prior written permission.
+# pylint: disable=import-error
 
-     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD "AS IS" AND ANY
-     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+"""See docstring for AdobeCC2019Versioner class"""
 
-SUPPORT FOR THIS PROGRAM
-
-    This program is distributed "as is" by DATA JAR LTD.
-
-
-DESCRIPTION
-
-Variant of:
-https://github.com/autopkg/adobe-ccp-recipes/blob/master/Adobe/CreativeCloudVersioner.py
-'''
-
-# Standard Imports
+from __future__ import absolute_import
 import glob
 import json
 import os
@@ -44,22 +26,20 @@ import re
 import zipfile
 from xml.etree import ElementTree
 
-# AutoPkg Imports
-# pylint: disable=import-error
-import FoundationPlist
+try:
+    from plistlib import loads as load_plist
+except ImportError:
+    from FoundationPlist import readPlistFromString as load_plist
 from autopkglib import Processor, ProcessorError
 
-# Details
+
 __all__ = ['AdobeCC2019Versioner']
-__version__ = ['1.1']
+__version__ = ['1.2']
 
 
-# Class
 class AdobeCC2019Versioner(Processor):
-    '''
-    Parses generated Adobe Admin Console CC 2019 pkgs for 
-    detailed application path and bundle version info
-    '''
+    """Parses generated Adobe Admin Console CC 2019 pkgs for
+       detailed application path and bundle version info"""
 
     description = __doc__
     input_variables = {
@@ -83,9 +63,7 @@ class AdobeCC2019Versioner(Processor):
 
 
     def main(self):
-        '''
-        Find the Adobe*_Install.pkg in the Downloads dir based on the name
-        '''
+        """Find the Adobe*_Install.pkg in the Downloads dir based on the name"""
 
         download_path = os.path.expanduser('~/Downloads')
         self.env['PKG'] = os.path.join(download_path, self.env['NAME'], \
@@ -259,8 +237,9 @@ class AdobeCC2019Versioner(Processor):
                                     try:
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
-                                            data = FoundationPlist.readPlistFromString(plist)
-                                            if self.env['sap_code'] == 'LTRM' or self.env['sap_code'] == 'LRCC':
+                                            data = load_plist(plist)
+                                            if self.env['sap_code'] == 'LTRM' or \
+                                                 self.env['sap_code'] == 'LRCC':
                                                 self.env['vers_compare_key'] = 'CFBundleVersion'
                                             else:
                                                 self.env['vers_compare_key'] = \
@@ -281,13 +260,13 @@ class AdobeCC2019Versioner(Processor):
 
 
     def create_pkginfo(self, app_bundle, app_version, installed_path):
-        '''Create pkginfo with found details
+        """Create pkginfo with found details
 
         Args:
               app_bundle (str): Bundle name
               app_version (str): Bundle version
               installed_path (str): The path where the installed item will be installed.
-        '''
+        """
 
         self.env['jss_inventory_name'] = app_bundle
         self.env['pkg_path'] = self.env['PKG']
@@ -311,5 +290,4 @@ class AdobeCC2019Versioner(Processor):
 
 
 if __name__ == '__main__':
-    # pylint: disable=invalid-name
-    processor = AdobeCC2019Versioner()
+    PROCESSOR = AdobeCC2019Versioner()

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2018 macmule
+# Copyright 2020 dataJAR
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,19 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# pylint: disable= import-error, invalid-name, missing-docstring, too-few-public-methods
+# pylint: disable=import-error, too-few-public-methods
 
+"""See docstring for TrafficXMLParser class"""
+
+from __future__ import absolute_import
 import os
-
 from xml.etree import ElementTree
 
 from autopkglib import Processor, ProcessorError
 
+
 __all__ = ["TrafficXMLParser"]
+__version__ = '1.1'
 
 
 class TrafficXMLParser(Processor):
-    """ Parses /META-INF/AIR/application.xml from the copied .air installer """
+    """Parses /META-INF/AIR/application.xml from the copied .air installer"""
     description = __doc__
     input_variables = {
         "app_xml": {
@@ -46,7 +50,7 @@ class TrafficXMLParser(Processor):
     }
 
     def main(self):
-        """ Parses /META-INF/AIR/application.xml from the copied .air installer """
+        """Parses /META-INF/AIR/application.xml from the copied .air installer"""
         if not os.path.exists(self.env["app_xml"]):
             raise ProcessorError("application.xml not found at %s" % self.env["app_xml"])
         else:
@@ -61,4 +65,4 @@ class TrafficXMLParser(Processor):
 
 
 if __name__ == "__main__":
-    processor = TrafficXMLParser()
+    PROCESSOR = TrafficXMLParser()

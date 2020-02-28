@@ -64,7 +64,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
                 <key>pkg_payload_path</key>
-                <string>%destination_path%/FlashPrint.pkg/Contents/Archive.pax.gz</string>
+                <string>%RECIPE_CACHE_DIR%/installer_pkg/FlashPrint.pkg/Contents/Archive.pax.gz</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
