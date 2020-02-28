@@ -27,7 +27,7 @@
                 <key>category</key>
                 <string>%MUNKI_CATEGORY%</string>
                 <key>description</key>
-                <string>JJamf Connect Verify is a menu bar application that allows for continuous password validation between network and local accounts. Validation can occur in the background, avoiding user engagement, or with user interaction.</string>
+                <string>Jamf Connect Verify is a menu bar application that allows for continuous password validation between network and local accounts. Validation can occur in the background, avoiding user engagement, or with user interaction.</string>
                 <key>developer</key>
                 <string>%NAME%</string>
                 <key>display_name</key>
