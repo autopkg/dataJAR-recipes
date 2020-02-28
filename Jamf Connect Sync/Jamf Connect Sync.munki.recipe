@@ -27,7 +27,7 @@
                 <key>category</key>
                 <string>%MUNKI_CATEGORY%</string>
                 <key>description</key>
-                <string>Jamf Connect Sync (formerly NoMAD Pro) is a menu bar application that helps manage your Okta password. With Jamf Connect Sync, you can sign in to your Okta account and synchronize your Okta password with your local account. </string>
+                <string>Jamf Connect Sync (formerly NoMAD Pro) is a menu bar application that helps manage your Okta password. With Jamf Connect Sync, you can sign in to your Okta account and synchronize your Okta password with your local account.</string>
                 <key>developer</key>
                 <string>%NAME%</string>
                 <key>display_name</key>
