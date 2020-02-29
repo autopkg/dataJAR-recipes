@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest release of Jamf Connect Login for Okta and imports it in into Munki.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.munki.Jamf Connect Login Okta</string>
+        <key>Input</key>
+        <dict>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>apps/Jamf Connect Login Okta</string>
+            <key>MUNKI_CATEGORY</key>
+            <string>Utilities</string>
+            <key>NAME</key>
+            <string>Jamf Connect Login Okta</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>category</key>
+                <string>%MUNKI_CATEGORY%</string>
+                <key>description</key>
+                <string>Jamf Connect Login (formerly NoMAD Login+) is an application that allows you to manage authentication with the macOS loginwindow process.</string>
+                <key>developer</key>
+                <string>%NAME%</string>
+                <key>display_name</key>
+                <string>%NAME%</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true/>
+            </dict>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>1.0.4</string>
+        <key>ParentRecipe</key>
+        <string>com.github.yohan460-recipes.pkg.JamfConnectLogin</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>PkgCopier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>source_pkg</key>
+                    <string>%pkg_path%</string>
+                    <key>pkg_path</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-okta-%version%.pkg</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%pkg_path%</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>PathDeleter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>path_list</key>
+                    <array>
+                        <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                        <string>%RECIPE_CACHE_DIR%/payload</string>
+                        <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    </array>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
