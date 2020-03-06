@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=&quot;(https://oc.zylia.pl/index.php/s/\S.*)&quot;&gt;ZYLIA Studio&lt;br /&gt;&amp;#8203;for Mac OS X&lt;/a&gt;&lt;br /&gt;&lt;/div&gt;</string>
+                <string>href=&quot;(https://oc.zylia.pl/index.php/s/\S.*)&quot; target=&quot;_blank&quot;&gt;ZYLIA Studio .*&lt;br /&gt;&amp;#8203;for Mac OS X&lt;/a&gt;&lt;/div&gt;</string>
                 <key>url</key>
                 <string>https://www.zylia.co/zylia-studio-download.html</string>
             </dict>
