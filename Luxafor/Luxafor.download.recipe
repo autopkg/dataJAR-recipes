@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://pro.luxafor.com/download/</string>
+                <string>https://luxafor.com/download/</string>
                 <key>re_pattern</key>
-                <string>/[\S]+\/[\S]+\/(luxafor_mac_[\S]+\.zip)</string>
+                <string>(http://luxafor.com/wp-content/uploads/[\S]+\/[\S]+\/luxafor_mac_[\S]+\.zip)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
             </dict>
@@ -34,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://prev.luxafor.com/uploads/%match%</string>
+                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
             </dict>
