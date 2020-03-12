@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www8.garmin.com/support/download_details.jsp?id=6593</string>
                 <key>re_pattern</key>
-                <string>http://download\.garmin\.com/software/VIRBEditforMac_\S.*\.dmg</string>
+                <string>https://download\.garmin\.com/software/VIRBEditforMac_\S.*\.dmg</string>
             </dict>
         </dict>
         <dict>
