@@ -17,64 +17,66 @@
     <string>com.github.dataJAR-recipes.download.Kiwi for G Suite</string>
     <key>Process</key>
     <array>
-        <dict>
+		<dict>
+ 			<key>Arguments</key>
+ 				<dict>
+ 					<key>destination_path</key>
+ 					<string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+ 					<key>flat_pkg_path</key>
+ 					<string>%pathname%</string>
+ 					<key>purge_destination</key>
+ 					<true />
+ 				</dict>
+ 			<key>Processor</key>
+ 			<string>FlatPkgUnpacker</string>
+ 		</dict>
+		<dict>
+ 			<key>Arguments</key>
+ 			<dict>
+ 				<key>destination_path</key>
+ 				<string>%RECIPE_CACHE_DIR%/installer_payload</string>
+ 				<key>pkg_payload_path</key>
+ 				<string>%RECIPE_CACHE_DIR%/installer_unpack/Payload</string>
+ 				<key>purge_destination</key>
+ 				<true />
+ 			</dict>
+ 			<key>Processor</key>
+ 			<string>PkgPayloadUnpacker</string>
+ 		</dict>
+ 		<dict>
+ 			<key>Arguments</key>
+ 			<dict>
+ 				<key>input_plist_path</key>
+ 				<string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Kiwi for G Suite.app/Contents/Info.plist</string>
+ 				<key>plist_version_key</key>
+ 				<string>CFBundleShortVersionString</string>
+ 			</dict>
+ 			<key>Processor</key>
+ 			<string>Versioner</string>
+ 		</dict> 		
+		<dict>
             <key>Processor</key>
-            <string>PlistReader</string>
+            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>info_path</key>
-                <string>%destination_path%</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleIdentifier</key>
-                    <string>bundleid</string>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                </dict>
+                <key>source_pkg</key>
+                <string>%pathname%</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgname</key>
-                <string>%NAME%-%version%</string>
-                <key>pkg_request</key>
-                <dict>
-                    <key>chown</key>
-                    <array>
-                        <dict>
-                            <key>path</key>
-                            <string>Applications</string>
-                            <key>user</key>
-                            <string>root</string>
-                            <key>group</key>
-                            <string>admin</string>
-                        </dict>
-                    </array>
-                    <key>id</key>
-                    <string>%bundleid%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>pkgroot</key>
-                    <string>%pkgroot%</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%pkgroot%</string>                          
-                </array>
-            </dict>
-        </dict>
+		<dict>
+ 			<key>Arguments</key>
+ 			<dict>
+ 				<key>path_list</key>
+ 				<array>
+ 					<string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+ 					<string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+ 				</array>
+ 			</dict>
+ 			<key>Processor</key>
+ 			<string>PathDeleter</string>
+ 		</dict>
     </array>
 </dict>
 </plist>
