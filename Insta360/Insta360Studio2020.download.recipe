@@ -3,31 +3,22 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the Insta360 Studio 2019 application.</string>
+    <string>Downloads the Insta360 Studio 2020 application.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.insta360studio2019</string>
+    <string>com.github.dataJAR-recipes.download.insta360studio2020</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>insta360studio2019</string>
+        <string>insta360studio2020</string>
         <key>DOWNLOAD_URL</key>
         <string>https://openapi.insta360.com/app/v1/common/upgrade/studiox_mac</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1</string>
+    <string>0.5.1</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>The vender has replaced this App with their 2020 version. See the 2020 recipes https://github.com/autopkg/dataJAR-recipes/blob/master/Insta360/Insta360Studio2020.download.recipe. Please remove this from your list of recipes.</string>
-             </dict>
-         </dict>
         <dict>
  			<key>Processor</key>
 			<string>URLTextSearcher</string>
@@ -36,7 +27,7 @@
 				<key>url</key>
 				<string>%DOWNLOAD_URL%</string>
 				<key>re_pattern</key>
-				<string>(2019_[\S]+\.pkg)</string>
+				<string>(https://static.insta360.com/assets/storage/[\S]+/[\S]+/Insta360_Studio_2020_[\S]+\.pkg)</string>
                 <key>request_headers</key>
                 <dict>
                         <key>user-agent</key>
@@ -50,9 +41,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://static.insta360.com/software/Studio/Mac/Insta360%20Studio%20%match%</string>
+                <string>%match%</string>
                 <key>filename</key>
-                <string>Insta360Studio2019.pkg</string>
+                <string>Insta360Studio2020.pkg</string>
                 <key>request_headers</key>
                 <dict>
                         <key>user-agent</key>
