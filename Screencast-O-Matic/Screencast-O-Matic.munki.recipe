@@ -24,6 +24,19 @@
             <string>Screencast-O-Matic</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+
+# User needs read write access to app bundle
+
+if [ -d "/Applications/Screencast-O-Matic v2.0.app" ]
+then
+    /bin/echo "Found /Applications/Screencast-O-Matic v2.0.app, Setting permissions..."
+    /bin/chmod -R 777 "/Applications/Screencast-O-Matic v2.0.app"
+fi</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
