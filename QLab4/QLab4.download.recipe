@@ -12,52 +12,67 @@
         <string>QLab4</string>
         <key>SPARKLE_FEED_URL</key>
         <string>https://figure53.com/qlab/downloads/appcast-v4/appcast-v4.xml</string>
+        <key>VERSION_URL</key>
+        <string>https://qlab.app/</string>
+        <key>VERSION_PATTERN</key>
+        <string>Latest Version ([0-9.]+)</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>Process</key>
     <array>
-        <dict>
+	<dict>
             <key>Processor</key>
-            <string>SparkleUpdateInfoProvider</string>
+            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>appcast_url</key>
-                <string>%SPARKLE_FEED_URL%</string>
+                <key>url</key>
+                <string>%VERSION_URL%</string>
+                <key>re_pattern</key>
+                <string>%VERSION_PATTERN%</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://qlab.app/downloads/QLab.zip</string>
+                <key>filename</key>
+                <string>QLab-%version%.zip</string>
+            </dict>
         </dict>
         <dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+	</dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>archive_path</key>
-				<string>%pathname%</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
-			<key>Processor</key>
-			<string>Unarchiver</string>
+		<key>Processor</key>
+		<string>Unarchiver</string>
+		<key>Arguments</key>
+		<dict>
+			<key>archive_path</key>
+			<string>%pathname%</string>
+			<key>destination_path</key>
+			<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+			<key>purge_destination</key>
+			<true/>
 		</dict>
+	</dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/QLab.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and identifier "com.figure53.QLab.4" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "7672N4CCJM")</string>
-			</dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
+		<key>Processor</key>
+		<string>CodeSignatureVerifier</string>
+		<key>Arguments</key>
+		<dict>
+			<key>input_path</key>
+			<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/QLab.app</string>
+			<key>requirement</key>
+			<string>anchor apple generic and identifier "com.figure53.QLab.4" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "7672N4CCJM")</string>
 		</dict>
+	</dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
