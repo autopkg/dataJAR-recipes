@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest trial version of Kiwi for G Suite and imports into Munki.</string>
+    <string>Downloads latest version of Screencast-O-Matic for macOS and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Kiwi for G Suite</string>
+    <string>com.github.dataJAR-recipes.munki.Screencast-O-Matic</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>KiwiforGSuite</string>
+        <string>Screencast-O-Matic</string>
         <key>pkginfo</key>
         <dict> 
             <key>catalogs</key>
@@ -19,11 +19,24 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>A better way for enterprises to use Gmail and G Suite.</string>
+            <string>Screencast-O-Matic is a screencasting and video editing software tool.</string>
             <key>display_name</key>
-            <string>Kiwi for G Suite</string>
+            <string>Screencast-O-Matic</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+
+# User needs read write access to app bundle
+
+if [ -d "/Applications/Screencast-O-Matic v2.0.app" ]
+then
+    /bin/echo "Found /Applications/Screencast-O-Matic v2.0.app, Setting permissions..."
+    /bin/chmod -R 777 "/Applications/Screencast-O-Matic v2.0.app"
+fi</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -33,31 +46,21 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.Kiwi for G Suite</string>
+    <string>com.github.mlbz521.download.Screencast-O-Matic</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-            <key>Arguments</key>
-            <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <string>%pathname%</string>
+                <key>munkiimport_pkgname</key>
+                <string>%MUNKIIMPORT_PKG_NAME%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
