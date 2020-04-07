@@ -27,7 +27,7 @@
 				<key>url</key>
 				<string>%DOWNLOAD_URL%</string>
 				<key>re_pattern</key>
-				<string>(https://static.insta360.com/assets/storage/[\S]+/[\S]+/Insta360_Studio_2020_[\S]+\.pkg)</string>
+				<string>(https://static.insta360.com/assets/storage/[\S]+/[\S]+/Insta360_Studio_2020_[\S]+\.pkg.zip)</string>
                 <key>request_headers</key>
                 <dict>
                         <key>user-agent</key>
@@ -43,7 +43,7 @@
                 <key>url</key>
                 <string>%match%</string>
                 <key>filename</key>
-                <string>Insta360Studio2020.pkg</string>
+                <string>Insta360Studio2020.pkg.zip</string>
                 <key>request_headers</key>
                 <dict>
                         <key>user-agent</key>
@@ -55,13 +55,37 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
+                <key>purge_destination</key>
+                <true/>
+                <key>archive_format</key>
+                <string>tar</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%destination_path%/*.pkg</string>
+            </dict>
+        </dict>
 		<dict>
 			<key>Processor</key>
 			<string>CodeSignatureVerifier</string>
 			<key>Arguments</key>
 			<dict>
 				<key>input_path</key>
-				<string>%pathname%</string>
+				<string>%found_filename%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Shenzhen Arashi Vision Co., Ltd. (UBX9CH9GDX)</string>
