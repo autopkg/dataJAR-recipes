@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of SecureSafe for macOS and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.SecureSafe</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SecureSafe</string>
+        <key>pkginfo</key>
+        <dict> 
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>SecureSafe is an award-winning online storage solution for companies and individuals alike. The cloud safe simplifies online file sharing and protects documents and passwords, offering a level of security comparable to a Swiss bank. SecureSafe is a unique solution thanks to the use of double encryption, triple data redundancy for each and every file and zero knowledge architecture, thus offering the highest level of privacy protection.</string>
+            <key>display_name</key>
+            <string>SecureSafe</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.andredb90.download.securesafe</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>munkiimport_pkgname</key>
+                <string>%MUNKIIMPORT_PKG_NAME%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/expanded</string>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
