@@ -42,7 +42,7 @@
 					<key>destination_path</key>
 					<string>%RECIPE_CACHE_DIR%/installer_unpack</string>
 					<key>flat_pkg_path</key>
-					<string>%pathname%</string>
+					<string>%found_filename%</string>
 					<key>purge_destination</key>
 					<true />
 				</dict>
@@ -88,6 +88,17 @@
 		<dict>
 			<key>Arguments</key>
 			<dict>
+				<key>source</key>
+				<string>%found_filename%</string>
+				<key>target</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>FileMover</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
 				<key>path_list</key>
 				<array>
 					<string>%RECIPE_CACHE_DIR%/installer_payload/</string>
@@ -101,7 +112,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
+				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>
