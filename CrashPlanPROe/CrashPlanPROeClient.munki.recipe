@@ -44,7 +44,16 @@
 	<string>com.github.homebysix.pkg.CrashPlanPROeClient</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is now non-functional, as parent pkg recipe was deleted: https://github.com/autopkg/homebysix-recipes/commit/a8bef0ee56626811992dac34c639122c618d75ab#diff-ce0b34293223285eb9810a1219e7ff05</string>
+            </dict>
+        </dict>
+        <dict>
 			<key>Processor</key>
 			<string>FlatPkgUnpacker</string>
 			<key>Arguments</key>
