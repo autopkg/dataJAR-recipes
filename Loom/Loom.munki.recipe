@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>    
+	<key>Description</key>
+    <string>Downloads the latest Loom disk image and imports it into munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Loom</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Loom</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/Loom</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Say it with video! Loom is the most effective way to get your message across, no matter where you work.</string>
+            <key>display_name</key>
+            <string>Loom</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.nstrauss.download.Loom</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
