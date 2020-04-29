@@ -66,7 +66,7 @@
 					<key>destination_path</key>
 					<string>%RECIPE_CACHE_DIR%/installer_payload</string>
 					<key>pkg_payload_path</key>
-					<string>%RECIPE_CACHE_DIR%/installer_unpack/webex.pkg/Payload</string>
+					<string>%RECIPE_CACHE_DIR%/installer_unpack/Cisco Webex Meetings Cloud.pkg/Payload</string>
 					<key>purge_destination</key>
 					<true />
 				</dict>
