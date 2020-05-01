@@ -23,9 +23,14 @@
                 <key>url</key>
                 <string>https://luxafor.com/download/</string>
                 <key>re_pattern</key>
-                <string>(http://luxafor.com/wp-content/uploads/[\S]+\/[\S]+\/luxafor_mac_[\S]+\.zip)</string>
+                <string>(//[\S]*/luxafor_mac_[\S]+\.zip)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Safari/605.1.15</string>
+                </dict>
             </dict>
         </dict>
         <dict>
@@ -34,7 +39,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%match%</string>
+                <string>https:%match%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
             </dict>
