@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>Comment</key>
-		<string>Created with Recipe Robot v1.1.2 (https://github.com/homebysix/recipe-robot)</string>
-		<key>Description</key>
-		<string>Downloads the latest version of Cisco Webex Meetings and creates a package.</string>
-		<key>Identifier</key>
-		<string>com.github.dataJAR-recipes.pkg.CiscoWebexMeetings</string>
-		<key>Input</key>
-		<dict>
-			<key>BUNDLE_ID</key>
-			<string>com.cisco.webexmeetingsapp</string>
-			<key>NAME</key>
-			<string>Cisco Webex Meetings</string>
-		</dict>
-		<key>MinimumVersion</key>
-		<string>1.0.0</string>
-		<key>ParentRecipe</key>
-		<string>com.github.dataJAR-recipes.download.CiscoWebexMeetings</string>
-		<key>Process</key>
-		<array>
-			<dict>
-				<key>Arguments</key>
-				<dict>
-					<key>source_pkg</key>
-					<string>%pathname%/*.pkg</string>
-					<key>pkg_path</key>
-					<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
-				</dict>
-				<key>Processor</key>
-				<string>PkgCopier</string>
-			</dict>
-		</array>
-	</dict>
+    <dict>
+        <key>Comment</key>
+        <string>Created with Recipe Robot v1.1.2 (https://github.com/homebysix/recipe-robot)</string>
+        <key>Description</key>
+        <string>Downloads the latest version of Cisco Webex Meetings and creates a package.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.pkg.CiscoWebexMeetings</string>
+        <key>Input</key>
+        <dict>
+            <key>BUNDLE_ID</key>
+            <string>com.cisco.webexmeetingsapp</string>
+            <key>NAME</key>
+            <string>Cisco Webex Meetings</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>1.0.0</string>
+        <key>ParentRecipe</key>
+        <string>com.github.dataJAR-recipes.download.CiscoWebexMeetings</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>source_pkg</key>
+                    <string>%pathname%/*.pkg</string>
+                    <key>pkg_path</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                </dict>
+                <key>Processor</key>
+                <string>PkgCopier</string>
+            </dict>
+        </array>
+    </dict>
 </plist>
