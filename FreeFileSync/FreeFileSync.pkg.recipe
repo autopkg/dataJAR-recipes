@@ -19,83 +19,73 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>PkgRootCreator</string>
+            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
+            <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
             </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%</string>
                 <key>purge_destination</key>
                 <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications</string>
+                <string>%RECIPE_CACHE_DIR%/installer_payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/FreeFileSync.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true />
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/FreeFileSync.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PlistReader</string>
+            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>info_path</key>
-                <string>%pkgroot%/Applications/FreeFileSync.app</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                    <key>CFBundleIdentifier</key>
-                    <string>PKG_ID</string>
-                </dict>
+                <key>source_pkg</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
             </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgname</key>
-                <string>%NAME%-%version%</string>
-                <key>pkg_request</key>
-                <dict>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>id</key>
-                    <string>%PKG_ID%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
-                    <key>chown</key>
-                    <array>
-                        <dict>
-                            <key>path</key>
-                            <string>Applications</string>
-                            <key>user</key>
-                            <string>root</string>
-                            <key>group</key>
-                            <string>admin</string>
-                        </dict>
-                        <dict>
-                            <key>path</key>
-                            <string>Applications/FreeFileSync.app/Contents/MacOS/AppLauncher</string>
-                            <key>user</key>
-                            <string>root</string>
-                            <key>group</key>
-                            <string>admin</string>
-                            <key>mode</key>
-                            <string>755</string>
-                        </dict>
-                    </array>
-                </dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
