@@ -31,11 +31,21 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.sonic particles 2.0</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                 <key>warning_message</key>
+                 <string>This recipe will soon be removed. Please remove it from your list of recipes.
+                 The Vender has removed the App from any downloads - https://twitter.com/kasperfskov/status/1260943762341101568?s=20</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>DmgCreator</string>
