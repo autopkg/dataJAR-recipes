@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Comment</key>
+        <string>Based on a receipe from gerardkok</string>
+        <key>Description</key>
+        <string>Downloads the latest LTS version of Node.js.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.nodejslts</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>nodelts</string>
+            <key>RELEASE</key>
+            <string>latest</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.6.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>https://nodejs.org/en/download/</string>
+                    <key>re_pattern</key>
+                    <string>node-v([0-9\.]+).pkg</string>
+                    <key>result_output_var_name</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>https://nodejs.org/dist/v%version%/node-v%version%.pkg</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: Node.js Foundation (HX7739G8FX)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
