@@ -63,7 +63,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync_10.14_macOS.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Florian Bauer (Y8U4RUM443)</string>

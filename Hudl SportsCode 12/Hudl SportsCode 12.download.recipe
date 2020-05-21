@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>HudlSportsCode12</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://www.hudl.com/elite/downloads</string>
+        <string>https://www.hudl.com/downloads/elite</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
     </dict>
@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/HudlSportscode*12.*\.dmg\.zip\?mtime=.*?)"</string>
+                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg\.zip\?mtime=.*?)"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
