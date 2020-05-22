@@ -70,7 +70,7 @@ For example:
 1. Check the running users ~/Downloads folder for folders matching the pattern: Adobe&ast;2020, exiting if nothing found.
 2. Create an empty recipe list at ~/Downloads/adobe2020_list.txt
 3. Check that the Adobe&ast;2020 folders contain a sub directory called Build containing a pkg called \*\_Install.pkg, skipping this pkg if not found.
-4. If step 3 passes for a pkg, next we look for an override named Adobe&ast;2020.jss.recipe or Adobe&ast;2020.munki.recipe (depending on what option was passed to [Adobe2020Importer.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202020/Adobe2020Importer.py), skipping this pkg if not found.
+4. If step 3 passes for a pkg, next we look for an override named Adobe&ast;2020.jss.recipe or Adobe&ast;2020.munki.recipe in ~/Library/AutoPkg/RecipeOverrides (depending on what option was passed to [Adobe2020Importer.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202020/Adobe2020Importer.py), skipping this pkg if not found.
 5. If step 4 is successful, the Override added to the ~/Downloads/adobecc2020_list.txt recipe list. Steps 3-5 are repeated for all Adobe&ast;2020 folders found within ~/Downloads.
 6. If any items are added to the ~/Downloads/adobe2020_list.txt recipe list, this is then ran with a report written to ~/Downloads/adobe2020_report.plist
 
