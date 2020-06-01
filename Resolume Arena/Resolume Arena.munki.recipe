@@ -24,7 +24,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Arena is an instrument for VJs, AV performers and video artists. It puts all your media and effects right at your fingertips so you can quickly improvise your live visuals.</string>
+            <string>Arena has everything Avenue has, plus advanced options for projection mapping and blending projectors. Control it from a lighting desk and sync to the DJ via SMPTE timecode.</string>
             <key>display_name</key>
             <string>Resolume Arena</string>
             <key>name</key>
