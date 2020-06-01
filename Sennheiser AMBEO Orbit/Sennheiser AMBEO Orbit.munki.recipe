@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of AMBEO Orbit and imports into Munki.</string>
+    <string>Downloads the latest version of Sennheiser AMBEO Orbit and imports into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Sennheiser AMBEO Orbit</string>
     <key>Input</key>
