@@ -78,22 +78,66 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_payload_path</key>
-                <string>%destination_path%//Resolume_Avenue.pkg/Payload</string>
+                <string>%destination_path%/Resolume_Avenue.pkg/Payload</string>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications</string>
+                <string>%pkgroot%</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
         </dict>
+		<dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%destination_path%/Applications/Resolume Avenue/Avenue.app/Contents/Info.plist</string>
+            </dict>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/Resolume Alley/Alley.app</string>
+					<string>/Applications/Resolume Avenue/Avenue.app</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%pkg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
             </dict>
         </dict>
     </array>
