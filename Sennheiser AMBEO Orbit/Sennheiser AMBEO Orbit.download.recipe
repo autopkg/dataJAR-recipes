@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of AMBEO Orbit.</string>
+	<string>Downloads the latest version of Sennheiser AMBEO Orbit.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.AMBEO Orbit</string>
+	<string>com.github.dataJAR-recipes.download.Sennheiser AMBEO Orbit</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
