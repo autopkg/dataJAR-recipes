@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Osculator 3</string>
+    <string>Downloads latest version of OSCulator 3</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Osculator 3</string>
+    <string>com.github.dataJAR-recipes.download.OSCulator 3</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Osculator 3</string>
+        <string>OSCulator 3</string>
         <key>SPARKLE_FEED_URL</key>
         <string>https://backend.wildora.net/v1/products/osculator-v3/revisions.rss</string>
     </dict>
@@ -40,7 +40,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Osculator.app</string>
+                <string>%pathname%/OSCulator.app</string>
                 <key>requirement</key>
                 <string>identifier "net.osculator.OSCulator" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2B429GPEQZ"</string>
             </dict>

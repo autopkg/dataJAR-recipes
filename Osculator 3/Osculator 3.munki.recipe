@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Osculator 3 and imports into Munki.</string>
+    <string>Downloads the latest version of OSCulator 3 and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Osculator 3</string>
+    <string>com.github.dataJAR-recipes.munki.OSCulator 3</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Osculator 3</string>
+        <string>OSCulator 3</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -21,7 +21,7 @@
             <key>description</key>
             <string>OSCulator is the missing link between your controllers and your music or video software. For example, you can use your Nintendo Wiimote or Apple iPhone with Ableton Live or any MIDI compatible application, with ease</string>
             <key>display_name</key>
-            <string>Osculator 3</string>
+            <string>OSCulator 3</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -31,7 +31,7 @@
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Osculator 3</string>
+    <string>com.github.dataJAR-recipes.download.OSCulator 3</string>
     <key>Process</key>
     <array>
         <dict>
