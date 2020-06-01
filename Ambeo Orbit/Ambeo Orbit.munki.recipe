@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Ambeo Orbit and imports into Munki.</string>
+    <string>Downloads the latest version of AMBEO Orbit and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Ambeo Orbit</string>
+    <string>com.github.dataJAR-recipes.munki.AMBEO Orbit</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Ambeo Orbit</string>
+        <string>AMBEO Orbit</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>        
         <key>pkginfo</key>
@@ -33,7 +33,7 @@
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Ambeo Orbit</string>
+    <string>com.github.dataJAR-recipes.download.AMBEO Orbit</string>
     <key>Process</key>
     <array>
         <dict>

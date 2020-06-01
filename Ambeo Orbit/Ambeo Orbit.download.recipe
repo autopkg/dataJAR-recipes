@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of Ambeo Orbit.</string>
+	<string>Downloads the latest version of AMBEO Orbit.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Ambeo Orbit</string>
+	<string>com.github.dataJAR-recipes.download.AMBEO Orbit</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>Ambeo Orbit</string>
+		<string>AMBEO Orbit</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>1.0.0</string>
