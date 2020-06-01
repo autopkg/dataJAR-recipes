@@ -14,12 +14,17 @@
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Alley</string>
+                <string>Avenue</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>OSCulator is the missing link between your controllers and your music or video software. For example, you can use your Nintendo Wiimote or Apple iPhone with Ableton Live or any MIDI compatible application, with ease</string>
+            <string>Avenue is an instrument for VJs, AV performers and video artists. It puts all your media and effects right at your fingertips so you can quickly improvise your live visuals.</string>
             <key>display_name</key>
             <string>Resolume Avenue</string>
             <key>name</key>
