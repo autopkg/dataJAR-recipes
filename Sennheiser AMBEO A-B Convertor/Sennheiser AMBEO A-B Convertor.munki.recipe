@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of the Sennheiser AMBEO A-B Converter plugin and imports it into Munki.</string>
 	<key>Identifier</key>
-	<string>com.github.orbsmiv.munki.Ambeo</string>
+	<string>com.github.dataJAR-recipes.munki.Ambeo</string>
 	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
