@@ -113,7 +113,6 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
 				<key>installs_item_paths</key>
 				<array>
-					<string>/Applications/Resolume Alley/Alley.app</string>
 					<string>/Applications/Resolume Avenue/Avenue.app</string>
 				</array>
 			</dict>
