@@ -85,12 +85,12 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Copier</string>
+            <string>FileMover</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
+                <key>source</key>
                 <string>%RECIPE_CACHE_DIR%/source/payload/VMware Fusion.app</string>
-                <key>destination_path</key>
+                <key>target</key>
                 <string>%pkgroot%/Applications/VMware Fusion.app</string>
             </dict>
         </dict>
