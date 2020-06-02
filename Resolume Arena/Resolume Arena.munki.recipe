@@ -39,7 +39,7 @@
     <string>com.github.dataJAR-recipes.download.Resolume Arena</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>
@@ -90,7 +90,7 @@
                 <string>true</string>
             </dict>
         </dict>
-		<dict>
+        <dict>
             <key>Processor</key>
             <string>Versioner</string>
             <key>Arguments</key>
@@ -99,28 +99,28 @@
                 <string>%destination_path%/Applications/Resolume Arena/Arena.app/Contents/Info.plist</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
-				<key>faux_root</key>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Resolume Arena/Arena.app</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Resolume Arena/Arena.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
