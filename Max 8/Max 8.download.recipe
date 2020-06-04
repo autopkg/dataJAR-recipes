@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://cycling74.com/thanks-for-downloading-max/?os=mac</string>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://\w*-maxmspjitter.s3.amazonaws.com/Max%MAJOR_VERSION%\S.*.dmg)</string>
+                <string>(?P&lt;url&gt;https://\w*-maxmspjitter.s3.amazonaws.com/Max8\S.*.dmg)</string>
             </dict>
         </dict>
         <dict>
