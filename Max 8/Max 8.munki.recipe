@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Max is a graphical environment for music, audio, and multimedia. In use for over twenty years by performers, composers, artists, scientists, teachers, and students, Max is the way to make your computer do things that reflect your individual ideas and dreams. Now with a new interface optimized for speed and simplicity, major performance improvements, and a collection of powerful new tools to realize your ideas faster than ever.</string>
+            <string>Max is an infinitely flexible place to create interactive media software. With in-depth tools for audio, graphics, interaction, and communication, Max is an environment to explore and develop your own ideas.</string>
             <key>display_name</key>
             <string>Max</string>
             <key>name</key>
