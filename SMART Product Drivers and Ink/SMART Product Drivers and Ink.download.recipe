@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SMART Product Drivers and Ink.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.SMARTProductDriversandInk</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SMART Product Drivers and Ink</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://support.smarttech.com/downloads/product-drivers</string>
+                <key>re_pattern</key>
+                <string>(\/en\/downloads\/product-drivers\/\d{1,3}_\d{1,3}-and-ink-\d{1,3}_\d{1,3})</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://support.smarttech.com%match%</string>
+                <key>re_pattern</key>
+                <string>(http.*\.dmg)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>   
+            <string>CodeSignatureVerifier</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>input_path</key>   
+                <string>%pathname%/Install SMART Product Drivers.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: SMART Technologies ULC (53V9BC2FMQ)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
