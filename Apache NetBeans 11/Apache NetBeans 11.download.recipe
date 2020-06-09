@@ -23,9 +23,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%BASE_URL%</string>
+                <string>%BASE_URL%/download/archive/index.html</string>
                 <key>re_pattern</key>
-                <string>href="(\/download\/nb11[\d].*\/index\.html)"</string>
+                <string>href="(/download/nb11[\d]+/nb11[\d]+.html)" class="button success">Download</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
             </dict>
@@ -37,32 +37,6 @@
             <dict>
                 <key>url</key>
                 <string>%BASE_URL%%match%</string>
-                <key>re_pattern</key>
-                <string>href="(\/download\/nb11[\d].*\/nb11[\d].*\.html)" class="button success"</string>
-                <key>result_output_var_name</key>
-                <string>match</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>%BASE_URL%%match%</string>
-                <key>re_pattern</key>
-                <string>href="(https:\/\/www\.apache\.org\/dyn\/closer\.cgi\/netbeans\/netbeans\/11\.[\d].*\/Apache-NetBeans-11\.[\d].*-bin-macosx\.dmg)"</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>%url%</string>
                 <key>re_pattern</key>
                 <string>href="(.*\/Apache-NetBeans-11\.[\d].*-bin-macosx\.dmg)"</string>
                 <key>result_output_var_name</key>
