@@ -74,8 +74,10 @@
                     <string>0755</string>
                     <key>file_content</key>
                     <string>#!/bin/sh
+
 # Determine working directory
 install_dir=$(dirname $0)
+
 # Install the Exposure X5 application using the Install binary's silent install mode
 /usr/bin/hdiutil attach "${install_dir}/Exposure X5 Installer.dmg" -nobrowse
 "/Volumes/Exposure X5 Installer/Exposure X5 Installer.app/Contents/MacOS/Exposure X5 Installer" -quiet</string>
@@ -102,6 +104,17 @@ install_dir=$(dirname $0)
                         <string>Scripts</string>
                     </dict>
                 </dict>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>path_list</key>
+                    <array>
+                        <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                    </array>
+                </dict>
+                <key>Processor</key>
+                <string>PathDeleter</string>
             </dict>
         </array>
     </dict>
