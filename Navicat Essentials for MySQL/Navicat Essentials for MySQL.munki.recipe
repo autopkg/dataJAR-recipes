@@ -6,7 +6,7 @@
 	<string>Downloads the latest version of Navicat Essentials for MySQL and imports it into Munki.</string>
 	<key>Identifier</key>
 	<string>com.github.dataJAR-recipes.munki.Navicat Essentials for MySQL</string>
-	  <key>Input</key>
+	<key>Input</key>
 	<dict>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
@@ -34,21 +34,21 @@
 	<string>0.3.1</string>
 	<key>ParentRecipe</key>
 	<string>com.github.dataJAR-recipes.download.Navicat Essentials for MySQL</string>
-	    <key>Process</key>
-		<array>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
 			<dict>
-				<key>Arguments</key>
-				<dict>
-					<key>pkg_path</key>
-					<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
-					<key>repo_subdirectory</key>
-					<string>%MUNKI_REPO_SUBDIR%</string>
-					<key>version_comparison_key</key>
-					<string>CFBundleShortVersionString</string>
-				</dict>
-				<key>Processor</key>
-				<string>MunkiImporter</string>
+				<key>pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+				<key>version_comparison_key</key>
+				<string>CFBundleShortVersionString</string>
 			</dict>
-	    </array>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
 </dict>
 </plist>
