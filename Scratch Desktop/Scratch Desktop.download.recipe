@@ -32,7 +32,7 @@
 				<key>url</key>
 				<string>%baseurl%/js/download.bundle.js</string>
 				<key>re_pattern</key>
-				<string>(https://downloads.scratch.mit.edu/desktop/Scratch%20Desktop-[\S]+\.dmg)</string>
+				<string>(https://downloads.scratch.mit.edu/desktop/Scratch.dmg)</string>
 				<key>result_output_var_name</key>
 				<string>url</string>
 			</dict>
