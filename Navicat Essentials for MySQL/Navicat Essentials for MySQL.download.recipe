@@ -1,0 +1,53 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Navicat Essentials for MySQL.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Navicat Essentials for MySQL</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Navicat Essentials for MySQL</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>http://download.navicat.com/download/navicatess150_mysql_en.dmg</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Navicat Essentials for MySQL.app</string>
+                <key>requirement</key>
+                <string>identifier "com.prect.NavicatEssentialsForMySQL12" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = VH7G2MRF27</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
