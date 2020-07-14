@@ -19,73 +19,15 @@
 	<string>com.github.peshay.download.Platypus</string>
 	<key>Process</key>
 	<array>
-        <dict>
-			<key>Processor</key>
-			<string>PkgRootCreator</string>
+        	<dict>
 			<key>Arguments</key>
 			<dict>
-				<key>pkgroot</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-pkg</string>
-				<key>pkgdirs</key>
-				<dict>
-					<key>Applications</key>
-					<string>0775</string>
-				</dict>
+				<key>app_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%/Platypus.app</string>
 			</dict>
-		</dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/%NAME%-%version%/Platypus.app</string>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications/Platypus.app</string>
-            </dict>
-        </dict>
-		<dict>
 			<key>Processor</key>
-			<string>PkgCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_request</key>
-				<dict>
-					<key>pkgname</key>
-					<string>%NAME%-%version%</string>
-					<key>pkgdirs</key>
-					<string>%RECIPE_CACHE_DIR%/pkgroot/Applications/</string>
-					<key>version</key>
-					<string>%version%</string>
-					<key>id</key>
-					<string>%BUNDLE_ID%</string>
-					<key>options</key>
-					<string>purge_ds_store</string>
-					<key>chown</key>
-					<array>
-						<dict>
-							<key>path</key>
-							<string>Applications</string>
-							<key>user</key>
-							<string>root</string>
-							<key>group</key>
-							<string>admin</string>
-						</dict>
-					</array>
-				</dict>
-			</dict>
+			<string>AppPkgCreator</string>
 		</dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%-pkg</string>
-                </array>
-            </dict>
-        </dict>
 	</array>
 </dict>
 </plist>
