@@ -5,7 +5,7 @@
 	<input_type>
 		<type>script</type>
 		<platform>Mac</platform>
-		<script>#!/bin/assh
+		<script>#!/bin/bash
 CFBundleVersion=""
 if [ -f "/Applications/Box.app/Contents/Info.plist" ]; then
     CFBundleVersion=$(defaults read "/Applications/Box.app/Contents/Info.plist" CFBundleVersion)
