@@ -23,7 +23,7 @@
 				<key>url</key>
 				<string>http://pages.uoregon.edu/koch/</string>
 				<key>re_pattern</key>
-				<string>Ghostscript-+[0-9]+\.+[0-9]+\.pkg</string>
+				<string>Ghostscript-+[0-9]+\.+[0-9]+\-Full.pkg</string>
 			</dict>
 		</dict>
         <dict>
