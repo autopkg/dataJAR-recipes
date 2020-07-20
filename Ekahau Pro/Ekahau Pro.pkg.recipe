@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest unlicensed version of Ekahau Pro and turns it into a package.
+    NOTE: When launching this App there are PPPC prompts for sh and java.
+    This .pkg recipe can handle the sh prompt but the java prompt seems unavoidable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Ekahau Pro</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Ekahau Pro</string>
+         <key>LANGUAGE</key>
+        <string>en</string>      
+        <!--This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts --> 
+        <!--Acceptable values for this are: -->
+        <!--"en" for English -->
+        <!--"fr" for French / Française -->
+        <!--"de" for German / Deutsche -->
+        <!--"ja" for Japanese / 日本人-->
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Ekahau Pro</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                  	<key>Scripts</key>
+                  	<string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+         <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+               <key>source</key>
+               <string>%RECIPE_CACHE_DIR%/%NAME%/Scripts</string>
+               <key>target</key>
+               <string>%RECIPE_CACHE_DIR%/Scripts</string>
+            </dict>
+         </dict>
+		<dict>
+			<key>Processor</key>
+			<string>FileCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>file_path</key>
+				<string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+				<key>file_mode</key>
+				<string>0755</string>
+				<key>file_content</key>
+				<string>#!/bin/bash
+
+##########################################################################################
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+#       Redistribution and use in source and binary forms, with or without
+#       modification, are permitted provided that the following conditions are met:
+#               * Redistributions of source code must retain the above copyright
+#                 notice, this list of conditions and the following disclaimer.
+#               * Redistributions in binary form must reproduce the above copyright
+#                 notice, this list of conditions and the following disclaimer in the
+#                 documentation and/or other materials provided with the distribution.
+#               * Neither data JAR Ltd nor the
+#                 names of its contributors may be used to endorse or promote products
+#                 derived from this software without specific prior written permission.
+#
+#       THIS SOFTWARE IS PROVIDED BY DATA JAR LTD "AS IS" AND ANY
+#       EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#       WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#       DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+#       DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#       (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#       LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#       ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#       (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#       SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+##########################################################################################
+#
+# SUPPORT FOR THIS PROGRAM
+#
+#       This program is distributed "as is" by DATA JAR LTD.
+#       For more information or support, please utilise the following resources:
+#
+#               http://www.datajar.co.uk
+#
+##########################################################################################
+#
+# DESCRIPTION
+# 
+#	Sets the required file for the language chooser to not be shown by pre-setting it.
+#
+##########################################################################################
+
+##########################################################################################
+################################### Global Variables #####################################
+##########################################################################################
+
+# Overall name of the family of software we are installing
+swTitle="gen-script-autopkg-ekanhaupro-postinstall"
+
+# Log directory
+debugDir="/var/log/managed"
+
+# Log file
+debugFile="${debugDir}/${swTitle}.log"
+
+# Script Version
+ver="1.0"
+
+# Language
+language="%LANGUAGE%"
+
+##########################################################################################
+#################################### Start functions #####################################
+##########################################################################################
+
+
+setup()
+{
+
+    # Make sure we're root and creating logging dirs
+
+    if [ "$(id -u)" != "0" ]
+    then
+        /bin/echo "This script must be run as root"
+        exit 1
+    fi
+
+    if [ ! -d "{debugDir}" ]
+    then
+        /bin/mkdir -p "${debugDir}"
+        /bin/chmod -R 777 "${debugDir}"
+    fi
+
+    if [ ! -f "${debugFile}" ]
+    then
+        /usr/bin/touch "${debugFile}"
+    fi
+
+}
+
+
+start()
+{
+
+    # Logging start
+
+    {
+
+        /bin/echo
+        /bin/echo "###################-START-##################"
+        /bin/echo
+        /bin/echo "dataJAR IT Services"
+        /bin/echo "Running ${swTitle} ${ver}"
+        /bin/echo
+        /bin/echo "Started: $(/bin/date)"
+        /bin/echo
+
+    } | /usr/bin/tee "${debugFile}"
+
+}
+
+
+finish()
+{
+
+    # Logging finish
+
+    {
+
+        /bin/echo
+        /bin/echo "Finished: $(/bin/date)"
+        /bin/echo
+        /bin/echo "###################-END-###################"
+
+    } | /usr/bin/tee -a "${debugFile}"
+
+}
+
+
+setLanguage ()
+{
+
+    # Write the Language key to file, overwriting the Language if exists
+
+    {
+
+        if [ -z "${language}" ]
+        then
+            /bin/echo "ERROR: The parameter 'language' is blank. Exiting..."
+            exit 1
+        else
+            /bin/echo "Creating /Applications/Ekahau Pro.app/Contents/Java, if missing..."
+            /bin/mkdir -p "/Applications/Ekahau Pro.app/Contents/Java"
+            /bin/echo "Creating /Applications/Ekahau Pro.app/Contents/Java/LANGUAGE, if missing..."
+            /usr/bin/touch "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
+            /bin/echo "Writing language to LANGUAGE..."
+            /bin/echo "${language}" > "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
+       fi
+    } | /usr/bin/tee -a "${debugFile}"
+}   
+
+
+##########################################################################################
+#################################### End functions #######################################
+##########################################################################################
+
+
+setup
+start
+if ! setLanguage;
+then
+    finish
+    exit 1
+else
+    finish
+fi</string>	
+			</dict>
+		</dict>				
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/Ekahau Pro.app</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/Ekahau Pro.app</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%destination_path%</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleIdentifier</key>
+                    <string>bundleid</string>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgname</key>
+                <string>%NAME%-%LANGUAGE%-%version%</string>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>path</key>
+                            <string>Applications</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>admin</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>%bundleid%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgroot</key>
+                    <string>%pkgroot%</string>
+					<key>version</key>
+					<string>%version%</string>
+					<key>scripts</key>
+					<string>Scripts</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%pkgroot%</string>                          
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest unlicensed version of Ekahau Pro, turns it into a package to add to Munki.
+    NOTE: When launching this App there are PPPC prompts for sh and java.
+    The parent .pkg recipe can handle the sh prompt but the java prompt seems unavoidable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Ekahau Pro</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Ekahau Pro</string>
+        <key>LANGUAGE</key>
+        <string>en</string>      
+        <!--This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts --> 
+        <!--Acceptable values for this are: -->
+        <!--"en" for English -->
+        <!--"fr" for French / Française -->
+        <!--"de" for German / Deutsche -->
+        <!--"ja" for Japanese / 日本人-->
+        <key>pkginfo</key>
+        <dict> 
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Industry standard tool for designing, analyzing, optimizing and troubleshooting WiFi Networks.</string>
+            <key>display_name</key>
+            <string>Ekahau Pro</string>
+            <key>name</key>
+            <string>EkahauPro</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Ekahau Pro</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
