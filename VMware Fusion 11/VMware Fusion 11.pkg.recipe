@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>VMwareFusion11</string>
+        <string>VMwareFusion</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.5</string>
@@ -19,18 +19,36 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>PlistReader</string>
+            <string>AppDmgVersioner</string>
             <key>Arguments</key>
             <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/VMWare Fusion.app</string>
-                <key>plist_keys</key>
+                <key>dmg_path</key>
+                <string>%pathname%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
                 <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                    <key>CFBundleIdentifier</key>
-                    <string>bundleid</string>
+                    <key>Applications</key>
+                    <string>0775</string>
                 </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>DittoCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/%app_name%</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/%app_name%</string>
             </dict>
         </dict>
         <dict>
@@ -50,12 +68,12 @@
             <key>Arguments</key>
             <dict>
                 <key>file_content</key>
-            <string>#!/bin/bash
+            <string>#!/bin/zsh
 #
 # Pinched with &lt;3 from: https://github.com/autopkg/justinrummel-recipes/blob/42bc13881fe373f771cefec20a53d7844172019f/VMware%20Fusion/VMwareFusion.pkg.munki.recipe
 #
 
-if [ -e /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool ]
+if [[ -e /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool ]]
 then
         /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool set
 fi</string>
@@ -63,6 +81,21 @@ fi</string>
                 <string>0755</string>
                 <key>file_path</key>
                 <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgInfoCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>version</key>
+                <string>%version%</string>
+                <key>template_path</key>
+                <string>PackageInfoTemplate</string>
+                <key>infofile</key>
+                <string>%RECIPE_CACHE_DIR%/PackageInfo</string>
+                <key>pkgtype</key>
+                <string>flat</string>
             </dict>
         </dict>
         <dict>
