@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>VMwareFusion</string>
+        <string>VMwareFusion11</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.5</string>
