@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of VMware Fusion and creates a package</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.VMware Fusion</string>
+    <string>com.github.dataJAR-recipes.pkg.VMware Fusion 11</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -14,7 +14,7 @@
     <key>MinimumVersion</key>
     <string>0.2.5</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.VMware Fusion</string>
+    <string>com.github.dataJAR-recipes.download.VMware Fusion 11</string>
     <key>Process</key>
     <array>
         <dict>
