@@ -3,119 +3,82 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of VMware Fusion 11</string>
+    <string>Downloads the latest version of VMware Fusion 11.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.VMware Fusion 11</string>
     <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>VMwareFusion11</string>
-    </dict>
+    <dict/>
     <key>MinimumVersion</key>
-    <string>0.2.5</string>
+    <string>0.4.2</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>com.justinrummel.download.VMwareFusion/VMwareFusionURLProvider</string>
             <key>Arguments</key>
             <dict>
-                <key>major_version</key>
-                <string>11</string>
-                <key>product_name</key>
-                <string>fusion.xml</string>
+                <key>re_pattern</key>
+                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 11.*\&quot;,\&quot;dlgList&quot;:\[{&quot;.*&quot;,\&quot;code\&quot;:\&quot;(?P&lt;downloadGroup&gt;FUS-[\d]+?)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;orderId\&quot;:.*}</string>
+                <!--
+                    Example for 11.x:
+                    {"name":"VMware Fusion 11.5.5","dlgList":[{"name":"VMware Fusion 11.5.5 (for Intel-based Macs)","code":"FUS-1155","releaseDate":"2020-05-28T19:00:00Z","productId":"798","releasePackageId":"46541","orderId":5}
+                -->
+                <key>url</key>
+                <string>https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=11_0&amp;dlgType=PRODUCT_BINARY</string>
+                <!--
+                    Example for 11.x:
+                    https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&category=desktop_end_user_computing&product=vmware_fusion&version=11_0&dlgType=PRODUCT_BINARY
+                -->
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>filename</key>
-                <string>%NAME%.zip.tar</string>
+                <key>re_pattern</key>
+                <string>VMware-Fusion-.*\.dmg</string>
+                <!--
+                    Example for 11.x:
+                    VMware-Fusion-11.5.5-16269456.dmg
+                -->
+                <key>result_output_var_name</key>
+                <string>dmg_url</string>
+                <key>url</key>
+                <string>https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=11_0&amp;dlgType=PRODUCT_BINARY&amp;downloadGroup=%downloadGroup%</string>
+                <!--
+                    Example for 11.x:
+                    https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&category=desktop_end_user_computing&product=vmware_fusion&version=11_0&dlgType=PRODUCT_BINARY&downloadGroup=FUS-1155
+                -->
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download3.vmware.com/software/fusion/file/%dmg_url%</string>
+                <!--
+                    Example for 11.x:
+                    https://download3.vmware.com/software/fusion/file/VMware-Fusion-11.5.5-16269456.dmg
+                -->
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/tar</string>
-                <key>purge_destination</key>
-                <true/>
-                <key>archive_format</key>
-                <string>tar</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%RECIPE_CACHE_DIR%/tar/com.vmware.fusion.zip</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/source</string>
-                <key>purge_destination</key>
-                <true/>
-                <key>archive_format</key>
-                <string>zip</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FileMover</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source</key>
-                <string>%RECIPE_CACHE_DIR%/source/payload/VMware Fusion.app</string>
-                <key>target</key>
-                <string>%pkgroot%/Applications/VMware Fusion.app</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pkgroot%/Applications/VMware Fusion.app</string>
+                <string>%pathname%/VMware Fusion.app</string>
                 <key>requirement</key>
                 <string>identifier "com.vmware.fusion" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EG7KH642X6</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/tar/</string>
-                    <string>%RECIPE_CACHE_DIR%/source/</string>
-                </array>
-            </dict>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
