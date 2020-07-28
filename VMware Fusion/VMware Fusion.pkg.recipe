@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of VMware Fusion and creates a package</string>
+    <string>Downloads the latest version of VMware Fusion 11 and creates a package</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.VMware Fusion 11</string>
     <key>Input</key>
