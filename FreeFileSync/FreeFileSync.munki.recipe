@@ -42,6 +42,35 @@
     <string>com.github.dataJAR-recipes.pkg.freefilesync</string>
     <key>Process</key>
     <array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/FreeFileSync.app</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+    	<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+		</dict>
         <dict>
             <key>Arguments</key>
             <dict>
@@ -50,6 +79,19 @@
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
