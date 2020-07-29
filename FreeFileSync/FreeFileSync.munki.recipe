@@ -68,6 +68,8 @@
 				<dict>
 					<key>version</key>
 					<string>%version%</string>
+					<key>minosversion</key>
+                    <string>10.10</string>
 				</dict>
 			</dict>
 		</dict>
