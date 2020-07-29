@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Perimeter 81, builds a package and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Perimeter 81</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Perimeter81</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>description</key>
+            <string>Perimeter 81 is a Zero Trust Network as a Service that helps you to secure your team’s network, including valuable local and cloud resources.
+Incorporating the highest standards of Zero Trust Security, Perimeter 81 users can create adaptive least-privilege access policies based on device, identity, role, and location.</string>
+            <key>developer</key>
+            <string>Safer Social</string>
+            <key>display_name</key>
+            <string>Perimeter 81</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.3</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Perimeter 81</string>
+    <key>Process</key>
+    <array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/Perimeter 81.app</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+    	<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
