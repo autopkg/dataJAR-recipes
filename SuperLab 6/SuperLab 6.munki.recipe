@@ -65,7 +65,7 @@ Every other tool to build experiments relies on programming. SuperLab has been o
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%pkg_path%</string>
+                    <string>%destination_path%</string>
                 </array>
             </dict>
         </dict>
