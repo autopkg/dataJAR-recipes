@@ -24,6 +24,32 @@
             <string>FontLab 7-Trial</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+# v7: https://help.fontlab.com/fontlab/7/manual/FontLab-Multi-Seat-License-Setup/
+# 
+# Set licenseServer &amp; licenseServerPort as needed
+
+licenseServer=""
+licenseServerPort=""
+
+licenseFile="com.fontlab.fl70.lic"
+prefPath="/Library/Preferences/"
+
+
+if [ -n "${licenseServer}" ] &amp;&amp; [ -n "${licenseServerPort}" ]
+then
+	/bin/echo "Creating ${prefPath}${licenseFile}..."
+	/bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" > "${prefPath}""${licenseFile}"
+	/bin/echo -n "ISV fontlab" >> "${prefPath}""${licenseFile}"
+	/bin/echo "Making ${prefPath}${licenseFile} executable..."
+	/bin/chmod +x "${prefPath}""${licenseFile}"
+	/bin/echo "Setting permissions on ${prefPath}${licenseFile}..."
+	/usr/sbin/chown root:wheel "${prefPath}""${licenseFile}"
+fi</string>
             <key>unattended_install</key>
             <true/>
         </dict>
