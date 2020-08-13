@@ -16,7 +16,7 @@
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.1</string>
+    <string>2.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -27,7 +27,7 @@
 				<key>url</key>
 				<string>%DOWNLOAD_URL%</string>
 				<key>re_pattern</key>
-				<string>(https://static.insta360.com/assets/storage/[\S]+/[\S]+/Insta360_Studio_2020_[\S]+\.pkg.zip)</string>
+				<string>(https://res.insta360.com/static/assets/storage/[\S]+/[\S]+/Insta360_Studio_3.[\S]+pkg.zip)</string>
                 <key>request_headers</key>
                 <dict>
                         <key>user-agent</key>
@@ -76,7 +76,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%destination_path%/*.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/**/*.pkg</string>
             </dict>
         </dict>
 		<dict>
