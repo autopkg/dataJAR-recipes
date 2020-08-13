@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of NVivo 12 and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.NVivo 12</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>NVivo12</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>More than just a tool for organizing and managing data, NVivo offers an intuitive qualitative data analysis experience that helps you uncover deeper research insights.</string>
+            <key>display_name</key>
+            <string>NVivo 12</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+# The activationFile var needs to be amended and licenseKey var supplied as per: 
+# http://techcenter.qsrinternational.com/desktop/nm12/nm12_mass_deployment.htm
+#
+
+activationFile="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;Activation&gt;
+  &lt;Request&gt;
+    &lt;FirstName&gt;John&lt;/FirstName&gt;
+    &lt;LastName&gt;Sysadmin&lt;/LastName&gt;
+    &lt;Email&gt;admin@yourorg.com&lt;/Email&gt;
+    &lt;Phone&gt;+1-555-555-5555&lt;/Phone&gt;
+    &lt;Fax&gt;+1-555-555-5555&lt;/Fax&gt;
+    &lt;JobTitle&gt;Your Job Title&lt;/JobTitle&gt;
+    &lt;Sector&gt;Your Sector&lt;/Sector&gt;
+    &lt;Industry&gt;Your Industry&lt;/Industry&gt;
+    &lt;Role&gt;Your Role&lt;/Role&gt;
+    &lt;Department&gt;Your Department&lt;/Department&gt;
+    &lt;Organization&gt;Your Organization&lt;/Organization&gt;
+    &lt;City&gt;Boston&lt;/City&gt;
+    &lt;Country&gt;USA&lt;/Country&gt;
+    &lt;State&gt;Massachusetts&lt;/State&gt;
+  &lt;/Request&gt;
+&lt;/Activation&gt;"
+
+licenseKey=""
+
+# Proceed only if variable(s) have a value
+if [ -n "${licenseKey}" ]
+then
+    /bin/echo "Creating activation file /tmp/activation.xml..."
+    /bin/echo -n "${activationFile}" > /tmp/activation.xml
+    /bin/echo "Licensing NVivo..."
+    '/Applications/NVivo 12.app/Contents/MacOS/NVivo 12' -initialize "${licenseKey}" -activate /tmp/activation.xml
+    /bin/rm /tmp/activation.xml
+fi
+
+/bin/echo "Disabling Automatic updates..."
+/usr/bin/defaults write /Library/Preferences/com.qsrinternational.NVivo-12.plist SUEnableAutomaticChecks -bool NO 
+/usr/bin/defaults write /Library/Preferences/com.qsrinternational.NVivo-12.plist SUAutomaticallyUpdate -bool NO</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.NVivo 12</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

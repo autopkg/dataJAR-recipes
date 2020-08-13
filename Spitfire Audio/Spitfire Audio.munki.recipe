@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest release of Spitfire Audio and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Spitfire Audio</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SpitfireAudio</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>This intuitive desktop application enables you to install and update your Spitfire products with ease.</string>
+            <key>display_name</key>
+            <string>Spitfire Audio</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+
+helperName="com.spitfireaudio.LibraryManagerHelper"
+daemonPath="/Library/LaunchDaemons/${helperName}.plist"
+
+if [ ! -f /Library/PrivilegedHelperTools/"${helperName}" ]
+then
+    /bin/echo "Copying Privileged Helper from /Applications/Spitfire Audio.app/Contents/Library/LaunchServices/${helperName} to /Library/PrivilegedHelperTools/..."
+    /bin/cp '/Applications/Spitfire Audio.app/Contents/Library/LaunchServices/com.spitfireaudio.LibraryManagerHelper' /Library/PrivilegedHelperTools/
+fi
+
+if [ ! -f "${daemonPath}" ]
+then
+    /bin/echo "LaunchDaemon missing, writing out..."
+    /usr/bin/defaults write "${daemonPath}" KeepAlive -bool true
+    /usr/bin/defaults write "${daemonPath}" Label com.spitfireaudio.LibraryManagerHelper
+    /usr/bin/defaults write "${daemonPath}" MachServices -dict-add com.spitfireaudio.LibraryManagerHelper -bool true
+    /usr/bin/defaults write "${daemonPath}" Program /Library/PrivilegedHelperTools/com.spitfireaudio.LibraryManagerHelper
+    /usr/bin/defaults write "${daemonPath}" ProgramArguments -array-add /Library/PrivilegedHelperTools/com.spitfireaudio.LibraryManagerHelper
+    /bin/echo "Setting LaunchDaemon permissions..."
+    /usr/sbin/chown root:wheel "${daemonPath}"
+    /bin/chmod 755 "${daemonPath}"
+    /bin/echo "Loading LaunchDaemon..."
+    /usr/sbin/chown root:wheel "${daemonPath}"
+    /bin/chmod 755 "${daemonPath}"
+    /bin/launchctl load -w "${daemonPath}"
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+#
+
+helperName="com.spitfireaudio.LibraryManagerHelper"
+daemonPath="/Library/LaunchDaemons/${helperName}.plist"
+appPath="/Applications/Spitfire Audio.app"
+
+if [ -f /Library/PrivilegedHelperTools/"${helperName}" ]
+then
+    /bin/echo "Deleting Privileged Helper ${helperName} from ${helperName} to /Library/PrivilegedHelperTools/..."
+    /bin/rm -rf /Library/PrivilegedHelperTools/"${helperName}"
+fi
+
+if [ -f "${daemonPath}" ]
+then
+    /bin/echo "Unloading LaunchDaemon..."
+    /bin/launchctl unload -w "${daemonPath}"
+    /bin/echo "Deleting LaunchDaemon..."
+    //bin/rm "${daemonPath}"
+fi
+
+if [ -d "${appPath}" ]
+then
+    /bin/echo "Deleting ${appPath}..."
+    /bin/rm -rf "${appPath}"
+fi</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Spitfire Audio</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
