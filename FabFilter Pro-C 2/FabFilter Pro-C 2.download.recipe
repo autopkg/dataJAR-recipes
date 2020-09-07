@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of FabFilter Pro-C 2</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.FabFilter Pro-C 2</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>FabFilter Pro-C 2</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>re_pattern</key>
+                    <string>https:\/\/download\.fabfilter\.com\/ffproc2.*\.dmg</string>
+                    <key>url</key>
+                    <string>https://www.fabfilter.com/download</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>%match%</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%/*.pkg</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: FabFilter (43SG2JNHFW)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+            </dict>
+        </array>
+    </dict>
+</plist>
