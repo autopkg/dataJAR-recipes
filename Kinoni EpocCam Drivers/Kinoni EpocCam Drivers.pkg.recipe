@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Kinoni EpocCam Drivers and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Kinoni EpocCam Drivers</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>KinoniEpocCamDrivers</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+	<key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Kinoni EpocCam Drivers</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%found_filename%</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>                              
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -10,7 +10,7 @@
 			<value>%JSS_INVENTORY_NAME%</value>
 		</criterion>
 		<criterion>
-			<name>BoxVersion</name>
+			<name>Box Version</name>
 			<priority>1</priority>
 			<and_or>and</and_or>
 			<search_type>is not</search_type>

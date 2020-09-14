@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of DisplayLink.
+	Taken over from bochoven-recipe (https://github.com/autopkg/bochoven-recipes/issues/35)</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.DisplayLink</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>DisplayLink</string>
+        <key>DOWNLOAD_URL</key>
+        <string>https://www.displaylink.com/downloads</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>DisplayLink USB Graphics Software for macOS\s.*\s.*\s.*\s.*\s.*\s.*\s.*\s.*\s.*\s.*\s.*a href=\&quot;\/downloads\/file\?id=(\d+)\&quot; title=\&quot;Download File\&quot; onclick=\&quot;\&quot; class=\&quot;download-link\&quot;&gt;&lt;button&gt;Download&lt;\/button&gt;&lt;\/a&gt;</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%/macos</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>curl_opts</key>
+                <array>
+                    <string>-F</string>
+                    <string>fileId=%match%</string>
+                    <string>-F</string>
+                    <string>accept_submit=Accept</string>
+                    <string>--location</string>
+                </array>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%/file?id=%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pattern</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/*.dmg</string>
+			</dict>
+			<key>Processor</key>
+			<string>FileFinder</string>
+		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%found_filename%/DisplayLink Software Installer.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: DisplayLink Corp (73YQY62QM3)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
