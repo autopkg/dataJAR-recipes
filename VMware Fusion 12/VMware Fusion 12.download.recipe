@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of VMware Fusion 12.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.VMware Fusion 12</string>
+    <key>Input</key>
+    <dict/>
+    <key>MinimumVersion</key>
+    <string>0.4.2</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 12.*\&quot;,\&quot;dlgList&quot;:\[{&quot;.*&quot;,\&quot;code\&quot;:\&quot;(?P&lt;downloadGroup&gt;FUS-[\d]+?)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;orderId\&quot;:.*}</string>
+                <!--
+                    Example for 12.x:
+                    {"name":"VMware Fusion 12.0.0 (for Intel-based Macs)","code":"FUS-1200","releaseDate":"2020-09-14T07:00:00Z","productId":"1040","releasePackageId":"52084","orderId":1}
+                -->
+                <key>url</key>
+                <string>https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY</string>
+                <!--
+                    Example for 12.x:
+                    https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&category=desktop_end_user_computing&product=vmware_fusion&version=12_0&dlgType=PRODUCT_BINARY
+                -->
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>VMware-Fusion-.*\.dmg</string>
+                <!--
+                    Example for 12.x:
+                    VMware-Fusion-12.0.0-16880131.dmg
+                -->
+                <key>result_output_var_name</key>
+                <string>dmg_url</string>
+                <key>url</key>
+                <string>https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY&amp;downloadGroup=%downloadGroup%</string>
+                <!--
+                    Example for 11.x:
+                    https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&category=desktop_end_user_computing&product=vmware_fusion&version=12_0&dlgType=PRODUCT_BINARY&downloadGroup=FUS-1200
+                -->
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download3.vmware.com/software/fusion/file/%dmg_url%</string>
+                <!--
+                    Example for 11.x:
+                    https://download3.vmware.com/software/fusion/file/VMware-Fusion-12.0.0-16880131.dmg
+                -->
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/VMware Fusion.app</string>
+                <key>requirement</key>
+                <string>identifier "com.vmware.fusion" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EG7KH642X6</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
