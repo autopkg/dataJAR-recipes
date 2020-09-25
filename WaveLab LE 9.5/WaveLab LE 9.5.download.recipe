@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.steinberg.net/index.php?id=14715&amp;L=1</string>
                 <key>re_pattern</key>
-                <string>http://download.steinberg.net/downloads_software/WaveLab_LE_9.[0-9a-z\.]+\/[0-9a-z\.]+\/WaveLab_LE_[0-9a-z\.]+\_Update_mac.dmg</string>
+                <string>https://download.steinberg.net/downloads_software/WaveLab_LE_9.[0-9a-z\.]+\/[0-9a-z\.]+\/WaveLab_LE_[0-9a-z\.]+\_Update_mac.dmg</string>
             </dict>
         </dict>
         <dict>
