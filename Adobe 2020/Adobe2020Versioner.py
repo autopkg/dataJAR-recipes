@@ -34,7 +34,7 @@ from autopkglib import Processor, ProcessorError
 
 
 __all__ = ['Adobe2020Versioner']
-__version__ = ['1.2']
+__version__ = ['1.3']
 
 
 class Adobe2020Versioner(Processor):
@@ -200,6 +200,10 @@ class Adobe2020Versioner(Processor):
                 self.output('display_name: %s' % self.env['display_name'])
 
                 zip_file = load_json['Packages']['Package'][0]['PackageName']
+                pimx_dir = '1'
+                if zip_file.endswith('-LearnPanel'):
+                    zip_file = load_json['Packages']['Package'][1]['PackageName']
+                    pimx_dir = '2'
                 self.output('zip_file: %s' % zip_file)
 
                 zip_path = os.path.join(self.env['PKG'], 'Contents/Resources/HD', \
@@ -230,11 +234,11 @@ class Adobe2020Versioner(Processor):
                                 else:
                                     bundle_location = bundle_location[16:]
                                     if bundle_location.endswith('.app'):
-                                        zip_bundle = os.path.join('1', bundle_location, \
-                                                                 'Contents/Info.plist')
+                                        zip_bundle = os.path.join(pimx_dir, bundle_location, \
+                                                                      'Contents/Info.plist')
                                     else:
-                                        zip_bundle = os.path.join('1', bundle_location, \
-                                                     app_bundle, 'Contents/Info.plist')
+                                        zip_bundle = os.path.join(pimx_dir, bundle_location, \
+                                                          app_bundle, 'Contents/Info.plist')
                                     try:
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
