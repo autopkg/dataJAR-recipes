@@ -40,31 +40,24 @@
         </dict>
         <key>MinimumVersion</key>
         <string>1.0.4</string>
-        <key>ParentRecipe</key>
-        <string>com.github.yohan460-recipes.pkg.JamfConnectSync</string>
         <key>Process</key>
         <array>
             <dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
                 <key>Arguments</key>
                 <dict>
-                    <key>pkg_path</key>
-                    <string>%pkg_path%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
+                    <key>warning_message</key>
+                    <string>This recipe has been deprecated following the release of Jamf Connect 2.0</string>
                 </dict>
-            </dict>
-            <dict>
                 <key>Processor</key>
-                <string>PathDeleter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <array>
-                        <string>%RECIPE_CACHE_DIR%/payload</string>
-                        <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    </array>
+                <string>DeprecationWarning</string>
+            </dict>
+            <dict>   
+                <key>Processor</key>   
+                <string>StopProcessingIf</string>   
+                <key>Arguments</key>   
+                <dict>   
+                    <key>predicate</key>   
+                    <string>TRUEPREDICATE</string>
                 </dict>
             </dict>
         </array>
