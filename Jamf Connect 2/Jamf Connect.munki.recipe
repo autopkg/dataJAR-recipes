@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Jamf Connect and imports into Munki</string>
+    <string>Downloads the latest version of Jamf Connect 2 and imports into Munki</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Jamf Connect</string>
+    <string>com.github.dataJAR-recipes.munki.Jamf Connect 2</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_CATEGORY</key>
@@ -37,7 +37,7 @@
     <key>MinimumVersion</key>
     <string>0.5.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.Jamf Connect</string>
+    <string>com.github.dataJAR-recipes.pkg.Jamf Connect 2</string>
     <key>Process</key>
     <array>
         <dict>
