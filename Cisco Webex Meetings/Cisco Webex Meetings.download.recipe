@@ -14,97 +14,30 @@
             <string>Cisco Webex Meetings</string>
         </dict>
         <key>MinimumVersion</key>
-        <string>1.0.0</string>
+        <string>1.1.0</string>
         <key>Process</key>
         <array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
             <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>filename</key>
-                    <string>%NAME%.dmg</string>
-                    <key>url</key>
-                    <string>%DOWNLOAD_URL%</string>
-                </dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
+                <key>warning_message</key>
+                <string>This package from Cisco deploys files into /tmp then uses a post-
+                script to move them into the logged in user's home area. As a result, this
+                isn't mass-deployable and isn't fully patchable. As a result, we have 
+                depreciated this recipe.</string>
             </dict>
-            <dict>
-                <key>Processor</key>
-                <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
             </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>expected_authority_names</key>
-                    <array>
-                        <string>Developer ID Installer: Cisco (DE8Y96K9QP)</string>
-                        <string>Developer ID Certification Authority</string>
-                        <string>Apple Root CA</string>
-                    </array>
-                    <key>input_path</key>
-                    <string>%pathname%/Cisco Webex Meetings.pkg</string>
-                </dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
-                    <key>flat_pkg_path</key>
-                    <string>%pathname%/Cisco Webex Meetings.pkg</string>
-                    <key>purge_destination</key>
-                    <true />
-                </dict>
-                <key>Processor</key>
-                <string>FlatPkgUnpacker</string>
-            </dict>
-        	<dict>
-                <key>Processor</key>
-                <string>FileFinder</string>
-                <key>Arguments</key>
-                <dict>
-                <key>pattern</key>
-              		<string>%RECIPE_CACHE_DIR%/installer_unpack/*.pkg</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_payload</string>
-                    <key>pkg_payload_path</key>
-                    <string>%found_filename%/Payload</string>
-                    <key>purge_destination</key>
-                    <true />
-                </dict>
-                <key>Processor</key>
-                <string>PkgPayloadUnpacker</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>input_plist_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_payload/Cisco Webex Meetings.app/Contents/Info.plist</string>
-                    <key>plist_version_key</key>
-                    <string>CFBundleShortVersionString</string>
-                </dict>
-                <key>Processor</key>
-                <string>Versioner</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <array>
-                        <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
-                        <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
-                    </array>
-                </dict>
-                <key>Processor</key>
-                <string>PathDeleter</string>
-            </dict>
+        </dict>
         </array>
     </dict>
 </plist>
