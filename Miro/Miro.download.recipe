@@ -11,7 +11,7 @@
 		<key>NAME</key>
 		<string>Miro</string>
 		<key>DOWNLOAD_URL</key>
-		<string>https://desktop.realtimeboard.com/platforms/darwin/Miro%20-%20formerly%20RealtimeBoard.dmg</string>
+		<string>https://desktop.miro.com/platforms/darwin/Miro.dmg</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>1.0.0</string>
