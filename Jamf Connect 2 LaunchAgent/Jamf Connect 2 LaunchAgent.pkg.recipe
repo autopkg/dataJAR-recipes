@@ -38,7 +38,7 @@
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
                 <key>source_pkg</key>
-                <string>%pathname%/*.pkg</string>
+                <string>%pathname%/JamfConnectLaunchAgent.pkg</string>
             </dict>
             <key>Processor</key>
             <string>PkgCopier</string>
