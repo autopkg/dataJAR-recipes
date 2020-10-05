@@ -15,23 +15,23 @@
     <string>0.6.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://www.steinberg.net/en/support/downloads/downloads_wavelab_elements_9_5.html</string>
-				<key>re_pattern</key>
-				<string>http://download.steinberg.net/downloads_software/WaveLab_Elements_9.5/[0-9a-z\.]+\/WaveLab_Elements_[0-9a-z\.]+\_Update_mac.dmg</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%match%</string>
-			</dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.steinberg.net/en/support/downloads/wavelab_95.html</string>
+                <key>re_pattern</key>
+                <string>https:\/\/download\.steinberg\.net\/downloads_software\/WaveLab_Elements_9\.5\/\S*\/WaveLab_Elements_\S*_Update_mac\.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -40,15 +40,15 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-        	<key>Processor</key>
-        	<string>PkgCopier</string>
-        	<key>Arguments</key>
-        	<dict>
-        		<key>source_pkg</key>
-        		<string>%pathname%/WaveLab Elements 9.5 Update.pkg</string>
-        		<key>pkg_path</key>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%pathname%/WaveLab Elements 9.5 Update.pkg</string>
+                <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-        	</dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -66,19 +66,19 @@
             </dict>
         </dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/</string>
-				<key>flat_pkg_path</key>
-				<string>%pkg_path%</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-		<dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkgroot</key>
@@ -89,28 +89,28 @@
             <key>Processor</key>
             <string>PkgRootCreator</string>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/WaveLab Elements 9.5.pkg/Payload</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/WaveLab Elements 9.5.app/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>       
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/WaveLab Elements 9.5.pkg/Payload</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications/WaveLab Elements 9.5.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>       
     </array>
 </dict>
 </plist>
