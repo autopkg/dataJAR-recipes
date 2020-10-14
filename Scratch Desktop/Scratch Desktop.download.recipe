@@ -16,51 +16,27 @@
 		<string>https://scratch.mit.edu</string>
 	</dict>
 	<key>MinimumVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>Process</key>
 	<array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>request_headers</key>
-				<dict>
-					<key>User-Agent</key>
-					<string>%USER_AGENT%</string>
-				</dict>
-				<key>url</key>
-				<string>%baseurl%/js/download.bundle.js</string>
-				<key>re_pattern</key>
-				<string>(https://downloads.scratch.mit.edu/desktop/Scratch.dmg)</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-			<key>Arguments</key>
-			<dict>
-			   <key>filename</key>
-			   <string>%NAME%.dmg</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-	<key>Processor</key>
-	<string>CodeSignatureVerifier</string>
-	<key>Arguments</key>
-	<dict>
-		<key>input_path</key>
-		<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Scratch Desktop.app</string>
-		<key>requirement</key>
-		<string>identifier "edu.mit.scratch.scratch-desktop" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = W7AR3WMP87</string>
-	</dict>
-</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated following the release of Scratch 3 in place of Scratch Desktop</string>
+             </dict>
+           	<key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
 	</array>
 </dict>
 </plist>
