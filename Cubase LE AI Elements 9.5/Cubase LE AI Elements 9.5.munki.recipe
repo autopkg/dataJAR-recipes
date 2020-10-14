@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of Cubase LE AI Elements 9 and imports into Munki.</string>
+	<string>Downloads the latest version of Cubase LE AI Elements 9.5 and imports into Munki.</string>
 	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Cubase LE AI Elements 9</string>
+	<string>com.github.dataJAR-recipes.munki.Cubase LE AI Elements 9.5</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
@@ -41,7 +41,7 @@
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Cubase LE AI Elements 9</string>
+	<string>com.github.dataJAR-recipes.download.Cubase LE AI Elements 9.5</string>
 	<key>Process</key>
 	<array>
 		<dict>
@@ -56,7 +56,7 @@
                 <string>%RECIPE_CACHE_DIR%/application_payload</string>
 				<key>installs_item_paths</key>
 				<array>
-					<string>/Applications/Cubase LE AI Elements 9.app</string>
+					<string>/Applications/Cubase LE AI Elements 9.5.app</string>
 				</array>
 			</dict>
 			<key>Processor</key>
