@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Imports DBeaver Community Edition into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.DBeaver Community Edition</string>
+    <key>Input</key>
+    <dict>
+        <key>APP_FILENAME</key>
+        <string>DBeaver</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>DBeaver Community Edition</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Free multi-platform database tool for developers, SQL programmers, database administrators and analysts. Supports all popular databases: MySQL, PostgreSQL, MariaDB, SQLite, Oracle, DB2, SQL Server, Sybase, MS Access, Teradata, Firebird, Derby, etc.</string>
+            <key>developer</key>
+            <string>DBeaver Corp</string>
+            <key>display_name</key>
+            <string>DBeaver Community Edition</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.peshay.download.DBeaverCE</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: DBeaver Corporation (42B6MDKMW8)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/Unpack/DBeaverCE.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/DBeaver.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/DBeaver.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
