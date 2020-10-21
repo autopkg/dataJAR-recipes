@@ -51,7 +51,6 @@
 					<string>%pkgroot%/Applications/Miro.app</string>
 				</dict>
 			</dict>
-
 			<dict>
 				<key>Processor</key>
 				<string>PkgCreator</string>
