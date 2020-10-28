@@ -50,11 +50,20 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
-                <key>repo_subdirectory</key>
-                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>warning_message</key>
+                <string>This has been replaced by OpenJDK 15. See https://github.com/autopkg/dataJAR-recipes/blob/master/OpenJDK15/OpenJDK15.munki.recipe.</string>
+            </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
             </dict>
         </dict>
     </array>
