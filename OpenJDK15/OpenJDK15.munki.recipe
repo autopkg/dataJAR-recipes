@@ -33,7 +33,7 @@
             <key>developer</key>
             <string>%VENDOR%</string>
             <key>display_name</key>
-            <string>OpenJDK 14</string>
+            <string>OpenJDK 15</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
