@@ -42,7 +42,7 @@
 					<key>destination_path</key>
 					<string>%RECIPE_CACHE_DIR%/installer_unpack</string>
 					<key>flat_pkg_path</key>
-					<string>%found_filename%</string>
+					<string>%pathname%</string>
 					<key>purge_destination</key>
 					<true />
 				</dict>
@@ -89,7 +89,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>source</key>
-				<string>%found_filename%</string>
+				<string>%pathname%</string>
 				<key>target</key>
 				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
 			</dict>
