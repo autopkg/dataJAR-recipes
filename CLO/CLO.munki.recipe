@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Kinoni EpocCam Drivers and imports into Munki.</string>
+    <string>Downloads the latest version of CLO and imports into Munki</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Kinoni EpocCam Drivers</string>
+    <string>com.github.dataJAR-recipes.munki.CLO</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>KinoniEpocCamDrivers</string>
+        <string>CLO</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -19,9 +19,11 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Turn your phone into a webcam for free! Requires companion iOS App</string>
+            <string>CLO is a 3D fashion design software program creating virtual, true-to life garment visualization with cutting-edge simulation technologies for the fashion industry.</string>
+            <key>developer</key>
+            <string>CLO Virtual Fashion LLC</string>
             <key>display_name</key>
-            <string>Kinoni EpocCam Drivers</string>
+            <string>CLO</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -31,14 +33,12 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.5.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Kinoni EpocCam Drivers</string>
+    <string>com.github.dataJAR-recipes.download.CLO</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -46,6 +46,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
