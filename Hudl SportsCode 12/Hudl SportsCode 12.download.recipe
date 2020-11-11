@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>href="(https://hudl-content.s3.amazonaws.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg\.zip\?mtime=.*?)"</string>
+                <string>href="(https:\/\/hudl-content\.s3\.amazonaws\.com\/craft\/elite\/downloads\/HudlSportscode.*12.*\.dmg\?mtime=.*?)"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -43,7 +43,7 @@
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.dmg.zip</string>
+                <string>%NAME%.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -52,58 +52,11 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/dmg_unpack/</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/dmg_unpack/HudlSportscode*.dmg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications/Hudl Sportscode.app</string>
-                <key>source_path</key>
-                <string>%found_filename%/Hudl Sportscode.app</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%destination_path%</string>
+                <string>%pathname%/*.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.hudl.Sportscode64" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4M6T2C723P")</string>
                 <key>strict_verification</key>
