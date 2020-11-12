@@ -21,11 +21,16 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://support.kaspersky.com/kes11mac#downloads</string>
+                <string>https://api-router.kaspersky-labs.com/downloads/search</string>
                 <key>re_pattern</key>
-                <string>\"(https://products.s.kaspersky-labs.com/workstations/kesmac\d.*/.*/multilanguage-INT-.*/.*/klnagentmac1.*.zip)\"</string>
+                <string>https:\/\/products\.s\.kaspersky-labs\.com\/workstations\/kesmac10\/\S*\/multilanguage-INT-\S*klnagentmac1\S*\.zip</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>curl_opts</key>
+                <array>
+                    <string>--data-binary</string>
+                    <string>[{"codename":"kesmac10","typename":"Build","TypeExtension":"Network agent","site":"https://www.kaspersky.com"}]</string>
+                </array>
             </dict>
         </dict>
         <dict>
@@ -37,6 +42,9 @@
                 <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>curl_opts</key>
+                <array>
+                </array>
             </dict>
         </dict>
         <dict>
