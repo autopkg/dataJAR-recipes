@@ -16,36 +16,41 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://support.kaspersky.com/kes11mac#downloads</string>
+                <key>curl_opts</key>
+                <array>
+                    <string>--data-binary</string>
+                    <string>[{"codename":"kesmac10","typename":"Build","TypeExtension":"Network agent","site":"https://www.kaspersky.com"}]</string>
+                </array>
                 <key>re_pattern</key>
-                <string>\"(https://products.s.kaspersky-labs.com/workstations/kesmac\d.*/.*/multilanguage-INT-.*/.*/klnagentmac1.*.zip)\"</string>
+                <string>https:\/\/products\.s\.kaspersky-labs\.com\/workstations\/kesmac10\/\S*\/multilanguage-INT-\S*klnagentmac1\S*\.zip</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://api-router.kaspersky-labs.com/downloads/search</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%match%</string>
+                <key>curl_opts</key>
+                <array/>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -55,21 +60,23 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%destination_path%/klnagentmac.dmg/Kaspersky Network Agent.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Kaspersky Lab UK Limited (2Y8XE5CQ94)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%destination_path%/klnagentmac.dmg/Kaspersky Network Agent.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
