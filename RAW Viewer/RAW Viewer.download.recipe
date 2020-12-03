@@ -107,7 +107,7 @@
                 <string>%pkg_path%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Sony Corporation (M8BZ28GSX7)</string>
+                    <string>Developer ID Installer: Sony Imaging Products &amp; Solutions Inc. (EKS2CRZPNK)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
