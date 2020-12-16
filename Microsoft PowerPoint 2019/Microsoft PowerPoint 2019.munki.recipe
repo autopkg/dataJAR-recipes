@@ -23,7 +23,7 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>MINIMUM_OS_VERSION</key>
-        <string>10.12.0</string>
+        <string>10.14.0</string>
         <key>pkginfo</key>
         <dict>
         	<key>blocking_applications</key>
