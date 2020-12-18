@@ -40,7 +40,7 @@ https://docs.jamf.com/jamf-connect/1.18.0/administrator-guide/Deploying_Jamf_Con
             </dict>
         </dict>
         <key>MinimumVersion</key>
-        <string>1.0.4</string>
+        <string>1.1</string>
         <key>Process</key>
         <array>
             <dict>
