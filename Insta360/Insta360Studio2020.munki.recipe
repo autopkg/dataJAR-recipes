@@ -88,13 +88,13 @@
 		<dict>
 			<key>Arguments</key>
 			<dict>
-				<key>source</key>
+				<key>source_pkg</key>
 				<string>%pathname%</string>
-				<key>target</key>
+				<key>pkg_path</key>
 				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
 			</dict>
 			<key>Processor</key>
-			<string>FileMover</string>
+			<string>PkgCopier</string>
 		</dict>
 		<dict>
 			<key>Arguments</key>
@@ -112,7 +112,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+				<string>%pkg_path%</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>
