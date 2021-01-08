@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of DisplayLink.
+    <string>Downloads the latest version of the DisplayLink Drivers (not Manager).
 	Taken over from bochoven-recipe (https://github.com/autopkg/bochoven-recipes/issues/35)</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.DisplayLink</string>
