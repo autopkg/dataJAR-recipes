@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of UP Studio and creates a package</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.pkg.UP Studio</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>UP Studio</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>ParentRecipe</key>
+        <string>com.github.dataJAR-recipes.download.UP Studio</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>archive_path</key>
+                    <string>%pathname%</string>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                    <key>purge_destination</key>
+                    <true></true>
+                </dict>
+                <key>Processor</key>
+                <string>Unarchiver</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>pattern</key>
+                    <string>%RECIPE_CACHE_DIR%/unzip/*/*.pkg</string>
+                </dict>
+                <key>Processor</key>
+                <string>FileFinder</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                    <key>source_pkg</key>
+                    <string>%found_filename%</string>
+                </dict>
+                <key>Processor</key>
+                <string>PkgCopier</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>path_list</key>
+                    <array>
+                        <string>%RECIPE_CACHE_DIR%/unzip</string>
+                    </array>
+                </dict>
+                <key>Processor</key>
+                <string>PathDeleter</string>
+            </dict>
+        </array>
+    </dict>
+</plist>
