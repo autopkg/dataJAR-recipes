@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>JPEGmini Pro-Trial</string>
         <key>SPARKLE_FEED_URL</key>
-        <string>http://mac.jpegmini.com/autoupdate/jpegmini-pro-appcast.xml</string>
+        <string>https://mac.jpegmini.com/autoupdate/jpegmini-pro-appcast.xml</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>

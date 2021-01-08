@@ -39,7 +39,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>http://www.freefilesync.org/download/%match%</string>
+                <string>https://www.freefilesync.org/download/%match%</string>
                 <key>CHECK_FILESIZE_ONLY</key>
                 <true/>
             </dict>

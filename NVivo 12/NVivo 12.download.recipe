@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>NVivo12</string>
         <key>SPARKLE_FEED_URL</key>
-        <string>http://download.qsrinternational.com/Software/NVivo12forMac/appcast.xml</string>
+        <string>https://download.qsrinternational.com/Software/NVivo12forMac/appcast.xml</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>

@@ -28,7 +28,7 @@
                         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36</string>
                     </dict>
                     <key>url</key>
-                    <string>http://exposure.software/exposure/x5-release-notes/</string>
+                    <string>https://exposure.software/exposure/x5-release-notes/</string>
                 </dict>
                 <key>Processor</key>
                 <string>URLTextSearcher</string>
@@ -42,7 +42,7 @@
                         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36</string>
                     </dict>
                     <key>url</key>
-                    <string>http://cdn.exposure.software/downloads/exposure-x5-%EXPOSURE_VERSION%.dmg</string>
+                    <string>https://cdn.exposure.software/downloads/exposure-x5-%EXPOSURE_VERSION%.dmg</string>
                 </dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>

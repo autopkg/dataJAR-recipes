@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_URL</key>
-        <string>http://zevrix.com/LinkOptimizer.dmg</string>
+        <string>https://zevrix.com/LinkOptimizer.dmg</string>
         <key>NAME</key>
         <string>LinkOptimizer</string>
     </dict>

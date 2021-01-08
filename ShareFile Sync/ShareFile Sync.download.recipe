@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>http://dl.sharefile.com/sync2mac</string>
+                <string>https://dl.sharefile.com/sync2mac</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>filename</key>
