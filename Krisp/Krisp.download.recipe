@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of Krisp</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.Krisp</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>Krisp</string>
+            <key>DOWNLOAD_URL</key>
+            <string>https://download.krisp.ai/mac?btn=downloadMac_AccountFooter</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>filename</key>
+                    <string>%NAME%.pkg</string>
+                    <key>url</key>
+                    <string>%DOWNLOAD_URL%</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: Krisp Technologies, Inc. (U5R26XM5Z2)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+            </dict>
+        </array>
+    </dict>
+</plist>
