@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of XAMPP</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.XAMPP</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>XAMPP</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>re_pattern</key>
+                    <string>https:\/\/www\.apachefriends\.org\/xampp-files\/\S*\.dmg</string>
+                    <key>result_output_var_name</key>
+                    <string>match</string>
+                    <key>url</key>
+                    <string>https://www.apachefriends.org/index.html</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>%match%</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%/XAMPP.app</string>
+                    <key>requirement</key>
+                    <string>anchor apple generic and identifier "com.bitnami.stackman" and certificate leaf[subject.OU] = "49P7N62XPM"</string>
+                </dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+            </dict>
+        </array>
+    </dict>
+</plist>
