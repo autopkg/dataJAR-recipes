@@ -23,7 +23,7 @@
 				<key>url</key>
 				<string>https://www.steinberg.net/en/support/downloads/cubase_9.html</string>
 				<key>re_pattern</key>
-				<string>https://download.steinberg.net/downloads_software/Cubase_Pro_9_and_Cubase_Artist_9/+[0-9]+\.+[0-9]+\.+[0-9][0-9]/Mac/Cubase_+[0-9]+\.+[0-9]+\.+[0-9][0-9]_Update_mac.dmg</string>
+				<string>https:\/\/download\.steinberg\.net\/downloads_software\/Cubase_Pro_9_and_Cubase_Artist_9\/+[0-9]+\.+[0-9]+\.+[0-9][0-9]\/Cubase_+[0-9]+\.+[0-9]+\.+[0-9][0-9]_Update_mac.dmg</string>
 			</dict>
 		</dict>
         <dict>
