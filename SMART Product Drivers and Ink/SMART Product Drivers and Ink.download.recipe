@@ -21,18 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://support.smarttech.com/downloads/product-drivers</string>
-                <key>re_pattern</key>
-                <string>(\/en\/downloads\/product-drivers\/\d{1,3}_\d{1,3}-and-ink-\d{1,3}_\d{1,3})</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://support.smarttech.com%match%</string>
+                <string>https://support.smarttech.com/docs/software/product-drivers/product-drivers-12/en/downloads/drink-mac-download.cshtml</string>
                 <key>re_pattern</key>
                 <string>(http.*\.dmg)</string>
             </dict>

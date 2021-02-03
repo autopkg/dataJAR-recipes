@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of eLicenser Controland creates a package</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.eLicenser Control</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>eLicenser Control</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.eLicenser Control</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/eLicenserControlSetup.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/%NAME%-%version%.dmg</string>
+                <key>overwrite</key>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#!/bin/bash
+                
+# Determine working directory
+installDir=$(dirname $0)
+
+#
+# Installing eLicenser Control
+#
+
+# Mount the eLicenser Control disk image to /Volumes
+mountResult=$(/usr/bin/hdiutil attach "${installDir}/%NAME%-%version%.dmg" -nobrowse -noverify -noautoopen)
+mountPoint=$(/bin/echo "${mountResult}" | /usr/bin/grep Volumes | /usr/bin/awk '{print substr($0, index($0,$3))}')
+
+# Install the eLicenser Control software
+"${mountPoint}/eLicenserControlSetup.app/Contents/MacOS/installbuilder.sh" --unattendedmodeui none --mode unattended
+
+# Clean-up
+
+# Unmount the eLicenser Control disk image from /Volumes
+/usr/bin/hdiutil detach "${mountPoint}"
+</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>id</key>
+                    <string>net.eLicenser.installer.eLicenserControl.pkg</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <key>pkgtype</key>
+                    <string>flat</string>
+                    <key>scripts</key>
+                    <string>Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

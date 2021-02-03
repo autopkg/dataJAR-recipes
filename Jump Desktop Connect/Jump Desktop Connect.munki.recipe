@@ -65,26 +65,13 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
-                <key>purge_destination</key>
-                <string>true</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_payload_path</key>
                 <string>%destination_path%/Jump_Desktop_Connect.pkg/Payload</string>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications</string>
+                <string>%pkgroot%</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
@@ -95,7 +82,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%destination_path%/Jump Desktop Connect.app/Contents/Info.plist</string>
+                <string>%destination_path%/Applications/Jump Desktop Connect.app/Contents/Info.plist</string>
             </dict>
         </dict>
         <dict>

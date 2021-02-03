@@ -36,6 +36,15 @@
 	<string>com.github.dataJAR-recipes.download.insta360studio2020</string>
     <key>Process</key>
 	<array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>The vender has replaced this App with their 2021 version. See the 2021 recipes https://github.com/autopkg/dataJAR-recipes/blob/master/Insta360/Insta360Studio2021.munki.recipe. Please remove this from your list of recipes.</string>
+             </dict>
+        </dict>
 		<dict>
 			<key>Arguments</key>
 				<dict>
@@ -88,13 +97,13 @@
 		<dict>
 			<key>Arguments</key>
 			<dict>
-				<key>source</key>
+				<key>source_pkg</key>
 				<string>%pathname%</string>
-				<key>target</key>
+				<key>pkg_path</key>
 				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
 			</dict>
 			<key>Processor</key>
-			<string>FileMover</string>
+			<string>PkgCopier</string>
 		</dict>
 		<dict>
 			<key>Arguments</key>
@@ -112,7 +121,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+				<string>%pkg_path%</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>

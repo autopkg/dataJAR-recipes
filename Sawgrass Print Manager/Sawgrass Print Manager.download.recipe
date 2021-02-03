@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of Sawgrass Print Manager</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.Sawgrass Print Manager</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>Sawgrass Print Manager</string>
+            <key>DOWNLOAD_URL</key>
+            <string>https://www.sawgrassink.com/spm/mac</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>filename</key>
+                    <string>%NAME%.pkg</string>
+                    <key>url</key>
+                    <string>%DOWNLOAD_URL%</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: Sawgrass Technologies, Inc. (2DD4HMHX5K)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+            </dict>
+        </array>
+    </dict>
+</plist>
