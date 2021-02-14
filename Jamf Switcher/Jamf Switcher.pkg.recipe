@@ -8,8 +8,6 @@
 	<string>com.github.dataJAR-recipes.pkg.JamfSwitcher</string>
 	<key>Input</key>
 	<dict>
-		<key>BUNDLE_ID</key>
-		<string>uk.co.dataJAR.JamfSwitcher</string>
 		<key>NAME</key>
 		<string>JamfSwitcher</string>
 	</dict>

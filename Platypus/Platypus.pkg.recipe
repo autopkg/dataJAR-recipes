@@ -8,8 +8,6 @@
 	<string>com.github.dataJAR-recipes.pkg.Platypus</string>
 	<key>Input</key>
 	<dict>
-		<key>BUNDLE_ID</key>
-		<string>org.sveinbjorn.Platypus</string>
 		<key>NAME</key>
 		<string>Platypus</string>
 	</dict>
@@ -19,7 +17,7 @@
 	<string>com.github.peshay.download.Platypus</string>
 	<key>Process</key>
 	<array>
-        	<dict>
+		<dict>
 			<key>Arguments</key>
 			<dict>
 				<key>app_path</key>

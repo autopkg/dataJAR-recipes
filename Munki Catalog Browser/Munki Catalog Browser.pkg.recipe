@@ -8,8 +8,6 @@
 	<string>com.github.dataJAR-recipes.pkg.MunkiCatalogBrowser</string>
 	<key>Input</key>
 	<dict>
-		<key>BUNDLE_ID</key>
-		<string>uk.co.dataJAR.MunkiCatalogBrowser</string>
 		<key>NAME</key>
 		<string>MunkiCatalogBrowser</string>
 	</dict>
