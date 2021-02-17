@@ -40,35 +40,11 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>DmgCreator</string>
+            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
-                <key>dmg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-                <key>dmg_root</key>
-                <string>%destination_path%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_path</key>
-                <string>%dmg_path%</string>
-                <key>repo_subdirectory</key>
-                <string>%MUNKI_REPO_SUBDIR%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-                </array>
+                <key>warning_message</key>
+                <string>ShareFile Sync has been replaced with Citrix Files for Mac. Recipes are available for Files for Mac.</string>
             </dict>
         </dict>
     </array>
