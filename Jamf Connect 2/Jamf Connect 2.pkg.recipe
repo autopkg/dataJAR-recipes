@@ -61,13 +61,18 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/payload/Applications/Jamf Connect.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Code42.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_version</string>
+                </dict>
             </dict>
             <key>Processor</key>
-            <string>Versioner</string>
+            <string>PlistReader</string>
         </dict>
         <dict>
             <key>Arguments</key>
