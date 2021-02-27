@@ -68,13 +68,8 @@ class DistributionPkgInfo(Processor):
 
         if proc.returncode == 0:
             # Walk trough the TOC entries
-            if not os.path.exists('file_path'):
-                try:
-                    os.mkdir('file_path')
-                except OSError as err:
-                    print((
-                        "Can't create %s: %s"
-                        % ('file_path', err.strerror)))
+            if not os.path.exists(file_path):
+                os.mkdir(file_path)
 
             for toc_entry in [item for item in toc
                               if item.startswith('Distribution')]:
