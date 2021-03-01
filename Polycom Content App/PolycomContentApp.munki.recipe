@@ -8,6 +8,8 @@
     <string>com.github.dataJAR-recipes.munki.PolycomContentApp</string>
     <key>Input</key>
     <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/polycom</string>
         <key>NAME</key>
         <string>PolycomContentApp</string>
         <key>SEARCH_URL</key>
@@ -32,8 +34,6 @@
             <string>The easiest way to share content at work</string>
             <key>display_name</key>
             <string>Polycom Content App</string>
-			<key>MUNKI_REPO_SUBDIR</key>
-			<string>apps/polycom</string>
             <key>unattended_install</key>
             <true/>
         </dict>
