@@ -8,31 +8,8 @@
     <string>com.github.dataJAR-recipes.pkg.Citrix Files for Mac</string>
     <key>Input</key>
     <dict>
-        <key>pkg_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Citrix Files for Mac</string>
-        <key>pkginfo</key>
-        <dict>
-            <key>blocking_applications</key>
-            <array>
-                <string>Citrix Files</string>
-            </array>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
-            <key>description</key>
-            <string>Citrix Files for Mac allows users with a ShareFile license to interact with all their files directly from the Finder. Files do not need to be synced locally. Quick access to sharing, requesting, and other file options are available through the right click menu.</string>
-            <key>display_name</key>
-            <string>Citrix Files for Mac</string>
-            <key>name</key>
-            <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
-        </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
