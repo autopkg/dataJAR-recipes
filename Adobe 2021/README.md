@@ -57,7 +57,7 @@ For example:
 
 Also, these packages should only contain a maximum of the Creative Cloud Desktop App (CCDA) and only **one** other App (e.g. CCDA and Photoshop). Most of the Adobe Templates for packages aren't compatible with this.
 
-5) Create the respective munki or jss recipe overrides. The override name **must** be the same as the Adobe 2021 pkg. 
+4) Create the respective munki or jss recipe overrides. The override name **must** be the same as the Adobe 2021 pkg. 
 
 For example:
 
@@ -66,7 +66,7 @@ For example:
 
 *Please Note:* The [Adobe2021Importer.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202021/Adobe2021Importer.py) script assumes your autopkg overrides live in `~/Library/AutoPkg/RecipeOverrides`.
 
-6) The `NAME` input variable must also match the Adobe package title.
+5) The `NAME` input variable must also match the Adobe package title.
 
 ## Usage
 
