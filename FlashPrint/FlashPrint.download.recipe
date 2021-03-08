@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>http://www.ishare3d.com/3dapp/public/FlashPrint-ii/appInfo1</string>
+                <string>https://www.flashforge.com/download-center?category=15</string>
                 <key>re_pattern</key>
-                <string>http://www.ishare3d.com/3dapp/public/FlashPrint-ii/FlashPrint/FlashPrint_[\S]+\_mac.zip</string>
+                <string>mac.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*(https:\S*zip)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
