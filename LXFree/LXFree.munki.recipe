@@ -75,7 +75,7 @@
                 <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/LXSeries/LXFree.app</string>
+                    <string>/Applications/LXFree.app</string>
                 </array>
             </dict>
         </dict>

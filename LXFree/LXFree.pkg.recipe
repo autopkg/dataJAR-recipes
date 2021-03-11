@@ -47,7 +47,7 @@
     	<key>Arguments</key>
         <dict>
             <key>info_path</key>
-            <string>%RECIPE_CACHE_DIR%/unpack/root/Applications/LXSeries/LXFree.app/Contents/Info.plist</string>
+            <string>%RECIPE_CACHE_DIR%/unpack/root/Applications/LXFree.app/Contents/Info.plist</string>
             <key>plist_keys</key>
             <dict>
 				<key>CFBundleShortVersionString</key>
