@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of draw.io Desktop and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Steam</string>
+    <string>com.github.dataJAR-recipes.munki.drawio</string>
     <key>Input</key>
     <dict>
 		<key>os</key>
