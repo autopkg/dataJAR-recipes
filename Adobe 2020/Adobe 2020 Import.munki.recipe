@@ -86,7 +86,7 @@
                         <key>version</key>
                         <string>%version%</string>
                         <key>installer_type</key>
-						<string></string>
+                        <string></string>
                     </dict>
                 </dict>
             </dict>
