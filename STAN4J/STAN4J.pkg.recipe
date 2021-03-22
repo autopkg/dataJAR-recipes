@@ -143,10 +143,10 @@ osgi.instance.area.default=@user.home/Documents/workspace
             <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgname</key>
-                <string>%NAME%-%version%</string>
                 <key>pkg_request</key>
                 <dict>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
                     <key>pkgdir</key>
                     <string>%RECIPE_CACHE_DIR%</string>
                     <key>id</key>
