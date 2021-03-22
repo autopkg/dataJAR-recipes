@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for ShareFile Sync.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.ShareFile Sync</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ShareFileSync</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>ShareFile Sync has been replaced with Citrix Files for Mac. Recipes are available for Files for Mac.</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
