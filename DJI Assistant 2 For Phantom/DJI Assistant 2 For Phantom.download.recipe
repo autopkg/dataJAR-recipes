@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of DJI Assistant 2 For Phantom.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.DJI Assistant 2 For Phantom</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>DJIAssistant2ForPhantom</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.dji.com/uk/downloads/softwares/assistant-dji-2-for-phantom</string>
+                <key>re_pattern</key>
+                <string>https:\/\/dl\.djicdn\.com\/downloads\/dji_assistant\/.*?\/DJI\+Assistant\+2\+For\+Phantom\+.*?\.pkg</string>
+                <key>request_headers</key>
+                <dict>
+                        <key>user-agent</key>
+                        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13 Safari/605.1.15</string>
+                </dict>
+                <key>result_output_var_name</key>
+                <string>match</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+            	<key>filename</key>
+            	<string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>

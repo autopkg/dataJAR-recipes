@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>NVivo12</string>
         <key>SPARKLE_FEED_URL</key>
-        <string>http://download.qsrinternational.com/Software/NVivo12forMac/appcast.xml</string>
+        <string>https://download.qsrinternational.com/Software/NVivo12forMac/appcast.xml</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -28,16 +28,16 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Processor</key>

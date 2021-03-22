@@ -269,10 +269,10 @@ fi</string>
             <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgname</key>
-                <string>%NAME%-%LANGUAGE%-%version%</string>
                 <key>pkg_request</key>
                 <dict>
+                    <key>pkgname</key>
+                    <string>%NAME%-%LANGUAGE%-%version%</string>
                     <key>chown</key>
                     <array>
                         <dict>

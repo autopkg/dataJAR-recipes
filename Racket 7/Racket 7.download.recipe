@@ -21,9 +21,24 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://download.racket-lang.org</string>
+                <string>https://download.racket-lang.org/all-versions.html</string>
+                <key>re_pattern</key>
+                <string>/racket-v7.[0-9].html</string>
+                <key>result_output_var_name</key>
+                <string>DownloadPage</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download.racket-lang.org%DownloadPage%</string>
                 <key>re_pattern</key>
                 <string>7.[0-9]/racket-7.[0-9]-x86_64-macosx.dmg</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
             </dict>
         </dict>
         <dict>

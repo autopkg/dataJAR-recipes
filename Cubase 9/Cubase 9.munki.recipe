@@ -47,11 +47,6 @@
 		<dict>
 			<key>Arguments</key>
 			<dict>
-			    <key>additional_pkginfo</key>
-                <dict>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
 				<key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload</string>
 				<key>installs_item_paths</key>
@@ -63,6 +58,14 @@
 			<string>MunkiInstallsItemsCreator</string>
 		</dict>
 		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
 			<key>Processor</key>
 			<string>MunkiPkginfoMerger</string>
 		</dict>

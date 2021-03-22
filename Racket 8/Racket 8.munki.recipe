@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for the latest version of Racket 8 and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Racket 8</string>
+    <key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Racket8</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>blocking_applications</key>
+			<array>
+				<string>DrRacket</string>
+				<string>PLT Games</string>
+				<string>Racket Documentation</string>
+				<string>Slideshow</string>
+			</array>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Racket is a general-purpose programming language as well as the world’s first ecosystem for developing and deploying new languages. Make your dream language, or use one of the dozens already available.</string>
+			<key>display_name</key>
+			<string>Racket 8</string>
+			<key>developer</key>
+			<string>PLT Inc</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.pkg.Racket 8</string>
+    <key>Process</key>
+    <array>
+    	<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/Racket v%version%/DrRacket.app</string>
+					<string>/Applications/Racket v%version%/PLT Games.app</string>
+					<string>/Applications/Racket v%version%/Racket Documentation.app</string>
+					<string>/Applications/Racket v%version%/Slideshow.app</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pkg_path%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+    </array>
+</dict>
+</plist>
+

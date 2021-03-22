@@ -12,59 +12,18 @@
         <string>iSwiff</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://echoone.com/download</string>
-				<key>re_pattern</key>
-				<string>(/iswiff/iSwiff.zip)</string>
-				<key>result_output_var_name</key>
-				<string>match</string>
-			</dict>
-		</dict>
-        <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%url%%match%</string>
-			</dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
         <dict>
             <key>Processor</key>
-            <string>EndOfCheckPhase</string>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>iSwiff needs a manual local install of Flash Player and to set the system clock back (see https://echoone.com/iswiff/) and so this recipe is being retired</string>
+            </dict>
         </dict>
-        <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>archive_path</key>
-				<string>%pathname%</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
-			<key>Processor</key>
-			<string>Unarchiver</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%destination_path%/iSwiff.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and identifier "com.echoone.iSwiff" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = HCFWG8346D)</string>
-			</dict>
-		</dict>
     </array>
 </dict>
 </plist>
