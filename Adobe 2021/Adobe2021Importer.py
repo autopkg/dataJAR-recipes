@@ -107,6 +107,7 @@ def create_list(adobe_folder):
 
     if not os.path.isfile(override_path):
         print('Skipping {0}, as cannot find override...'.format(override_path))
+        return
 
     list_file = open(ADOBE_LIST, 'a+')
     list_file.write(override_name + '\n')
