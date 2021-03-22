@@ -8,8 +8,6 @@
 	<string>com.github.dataJAR-recipes.pkg.CloudApp</string>
 	<key>Input</key>
 	<dict>
-		<key>BUNDLE_ID</key>
-		<string>uk.co.dataJAR.CloudApp</string>
 		<key>NAME</key>
 		<string>CloudApp</string>
 	</dict>

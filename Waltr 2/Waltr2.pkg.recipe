@@ -10,8 +10,6 @@
 	<string>com.github.dataJAR-recipes.pkg.Waltr2</string>
 	<key>Input</key>
 	<dict>
-		<key>BUNDLE_ID</key>
-		<string>com.softorino.waltr2</string>
 		<key>NAME</key>
 		<string>Waltr 2</string>
 	</dict>
