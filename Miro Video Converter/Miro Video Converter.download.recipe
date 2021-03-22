@@ -21,7 +21,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>url</key>
-				<string>http://getmiro.com/files/MiroVideoConverter.dmg</string>
+				<string>https://getmiro.com/files/MiroVideoConverter.dmg</string>
 			</dict>
 		</dict>
 		<dict>
