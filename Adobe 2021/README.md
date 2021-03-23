@@ -23,7 +23,7 @@ But with the death of Creative Cloud Packager (https://macmule.com/2018/10/15/ad
 
 1) Build the wanted Adobe 2021 titles from the Adobe Admin Console.
 
-*Please Note:* These should be of the **Managed Install** variety, as a Self Service package does not create the required `_Uninstall.pkg` which is needed by the [Adobe2021Versioner.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202021/Adobe2021Versioner.py) processor. See [this issue](https://github.com/autopkg/dataJAR-recipes/issues/39) for more info.
+*Please Note:* These should be of the **Managed Package** variety, as a Self Service package does not create the required `_Uninstall.pkg` which is needed by the [Adobe2021Versioner.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202021/Adobe2021Versioner.py) processor. See [this issue](https://github.com/autopkg/dataJAR-recipes/issues/39) for more info.
 
 2) For each Adobe package title, use the naming convention of:
 
