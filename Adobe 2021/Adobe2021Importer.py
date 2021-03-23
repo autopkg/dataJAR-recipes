@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 '''
 Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
      Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@ Imports Adobe 2021 titles found in running users ~/Downloads
 
 '''
 
+# Standard Imports
 from __future__ import absolute_import
 from __future__ import print_function
 import argparse
@@ -41,99 +42,144 @@ import subprocess
 import sys
 
 
-__version__ = '1.1'
+# Version
+__version__ = '1.2'
 
 
+# Functions
 def main():
-    '''Gimme some main'''
+    '''
+        Look within DOWNLOADS_PATH for Adobe*2021 items, add to adobe_folders list if found
+    '''
 
+    # Progress notification
+    print("Looking for {} folders ...".format(os.path.join(DOWNLOADS_PATH, 'Adobe*2021')))
+
+    # Create empty list
     adobe_folders = []
 
+    # Look within DOWNLOADS_PATH for Adobe*2021 items, add to adobe_folders list if found
     for some_item in os.listdir(DOWNLOADS_PATH):
         some_path = os.path.join(DOWNLOADS_PATH, some_item)
         if os.path.isdir(some_path):
             if some_item.startswith('Adobe') and some_item.endswith('2021'):
                 adobe_folders.append(some_item)
 
-    if not len(adobe_folders):
-        print('No Adobe*2021 folders found in %s, exiting...' % DOWNLOADS_PATH)
+    # If no folders are found, exit
+    if not adobe_folders:
+        print("No Adobe*2021 folders found in {}, exiting...".format(DOWNLOADS_PATH))
         sys.exit(1)
 
+    # If 1 or moe folders are found, notify and proceed.
     if len(adobe_folders) == 1:
-        print('1 Adobe 2021 folder found, creating recipe list...')
+        print("1 Adobe 2021 folder found, creating recipe list...")
     else:
-        print('%s Adobe 2021 folder found, creating recipe list...' % len(adobe_folders))
+        print("{} Adobe 2021 folder found, creating recipe list...".format(len(adobe_folders)))
 
-    open(ADOBE_LIST, 'w').close()
-    pkg_checker(adobe_folders)
+    # Check for pkg's
+    pkg_checker(sorted(adobe_folders))
 
 
 def pkg_checker(adobe_folders):
-    ''' Check that we have the Install_pkg's & proceed if we do'''
+    '''
+        Check that we have the Install_pkg's & Uninstall_pkg's needed, proceed if we do
+    '''
 
+    # Progress notification
+    print("Looking for pkgs...")
+
+    # count var
     found_pkgs = 0
 
-    print('Looking for pkgs...')
+    # For each folder within adobe_folders, look for *_Install.pkg and *_Uninstall.pkg,
+    for adobe_folder in adobe_folders:
 
-    for adobe_folder in sorted(adobe_folders):
+        # var declaration
+        install_pkg = None
+        uninstall_pkg = None
+        adobe_build_folder_path = os.path.join(DOWNLOADS_PATH, adobe_folder, 'Build')
+
+        # Look for *_Install.pkg
         try:
-            install_pkg = glob.glob(os.path.join(DOWNLOADS_PATH, adobe_folder, \
-                                               'Build', '*_Install.pkg'))[0]
-            print('Found {0}...'.format(install_pkg))
-            if os.path.exists(install_pkg):
-                create_list(adobe_folder)
-                found_pkgs += 1
-            else:
-                print('Cannot find pkg ({0}), for {1}... Skipping...'.format\
-                                               (install_pkg, adobe_folder))
-        except IndexError as err_msg:
-            print('Skipping {0}, as cannot find Install.pkg: {1}...'.format(adobe_folder, err_msg))
+            install_pkg = glob.glob(os.path.join(adobe_build_folder_path, '*_Install.pkg'))[0]
+            print("Found {}...".format(install_pkg))
+        except IndexError:
+            print("Cannot find *_Install.pkg within: {}...".format(adobe_build_folder_path))
 
+        # Look for *_Uninstall.pkg
+        try:
+            uninstall_pkg = glob.glob(os.path.join(adobe_build_folder_path, '*_Install.pkg'))[0]
+            print("Found {}...".format(uninstall_pkg))
+        except IndexError:
+            print("Cannot find *_Uninstall.pkg within: {}...".format(adobe_build_folder_path))
+
+        # If we can find both *_Install.pkg and *_Uninstall.pkg, add to ADOBE_LIST
+        if install_pkg and uninstall_pkg:
+            # Increment count
+            found_pkgs += 1
+            # Append to ADOBE_LIST
+            create_list(adobe_folder, found_pkgs)
+        else:
+            print("Cannot find both an *_Install.pkg and *_Uninstall.pkg for {}... "
+                  "Skipping...".format(adobe_folder))
+
+    # If we did not find any pkg pairs to import
     if found_pkgs == 0:
-        print('No pkgs found, exiting...')
+        print("ERROR: No Adobe 2021 pkg pairs found, exiting...")
         sys.exit(1)
+    # Else, run the recipe list ADOBE_LIST
     else:
         run_list()
 
 
-def create_list(adobe_folder):
-    ''' Create recipe list '''
+def create_list(adobe_folder, found_pkgs):
+    '''
+        Create recipe list
+    '''
 
+    # Create an empty file at ADOBE_List, if this is the 1st found pkg
+    if found_pkgs == 1:
+        open(ADOBE_LIST, 'w').close()
+
+    # var declaration
     library_dir = os.path.expanduser('~/Library/')
     override_path = os.path.join(library_dir, 'AutoPkg', 'RecipeOverrides', \
                                                          adobe_folder + '.' \
                                                  + RECIPE_TYPE + '.recipe')
     override_name = 'local.' + RECIPE_TYPE + '.' + adobe_folder
 
+    # If we cannot find the override
     if not os.path.isfile(override_path):
-        print('Skipping {0}, as cannot find override...'.format(override_path))
+        print("Skipping {}, as cannot find override...".format(override_path))
         return
 
+    # Append to ADOBE_LIST
     list_file = open(ADOBE_LIST, 'a+')
     list_file.write(override_name + '\n')
     list_file.close()
 
 
 def run_list():
-    '''Run recipe list'''
+    '''
+        Run recipe list
+    '''
 
-    if os.path.exists(ADOBE_LIST):
-        print('Running recipe_list: `{0}`'.format(ADOBE_LIST))
-        print()
-        cmd_args = ['/usr/local/bin/autopkg', 'run', '-v', '--recipe-list', ADOBE_LIST, \
-                                                         '--report-plist', REPORT_PATH]
-        print('Running `{0}`...'.format(cmd_args))
-        subprocess.call(cmd_args)
-    else:
-        print('Recipe list not populated, make sure you have the needed overrides in place....')
+    # Notify we're starting
+    print("Running recipe_list: `{}`".format(ADOBE_LIST))
+    print()
+
+    # The subprocess command
+    cmd_args = ['/usr/local/bin/autopkg', 'run', '-v', '--recipe-list', ADOBE_LIST,
+                '--report-plist', REPORT_PATH]
+
+    # Notify what command we're about to run.
+    print('Running `{}`...'.format(cmd_args))
+
+    # Run the command
+    subprocess.call(cmd_args)
 
 
 if __name__ == '__main__':
-
-    # Try to locate autopkg
-    if not os.path.exists('/usr/local/bin/autopkg'):
-        print('Cannot find autopkg')
-        sys.exit(1)
 
     # Parse recipe type argument
     PARSER = argparse.ArgumentParser()
@@ -146,4 +192,5 @@ if __name__ == '__main__':
     ADOBE_LIST = os.path.join(DOWNLOADS_PATH + 'adobe2021_list.txt')
     REPORT_PATH = os.path.join(DOWNLOADS_PATH + 'adobe2021_report.plist')
 
+    # Call main def
     main()
