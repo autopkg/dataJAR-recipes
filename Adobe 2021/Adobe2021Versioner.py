@@ -124,6 +124,9 @@ class Adobe2021Versioner(Processor):
                 install_lang = hd_media.findtext('installLang')
                 self.env['sap_code'] = hd_media.findtext('SAPCode')
                 self.env['target_folder'] = hd_media.findtext('TargetFolderName')
+                
+        # Check for Processor Architecture
+        self.env['architecture_type'] = option_xml.findtext('ProcessorArchitecture')
 
         # If no HDMedia is found, then install_lang will be none
         if install_lang is None:
@@ -136,6 +139,7 @@ class Adobe2021Versioner(Processor):
         # Display progress
         self.output("sap_code: {}".format(self.env['sap_code']))
         self.output("target_folder: {}".format(self.env['target_folder']))
+        self.output("architecture_type: {}".format(self.env['architecture_type']))
 
         # Get app_json var
         self.env['app_json'] = os.path.join(self.env['PKG'], 'Contents/Resources/HD', \
@@ -241,7 +245,7 @@ class Adobe2021Versioner(Processor):
 
             # Get app_path
             self.env['app_path'] = app_path
-            self.output("app_path: {}".format(self.env['app_path']))
+            self.output("app_path: {}".format(self.env['app_path']))          
 
             # Get generic keys
             self.get_generic_keys()
@@ -443,6 +447,17 @@ class Adobe2021Versioner(Processor):
                 'type': 'application',
                 'version_comparison_key': self.env['vers_compare_key'],
             }]
+            
+        # Set Processor Architecture info
+        if self.env['architecture_type'] == "x64":
+            pkginfo['supported_architectures'] = [
+                'x86_64',
+                'i386',
+            ]
+        elif self.env['architecture_type'] == "arm64":
+            pkginfo['supported_architectures'] = [
+                'arm64',
+            ]
 
         # Notify of additional_pkginfo
         self.env['additional_pkginfo'] = pkginfo
