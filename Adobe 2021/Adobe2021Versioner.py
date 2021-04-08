@@ -181,20 +181,20 @@ class Adobe2021Versioner(Processor):
         # Get app_bundle
         app_bundle_text = (root.findtext
                            ('./ThirdPartyComponent/Metadata/Properties/Property[@name=\'path\']'))
-        app_bundle = app_bundle_text.split('/')[1]
-        self.output("app_bundle: {}".format(app_bundle))
+        self.env['app_bundle'] = app_bundle_text.split('/')[1]
+        self.output("app_bundle: {}".format(self.env['app_bundle']))
 
         # Get app_path
         app_path_text = root.findtext('./InstallDir/Platform')
-        app_path = app_path_text.split('/')[1]
-        self.output("app_path: {}".format(app_path))
+        self.env['app_path'] = app_path_text.split('/')[1]
+        self.output("app_path: {}".format(self.env['app_path']))
 
         # Get generic keys
         self.get_generic_keys()
 
         # Get app_version
-        app_version = root.findtext('./InstallerProperties/Property[@name=\'ProductVersion\']')
-        self.output("app_version: {}".format(app_version))
+        self.env['app_version'] = root.findtext('./InstallerProperties/Property[@name=\'ProductVersion\']')
+        self.output("app_version: {}".format(self.env['app_version']))
 
         # Get vers_compare_key
         self.env['vers_compare_key'] = 'CFBundleShortVersionString'
@@ -238,6 +238,7 @@ class Adobe2021Versioner(Processor):
             # Get app_bundle
             self.env['app_bundle'] = app_bundle
             self.output("app_bundle: {}".format(self.env['app_bundle']))
+
             # Get app_path
             self.env['app_path'] = app_path
             self.output("app_path: {}".format(self.env['app_path']))
