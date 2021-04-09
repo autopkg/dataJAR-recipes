@@ -7,7 +7,7 @@ But with the death of Creative Cloud Packager (https://macmule.com/2018/10/15/ad
 
 ***Please Note:*** Imports have now been tested with all titles Adobe have released for 2021
 
-***Please Note:*** Munki support has been added for Adobe's new Intel-only and Apple Silicon-only packages, please see section *Adobe and Apple Silicon* below
+***Please Note:*** Munki support has been added for Adobe's new Intel-only and Apple Silicon-only packages, please see section *[Adobe and Apple Silicon](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202021/README.md#adobe-and-apple-silicon)* below
 
 ## Pre-reqs
 
