@@ -82,6 +82,11 @@ class Adobe2021Versioner(Processor):
                             'This may match user_facing_version, but it may also be more '
                             'specific and add another version component.'),
         },
+        'architecture_type': {
+            'description': ('The value of ProcessorArchitecture for the package. '
+                            'This is either -Intel or -ARM to add with renaming the '
+                            'package disk image'),
+        },
     }
 
 
@@ -413,10 +418,6 @@ class Adobe2021Versioner(Processor):
             if app_launch.endswith('.app'):
                 app_bundle = ('/Applications/' + app_launch.split('.app')[0] + '/' + app_launch)
         self.output("app_bundle: {}".format(app_bundle))
-
-        # Now we have the deets, let's use them
-        self.create_pkginfo()
-
 
     def create_pkginfo(self):
         '''
