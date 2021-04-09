@@ -49,11 +49,11 @@ __version__ = '1.2'
 # Functions
 def main():
     '''
-        Look within DOWNLOADS_PATH for Adobe*2021 items, add to adobe_folders list if found
+        Look within DOWNLOADS_PATH for Adobe*2021* items, add to adobe_folders list if found
     '''
 
     # Progress notification
-    print("Looking for {} folders ...".format(os.path.join(DOWNLOADS_PATH, 'Adobe*2021')))
+    print("Looking for {} folders ...".format(os.path.join(DOWNLOADS_PATH, 'Adobe*2021*')))
 
     # Create empty list
     adobe_folders = []
@@ -62,7 +62,7 @@ def main():
     for some_item in os.listdir(DOWNLOADS_PATH):
         some_path = os.path.join(DOWNLOADS_PATH, some_item)
         if os.path.isdir(some_path):
-            if some_item.startswith('Adobe') and some_item.endswith('2021'):
+            if some_item.startswith('Adobe') and '2021' in (some_item):
                 adobe_folders.append(some_item)
 
     # If no folders are found, exit
