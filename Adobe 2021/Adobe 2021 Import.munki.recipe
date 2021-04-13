@@ -10,6 +10,8 @@
         <string>com.github.dataJAR-recipes.munki.Import Adobe 2021 Title</string>
         <key>Input</key>
         <dict>
+            <key>force_munkiimport</key>
+            <true/>
             <key>MINIMUM_OS_VERSION</key>
             <string>10.14.0</string>
             <key>MUNKI_CATEGORY</key>
