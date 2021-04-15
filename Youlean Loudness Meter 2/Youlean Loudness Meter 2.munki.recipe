@@ -52,7 +52,7 @@ done</string>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.munki.Youlean Loudness Meter 2</string>
+    <string>com.github.dataJAR-recipes.download.Youlean Loudness Meter 2</string>
     <key>Process</key>
     <array>
         <dict>
