@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest release of Youlean Loudness Meter 2.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Youlean Loudness Meter 2</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Youlean Loudness Meter 2</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://youlean.co/download-youlean-loudness-meter/</string>
+                <key>re_pattern</key>
+                <string>(https://youlean-129cf\.kxcdn\.com/wp-content/uploads/.*/Youlean-Loudness-Meter-2.*macOS.*zip).*Download for macOS&lt;</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <key>purge_destination</key>
+                <true/>
+                <key>archive_format</key>
+                <string>zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/**/Youlean Loudness Meter 2 - * Installer.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%found_filename%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Julijan Nikolic (S7KN6P3F95)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
