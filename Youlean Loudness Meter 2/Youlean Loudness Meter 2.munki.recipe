@@ -28,12 +28,31 @@
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+filePaths=('/Applications/Youlean Loudness Meter 2.app'
+		   '/Library/Application Support/Avid/Audio/Plug-Ins/Youlean Loudness Meter 2.aaxplugin'
+		   '/Library/Audio/Plug-Ins/Components/Youlean Loudness Meter 2.component'
+		   '/Library/Audio/Plug-Ins/VST/Youlean Loudness Meter 2.vst'
+		   '/Library/Audio/Plug-Ins/VST3/Youlean Loudness Meter 2.vst3')
+
+for filePath in "${filePaths[@]}"
+do
+	if [ -d "${filePath}" ]
+	then
+		/bin/echo "Found ${filePath}, deleting..."
+		/bin/rm -rf "${filePath}"
+	fi
+done</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Youlean Loudness Meter 2</string>
+    <string>com.github.dataJAR-recipes.munki.Youlean Loudness Meter 2</string>
     <key>Process</key>
     <array>
         <dict>
