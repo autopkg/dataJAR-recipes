@@ -33,16 +33,27 @@
         <key>MinimumVersion</key>
         <string>0.6.1</string>
         <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.pkg.MicrosoftAzureStorageExplorer</string>
+        <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
         <key>Process</key>
         <array>
+		<dict>
+			<key>Processor</key>
+			<string>DmgCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>dmg_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+				<key>dmg_root</key>
+				<string>%RECIPE_CACHE_DIR%/Applications</string>
+			</dict>
+		</dict>
             <dict>
                 <key>Processor</key>
                 <string>MunkiImporter</string>
                 <key>Arguments</key>
                 <dict>
                     <key>pkg_path</key>
-                    <string>%pkg_path%</string>
+                    <string>%dmg_path%</string>
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
                 </dict>
