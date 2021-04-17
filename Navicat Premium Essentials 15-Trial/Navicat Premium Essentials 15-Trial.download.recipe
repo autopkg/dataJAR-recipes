@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Navicat Premium Essentials 15.</string>
+    <string>Downloads the latest version of Navicat Premium Essentials 15 Trial.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Navicat Premium Essentials 15</string>
+    <string>com.github.dataJAR-recipes.download.Navicat Premium Essentials 15-Trial</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
