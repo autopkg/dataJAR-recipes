@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Navicat Premium Essentials 15.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Navicat Premium Essentials 15</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>NavicatPremiumEssentials15</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>curl_opts</key>
+                <array>
+                    <string>--data-raw</string>
+                    <string>product=navicatess_premium_en.dmg&amp;location=1&amp;support=&amp;linux_dist=</string>
+                </array>
+                <key>re_pattern</key>
+                <string>navicatess15\S*_premium_en\.dmg</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://www.navicat.com/includes/Navicat/direct_download.php</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>curl_opts</key>
+                <array/>
+                <key>url</key>
+                <string>https://download3.navicat.com/download/%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Navicat Premium Essentials.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.prect.NavicatPremiumEssentials12" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = VH7G2MRF27)</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
