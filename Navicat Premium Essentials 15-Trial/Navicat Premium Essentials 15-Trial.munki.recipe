@@ -14,6 +14,10 @@
         <string>NavicatPremiumEssentials15</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Navicat Premium Essentials</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
