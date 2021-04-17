@@ -17,6 +17,7 @@
             <key>blocking_applications</key>
             <array>
                 <string>Microsoft Auto Update</string>
+                <string>Microsoft Defender ATP</string>
             </array>
             <key>catalogs</key>
             <array>
