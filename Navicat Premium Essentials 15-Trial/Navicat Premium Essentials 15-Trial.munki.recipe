@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Navicat Premium Essentials</string>
+    <string>com.github.dataJAR-recipes.download.Navicat Premium Essentials-Trial</string>
     <key>Process</key>
     <array>
         <dict>
