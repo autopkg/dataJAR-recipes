@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://luxafor.dk/download</string>
+                <string>https://luxafor.co.uk/download</string>
                 <key>re_pattern</key>
-                <string>http://luxafor\.com/wp-content/uploads/\d*/\d*/luxafor_mac_v.*\.zip</string>
+                <string>https://luxafor\.com/uploads/luxafor_mac_v.*\.zip</string>
             </dict>
         </dict>
         <dict>
