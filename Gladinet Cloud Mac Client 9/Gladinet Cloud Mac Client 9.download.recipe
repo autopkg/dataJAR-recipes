@@ -21,106 +21,16 @@
     <string>0.2.0</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%SEARCH_URL%</string>
-				<key>re_pattern</key>
-				<string>%SEARCH_PATTERN%</string>
-				<key>result_output_var_name</key>
-				<string>match</string>
-			</dict>
-		</dict>
         <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%/%match%</string>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_pkg</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Cloud Drive.pkg</string>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>warning_message</key>
+                <string>For Gladinet Cloud Drive Mac Client 9: https://github.com/autopkg/dataJAR-recipes/tree/master/Gladinet%20Cloud%20Mac%20Client%209, for 
+                Gladinet Cloud Mac Client 12: https://github.com/autopkg/dataJAR-recipes/tree/master/Gladinet%20Cloud%20Mac%20Client%2012</string>
             </dict>
         </dict>
-        <dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pkg_path%</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: Gladinet, Inc. (CX8U2YJ96P)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-        	<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack</string>
-				<key>flat_pkg_path</key>
-				<string>%pkg_path%</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-		</dict>
-		<dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <key>pkgdirs</key>
-				<dict/>
-            </dict>
-        </dict>
-		<dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/Gladinet.pkg/Payload</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/Gladinet Cloud Mac Client.app/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>
     </array>
 </dict>
 </plist>
