@@ -19,13 +19,11 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Gladinet Cloud Mac OS X client integrates with Mac Finder with a drive volume. Inside the drive volume, you can see the backend storage files and folders from Gladinet Cloud Enterprise.</string>
+            <string>Have cloud drive volume on your Mac as if it were an external remote drive mounted locally. Move your corporate file servers to cloud file servers for easy remote file access and team collaboration.</string>
             <key>display_name</key>
-            <string>Gladinet Cloud Drive Mac Client</string>
-            <key>maximum_os_version</key>
-            <string>10.12.6</string>
+            <string>Gladinet Cloud Drive Mac Client 12</string>
             <key>minimum_os_version</key>
-            <string>10.9.0</string>
+            <string>10.13.0</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
