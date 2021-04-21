@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2020 dataJAR
+# Copyright 2021 dataJAR
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ from autopkglib import Processor, ProcessorError
 
 
 __all__ = ['AdobeCC2019Versioner']
-__version__ = ['1.2']
+__version__ = ['1.2.1']
 
 
 class AdobeCC2019Versioner(Processor):
@@ -159,8 +159,12 @@ class AdobeCC2019Versioner(Processor):
         self.output('display_name: %s' % self.env['display_name'])
 
         self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        self.output('vers_compare_key: %s' % self.env['vers_compare_key'])
 
-        self.create_pkginfo(app_bundle, app_version, installed_path)
+        app_bundle_id = 'com.adobe.Acrobat.Pro'
+        self.output('app_bundle_id: %s' % app_bundle_id)
+
+        self.create_pkginfo(app_bundle, app_bundle_id, app_version, installed_path)
 
 
     # pylint: disable=too-many-branches
@@ -238,8 +242,7 @@ class AdobeCC2019Versioner(Processor):
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
                                             data = load_plist(plist)
-                                            if self.env['sap_code'] == 'LTRM' or \
-                                                 self.env['sap_code'] == 'LRCC':
+                                            if self.env['sap_code'] == 'LTRM':
                                                 self.env['vers_compare_key'] = 'CFBundleVersion'
                                             else:
                                                 self.env['vers_compare_key'] = \
@@ -247,6 +250,8 @@ class AdobeCC2019Versioner(Processor):
                                             self.output('vers_compare_key: %s' % \
                                                    self.env['vers_compare_key'])
                                             app_version = data[self.env['vers_compare_key']]
+                                            app_bundle_id = data['CFBundleIdentifier']
+                                            self.output('app_bundle_id: %s' % app_bundle_id)
                                             self.output('staging_folder: %s' % bundle_location)
                                             self.output('staging_folder_path: %s' % zip_bundle)
                                             self.output('app_version: %s' % app_version)
@@ -256,10 +261,10 @@ class AdobeCC2019Versioner(Processor):
                                         continue
 
                 # Now we have the deets, let's use them
-                self.create_pkginfo(app_bundle, app_version, installed_path)
+                self.create_pkginfo(app_bundle, app_bundle_id, app_version, installed_path)
 
 
-    def create_pkginfo(self, app_bundle, app_version, installed_path):
+    def create_pkginfo(self, app_bundle, app_bundle_id, app_version, installed_path):
         """Create pkginfo with found details
 
         Args:
@@ -283,6 +288,7 @@ class AdobeCC2019Versioner(Processor):
                 'path': installed_path,
                 'type': 'application',
                 'version_comparison_key': self.env['vers_compare_key'],
+                'CFBundleIdentifier': app_bundle_id,
             }]
 
         self.env['additional_pkginfo'] = pkginfo
