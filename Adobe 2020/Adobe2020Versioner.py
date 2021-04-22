@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright 2020 dataJAR
+# Copyright 2021 dataJAR
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ from autopkglib import Processor, ProcessorError
 
 
 __all__ = ['Adobe2020Versioner']
-__version__ = ['1.3']
+__version__ = ['1.3.1']
 
 
 class Adobe2020Versioner(Processor):
@@ -158,8 +158,12 @@ class Adobe2020Versioner(Processor):
         self.output('display_name: %s' % self.env['display_name'])
 
         self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        self.output('vers_compare_key: %s' % self.env['vers_compare_key'])
 
-        self.create_pkginfo(app_bundle, app_version, installed_path)
+        app_bundle_id = 'com.adobe.Acrobat.Pro'
+        self.output('app_bundle_id: %s' % app_bundle_id)
+
+        self.create_pkginfo(app_bundle, app_bundle_id, app_version, installed_path)
 
 
     # pylint: disable=too-many-branches
@@ -254,6 +258,8 @@ class Adobe2020Versioner(Processor):
                                             self.output('vers_compare_key: %s' % \
                                                    self.env['vers_compare_key'])
                                             app_version = data[self.env['vers_compare_key']]
+                                            app_bundle_id = data['CFBundleIdentifier']
+                                            self.output('app_bundle_id: %s' % app_bundle_id)
                                             self.output('staging_folder: %s' % bundle_location)
                                             self.output('staging_folder_path: %s' % zip_bundle)
                                             self.output('app_version: %s' % app_version)
@@ -263,10 +269,10 @@ class Adobe2020Versioner(Processor):
                                         continue
 
                 # Now we have the deets, let's use them
-                self.create_pkginfo(app_bundle, app_version, installed_path)
+                self.create_pkginfo(app_bundle, app_bundle_id, app_version, installed_path)
 
 
-    def create_pkginfo(self, app_bundle, app_version, installed_path):
+    def create_pkginfo(self, app_bundle, app_bundle_id, app_version, installed_path):
         """Create pkginfo with found details
 
         Args:
@@ -286,13 +292,14 @@ class Adobe2020Versioner(Processor):
         # Allow the user to provide a display_name string that prevents CreativeCloudVersioner from overriding it.
         if 'pkginfo' not in self.env or 'display_name' not in self.env['pkginfo']:
             pkginfo['display_name'] = self.env['display_name']
-          
+
         if 'pkginfo' not in self.env or 'installs' not in self.env['pkginfo']:
             pkginfo['installs'] = [{
                 self.env['vers_compare_key']: self.env['version'],
                 'path': installed_path,
                 'type': 'application',
                 'version_comparison_key': self.env['vers_compare_key'],
+                'CFBundleIdentifier': app_bundle_id,
             }]
 
         self.env['additional_pkginfo'] = pkginfo
