@@ -9,14 +9,25 @@
         <key>Input</key>
         <dict>
             <key>NAME</key>
-            <string>TX16Wx Software Sampler 3</string>
-            <key>DOWNLOAD_URL</key>
-            <string>https://www.tx16wx.com/download/tx16wx-software-sampler-3-osx-setup/?wpdmdl=241</string>
+            <string>TX16WxSoftwareSampler3</string>
         </dict>
         <key>MinimumVersion</key>
         <string>0.5.0</string>
         <key>Process</key>
         <array>
+			<dict>
+				<key>Processor</key>
+				<string>URLTextSearcher</string>
+				<key>Arguments</key>
+				<dict>
+					<key>url</key>
+					<string>https://www.tx16wx.com/download/</string>
+					<key>re_pattern</key>
+					<string>data-downloadurl=\"(https://www\.tx16wx\.com/download/tx16wx-software-sampler-3-osx-setup/\?wpdmdl=.*&amp;refresh=.*)\"</string>
+					<key>result_output_var_name</key>
+					<string>url</string>
+				</dict>
+			</dict>
             <dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>
@@ -24,8 +35,6 @@
                 <dict>
                     <key>filename</key>
                     <string>%NAME%.pkg</string>
-                    <key>url</key>
-                    <string>%DOWNLOAD_URL%</string>
                 </dict>
             </dict>
             <dict>
