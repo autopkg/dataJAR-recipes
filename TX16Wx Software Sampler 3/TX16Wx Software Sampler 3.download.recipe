@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of TX16Wx Software Sampler 3</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.TX16Wx Software Sampler 3</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>TX16Wx Software Sampler 3</string>
+            <key>DOWNLOAD_URL</key>
+            <string>https://www.tx16wx.com/download/tx16wx-software-sampler-3-osx-setup/?wpdmdl=241</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>filename</key>
+                    <string>%NAME%.pkg</string>
+                    <key>url</key>
+                    <string>%DOWNLOAD_URL%</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: CWITEC AB (LQZYK9TZH4)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
