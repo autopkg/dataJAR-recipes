@@ -53,7 +53,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4']
+__version__ = ['1.4.1']
 
 
 # Class def
@@ -208,6 +208,10 @@ class Adobe2021Versioner(Processor):
         # Get vers_compare_key
         self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         self.output("vers_compare_key: {}".format(self.env['vers_compare_key']))
+
+        # Set bundle id
+        self.env['app_bundle_id'] = 'com.adobe.Acrobat.Pro'
+        self.output("app_bundle_id: {}".format(self.env['app_bundle_id']))
 
         # Create pkginfo with found details
         self.create_pkginfo()
@@ -378,9 +382,14 @@ class Adobe2021Versioner(Processor):
                         # Get version from info.plist
                         app_version = data[self.env['vers_compare_key']]
 
+                        # Get bundleid from info.plist
+                        self.env['app_bundle_id'] = data['CFBundleIdentifier']
+
                         # Progress notifications
                         self.output("vers_compare_key: {}"
                                     .format(self.env['vers_compare_key']))
+                        self.output("app_bundle_id: {}"
+                                    .format(self.env['app_bundle_id']))
                         self.output("staging_folder: {}"
                                     .format(bundle_location))
                         self.output("staging_folder_path: {}"
@@ -419,6 +428,7 @@ class Adobe2021Versioner(Processor):
                 app_bundle = ('/Applications/' + app_launch.split('.app')[0] + '/' + app_launch)
         self.output("app_bundle: {}".format(app_bundle))
 
+
     def create_pkginfo(self):
         '''
             Create pkginfo with found details
@@ -447,6 +457,7 @@ class Adobe2021Versioner(Processor):
                 'path': self.env['installed_path'],
                 'type': 'application',
                 'version_comparison_key': self.env['vers_compare_key'],
+                'CFBundleIdentifier': self.env['app_bundle_id'],
             }]
 
         # Set Processor Architecture info
