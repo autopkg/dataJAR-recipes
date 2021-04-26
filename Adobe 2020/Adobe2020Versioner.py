@@ -289,7 +289,8 @@ class Adobe2020Versioner(Processor):
             'minimum_os_version': self.env['MINIMUM_OS_VERSION']
         }
 
-        # Allow the user to provide a display_name string that prevents CreativeCloudVersioner from overriding it.
+        # Allow the user to provide a display_name string that prevents 
+        # CreativeCloudVersioner from overriding it.
         if 'pkginfo' not in self.env or 'display_name' not in self.env['pkginfo']:
             pkginfo['display_name'] = self.env['display_name']
 
