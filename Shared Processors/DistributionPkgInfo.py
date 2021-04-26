@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
-import os.path
+import os
 import subprocess
 from xml.etree import ElementTree
 
@@ -28,7 +28,7 @@ from autopkglib import Processor, ProcessorError
 
 
 __all__ = ["DistributionPkgInfo"]
-__version__ = '1.1'
+__version__ = '1.1.1'
 
 
 class DistributionPkgInfo(Processor):
@@ -95,7 +95,7 @@ class DistributionPkgInfo(Processor):
                 for elem in tree.iter(tag='pkg-ref'):
                     pkg_id = elem.get("id")
             except ElementTree.ParseError as err:
-                print(("Can't parse distruntion file %s: %s"
+                print(("Can't parse distribution file %s: %s"
                        % ('dist_path', err.strerror)))
 
         if not pkg_id:
@@ -107,6 +107,7 @@ class DistributionPkgInfo(Processor):
             raise ProcessorError("cannot get version")
         else:
             self.env["version"] = version
+            os.remove(dist_path)
 
 if __name__ == '__main__':
     PROCESSOR = DistributionPkgInfo()
