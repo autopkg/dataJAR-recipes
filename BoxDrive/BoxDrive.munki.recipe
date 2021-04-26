@@ -46,6 +46,8 @@
 			</dict>
 		</dict>
         <dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
 			<key>Arguments</key>
 			<dict>
 				<key>destination_path</key>
@@ -55,10 +57,10 @@
 				<key>purge_destination</key>
 				<string>true</string>
 			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
 		</dict>
 		<dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
 			<key>Arguments</key>
 			<dict>
 				<key>destination_path</key>
@@ -68,10 +70,10 @@
 				<key>purge_destination</key>
 				<string>true</string>
 			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
 		</dict>
 		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
 			<key>Arguments</key>
 			<dict>
 				<key>additional_pkginfo</key>
@@ -80,10 +82,10 @@
                     <string>%version%</string>
                 </dict>
 			</dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
 		</dict>
 		<dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
@@ -91,9 +93,19 @@
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
 		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
