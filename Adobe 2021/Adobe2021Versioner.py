@@ -53,7 +53,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.1']
+__version__ = ['1.4.2']
 
 
 # Class def
@@ -415,8 +415,10 @@ class Adobe2021Versioner(Processor):
         # Get app_version, cautiously for now for only certain apps
         if self.env['sap_code'] == 'KBRG':
             self.env['app_version'] = load_json['ProductVersion']
+            self.env['app_bundle_id'] = 'com.adobe.bridge11'
         elif self.env['sap_code'] == 'ESHR':
             self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.dimension'
         else:
             raise ProcessorError("Checking app_json for version details but sap code {},"
                                  "is neither ESHR nor KBRG".format(self.env['sap_code']))
