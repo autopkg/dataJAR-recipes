@@ -59,7 +59,7 @@
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/RingCentral Meetings Rooms.app</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/RingCentral Rooms.app</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/zp.pkg/Payload</string>
                 <key>purge_destination</key>
