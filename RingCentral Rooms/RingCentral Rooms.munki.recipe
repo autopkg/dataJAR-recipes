@@ -75,7 +75,7 @@
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/RingCentral Rooms.app</string>
+                    <string>/Applications/RingCentralVideo.app</string>
                 </array>
             </dict>
         </dict>
