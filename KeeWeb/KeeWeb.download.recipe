@@ -21,17 +21,17 @@ i.e.: `-k PRERELEASE=yes`</string>
 	<key>Process</key>
 	<array>
 		<dict>
+			<key>Processor</key>
+			<string>GitHubReleasesInfoProvider</string>
 			<key>Arguments</key>
 			<dict>
+				<key>asset_regex</key>
+				<string>.*\.mac\.x64\.dmg</string>
 				<key>github_repo</key>
 				<string>keeweb/keeweb</string>
 				<key>include_prereleases</key>
 				<string>%PRERELEASE%</string>
-				<key>asset_regex</key>
-				<string>.*\.mac\.x64\.dmg</string>
 			</dict>
-			<key>Processor</key>
-			<string>GitHubReleasesInfoProvider</string>
 		</dict>
 		<dict>
 			<key>Arguments</key>
