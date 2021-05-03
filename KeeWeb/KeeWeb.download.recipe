@@ -28,7 +28,7 @@ i.e.: `-k PRERELEASE=yes`</string>
 				<key>include_prereleases</key>
 				<string>%PRERELEASE%</string>
 				<key>asset_regex</key>
-				<string>[\S]+\.dmg</string>
+				<string>.*\.mac\.x64\.dmg</string>
 			</dict>
 			<key>Processor</key>
 			<string>GitHubReleasesInfoProvider</string>
