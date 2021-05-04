@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Imports the latest version of the Isadora 3 software into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Isadora 3</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Isadora</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/troikatronix</string>
+        <key>pkginfo</key>
+    		<dict>
+    			<key>catalogs</key>
+    			<array>
+    			     <string>testing</string>
+    			</array>
+    			<key>description</key>
+    			<string>Isadora is a proprietary graphic programming environment, with emphasis on real-time manipulation of digital video.</string>
+    			<key>developer</key>
+    			 <string>TroikaTronix</string>
+    			<key>display_name</key>
+    			<string>Isadora</string>
+    			<key>name</key>
+    			<string>%NAME%</string>
+    			<key>unattended_install</key>
+    			<true/>
+    			<key>unattended_uninstall</key>
+    			<true/>
+    		</dict>
+    	</dict>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Isadora 3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Isadora Installer.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Isadora 3</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/isadora-standard.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Isadora 3/Isadora.app</string>
+                </array>
+				<key>version_comparison_key</key>
+				<string>CFBundleVersion</string>
+            </dict>
+        </dict>
+       <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/Isadora Installer.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
