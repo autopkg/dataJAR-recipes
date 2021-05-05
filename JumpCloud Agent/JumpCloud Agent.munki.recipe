@@ -113,16 +113,9 @@ rm -rf /Applications/Jumpcloud.app</string>
     <string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>com.github.dataJAR-recipes.Shared Processors/DistributionPkgInfo</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-			</dict>
-		</dict>
         <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -132,10 +125,10 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -145,22 +138,27 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Jumpcloud.app</string>
+                </array>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -168,8 +166,6 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
