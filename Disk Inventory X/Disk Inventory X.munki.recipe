@@ -24,10 +24,10 @@
             <string>Tjark Derlien</string>
             <key>display_name</key>
             <string>Disk Inventory X</string>
-			<key>maximum_os_version</key>
-			<string>10.15.7</string>
-			<key>minimum_os_version</key>
-			<string>10.13</string>
+            <key>maximum_os_version</key>
+            <string>10.15.7</string>
+            <key>minimum_os_version</key>
+            <string>10.13</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
