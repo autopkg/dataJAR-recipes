@@ -13,25 +13,25 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/troikatronix</string>
         <key>pkginfo</key>
-    		<dict>
-    			<key>catalogs</key>
-    			<array>
-    			     <string>testing</string>
-    			</array>
-    			<key>description</key>
-    			<string>Isadora is a proprietary graphic programming environment, with emphasis on real-time manipulation of digital video.</string>
-    			<key>developer</key>
-    			 <string>TroikaTronix</string>
-    			<key>display_name</key>
-    			<string>Isadora</string>
-    			<key>name</key>
-    			<string>%NAME%</string>
-    			<key>unattended_install</key>
-    			<true/>
-    			<key>unattended_uninstall</key>
-    			<true/>
-    		</dict>
-    	</dict>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                     <string>testing</string>
+                </array>
+                <key>description</key>
+                <string>Isadora is a proprietary graphic programming environment, with emphasis on real-time manipulation of digital video.</string>
+                <key>developer</key>
+                 <string>TroikaTronix</string>
+                <key>display_name</key>
+                <string>Isadora</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true/>
+                <key>unattended_uninstall</key>
+                <true/>
+            </dict>
+        </dict>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Isadora 3</string>
     <key>Process</key>
@@ -73,8 +73,8 @@
                 <array>
                     <string>/Applications/Isadora 3/Isadora.app</string>
                 </array>
-				<key>version_comparison_key</key>
-				<string>CFBundleVersion</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
         </dict>
        <dict>
