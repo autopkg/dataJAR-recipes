@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Milanote 1 and then uploads to the JSS</string>
+    <string>Downloads the latest version of Axure RP 8-Trial and then uploads to the JSS</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.jss.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.jss.Axure RP 8-Trial</string>
     <key>Input</key>
     <dict>
         <key>CATEGORY</key>
@@ -28,7 +28,7 @@
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.Milanote 1</string>
+    <string>com.github.dataJAR-recipes.pkg.Axure RP 8-Trial</string>
     <key>Process</key>
     <array>
         <dict>
