@@ -15,27 +15,27 @@
     <string>0.6.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://support.code42.com/Administrator/6/Planning_And_Installing/Code42_server_and_app_downloads</string>
-				<key>re_pattern</key>
-				<string>href=\"(https://download\.code42\.com/installs/mac/install/Code42CrashPlan/Code42CrashPlan_6.*_Mac\.dmg)\"</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%match%</string>
-				<key>filename</key>
-                <string>%NAME%.dmg</string>
-			</dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://support.code42.com/Administrator/6/Planning_And_Installing/Code42_server_and_app_downloads</string>
+                <key>re_pattern</key>
+                <string>href=\"(https://download\.code42\.com/installs/mac/install/Code42CrashPlan/Code42CrashPlan_6.*_Mac\.dmg)\"</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%match%</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>

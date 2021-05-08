@@ -9,78 +9,78 @@
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
+        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>CrashPlanForEnterprise6</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>Silently and continuously back up all distributed end-user data for complete visibility and control on a single, secure platform.</string>
-			<key>developer</key>
-			<string>Code42</string>
-			<key>display_name</key>
-			<string>CrashPlan for Enterprise 6</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>unattended_uninstall</key>
-			<true/>
-		</dict>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Silently and continuously back up all distributed end-user data for complete visibility and control on a single, secure platform.</string>
+            <key>developer</key>
+            <string>Code42</string>
+            <key>display_name</key>
+            <string>CrashPlan for Enterprise 6</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.CrashPlan for Enterprise 6</string>
+    <string>com.github.dataJAR-recipes.pkg.CrashPlan for Enterprise 6</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/CrashPlan.app</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-					<key>uninstall_method</key>
-					<string>/Library/Application Support/CrashPlan/Uninstall.app/Contents/Resources/uninstall.sh</string>
-				</dict>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%target%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-		</dict>
-		<dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/CrashPlan.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>uninstall_method</key>
+                    <string>/Library/Application Support/CrashPlan/Uninstall.app/Contents/Resources/uninstall.sh</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%target%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
