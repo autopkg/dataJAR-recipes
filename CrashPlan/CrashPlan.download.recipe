@@ -27,7 +27,16 @@
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>Please use the Code42 recipes instead.</string>
+                <string>This recipe has been replaced by: https://github.com/autopkg/dataJAR-recipes/tree/master/Code42.</string>
+            </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
             </dict>
         </dict>
 	</array>
