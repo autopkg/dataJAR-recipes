@@ -23,7 +23,7 @@
 				<key>url</key>
 				<string>https://support.code42.com/Administrator/6/Planning_And_Installing/Code42_server_and_app_downloads</string>
 				<key>re_pattern</key>
-				<string>https://download.code42.com/installs/mac/install/Code42CrashPlan/Code42CrashPlan_+[0-9]+\.+[0-9]+\.+[0-9]+\_Mac.dmg</string>
+				<string>href=\"(https://download\.code42\.com/installs/mac/install/Code42CrashPlan/Code42CrashPlan_6.*_Mac\.dmg)\"</string>
 			</dict>
 		</dict>
         <dict>
