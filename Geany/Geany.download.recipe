@@ -30,7 +30,7 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
