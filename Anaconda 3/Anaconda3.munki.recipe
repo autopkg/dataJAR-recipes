@@ -45,8 +45,8 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
             <string>%DISPLAY_NAME%</string>
             <key>name</key>
             <string>%NAME%</string>
-			<key>postuninstall_script</key>
-			<string>#!/bin/bash
+            <key>postuninstall_script</key>
+            <string>#!/bin/bash
 rm -rf "/Applications/Anaconda-Navigator.app"</string>
             <key>uninstall_method</key>
             <string>removepackages</string>
@@ -143,8 +143,8 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <dict>
                     <key>version</key>
                     <string>%json_value%</string>
-                	<key>installcheck_script</key>
-                	<string>#!/usr/local/munki/munki-python
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
 # pylint: disable = invalid-name
 
 '''
@@ -221,7 +221,7 @@ def main():
 if __name__ == '__main__':
     main()
 </string>
-				</dict>
+                </dict>
             </dict>
         </dict>
         <dict>
