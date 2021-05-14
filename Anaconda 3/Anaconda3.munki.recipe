@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Anaconda for Python 3 and imports it into Munki.
+
+This differs from other recipes as we pull the version out of a .json file instead of the pkg receipts, as
+the pkg receipts are all 0.
+
+This is accomplished via our own custom processor (JSONFileReader) and an installcheck_script</string>
+    <key>Identifier</key>
+    <string>com.dataJAR-Recipes.munki.Anaconda 3</string>
+    <key>Input</key>
+    <dict>
+        <key>INSTALLER_TYPE</key>
+        <string>pkg</string>
+        <key>PYTHON_MAJOR_VERSION</key>
+        <string>3</string>
+        <key>MUNKI_CATALOGS</key>
+        <string>testing</string>
+        <key>MUNKI_CATEGORY</key>
+        <string>Science</string>
+        <key>MUNKI_DEVELOPER</key>
+        <string>Continuum</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%/</string>
+        <key>NAME</key>
+        <string>Anaconda3</string>
+        <key>DISPLAY_NAME</key>
+        <string>Anaconda 3</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>%MUNKI_CATALOGS%</string>
+            </array>
+            <key>category</key>
+            <string>%MUNKI_CATEGORY%</string>
+            <key>description</key>
+            <string>Anaconda is a Python distribution which includes over 400 Python packages for science, math, engineering, and data analysis.</string>
+            <key>developer</key>
+            <string>%MUNKI_DEVELOPER%</string>
+            <key>display_name</key>
+            <string>%DISPLAY_NAME%</string>
+            <key>name</key>
+            <string>%NAME%</string>
+			<key>postuninstall_script</key>
+			<string>#!/bin/bash
+rm -rf "/Applications/Anaconda-Navigator.app"</string>
+            <key>uninstall_method</key>
+            <string>removepackages</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.hansen-m.download.Anaconda</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                 <key>destination_path</key>
+                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                 <key>flat_pkg_path</key>
+                 <string>%pathname%</string>
+                 <key>purge_destination</key>
+                 <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                 <key>destination_path</key>
+                 <string>%RECIPE_CACHE_DIR%/tmp/</string>
+                 <key>pkg_payload_path</key>
+                 <string>%RECIPE_CACHE_DIR%/unpack/preconda.pkg/Payload</string>
+                 <key>purge_destination</key>
+                 <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/tmp/anaconda3/tmp.tar</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/tar/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+         <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+               <key>pattern</key>
+               <string>%RECIPE_CACHE_DIR%/tar/pkgs/anaconda-*.tar.bz2</string>
+            </dict>
+         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_format</key>
+                <string>tar</string>
+                <key>archive_path</key>
+                <string>%found_filename%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/info/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/JSONFileReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>json_key</key>
+                <string>conda_version</string>
+                <key>json_path</key>
+                <string>%RECIPE_CACHE_DIR%/info/info/about.json</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%json_value%</string>
+                	<key>installcheck_script</key>
+                	<string>#!/usr/local/munki/munki-python
+# pylint: disable = invalid-name
+
+'''
+Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+from distutils.version import LooseVersion
+import os
+import sys
+import subprocess
+
+
+def main():
+    '''
+        Get conda version (if installed)
+
+        Exit 1 if conda is installed and newer than what we have in Munki
+
+        Based on:
+        https://github.com/autopkg/andrewzirkel-recipes/blob/master/LightspeedRelaySmartAgent/LightspeedRelaySmartAgent.munki.recipe#L46
+    '''
+
+    conda_binary = '/opt/anaconda3/bin/conda'
+    munki_version = '%json_value%'
+
+    # If the binary exists
+    if os.path.isfile(conda_binary):
+
+        try:
+            installed_ver = subprocess.check_output([conda_binary, '-V']).split()[1].decode('utf-8')
+        except subprocess.CalledProcessError:
+            print("Encountered an error when ascertaining conda version, "
+                  "proceeding with install...")
+            sys.exit(0)
+
+        if LooseVersion(installed_ver) &lt; LooseVersion(munki_version):
+            print("Older version of conda binary located, proceeding with install...")
+            sys.exit(0)
+        print("Version of conda binary same or newer than the munki version, skipping...")
+        sys.exit(1)
+
+    print("Cannot locate conda binary, proceeding with install...")
+    sys.exit(0)
+
+if __name__ == '__main__':
+    main()
+</string>
+				</dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/info</string>
+                    <string>%RECIPE_CACHE_DIR%/tar</string>
+                    <string>%RECIPE_CACHE_DIR%/tmp</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
