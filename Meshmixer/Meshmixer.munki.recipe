@@ -14,22 +14,22 @@
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
-			 <key>catalogs</key>
-			 <array>
-					<string>testing</string>
-			 </array>
-			 <key>description</key>
-			 <string>Meshmixer is state-of-the-art software for working with triangle meshes.</string>
-			 <key>developer</key>
-			  <string>Autodesk Inc</string>
-			 <key>display_name</key>
-			 <string>Meshmixer</string>
-			 <key>name</key>
-			 <string>%NAME%</string>
-			 <key>unattended_install</key>
-			 <true/>
-			 <key>unattended_uninstall</key>
-			 <true/>
+             <key>catalogs</key>
+             <array>
+                    <string>testing</string>
+             </array>
+             <key>description</key>
+             <string>Meshmixer is state-of-the-art software for working with triangle meshes.</string>
+             <key>developer</key>
+              <string>Autodesk Inc</string>
+             <key>display_name</key>
+             <string>Meshmixer</string>
+             <key>name</key>
+             <string>%NAME%</string>
+             <key>unattended_install</key>
+             <true/>
+             <key>unattended_uninstall</key>
+             <true/>
         </dict>
     </dict>
     <key>ParentRecipe</key>
