@@ -27,7 +27,7 @@ Parses a JSON file, returning the value of the supplied key.
     - **description:** Path to the JSON file.
 - **json_key:**
     - **required:** True
-    - **description:** Key to look return value of.
+    - **description:** Key to look for, and return the value of.
 
 ## Output Variables
 - **json_value:**
