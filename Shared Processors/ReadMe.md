@@ -21,6 +21,8 @@ Parses a distribution pkg to pull additional information.
 ## Description
 Parses a JSON file, returning the value of the supplied key.
 
+Raising if the key is not found.
+
 ## Input Variables
 - **json_key:**
     - **required:** True
