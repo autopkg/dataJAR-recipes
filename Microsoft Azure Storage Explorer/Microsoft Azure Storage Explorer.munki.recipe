@@ -38,6 +38,48 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                 <key>input_plist_path</key>
+                 <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app/Contents/Info.plist</string>
+                 <key>plist_version_key</key>
+                 <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                 <key>additional_pkginfo</key>
+                 <dict>
+                      <key>version</key>
+                      <string>%version%</string>
+                 </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                 <key>faux_root</key>
+                 <string>%RECIPE_CACHE_DIR%/</string>
+                 <key>installs_item_paths</key>
+                 <array>
+                      <string>/Applications/Microsoft Azure Storage Explorer.app</string>
+                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
@@ -56,8 +98,17 @@
                 <string>%dmg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                </array>
             </dict>
         </dict>
     </array>
