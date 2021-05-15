@@ -24,6 +24,10 @@
             <string>Apache NetBeans 12</string>
             <key>name</key>
             <string>%NAME%</string>
+			<key>requires</key>
+			<array>
+				<string>OpenJDK</string>
+			</array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -38,37 +42,64 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-                <dict>
-                    <key>pkgroot</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
-                    <key>pkgdirs</key>
-                    <dict/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
                 <key>source_pkg</key>
                 <string>%input_path%</string>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/installer_pkg/%NAME%.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
+            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%pkgroot%</string>
-                <key>installs_item_paths</key>
-                <array>
-                    <string>/Applications/Apache NetBeans %version%.app</string>
-                </array>
+                <key>flat_pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/main</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%destination_path%/nbide-12.*.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%found_filename%/Payload</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%destination_path%/Apache NetBeans 12.*.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%found_filename%/Contents/Info.plist</string>
             </dict>
         </dict>
         <dict>
@@ -82,6 +113,23 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Apache NetBeans %version%.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -101,8 +149,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
                     <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                    <string>%pkgroot%</string>
                 </array>
             </dict>
         </dict>
