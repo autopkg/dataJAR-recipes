@@ -210,8 +210,13 @@ def main():
             sys.exit(0)
 
         if LooseVersion(installed_ver) &lt; LooseVersion(munki_version):
-            print("Older version of conda binary located, proceeding with install...")
-            sys.exit(0)
+            # The Anaconda pkg will not install if it finds an existing install, so we'll use the binary
+            print("Older version of conda binary located, updating via binary...")
+        	try:
+            	subprocess.check_output([conda_binary, 'update', 'conda', '-y'])
+        	except subprocess.CalledProcessError:
+           		print("Encountered an error when update conda via binary...")
+            sys.exit(1)
         print("Version of conda binary same or newer than the munki version, skipping...")
         sys.exit(1)
 
