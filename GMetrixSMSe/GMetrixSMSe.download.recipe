@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://support.gmetrix.net/download</string>
                 <key>re_pattern</key>
-                <string>https:\/\/gmetrixreleases.blob.core.windows.net\/smse\/latest\/mac\/GMetrixSMSe-.*.dmg</string>
+                <string>https://releases\.gmetrix\.net/smse/latest/mac/GMetrixSMSe-.*\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
             </dict>
@@ -55,6 +55,8 @@
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -62,8 +64,6 @@
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
-            <key>Processor</key>
-            <string>Versioner</string>
         </dict>
     </array>
 </dict>
