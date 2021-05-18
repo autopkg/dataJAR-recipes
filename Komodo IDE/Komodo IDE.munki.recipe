@@ -35,17 +35,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Info.plist</string>
-                <key>source_path</key>
-                <string>%pathname%/Komodo IDE*.app/Contents/Info.plist</string>
-            </dict>
-            <key>Processor</key>
-            <string>Copier</string>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Versioner</string>
             <key>Arguments</key>
