@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for UPDD Commander.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.UPDD Commander</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>UPDDCommander</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.legamaster.com/downloads/software/e-screen-touch-screen-drivers</string>
+                <key>re_pattern</key>
+                <string>fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_.*\.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.legamaster.com/%match%</string>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/Legamaster all in one *.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Touch-Base Ltd (U86H28HG4S)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%found_filename%/*.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
