@@ -3,11 +3,14 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of Komodo IDE.</string>
+    <string>Downloads the major release version of Komodo IDE, as per the MAJOR_VERSION variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.KomodoIDE</string>
     <key>Input</key>
-    <dict/>
+    <dict>
+        <key>MAJOR_VERSION</key>
+        <string>12</string>
+    </dict>
     <key>MinimumVersion</key>
     <string>0.2.9</string>
     <key>Process</key>
@@ -16,12 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://downloads\.activestate\.com/Komodo/releases/[\d\.]+/Komodo-IDE-[\d\.-]+-macosx-x86_64\.dmg</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>User-Agent</key>
-                    <string>curl/7.37.1</string>
-                </dict>
+                <string>https://downloads\.activestate\.com/Komodo/releases/%MAJOR_VERSION%.*/Komodo-IDE-%MAJOR_VERSION%.*.dmg</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
@@ -31,13 +29,6 @@
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-        	<key>Arguments</key>
-        	<dict>
-        		<key>curl_opts</key>
-        		<array>
-        			<string>-L</string>
-        		</array>
-        	</dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -46,15 +37,15 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Komodo IDE*</string>
+                <string>%pathname%/Komodo IDE %MAJOR_VERSION%.app</string>
                 <key>requirement</key>
                 <string>identifier "com.activestate.KomodoIDE" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6L3MMJ36R9"</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
