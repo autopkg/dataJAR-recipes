@@ -88,9 +88,9 @@ For example:
 
 Adobe have started to release titles that support Apple Silicon devices. In order to facility this, they have the administrator specify the type of *package* that is created from the Admin console. 
 
-Note: Although you can specify an Apple Silicon / arm64 package, the content for the majority of Apps are still Intel-only and will require Rosetta 2 to be installed on devices even for this packages to install.
+**Note:** Although you can specify an Apple Silicon / arm64 package, the content for the majority of Apps are still Intel-only and will require Rosetta 2 to be installed on devices even for this packages to install.
 
-The Munki support is achieved through the use of the built in support for the `supported_architectures` pkginfo key ( [More Info](https://github.com/munki/munki/wiki/Supported-Pkginfo-Keys)). In order for this to work correctly on Apple Silicon devices, you must make sure to be running Munki v5.2.1 or newer. You will need to create two packages per Adobe 2021 title, one with the Intel option selected, and one with Apple Silicon / arm64 selected. These both need to be imported into your Munki repo with the same Munki name, and with the appropriate `supported_architectures` value/s set.
+The Munki support is achieved through the use of the built in support for the `supported_architectures` pkginfo key ([More Info](https://github.com/munki/munki/wiki/Supported-Pkginfo-Keys)). In order for this to work correctly on Apple Silicon devices, you must make sure to be running Munki v5.2.1 or newer. You will need to create two packages per Adobe 2021 title, one with the Intel option selected, and one with Apple Silicon/arm64 selected. These both need to be imported into your Munki repo with the same Munki name, and with the appropriate `supported_architectures` value/s set.
 
 In order to support this, we've had to make some changes to the Munki parent recipe, the [Adobe2021Versioner.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202021/Adobe2021Versioner.py) processor and the [Adobe2021Importer.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%202021/Adobe2021Importer.py) script. The core changes have been detailed below:
 
