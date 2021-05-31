@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Clevershare2.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.clevershare2</string>
+    <string>com.github.dataJAR-recipes.download.Clevershare2</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>

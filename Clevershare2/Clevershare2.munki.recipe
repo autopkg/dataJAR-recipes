@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Clevershare 2 and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.clevershare2</string>
+    <string>com.github.dataJAR-recipes.munki.Clevershare2</string>
       <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
@@ -34,7 +34,7 @@
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.clevershare2</string>
+	<string>com.github.dataJAR-recipes.download.Clevershare2</string>
     <key>Process</key>
 	<array>
 		<dict>
