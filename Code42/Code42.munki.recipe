@@ -28,7 +28,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string> </string>
+            <string>The Code42 app allows you to back up your device, change backup settings, and download backed up files from all the devices on your account.</string>
             <key>developer</key>
             <string>Code 42 Software</string>
             <key>display_name</key>
