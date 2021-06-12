@@ -1,6 +1,6 @@
 #!/usr/local/autopkg/python
 '''
-Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
+Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
      Redistribution and use in source and binary forms, with or without
      modification, are permitted provided that the following conditions are met:
              * Redistributions of source code must retain the above copyright
@@ -53,7 +53,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.2']
+__version__ = ['1.4.3']
 
 
 # Class def
@@ -409,16 +409,19 @@ class Adobe2021Versioner(Processor):
             Read in values from app_json
         '''
 
-        # Get vers_compare_key
-        self.env['vers_compare_key'] = 'CFBundleShortVersionString'
-
         # Get app_version, cautiously for now for only certain apps
-        if self.env['sap_code'] == 'KBRG':
-            self.env['app_version'] = load_json['ProductVersion']
-            self.env['app_bundle_id'] = 'com.adobe.bridge11'
-        elif self.env['sap_code'] == 'ESHR':
+        if self.env['sap_code'] == 'ESHR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.dimension'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'KBRG':
+            self.env['app_version'] = load_json['ProductVersion']
+            self.env['app_bundle_id'] = 'com.adobe.bridge11'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'LTRM':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.LightroomClassicCC7'
+            self.env['vers_compare_key'] = 'CFBundleVersion'
         else:
             raise ProcessorError("Checking app_json for version details but sap code {},"
                                  "is neither ESHR nor KBRG".format(self.env['sap_code']))
