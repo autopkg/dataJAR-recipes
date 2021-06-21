@@ -53,7 +53,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.3']
+__version__ = ['1.4.4']
 
 
 # Class def
@@ -414,6 +414,10 @@ class Adobe2021Versioner(Processor):
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.dimension'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'ILST':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.illustrator'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'KBRG':
             self.env['app_version'] = load_json['ProductVersion']
             self.env['app_bundle_id'] = 'com.adobe.bridge11'
@@ -424,7 +428,8 @@ class Adobe2021Versioner(Processor):
             self.env['vers_compare_key'] = 'CFBundleVersion'
         else:
             raise ProcessorError("Checking app_json for version details but sap code {},"
-                                 "is neither ESHR nor KBRG".format(self.env['sap_code']))
+                                 "is not within the known list of apps which we need to"
+                                 "check via their Application.json".format(self.env['sap_code']))
         self.output("app_version: {}".format(self.env['app_version']))
 
         # Get app_bundle
