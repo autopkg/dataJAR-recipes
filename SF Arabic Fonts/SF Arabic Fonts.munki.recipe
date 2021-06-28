@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of SF Arabic Fonts and imports into Munki</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.munki.SF Arabic Fonts</string>
+        <key>Input</key>
+        <dict>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>apps/%NAME%</string>
+            <key>NAME</key>
+            <string>SF Arabic Fonts</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>description</key>
+                <string>A contemporary interpretation of the Naskh style with a rational and flexible design, this extension of San Francisco is the Arabic system font on Apple platforms. Like San Francisco, SF Arabic features nine weights and variable optical sizes that automatically adjust spacing and contrast based on the point size.</string>
+                <key>developer</key>
+                <string>Apple</string>
+                <key>display_name</key>
+                <string>SF Arabic Fonts</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true></true>
+                <key>unattended_uninstall</key>
+                <true></true>
+            </dict>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>ParentRecipe</key>
+        <string>com.github.dataJAR-recipes.download.SF Arabic Fonts</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%pathname%</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
