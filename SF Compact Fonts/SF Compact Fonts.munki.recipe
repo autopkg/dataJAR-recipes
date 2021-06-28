@@ -19,7 +19,7 @@
                     <string>testing</string>
                 </array>
                 <key>description</key>
-                <string>This sans-serif typeface is the system font for watchOS, and includes a rounded variant. It suits a wide range of content and is easily legible in a variety of contexts.</string>
+                <string>Sharing many features with SF Pro, SF Compact features an efficient, compact design that is optimized for small sizes and narrow columns. SF Compact is the system font for watchOS and includes a rounded variant.</string>
                 <key>developer</key>
                 <string>Apple</string>
                 <key>display_name</key>
@@ -39,6 +39,8 @@
         <key>Process</key>
         <array>
             <dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
                 <key>Arguments</key>
                 <dict>
                     <key>pkg_path</key>
@@ -46,8 +48,6 @@
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
                 </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
             </dict>
         </array>
     </dict>
