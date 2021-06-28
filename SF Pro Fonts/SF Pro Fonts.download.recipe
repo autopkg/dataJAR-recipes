@@ -11,13 +11,15 @@
             <key>NAME</key>
             <string>SF Pro Fonts</string>
             <key>DOWNLOAD_URL</key>
-            <string>https://devimages-cdn.apple.com/design/resources/download/SF-Font-Pro.dmg</string>
+            <string>https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg</string>
         </dict>
         <key>MinimumVersion</key>
         <string>0.5.0</string>
         <key>Process</key>
         <array>
             <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
                 <key>Arguments</key>
                 <dict>
                     <key>filename</key>
@@ -25,27 +27,25 @@
                     <key>url</key>
                     <string>%DOWNLOAD_URL%</string>
                 </dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
             </dict>
             <dict>
                 <key>Processor</key>
                 <string>EndOfCheckPhase</string>
             </dict>
             <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
                 <key>Arguments</key>
                 <dict>
                     <key>input_path</key>
                     <string>%pathname%/*.pkg</string>
                     <key>expected_authority_names</key>
                     <array>
-                        <string>Development Update</string>
+                        <string>Software Update</string>
                         <string>Apple Software Update Certification Authority</string>
                         <string>Apple Root CA</string>
                     </array>
                 </dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
             </dict>
         </array>
     </dict>
