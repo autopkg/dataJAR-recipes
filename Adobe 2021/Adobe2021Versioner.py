@@ -426,9 +426,21 @@ class Adobe2021Versioner(Processor):
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.LightroomClassicCC7'
             self.env['vers_compare_key'] = 'CFBundleVersion'
+        elif self.env['sap_code'] == 'SBSTA':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.adobe-substance-3d-sampler'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'SBSTD':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.substance-3d-designer'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'SBSTP':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Adobe-Substance-3D-Painter'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'STGR':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.stager'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         else:
             raise ProcessorError("Checking app_json for version details but sap code {},"
