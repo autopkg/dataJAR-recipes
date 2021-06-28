@@ -426,6 +426,10 @@ class Adobe2021Versioner(Processor):
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.LightroomClassicCC7'
             self.env['vers_compare_key'] = 'CFBundleVersion'
+        elif self.env['sap_code'] == 'SBSTP':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.Adobe-Substance-3D-Painter'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         else:
             raise ProcessorError("Checking app_json for version details but sap code {},"
                                  "is not within the known list of apps which we need to"
