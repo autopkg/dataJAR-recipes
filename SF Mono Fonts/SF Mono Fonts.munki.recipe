@@ -19,7 +19,7 @@
                     <string>testing</string>
                 </array>
                 <key>description</key>
-                <string>This monospaced variant of San Francisco enables alignment between rows and columns of text, and is used in coding environments like Xcode. It supports Latin, Greek, and Cyrillic scripts and contains six weights in upright and italic.</string>
+                <string>This monospaced variant of San Francisco enables alignment between rows and columns of text, and is used in coding environments like Xcode. SF Mono features six weights and supports Latin, Greek, and Cyrillic scripts.</string>
                 <key>developer</key>
                 <string>Apple</string>
                 <key>display_name</key>
