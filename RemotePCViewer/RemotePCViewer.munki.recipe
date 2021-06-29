@@ -93,6 +93,11 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>Versioner</string>
             <key>Arguments</key>
             <dict>
