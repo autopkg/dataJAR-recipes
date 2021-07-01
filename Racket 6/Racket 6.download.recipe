@@ -15,24 +15,39 @@
     <string>0.6.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://mirror.racket-lang.org/installers/recent/</string>
-				<key>re_pattern</key>
-				<string>racket-6.+[0-9]+\-x86_64-macosx.dmg(?=")</string>
-			</dict>
-		</dict>
-		<dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download.racket-lang.org/all-versions.html</string>
+                <key>re_pattern</key>
+                <string>/racket-v6.\d.*.html</string>
+                <key>result_output_var_name</key>
+                <string>DownloadPage</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download.racket-lang.org%DownloadPage%</string>
+                <key>re_pattern</key>
+                <string>6.\d*/racket-6.\d*-x86_64-macosx.dmg</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%url%%match%</string>
+                <string>https://www.cs.utah.edu/plt/installers/%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
