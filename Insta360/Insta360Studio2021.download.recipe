@@ -20,20 +20,20 @@
     <key>Process</key>
     <array>
         <dict>
- 			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%DOWNLOAD_URL%</string>
-				<key>re_pattern</key>
-				<string>(https://res.insta360.com/static/assets/storage/[\S]+/[\S]+/Insta360_Studio_[\S]+pkg)</string>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+                <key>re_pattern</key>
+                <string>(https://res\.insta360\.com/static/.*/Insta360_Studio_2021_.*\.pkg)</string>
                 <key>request_headers</key>
                 <dict>
-                        <key>user-agent</key>
-                        <string>%USER_AGENT%</string>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
                 </dict>
-			</dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -44,8 +44,8 @@
                 <string>%match%</string>
                 <key>request_headers</key>
                 <dict>
-                        <key>user-agent</key>
-                        <string>%USER_AGENT%</string>
+                	<key>user-agent</key>
+                    <string>%USER_AGENT%</string>
                 </dict>
             </dict>
         </dict>
@@ -53,21 +53,21 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%</string>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Shenzhen Arashi Vision Co., Ltd. (UBX9CH9GDX)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
-			</dict>
-		</dict>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
