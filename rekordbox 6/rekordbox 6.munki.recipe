@@ -25,9 +25,9 @@
                 <key>name</key>
                 <string>%NAME%</string>
                 <key>unattended_install</key>
-                <true>
+                <true/>
                 <key>unattended_uninstall</key>
-                <true>
+                <true/>
                 <key>uninstall_method</key>
                 <string>uninstall_script</string>
                 <key>uninstall_script</key>
