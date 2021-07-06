@@ -35,11 +35,11 @@
 filePaths=('/Applications/rekordbox 6’)
 for filePath in "${filePaths[@]}"
 do
-	if [ -d "${filePath}" ]
-	then
-		/bin/echo "Found ${filePath}, deleting..."
-		/bin/rm -rf "${filePath}"
-	fi
+    if [ -d "${filePath}" ]
+    then
+        /bin/echo "Found ${filePath}, deleting..."
+        /bin/rm -rf "${filePath}"
+    fi
 done</string>
             </dict>
         </dict>
