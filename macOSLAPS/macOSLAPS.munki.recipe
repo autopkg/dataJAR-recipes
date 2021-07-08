@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the latest version of Labels and Addresses and imports it into Munki.</string>
+	<string>Downloads the latest version of macOSLAPS and imports it into Munki.</string>
 	<key>Identifier</key>
 	<string>com.github.dataJAR-recipes.munki.macOSLAPS</string>
 	<key>Input</key>
