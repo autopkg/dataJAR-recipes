@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.legamaster.com/downloads/software/e-screen-touch-screen-drivers</string>
+                <string>https://www.legamaster.com/downloads/software</string>
                 <key>re_pattern</key>
-                <string>fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_.*\.zip</string>
+                <string>\"/(fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_.*\.zip)\"&gt;Download macOS</string>
             </dict>
         </dict>
         <dict>
