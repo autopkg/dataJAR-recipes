@@ -33,9 +33,9 @@
 			<key>Arguments</key>
 			<dict>
 				<key>version</key>
-				<string>%pathname%</string>
+				<string>%url%</string>
 				<key>index</key>
-        		<integer>2</integer>
+        		<integer>1</integer>
 				<key>split_on</key>
 				<string>-</string>
 			</dict>
