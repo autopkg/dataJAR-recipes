@@ -28,31 +28,31 @@
     <key>Process</key>
     <array>
         <dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>version</key>
-				<string>%url%</string>
-				<key>index</key>
-        		<integer>1</integer>
-				<key>split_on</key>
-				<string>-</string>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>version</key>
+                <string>%url%</string>
+                <key>index</key>
+                <integer>1</integer>
+                <key>split_on</key>
+                <string>-</string>
+            </dict>
+        </dict>
         <dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>version</key>
-				<string>%version%</string>
-				<key>index</key>
-        		<integer>0</integer>
-				<key>split_on</key>
-				<string>.dmg</string>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>version</key>
+                <string>%version%</string>
+                <key>index</key>
+                <integer>0</integer>
+                <key>split_on</key>
+                <string>.dmg</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
@@ -64,8 +64,8 @@
                 <dict>
                     <key>Applications</key>
                     <string>0775</string>
-                  	<key>Scripts</key>
-                  	<string>0775</string>
+                    <key>Scripts</key>
+                    <string>0775</string>
                 </dict>
             </dict>
         </dict>
@@ -80,17 +80,17 @@
                <string>%RECIPE_CACHE_DIR%/Scripts</string>
             </dict>
          </dict>
-		<dict>
-			<key>Processor</key>
-			<string>FileCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>file_path</key>
-				<string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
-				<key>file_mode</key>
-				<string>0755</string>
-				<key>file_content</key>
-				<string>#!/bin/bash
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_content</key>
+                <string>#!/bin/bash
 
 ##########################################################################################
 #
@@ -131,7 +131,7 @@
 #
 # DESCRIPTION
 # 
-#	Sets the required file for the language chooser to not be shown by pre-setting it.
+#   Sets the required file for the language chooser to not be shown by pre-setting it.
 #
 ##########################################################################################
 
@@ -258,9 +258,9 @@ then
     exit 1
 else
     finish
-fi</string>	
-			</dict>
-		</dict>				
+fi</string> 
+            </dict>
+        </dict>             
         <dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -316,10 +316,10 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%</string>
                     <key>pkgroot</key>
                     <string>%pkgroot%</string>
-					<key>version</key>
-					<string>%version%</string>
-					<key>scripts</key>
-					<string>Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>scripts</key>
+                    <string>Scripts</string>
                 </dict>
             </dict>
         </dict>
