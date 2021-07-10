@@ -28,6 +28,32 @@
     <key>Process</key>
     <array>
         <dict>
+			<key>Processor</key>
+			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>version</key>
+				<string>%pathname%</string>
+				<key>index</key>
+        		<integer>2</integer>
+				<key>split_on</key>
+				<string>-</string>
+			</dict>
+		</dict>
+        <dict>
+			<key>Processor</key>
+			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>version</key>
+				<string>%version%</string>
+				<key>index</key>
+        		<integer>0</integer>
+				<key>split_on</key>
+				<string>.dmg</string>
+			</dict>
+		</dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
@@ -259,8 +285,6 @@ fi</string>
                 <dict>
                     <key>CFBundleIdentifier</key>
                     <string>bundleid</string>
-                    <key>CFBundleVersion</key>
-                    <string>version</string>
                 </dict>
             </dict>
         </dict>

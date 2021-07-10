@@ -16,7 +16,7 @@
         <string>Ekahau Pro</string>
         <key>LANGUAGE</key>
         <string>en</string>      
-        <!--This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts --> 
+        <!--This will set the lanugaue for Ekahau Pro to avoid one of the two PPPC prompts --> 
         <!--Acceptable values for this are: -->
         <!--"en" for English -->
         <!--"fr" for French / Française -->

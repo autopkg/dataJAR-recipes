@@ -14,8 +14,6 @@
         <string>Ekahau Pro</string>
         <key>SEARCH_URL</key>
         <string>https://sw.ekahau.com/download/pro/</string>
-        <key>REG_EX</key>
-        <string>https://foldr.io/updates/macos/appcast.xml</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
