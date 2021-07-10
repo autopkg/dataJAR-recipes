@@ -1,66 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of Exposure X5 and imports into Munki</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Exposure X5</string>
-        <key>Input</key>
-        <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
-            <string>Exposure X5</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Exposure X5 is the creative photo editor that handles every step of your workflow.</string>
-                <key>developer</key>
-                <string>Exposure Software</string>
-                <key>display_name</key>
-                <string>Exposure X5</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true></true>
-                <key>unattended_uninstall</key>
-                <true></true>
-                <key>preuninstall_script</key>
-                <string>#!/bin/sh
-                
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Exposure X5 and imports into Munki</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.Exposure X5</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>Exposure X5</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Exposure X5 is the creative photo editor that handles every step of your workflow.</string>
+			<key>developer</key>
+			<string>Exposure Software</string>
+			<key>display_name</key>
+			<string>Exposure X5</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true></true>
+			<key>unattended_uninstall</key>
+			<true></true>
+			<key>preuninstall_script</key>
+			<string>#!/bin/sh
+			
 uninstallHelper="/Applications/Exposure Software/Exposure X5 Uninstaller.app/Contents/MacOS/UninstallerHelper"
 logFilePath="/Library/Application Support/Alien Skin/Exposure X5 Installer.log"
 
 if [ ! -e "${uninstallHelper}" ]; then
-    /bin/echo "Uninstaller not found, exiting..."
-    exit 0
+/bin/echo "Uninstaller not found, exiting..."
+exit 0
 fi
 
 "${uninstallHelper}" UninstallLogFile path "${logFilePath}"</string>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.5.0</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.pkg.Exposure X5</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>PkgRootCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pkgroot</key>
+				<string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+				<key>pkgdirs</key>
+				<dict>
+					<key>Applications</key>
+					<string>0775</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>Copier</string>
+			<key>Arguments</key>
+			<dict>
+				<key>source_path</key>
+				<string>%pathname%/Exposure X5 Installer.app/Contents/Resources/files/HD/Applications/Exposure X5.app</string>
+				<key>destination_path</key>
+				<string>%pkgroot%/Applications/Exposure X5.app</string>
+				<key>overwrite</key>
+				<true/>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+				<string>%pkgroot%</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/Exposure X5.app</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pkg_path%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                </array>
             </dict>
         </dict>
-        <key>MinimumVersion</key>
-        <string>0.5.0</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.pkg.Exposure X5</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pkg_path%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-            </dict>
-        </array>
-    </dict>
+	</array>
+</dict>
 </plist>
