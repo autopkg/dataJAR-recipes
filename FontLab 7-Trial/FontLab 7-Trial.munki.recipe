@@ -42,13 +42,13 @@ prefPath="/Library/Preferences/"
 
 if [ -n "${licenseServer}" ] &amp;&amp; [ -n "${licenseServerPort}" ]
 then
-	/bin/echo "Creating ${prefPath}${licenseFile}..."
-	/bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" > "${prefPath}""${licenseFile}"
-	/bin/echo -n "ISV fontlab" >> "${prefPath}""${licenseFile}"
-	/bin/echo "Making ${prefPath}${licenseFile} executable..."
-	/bin/chmod +x "${prefPath}""${licenseFile}"
-	/bin/echo "Setting permissions on ${prefPath}${licenseFile}..."
-	/usr/sbin/chown root:wheel "${prefPath}""${licenseFile}"
+    /bin/echo "Creating ${prefPath}${licenseFile}..."
+    /bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" > "${prefPath}""${licenseFile}"
+    /bin/echo -n "ISV fontlab" >> "${prefPath}""${licenseFile}"
+    /bin/echo "Making ${prefPath}${licenseFile} executable..."
+    /bin/chmod +x "${prefPath}""${licenseFile}"
+    /bin/echo "Setting permissions on ${prefPath}${licenseFile}..."
+    /usr/sbin/chown root:wheel "${prefPath}""${licenseFile}"
 fi</string>
             <key>unattended_install</key>
             <true/>
@@ -62,22 +62,11 @@ fi</string>
     <array>
         <dict>
             <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Info.plist</string>
-                <key>source_path</key>
-                <string>%pathname%/FontLab 7.app/Contents/Info.plist</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/Info.plist</string>
+                <string>%pathname%/FontLab 7.app/Contents/Info.plist</string>
                 <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>
