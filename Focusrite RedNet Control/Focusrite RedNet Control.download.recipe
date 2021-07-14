@@ -23,9 +23,9 @@
                 <key>url</key>
                 <string>https://customer.novationmusic.com/en/support/downloads?brand=Focusrite+Pro&amp;product_by_range=575&amp;download_type=all</string>
                 <key>re_pattern</key>
-                <string>https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/RedNet_Control_\S.*\.dmg</string>
+                <string>https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/RedNet_Control_(\S.*)\.dmg</string>
                 <key>result_output_var_name</key>
-				<string>url</string>
+				<string>version</string>
             </dict>
         </dict>
         <dict>
@@ -35,6 +35,8 @@
 			<dict>
 				<key>filename</key>
 				<string>%NAME%.dmg</string>
+				<key>url</key>
+				<string>https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/RedNet_Control_%version%.dmg</string>
 			</dict>
 		</dict>
         <dict>
