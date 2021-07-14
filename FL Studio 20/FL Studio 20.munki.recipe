@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of FL Studio 20 and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.FLStudio20</string>
+    <string>com.github.dataJAR-recipes.munki.FLStudio20</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_CATEGORY</key>
@@ -39,7 +39,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.apizz.download.FLStudio</string>
+    <string>com.github.dataJAR-recipes.download.FLStudio20</string>
     <key>Process</key>
     <array>
         <dict>
