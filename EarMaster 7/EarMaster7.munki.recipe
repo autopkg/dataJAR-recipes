@@ -105,7 +105,7 @@
                 <key>input_plist_path</key>
                 <string>%pkgroot%/Applications/EarMaster 7.app/Contents/Info.plist</string>
                 <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
+                <string>CFBundleVersion</string>
             </dict>
         </dict>
         <dict>

@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.earmaster.com/download-handler.html?product=empro7m&amp;initiator=down</string>
+                <string>https://www.earmaster.com/all-download.html</string>
                 <key>re_pattern</key>
-                <string>https?://.*?EarMaster7.pkg[^"]*</string>
+                <string>MAC 10\.12 OR NEWER: &lt;a href=\"(/download/EarMaster7\..*\.pkg)"</string>
             </dict>
         </dict>
         <dict>
@@ -34,10 +34,16 @@
                 <key>filename</key>
                 <string>EarMaster7.pkg</string>
                 <key>url</key>
-                <string>%match%</string>
+                <string>https://www.earmaster.com%match%</string>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -49,12 +55,6 @@
                 <key>input_path</key>
                 <string>%pathname%</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
     </array>
 </dict>
