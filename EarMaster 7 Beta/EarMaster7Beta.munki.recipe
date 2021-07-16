@@ -86,7 +86,7 @@
                 <key>faux_root</key>
                 <string>%pkgroot%</string>
                 <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
+                <string>CFBundleVersion</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/EarMaster 7.app</string>
