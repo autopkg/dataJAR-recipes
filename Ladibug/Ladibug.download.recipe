@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Ladibug</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Ladibug</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Ladibug</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\/Download\/Ladibug-MAC-\S*\.zip</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://www.lumens.com.tw/en/Downloads_list/1/ladibug-software</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.lumens.com.tw%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
+                <key>purge_destination</key>
+                <true></true>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/*/*.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%found_filename%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Lumens Digital Optics Inc. (4V93XH96HM)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

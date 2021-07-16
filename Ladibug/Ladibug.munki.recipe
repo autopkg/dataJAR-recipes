@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Ladibug and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Ladibug</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Ladibug</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Driver software for Lumens document cameras.</string>
+            <key>display_name</key>
+            <string>Ladibug</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/usr/bin/env bash
+# Contents of uninstall.bash found within the Ladbibug Uninstaller.app
+
+# Stop plugin service
+sudo launchctl remove tw.com.lumens.DocumentCamera
+
+# Preferences
+rm -f ~/Library/Preferences/tw.com.Lumens.WirelessDC2.plist
+rm -f ~/Library/Preferences/tw.com.Lumens.WirelessDC1.plist
+rm -f ~/Library/Preferences/tw.com.lumens.Ladibug.plist
+rm -f ~/Library/Preferences/tw.com.lumens.LumensDocumentCameraDC122.plist
+
+# Application
+rm -rf /Applications/Ladibug.app
+
+# Plugin
+rm -rf /Library/CoreMediaIO/Plug-Ins/DAL/LumensDocumentCamera.plugin
+rm -rf /Library/LaunchDaemons/tw.com.lumens.DocumentCamera.plist
+
+# QuickTime
+ls -d /Library/QuickTime/Lumens*.component | xargs rm -rf
+
+# Driver
+ls -d /System/Library/Extensions/Lumens*.kext | xargs rm -rf
+ls -d /Library/Extensions/Lumens*.kext | xargs rm -rf
+
+# Receipts
+ls /var/db/receipts/tw.com.lumens.pkgs* | xargs rm -rf
+
+# Receipts (Legacy packages)
+ls /var/db/receipts/tw.com.lumens.ladibug* | xargs rm -rf
+
+# Receipts (Generated before osx 10.6)
+rm -rf /Library/Receipts/lumenswirelessdc2.pkg
+rm -rf ~/Library/Receipts/lumenswirelessdc2.pkg
+
+rm -rf /Library/Receipts/lumensdocumentcameradc170.pkg
+rm -rf ~/Library/Receipts/lumensdocumentcameradc170.pkg
+
+rm -rf /Library/Receipts/lumensdocumentcameradc122.pkg
+rm -rf ~/Library/Receipts/lumensdocumentcameradc122.pkg
+
+rm -rf /Library/Receipts/lumenswirelessdc1.pkg
+rm -rf ~/Library/Receipts/lumenswirelessdc1.pkg
+
+rm -rf /Library/Receipts/lumensdocumentcamera.pkg
+rm -rf ~/Library/Receipts/lumensdocumentcamera.pkg
+
+rm -rf /Library/Receipts/lumensdigitizer.pkg
+rm -rf ~/Library/Receipts/lumensdigitizer.pkg
+
+rm -rf /Library/Receipts/lumensdc260msdc.pkg
+rm -rf ~/Library/Receipts/lumensdc260msdc.pkg
+
+rm -rf /Library/Receipts/lumensaudiodriver.pkg
+rm -rf ~/Library/Receipts/lumensaudiodriver.pkg
+
+rm -rf /Library/Receipts/ladibug.pkg
+rm -rf ~/Library/Receipts/ladibug.pkg
+
+rm -rf /Library/Receipts/ladibug20Preflight.pkg
+rm -rf ~/Library/Receipts/ladibug20Preflight.pkg
+
+# For macOS 10.15 above
+# Clear permissions if available
+sudo tccutil reset All tw.com.lumens.Ladibug || true</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Ladibug</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0755</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Ladibug.pkg/Payload</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Ladibug.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%input_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
