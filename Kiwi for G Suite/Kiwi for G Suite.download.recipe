@@ -19,6 +19,24 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>As per: https://kiwiforgmail.zendesk.com/hc/en-us/articles/360050366172-Kiwi-for-Gmail-and-Kiwi-for-G-Suite-3-0-Changes-from-2-0, Kiwi for G Suite is now Kiwi for Gmail.</string>
+            </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
