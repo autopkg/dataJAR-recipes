@@ -3,15 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest release of Insomnia Core.</string>
+    <string>Downloads the latest release of Insomnia.
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Insomnia Core</string>
+    <string>com.github.dataJAR-recipes.download.Insomnia</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>InsomniaCore</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://updates.insomnia.rest/downloads/mac/latest?app=com.insomnia.app&amp;ref=</string>
+        <string>Insomnia</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
@@ -19,33 +22,20 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>DeprecationWarning</string>
+            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>From: https://insomnia.rest/changelog, "Following the Insomnia 2021.1 release there will no longer be an Insomnia Core or Insomnia Designer, only Insomnia." 
-Insomnia recipes can be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/Insomnia.</string>
-            </dict>
-        </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
+                <key>asset_regex</key>
+                <string>.*\.dmg</string>
+                <key>github_repo</key>
+                <string>Kong/insomnia</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
-            </dict>
         </dict>
         <dict>
             <key>Processor</key>
