@@ -21,7 +21,7 @@
             <key>description</key>
             <string>iOS Console allows you to view iOS console logs directly from your Mac, and now with built in textual filtering, finding a specific log message has never been easier!</string>
             <key>developer</key>
-			<string>Lemonjar</string>
+            <string>Lemonjar</string>
             <key>display_name</key>
             <string>iOS Console</string>
             <key>name</key>
@@ -29,10 +29,10 @@
             <key>unattended_install</key>
             <true/>
         </dict>
-		<key>pkginfo_keys_to_copy_from_sparkle_feed</key>
-		<array>
-			<string>minimum_os_version</string>
-		</array>  
+        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
+        <array>
+            <string>minimum_os_version</string>
+        </array>  
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -40,28 +40,39 @@
     <string>com.github.dataJAR-recipes.download.iOS Console</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>dmg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-				<key>dmg_root</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/iOS Console.app</string>
-			</dict>
-			<key>Processor</key>
-			<string>DmgCreator</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%dmg_path%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/iOS Console.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
