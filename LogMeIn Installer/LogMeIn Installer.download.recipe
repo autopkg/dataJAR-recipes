@@ -46,6 +46,8 @@
 			<string>EndOfCheckPhase</string>
 		</dict>
 		<dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
 			<key>Arguments</key>
 			<dict>
 				<key>input_path</key>
@@ -53,50 +55,6 @@
                 <key>requirement</key>
                 <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or anchor apple generic) and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GFNFVT632V and identifier "com.logmein.LogMeInInstaller"</string>
             </dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-		</dict>
-		<dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/LogMeIn Installer *.app</string>
-            </dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-        </dict>
-		<dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <key>pkgdirs</key>
-                <dict/>
-            </dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-        </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%pkgroot%</string>
-				<key>pkg_payload_path</key>
-				<string>%found_filename%/Contents/Resources/archive.pax.gz</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%pkgroot%/Applications/Toolkit.app/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
 		</dict>
 	</array>
 </dict>

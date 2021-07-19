@@ -4,10 +4,10 @@
 <dict>
     <key>Description</key>
     <string>Downloads the current release version of LogMeIn Installer and imports into Munki
-	
-	NOTE: This installs "/Applications/LogMeIn Installer *.app", postinstall a script will be needed that follows the below:
-	
-	https://www.jamf.com/jamf-nation/discussions/16802/deploying-logmein-via-casper</string>
+    
+    NOTE: This installs "/Applications/LogMeIn Installer *.app", postinstall a script will be needed that follows the below:
+    
+    https://www.jamf.com/jamf-nation/discussions/16802/deploying-logmein-via-casper</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.LogMeIn Installer</string>
     <key>Input</key>
@@ -22,10 +22,10 @@
             <array>
                 <string>testing</string>
             </array>
-           	<key>category</key>
-			<string>Utilities</string>
-			<key>developer</key>
-			<string>LogMeIn Installer</string>
+            <key>category</key>
+            <string>Utilities</string>
+            <key>developer</key>
+            <string>LogMeIn Installer</string>
             <key>description</key>
             <string>The #1 most reliable remote access tool.</string>
             <key>display_name</key>
@@ -39,73 +39,83 @@
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.LogMeIn Installer</string>
+    <string>com.github.dataJAR-recipes.download.LogMeIn Installer</string>
     <key>Process</key>
-	<array>
-    	<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-		</dict>
+    <array>
 		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Toolkit.app</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-		</dict>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
 		<dict>
 			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-		<dict>
+			<string>PkgPayloadUnpacker</string>
 			<key>Arguments</key>
 			<dict>
-				<key>dmg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-				<key>dmg_root</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+				<key>destination_path</key>
+				<string>%pkgroot%</string>
+				<key>pkg_payload_path</key>
+				<string>%found_filename%/Contents/Resources/archive.pax.gz</string>
+				<key>purge_destination</key>
+				<string>true</string>
 			</dict>
-			<key>Processor</key>
-			<string>DmgCreator</string>
 		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%dmg_path%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-				<key>version_comparison_key</key>
-				<string>CFBundleVersion</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-		<dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Toolkit.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/application_payload</string> 
-                	<string>%RECIPE_CACHE_DIR%/%NAME%</string>                              
+                    <string>%RECIPE_CACHE_DIR%/application_payload</string> 
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>                              
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict> 
     </array>
 </dict>

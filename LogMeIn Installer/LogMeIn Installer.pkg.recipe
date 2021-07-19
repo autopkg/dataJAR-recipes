@@ -4,10 +4,10 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of LogMeIn Installer and creates a package
-	
-	NOTE: This installs "/Applications/LogMeIn Installer *.app", postinstall a script will be needed that follows the below:
-	
-	https://www.jamf.com/jamf-nation/discussions/16802/deploying-logmein-via-casper</string>
+    
+    NOTE: This installs "/Applications/LogMeIn Installer *.app", postinstall a script will be needed that follows the below:
+    
+    https://www.jamf.com/jamf-nation/discussions/16802/deploying-logmein-via-casper</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.LogMeIn Installer</string>
     <key>Input</key>
@@ -21,7 +21,51 @@
     <string>com.github.dataJAR-recipes.download.LogMeIn Installer</string>
     <key>Process</key>
     <array>
+		<dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/LogMeIn Installer *.app</string>
+            </dict>
+        </dict>
+		<dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%pkgroot%</string>
+				<key>pkg_payload_path</key>
+				<string>%found_filename%/Contents/Resources/archive.pax.gz</string>
+				<key>purge_destination</key>
+				<string>true</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%pkgroot%/Applications/Toolkit.app/Contents/Info.plist</string>
+			</dict>
+		</dict>
         <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -49,20 +93,18 @@
                     <string>%version%</string>
                 </dict>
             </dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/application_payload</string> 
-                	<string>%RECIPE_CACHE_DIR%/%NAME%</string>                              
+                    <string>%RECIPE_CACHE_DIR%/application_payload</string> 
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>                              
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict> 
     </array>
 </dict>
