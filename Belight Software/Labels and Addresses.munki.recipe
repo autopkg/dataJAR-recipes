@@ -24,6 +24,8 @@
 			<string>Belight Software</string>
 			<key>display_name</key>
 			<string>Labels and Addresses</string>
+			<key>maximmum_os_version</key>
+			<string>10.14.6</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>unattended_install</key>
