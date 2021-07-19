@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Krita.</string>
+    <string>Downloads the latest version of krita.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Krita</string>
+    <string>com.github.dataJAR-recipes.download.krita</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Krita</string>
+        <string>krita</string>
         <key>DOWNLOAD_URL</key>
         <string>https://krita.org/en/download/krita-desktop/</string>
         <key>USER_AGENT</key>
