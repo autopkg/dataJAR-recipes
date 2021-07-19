@@ -42,7 +42,7 @@
     <string>com.github.dataJAR-recipes.download.LogMeIn Installer</string>
     <key>Process</key>
     <array>
-		<dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
@@ -53,19 +53,28 @@
                 <dict/>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%pkgroot%</string>
-				<key>pkg_payload_path</key>
-				<string>%found_filename%/Contents/Resources/archive.pax.gz</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/LogMeIn Installer *.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%</string>
+                <key>pkg_payload_path</key>
+                <string>%found_filename%/Contents/Resources/archive.pax.gz</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
