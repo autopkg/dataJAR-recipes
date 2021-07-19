@@ -3,13 +3,13 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest version of Krisp</string>
+        <string>Downloads the latest version of krisp</string>
         <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.download.Krisp</string>
+        <string>com.github.dataJAR-recipes.download.krisp</string>
         <key>Input</key>
         <dict>
             <key>NAME</key>
-            <string>Krisp</string>
+            <string>krisp</string>
             <key>DOWNLOAD_URL</key>
             <string>https://download.krisp.ai/mac?btn=downloadMac_AccountFooter</string>
         </dict>
@@ -18,6 +18,8 @@
         <key>Process</key>
         <array>
             <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
                 <key>Arguments</key>
                 <dict>
                     <key>filename</key>
@@ -25,10 +27,10 @@
                     <key>url</key>
                     <string>%DOWNLOAD_URL%</string>
                 </dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
             </dict>
             <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
                 <key>Arguments</key>
                 <dict>
                     <key>input_path</key>
@@ -40,8 +42,6 @@
                         <string>Apple Root CA</string>
                     </array>
                 </dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
             </dict>
         </array>
     </dict>
