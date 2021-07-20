@@ -53,7 +53,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.5']
+__version__ = ['1.4.6']
 
 
 # Class def
@@ -434,7 +434,7 @@ class Adobe2021Versioner(Processor):
         elif self.env['sap_code'] == 'PHSP':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Photoshop'
-            self.env['vers_compare_key'] = 'CFBundleVersion'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'SBSTA':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.adobe-substance-3d-sampler'
