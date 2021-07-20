@@ -23,7 +23,7 @@
         <key>SELF_SERVICE_DESCRIPTION</key>
         <string>Create simple click-through diagrams or highly functional, rich prototypes with conditional logic, dynamic content, animations, math functions, and data-driven interactions without writing a single line of code.</string>
         <key>SELF_SERVICE_ICON</key>
-        <string>Milanote1.png</string>
+        <string>AxureRP8-Trial.png</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
