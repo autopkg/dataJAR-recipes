@@ -53,7 +53,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.4']
+__version__ = ['1.4.5']
 
 
 # Class def
@@ -404,13 +404,18 @@ class Adobe2021Versioner(Processor):
                                          .format(zip_path, err_msg))
 
 
+    # pylint: disable = too-many-branches
     def parse_app_json(self, load_json):
         '''
             Read in values from app_json
         '''
 
         # Get app_version, cautiously for now for only certain apps
-        if self.env['sap_code'] == 'ESHR':
+        if self.env['sap_code'] == 'CHAR':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.Character-Animator.application'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'ESHR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.dimension'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
@@ -425,6 +430,10 @@ class Adobe2021Versioner(Processor):
         elif self.env['sap_code'] == 'LTRM':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.LightroomClassicCC7'
+            self.env['vers_compare_key'] = 'CFBundleVersion'
+        elif self.env['sap_code'] == 'PHSP':
+            self.env['app_version'] = load_json['CodexVersion']
+            self.env['app_bundle_id'] = 'com.adobe.Photoshop'
             self.env['vers_compare_key'] = 'CFBundleVersion'
         elif self.env['sap_code'] == 'SBSTA':
             self.env['app_version'] = load_json['CodexVersion']
@@ -443,8 +452,8 @@ class Adobe2021Versioner(Processor):
             self.env['app_bundle_id'] = 'com.adobe.stager'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         else:
-            raise ProcessorError("Checking app_json for version details but sap code {},"
-                                 "is not within the known list of apps which we need to"
+            raise ProcessorError("Checking app_json for version details but sap code {}, "
+                                 "is not within the known list of apps which we know to "
                                  "check via their Application.json".format(self.env['sap_code']))
         self.output("app_version: {}".format(self.env['app_version']))
 
