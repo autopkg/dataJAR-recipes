@@ -12,44 +12,64 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>MidiMonitor</string>
-    	<key>pkginfo</key>
-    	<dict>
-    		<key>catalogs</key>
-    		<array>
-    			<string>testing</string>
-    		</array>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
             <key>developer</key>
             <string>Snoize</string>
             <key>display_name</key>
             <string>MidiMonitor</string>
-    		<key>description</key>
-    		<string>MIDI Monitor is an app to display MIDI signals going in and out of your Mac. Musicians will find it handy for tracking down confusing MIDI problems, and programmers can use it to test MIDI drivers and applications.</string>
-    		<key>name</key>
-    		<string>%NAME%</string>
+            <key>description</key>
+            <string>MIDI Monitor is an app to display MIDI signals going in and out of your Mac. Musicians will find it handy for tracking down confusing MIDI problems, and programmers can use it to test MIDI drivers and applications.</string>
+            <key>name</key>
+            <string>%NAME%</string>
             <key>display_name</key>
             <string>%NAME%</string>
-    		<key>unattended_install</key>
-    		<true/>
-    	</dict>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.3.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.midimonitor</string>
+    <string>com.github.dataJAR-recipes.download.midimonitor</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <string>%dmg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>                           
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>
