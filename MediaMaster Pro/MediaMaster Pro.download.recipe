@@ -32,22 +32,13 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-    	<dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%pathname%/ArKaos_MediaMaster*.pkg</string>
-            </dict>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/%dmg_found_filename%</string>
+                <string>%pathname%/ArKaos_MediaMaster*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: ArKaos SA (SKE5HH5VKW)</string>
