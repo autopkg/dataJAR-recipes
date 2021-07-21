@@ -75,18 +75,6 @@
                 </dict>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%pkgroot%</string>
-                </array>
-            </dict>
-        </dict>
     </array>
 </dict>
 </plist>
-
