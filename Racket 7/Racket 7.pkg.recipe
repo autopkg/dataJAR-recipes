@@ -7,14 +7,14 @@
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.Racket 7</string>
     <key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>Racket7</string>
-	</dict>
+    <dict>
+        <key>NAME</key>
+        <string>Racket7</string>
+    </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Racket 7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Racket 7</string>
     <key>Process</key>
     <array>
         <dict>
@@ -31,62 +31,50 @@
                 </dict>
             </dict>
         </dict>
-    	<dict>
-			<key>Processor</key>
-			<string>Copier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/pkgroot/Applications/Racket v%version%</string>
-				<key>source_path</key>
-				<string>%pathname%/Racket v%version%</string>
-				<key>overwrite</key>
-                <string>true</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_request</key>
-				<dict>
-					<key>chown</key>
-					<array>
-						<dict>
-							<key>group</key>
-							<string>admin</string>
-							<key>path</key>
-							<string>Applications</string>
-							<key>user</key>
-							<string>root</string>
-						</dict>
-					</array>
-					<key>id</key>
-					<string>org.racket-lang.Racket7</string>
-					<key>options</key>
-					<string>purge_ds_store</string>
-					<key>pkgname</key>
-					<string>%NAME%</string>
-					<key>pkgroot</key>
-					<string>%pkgroot%</string>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-			<key>Processor</key>
-			<string>PkgCreator</string>
-		</dict>
         <dict>
             <key>Processor</key>
-            <string>PathDeleter</string>
+            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>path_list</key>
-                <array>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/Racket v%version%</string>
+                <key>source_path</key>
+                <string>%pathname%/Racket v%version%</string>
+                <key>overwrite</key>
+                <string>true</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>path</key>
+                            <string>Applications</string>
+                            <key>user</key>
+                            <string>root</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>org.racket-lang.Racket7</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgname</key>
+                    <string>%NAME%</string>
+                    <key>pkgroot</key>
                     <string>%pkgroot%</string>
-                </array>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
             </dict>
         </dict>
     </array>
 </dict>
 </plist>
-
