@@ -14,6 +14,10 @@
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>QLab</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -26,6 +30,8 @@
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -36,17 +42,11 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
                 <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -57,12 +57,14 @@
             <key>Arguments</key>
             <dict>
                 <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -70,8 +72,17 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>                   
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>
