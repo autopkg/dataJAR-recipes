@@ -12,8 +12,6 @@
         <string>Post Haste</string>
         <key>DOWNLOAD_CHECK_URL</key>
         <string>https://www.digitalrebellion.com/posthaste/download-mac</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://www.digitalrebellion.com</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -27,7 +25,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_CHECK_URL%</string>
                 <key>re_pattern</key>
-                <string>download\/posthaste\?version=[0-9]*</string>
+                <string>Downloading Post Haste for Mac.*/download\/posthaste\?version=(.*)\"&gt;click</string>
             </dict>
         </dict>
         <dict>
@@ -36,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%/%match%</string>
+                <string>https://digitalrebellion-downloads.s3.amazonaws.com/posthaste/Post_Haste_for_Mac_%match%.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -49,7 +47,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%filename%/Post Haste.app</string>
+                <string>%pathname%/Post Haste.app</string>
                 <key>requirement</key>
                 <string>identifier "com.digitalrebellion.PostHaste" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "7F8QJ989JE"</string>
             </dict>
