@@ -59,7 +59,7 @@
                 <string>%found_filename%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: SolarWinds MSP UK Ltd (V8ZV6KCSH4)</string>
+                    <string>Developer ID Installer: N-able Technologies Inc. (YT3GCGK3Z7)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
