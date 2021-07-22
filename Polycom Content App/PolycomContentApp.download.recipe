@@ -37,63 +37,11 @@
             <dict>
                 <key>url</key>
                 <string>%url%</string>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%/PolycomContentApp.pkg</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/root</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/root/PolycomContentApp.pkg/Payload</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/app/</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/app/Polycom Content App.app/Contents/Info.plist</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleVersion</key>
-                    <string>bundleversion</string>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                </dict>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/root</string>
-                    <string>%RECIPE_CACHE_DIR%/app</string>
-                </array>
-            </dict>
         </dict>
         <dict>   
             <key>Processor</key>   
@@ -101,7 +49,7 @@
             <key>Arguments</key>   
             <dict>   
                 <key>input_path</key>   
-                <string>%pathname%/PolycomContentApp.pkg</string>
+                <string>%pathname%/*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Polycom (WJCM3F7AQ4)</string>
