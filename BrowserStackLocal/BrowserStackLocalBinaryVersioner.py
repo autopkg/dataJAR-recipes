@@ -83,7 +83,7 @@ class BrowserStackLocalBinaryVersioner(Processor):
             # Get binary version, from: https://www.browserstack.com/local-testing/binary-params
             # raise if we error
             try:
-                version = subprocess.check_output([binary_path, '--version']
+                version = subprocess.check_output([self.env['binary_path'], '--version']
                     ).split()[3].decode('utf-8')
             except subprocess.CalledProcessError:
                 raise ProcessorError("Encountered an error when trying to get the "
