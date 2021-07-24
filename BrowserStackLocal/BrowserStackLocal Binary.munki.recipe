@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of the BrowserStackLocal binary and creates a pkg, placing the binary at /usr/local/bin/BrowserStackLocal and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.BrowserStackLocal Binary</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>BrowserStackLocalBinary</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>BrowserStackLocal lets you test work-in-progress web and mobile apps at scale without hosting them on public staging environments.</string>
+            <key>display_name</key>
+            <string>BrowserStackLocal Binary</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.BrowserStackLocal Binary</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+# pylint: disable = invalid-name
+
+'''
+Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+from distutils.version import LooseVersion
+import os
+import sys
+import subprocess
+
+
+def main():
+    '''
+        Get browserstacklocal version (if installed)
+
+        Exit 1 if browserstacklocal is installed and newer than what we have in Munki
+
+        Based on:
+        https://github.com/autopkg/andrewzirkel-recipes/blob/master/LightspeedRelaySmartAgent/LightspeedRelaySmartAgent.munki.recipe#L46
+    '''
+
+    browserstacklocal_binary = '/usr/local/bin/BrowserStackLocal'
+    munki_version = '%version%'
+
+    # If the binary exists
+    if os.path.isfile(browserstacklocal_binary):
+
+        try:
+            installed_ver = subprocess.check_output([browserstacklocal_binary, '-version']).split()[3].decode('utf-8')
+        except subprocess.CalledProcessError:
+            print("Encountered an error when ascertaining browserstacklocal version, "
+                  "proceeding with install...")
+            sys.exit(0)
+
+        if LooseVersion(installed_ver) &lt; LooseVersion(munki_version):
+            print("Version of browserstacklocal binary older than the munki version, proceeding with install...")
+            sys.exit(0)
+
+        print("Version of browserstacklocal binary same or newer than the munki version, skipping...")
+        sys.exit(1)
+
+    print("Cannot locate browserstacklocal binary, proceeding with install...")
+    sys.exit(0)
+
+if __name__ == '__main__':
+    main()
+</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

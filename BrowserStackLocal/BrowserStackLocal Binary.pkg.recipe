@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of the BrowserStackLocal binary and creates a pkg, placing the binary at /usr/local/bin/BrowserStackLocal</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.BrowserStackLocal Binary</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>BrowserStackLocalBinary</string>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.BrowserStackLocal Binary</string>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>BrowserStackLocalBinaryVersioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>binary_path</key>
+                <string>%pkgroot%/usr/local/bin/BrowserStackLocal</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>id</key>
+                    <string>com.browserstack.local.binary</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>path</key>
+                            <string>/usr/local/bin/BrowserStackLocal</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>wheel</string>
+                            <key>mode</key>
+                            <string>0755</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

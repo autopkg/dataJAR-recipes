@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of the BrowserStackLocal binary.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.BrowserStackLocal Binary</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>BrowserStackLocalBinary</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.4</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://www\.browserstack\.com/browserstack-local/BrowserStackLocal-darwin.*\.zip</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://www.browserstack.com/docs/live/local-testing#Chrome_and_Firefox</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>usr</key>
+                    <string>0755</string>
+                    <key>usr/local</key>
+                    <string>0755</string>
+                    <key>usr/local/bin</key>
+                    <string>0755</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/usr/local/bin/</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pkgroot%/usr/local/bin/BrowserStackLocal</string>
+                <key>requirement</key>
+                <string>identifier "BrowserStack Local" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = CL769MBK8C</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
