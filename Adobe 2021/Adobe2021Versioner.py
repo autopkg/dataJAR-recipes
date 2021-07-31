@@ -1,4 +1,5 @@
 #!/usr/local/autopkg/python
+# pylint: disable = invalid-name
 '''
 Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
      Redistribution and use in source and binary forms, with or without
@@ -53,7 +54,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.6']
+__version__ = ['1.4.7']
 
 
 # Class def
@@ -404,7 +405,7 @@ class Adobe2021Versioner(Processor):
                                          .format(zip_path, err_msg))
 
 
-    # pylint: disable = too-many-branches
+    # pylint: disable = too-many-branches, too-many-statements
     def parse_app_json(self, load_json):
         '''
             Read in values from app_json
@@ -446,6 +447,10 @@ class Adobe2021Versioner(Processor):
         elif self.env['sap_code'] == 'SBSTP':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Adobe-Substance-3D-Painter'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'SPRK':
+            self.env['app_version'] = load_json['ProductVersion']
+            self.env['app_bundle_id'] = 'com.adobe.xd'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'STGR':
             self.env['app_version'] = load_json['CodexVersion']
