@@ -10,8 +10,6 @@
     <dict>
         <key>NAME</key>
         <string>HudlSportsCode12</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://www.hudl.com/downloads/elite</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -23,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://www.hudl.com/downloads/elite</string>
                 <key>re_pattern</key>
-                <string>href=\"(https://hudl-content\.s3\.amazonaws\.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg.*)\"</string>
+                <string>href=\"(https://static\.hudl\.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg.*)\"</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
