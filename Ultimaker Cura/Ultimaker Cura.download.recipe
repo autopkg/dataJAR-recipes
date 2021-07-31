@@ -57,22 +57,6 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <string>identifier "nl.ultimaker.cura" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = V4B3JXRRQS</string>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%pathname%/Ultimaker Cura.app</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleIdentifier</key>
-                    <string>bundleid</string>
-                    <key>CFBundleVersion</key>
-                    <string>version</string>
-                </dict>
-            </dict>
-        </dict>
     </array>
 </dict>
 </plist>
