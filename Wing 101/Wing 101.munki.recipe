@@ -26,6 +26,22 @@
             <string>Wing 101</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
+#
+
+# Delete old app, if found
+
+oldApp="/Applications/Wing101.app"
+
+if [ -d "${oldApp}" ]
+then
+    /bin/echo "Found ${oldApp}, deleting..."
+    /bin/rm -rf "${oldApp}"
+    /bin/echo "Deleted, ${oldApp}..."
+fi</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>

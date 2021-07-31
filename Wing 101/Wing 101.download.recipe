@@ -3,15 +3,16 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for Wing 101.</string>
+    <string>Download recipe for Wing 101.
+Set the ARCHITECTURE override to "intel" to download the Intel or "arm64" for Apple Silicon.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Wing 101</string>
     <key>Input</key>
     <dict>
+        <key>ARCHITECTURE</key>
+        <string>intel</string>
         <key>NAME</key>
         <string>Wing 101</string>
-        <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -23,16 +24,24 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://wingware.com/downloads/wingide-101</string>
+                <string>https://wingware.com/pub/wing-101/?C=M;O=D</string>
                 <key>re_pattern</key>
-                <string>get&amp;prod=wing-101&amp;target=(pub/wing-101/\S.*/wing-101-\S.*.dmg)</string>
+                <string>&lt;img src=\&quot;/icons/folder\.gif\&quot; alt=\&quot;\[DIR\]\&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;.*/\&quot;&gt;(.*)/&lt;</string>
                 <key>result_output_var_name</key>
-                <string>match</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>%USER_AGENT%</string>
-                </dict>
+                <string>first_match</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://wingware.com/pub/wing-101/%first_match%</string>
+                <key>re_pattern</key>
+                <string>href=\"(.*-%ARCHITECTURE%\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>second_match</string>
             </dict>
         </dict>
         <dict>
@@ -40,10 +49,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-            	<key>url</key>
-            	<string>https://wingware.com/%match%</string>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://wingware.com/pub/wing-101/%first_match%/%second_match%</string>
             </dict>
         </dict>
         <dict>
@@ -56,7 +63,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Wing101.app</string>
+                <string>%pathname%/Wing 101.app</string>
                 <key>requirement</key>
                 <string>identifier "com.wingware.wing-101" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "9D63R52894"</string>
             </dict>
