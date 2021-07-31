@@ -31,8 +31,8 @@
             <string>JumpCloud</string>
             <key>display_name</key>
             <string>JumpCloud Agent</string>
-			<key>minimum_os_version</key>
-			<string>10.11</string>
+            <key>minimum_os_version</key>
+            <string>10.11</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>preinstall_script</key>
@@ -160,6 +160,29 @@ rm -rf /Applications/Jumpcloud.app</string>
         </dict>
         <dict>
             <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Jumpcloud.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
@@ -167,6 +190,8 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
             </dict>
         </dict>
         <dict>
