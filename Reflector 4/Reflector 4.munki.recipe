@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Imports the latest version of the Reflector 4 client into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Reflector 4</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Reflector4</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+    		<dict>
+    			<key>catalogs</key>
+    			<array>
+    				<string>testing</string>
+    			</array>
+    			<key>description</key>
+    			<string>Discover how easy it is to wirelessly share and record your favorite devices. No cables, adapters or confusing hardware. Present, teach or entertain from the palm of your hand.</string>
+    			<key>developer</key>
+    			<string>Squirrels LLC</string>
+    			<key>display_name</key>
+    			<string>Reflector 4</string>
+    			<key>name</key>
+    			<string>%NAME%</string>
+    			<key>unattended_install</key>
+    			<true/>
+    			<key>unattended_uninstall</key>
+    			<true/>
+    		</dict>
+    	</dict>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Reflector 4</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
