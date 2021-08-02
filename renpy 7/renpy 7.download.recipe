@@ -27,13 +27,13 @@
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -41,27 +41,13 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgRootCreator</string>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%pathname%/renpy-*-sdk</string>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications/renpy</string>
+                <key>input_path</key>
+                <string>%pathname%/renpy-*-sdk/renpy.app</string>
+                <key>requirement</key>
+                <string>identifier "Ren'Py Launcher" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XHTE5H7Z79</string>
             </dict>
         </dict>
     </array>
