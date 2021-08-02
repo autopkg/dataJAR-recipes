@@ -18,6 +18,7 @@
             <array>
                 <string>Alley</string>
                 <string>Avenue</string>
+                <string>Wire</string>
             </array>
             <key>catalogs</key>
             <array>
@@ -39,7 +40,7 @@
     <string>com.github.amsysuk-recipes.download.Avenue</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>
@@ -52,27 +53,13 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
                 <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
@@ -83,47 +70,104 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_payload_path</key>
-                <string>%destination_path%/Resolume_Avenue.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Avenue.pkg/Payload</string>
                 <key>destination_path</key>
-                <string>%pkgroot%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
         </dict>
-		<dict>
+        <dict>
             <key>Processor</key>
-            <string>Versioner</string>
+            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>input_plist_path</key>
-                <string>%destination_path%/Applications/Resolume Avenue/Avenue.app/Contents/Info.plist</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Alley.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Alley</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Alley/Applications/Resolume Alley</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Alley</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire</string>
+            </dict>
+        </dict>
+       <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire/Applications/Resolume Wire</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Wire</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Resolume Avenue/Avenue.app</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Resolume Avenue/Avenue.app</string>
+                    <string>/Applications/Resolume Alley/Alley.app</string>
+                    <string>/Applications/Resolume Wire/Wire.app</string>
+                </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Avenue/Avenue.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
@@ -142,8 +186,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
                 </array>
             </dict>
         </dict>
