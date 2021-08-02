@@ -97,6 +97,8 @@
                 <array>
                     <string>/Applications/Razer Synapse.app</string>
                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
         </dict>
         <dict>
@@ -110,6 +112,11 @@
             <dict>
                 <key>info_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Razer Synapse.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
             </dict>
         </dict>
         <dict>
