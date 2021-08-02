@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>Resolume Arena</string>
         <key>CHECK_PAGE_URL</key>
-        <string>https://resolume.com/download?file=latest_arena</string>
+        <string>https://resolume.com/download/?file=latest_arena</string>
         <key>DOWNLOAD_PAGE_URL</key>
         <string>https://resolume.com/download</string>
         <key>USER_AGENT</key>
