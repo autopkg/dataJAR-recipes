@@ -18,6 +18,7 @@
             <array>
                 <string>Alley</string>
                 <string>Arena</string>
+                <string>Wire</string>
             </array>
             <key>catalogs</key>
             <array>
