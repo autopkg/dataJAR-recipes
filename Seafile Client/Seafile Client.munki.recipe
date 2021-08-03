@@ -21,11 +21,13 @@
             <key>description</key>
             <string>Seafile is an open source cloud storage for your teams and organizations. (Dropbox like)</string>
             <key>display_name</key>
-            <string>Seafile</string>
+            <string>Seafile Client</string>
             <key>name</key>
-            <string>Seafile</string>
+            <string>%NAME%</string>
             <key>unattended_install</key>
-            <false/>
+            <true/>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
