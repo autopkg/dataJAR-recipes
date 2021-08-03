@@ -14,25 +14,25 @@
         <string>apps/sassafrasclient</string>
         <key>NAME</key>
         <string>Sassafras Client</string>
-    	<key>pkginfo</key>
-    	<dict>
-    		<key>catalogs</key>
-    		<array>
-    			<string>testing</string>
-    		</array>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
             <key>developer</key>
             <string>Sassafras Software</string>
             <key>display_name</key>
             <string>Sassafras Client</string>
-    		<key>description</key>
-    		<string>KSP Client Installer from Sassafras Software</string>
-    		<key>name</key>
-    		<string>%NAME%</string>
+            <key>description</key>
+            <string>KSP Client Installer from Sassafras Software</string>
+            <key>name</key>
+            <string>%NAME%</string>
             <key>display_name</key>
             <string>%NAME%</string>
-    		<key>unattended_install</key>
-    		<true/>
-    	</dict>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.3.0</string>
@@ -40,6 +40,24 @@
     <string>com.github.jazzace.download.sassafrasclient</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been replaced by: https://github.com/autopkg/dataJAR-recipes/tree/master/Sassafras%20KeyAccess.</string>
+            </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
