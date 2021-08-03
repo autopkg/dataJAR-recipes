@@ -2,82 +2,81 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of SketchUp Viewer 2017 and imports into Munki.
-
-Based on: com.github.jps3.download.SketchUpPro
-
-Main changes are non-overridable year and locale.
-Removed superfluous CodeSignatureVerification from PKG.
-</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.SketchUp Viewer EN</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>SketchUpViewer-EN</string>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>Bring 3D models to life in mixed reality, and step into a powerful new way to explore, understand, and share your work.</string>
-			<key>display_name</key>
-			<string>SketchUp Viewer</string>
-			<key>developer</key>
-			<string>Trimble Navigation Ltd</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>unattended_uninstall</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.4.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.SketchUp Viewer EN</string>
-	<key>Process</key>
-	<array>
+    <key>Description</key>
+    <string>Downloads the latest version of SketchUp Viewer EN and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.SketchUp Viewer EN</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SketchUpViewer-EN</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>SketchUp Viewer. Your models. Anywhere you are..</string>
+            <key>display_name</key>
+            <string>SketchUp Viewer</string>
+            <key>developer</key>
+            <string>Trimble Navigation Ltd</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.SketchUp Viewer EN</string>
+    <key>Process</key>
+    <array>
         <dict>
             <key>Processor</key>
-            <string>Versioner</string>
+            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
-                <key>input_plist_path</key>
+                <key>info_path</key>
                 <string>%pathname%/SketchUpViewer.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
         </dict>
-    	<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-	</array>
+    </array>
 </dict>
 </plist>
