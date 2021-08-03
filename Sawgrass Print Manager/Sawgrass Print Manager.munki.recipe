@@ -1,54 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Sawgrass Print Manager and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Sawgrass Print Manager</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of Sawgrass Print Manager and imports into Munki</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Sawgrass Print Manager</string>
-        <key>Input</key>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Sawgrass Print Manager</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Sawgrass Print Manager is sophisticated color management software designed to make things easy with simple setup, intuitive workflow, and powerful print controls.</string>
+            <key>developer</key>
+            <string>Sawgrass Technologies</string>
+            <key>display_name</key>
             <string>Sawgrass Print Manager</string>
-            <key>pkginfo</key>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true></true>
+            <key>unattended_uninstall</key>
+            <true></true>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Sawgrass Print Manager</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
             <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Sawgrass Print Manager is sophisticated color management software designed to make things easy with simple setup, intuitive workflow, and powerful print controls.</string>
-                <key>developer</key>
-                <string>Sawgrass Technologies</string>
-                <key>display_name</key>
-                <string>Sawgrass Print Manager</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true></true>
-                <key>unattended_uninstall</key>
-                <true></true>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
             </dict>
         </dict>
-        <key>MinimumVersion</key>
-        <string>0.5.0</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.Sawgrass Print Manager</string>
-        <key>Process</key>
-        <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
             <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Sawgrass_Print_Manager.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
             </dict>
-        </array>
-    </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Sawgrass Print Manager.app</string>
+                </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Sawgrass Print Manager.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>  
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>                      
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
 </plist>
