@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of Seafile Client for mac</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Seafile Client</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SeafileClient</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.seafile.com/en/download/</string>
+                <key>re_pattern</key>
+                <string>https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-client-8.*.dmg</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Seafile Client.app</string>
+                <key>requirement</key>
+                <string>identifier "com.seafile.seafile-client" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "55LCTZ5354"</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
