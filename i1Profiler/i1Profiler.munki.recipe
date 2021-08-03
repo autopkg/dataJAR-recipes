@@ -38,7 +38,7 @@
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-private.temp.download.i1Profiler</string>
+    <string>com.github.dataJAR-recipes.download.i1Profiler</string>
     <key>Process</key>
     <array>
         <dict>
