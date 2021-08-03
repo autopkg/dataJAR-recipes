@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of Signiant App and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.Signiant App</string>
+    <string>com.github.dataJAR-recipes.munki.Signiant App</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
