@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SketchUp Viewer EN and imports into Munki.</string>
+    <string>Downloads the latest version of SketchUpViewer EN and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.SketchUp Viewer EN</string>
+    <string>com.github.dataJAR-recipes.munki.SketchUpViewer-EN</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>0.4.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.SketchUp Viewer EN</string>
+    <string>com.github.dataJAR-recipes.download.SketchUpViewer-EN</string>
     <key>Process</key>
     <array>
         <dict>

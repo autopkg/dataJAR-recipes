@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SketchUp Viewer EN.</string>
+    <string>Downloads the latest version of SketchUpViewer EN.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.SketchUp Viewer EN</string>
+    <string>com.github.dataJAR-recipes.download.SketchUpViewer-EN</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
