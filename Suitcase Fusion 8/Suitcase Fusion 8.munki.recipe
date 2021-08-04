@@ -18,10 +18,10 @@
             <array>
                 <string>testing</string>
             </array>
-           	<key>category</key>
-			<string>Productivity</string>
-			<key>developer</key>
-			<string>Extensis</string>
+            <key>category</key>
+            <string>Productivity</string>
+            <key>developer</key>
+            <string>Extensis</string>
             <key>description</key>
             <string>Professional font management. Suitcase Fusion is a professional tool that enables you to organize your font collection by project, client, or however you see fit.</string>
             <key>display_name</key>
@@ -35,9 +35,9 @@
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 8</string>
+    <string>com.github.dataJAR-recipes.download.Suitcase Fusion 8</string>
     <key>Process</key>
-	<array>
+    <array>
         <dict>
             <key>Processor</key>
             <string>Unarchiver</string>
@@ -67,6 +67,8 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -76,8 +78,17 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>
