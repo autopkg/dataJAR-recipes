@@ -22,8 +22,8 @@
             <string>Gaining an edge on the competition requires flexible workflows that adapt to any situation</string>
             <key>display_name</key>
             <string>Hudl SportsCode 11</string>
-			<key>maximum_os_version</key>
-			<string>10.14.6</string>
+            <key>maximum_os_version</key>
+            <string>10.14.6</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -47,6 +47,17 @@
                 <string>%RECIPE_CACHE_DIR%/unzip/SportsCode.dmg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
             </dict>
         </dict>
     </array>
