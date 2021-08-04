@@ -20,10 +20,10 @@
             <array>
                 <string>testing</string>
             </array>
-           	<key>category</key>
-			<string>Productivity</string>
-			<key>developer</key>
-			<string>Extensis</string>
+            <key>category</key>
+            <string>Productivity</string>
+            <key>developer</key>
+            <string>Extensis</string>
             <key>description</key>
             <string>Font management application</string>
             <key>display_name</key>
@@ -37,9 +37,9 @@
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 7</string>
+    <string>com.github.dataJAR-recipes.download.Suitcase Fusion 7</string>
     <key>Process</key>
-	<array>
+    <array>
         <dict>
             <key>Processor</key>
             <string>Unarchiver</string>
@@ -69,6 +69,8 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -78,9 +80,19 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
     </array>
 </dict>
 </plist>
