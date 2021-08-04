@@ -24,7 +24,16 @@
             <dict>
                  <key>warning_message</key>
                  <string>This recipe will soon be removed. Please remove it from your list of recipes.
-                 The Vender has removed the App from any downloads - https://twitter.com/kasperfskov/status/1260943762341101568?s=20</string>
+                 The vendor has removed the App from any downloads - https://twitter.com/kasperfskov/status/1260943762341101568?s=20</string>
+            </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
             </dict>
         </dict>
         <dict>
