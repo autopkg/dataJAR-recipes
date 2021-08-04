@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of pgAdmin 4. Taken from bnpl-recipes repo</string>
+    <string>Downloads the current release version of pgAdmin 4.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.pgadmin4</string>
+    <string>com.github.dataJAR-recipes.download.pgAdmin4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>pgAdmin4</string>
         <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0</string>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -23,14 +23,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.pgadmin.org/download/macos4.php</string>
+                <string>https://www.pgadmin.org/download/pgadmin-4-macos/</string>
                 <key>re_pattern</key>
-                <string>href="(https://.*?/macos/)"&gt;pg</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>%USER_AGENT%</string>
-                </dict>
+                <string>href=\"(https://www\.postgresql\.org/ftp/pgadmin/pgadmin4/.*/macos/)\">pg</string>
             </dict>
         </dict>
         <dict>
@@ -41,12 +36,7 @@
                 <key>url</key>
                 <string>%match%</string>
                 <key>re_pattern</key>
-                <string>href="(https://.*?\.dmg)"&gt;&lt;</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>%USER_AGENT%</string>
-                </dict>
+                <string>(https://ftp\.postgresql\.org/pub/pgadmin/pgadmin4/.*?/macos/pgadmin4.*?\.dmg)\"&gt;&lt;</string>
             </dict>
         </dict>
         <dict>
@@ -56,24 +46,22 @@
             <dict>
                 <key>url</key>
                 <string>%match%</string>
-                <key>CHECK_FILESIZE_ONLY</key>
-                <true/>
             </dict>
         </dict>
         <dict>
-	        <key>Arguments</key>
-	        <dict>
-	            <key>input_path</key>
-	            <string>%pathname%/pgAdmin 4.app</string>
-	            <key>requirement</key>
-	            <string>identifier "org.pgadmin.pgAdmin4" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "26QKX55P9K"</string>
-	        </dict>
-	        <key>Processor</key>
-	        <string>CodeSignatureVerifier</string>
-	    </dict>
-        <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/pgAdmin 4.app</string>
+                <key>requirement</key>
+                <string>identifier "org.pgadmin.pgadmin4" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "26QKX55P9K"</string>
+            </dict>
         </dict>
     </array>
 </dict>
