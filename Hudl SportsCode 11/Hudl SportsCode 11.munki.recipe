@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest trial version of SportsCode and imports into Munki.</string>
+    <string>Downloads Hudl SportsCode 11 and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.SportsCode</string>
+    <string>com.github.dataJAR-recipes.munki.Hudl SportsCode 11</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>SportsCode</string>
+        <string>HudlSportsCode11</string>
         <key>pkginfo</key>
         <dict> 
             <key>catalogs</key>
@@ -21,7 +21,9 @@
             <key>description</key>
             <string>Gaining an edge on the competition requires flexible workflows that adapt to any situation</string>
             <key>display_name</key>
-            <string>SportsCode</string>
+            <string>Hudl SportsCode 11</string>
+			<key>maximum_os_version</key>
+			<string>10.14.6</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -33,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.haircut.download.SportsCode</string>
+    <string>com.github.dataJAR-recipes.download.Hudl SportsCode 11</string>
     <key>Process</key>
     <array>
         <dict>
@@ -42,7 +44,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/SportsCode.dmg</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/SportsCode.dmg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>

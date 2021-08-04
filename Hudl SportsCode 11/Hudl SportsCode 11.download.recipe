@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest Hudl SportsCode disk image.</string>
+    <string>Downloads Hudl SportsCode 11.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Hudl SportsCode 12</string>
+    <string>com.github.dataJAR-recipes.download.Hudl SportsCode 11</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>HudlSportsCode12</string>
+        <string>HudlSportsCode11</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.hudl.com/downloads/elite</string>
                 <key>re_pattern</key>
-                <string>href=\"(https://static\.hudl\.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg.*)\"</string>
+                <string>https://static\.hudl\.com/craft/elite/downloads/SportsCode.*11.*\.dmg.zip?</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
