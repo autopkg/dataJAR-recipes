@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Spyder Lite, is the Spyder without optional dependencies (Numpy, SciPy, Pandas, Matplotlib, Cython and Sympy for example).</string>
+            <string>Spyder Lite, is Spyder without optional dependencies (Numpy, SciPy, Pandas, Matplotlib, Cython and Sympy for example).</string>
             <key>developer</key>
             <string>spyder-ide</string>
             <key>display_name</key>
