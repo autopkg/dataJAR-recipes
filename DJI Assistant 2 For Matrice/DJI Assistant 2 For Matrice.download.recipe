@@ -17,12 +17,21 @@
     <array>
         <dict>
             <key>Processor</key>
-			<string>DeprecationWarning</string>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>This recipe has been deprecated following the release of DJI Assistant 2 (Enterprise Series), which might be a rename</string>
-			</dict>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>These recipes have been replaced by: https://github.com/autopkg/dataJAR-recipes/tree/master/DJI%20Assistant%202%20(Enterprise%20Series)</string>
+            </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -47,8 +56,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-            	<key>filename</key>
-            	<string>%NAME%.pkg</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
