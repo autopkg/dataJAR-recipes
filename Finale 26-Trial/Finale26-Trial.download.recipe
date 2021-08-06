@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Finale 26 full installer.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Finale26-Trial</string>
+    <key>Input</key>
+    <dict>
+        <key>MAJOR_VERSION</key>
+        <string>26</string>
+        <key>NAME</key>
+        <string>Finale</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.4</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://makemusic-downloads.makemusic.com/Finale/(%MAJOR_VERSION%(\.\d+)+)/</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
+                </dict>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>https://downloads2.makemusic.com/xml/en/Finale26Mac.xml</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
+                </dict>
+                <key>url</key>
+                <string>http://makemusic-downloads.makemusic.com/Finale/%version%/Mac/en-US/FinaleSetup.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: MakeMusic, Inc. (77WERABCRU)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%/*.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
