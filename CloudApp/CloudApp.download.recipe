@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of CloudApp.  We use the Sparkle feed URL as the vendor supplied package has a different version number than the app bundle and contains postinstall scripts and an auto-update script that does not behave.</string>
+    <string>Downloads the latest version of CloudApp.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.CloudApp</string>
     <key>Input</key>
