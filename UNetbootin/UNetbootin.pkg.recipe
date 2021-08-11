@@ -2,35 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of UNetbootin and makes a package.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.pkg.UNetbootin</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>UNetbootin</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.3.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.peshay.download.UNetbootin</string>
-	<key>Process</key>
-	<array>
+    <key>Description</key>
+    <string>Downloads the current release version of UNetbootin and makes a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.UNetbootin</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>UNetbootin</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.3.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.peshay.download.UNetbootin</string>
+    <key>Process</key>
+    <array>
         <dict>
-			<key>Processor</key>
-			<string>PkgRootCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkgroot</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-pkg</string>
-				<key>pkgdirs</key>
-				<dict>
-					<key>Applications</key>
-					<string>0775</string>
-				</dict>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -42,49 +42,48 @@
                 <string>%pkgroot%/Applications/UNetbootin.app</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>PkgCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_request</key>
-				<dict>
-					<key>pkgname</key>
-					<string>%NAME%-%version%</string>
-					<key>pkgdirs</key>
-					<string>%RECIPE_CACHE_DIR%/pkgroot/Applications/</string>
-					<key>version</key>
-					<string>%version%</string>
-					<key>id</key>
-					<string>com.github.gkovacs.unetbootin-%version%</string>
-					<key>options</key>
-					<string>purge_ds_store</string>
-					<key>chown</key>
-					<array>
-						<dict>
-							<key>path</key>
-							<string>Applications</string>
-							<key>user</key>
-							<string>root</string>
-							<key>group</key>
-							<string>admin</string>
-						</dict>
-					</array>
-				</dict>
-			</dict>
-		</dict>
-		<dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgdirs</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>id</key>
+                    <string>com.github.gkovacs.unetbootin</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>path</key>
+                            <string>Applications</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>admin</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/%NAME%-pkg</string>
-                	<string>%RECIPE_CACHE_DIR%/unpack</string>
-            	</array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>
