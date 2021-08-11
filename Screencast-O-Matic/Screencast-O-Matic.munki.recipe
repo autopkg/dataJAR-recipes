@@ -144,7 +144,7 @@ def main():
     '''
 
     # pylint: disable = line-too-long
-    jar_path = glob.glob('/Applications/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*-JRE*.jar')
+    jar_path = glob.glob('/Applications/Screencast-O-Matic*.app/Contents/app/AppMain-*-JRE*.jar')
     munki_version = '%version%'
 
     # If the .jar exists, then jar_path will have a value
@@ -157,7 +157,7 @@ def main():
             sys.exit(0)
     else:
         print("Cannot find a .jar at: "
-              "/Applications/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*-JRE*.jar, "
+              "/Applications/Screencast-O-Matic*.app/Contents/app/AppMain-*-JRE*.jar, "
               "proceeding with install...")
         sys.exit(0)
 
