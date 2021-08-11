@@ -50,17 +50,140 @@ fi</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*.jar</string>
+            </dict>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>index</key>
+        		<integer>1</integer>
+				<key>split_on</key>
+				<string>AppMain-</string>
+				<key>version</key>
+				<string>%found_filename%</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>index</key>
+        		<integer>0</integer>
+				<key>split_on</key>
+				<string>-</string>
+				<key>version</key>
+				<string>%version%</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+			    <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+# pylint: disable = invalid-name
+
+'''
+Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+from distutils.version import LooseVersion
+import glob
+import sys
+
+
+def main():
+    '''
+        Gets the Screencast-O-Matic version from .jar files name as the info.plist is 1.0
+
+        Exit 1 if Screencast-O-Matic is installed and newer than what we have in Munki.
+
+    '''
+
+    # pylint: disable = line-too-long
+    jar_path = glob.glob('/Applications/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*-JRE*.jar')
+    munki_version = '%version%'
+
+    # If the .jar exists, then jar_path will have a value
+    if jar_path:
+        try:
+            jar_version = jar_path[0].split('AppMain-')[1].split('-')[10]
+        except IndexError:
+            print("Encountered an error when ascertaining Screencast-O-Matic version, "
+                  "proceeding with install...")
+            sys.exit(0)
+    else:
+        print("Cannot find a .jar at: "
+              "/Applications/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*-JRE*.jar, "
+              "proceeding with install...")
+        sys.exit(0)
+
+    if LooseVersion(jar_version) &lt; LooseVersion(munki_version):
+        print("Older version of Screencast-O-Matic found,  proceeding with install...")
+        sys.exit(0)
+    print("Version of Screencast-O-Matic same or newer than the munki version, skipping...")
+    sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
+</string>
+                </dict>
+            </dict>
+		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
-                <key>munkiimport_pkgname</key>
-                <string>%MUNKIIMPORT_PKG_NAME%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
