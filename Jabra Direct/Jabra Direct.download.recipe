@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Jabra Direct</string>
+        <string>JabraDirect</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
