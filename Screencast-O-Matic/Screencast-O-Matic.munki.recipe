@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>Screencast-O-Matic</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -58,38 +58,38 @@ fi</string>
                 <string>%pathname%/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*.jar</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>index</key>
-        		<integer>1</integer>
-				<key>split_on</key>
-				<string>AppMain-</string>
-				<key>version</key>
-				<string>%found_filename%</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>index</key>
-        		<integer>0</integer>
-				<key>split_on</key>
-				<string>-</string>
-				<key>version</key>
-				<string>%version%</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-			<key>Arguments</key>
-			<dict>
-			    <key>additional_pkginfo</key>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>index</key>
+                <integer>1</integer>
+                <key>split_on</key>
+                <string>AppMain-</string>
+                <key>version</key>
+                <string>%found_filename%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>index</key>
+                <integer>0</integer>
+                <key>split_on</key>
+                <string>-</string>
+                <key>version</key>
+                <string>%version%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
@@ -173,7 +173,7 @@ if __name__ == '__main__':
 </string>
                 </dict>
             </dict>
-		</dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
