@@ -2,65 +2,193 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of MacTeX Ghostscript and imports it into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.MacTeX Ghostscript</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>MacTeXGhostscript</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>Ghostscript an interpreter for the PostScript language and for PDF.</string>
-			<key>developer</key>
-			<string>Artifex Software, Inc</string>
-			<key>display_name</key>
-			<string>MacTeX Ghostscript</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>unattended_uninstall</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.MacTeX Ghostscript</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-			    <key>additional_pkginfo</key>
+    <key>Description</key>
+    <string>Downloads the latest version of MacTeX Ghostscript and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.MacTeX Ghostscript</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MacTeXGhostscript</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Ghostscript an interpreter for the PostScript language and for PDF.</string>
+            <key>developer</key>
+            <string>Artifex Software, Inc</string>
+            <key>display_name</key>
+            <string>MacTeX Ghostscript</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.MacTeX Ghostscript</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Ghostscript-9.54-Start.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>GhostscriptVersioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>binary_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/gs-noX11</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
                 <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+# pylint: disable = invalid-name
+
+'''
+Copyright (c) 2021, databinary Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data binary Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA binary LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA binary LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA binary LTD.
+    For more information or support, please utilise the following resources:
+            http://www.databinary.co.uk
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+
+from distutils.version import LooseVersion
+import os
+import subprocess
+import sys
+
+
+def main():
+    '''
+        Returns the the version from the Ghostscript binary
+
+        Exit 1 if Ghostscript is installed and newer than what we have in Munki.
+
+    '''
+
+    binary_path = '/usr/local/bin/gs-noX11'
+    munki_version = '%version%'
+    binary_version = None
+
+    # If binary exists
+    if os.path.isfile(binary_path):
+        # Get binary version, from: https://www.ghostscript.com/doc/9.54.0/Use.htm#Help_command
+        # raise if we error
+        try:
+            binary_version = subprocess.check_output([binary_path, '-v']
+                                                    ).split()[2].decode('utf-8')
+        except subprocess.CalledProcessError:
+            print("Encountered an error when ascertaining Ghostscript version, "
+                  "proceeding with install...")
+            sys.exit(0)
+    # If binary is missing
+    else:
+        print("Cannot find {}, proceeding with install...".format(binary_path))
+        sys.exit(0)
+
+    # Check binary_version against munki_version
+    if LooseVersion(binary_version) &lt; LooseVersion(munki_version):
+        print("Older version of Ghostscript,  proceeding with install...")
+        sys.exit(0)
+    print("Version of Ghostscript same or newer than the munki version, skipping...")
+    sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
+</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
             </dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-	</array>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>

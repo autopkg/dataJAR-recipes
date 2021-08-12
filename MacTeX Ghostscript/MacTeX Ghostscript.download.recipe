@@ -40,31 +40,20 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>version</key>
-				<string>%match%</string>
-				<key>index</key>
-        		<integer>1</integer>
-				<key>split_on</key>
-				<string>-</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>version</key>
-				<string>%version%</string>
-				<key>index</key>
-        		<integer>0</integer>
-				<key>split_on</key>
-				<string>.pkg</string>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Richard Koch (RBGCY5RJWM)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
