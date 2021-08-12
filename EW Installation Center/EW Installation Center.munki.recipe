@@ -25,10 +25,9 @@
             <key>category</key>
             <string>Applications</string>
             <key>description</key>
-            <string>Engineered to optimise and personalise your headset.
-Smart, secure and free call management of headsets and speakerphones.</string>
+            <string>With EW Installation Center you can install EastWest software.</string>
             <key>developer</key>
-            <string>GN Audio AS</string>
+            <string>East West</string>
             <key>display_name</key>
             <string>EW Installation Center</string>
             <key>name</key>
