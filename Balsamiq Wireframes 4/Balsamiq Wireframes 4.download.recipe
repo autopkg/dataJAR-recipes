@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://build_ondeck.s3.amazonaws.com/mac4.json</string>
+                <string>https://builds.balsamiq.com/bwd/mac.jsonp</string>
                 <key>re_pattern</key>
-                <string>version\":\"(.*?)\"</string>
+                <string>version\":\"(4\..*?)\"</string>
             </dict>
         </dict>
         <dict>
