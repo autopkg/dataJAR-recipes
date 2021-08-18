@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of AJA U-TAP Updater, builds a package and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.AJA U-TAP Updater</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AJAU-TAPUpdater</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>AJA U-TAP Updater</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>description</key>
+            <string>U-TAP SDI Simple USB 3.0
+ 
+Powered 3G-SDI Capture</string>
+            <key>developer</key>
+            <string>AJA Video Systems, Inc</string>
+            <key>display_name</key>
+            <string>AJA U-TAP Updater</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.3</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.AJA U-TAP Updater</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
