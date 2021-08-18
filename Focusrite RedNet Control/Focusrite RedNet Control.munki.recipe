@@ -68,6 +68,21 @@
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_ids_set_optional_true</key>
+                <array>
+                    <string>com.audinate.dante.conmon.pkg</string>
+                    <string>com.audinate.dante.pkg.DanteController</string>
+                    <string>com.focusrite.pkg.FocusritePCIe.audio_driver</string>
+                    <string>com.focusrite.pkg.FocusritePCIe.midi_driver</string>
+                    <string>com.focusrite.rednet.driver.pcie.109</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
