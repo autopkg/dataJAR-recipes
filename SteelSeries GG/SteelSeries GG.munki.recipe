@@ -109,11 +109,26 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/SteelSeries-GG-%version%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Comment</key>
+            <string>As found in: https://github.com/autopkg/dataJAR-recipes/issues/163, if you change pkgname to SteelSeriesGG then the preinstall kills the installer process.
+
+Hence setting the munkiimport_pkgname to SteelSeries-GG-%version%</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%pkg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
