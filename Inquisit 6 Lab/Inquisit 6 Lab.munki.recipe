@@ -11,7 +11,7 @@
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>NAME</key>
-		<string>Inquisit 6 Lab</string>
+		<string>Inquisit6Lab</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
@@ -25,7 +25,7 @@
 			<key>developer</key>
 			<string>Millisecond Software</string>
 			<key>display_name</key>
-			<string>%NAME%</string>
+			<string>Inquisit 6 Lab</string>
 			<key>name</key>
 			<string>%NAME%</string>
 			<key>unattended_install</key>
@@ -62,37 +62,16 @@ fi</string>
 	<string>com.github.dataJAR-recipes.download.Inquisit 6 Lab</string>
 	<key>Process</key>
 	<array>
-			<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Inquisit 6.app/Contents/Info.plist</string>
-					<string>/Library/Extensions/InquisitParallelPort.kext</string>
-					<string>/System/Library/Extensions/InquisitParallelPort.kext</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-		</dict>
-		<dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>version</key>
-                <string>%app_version%</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
