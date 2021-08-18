@@ -25,7 +25,7 @@
             <key>developer</key>
             <string>Millisecond Software</string>
             <key>display_name</key>
-            <string>%NAME%</string>
+            <string>Inquisit 4 Lab</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
