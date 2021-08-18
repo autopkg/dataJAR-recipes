@@ -9,33 +9,28 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Inquisit 5 Lab</string>
+        <string>Inquisit5Lab</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://www.millisecond.com/download/</string>
-				<key>re_pattern</key>
-				<string>(https://inquisit.millisecond.com/5/(\S+)/mac/Inquisit_(\S+).pkg)</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-			<key>Arguments</key>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
             <dict>
-                <key>filename</key>
-                <string>%NAME%.pkg</string>
+                <key>re_pattern</key>
+                <string>(https://inquisit.millisecond.com/5/(\S+)/mac/Inquisit_(\S+).pkg)</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://www.millisecond.com/download/</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -43,66 +38,51 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Inquisit.pkg/Payload</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%</string>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: Millisecond Software, LLC</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Inquisit 5.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.millisecond.Inquisit-5" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J9JYE5M476)</string>
             </dict>
         </dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack</string>
-				<key>flat_pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/%filename%</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkgdirs</key>
-				<dict>
-					<key>Applications</key>
-					<string>0775</string>
-				</dict>
-				<key>pkgroot</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgRootCreator</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/Inquisit.pkg/Payload</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Inquisit 5.app/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+            <key>path_list</key>
+            <array>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
