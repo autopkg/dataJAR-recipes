@@ -2,36 +2,36 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of Inquisit 4 Lab and imports into munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Inquisit 4 Lab</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>Inquisit 4 Lab</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>category</key>
-			<string>Development</string>
-			<key>description</key>
-			<string>Inquisit 4 Lab Lab is a powerful tool for designing, testing, debugging, demonstrating, and administering psychological tests and experiments. Inquisit 4 Lab Lab is capable of collecting rich behavioral data from a wide variety of measures used in the fields of cognitive neuroscience, cognitive, social, and personality psychology, consumer behavior, behavioral economics, and neuropsychology. Inquisit Lab is designed to be run on dedicated computers within research labs, classrooms, kiosks, and on mobile laptops taken out into the field.</string>
-			<key>developer</key>
-			<string>Millisecond Software</string>
-			<key>display_name</key>
-			<string>%NAME%</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>uninstall_method</key>
-			<string>uninstall_script</string>
+    <key>Description</key>
+    <string>Downloads the current release version of Inquisit 4 Lab and imports into munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Inquisit 4 Lab</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Inquisit4Lab</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Development</string>
+            <key>description</key>
+            <string>Inquisit 4 Lab Lab is a powerful tool for designing, testing, debugging, demonstrating, and administering psychological tests and experiments. Inquisit 4 Lab Lab is capable of collecting rich behavioral data from a wide variety of measures used in the fields of cognitive neuroscience, cognitive, social, and personality psychology, consumer behavior, behavioral economics, and neuropsychology. Inquisit Lab is designed to be run on dedicated computers within research labs, classrooms, kiosks, and on mobile laptops taken out into the field.</string>
+            <key>developer</key>
+            <string>Millisecond Software</string>
+            <key>display_name</key>
+            <string>%NAME%</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/bash
 # Unload kexts
@@ -40,48 +40,100 @@
 # Delete app bundle
 if [ -d /Applications/Inquisit.app ]
 then
-	/bin/rm -rf /Applications/Inquisit.app
+    /bin/rm -rf /Applications/Inquisit.app
 fi
 
 # Delete Library kext
 if [ -d /Library/Extensions/InquisitParallelPort.kext ]
 then
-	/bin/rm -rf /Library/Extensions/InquisitParallelPort.kext
+    /bin/rm -rf /Library/Extensions/InquisitParallelPort.kext
 fi
 
 # Delete System kext
 if [ -d /System/Library/Extensions/InquisitParallelPort.kext ]
 then
-	/bin/rm -rf /System/Library/Extensions/InquisitParallelPort.kext
+    /bin/rm -rf /System/Library/Extensions/InquisitParallelPort.kext
 fi</string>
-		</dict>
-	</dict>
-  	<key>MinimumVersion</key>
-	<string>1.0.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Inquisit 4 Lab</string>
-	<key>Process</key>
-	<array>
-			<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Inquisit.app/Contents/Info.plist</string>
-					<string>/Library/Extensions/InquisitParallelPort.kext</string>
-					<string>/System/Library/Extensions/InquisitParallelPort.kext</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-		</dict>
-		<dict>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Inquisit 4 Lab</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Inquisit.pkg/Payload</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Inquisit.app</string>
+                </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Inquisit.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+       <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -89,8 +141,18 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>

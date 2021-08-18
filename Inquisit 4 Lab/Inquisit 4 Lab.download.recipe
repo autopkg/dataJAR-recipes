@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Inquisit 4 Lab</string>
+        <string>Inquisit4Lab</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -17,20 +17,38 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>DeprecationWarning</string>
+            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>This recipe is now non-functional, only version 5 and 6 are available via https://www.millisecond.com/download/. Please remove it from your list of recipes.</string>
+                <key>re_pattern</key>
+                <string>https://inquisit\.millisecond\.com/4/.*?/mac/Inquisit_.*?\.pkg</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://www.millisecond.com/download/archives.aspx</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Millisecond Software, LLC</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
             </dict>
         </dict>
     </array>
