@@ -11,7 +11,7 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>Applications</string>
         <key>NAME</key>
-        <string>Bria Enterprise</string>
+        <string>BriaEnterprise</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
