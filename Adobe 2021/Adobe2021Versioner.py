@@ -54,7 +54,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.7']
+__version__ = ['1.4.8']
 
 
 # Class def
@@ -504,7 +504,6 @@ class Adobe2021Versioner(Processor):
         if self.env['architecture_type'] == "x64":
             pkginfo['supported_architectures'] = [
                 'x86_64',
-                'i386',
             ]
             self.env['architecture_type'] = '-Intel'
         elif self.env['architecture_type'] == "arm64":
