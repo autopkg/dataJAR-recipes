@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Bria Enterprise</string>
+        <string>BriaEnterprise</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -20,6 +20,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
                 <key>url</key>
                 <string>https://www.counterpath.com/EnterpriseForMac</string>
             </dict>
