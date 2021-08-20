@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>/assets/products/downloads/software/arraycalc/dbaudio-software-arraycalc-.*?-mac\.dmg</string>
+                <string>/assets/products/downloads/software/arraycalc/dbaudio-software-arraycalc-v10.*?-mac\.dmg</string>
                 <key>url</key>
                 <string>https://www.dbaudio.com/global/en/products/software/arraycalc/#tab-downloads</string>
             </dict>
