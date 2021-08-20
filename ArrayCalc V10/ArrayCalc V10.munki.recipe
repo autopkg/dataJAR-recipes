@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of ArrayCalc V10, builds a package and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.ArrayCalc V10</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ArrayCalcV10</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>ArrayCalc V10</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>description</key>
+            <string>The d&amp;b ArrayCalc simulation software is the simulation tool for d&amp;b line arrays, column and point source loudspeakers as well as subwoofers. This is a comprehensive toolbox for all tasks associated with acoustic design, performance prediction, alignment, rigging and safety parameters.</string>
+            <key>developer</key>
+            <string>d&amp;b audiotechnik GmbH &amp; Co</string>
+            <key>display_name</key>
+            <string>ArrayCalc V10</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.3</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.ArrayCalc V10</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
