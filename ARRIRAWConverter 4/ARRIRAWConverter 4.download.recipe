@@ -10,8 +10,6 @@
     <dict>
         <key>NAME</key>
         <string>ARRIRAWConverter4</string>
-        <key>MAJOR_OS_VERSION</key>
-        <string>14</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
