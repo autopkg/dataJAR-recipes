@@ -22,12 +22,12 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>/resource/blob/239046/54879a39243b796f00d68ec687306418/arriraw-converter-gui-4-.*?-osx-.*?-data\.zip</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
                 <key>url</key>
                 <string>https://www.arri.com/en/learn-help/learn-help-camera-system/tools/arriraw-converter</string>
-                <key>re_pattern</key>
-                <string>href="(/resource/blob/[\S].*/[\S].*/arriraw-converter-gui-4-[\S].*-10-%MAJOR_OS_VERSION%-data.zip)"</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
             </dict>
         </dict>
         <dict>
@@ -38,7 +38,7 @@
                 <key>filename</key>
                 <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>https://www.arri.com%url%</string>
+                <string>https://www.arri.com%match%</string>
             </dict>
         </dict>
         <dict>
@@ -58,7 +58,7 @@
                 <true/>
             </dict>
         </dict>
-    	<dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
@@ -78,18 +78,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%destination_path%/*.dmg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications/ARRIRAWConverter.app</string>
-                <key>source_path</key>
-                <string>%found_filename%/ARRIRAWConverter.app</string>
+                <string>%RECIPE_CACHE_DIR%/unzipped/*/*.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -98,26 +87,13 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%destination_path%</string>
+                <string>%found_filename%/ARRIRAWConverter.app</string>
                 <key>requirement</key>
                 <string>identifier "com.arri.ARRIRAWConverter" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "34E6756YB7"</string>
                 <key>strict_verification</key>
                 <true />
             </dict>
         </dict>
-        <dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>version</key>
-				<string>%%found_filename%%</string>
-				<key>index</key>
-        		<integer>1</integer>
-				<key>split_on</key>
-				<string>_</string>
-			</dict>
-		</dict>
     </array>
 </dict>
 </plist>
