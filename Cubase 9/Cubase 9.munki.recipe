@@ -49,10 +49,10 @@
         	<string>PkgCopier</string>
         	<key>Arguments</key>
         	<dict>
-        		<key>source_pkg</key>
-        		<string>%pathname%/Cubase 9 Update.pkg</string>
         		<key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+        		<key>source_pkg</key>
+        		<string>%pathname%/Cubase 9 Update.pkg</string>
         	</dict>
         </dict>
         <dict>
