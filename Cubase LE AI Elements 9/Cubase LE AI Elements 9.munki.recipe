@@ -68,20 +68,6 @@
 				<true/>
 			</dict>
 		</dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-            </dict>
-        </dict>
 		<dict>
 			<key>Processor</key>
 			<string>PkgPayloadUnpacker</string>
@@ -112,6 +98,32 @@
 			<key>Processor</key>
 			<string>MunkiPkginfoMerger</string>
 		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%//application_payload/Applications/Cubase LE AI Elements 9.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
 		<dict>
 			<key>Processor</key>
 			<string>MunkiImporter</string>
