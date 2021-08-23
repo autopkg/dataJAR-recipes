@@ -2,96 +2,151 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of WaveLab Elements 9.5 and imports into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.WaveLab Elements 9.5</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>WaveLab Elements 9.5</string>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>blocking_applications</key>
-			<array>
-				<string>WaveLab Elements 9.5.app</string>
-			</array>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>WaveLab Elements is an audio editing and mastering software, perfectly tailored to hobby musicians, radio freelancers and home studio owners. Based on the approved WaveLab Pro mastering solution, the WaveLab Elements highlights proven editing and analysis tools, a valuable selection of restoration and mastering plug-ins, a CD burning engine and much more — all accessible through an intuitive user interface.</string>
-			<key>display_name</key>
-			<string>WaveLab Elements 9.5</string>
-			<key>developer</key>
-			<string>Steinberg Media Technologies GmbH</string>
-			<key>minimum_os_version</key>
-			<string>10.11</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>unattended_uninstall</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.WaveLab Elements 9.5</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+    <key>Description</key>
+    <string>Downloads the latest version of WaveLab Elements 9.5 and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.WaveLab Elements 9.5</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>WaveLabElements9.5</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>WaveLab Elements 9.5.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>WaveLab Elements is an audio editing and mastering software, perfectly tailored to hobby musicians, radio freelancers and home studio owners. Based on the approved WaveLab Pro mastering solution, the WaveLab Elements highlights proven editing and analysis tools, a valuable selection of restoration and mastering plug-ins, a CD burning engine and much more — all accessible through an intuitive user interface.</string>
+            <key>display_name</key>
+            <string>WaveLab Elements 9.5</string>
+            <key>developer</key>
+            <string>Steinberg Media Technologies GmbH</string>
+            <key>minimum_os_version</key>
+            <string>10.11</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.WaveLab Elements 9.5</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/WaveLab Elements 9.5 Update.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/WaveLab Elements 9.5.app.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/WaveLab Elements 9.5.app</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pkg_path%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-		<dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/WaveLab Elements 9.5.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications/WaveLab Elements 9.5.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
                 <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>                              
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-        </dict> 
-	</array>
+        </dict>
+    </array>
 </dict>
 </plist>
