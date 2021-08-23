@@ -15,23 +15,23 @@
     <string>0.6.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://www.steinberg.net/en/support/downloads/cubase_9.5.html</string>
-				<key>re_pattern</key>
-				<string>https://download.steinberg.net/downloads_software/Cubase_9.5/9\.[0-9]\.[0-9][0-9]/Cubase_9\.[0-9]\.[0-9][0-9]_Update_mac.dmg</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%match%</string>
-			</dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.steinberg.net/en/support/downloads/cubase_9.5.html</string>
+                <key>re_pattern</key>
+                <string>https://download.steinberg.net/downloads_software/Cubase_9.5/9\.[0-9]\.[0-9][0-9]/Cubase_9\.[0-9]\.[0-9][0-9]_Update_mac.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -40,15 +40,15 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-        	<key>Processor</key>
-        	<string>PkgCopier</string>
-        	<key>Arguments</key>
-        	<dict>
-        		<key>source_pkg</key>
-        		<string>%pathname%/Cubase 9.5 Update.pkg</string>
-        		<key>pkg_path</key>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%pathname%/Cubase 9.5 Update.pkg</string>
+                <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-        	</dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -65,52 +65,6 @@
                 </array>
             </dict>
         </dict>
-        <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/</string>
-				<key>flat_pkg_path</key>
-				<string>%pkg_path%</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-		<dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-                <key>pkgdirs</key>
-                <dict/>
-            </dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-        </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/Cubase 9.5.app.pkg/Payload</string>
-				<key>purge_destination</key>
-				<string>true</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications/Cubase 9.5.app/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>       
     </array>
 </dict>
 </plist>
