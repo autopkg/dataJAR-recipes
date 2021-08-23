@@ -9,7 +9,7 @@
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>Cubase LE AI Elements 9</string>
+		<string>CubaseLEAIElements9</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
 		<key>pkginfo</key>
@@ -44,7 +44,60 @@
 	<string>com.github.dataJAR-recipes.download.Cubase LE AI Elements 9</string>
 	<key>Process</key>
 	<array>
+        <dict>
+        	<key>Processor</key>
+        	<string>PkgCopier</string>
+        	<key>Arguments</key>
+        	<dict>
+        		<key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+        		<key>source_pkg</key>
+        		<string>%pathname%/Cubase LE AI Elements 9 Update.pkg</string>
+        	</dict>
+        </dict>
+        <dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/</string>
+				<key>flat_pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
+		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+            </dict>
+        </dict>
 		<dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+				<key>pkg_payload_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/Cubase LE AI Elements 9.pkg/Payload</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
 			<key>Arguments</key>
 			<dict>
 				<key>faux_root</key>
@@ -54,33 +107,25 @@
 					<string>/Applications/Cubase LE AI Elements 9.app</string>
 				</array>
 			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
 		</dict>
 		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
 			<key>Processor</key>
 			<string>MunkiPkginfoMerger</string>
 		</dict>
 		<dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
 			<key>Arguments</key>
 			<dict>
 				<key>pkg_path</key>
-				<string>%pkg_path%</string>
+				<string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
 		</dict>
 		<dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -89,8 +134,6 @@
                 <string>%RECIPE_CACHE_DIR%/unpack</string>                              
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict> 
 	</array>
 </dict>
