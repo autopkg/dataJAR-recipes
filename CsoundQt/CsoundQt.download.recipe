@@ -25,12 +25,12 @@ i.e.: `-k PRERELEASE=yes`</string>
             <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>CsoundQt-\d.*?\.?[^pythonqt]-MacOS\.dmg</string>
                 <key>github_repo</key>
                 <string>csoundqt/csoundqt</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>[\S]+\.dmg</string>
             </dict>
         </dict>
         <dict>

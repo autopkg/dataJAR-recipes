@@ -8,8 +8,6 @@
     <string>com.github.dataJAR-recipes.pkg.CsoundQt</string>
     <key>Input</key>
     <dict>
-        <key>BUNDLE_ID</key>
-        <string>com.csound.csoundqt</string>
         <key>NAME</key>
         <string>CsoundQt</string>
     </dict>
@@ -38,15 +36,17 @@
             <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%-%version%.dmg/CsoundQt-d-html-cs6.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/CsoundQt-d-html-cs6.app</string>
                 <key>overwrite</key>
-                <string>true</string>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%/CsoundQt-d-html-cs6.app</string>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -63,7 +63,7 @@
                         </dict>
                     </array>
                     <key>id</key>
-                    <string>%BUNDLE_ID%</string>
+                    <string>com.csound.qutecsound</string>
                     <key>options</key>
                     <string>purge_ds_store</string>
                     <key>pkgname</key>
@@ -74,8 +74,17 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
-            <string>PkgCreator</string>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>
