@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>WaveLab LE 9.5</string>
+        <string>WaveLabLE 9.5</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -46,6 +46,43 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/WaveLab LE 9.5 Update.pkg</string>
+            </dict>
+        </dict>
+            <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/WaveLab LE 9.5.app.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
@@ -55,6 +92,24 @@
                 <array>
                     <string>/Applications/WaveLab LE 9.5.app</string>
                 </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications/WaveLab LE 9.5.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                </dict>
             </dict>
         </dict>
         <dict>
@@ -70,15 +125,15 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -87,11 +142,11 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>                              
+                    <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
-        </dict> 
+        </dict>
     </array>
 </dict>
 </plist>
