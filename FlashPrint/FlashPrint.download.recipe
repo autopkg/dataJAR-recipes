@@ -20,17 +20,24 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>https://en\.fss\.flashforge\.com/10000/software/.*?\.zip</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
                 <key>url</key>
                 <string>https://www.flashforge.com/download-center?category=15</string>
+                <key>re_pattern</key>
+                <string>mac.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*(https:\S*zip)</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>download_dir</key>
+                <string>%RECIPE_CACHE_DIR%/downloads</string>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
