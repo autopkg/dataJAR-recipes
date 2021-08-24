@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.steinberg.net/en/support/downloads/cubase_9.5.html</string>
+                <string>https://o.steinberg.net/en/support/downloads/cubase_9.5.html</string>
                 <key>re_pattern</key>
                 <string>https://download.steinberg.net/downloads_software/Cubase_9.5/9\.[0-9]\.[0-9][0-9]/Cubase_9\.[0-9]\.[0-9][0-9]_Update_mac.dmg</string>
                 <key>result_output_var_name</key>
