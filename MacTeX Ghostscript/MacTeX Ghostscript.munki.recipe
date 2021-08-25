@@ -72,6 +72,8 @@
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -105,7 +107,7 @@ Copyright (c) 2021, databinary Ltd.  All rights reserved.
 SUPPORT FOR THIS PROGRAM
     This program is distributed 'as is' by DATA binary LTD.
     For more information or support, please utilise the following resources:
-            http://www.databinary.co.uk
+            http://www.datajar.co.uk
 
 DESCRIPTION
 
@@ -163,8 +165,6 @@ if __name__ == '__main__':
                     <string>%version%</string>
                 </dict>
             </dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
