@@ -8,8 +8,8 @@
     <string>com.github.dataJAR-recipes.munki.drawio</string>
     <key>Input</key>
     <dict>
-		<key>os</key>
-		<string>dmg</string>
+        <key>os</key>
+        <string>dmg</string>
         <key>NAME</key>
         <string>draw.io Desktop</string>
         <key>MUNKI_REPO_SUBDIR</key>
@@ -40,7 +40,7 @@
     <string>com.github.peshay.download.draw.io</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
