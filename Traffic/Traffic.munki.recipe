@@ -76,7 +76,7 @@ fi</string>
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
-                    <key>installs_item_paths</key>
+                    <key>installs</key>
                     <array>
                         <dict>
                             <key>path</key>
@@ -101,6 +101,8 @@ fi</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -108,8 +110,6 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

@@ -19,6 +19,39 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/TrafficApplication-Installer.air</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/TrafficApplication-Installer.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/TrafficApplication-Installer.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>TrafficXMLParser</string>
+            <key>Arguments</key>
+            <dict>
+                <key>app_xml</key>
+                <string>%destination_path%/META-INF/AIR/application.xml</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
@@ -125,6 +158,8 @@ fi</string>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -156,8 +191,6 @@ fi</string>
                     <string>%version%</string>
                 </dict>
             </dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -166,8 +199,10 @@ fi</string>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>     
-                    <string>%RECIPE_CACHE_DIR%/scripts</string> 
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/scripts</string>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                    <string>%RECIPE_CACHE_DIR%/downloads/TrafficApplication-Installer.zip</string>
                 </array>
             </dict>
         </dict>
