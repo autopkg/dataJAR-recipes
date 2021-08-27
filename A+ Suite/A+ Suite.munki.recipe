@@ -28,10 +28,8 @@
             <string>A+Suite</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true></true>
             <key>unattended_uninstall</key>
-            <true></true>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
