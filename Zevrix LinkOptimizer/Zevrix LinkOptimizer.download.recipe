@@ -18,6 +18,24 @@
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>These recipes have been replaced with: https://github.com/autopkg/dataJAR-recipes/tree/master/Zevrix%20LinkOptimizer%206</string>
+             </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
