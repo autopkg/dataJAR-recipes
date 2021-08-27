@@ -1,76 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Sphere2 and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Sphere2</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of Sphere2 and imports into Munki</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Sphere2</string>
-        <key>Input</key>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Sphere2</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
+            <key>RestartAction</key>
+            <string>RequireRestart</string>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Provides teachers with a range of interactive software to realize the full potential of their AVer visualizers.</string>
+            <key>developer</key>
+            <string>AVer</string>
+            <key>display_name</key>
             <string>Sphere2</string>
-            <key>pkginfo</key>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true></true>
+            <key>unattended_uninstall</key>
+            <true></true>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Sphere2</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
             <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Provides teachers with a range of interactive software to realize the full potential of their AVer visualizers.</string>
-                <key>developer</key>
-                <string>AVer</string>
-                <key>display_name</key>
-                <string>Sphere2</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true></true>
-                <key>unattended_uninstall</key>
-                <true></true>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
             </dict>
         </dict>
-        <key>MinimumVersion</key>
-        <string>0.5.0</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.Sphere2</string>
-        <key>Process</key>
-        <array>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
             <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>archive_path</key>
-                    <string>%pathname%</string>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    <key>purge_destination</key>
-                    <true></true>
-                </dict>
-                <key>Processor</key>
-                <string>Unarchiver</string>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/*.pkg</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
             <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pattern</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack/*.pkg</string>
-                </dict>
-                <key>Processor</key>
-                <string>FileFinder</string>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
             <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%found_filename%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
             </dict>
-        </array>
-    </dict>
+        </dict>
+    </array>
+</dict>
 </plist>
