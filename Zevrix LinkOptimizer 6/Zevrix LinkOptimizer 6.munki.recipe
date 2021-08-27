@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.ZevrixLinkOptimizer</string>
+    <string>com.github.dataJAR-recipes.pkg.Zevrix LinkOptimizer 6</string>
     <key>Process</key>
     <array>
         <dict>
