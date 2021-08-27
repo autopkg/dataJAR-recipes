@@ -32,6 +32,7 @@
                 <key>predicate</key>   
                 <string>TRUEPREDICATE</string>
             </dict>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
