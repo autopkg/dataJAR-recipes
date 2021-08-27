@@ -8,71 +8,60 @@
     <string>com.github.dataJAR-recipes.download.Red Giant Trapcode Suite</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOAD_URL</key>
-        <string>https://downloads.redgiant.com/redgiant/products/singlesuites/trapcode/TCSuite_Mac_Scripted.zip</string>
         <key>NAME</key>
-        <string>Red Giant Trapcode Suite</string>
+        <string>RedGiantTrapcodeSuite</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.5.0</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://downloads\.redgiant\.com/redgiant/products/singlesuites/trapcode/TCSuite_Mac_Full\.zip</string>
+                <key>url</key>
+                <string>https://www.redgiant.com/support/installers/</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>%match%</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/*.app</string>
-            </dict>
             <key>Processor</key>
-            <string>FileFinder</string>
-        </dict>
-        <dict>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%found_filename%</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.redgiant.Trapcode-Suite-Installer" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = D642JS68SL)</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
-                </array>
-            </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
