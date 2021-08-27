@@ -68,7 +68,7 @@
         </dict>
         <dict>
             <key>Comment</key>
-            <string>If the bundleid != com.zevrix.LinkOptimizer6, then the recipe will stop here</key>
+            <string>If the bundleid != com.zevrix.LinkOptimizer6, then the recipe will stop here</string>
             <key>Processor</key>   
             <string>StopProcessingIf</string>   
             <key>Arguments</key>   
