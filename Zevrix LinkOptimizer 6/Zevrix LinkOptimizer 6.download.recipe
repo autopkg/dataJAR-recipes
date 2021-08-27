@@ -74,7 +74,7 @@
             <key>Arguments</key>   
             <dict>   
                 <key>predicate</key>   
-                <string>%bundleid% = "com.zevrix.LinkOptimizer"</string>
+                <string>%bundleid% = "com.zevrix.LinkOptimizer6"</string>
             </dict>
         </dict>
     </array>
