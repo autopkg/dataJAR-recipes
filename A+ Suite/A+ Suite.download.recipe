@@ -21,11 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https:\/\/presentation\.aver\.com\/DownloadFile\.aspx\?n=\S*&amp;t=ServiceDownload</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
+                <string>/downloads/A\+Suite_v.*?_Mac.*?.zip</string>
                 <key>url</key>
-                <string>https://presentation.aver.com/model/sphere2</string>
+                <string>https://www.averusa.com/education/support/aplus-suite</string>
             </dict>
         </dict>
         <dict>
@@ -34,7 +32,9 @@
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.zip</string>>
+                <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://www.averusa.com/education%match%</string>
             </dict>
         </dict>
         <dict>
