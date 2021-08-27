@@ -66,13 +66,15 @@
                 </dict>
             </dict>
         </dict>
-        <dict>   
+        <dict>
+            <key>Comment</key>
+            <string>If the bundleid != com.zevrix.LinkOptimizer6, then the recipe will stop here</key>
             <key>Processor</key>   
             <string>StopProcessingIf</string>   
             <key>Arguments</key>   
             <dict>   
                 <key>predicate</key>   
-                <string>"com.zevrix.LinkOptimizer" != %bundleid%</string>
+                <string>%bundleid% = "com.zevrix.LinkOptimizer"</string>
             </dict>
         </dict>
     </array>
