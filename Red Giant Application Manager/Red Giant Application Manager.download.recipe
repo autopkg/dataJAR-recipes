@@ -8,10 +8,8 @@
     <string>com.github.dataJAR-recipes.download.Red Giant Application Manager</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOAD_URL</key>
-        <string></string>
         <key>NAME</key>
-        <string>Red Giant Application Manager</string>
+        <string>RedGiantApplicationManager</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.5.0</string>
