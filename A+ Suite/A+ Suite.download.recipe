@@ -31,8 +31,6 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>filename</key>
-                <string>%NAME%.zip</string>
                 <key>url</key>
                 <string>https://www.averusa.com/education%match%</string>
             </dict>
@@ -51,7 +49,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unzip</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
         </dict>
         <dict>
