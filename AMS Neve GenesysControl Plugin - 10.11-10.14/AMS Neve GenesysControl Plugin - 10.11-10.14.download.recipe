@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of the AMS Neve GenesysControl plugin for macOS - 10.11-10.14</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.AMS Neve GenesysControl Plugin - 10.11-10.14</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AMSNeveGenesysControlPlugin</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>&lt;div class=&quot;genesys-version&quot; style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;(http://ams-neve\.info/ftp/web/Genesys/GenesysControlInstallerMac_.*\.zip)&quot; onclick=&quot;window\.open\(this\.href, &apos;&apos;, &apos;resizable=no,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no&apos;\); return false;&quot;&gt;GenesysControl&amp;nbsp;Plugin&amp;nbsp;Installer&amp;nbsp;\(Mac OSX, up to Mojave\)&lt;/a&gt;&lt;/div&gt;</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://www.ams-neve.com/genesyscontrol-plugin-199-w.asp</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/GenesysControlInstaller*.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Library/Application Support/Avid/Audio/Plug-ins/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/AAX.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Library/Application Support/Avid/Audio/Plug-ins/GenesysControl.aaxplugin</string>
+                <key>requirement</key>
+                <string>identifier "com.AMSNeve.GenesysControl" and certificate leaf = H"8eee15e441a44455f2ddad0b222a640a73dbf8c0"</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
