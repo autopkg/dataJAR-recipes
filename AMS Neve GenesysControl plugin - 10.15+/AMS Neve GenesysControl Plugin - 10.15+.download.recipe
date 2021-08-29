@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of the AMS Neve GenesysControl Plugin for macOS - 10.15+</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.AMS Neve GenesysControl Plugin - 10.15+</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AMSNeveGenesysControlPlugin</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>&lt;div class=&quot;genesys-version&quot; style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;(http://ams-neve\.info/ftp/web/Genesys/GenesysControlInstallerMac_.*?\.zip)&quot; onclick=&quot;window.open\(this\.href, &apos;&apos;, &apos;resizable=no,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no&apos;\); return false;&quot;&gt;GenesysControl plugin Installer \(Mac OSX, Catalina\+\)&lt;/a&gt;&lt;/div&gt;</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://www.ams-neve.com/genesyscontrol-plugin-199-w.asp</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%found_filename%/GenesysControl.aaxplugin</string>
+                <key>requirement</key>
+                <string>identifier "com.AMSNeve.GenesysControl" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MFS334BU6V</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
