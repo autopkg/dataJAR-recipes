@@ -2,53 +2,53 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest Egnyte Connect package and imports into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Egnyte Connect</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>EgnyteConnect</string>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>category</key>
-			<string>Applications</string>
-			<key>developer</key>
-			<string>Egnyte</string>
-			<key>description</key>
-			<string>Easily browse all the Egnyte files and folders that you have access to directly from Mac Finder or Windows Explorer. The Egnyte Connect Desktop App will allow you to access all the files you have available in the cloud without requiring all the disk space to store them. Disk space is only occupied temporarily by files that are currently open or were recently opened. The Egnyte Connect Desktop app will automatically download and upload files and folders as you create, rename, update, and delete them.</string>
-			<key>display_name</key>
-			<string>Egnyte Connect</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.2.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.moofit-recipes.download.EgnyteConnect</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest Egnyte Connect package and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Egnyte Connect</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>EgnyteConnect</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>developer</key>
+            <string>Egnyte</string>
+            <key>description</key>
+            <string>Easily browse all the Egnyte files and folders that you have access to directly from Mac Finder or Windows Explorer. The Egnyte Connect Desktop App will allow you to access all the files you have available in the cloud without requiring all the disk space to store them. Disk space is only occupied temporarily by files that are currently open or were recently opened. The Egnyte Connect Desktop app will automatically download and upload files and folders as you create, rename, update, and delete them.</string>
+            <key>display_name</key>
+            <string>Egnyte Connect</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.moofit-recipes.download.EgnyteConnect</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>
