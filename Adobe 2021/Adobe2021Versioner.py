@@ -54,7 +54,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.8']
+__version__ = ['1.4.9']
 
 
 # Class def
@@ -412,7 +412,11 @@ class Adobe2021Versioner(Processor):
         '''
 
         # Get app_version, cautiously for now for only certain apps
-        if self.env['sap_code'] == 'CHAR':
+        if self.env['sap_code'] == 'AICY':
+            self.env['app_version'] = load_json['ProductVersion']
+            self.env['app_bundle_id'] = 'com.adobe.InCopy'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'CHAR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Character-Animator.application'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
@@ -423,6 +427,10 @@ class Adobe2021Versioner(Processor):
         elif self.env['sap_code'] == 'FLPR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Adobe-Animate-2021.application'
+            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'IDSN':
+            self.env['app_version'] = load_json['ProductVersion']
+            self.env['app_bundle_id'] = 'com.adobe.InDesign'
             self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'ILST':
             self.env['app_version'] = load_json['CodexVersion']
