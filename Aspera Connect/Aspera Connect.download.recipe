@@ -40,8 +40,8 @@
                  <key>result_output_var_name</key>
                  <string>downloadpath</string>
              </dict>
-         </dict>         
-         
+         </dict>
+
          <dict>
              <key>Processor</key>
              <string>URLDownloader</string>
@@ -59,37 +59,15 @@
          </dict>
          <dict>
              <key>Processor</key>
-             <string>PkgRootCreator</string>
-             <key>Arguments</key>
-                 <dict>
-                 <key>pkgroot</key>
-                 <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
-                 <key>pkgdirs</key>
-                 <dict/>
-             </dict>
-         </dict>
-         <dict>
-         <key>Processor</key>
-             <string>PkgCopier</string>
-             <key>Arguments</key>
-                 <dict>
-                     <key>source_pkg</key>
-                     <string>%pathname%/IBMAsperaConnectInstaller.pkg</string>
-                     <key>pkg_path</key>
-                     <string>%RECIPE_CACHE_DIR%/installer_pkg/%NAME%.pkg</string>
-                 </dict>
-         </dict>
-         <dict>
-             <key>Processor</key>
              <string>CodeSignatureVerifier</string>
              <key>Arguments</key>
              <dict>
                  <key>input_path</key>
-                 <string>%pkg_path%</string>
+                 <string>%pathname%/IBM Aspera Connect Installer.app</string>
                  <key>requirement</key>
-                 <string>identifier IBMAsperaConnectInstaller and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RJ747GSBCT</string>
+                 <string>identifier "com.ibm.installer.IBM-Aspera-Connect-Installer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RJ747GSBCT</string>
              </dict>
          </dict>
      </array>
  </dict>
- </plist> 
+ </plist>
