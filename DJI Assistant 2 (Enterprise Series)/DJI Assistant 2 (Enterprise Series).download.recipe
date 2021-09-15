@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.dji.com/uk/downloads/softwares/assistant-dji-2-for-matrice</string>
                 <key>re_pattern</key>
-                <string>https://dl\.djicdn\.com/downloads/dji_assistant/20210317/DJI\+Assistant\+2\+\(Enterprise\+Series\)\+.*?\.pkg</string>
+                <string>https://dl\.djicdn\.com/downloads/dji_assistant/.*?/DJI\+Assistant\+2\+\(Enterprise\+Series\)\+.*?\.pkg</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
