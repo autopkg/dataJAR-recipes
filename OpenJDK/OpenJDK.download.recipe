@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Comment</key>
+    <string>Set ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Silicon.</string>
     <key>Description</key>
     <string>Downloads the latest OpenJDK for macOS.</string>
     <key>Identifier</key>
@@ -10,6 +12,8 @@
     <dict>
         <key>NAME</key>
         <string>OpenJDK</string>
+        <key>ARCHITECTURE</key>
+        <string>x64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -34,7 +38,7 @@
                 <key>url</key>
                 <string>https://jdk.java.net/%match%/index.html</string>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_osx-x64_bin\.tar\.gz)</string>
+                <string>(?P&lt;url&gt;https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-%ARCHITECTURE%_bin\.tar\.gz)</string>
             </dict>
         </dict>
         <dict>
