@@ -69,7 +69,7 @@
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%pkgroot%</string>
+                <string>%pkgroot%/Applications</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/Insta360_Studio_2021.pkg/Payload</string>
                 <key>purge_destination</key>
