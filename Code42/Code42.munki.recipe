@@ -35,7 +35,27 @@
             <string>Code42</string>
             <key>name</key>
             <string>%NAME%</string>
+            <string>uninstall_script</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# From: https://support.code42.com/CrashPlan/6/Get_started/Uninstall_the_Code42_app#Mac_2
+#
+
+# The section below uninstalls Code42, if it is installed on the system.
+if [[ -e /Library/Application\ Support/CrashPlan/ ]]; then
+    launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist
+    launchctl unload /Library/LaunchDaemons/com.code42.service.plist
+    /Library/Application\ Support/CrashPlan/Uninstall.app/Contents/Resources/uninstall.sh
+fi
+
+# The section below removes the Code42 identity file. Uncomment the lines below if you wish to do a complete uninstall.
+rm -r /Library/Application\ Support/CrashPlan/</string>
             <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
