@@ -51,11 +51,24 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>version</key>
+                <string>%match%</string>
+                <key>index</key>
+                <integer>1</integer>
+                <key>split_on</key>
+                <string>-</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/Ghostscript-9.54-Start.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/Ghostscript-%version%-Start.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>purge_destination</key>
