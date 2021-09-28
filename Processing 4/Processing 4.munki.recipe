@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Processing 4 is a user-programmable and user-extensible sound processing language and software synthesizer.</string>
+            <string>Processing 4 makes important updates to the code to prepare the platform for its future. Most significantly, this includes the move to JDK 11 and support for new Java language features. The changes should be transparent to most users, but because of the massive shift behind the scenes, this will be 4.0.</string>
             <key>developer</key>
             <string>Processing 4</string>
             <key>display_name</key>
