@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads latest version of MediaMaster Pro 6.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.MediaMaster Pro 6</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>MediaMasterPro6</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.6.1</string>
+	<key>Process</key>
+	<array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>/downloads/mediamaster_mac.*?\.php</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://pro.arkaos.com/software/mediamaster-pro/download</string>
+            </dict>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+			<key>Arguments</key>
+			<dict>
+				<key>CHECK_FILESIZE_ONLY</key>
+				<true/>
+				<key>filename</key>
+				<string>%NAME%.dmg</string>
+				<key>url</key>
+				<string>https://pro.arkaos.com%match%</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+			<key>Arguments</key>
+			<dict>
+                <key>input_path</key>
+                <string>%pathname%/ArKaos_MediaMaster_6.*/MediaMaster.app</string>
+                <key>requirement</key>
+                <string>identifier "com.ArKaos.MediaMaster5" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = SKE5HH5VKW</string>
+			</dict>
+		</dict>
+    </array>
+</dict>
+</plist>
