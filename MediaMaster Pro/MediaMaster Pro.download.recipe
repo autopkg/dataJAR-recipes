@@ -19,6 +19,24 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>With the release of MediaMaster Pro, these recipes has been deprecated. MediaMaster Pro 5 recipes can still be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/MediaMaster%20Pro%205, and MediaMaster Pro 6 recipes found at: https://github.com/autopkg/dataJAR-recipes/tree/master/MediaMaster%20Pro%206.</string>
+             </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
