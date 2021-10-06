@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://support.ringcentral.com/download.html</string>
+                <string>https://www.ringcentral.com/apps/rc-classic</string>
                 <key>re_pattern</key>
-                <string>https://downloads\.ringcentral\.com/glip/rc/.*/mac/RingCentral%20Classic-.*\.dmg</string>
+                <string>\"macOS\",\"link\":\"(https://downloads\.ringcentral\.com/.*?/.*?/GlipForMac)\"</string>
             </dict>
         </dict>
         <dict>
@@ -31,6 +31,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
