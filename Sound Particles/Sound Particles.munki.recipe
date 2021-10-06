@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of the Sound Particles and imports it into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.Sound Particles</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>SoundParticles</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Sound Particles is an immersive audio software capable of generating thousands (even millions) of sounds in a virtual 3D audio world. Creating highly complex sounds has never been this quick.</string>
+			<key>developer</key>
+			<string>Sound Particles</string>
+			<key>display_name</key>
+			<string>Sound Particles</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Adapted from the supplied Uninstaller
+#
+
+/bin/echo "Uninstalling Sound Particles."
+
+/bin/rm -rf "/Library/Application Support/Sound Particles"
+/bin/rm -rf "/Applications/Sound Particles.app"
+
+/bin/echo "Sound Particles uninstalled successfully."</string>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.6.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.Sound Particles</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
