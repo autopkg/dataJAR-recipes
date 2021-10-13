@@ -68,20 +68,19 @@
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
-        <dict>
-            <dict>
-                <key>Processor</key>
-                <string>URLTextSearcher</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>re_pattern</key>
-                    <string>__version__ = \"(.*?)\"</string>
-                    <key>result_output_var_name</key>
-                    <string>version</string>
-                    <key>url</key>
-                    <string>file:////%RECIPE_CACHE_DIR%/%NAME%/Applications/MakeHuman.app/Contents/Resources/makehuman.py</string>
-                </dict>
-            </dict>
+		<dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>__version__ = \"(.*?)\"</string>
+				<key>result_output_var_name</key>
+				<string>version</string>
+				<key>url</key>
+				<string>file:////%RECIPE_CACHE_DIR%/%NAME%/Applications/MakeHuman.app/Contents/Resources/makehuman.py</string>
+			</dict>
+		</dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
