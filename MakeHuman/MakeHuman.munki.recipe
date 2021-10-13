@@ -69,14 +69,6 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MakeHumanVersioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>app_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/MakeHuman.app</string>
-            </dict>
-        </dict>
             <dict>
                 <key>Processor</key>
                 <string>URLTextSearcher</string>
