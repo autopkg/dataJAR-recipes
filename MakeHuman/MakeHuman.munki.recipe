@@ -67,6 +67,8 @@
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
+                    <key>installs</key>
+                    <string/>
                     <key>installcheck_script</key>
                     <string>#!/usr/local/munki/munki-python
 # pylint: disable = invalid-name
