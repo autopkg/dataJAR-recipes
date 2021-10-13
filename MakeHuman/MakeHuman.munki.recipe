@@ -45,9 +45,28 @@
             <dict>
                 <key>archive_path</key>
                 <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/MakeHuman.app/Contents/MacOS/MakeHuman</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -55,9 +74,22 @@
             <key>Arguments</key>
             <dict>
                 <key>app_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/MakeHuman.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/MakeHuman.app</string>
             </dict>
         </dict>
+            <dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>re_pattern</key>
+                    <string>__version__ = \"(.*?)\"</string>
+                    <key>result_output_var_name</key>
+                    <string>version</string>
+                    <key>url</key>
+                    <string>file:////%RECIPE_CACHE_DIR%/%NAME%/Applications/MakeHuman.app/Contents/Resources/makehuman.py</string>
+                </dict>
+            </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
@@ -67,8 +99,6 @@
                 <dict>
                     <key>version</key>
                     <string>%version%</string>
-                    <key>installs</key>
-                    <string/>
                     <key>installcheck_script</key>
                     <string>#!/usr/local/munki/munki-python
 # pylint: disable = invalid-name
@@ -162,12 +192,12 @@ if __name__ == '__main__':
             <key>Arguments</key>
             <dict>
                 <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
             </dict>
         </dict>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
@@ -185,7 +215,7 @@ if __name__ == '__main__':
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>                   
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 </array>
             </dict>
         </dict>
