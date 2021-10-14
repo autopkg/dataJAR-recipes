@@ -51,11 +51,24 @@ fi</string>
     <array>
         <dict>
             <key>Processor</key>
-            <string>FileFinder</string>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Screencast-O-Matic v2.0.app</string>
+                <key>overwrite</key>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%/Screencast-O-Matic v2.0.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/TempFileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%pathname%/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*.jar</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*.jar</string>
             </dict>
         </dict>
         <dict>
@@ -68,7 +81,7 @@ fi</string>
                 <key>split_on</key>
                 <string>AppMain-</string>
                 <key>version</key>
-                <string>%found_filename%</string>
+                <string>%found_basename%</string>
             </dict>
         </dict>
         <dict>
@@ -83,6 +96,23 @@ fi</string>
                 <key>version</key>
                 <string>%version%</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Screencast-O-Matic v2.0.app/Contents/app/%found_basename%</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -183,6 +213,17 @@ if __name__ == '__main__':
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
             </dict>
         </dict>
     </array>
