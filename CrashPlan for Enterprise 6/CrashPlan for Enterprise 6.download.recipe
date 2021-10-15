@@ -17,6 +17,24 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>"Previous versions are no longer supported. If you need to download an older version, contact our Customer Champions for support." from - https://support.code42.com/Administrator/6/Planning_And_Installing/Code42_server_and_app_downloads</string>
+             </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
