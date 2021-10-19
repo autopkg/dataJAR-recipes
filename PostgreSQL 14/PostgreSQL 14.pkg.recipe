@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Generates a pkg of PostgreSQL 14.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.PostgreSQL 14</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>PostgreSQL14</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.PostgreSQL 14</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/postgresql-%match%-1-osx.app</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postgresql-%match%-1-osx.app</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_content</key>
+                <string>#!/bin/bash
+
+# Determine working directory
+install_dir=$(dirname $0)
+
+# install with no UI
+"${install_dir}/postgresql-%match%-1-osx.app/Contents/MacOS/osx-x86_64" --unattendedmodeui none --mode unattended</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%match%</string>
+                    <key>pkgtype</key>
+                    <string>flat</string>
+                    <key>id</key>
+                    <string>com.enterprisedb.postgresql.pkg</string>
+                    <key>version</key>
+                    <string>%match%</string>
+                    <key>scripts</key>
+                    <string>Scripts</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
