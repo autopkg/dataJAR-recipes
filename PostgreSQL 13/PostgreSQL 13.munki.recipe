@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of PostgreSQL 13 and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.PostgreSQL 13</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>PostgreSQL13</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>PostgreSQL 13 database system packaged by EnterpriseDB.com.
+
+This installer includes the PostgreSQL server, pgAdmin; a graphical tool for managing and developing your databases, and StackBuilder; a package manager that can be used to download and install additional PostgreSQL tools and drivers. Stackbuilder includes management, integration, migration, replication, geospatial, connectors and other tools. </string>
+            <key>developer</key>
+            <string>EnterpriseDB Corporation</string>
+            <key>display_name</key>
+            <string>PostgreSQL 13</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# If the versions uninstaller exists, call it.
+#
+# NOTE: The script states that after running: 
+# "The data directory (/Library/PostgreSQL/13/data) and service user account (postgres) have not been removed.
+#
+
+installbuilderScript="/Library/PostgreSQL/13/uninstall-postgresql.app/Contents/MacOS/installbuilder.sh"
+
+if [ -e "${installbuilderScript}" ]
+then
+    /bin/echo "Running ${installbuilderScript} --unattendedmodeui none --mode unattended..."
+    "${installbuilderScript}" --unattendedmodeui none --mode unattended
+else
+    /bin/echo "Cannot find ${installbuilderScript}..."
+    exit 1
+fi
+
+# Deletes this dir if found after uninstallation
+
+if [ -d "/Applications/PostgreSQL 13/" ]
+then
+    /bin/echo "Deleting /Applications/PostgreSQL 13..."
+    /bin/rm -rf "/Applications/PostgreSQL 13"
+fi</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.PostgreSQL 13</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
