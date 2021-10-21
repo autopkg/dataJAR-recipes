@@ -30,6 +30,8 @@ This installer includes the PostgreSQL server, pgAdmin; a graphical tool for man
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/bash
 #
