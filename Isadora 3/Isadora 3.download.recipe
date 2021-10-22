@@ -33,10 +33,10 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://troikatronix.com/%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://troikatronix.com/%match%</string>
             </dict>
         </dict>
         <dict>
@@ -47,21 +47,21 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>   
-			<key>Processor</key>   
-			<string>CodeSignatureVerifier</string>   
-			<key>Arguments</key>   
-			<dict>   
-				<key>input_path</key>   
-				<string>%pathname%/Isadora Installer.pkg</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: Mark Coniglio (Q5V96MD6S6)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Isadora Installer.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Mark Coniglio (Q5V96MD6S6)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>

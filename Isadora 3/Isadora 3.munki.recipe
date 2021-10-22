@@ -57,7 +57,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Isadora 3</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/isadora-standard.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/isadora-fat-std.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
