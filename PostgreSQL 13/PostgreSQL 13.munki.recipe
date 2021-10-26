@@ -49,11 +49,9 @@ then
     "${installbuilderScript}" --unattendedmodeui none --mode unattended
 else
     /bin/echo "Cannot find ${installbuilderScript}..."
-    exit 1
 fi
 
 # Deletes this dir if found after uninstallation
-
 if [ -d "/Applications/PostgreSQL 13/" ]
 then
     /bin/echo "Deleting /Applications/PostgreSQL 13..."
