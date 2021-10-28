@@ -18,6 +18,8 @@
             <array>
                 <string>testing</string>
             </array>
+            <key>blocking_applications</key>
+            <array/>
             <key>description</key>
             <string>Move and resize windows on macOS with keyboard shortcuts and snap areas.</string>
             <key>developer</key>
@@ -26,6 +28,9 @@
             <string>Rectangle</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postuninstall_script</key>
+            <string>#!/bin/bash
+/usr/bin/pkill -9 Rectangle</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
