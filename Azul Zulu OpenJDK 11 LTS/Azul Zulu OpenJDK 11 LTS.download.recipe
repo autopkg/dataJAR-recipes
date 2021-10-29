@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Azul Zulu OpenJDK 11 LTS.
+Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for Apple Silicon version.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Azul Zulu OpenJDK 11 LTS</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AzulZuluOpenJDK11LTS</string>
+        <key>ARCHITECTURE</key>
+        <string>x</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\"(zulu11.*?-ca-jdk11.*?-macosx_%ARCHITECTURE%64\.dmg)\"</string>
+                <key>url</key>
+                <string>https://cdn.azul.com/zulu/bin/?C=M;O=D</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cdn.azul.com/zulu/bin/%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Azul Systems, Inc. (TDTHCUPYFR)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%/Double-Click to Install Azul Zulu JDK 11.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

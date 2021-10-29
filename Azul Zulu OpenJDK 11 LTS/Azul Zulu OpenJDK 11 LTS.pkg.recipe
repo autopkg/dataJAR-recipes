@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Azul Zulu OpenJDK 11 LTS, builds a package and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Azul Zulu OpenJDK 11 LTS</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AzulZuluOpenJDK11LTS</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.3</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Azul Zulu OpenJDK 11 LTS</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>version</key>
+                <string>%match%</string>
+                <key>index</key>
+                <integer>0</integer>
+                <key>split_on</key>
+                <string>.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%version%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/Double-Click to Install Azul Zulu JDK 11.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
