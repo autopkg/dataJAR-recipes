@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>http://software\.soundsonline\.com/Products/IC/IC_.*?_Mac\.zip</string>
+                <string>https://software\.soundsonline\.com/Products/IC/IC_.*?_Mac\.zip</string>
                 <key>url</key>
-                <string>http://www.soundsonline.com/Support?section=updates&amp;article=</string>
+                <string>https://www.soundsonline.com/support/updates</string>
             </dict>
         </dict>
         <dict>
