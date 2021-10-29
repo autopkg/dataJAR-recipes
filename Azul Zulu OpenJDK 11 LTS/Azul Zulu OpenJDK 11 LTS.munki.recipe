@@ -21,9 +21,9 @@
             <key>category</key>
             <string>Applications</string>
             <key>description</key>
-            <string>With Azul Zulu OpenJDK 11 LTS you can install EastWest software.</string>
+            <string>Azul Zulu builds of OpenJDK are open source, TCK-tested and certified builds of OpenJDK. Azul Zulu is available for a wide range of hardware platforms and operating systems.</string>
             <key>developer</key>
-            <string>East West</string>
+            <string>Azul Systems</string>
             <key>display_name</key>
             <string>Azul Zulu OpenJDK 11 LTS</string>
             <key>name</key>
