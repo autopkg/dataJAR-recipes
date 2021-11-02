@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.FLEXOPTIX App</string>
+    <key>Description</key>
+    <string>Downloads the current release version of Amazon Coretto 8 and imports it into Munki.</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>FLEXOPTIXApp</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>Applications</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>description</key>
+            <string>In order to keep all the reconfigure.me features available for you, we’ve decided to make our own application and while we were at it, gave it a nice clean up and new paint job.
+The result is the FLEXOPTIX App, which comes with support for all common Windows, MacOS X and Linux operating systems as well as almost all the features you know and love.</string>
+            <key>developer</key>
+            <string>Flexoptix GmbH</string>
+            <key>display_name</key>
+            <string>FLEXOPTIX App</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.FLEXOPTIX App</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
