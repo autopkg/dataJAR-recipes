@@ -59,7 +59,7 @@
                     <key>destination_path</key>
                     <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                     <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/Installer.pkg/Payload</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/Audio.pkg/Payload</string>
                     <key>purge_destination</key>
                     <string>true</string>
                 </dict>

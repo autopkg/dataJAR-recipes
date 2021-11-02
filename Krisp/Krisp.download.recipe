@@ -10,8 +10,6 @@
         <dict>
             <key>NAME</key>
             <string>krisp</string>
-            <key>DOWNLOAD_URL</key>
-            <string>https://download.krisp.ai/mac?btn=downloadMac_AccountFooter</string>
         </dict>
         <key>MinimumVersion</key>
         <string>0.5.0</string>
@@ -25,7 +23,7 @@
                     <key>filename</key>
                     <string>%NAME%.pkg</string>
                     <key>url</key>
-                    <string>%DOWNLOAD_URL%</string>
+                    <string>https://download.krisp.ai/mac?btn=downloadMac_AccountFooter</string>
                 </dict>
             </dict>
             <dict>
