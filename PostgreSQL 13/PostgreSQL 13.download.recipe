@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.enterprisedb.com/download-postgresql-binaries</string>
                 <key>re_pattern</key>
-                <string>Version (13\..*?)&lt;</string>
+                <string>Version (13\..*?)\\u</string>
             </dict>
         </dict>
         <dict>
