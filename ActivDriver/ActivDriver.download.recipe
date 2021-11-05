@@ -17,24 +17,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://support.prometheanworld.com/product/-activdriver-</string>
-                <key>re_pattern</key>
-                <string>'ActivDriver for macOS'[\S].* href="(https:\/\/support.prometheanworld.com\/download\/[\d].*\/)"</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://support.prometheanworld.com/sfc/servlet.shepherd/document/download/0696f00000DQjuoAAD?operationContext=S1</string>
             </dict>
         </dict>
         <dict>
