@@ -54,7 +54,7 @@ from autopkglib import Processor, ProcessorError
 
 # Define class
 __all__ = ['Adobe2021Versioner']
-__version__ = ['1.4.9']
+__version__ = ['1.4.10']
 
 
 # Class def
@@ -203,7 +203,8 @@ class Adobe2021Versioner(Processor):
         self.get_generic_keys()
 
         # Get app_version
-        self.env['app_version'] = root.findtext('./InstallerProperties/Property[@name=\'ProductVersion\']')
+        self.env['app_version'] = (root.findtext
+                                   ('./InstallerProperties/Property[@name=\'ProductVersion\']'))
         self.output("app_version: {}".format(self.env['app_version']))
 
         # Get vers_compare_key
@@ -411,35 +412,34 @@ class Adobe2021Versioner(Processor):
             Read in values from app_json
         '''
 
+        # We'll override this later if needed
+        self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+
         # Get app_version, cautiously for now for only certain apps
         if self.env['sap_code'] == 'AICY':
             self.env['app_version'] = load_json['ProductVersion']
             self.env['app_bundle_id'] = 'com.adobe.InCopy'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'CHAR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Character-Animator.application'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
+        elif self.env['sap_code'] == 'DRWV':
+            self.env['app_version'] = load_json['ProductVersion']
+            self.env['app_bundle_id'] = 'com.adobe.dreamweaver-18.1'
         elif self.env['sap_code'] == 'ESHR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.dimension'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'FLPR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Adobe-Animate-2021.application'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'IDSN':
             self.env['app_version'] = load_json['ProductVersion']
             self.env['app_bundle_id'] = 'com.adobe.InDesign'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'ILST':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.illustrator'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'KBRG':
             self.env['app_version'] = load_json['ProductVersion']
             self.env['app_bundle_id'] = 'com.adobe.bridge11'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'LTRM':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.LightroomClassicCC7'
@@ -447,27 +447,21 @@ class Adobe2021Versioner(Processor):
         elif self.env['sap_code'] == 'PHSP':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Photoshop'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'SBSTA':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.adobe-substance-3d-sampler'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'SBSTD':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.substance-3d-designer'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'SBSTP':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.Adobe-Substance-3D-Painter'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'SPRK':
             self.env['app_version'] = load_json['ProductVersion']
             self.env['app_bundle_id'] = 'com.adobe.xd'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         elif self.env['sap_code'] == 'STGR':
             self.env['app_version'] = load_json['CodexVersion']
             self.env['app_bundle_id'] = 'com.adobe.stager'
-            self.env['vers_compare_key'] = 'CFBundleShortVersionString'
         else:
             raise ProcessorError("Checking app_json for version details but sap code {}, "
                                  "is not within the known list of apps which we know to "
