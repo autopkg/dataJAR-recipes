@@ -42,10 +42,6 @@
                 <string>%MUNKI_NAME%</string>
                 <key>RestartAction</key>
                 <string>RequireLogout</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
             </dict>
         </dict>
         <key>MinimumVersion</key>
