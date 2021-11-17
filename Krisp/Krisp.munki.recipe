@@ -26,6 +26,7 @@
                 <string>krisp</string>
                 <key>name</key>
                 <string>%NAME%</string>
+                <key>preinstall_script</key>
                 <string>#!/bin/bash
             # as per the updated installation pkg allowing this, set trigger file to have it skip launching on post install
             /usr/bin/touch /private/tmp/do_not_launch_Krisp</string>
