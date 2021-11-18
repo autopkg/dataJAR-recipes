@@ -49,7 +49,7 @@ fi
 if [ -f /usr/local/lib/pam/pam_saml.so.2 ]
 then
     /bin/echo "Deleting the /usr/local/lib/pam/pam_saml.so.2..."
-    /bin/rm /usr/local/bin/authchanger
+    /bin/rm /usr/local/lib/pam/pam_saml.so.2
 fi
 
 if [ -f /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle ]
