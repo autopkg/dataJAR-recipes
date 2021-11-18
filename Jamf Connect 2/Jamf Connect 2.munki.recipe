@@ -56,7 +56,7 @@ if [ -f /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle ]
 then
     /bin/echo "Deleting the /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle..."
     /bin/rm -r /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle
-fi</script>
+fi</string>
             <key>unattended_install</key>
             <true/>
         </dict>
