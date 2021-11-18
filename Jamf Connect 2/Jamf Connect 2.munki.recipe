@@ -42,19 +42,19 @@ if [ -f /usr/local/bin/authchanger ]
 then
     /bin/echo "Resetting the authentication database..."
     /usr/local/bin/authchanger -reset
-    /bin/echo "Deleting the /usr/local/bin/authchanger..."
+    /bin/echo "Deleting /usr/local/bin/authchanger..."
     /bin/rm /usr/local/bin/authchanger
 fi
 
 if [ -f /usr/local/lib/pam/pam_saml.so.2 ]
 then
-    /bin/echo "Deleting the /usr/local/lib/pam/pam_saml.so.2..."
+    /bin/echo "Deleting /usr/local/lib/pam/pam_saml.so.2..."
     /bin/rm /usr/local/lib/pam/pam_saml.so.2
 fi
 
 if [ -f /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle ]
 then
-    /bin/echo "Deleting the /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle..."
+    /bin/echo "Deleting /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle..."
     /bin/rm -r /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle
 fi</string>
             <key>unattended_install</key>
