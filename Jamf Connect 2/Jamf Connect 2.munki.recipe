@@ -32,6 +32,31 @@
             <string>10.14.4</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>preuninstall_script</key>
+            <string>#!/bin/bash
+#
+# Taken from: https://docs.jamf.com/jamf-connect/2.6.0/documentation/Uninstalling_Jamf_Connect.html
+#
+
+if [ -f /usr/local/bin/authchanger ]
+then
+    /bin/echo "Resetting the authentication database..."
+    /usr/local/bin/authchanger -reset
+    /bin/echo "Deleting the /usr/local/bin/authchanger..."
+    /bin/rm /usr/local/bin/authchanger
+fi
+
+if [ -f /usr/local/lib/pam/pam_saml.so.2 ]
+then
+    /bin/echo "Deleting the /usr/local/lib/pam/pam_saml.so.2..."
+    /bin/rm /usr/local/bin/authchanger
+fi
+
+if [ -f /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle ]
+then
+    /bin/echo "Deleting the /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle..."
+    /bin/rm -r /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle
+fi</script>
             <key>unattended_install</key>
             <true/>
         </dict>
