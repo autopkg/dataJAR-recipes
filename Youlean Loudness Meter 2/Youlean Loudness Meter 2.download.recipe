@@ -20,12 +20,12 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://youlean.co/download-youlean-loudness-meter/</string>
                 <key>re_pattern</key>
-                <string>(https://youlean-129cf\.kxcdn\.com/wp-content/uploads/.*/Youlean-Loudness-Meter-2.*macOS.*zip).*Download for macOS&lt;</string>
+                <string>https://youlean-.*\.kxcdn\.com/wp-content/uploads/.*/Youlean-Loudness-Meter-2-.*-macOS.*\.zip</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>https://youlean.co/download-youlean-loudness-meter/</string>
             </dict>
         </dict>
         <dict>
