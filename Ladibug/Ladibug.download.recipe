@@ -25,7 +25,7 @@
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
-                <string>https://www.lumens.com.tw/en/Downloads_list/1/ladibug-software</string>
+                <string>https://www.mylumens.com/en/Downloads_Search?id=1&amp;keyword=ladibug&amp;keyword2=mac</string>
             </dict>
         </dict>
         <dict>
@@ -34,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.lumens.com.tw%match%</string>
+                <string>https://www.mylumens.com%match%</string>
             </dict>
         </dict>
         <dict>
