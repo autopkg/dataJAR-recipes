@@ -21,11 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>&lt;div class=&quot;genesys-version&quot; style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;(http://ams-neve\.info/ftp/web/Genesys/GenesysControlInstallerMac_.*?\.zip)&quot; onclick=&quot;window.open\(this\.href, &apos;&apos;, &apos;resizable=no,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no&apos;\); return false;&quot;&gt;GenesysControl plugin Installer \(Mac OSX, Catalina\+\)&lt;/a&gt;&lt;/div&gt;</string>
+                <string>(http://ams-neve\.info/ftp/web/Genesys/GenesysControlInstallerMac.*?\.zip).*?GenesysControl plugin Installer \(Mac OSX, Catalina\+\)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
-                <string>https://www.ams-neve.com/genesyscontrol-plugin-199-w.asp</string>
+                <string>https://www.ams-neve.com/consoles/genesyscontrol-plugin/</string>
             </dict>
         </dict>
         <dict>
