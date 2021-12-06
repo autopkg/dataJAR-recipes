@@ -31,6 +31,15 @@
 	<string>com.github.homebysix.pkg.AWSCLI</string>
 	<key>Process</key>
 	<array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated.</string>
+             </dict>
+           	<key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
 		<dict>
 			<key>Arguments</key>
 			<dict>
