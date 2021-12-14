@@ -36,7 +36,7 @@
                  <key>url</key>
                  <string>%baseurl%/connect_latest/v4/connectversions.min.js</string>
                  <key>re_pattern</key>
-                 <string>title:\"Mac Intel Installer\",type:\"application/octet-stream\",href:\"(bin/ibm-aspera-connect_.*?-macOS_x86_64\.dmg)\"</string>
+                 <string>title:\"Mac Intel Installer\",type:\"application/octet-stream\",href:\"(bin/ibm-aspera-connect_.*?_macOS_x86_64\.dmg)\"</string>
                  <key>result_output_var_name</key>
                  <string>downloadpath</string>
              </dict>
