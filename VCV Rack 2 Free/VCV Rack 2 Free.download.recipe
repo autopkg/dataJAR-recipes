@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://vcvrack.com/Rack#get</string>
                 <key>re_pattern</key>
-                <string>https://vcvrack\.com/downloads/RackFree-2.*?-mac\.pkg</string>
+                <string>/downloads/RackFree-2.*?-mac\.pkg</string>
             </dict>
         </dict>
         <dict>
@@ -32,7 +32,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%match%</string>
+                <string>https://vcvrack.com%match%</string>
             </dict>
         </dict>
         <dict>
