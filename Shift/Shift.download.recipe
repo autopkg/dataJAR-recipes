@@ -10,10 +10,6 @@
     <dict>
         <key>NAME</key>
         <string>Shift</string>
-        <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://update.tryshift.com</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -25,13 +21,13 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://update.tryshift.com</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
-                    <string>%USER_AGENT%</string>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.2 Safari/605.1.15</string>
                 </dict>
             </dict>
         </dict>
