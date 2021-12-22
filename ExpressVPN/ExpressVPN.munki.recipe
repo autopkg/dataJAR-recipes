@@ -31,7 +31,7 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.download.ExpressVPN</string>
+    <string>com.github.dataJAR-recipes.download.ExpressVPN</string>
     <key>Process</key>
     <array>
         <dict>
