@@ -9,9 +9,9 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>SMART Product Drivers and Ink</string>
+        <string>SMARTProductDriversandInk</string>
         <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>        
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -46,12 +46,12 @@
                 <key>flat_pkg_path</key>
                 <string>%pathname%/*.pkg</string>
                 <key>purge_destination</key>
-                <string>true</string>
+                <true/>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>         
+            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -59,19 +59,22 @@
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack/SMART_Product_Drivers.pkg/Payload</string>
                 <key>purge_destination</key>
-                <string>true</string>
+                <true/>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
-                <key>input_plist_path</key>
+                <key>info_path</key>
                 <string>%RECIPE_CACHE_DIR%/app_unpack/Applications/SMART Technologies/SMART Settings.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                </dict>
             </dict>
-            <key>Processor</key>
-            <string>Versioner</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -118,6 +121,8 @@
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -126,8 +131,6 @@
                     <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

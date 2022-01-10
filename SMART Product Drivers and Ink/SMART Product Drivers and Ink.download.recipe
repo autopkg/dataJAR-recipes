@@ -9,7 +9,9 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>SMART Product Drivers and Ink</string>
+        <string>SMARTProductDriversandInk</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -20,10 +22,45 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://support.smarttech.com/docs/software/product-drivers/product-drivers-12/en/downloads/drink-mac-download.cshtml</string>
                 <key>re_pattern</key>
-                <string>(http.*\.dmg)</string>
+                <string>https://support\.smarttech\.com/docs/software/product-drivers-ink/12.*?/en/downloads/redirect\.cshtml</string>
+                <key>url</key>
+                <string>https://support.smarttech.com/en/downloads</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\"(.*?mac.*?)\"</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+            <key>Arguments</key>
+            <dict>
+                <key>find</key>
+                <string>redirect.cshtml</string>
+                <key>input_string</key>
+                <string>%url%</string>
+                <key>replace</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%output_string%</string>
+                <key>re_pattern</key>
+                <string>(https://.*?\.dmg)</string>
             </dict>
         </dict>
         <dict>
@@ -40,11 +77,11 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>   
-            <string>CodeSignatureVerifier</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>input_path</key>   
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
                 <string>%pathname%/Install SMART Product Drivers.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
