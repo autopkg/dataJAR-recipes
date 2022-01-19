@@ -1,6 +1,11 @@
 # IN BETA #
 
 ### Adobe Admin Console Packages
+#### Requirements
+1. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
+2. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name
+3. cd to the dir
+4. ./AdobeAdminConsolePackagesImporter.py munki
 
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
