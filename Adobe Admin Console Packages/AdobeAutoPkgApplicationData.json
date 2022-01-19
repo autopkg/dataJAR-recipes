@@ -1,0 +1,45 @@
+[
+  {
+    "sap_code": "AICY",
+    "versions": {
+      "17.0": {
+        "app_bundle_id": "com.adobe.InCopy",
+        "app_json_version_key": "ProductVersion",
+        "app_path": "/Applications/Adobe InCopy 2022/Adobe InCopy 2022.app",
+        "app_description": "Collaborate with copywriters and editors",
+        "display_name": "Adobe InCopy 2022",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      }
+    }
+  },
+  {
+    "sap_code": "APRO",
+    "versions": {
+      "21.0": {
+        "additional_blocking_applications": ["Acrobat Distiller", "Adobe Acrobat", "Acrobat Reader"],
+        "app_bundle_id": "com.adobe.Acrobat.Pro",
+        "app_json_version_key": "ProductVersion",
+        "app_path": "/Applications/Adobe Acrobat DC/Adobe Acrobat.app",
+        "app_description": "The complete PDF solution for a mobile, connected world.",
+        "display_name": "Adobe Acrobat",
+        "minos_version": "10.13.0",
+        "version_comparison_key": "CFBundleShortVersionString"
+      }
+    }
+  },
+  {
+    "sap_code": "FLPR",
+    "versions": {
+      "22.0": {
+        "app_bundle_id": "com.adobe.Adobe-Animate-2022.application",
+        "app_json_version_key": "CodexVersion",
+        "app_path": "/Applications/Adobe Animate 2022/Adobe Animate 2022.app",
+        "app_description": "Collaborate with copywriters and editors",
+        "display_name": "Adobe Animate 2022",
+        "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      }
+    }
+  }
+]
