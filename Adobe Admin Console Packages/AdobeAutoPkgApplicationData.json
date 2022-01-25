@@ -43,6 +43,29 @@
     }
   },
   {
+    "sap_code": "ILST",
+    "versions": {
+      "25.0": {
+        "app_bundle_id": "com.adobe.illustrator",
+        "app_json_version_key": "CodexVersion",
+        "app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
+        "app_description": "Create beautiful graphics, photos and art anywhere",
+        "display_name": "Adobe Illustrator 2021",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      },
+      "26.0": {
+        "app_bundle_id": "com.adobe.illustrator",
+        "app_json_version_key": "CodexVersion",
+        "app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
+        "app_description": "Create stunning illustrations and graphics",
+        "display_name": "Adobe Illustrator 2022",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      }
+    }
+  },
+  {
     "sap_code": "PHSP",
     "versions": {
       "22.0": {
