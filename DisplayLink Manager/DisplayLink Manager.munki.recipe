@@ -79,6 +79,10 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
@@ -102,6 +106,8 @@
                 <dict>
                     <key>minimum_os_version</key>
                     <string>%min_os_version%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
         </dict>
