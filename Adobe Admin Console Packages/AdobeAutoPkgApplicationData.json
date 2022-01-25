@@ -1,128 +1,151 @@
 [
-  {
-    "sap_code": "AICY",
-    "versions": {
-      "17.0": {
-        "app_bundle_id": "com.adobe.InCopy",
-        "app_json_version_key": "ProductVersion",
-        "app_path": "/Applications/Adobe InCopy 2022/Adobe InCopy 2022.app",
-        "app_description": "Collaborate with copywriters and editors.",
-        "display_name": "Adobe InCopy 2022",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      }
+	{
+        "sap_code": "AICY",
+        "versions": {
+            "17.0": {
+                "app_bundle_id": "com.adobe.InCopy",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe InCopy 2022/Adobe InCopy 2022.app",
+                "app_description": "Collaborate with copywriters and editors.",
+                "display_name": "Adobe InCopy 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "APRO",
+        "versions": {
+            "21.0": {
+                "additional_blocking_applications": ["Acrobat Distiller", "Adobe Acrobat", "Acrobat Reader"],
+                "app_bundle_id": "com.adobe.Acrobat.Pro",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe Acrobat DC/Adobe Acrobat.app",
+                "app_description": "The complete PDF solution for a mobile, connected world.",
+                "display_name": "Adobe Acrobat",
+                "minos_version": "10.13.0",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "FLPR",
+        "versions": {
+            "22.0": {
+                "app_bundle_id": "com.adobe.Adobe-Animate-2022.application",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Animate 2022/Adobe Animate 2022.app",
+                "app_description": "Collaborate with copywriters and editors.",
+                "display_name": "Adobe Animate 2022",
+                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "IDSN",
+        "versions": {
+            "16.0": {
+                "app_bundle_id": "com.adobe.InDesign",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Adobe InDesign 2021/Adobe InDesign 2021.app",
+                "app_description": "Design and publish elegant layouts.",
+                "display_name": "Adobe InDesign 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "17.0": {
+                "app_bundle_id": "com.adobe.InDesign",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe InDesign 2022/Adobe InDesign 2022.app",
+                "app_description": "Design and publish elegant layouts.",
+                "display_name": "Adobe InDesign 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "ILST",
+        "versions": {
+            "25.0": {
+                "app_bundle_id": "com.adobe.illustrator",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Illustrator 2021/Adobe Illustrator.app",
+                "app_description": "Create beautiful graphics, photos and art anywhere.",
+                "display_name": "Adobe Illustrator 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "26.0": {
+                "app_bundle_id": "com.adobe.illustrator",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
+                "app_description": "Create stunning illustrations and graphics.",
+                "display_name": "Adobe Illustrator 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "LRCC",
+        "versions": {
+            "1.0": {
+                "app_bundle_id": "com.adobe.lightroomCC",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
+                "app_description": "The cloud-based photo service.",
+                "display_name": "Adobe Lightroom",
+                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+                "version_comparison_key": "CFBundleVersion"
+            }
+        }
+    },
+    {
+        "sap_code": "PHSP",
+        "versions": {
+            "22.0": {
+                "app_bundle_id": "com.adobe.Photoshop",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app",
+                "app_description": "Create beautiful graphics, photos and art anywhere.",
+                "display_name": "Adobe Photoshop 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "23.0": {
+                "app_bundle_id": "com.adobe.Photoshop",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Photoshop 2022/Adobe Photoshop 2022.app",
+                "app_description": "Create beautiful graphics, photos and art anywhere.",
+                "display_name": "Adobe Photoshop 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "PPRO",
+        "versions": {
+            "15.0": {
+                "app_bundle_id": "com.adobe.PremierePro.15",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Premiere Pro 2021/Adobe Premiere Pro 2021.app",
+                "app_description": "Edit and craft polished films and video.",
+                "display_name": "Adobe Premiere Pro 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "22.0": {
+                "app_bundle_id": "com.adobe.PremierePro.22",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Premiere Pro 2022/Adobe Premiere Pro 2022.app",
+                "app_description": "Edit and craft polished films and video.",
+                "display_name": "Adobe Premiere Pro 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
     }
-  },
-  {
-    "sap_code": "APRO",
-    "versions": {
-      "21.0": {
-        "additional_blocking_applications": ["Acrobat Distiller", "Adobe Acrobat", "Acrobat Reader"],
-        "app_bundle_id": "com.adobe.Acrobat.Pro",
-        "app_json_version_key": "ProductVersion",
-        "app_path": "/Applications/Adobe Acrobat DC/Adobe Acrobat.app",
-        "app_description": "The complete PDF solution for a mobile, connected world.",
-        "display_name": "Adobe Acrobat",
-        "minos_version": "10.13.0",
-        "version_comparison_key": "CFBundleShortVersionString"
-      }
-    }
-  },
-  {
-    "sap_code": "FLPR",
-    "versions": {
-      "22.0": {
-        "app_bundle_id": "com.adobe.Adobe-Animate-2022.application",
-        "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Animate 2022/Adobe Animate 2022.app",
-        "app_description": "Collaborate with copywriters and editors.",
-        "display_name": "Adobe Animate 2022",
-        "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      }
-    }
-  },
-  {
-    "sap_code": "IDSN",
-    "versions": {
-      "16.0": {
-        "app_bundle_id": "com.adobe.InDesign",
-        "app_json_version_key": "ProductVersion",
-        "app_path": "/Adobe InDesign 2021/Adobe InDesign 2021.app",
-        "app_description": "Design and publish elegant layouts.",
-        "display_name": "Adobe InDesign 2021",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      },
-      "17.0": {
-        "app_bundle_id": "com.adobe.InDesign",
-        "app_json_version_key": "ProductVersion",
-        "app_path": "/Applications/Adobe InDesign 2022/Adobe InDesign 2022.app",
-        "app_description": "Design and publish elegant layouts.",
-        "display_name": "Adobe InDesign 2022",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      }
-    }
-  },
-  {
-    "sap_code": "ILST",
-    "versions": {
-      "25.0": {
-        "app_bundle_id": "com.adobe.illustrator",
-        "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Illustrator 2021/Adobe Illustrator.app",
-        "app_description": "Create beautiful graphics, photos and art anywhere.",
-        "display_name": "Adobe Illustrator 2021",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      },
-      "26.0": {
-        "app_bundle_id": "com.adobe.illustrator",
-        "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
-        "app_description": "Create stunning illustrations and graphics.",
-        "display_name": "Adobe Illustrator 2022",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      }
-    }
-  },
-  {
-    "sap_code": "LRCC",
-    "versions": {
-      "1.0": {
-        "app_bundle_id": "com.adobe.lightroomCC",
-        "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
-        "app_description": "The cloud-based photo service.",
-        "display_name": "Adobe Lightroom",
-        "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-        "version_comparison_key": "CFBundleVersion"
-      }
-    }
-  },
-  {
-    "sap_code": "PHSP",
-    "versions": {
-      "22.0": {
-        "app_bundle_id": "com.adobe.Photoshop",
-        "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app",
-        "app_description": "Create beautiful graphics, photos and art anywhere.",
-        "display_name": "Adobe Photoshop 2021",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      },
-      "23.0": {
-        "app_bundle_id": "com.adobe.Photoshop",
-        "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Photoshop 2022/Adobe Photoshop 2022.app",
-        "app_description": "Create beautiful graphics, photos and art anywhere.",
-        "display_name": "Adobe Photoshop 2022",
-        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-        "version_comparison_key": "CFBundleShortVersionString"
-      }
-    }
-  }
 ]
