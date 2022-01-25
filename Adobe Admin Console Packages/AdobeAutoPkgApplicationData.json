@@ -147,5 +147,19 @@
                 "version_comparison_key": "CFBundleShortVersionString"
             }
         }
+    },
+    {
+        "sap_code": "SPRK",
+        "versions": {
+            "18.0.12": {
+                "app_bundle_id": "com.adobe.xd",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe XD/Adobe XD.app",
+                "app_description": "Design, prototype and share user experiences.",
+                "display_name": "Adobe XD",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
     }
 ]
