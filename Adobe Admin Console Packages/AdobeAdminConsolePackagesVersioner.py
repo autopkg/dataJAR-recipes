@@ -305,6 +305,10 @@ class AdobeAdminConsolePackagesVersioner(Processor):
             for tag_line in tag_lines:
                 if tag_line['locale'] == self.env['aacp_application_install_lang']:
                     self.env['aacp_application_description'] = tag_line['value']
+                    # Add a . if missing from the end
+                    if not self.env['aacp_application_description'].endswith('.'):
+                        self.env['aacp_application_description'] = (
+                                            self.env['aacp_application_description'] + '.')
                     self.output(f"aacp_application_description: "
                                 f"{self.env['aacp_application_description']}")
 
