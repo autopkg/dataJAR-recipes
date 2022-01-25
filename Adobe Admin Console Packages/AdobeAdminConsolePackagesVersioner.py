@@ -331,7 +331,7 @@ class AdobeAdminConsolePackagesVersioner(Processor):
 
         # Get this scripts parent directory
         self.env['aacp_parent_dir'] = Path(__file__).cwd().as_posix()
-        self.output(f"aacp_parent_dir': {self.env['aacp_parent_dir']}")
+        self.output(f"aacp_parent_dir: {self.env['aacp_parent_dir']}")
 
         # Get the path to AdobeAutoPkgApplicationData.json
         self.env['aacp_json_path'] = os.path.join(self.env['aacp_parent_dir'],
@@ -349,6 +349,8 @@ class AdobeAdminConsolePackagesVersioner(Processor):
             except json.JSONDecodeError as err_msg:
                 raise ProcessorError from err_msg
 
+        self.output("here")
+
         # Get applications dict from the json
         for application_data in self.env['aacp_autopkg_json']:
             if application_data['sap_code'] == self.env['aacp_application_sap_code']:
@@ -365,9 +367,15 @@ class AdobeAdminConsolePackagesVersioner(Processor):
                                              f"{self.env['aacp_application_major_version']},"
                                              f" in {self.env['aacp_json_path']}... "
                                              f"exiting...") from err_msg
+
         # If we found a match
-        if 'aacp_matched_json' in self.env:
+        if self.env['aacp_matched_json']:
             self.process_matched_json(load_json)
+        else:
+            raise ProcessorError("Cannot find details for "
+                                f"{self.env['aacp_application_sap_code']} "
+                                f"with version: {self.env['aacp_application_major_version']},"
+                                f" in {self.env['aacp_json_path']}...")
 
 
     def process_matched_json(self, load_json):
@@ -413,6 +421,10 @@ class AdobeAdminConsolePackagesVersioner(Processor):
             self.output(f"aacp_application_description: description missing, set from "
                         f"aacp_matched_json: "
                         f"{self.env['aacp_application_description']}")
+        # Add a . if missing from the end
+        if not self.env['aacp_application_description'].endswith('.'):
+            self.env['aacp_application_description'] = (self.env['aacp_application_description']
+                                                        + '.')
 
         # Get additional_blocking_applications
         if 'additional_blocking_applications' in self.env['aacp_matched_json']:
