@@ -43,12 +43,35 @@
     }
   },
   {
+    "sap_code": "IDSN",
+    "versions": {
+      "16.0": {
+        "app_bundle_id": "com.adobe.InDesign",
+        "app_json_version_key": "ProductVersion",
+        "app_path": "/Adobe InDesign 2021/Adobe InDesign 2021.app",
+        "app_description": "Design and publish elegant layouts",
+        "display_name": "Adobe InDesign 2021",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      },
+      "17.0": {
+        "app_bundle_id": "com.adobe.InDesign",
+        "app_json_version_key": "ProductVersion",
+        "app_path": "/Applications/Adobe InDesign 2022/Adobe InDesign 2022.app",
+        "app_description": "Design and publish elegant layouts",
+        "display_name": "Adobe InDesign 2022",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      }
+    }
+  },
+  {
     "sap_code": "ILST",
     "versions": {
       "25.0": {
         "app_bundle_id": "com.adobe.illustrator",
         "app_json_version_key": "CodexVersion",
-        "app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
+        "app_path": "/Applications/Adobe Illustrator 2021/Adobe Illustrator.app",
         "app_description": "Create beautiful graphics, photos and art anywhere",
         "display_name": "Adobe Illustrator 2021",
         "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
