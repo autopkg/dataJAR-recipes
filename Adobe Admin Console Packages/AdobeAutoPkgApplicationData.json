@@ -41,5 +41,28 @@
         "version_comparison_key": "CFBundleShortVersionString"
       }
     }
+  },
+  {
+    "sap_code": "PHSP",
+    "versions": {
+      "22.0": {
+        "app_bundle_id": "com.adobe.Photoshop",
+        "app_json_version_key": "CodexVersion",
+        "app_path": "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app",
+        "app_description": "Create beautiful graphics, photos and art anywhere",
+        "display_name": "Adobe Photoshop 2021",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      },
+      "23.0": {
+        "app_bundle_id": "com.adobe.Photoshop",
+        "app_json_version_key": "CodexVersion",
+        "app_path": "/Applications/Adobe Photoshop 2022/Adobe Photoshop 2022.app",
+        "app_description": "Create beautiful graphics, photos and art anywhere",
+        "display_name": "Adobe Photoshop 2022",
+        "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+        "version_comparison_key": "CFBundleShortVersionString"
+      }
+    }
   }
 ]
