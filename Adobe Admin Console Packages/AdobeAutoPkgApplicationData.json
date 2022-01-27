@@ -71,7 +71,7 @@
             "11.0": {
                 "app_bundle_id": "com.adobe.bridge11",
                 "app_json_version_key": "ProductVersion",
-                "app_path": "/Adobe Bridge 2021/Adobe Bridge 2021.app",
+                "app_path": "/Applications/Adobe Bridge 2021/Adobe Bridge 2021.app",
                 "app_description": "Centralize your creative assets.",
                 "display_name": "Adobe Bridge 2021",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
