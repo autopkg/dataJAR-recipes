@@ -218,11 +218,11 @@ class AdobeAdminConsolePackagesVersioner(Processor):
 
         # Check for Processor Architecture
         self.env['aacp_application_architecture_type'] = (
-            option_xml.findtext('ProcessorArchitecture'))
-        if not self.env['aacp_application_architecture_type'] in ['arm64', 'x64']:
+            option_xml.findtext('ProcessorArchitecture').lower())
+        if not self.env['aacp_application_architecture_type'] in ['arm64', 'macuniversal', 'x64']:
             raise ProcessorError(f"architecture_type: "
                                  f"{self.env['aacp_application_architecture_type']},"
-                                 f" is neither arm64 nor x64... exiting...")
+                                 f" is neither arm64, macuniversal nor x64... exiting...")
         if self.env['aacp_application_architecture_type'] == 'x64':
             self.env['aacp_application_architecture_type'] = 'x86_64'
 
@@ -453,7 +453,8 @@ class AdobeAdminConsolePackagesVersioner(Processor):
         pkginfo = {}
 
         # Set pkginfo variables
-        if self.env['aacp_application_architecture_type']:
+        if (self.env['aacp_application_architecture_type'] and
+            not self.env['aacp_application_architecture_type'] == 'macuniversal'):
             pkginfo['supported_architectures'] = [self.env['aacp_application_architecture_type']]
 
         if self.env['aacp_application_description']:
