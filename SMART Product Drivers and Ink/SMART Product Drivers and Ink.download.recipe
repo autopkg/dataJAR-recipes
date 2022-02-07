@@ -23,9 +23,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://support\.smarttech\.com/docs/software/product-drivers-ink/12.*?/en/downloads/redirect\.cshtml</string>
+                <string>https://support\.smarttech\.com/docs/software/product-drivers-ink/(.*?)/en/home\.cshtml</string>
                 <key>url</key>
-                <string>https://support.smarttech.com/en/downloads</string>
+                <string>https://support.smarttech.com/en/software/product-drivers-and-ink</string>
             </dict>
         </dict>
         <dict>
@@ -34,33 +34,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\"(.*?mac.*?)\"</string>
+                <string>https://downloads\.smarttech\.com/software/driversink/.*?/mac/smartproductdrivers.*?\.dmg</string>
                 <key>url</key>
-                <string>%match%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
-            <key>Arguments</key>
-            <dict>
-                <key>find</key>
-                <string>redirect.cshtml</string>
-                <key>input_string</key>
-                <string>%url%</string>
-                <key>replace</key>
-                <string>%match%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>%output_string%</string>
-                <key>re_pattern</key>
-                <string>(https://.*?\.dmg)</string>
+                <string>https://support.smarttech.com/docs/software/product-drivers-ink/%match%/en/downloads/drink-mac-download.cshtml</string>
             </dict>
         </dict>
         <dict>
