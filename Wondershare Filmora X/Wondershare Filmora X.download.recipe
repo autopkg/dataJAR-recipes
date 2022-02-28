@@ -21,11 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\"(https://download\.wondershare\.com/filmora-mac_.*?.dmg)\"</string>
+                <string>http://download\.wondershare\.com/upgrade/filmora-mac_full[0-9]+\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
-                <string>https://cbs.wondershare.com/go.php?pid=718</string>
+                <string>http://cbs.wondershare.com/go.php?m=upgrade_info&amp;pid=718</string>
             </dict>
         </dict>
         <dict>
