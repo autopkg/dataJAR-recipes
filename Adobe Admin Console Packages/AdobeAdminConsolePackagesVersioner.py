@@ -353,8 +353,6 @@ class AdobeAdminConsolePackagesVersioner(Processor):
             except json.JSONDecodeError as err_msg:
                 raise ProcessorError from err_msg
 
-        self.output("here")
-
         # Get applications dict from the json
         for application_data in self.env['aacp_autopkg_json']:
             if application_data['sap_code'] == self.env['aacp_application_sap_code']:
