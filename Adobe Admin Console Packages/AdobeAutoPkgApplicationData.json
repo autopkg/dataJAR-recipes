@@ -107,6 +107,20 @@
         }
     },
     {
+        "sap_code": "ESHR",
+        "versions": {
+            "18.0.12": {
+                "app_bundle_id": "com.adobe.dimension",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Dimension/Adobe Dimension.app",
+                "app_description": "Design with 3D from concept to reality.",
+                "display_name": "Adobe Dimension",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
         "sap_code": "FLPR",
         "versions": {
             "21.0": {
