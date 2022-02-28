@@ -33,8 +33,7 @@
                 "display_name": "Adobe InCopy 2021",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
-            }
-        },
+            },
             "17.0": {
                 "app_bundle_id": "com.adobe.InCopy",
                 "app_json_version_key": "ProductVersion",
