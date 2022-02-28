@@ -334,7 +334,7 @@ class AdobeAdminConsolePackagesVersioner(Processor):
         self.env['aacp_matched_json'] = None
 
         # Get this scripts parent directory
-        self.env['aacp_parent_dir'] = Path(__file__).cwd().as_posix()
+        self.env['aacp_parent_dir'] = os.path.dirname(os.path.realpath(__file__))
         self.output(f"aacp_parent_dir: {self.env['aacp_parent_dir']}")
 
         # Get the path to AdobeAutoPkgApplicationData.json
