@@ -84,6 +84,29 @@
         }
     },
     {
+        "sap_code": "CHAR",
+        "versions": {
+            "4.0": {
+                "app_bundle_id": "com.adobe.Character-Animator.application",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Character Animator 2021/Adobe Character Animator 2021.app",
+                "app_description": "Animate in real time.",
+                "display_name": "Adobe Character Animator 2021",
+                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "22.0": {
+                "app_bundle_id": "com.adobe.Character-Animator.application",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Character Animator 2022/Adobe Character Animator 2022.app",
+                "app_description": "Animate in real time.",
+                "display_name": "Adobe Character Animator 2022",
+                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
         "sap_code": "FLPR",
         "versions": {
             "21.0": {
