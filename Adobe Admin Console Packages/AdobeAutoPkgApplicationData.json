@@ -107,6 +107,20 @@
         }
     },
     {
+        "sap_code": "DRWV",
+        "versions": {
+            "18.0.12": {
+                "app_bundle_id": "com.adobe.dreamweaver-18.1",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe Dreamweaver 2021/Adobe Dreamweaver 2021.app",
+                "app_description": "Design and develop modern, responsive web sites.",
+                "display_name": "Adobe Dreamweaver 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
         "sap_code": "ESHR",
         "versions": {
             "18.0.12": {
