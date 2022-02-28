@@ -6,7 +6,7 @@
                 "app_bundle_id": "com.adobe.AfterEffects",
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe After Effects 2021/Adobe After Effects 2021.app",
-                "app_description": "Collaborate with copywriters and editors.",
+                "app_description": "Industry Standard motion graphics & visual effects.",
                 "display_name": "Adobe After Effects 2021",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
