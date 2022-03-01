@@ -146,7 +146,7 @@
     {
         "sap_code": "ESHR",
         "versions": {
-            "18.0.12": {
+            "3.0": {
                 "app_bundle_id": "com.adobe.dimension",
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe Dimension/Adobe Dimension.app",
