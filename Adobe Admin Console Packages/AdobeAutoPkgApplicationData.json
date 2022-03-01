@@ -210,7 +210,7 @@
                 "app_bundle_id": "com.adobe.illustrator",
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe Illustrator 2021/Adobe Illustrator.app",
-                "app_description": "Create beautiful graphics, photos and art anywhere.",
+                "app_description": "Create stunning illustrations and graphics.",
                 "display_name": "Adobe Illustrator 2021",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
