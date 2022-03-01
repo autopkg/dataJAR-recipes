@@ -1,4 +1,27 @@
 [
+    {
+        "sap_code": "AME",
+        "versions": {
+            "15.0": {
+                "app_bundle_id": "com.adobe.ame.application.15",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "22.0": {
+                "app_bundle_id": "com.adobe.ame.application.22",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
 	{
         "sap_code": "AEFT",
         "versions": {
@@ -243,7 +266,7 @@
     {
         "sap_code": "LTRM",
         "versions": {
-            "1.0": {
+            "8.3": {
                 "app_bundle_id": "com.adobe.LightroomClassicCC7",
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
