@@ -349,12 +349,26 @@
     {
         "sap_code": "SBSTD",
         "versions": {
-            "18.0.12": {
+            "11.2.0": {
                 "app_bundle_id": "com.adobe.substance-3d-designer",
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe Substance 3D Designer/Adobe Substance 3D Designer.app",
                 "app_description": "Design parametric 3D assets with full control.",
                 "display_name": "Adobe Substance 3D Designer",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "SBSTP",
+        "versions": {
+            "7.2.0": {
+                "app_bundle_id": "com.adobe.Adobe-Substance-3D-Painter",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Substance 3D Painter/Adobe Substance 3D Painter.app",
+                "app_description": "Texture 3D models in real time.",
+                "display_name": "Adobe Substance 3D Painter",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
