@@ -234,9 +234,23 @@
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
                 "app_description": "The cloud-based photo service.",
-                "display_name": "Adobe Lightroom",
+                "display_name": "Adobe Lightroom CC",
                 "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
                 "version_comparison_key": "CFBundleVersion"
+            }
+        }
+    },
+    {
+        "sap_code": "LTRM",
+        "versions": {
+            "1.0": {
+                "app_bundle_id": "com.adobe.LightroomClassicCC7",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
+                "app_description": "Desktop focused photo editing app.",
+                "display_name": "Adobe Lightroom Classic",
+                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
