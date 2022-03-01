@@ -347,6 +347,20 @@
         }
     },
     {
+        "sap_code": "SBSTA",
+        "versions": {
+            "3.0.0": {
+                "app_bundle_id": "com.adobe.adobe-substance-3d-sampler",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Substance 3D Sampler/Adobe Substance 3D Sampler.app",
+                "app_description": "Create 3D materials and lights from real life images.",
+                "display_name": "Adobe Substance 3D Sampler",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
         "sap_code": "SBSTD",
         "versions": {
             "11.2.0": {
@@ -383,6 +397,20 @@
                 "app_path": "/Applications/Adobe XD/Adobe XD.app",
                 "app_description": "Design, prototype and share user experiences.",
                 "display_name": "Adobe XD",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+    {
+        "sap_code": "STGR",
+        "versions": {
+            "1.0.0": {
+                "app_bundle_id": "com.adobe.stager",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Substance 3D Stager/Adobe Substance 3D Stager.app",
+                "app_description": "Compose and render photorealistic 3D scenes.",
+                "display_name": "Adobe Substance 3D Stager",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
