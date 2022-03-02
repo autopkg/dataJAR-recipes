@@ -387,6 +387,13 @@ class AdobeAdminConsolePackagesVersioner(Processor):
         if not self.env['aacp_application_sap_code'] == 'APRO':
             self.env['version'] = load_json[self.env['aacp_matched_json']['app_json_version_key']]
             self.output(f"version: {self.env['version']}")
+        
+        # If the version is unsupported
+        if 'unsupported_versions_dict' in self.env['aacp_matched_json']:
+            self.output(f"unsupported_versions_dict: {self.env['aacp_matched_json']['unsupported_versions_dict']}")
+            for unsupported_version in self.env['aacp_matched_json']['unsupported_versions_dict']:
+                if unsupported_version == self.env['version']:
+                    raise ProcessorError(f"{self.env['aacp_matched_json']['unsupported_versions_dict'][unsupported_version]}")
 
         # Applications bundle id
         self.env['aacp_application_bundle_id'] = self.env['aacp_matched_json']['app_bundle_id']
@@ -513,6 +520,7 @@ class AdobeAdminConsolePackagesVersioner(Processor):
             for sub_key in self.env[some_key]:
                 # check for a match
                 re_match = re.search('%(.*?)%', self.env[some_key][sub_key])
+                # if we have a match
                 if re_match:
                     self.output(f"found: %{re_match[1]}% in {sub_key} from {some_key}, "
                                  "looking to replace...")
@@ -535,6 +543,7 @@ class AdobeAdminConsolePackagesVersioner(Processor):
                     for sub_item in self.env[some_key][list_item]:
                         # check for a match
                         re_match = re.search('%(.*?)%', self.env[some_key][list_item])
+                        # if we have a match
                         if re_match:
                             self.output(f"found: %{re_match[1]}% in {sub_item} from {list_item}, "
                                          "looking to replace...")
