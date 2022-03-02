@@ -336,7 +336,7 @@
                 "version_comparison_key": "CFBundleShortVersionString"
             },
             "2.0": {
-                "app_bundle_id": "com.adobe.PremiereRush2.0",
+                "app_bundle_id": "com.adobe.PremiereRush%version%",
                 "app_json_version_key": "CodexVersion",
                 "app_path": "/Applications/Adobe Premiere Rush 2.0/Adobe Premiere Rush.app",
                 "app_description": "Create and share online videos anywhere.",
