@@ -6,7 +6,7 @@
         <string>Import Adobe Admin Console Packages into Munki, please review: 
 https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md</string>
         <key>Identifier</key>
-        <string>com.github.dataJAR-test-recipes.munki.Import Adobe Admin Console Packages</string>
+        <string>com.github.dataJAR-recipes.munki.Import Adobe Admin Console Packages</string>
         <key>Input</key>
         <dict>
             <key>MUNKI_CATEGORY</key>
