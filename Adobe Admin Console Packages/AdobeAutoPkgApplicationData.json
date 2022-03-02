@@ -1,419 +1,421 @@
-[
-    {
-        "sap_code": "AME",
-        "versions": {
-            "15.0": {
-                "app_bundle_id": "com.adobe.ame.application.15",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
-                "app_description": "Quickly output video files for virtually any screen.",
-                "display_name": "Adobe Media Encoder 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.ame.application.22",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
-                "app_description": "Quickly output video files for virtually any screen.",
-                "display_name": "Adobe Media Encoder 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
+[{
+		"sap_code": "AME",
+		"versions": {
+			"15.0": {
+				"app_bundle_id": "com.adobe.ame.application.15",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
+				"app_description": "Quickly output video files for virtually any screen.",
+				"display_name": "Adobe Media Encoder 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"22.0": {
+				"app_bundle_id": "com.adobe.ame.application.22",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
+				"app_description": "Quickly output video files for virtually any screen.",
+				"display_name": "Adobe Media Encoder 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
 	{
-        "sap_code": "AEFT",
-        "versions": {
-            "18.0": {
-                "app_bundle_id": "com.adobe.AfterEffects",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe After Effects 2021/Adobe After Effects 2021.app",
-                "app_description": "Industry Standard motion graphics & visual effects.",
-                "display_name": "Adobe After Effects 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.AfterEffects",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe After Effects 2022/Adobe After Effects 2022.app",
-                "app_description": "Industry Standard motion graphics & visual effects.",
-                "display_name": "Adobe After Effects 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
+		"sap_code": "AEFT",
+		"versions": {
+			"18.0": {
+				"app_bundle_id": "com.adobe.AfterEffects",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe After Effects 2021/Adobe After Effects 2021.app",
+				"app_description": "Industry Standard motion graphics & visual effects.",
+				"display_name": "Adobe After Effects 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"22.0": {
+				"app_bundle_id": "com.adobe.AfterEffects",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe After Effects 2022/Adobe After Effects 2022.app",
+				"app_description": "Industry Standard motion graphics & visual effects.",
+				"display_name": "Adobe After Effects 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
 	{
-        "sap_code": "AICY",
-        "versions": {
-            "16.0": {
-                "app_bundle_id": "com.adobe.InCopy",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe InCopy 2021/Adobe InCopy 2021.app",
-                "app_description": "Collaborate with copywriters and editors.",
-                "display_name": "Adobe InCopy 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "17.0": {
-                "app_bundle_id": "com.adobe.InCopy",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe InCopy 2022/Adobe InCopy 2022.app",
-                "app_description": "Collaborate with copywriters and editors.",
-                "display_name": "Adobe InCopy 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "APRO",
-        "versions": {
-            "21.0": {
-                "additional_blocking_applications": ["Acrobat Distiller", "Adobe Acrobat", "Acrobat Reader"],
-                "app_bundle_id": "com.adobe.Acrobat.Pro",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe Acrobat DC/Adobe Acrobat.app",
-                "app_description": "The complete PDF solution for a mobile, connected world.",
-                "display_name": "Adobe Acrobat DC",
-                "minos_version": "10.13.0",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
+		"sap_code": "AICY",
+		"versions": {
+			"16.0": {
+				"app_bundle_id": "com.adobe.InCopy",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe InCopy 2021/Adobe InCopy 2021.app",
+				"app_description": "Collaborate with copywriters and editors.",
+				"display_name": "Adobe InCopy 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"17.0": {
+				"app_bundle_id": "com.adobe.InCopy",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe InCopy 2022/Adobe InCopy 2022.app",
+				"app_description": "Collaborate with copywriters and editors.",
+				"display_name": "Adobe InCopy 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
 	{
-        "sap_code": "AUDT",
-        "versions": {
-            "14.0": {
-                "app_bundle_id": "com.adobe.Audition",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Audition 2021/Adobe Audition 2021.app",
-                "app_description": "Collaborate with copywriters and editors.",
-                "display_name": "Adobe Audition 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.Audition",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Audition 2022/Adobe Audition 2022.app",
-                "app_description": "Bring stories to life with audio.",
-                "display_name": "Adobe Audition 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "CHAR",
-        "versions": {
-            "4.0": {
-                "app_bundle_id": "com.adobe.Character-Animator.application",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Character Animator 2021/Adobe Character Animator 2021.app",
-                "app_description": "Animate in real time.",
-                "display_name": "Adobe Character Animator 2021",
-                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.Character-Animator.application",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Character Animator 2022/Adobe Character Animator 2022.app",
-                "app_description": "Animate in real time.",
-                "display_name": "Adobe Character Animator 2022",
-                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "DRWV",
-        "versions": {
-            "21.0": {
-                "app_bundle_id": "com.adobe.dreamweaver-18.1",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe Dreamweaver 2021/Adobe Dreamweaver 2021.app",
-                "app_description": "Design and develop modern, responsive web sites.",
-                "display_name": "Adobe Dreamweaver 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "ESHR",
-        "versions": {
-            "3.0": {
-                "app_bundle_id": "com.adobe.dimension",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Dimension/Adobe Dimension.app",
-                "app_description": "Design with 3D from concept to reality.",
-                "display_name": "Adobe Dimension",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "FLPR",
-        "versions": {
-            "21.0": {
-                "app_bundle_id": "com.adobe.Adobe-Animate-2021.application",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app",
-                "app_description": "A new age for animation. Any platform, device and style.",
-                "display_name": "Adobe Animate 2021",
-                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.Adobe-Animate-2022.application",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Animate 2022/Adobe Animate 2022.app",
-                "app_description": "A new age for animation. Any platform, device and style.",
-                "display_name": "Adobe Animate 2022",
-                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "KBRG",
-        "versions": {
-            "11.0": {
-                "app_bundle_id": "com.adobe.bridge11",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe Bridge 2021/Adobe Bridge 2021.app",
-                "app_description": "Centralize your creative assets.",
-                "display_name": "Adobe Bridge 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "12.0": {
-                "app_bundle_id": "com.adobe.bridge12",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe Bridge 2022/Adobe Bridge 2022.app",
-                "app_description": "Centralize your creative assets.",
-                "display_name": "Adobe Bridge 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "IDSN",
-        "versions": {
-            "16.0": {
-                "app_bundle_id": "com.adobe.InDesign",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe InDesign 2021/Adobe InDesign 2021.app",
-                "app_description": "Design and publish elegant layouts.",
-                "display_name": "Adobe InDesign 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "17.0": {
-                "app_bundle_id": "com.adobe.InDesign",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe InDesign 2022/Adobe InDesign 2022.app",
-                "app_description": "Design and publish elegant layouts.",
-                "display_name": "Adobe InDesign 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "ILST",
-        "versions": {
-            "25.0": {
-                "app_bundle_id": "com.adobe.illustrator",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Illustrator 2021/Adobe Illustrator.app",
-                "app_description": "Create stunning illustrations and graphics.",
-                "display_name": "Adobe Illustrator 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "26.0": {
-                "app_bundle_id": "com.adobe.illustrator",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
-                "app_description": "Create stunning illustrations and graphics.",
-                "display_name": "Adobe Illustrator 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "LRCC",
-        "versions": {
-            "1.0": {
-                "app_bundle_id": "com.adobe.lightroomCC",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
-                "app_description": "The cloud-based photo service.",
-                "display_name": "Adobe Lightroom CC",
-                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-                "version_comparison_key": "CFBundleVersion"
-            }
-        }
-    },
-    {
-        "sap_code": "LTRM",
-        "versions": {
-            "8.3": {
-                "app_bundle_id": "com.adobe.LightroomClassicCC7",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
-                "app_description": "Desktop focused photo editing app.",
-                "display_name": "Adobe Lightroom Classic",
-                "minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "PHSP",
-        "versions": {
-            "22.0": {
-                "app_bundle_id": "com.adobe.Photoshop",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app",
-                "app_description": "Create beautiful graphics, photos and art anywhere.",
-                "display_name": "Adobe Photoshop 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "23.0": {
-                "app_bundle_id": "com.adobe.Photoshop",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Photoshop 2022/Adobe Photoshop 2022.app",
-                "app_description": "Create beautiful graphics, photos and art anywhere.",
-                "display_name": "Adobe Photoshop 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "PPRO",
-        "versions": {
-            "15.0": {
-                "app_bundle_id": "com.adobe.PremierePro.15",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Premiere Pro 2021/Adobe Premiere Pro 2021.app",
-                "app_description": "Edit and craft polished films and video.",
-                "display_name": "Adobe Premiere Pro 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.PremierePro.22",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Premiere Pro 2022/Adobe Premiere Pro 2022.app",
-                "app_description": "Edit and craft polished films and video.",
-                "display_name": "Adobe Premiere Pro 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "RUSH",
-        "versions": {
-            "1.5": {
-                "app_bundle_id": "com.adobe.PremiereRush1.5",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Premiere Rush/Adobe Premiere Rush.app",
-                "app_description": "Create and share online videos anywhere.",
-                "display_name": "Adobe Premiere Rush",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "2.0": {
-                "app_bundle_id": "com.adobe.PremiereRush%version%",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Premiere Rush 2.0/Adobe Premiere Rush.app",
-                "app_description": "Create and share online videos anywhere.",
-                "display_name": "Adobe Premiere Rush",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "SBSTA",
-        "versions": {
-            "3.0.0": {
-                "app_bundle_id": "com.adobe.adobe-substance-3d-sampler",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Substance 3D Sampler/Adobe Substance 3D Sampler.app",
-                "app_description": "Create 3D materials and lights from real life images.",
-                "display_name": "Adobe Substance 3D Sampler",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "SBSTD",
-        "versions": {
-            "11.2.0": {
-                "app_bundle_id": "com.adobe.substance-3d-designer",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Substance 3D Designer/Adobe Substance 3D Designer.app",
-                "app_description": "Design parametric 3D assets with full control.",
-                "display_name": "Adobe Substance 3D Designer",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "SBSTP",
-        "versions": {
-            "7.2.0": {
-                "app_bundle_id": "com.adobe.Adobe-Substance-3D-Painter",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Substance 3D Painter/Adobe Substance 3D Painter.app",
-                "app_description": "Texture 3D models in real time.",
-                "display_name": "Adobe Substance 3D Painter",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "SPRK",
-        "versions": {
-            "18.0.12": {
-                "app_bundle_id": "com.adobe.xd",
-                "app_json_version_key": "ProductVersion",
-                "app_path": "/Applications/Adobe XD/Adobe XD.app",
-                "app_description": "Design, prototype and share user experiences.",
-                "display_name": "Adobe XD",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-    {
-        "sap_code": "STGR",
-        "versions": {
-            "1.0.0": {
-                "app_bundle_id": "com.adobe.stager",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Substance 3D Stager/Adobe Substance 3D Stager.app",
-                "app_description": "Compose and render photorealistic 3D scenes.",
-                "display_name": "Adobe Substance 3D Stager",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    }
+		"sap_code": "APRO",
+		"versions": {
+			"21.0": {
+				"additional_blocking_applications": ["Acrobat Distiller", "Adobe Acrobat", "Acrobat Reader"],
+				"app_bundle_id": "com.adobe.Acrobat.Pro",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe Acrobat DC/Adobe Acrobat.app",
+				"app_description": "The complete PDF solution for a mobile, connected world.",
+				"display_name": "Adobe Acrobat DC",
+				"minos_version": "10.13.0",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "AUDT",
+		"versions": {
+			"14.0": {
+				"app_bundle_id": "com.adobe.Audition",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Audition 2021/Adobe Audition 2021.app",
+				"app_description": "Collaborate with copywriters and editors.",
+				"display_name": "Adobe Audition 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"22.0": {
+				"app_bundle_id": "com.adobe.Audition",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Audition 2022/Adobe Audition 2022.app",
+				"app_description": "Bring stories to life with audio.",
+				"display_name": "Adobe Audition 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "CHAR",
+		"versions": {
+			"4.0": {
+				"app_bundle_id": "com.adobe.Character-Animator.application",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Character Animator 2021/Adobe Character Animator 2021.app",
+				"app_description": "Animate in real time.",
+				"display_name": "Adobe Character Animator 2021",
+				"minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"22.0": {
+				"app_bundle_id": "com.adobe.Character-Animator.application",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Character Animator 2022/Adobe Character Animator 2022.app",
+				"app_description": "Animate in real time.",
+				"display_name": "Adobe Character Animator 2022",
+				"minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "DRWV",
+		"versions": {
+			"21.0": {
+				"app_bundle_id": "com.adobe.dreamweaver-18.1",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe Dreamweaver 2021/Adobe Dreamweaver 2021.app",
+				"app_description": "Design and develop modern, responsive web sites.",
+				"display_name": "Adobe Dreamweaver 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "ESHR",
+		"versions": {
+			"3.0": {
+				"app_bundle_id": "com.adobe.dimension",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Dimension/Adobe Dimension.app",
+				"app_description": "Design with 3D from concept to reality.",
+				"display_name": "Adobe Dimension",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "FLPR",
+		"versions": {
+			"21.0": {
+				"app_bundle_id": "com.adobe.Adobe-Animate-2021.application",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app",
+				"app_description": "A new age for animation. Any platform, device and style.",
+				"display_name": "Adobe Animate 2021",
+				"minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"22.0": {
+				"app_bundle_id": "com.adobe.Adobe-Animate-2022.application",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Animate 2022/Adobe Animate 2022.app",
+				"app_description": "A new age for animation. Any platform, device and style.",
+				"display_name": "Adobe Animate 2022",
+				"minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "KBRG",
+		"versions": {
+			"11.0": {
+				"app_bundle_id": "com.adobe.bridge11",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe Bridge 2021/Adobe Bridge 2021.app",
+				"app_description": "Centralize your creative assets.",
+				"display_name": "Adobe Bridge 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"12.0": {
+				"app_bundle_id": "com.adobe.bridge12",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe Bridge 2022/Adobe Bridge 2022.app",
+				"app_description": "Centralize your creative assets.",
+				"display_name": "Adobe Bridge 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "IDSN",
+		"versions": {
+			"16.0": {
+				"app_bundle_id": "com.adobe.InDesign",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe InDesign 2021/Adobe InDesign 2021.app",
+				"app_description": "Design and publish elegant layouts.",
+				"display_name": "Adobe InDesign 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"17.0": {
+				"app_bundle_id": "com.adobe.InDesign",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe InDesign 2022/Adobe InDesign 2022.app",
+				"app_description": "Design and publish elegant layouts.",
+				"display_name": "Adobe InDesign 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "ILST",
+		"versions": {
+			"25.0": {
+				"app_bundle_id": "com.adobe.illustrator",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Illustrator 2021/Adobe Illustrator.app",
+				"app_description": "Create stunning illustrations and graphics.",
+				"display_name": "Adobe Illustrator 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"26.0": {
+				"app_bundle_id": "com.adobe.illustrator",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Illustrator 2022/Adobe Illustrator.app",
+				"app_description": "Create stunning illustrations and graphics.",
+				"display_name": "Adobe Illustrator 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "LRCC",
+		"versions": {
+			"1.0": {
+				"app_bundle_id": "com.adobe.lightroomCC",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
+				"app_description": "The cloud-based photo service.",
+				"display_name": "Adobe Lightroom CC",
+				"minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+				"version_comparison_key": "CFBundleVersion"
+			}
+		}
+	},
+	{
+		"sap_code": "LTRM",
+		"versions": {
+			"8.3": {
+				"app_bundle_id": "com.adobe.LightroomClassicCC7",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
+				"app_description": "Desktop focused photo editing app.",
+				"display_name": "Adobe Lightroom Classic",
+				"minos_regex": "macChecks={minOSVersion:\"(.*?)\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "PHSP",
+		"versions": {
+			"22.0": {
+				"app_bundle_id": "com.adobe.Photoshop",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app",
+				"app_description": "Create beautiful graphics, photos and art anywhere.",
+				"display_name": "Adobe Photoshop 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"unsupported_versions_dict": {
+					"22.2": "Adobe Photoshop 22.2 is incompatible as it the optionXML and/or Application.json do not contain the needed metadata. Please use a newer version, this might need to be non-universal."
+				},
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"23.0": {
+				"app_bundle_id": "com.adobe.Photoshop",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Photoshop 2022/Adobe Photoshop 2022.app",
+				"app_description": "Create beautiful graphics, photos and art anywhere.",
+				"display_name": "Adobe Photoshop 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "PPRO",
+		"versions": {
+			"15.0": {
+				"app_bundle_id": "com.adobe.PremierePro.15",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Premiere Pro 2021/Adobe Premiere Pro 2021.app",
+				"app_description": "Edit and craft polished films and video.",
+				"display_name": "Adobe Premiere Pro 2021",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"22.0": {
+				"app_bundle_id": "com.adobe.PremierePro.22",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Premiere Pro 2022/Adobe Premiere Pro 2022.app",
+				"app_description": "Edit and craft polished films and video.",
+				"display_name": "Adobe Premiere Pro 2022",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "RUSH",
+		"versions": {
+			"1.5": {
+				"app_bundle_id": "com.adobe.PremiereRush1.5",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Premiere Rush/Adobe Premiere Rush.app",
+				"app_description": "Create and share online videos anywhere.",
+				"display_name": "Adobe Premiere Rush",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			},
+			"2.0": {
+				"app_bundle_id": "com.adobe.PremiereRush%version%",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Premiere Rush 2.0/Adobe Premiere Rush.app",
+				"app_description": "Create and share online videos anywhere.",
+				"display_name": "Adobe Premiere Rush",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "SBSTA",
+		"versions": {
+			"3.0.0": {
+				"app_bundle_id": "com.adobe.adobe-substance-3d-sampler",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Substance 3D Sampler/Adobe Substance 3D Sampler.app",
+				"app_description": "Create 3D materials and lights from real life images.",
+				"display_name": "Adobe Substance 3D Sampler",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "SBSTD",
+		"versions": {
+			"11.2.0": {
+				"app_bundle_id": "com.adobe.substance-3d-designer",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Substance 3D Designer/Adobe Substance 3D Designer.app",
+				"app_description": "Design parametric 3D assets with full control.",
+				"display_name": "Adobe Substance 3D Designer",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "SBSTP",
+		"versions": {
+			"7.2.0": {
+				"app_bundle_id": "com.adobe.Adobe-Substance-3D-Painter",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Substance 3D Painter/Adobe Substance 3D Painter.app",
+				"app_description": "Texture 3D models in real time.",
+				"display_name": "Adobe Substance 3D Painter",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "SPRK",
+		"versions": {
+			"18.0.12": {
+				"app_bundle_id": "com.adobe.xd",
+				"app_json_version_key": "ProductVersion",
+				"app_path": "/Applications/Adobe XD/Adobe XD.app",
+				"app_description": "Design, prototype and share user experiences.",
+				"display_name": "Adobe XD",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	},
+	{
+		"sap_code": "STGR",
+		"versions": {
+			"1.0.0": {
+				"app_bundle_id": "com.adobe.stager",
+				"app_json_version_key": "CodexVersion",
+				"app_path": "/Applications/Adobe Substance 3D Stager/Adobe Substance 3D Stager.app",
+				"app_description": "Compose and render photorealistic 3D scenes.",
+				"display_name": "Adobe Substance 3D Stager",
+				"minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+				"version_comparison_key": "CFBundleShortVersionString"
+			}
+		}
+	}
 ]
