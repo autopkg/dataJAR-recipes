@@ -37,7 +37,6 @@ import json
 import os
 import re
 import xml
-from pathlib import Path
 from xml.etree import ElementTree
 
 
@@ -467,6 +466,12 @@ class AdobeAdminConsolePackagesVersioner(Processor):
         if self.env['aacp_application_minimum_os']:
             pkginfo['minimum_os_version'] = self.env['aacp_application_minimum_os']
 
+        # Check for any var replacements
+        for some_key in self.env:
+            # only process the keys beginning with aacp_ and those not ending _json
+            if some_key.startswith('aacp_') and not some_key.endswith('_json'):
+                self.replace_element(some_key)
+
         # Create pkginfo is missing from installs array
         #if 'pkginfo' not in self.env or 'installs' not in self.env['pkginfo']:
         pkginfo['installs'] = [{
@@ -480,6 +485,69 @@ class AdobeAdminConsolePackagesVersioner(Processor):
         # Notify of additional_pkginfo
         self.env['additional_pkginfo'] = pkginfo
         self.output(f"additional_pkginfo: {self.env['additional_pkginfo']}")
+
+
+    # pylint: disable = too-many-branches
+    def replace_element(self, some_key):
+        '''
+            Checks for instances of %var_name% and replaces with the value for the matching
+            %var_name%
+
+        '''
+
+        # regex pattern
+        re_pattern = '%(.*?)%'
+
+        # If it's a string
+        if isinstance(self.env[some_key], str):
+            # check for a match
+            re_match = re.search(re_pattern, self.env[some_key])
+            # if we have a match
+            if re_match:
+                self.output(f"found: %{re_match[1]}% in {some_key}, looking to replace...")
+                self.env[some_key] = (self.env[some_key].replace('%' + re_match[1] + '%',
+                                      self.env[re_match[1]]))
+                self.output(f"{some_key} is now {self.env[some_key]}...")
+        # If a dict
+        elif isinstance(self.env[some_key], dict):
+            for sub_key in self.env[some_key]:
+                # check for a match
+                re_match = re.search('%(.*?)%', self.env[some_key][sub_key])
+                if re_match:
+                    self.output(f"found: %{re_match[1]}% in {sub_key} from {some_key}, "
+                                 "looking to replace...")
+                    self.env[some_key][sub_key] = (self.env[some_key][sub_key].replace('%' +
+                                                   re_match[1] + '%', self.env[re_match[1]]))
+                    self.output(f"{sub_key} in {some_key} is now {self.env[some_key][sub_key]}...")
+        elif isinstance(self.env[some_key], list):
+            for list_item in self.env[some_key]:
+                # If it's a string
+                if isinstance(list_item, str):
+                    # check for a match
+                    re_match = re.search(re_pattern, list_item)
+                    # if we have a match
+                    if re_match:
+                        self.output(f"found: %{re_match[1]}% in {list_item}, looking to replace...")
+                        self.env[some_key][list_item] = self.env[some_key][list_item].replace('%' +
+                                                        re_match[1] + '%', self.env[re_match[1]])
+                        self.output(f"{list_item} is now {self.env[some_key][list_item]}...")
+                elif isinstance(list_item, dict):
+                    for sub_item in self.env[some_key][list_item]:
+                        # check for a match
+                        re_match = re.search('%(.*?)%', self.env[some_key][list_item])
+                        if re_match:
+                            self.output(f"found: %{re_match[1]}% in {sub_item} from {list_item}, "
+                                         "looking to replace...")
+                            self.env[some_key][list_item] = (
+                                self.env[some_key][list_item].replace('%' + re_match[1] + '%',
+                                self.env[re_match[1]]))
+                            self.output(f"{sub_item} in {list_item} is now "
+                                        f"{self.env[some_key][list_item]}...")
+                else:
+                    self.output(f"{some_key} is {type(self.env[some_key])}, processing skipped..")
+        else:
+            self.output(f"{some_key} is {type(self.env[some_key])}, processing skipped..")
+
 
 
 if __name__ == '__main__':
