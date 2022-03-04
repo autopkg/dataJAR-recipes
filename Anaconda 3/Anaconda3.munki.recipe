@@ -57,7 +57,7 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
         </dict>
     </dict>
     <key>ParentRecipe</key>
-    <string>com.github.hansen-m.download.Anaconda3</string>
+    <string>com.github.hansen-m.download.Anaconda</string>
     <key>Process</key>
     <array>
         <dict>
