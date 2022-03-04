@@ -257,7 +257,7 @@ def run_list(recipe_list_path, report_path):
 
     # The subprocess command
     cmd_args = ['/usr/local/bin/autopkg', 'run', '-vv', '--recipe-list', recipe_list_path,
-                '--report-plist', report_path, '--ignore-parent-trust-verification-errors']
+                '--report-plist', report_path]
 
     # Notify what command we're about to run.
     print(f"Running: `{cmd_args}`...")
