@@ -392,12 +392,12 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # If the version is unsupported
         if 'unsupported_versions_dict' in self.env['aacp_matched_json']:
-            self.output(f"unsupported_versions_dict: {self.env['aacp_matched_json']"
-                        f"['unsupported_versions_dict']}")
+            self.output(f"unsupported_versions_dict: "
+                        f"{self.env['aacp_matched_json']['unsupported_versions_dict']}")
             for unsupported_version in self.env['aacp_matched_json']['unsupported_versions_dict']:
                 if unsupported_version == self.env['version']:
-                    raise ProcessorError(f"{self.env['aacp_matched_json']['unsupported_versions_dict']"
-                                         f"[unsupported_version]}")
+                    raise ProcessorError(
+            f"{self.env['aacp_matched_json']['unsupported_versions_dict'][unsupported_version]}")
 
         # Applications bundle id
         self.env['aacp_application_bundle_id'] = self.env['aacp_matched_json']['app_bundle_id']
