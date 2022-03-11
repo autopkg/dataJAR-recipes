@@ -1,4 +1,4 @@
-### Adobe Admin Console Packages
+# Adobe Admin Console Packages
 
 ## About  
 Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
