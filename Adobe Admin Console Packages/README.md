@@ -29,7 +29,7 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 |AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2022|AdobeXD|
 |AdobeBridge2021| AdobeInCopy2022| AdobePremierePro2021||
 |AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022||
-2. Download the DMG form the [Adobe Admin Console](https://adminconsole.adobe.com)
+2. Download the DMG from the [Adobe Admin Console](https://adminconsole.adobe.com)
 3. Load the .app
 4. Download the title to your ~/Downloads
 5. Unzip the zip file
