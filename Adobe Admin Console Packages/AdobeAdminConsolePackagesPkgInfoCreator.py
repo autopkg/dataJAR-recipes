@@ -63,11 +63,20 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
     }
 
     output_variables = {
-        'aacp_application_path': {
-            'description': 'aacp_installdir_value after regex applied to get the path alone.',
-        },
         'aacp_application_architecture_type': {
             'description': 'The architecture type for the title, either arm64 or x86_64',
+        },
+        'aacp_application_bundle_id': {
+            'description': 'Value of the titles CFBundleIdentifier.',
+        },
+        'aacp_application_description': {
+            'description': 'Short description of the title.',
+        },
+        'aacp_application_display_name': {
+            'description': 'Display name of the title.',
+        },
+        'aacp_application_full_path': {
+            'description': 'Full path to the application bundle on disk, as per Terminal etc, not Finder.',
         },
         'aacp_application_install_lang': {
             'description': 'The titles installation langauage.',
@@ -78,14 +87,11 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         'aacp_application_major_version': {
             'description': 'The major version of the title.',
         },
-        'aacp_blocking_applications': {
-            'description': 'Sorted set of the conflicting processes.',
-        },
-        'aacp_application_description': {
-            'description': 'Short description of the title.',
-        },
         'aacp_application_sap_code': {
             'description': 'The titles sap code.',
+        },
+        'aacp_blocking_applications': {
+            'description': 'Sorted set of the conflicting processes.',
         },
         'aacp_install_pkg_path': {
             'description': 'Path to the Adobe*_Install.pkg.',
@@ -503,7 +509,6 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         '''
             Checks for instances of %var_name% and replaces with the value for the matching
             %var_name%
-
         '''
 
         # regex pattern
