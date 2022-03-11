@@ -1,5 +1,11 @@
 ### Adobe Admin Console Packages
+##### Table of Contents  
+[About](#About)
+[Usage](#Usage)
+[Process](#Process)
+[Output Variables](#Output Variables)
 
+<a name="About">
 #### About
 Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
 
@@ -17,6 +23,7 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 
 Munki recipes are included only, as we use these recipes and as such can keep them udpated as needed.
 
+<a name="Usage">
 #### Usage
 1. Naming is important to the recipes, to start with you'll need to create [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html) with one of the below names in the [Adobe Admin Console](https://adminconsole.adobe.com):
 
@@ -31,13 +38,16 @@ Munki recipes are included only, as we use these recipes and as such can keep th
 |AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2022|AdobeXD|
 |AdobeBridge2021| AdobeInCopy2022| AdobePremierePro2021||
 |AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022||
-
-3. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
-4. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name 
-5. cd to the dir
-6. ./AdobeAdminConsolePackagesImporter.py munki
-
-### Output Variables from AdobeAdminConsolePackagesPkgInfoCreator
+2. Download the DMG form the [Adobe Admin Console](https://adminconsole.adobe.com)
+3. Load the .app
+4. Download the title to your ~/Downloads
+5. Unzip the zip file
+6. An override is needed for each title, Munki recipes are supplied here. The override needs to start with the a name from the list above, and contain the recipe "type". For example, `AdobeAcrobatDC.munki.recipe`
+9. With the above in place, call with the recipe "type" [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py). For example: `AdobeAdminConsolePackagesImporter.py munki`
+<a name="Process">
+#### Process
+<a name="Output Variables">
+### Output Variables
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
 |aacp_application_bundle|`aacp_installdir_maxpath` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
