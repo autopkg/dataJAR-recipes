@@ -1,4 +1,4 @@
-### Adobe Admin Console Packages
+# Adobe Admin Console Packages
 
 ## About  
 Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
@@ -55,6 +55,9 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 • aacp_blocking_applications
 11. Next, the [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) is read in and parsed. The step here is looking for the entry for the title, via the `aacp_application_sap_code` and `aacp_application_major_version`. If a match isn't found, an exception is raised. If a match is found, the details within the matched json are then used to populate the additional variables as needed.
 12. Finally, when the titles are processed via the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor the recipe proceeds to it's next step, and will be able to access all the variables as mentioned in the Variables table below.
+
+## Icons
+If you're using the .munki recipes supplied here, you can simply drop the icons from the icons folder, into your Munki repos icons folder.. and [Munki will use the icons]|(https://github.com/munki/munki/wiki/Product-Icons#details), as the names match. 
 
 ## Recipe Types
 Munki recipes are included in this repo only, as we use these recipes and as such can keep them updated as needed.
