@@ -25,12 +25,10 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 </array>
                 <key>category</key>
                 <string>%MUNKI_CATEGORY%</string>
-                <key>description</key>
-                <string>%MUNKI_DESCRIPTION%</string>
                 <key>developer</key>
                 <string>%MUNKI_DEVELOPER%</string>
                 <key>name</key>
-                <string>%MUNKI_NAME%</string>
+                <string>%NAME%</string>
             </dict>
         </dict>
         <key>MinimumVersion</key>
