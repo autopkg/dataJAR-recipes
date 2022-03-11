@@ -1,9 +1,9 @@
 ### Adobe Admin Console Packages
 ##### Table of Contents  
-[About](#About)
-[Usage](#Usage)
-[Process](#Process)
-[Output Variables](#Output Variables)
+[About](#About)  
+[Usage](#Usage)  
+[Process](#Process)  
+[Variables](#Variables)  
 
 <a name="About">
 #### About
@@ -46,8 +46,8 @@ Munki recipes are included only, as we use these recipes and as such can keep th
 9. With the above in place, call with the recipe "type" [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py). For example: `AdobeAdminConsolePackagesImporter.py munki`
 <a name="Process">
 #### Process
-<a name="Output Variables">
-### Output Variables
+<a name="Variables">
+### Variables
 
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
