@@ -18,38 +18,45 @@
             <array>
                 <string>testing</string>
             </array>
-			<key>developer</key>
-			<string>Sahara</string>
+            <key>developer</key>
+            <string>Sahara</string>
             <key>description</key>
-            <string>Clevershare 2 is a bi-directional mirroring application that wirelessly connects your iPhone, iPad, Android phone and tablet, Mac, Windows laptop/PC and Chrome devices to your Clevertouch touch screen.
-            </string>
+            <string>Clevershare 2 is a bi-directional mirroring application that wirelessly connects your iPhone, iPad, Android phone and tablet, Mac, Windows laptop/PC and Chrome devices to your Clevertouch touch screen.</string>
             <key>display_name</key>
             <string>Clevershare 2</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+# To stop admin credentials being asked for on Application launch unzip the MAXHUBAudio.driver to /Library/Audio/Plug-Ins/HAL
+
+/usr/bin/unzip /Applications/Clevershare.app/Contents/Resources/MAXHUBAudio.driver.zip -d /Library/Audio/Plug-Ins/HAL/ -x __MACOSX/*
+
+exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Clevershare2</string>
+    <string>com.github.dataJAR-recipes.download.Clevershare2</string>
     <key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-				<key>version_comparison_key</key>
-				<string>CFBundleShortVersionString</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>
