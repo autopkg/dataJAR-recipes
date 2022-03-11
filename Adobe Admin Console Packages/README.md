@@ -48,6 +48,7 @@ Munki recipes are included only, as we use these recipes and as such can keep th
 #### Process
 <a name="Output Variables">
 ### Output Variables
+
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
 |aacp_application_bundle|`aacp_installdir_maxpath` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
