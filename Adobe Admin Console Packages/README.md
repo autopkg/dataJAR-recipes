@@ -1,12 +1,23 @@
 # IN BETA #
 
 ### Adobe Admin Console Packages
-#### Requirements
-1. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
-2. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name
-3. cd to the dir
-4. ./AdobeAdminConsolePackagesImporter.py munki
+Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
 
+This means that we cannot pull apart the PKG's to retrieve the needed metadata for AutoPkg recipes.
+
+The prior iterations of our Adobe Versioner would work around this issue by having the data within the Versioner itself, but this then needed annual updates.
+
+The AdobeAdminConsolePackagesPkgInfoCreator processor, utilises the file: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to generate the needed metadata.
+
+#### Requirements
+1. Naming is important to the recipes, you'll need to create Managed Install
+    • AdobeAcrobatDC
+3. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
+4. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name 
+5. cd to the dir
+6. ./AdobeAdminConsolePackagesImporter.py munki
+
+### Output Variables from AdobeAdminConsolePackagesPkgInfoCreator
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
 |aacp_application_bundle|`aacp_installdir_maxpath` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
