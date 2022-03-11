@@ -3,7 +3,7 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Imports Adobe Admin Console Packages into Munki, please review:
+        <string>Imports Adobe Acrobat DC into Munki, please review:
 https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.munki.Adobe Acrobat DC</string>
