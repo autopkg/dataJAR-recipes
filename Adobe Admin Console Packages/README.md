@@ -34,7 +34,7 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 4. Download the title to your ~/Downloads
 5. Unzip the zip file
 6. An override is needed for each title, Munki recipes are supplied here. The override needs to start with the a name from the list above, and contain the recipe type. For example, `AdobeAcrobatDC.munki.recipe`
-9. With the above in place, call with the recipe "type" [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py). For example: `AdobeAdminConsolePackagesImporter.py munki`
+9. With the above in place, call with the recipe "type" [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py). For example: `./AdobeAdminConsolePackagesImporter.py munki`
 
 ## Process
 1. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) will create a [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) at: ~/Downloads/adobe_admin_console_recipes_list.txt  
@@ -96,9 +96,11 @@ Hopefully this makes things easier to create your own recipes.
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
 |aacp_application_bundle|`aacp_installdir_maxpath` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
-|aacp_application_architecture_type|`optionXML.xml`, the value of the `ProcessorArchitecture` element.|Raises if not found or not either arm64 or x64. x64 is later converted to x86_64.|
+|aacp_application_bundle_id|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Value of the titles CFBundleIdentifier.|
+|aacp_application_architecture_type|`optionXML.xml`, the value of the `ProcessorArchitecture` element.|Raises if not found or not either arm64, macuniversal nor x64. x64 is later converted to x86_64.|
 |aacp_application_description|`Application.json`, the short description found within ["ProductDescription"]["Tagline"]["Language"] where ["locale"] == `installLang`, failsover to the `app_description` key in `AdobeAutoPkgApplicationData.json`.|Description of title.|
-|aacp_application_full_path|os.path.join('/Applications', self.env['aacp_application_path'], self.env['aacp_application_bundle'])|Full path to titles .app.|
+|aacp_application_display_name|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Display name of the title|
+|aacp_application_full_path|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Full path to titles .app.|
 |aacp_application_install_lang|optionXML.xml, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `installLang` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `installLang` from the within the parent element.|Used to pull the description for the title.|
 |aacp_application_json_path|Path to the tiles `Application.json` file.|Processed for metadata.|
 |aacp_application_major_version|`optionXML.xml`, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `baseVersion` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `ProdVersion` from the within the parent element.|The major version of a title the installer is for.|
@@ -114,3 +116,41 @@ Hopefully this makes things easier to create your own recipes.
 |aacp_uninstall_pkg_path|Full path to the `*_Uninstall.pkg` |For importing.|
 |aacp_version_json|dict from `AdobeAutoPkgApplicationData.json`, which matches the `aacp_application_sap_code` and `aacp_application_major_version`.|More items for mmetadata.|
 |version|`Application.json`, the value is taken from the key defined by `app_json_version_key` within the `AdobeAutoPkgApplicationData.json` for the matching `aacp_sap_code` and `aacp_base_version`.|Titles version.|
+
+## AdobeAutoPkgApplicationData.json structure
+The below details the structure and keys in the [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) file.
+
+```
+{
+        "sap_code": "AME",
+        "versions": {
+            "15.0": {
+                "app_bundle_id": "com.adobe.ame.application.15",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2021",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "22.0": {
+                "app_bundle_id": "com.adobe.ame.application.22",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            }
+        }
+    },
+```
+
+• **sap_code** - required - see `aacp_application_sap_code` in the Variables table above, this is used to define which title the object covers.
+            • **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.
+                        • **app_bundle_id** - required - see `aacp_application_bundle_id`in the Variables table above.title.
+                        • **app_json_version_key** - required - the key within the `Application.json` which holds the titles version.
+                        • **app_path** - required - see `aacp_application_full_path` in the Variables table above.
+                        • **app_description** - required - see `aacp_application_description` in the Variables table above.
+                        • **display_name** - 
+                                    
