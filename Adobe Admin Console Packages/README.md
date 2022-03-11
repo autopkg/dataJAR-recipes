@@ -1,17 +1,21 @@
-# IN BETA #
-
 ### Adobe Admin Console Packages
+
+#### About
 Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
 
 This means that we cannot pull apart the PKG's to retrieve the needed metadata for AutoPkg recipes.
 
 The prior iterations of our Adobe Versioner would work around this issue by having the data within the Versioner itself, but this then needed annual updates.
 
-The AdobeAdminConsolePackagesPkgInfoCreator processor, utilises the file: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to generate the needed metadata.
+The [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor, utilises the file: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to generate the needed metadata.
 
 The idea is that we can update [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as needed. And not need to create a new processor.
 
-Data within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json, as well as the PKG's `optionXML.xml` and `Application.json`
+Data within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as well as the PKG's `optionXML.xml` and `Application.json` is used to create the metadata needed for the title.
+
+The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py), generates a large about output variables. These are detailed in the table at the end of this README, and are to be used for folks to write their own recipes.
+
+Munki recipes are included only, as we use these recipes and as such can keep them udpated as needed.
 
 #### Requirements
 1. Naming is important to the recipes, you'll need to create Managed Install
