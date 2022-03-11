@@ -1,12 +1,31 @@
-# IN BETA #
-
 ### Adobe Admin Console Packages
-#### Requirements
-1. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
-2. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name
-3. cd to the dir
-4. ./AdobeAdminConsolePackagesImporter.py munki
 
+#### About
+Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
+
+This means that we cannot pull apart the PKG's to retrieve the needed metadata for AutoPkg recipes.
+
+The prior iterations of our Adobe Versioner would work around this issue by having the data within the Versioner itself, but this then needed annual updates.
+
+The [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor, utilises the file: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to generate the needed metadata.
+
+The idea is that we can update [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as needed. And not need to create a new processor.
+
+Data within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as well as the PKG's `optionXML.xml` and `Application.json` is used to create the metadata needed for the title.
+
+The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py), generates a large about output variables. These are detailed in the table at the end of this README, and are to be used for folks to write their own recipes.
+
+Munki recipes are included only, as we use these recipes and as such can keep them udpated as needed.
+
+#### Requirements
+1. Naming is important to the recipes, you'll need to create Managed Install
+    • AdobeAcrobatDC
+3. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
+4. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name 
+5. cd to the dir
+6. ./AdobeAdminConsolePackagesImporter.py munki
+
+### Output Variables from AdobeAdminConsolePackagesPkgInfoCreator
 | Variable | Generated How? | Usage |
 |:---:|:---:|---|
 |aacp_application_bundle|`aacp_installdir_maxpath` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
@@ -22,9 +41,9 @@
 |aacp_application_version|`Application.json`, the value is taken from the key defined by `app_json_version_key` within the `AdobeAutoPkgApplicationData.json` for the matching `aacp_sap_code` and `aacp_base_version`.|Titles version.|
 |aacp_blocking_applications|A sorted set of the titles conflicting processes, collated from ['ConflictingProcesses']['ConflictingProcess'] within the `Application.json`.|Used to identify which processes cannot be running during the titles installation.|
 |aacp_install_pkg_path|Full path to the `*_Install.pkg`|For import, and for checking files within for metadata.|
-|aacp_json_path|os.path.join(self.env['aacp_parent_dir'], 'AdobeAutoPkgApplicationData.json').|Contains details of items to read in per `aacp_sap_code`, per `aacp_base_version`. To be updated with new major releases to drive `AdobeAdminConsolePackagesVersioner`|
+|aacp_json_path|os.path.join(self.env['aacp_parent_dir'], 'AdobeAutoPkgApplicationData.json').|Contains details of items to read in per `aacp_sap_code`, per `aacp_base_version`. To be updated with new major releases to drive `AdobeAdminConsolePackagesPkgInfoCreator`|
 |aacp_option_xml_path|Path to the tiles `optionXML.xml` file.|Processed for metadata.|
-|aacp_parent_dir|Path to directory which the AdobeAdminConsolePackagesVersioner exists.|To create the full path to `AdobeAutoPkgApplicationData.json`.|
+|aacp_parent_dir|Path to directory which the AdobeAdminConsolePackagesPkgInfoCreator exists.|To create the full path to `AdobeAutoPkgApplicationData.json`.|
 |aacp_proxy_xml_path|Acroabat only, path to the tiles `proxy.xml` file.|Processed for metadata.|
 |aacp_uninstall_pkg_path|Full path to the `*_Uninstall.pkg` |For importing.|
 |aacp_version_json|dict from `AdobeAutoPkgApplicationData.json`, which matches the `aacp_application_sap_code` and `aacp_application_major_version`.|More items for mmetadata.|
