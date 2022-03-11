@@ -9,6 +9,10 @@ The prior iterations of our Adobe Versioner would work around this issue by havi
 
 The AdobeAdminConsolePackagesPkgInfoCreator processor, utilises the file: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to generate the needed metadata.
 
+The idea is that we can update [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as needed. And not need to create a new processor.
+
+Data within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json, as well as the PKG's `optionXML.xml` and `Application.json`
+
 #### Requirements
 1. Naming is important to the recipes, you'll need to create Managed Install
     • AdobeAcrobatDC
@@ -33,9 +37,9 @@ The AdobeAdminConsolePackagesPkgInfoCreator processor, utilises the file: [Adobe
 |aacp_application_version|`Application.json`, the value is taken from the key defined by `app_json_version_key` within the `AdobeAutoPkgApplicationData.json` for the matching `aacp_sap_code` and `aacp_base_version`.|Titles version.|
 |aacp_blocking_applications|A sorted set of the titles conflicting processes, collated from ['ConflictingProcesses']['ConflictingProcess'] within the `Application.json`.|Used to identify which processes cannot be running during the titles installation.|
 |aacp_install_pkg_path|Full path to the `*_Install.pkg`|For import, and for checking files within for metadata.|
-|aacp_json_path|os.path.join(self.env['aacp_parent_dir'], 'AdobeAutoPkgApplicationData.json').|Contains details of items to read in per `aacp_sap_code`, per `aacp_base_version`. To be updated with new major releases to drive `AdobeAdminConsolePackagesVersioner`|
+|aacp_json_path|os.path.join(self.env['aacp_parent_dir'], 'AdobeAutoPkgApplicationData.json').|Contains details of items to read in per `aacp_sap_code`, per `aacp_base_version`. To be updated with new major releases to drive `AdobeAdminConsolePackagesPkgInfoCreator`|
 |aacp_option_xml_path|Path to the tiles `optionXML.xml` file.|Processed for metadata.|
-|aacp_parent_dir|Path to directory which the AdobeAdminConsolePackagesVersioner exists.|To create the full path to `AdobeAutoPkgApplicationData.json`.|
+|aacp_parent_dir|Path to directory which the AdobeAdminConsolePackagesPkgInfoCreator exists.|To create the full path to `AdobeAutoPkgApplicationData.json`.|
 |aacp_proxy_xml_path|Acroabat only, path to the tiles `proxy.xml` file.|Processed for metadata.|
 |aacp_uninstall_pkg_path|Full path to the `*_Uninstall.pkg` |For importing.|
 |aacp_version_json|dict from `AdobeAutoPkgApplicationData.json`, which matches the `aacp_application_sap_code` and `aacp_application_major_version`.|More items for mmetadata.|
