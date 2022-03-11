@@ -17,9 +17,21 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 
 Munki recipes are included only, as we use these recipes and as such can keep them udpated as needed.
 
-#### Requirements
-1. Naming is important to the recipes, you'll need to create Managed Install
-    • AdobeAcrobatDC
+#### Usage
+1. Naming is important to the recipes, to start with you'll need to create [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html) with one of the below names in the [Adobe Admin Console](https://adminconsole.adobe.com):
+
+|||||
+|:---:|:---:|:---:|:---:
+|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2022| AdobePremiereRush|
+|AdobeAfterEffects2021| AdobeCharacterAnimator2022| AdobeLightroomCC| AdobePremiereRush2.0|
+|AdobeAfterEffects2022| AdobeDimension| AdobeLightroomClassic|AdobeSubstance3DDesigner|
+|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2021|AdobeSubstance3DPainter|
+|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2022|AdobeSubstance3DSampler|
+|AdobeAudition2021| AdobeIllustrator2022| AdobePhotoshop2021|AdobeSubstance3DStager|
+|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2022|AdobeXD|
+|AdobeBridge2021| AdobeInCopy2022| AdobePremierePro2021||
+|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022||
+
 3. An Adobe Admin Console Package created, downloaded, the .app ran, and the .zip uncompressed in ~/Downloads
 4. An override for the munki recipe, suffixed the Adobe Admin Console Package name, with "munki" within the name 
 5. cd to the dir
