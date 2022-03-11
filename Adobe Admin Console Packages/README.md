@@ -148,9 +148,14 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
 
 • **sap_code** - required - see `aacp_application_sap_code` in the Variables table above, this is used to define which title the object covers.
             • **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.
+                        • **additional_blocking_applications** - optional - Array of additional applications to add to the blocking_applications array. In the case of Acrobat, this is actually the blocking_applications array as cannot be retrieved via the same method as the older titles.
                         • **app_bundle_id** - required - see `aacp_application_bundle_id`in the Variables table above.title.
                         • **app_json_version_key** - required - the key within the `Application.json` which holds the titles version.
                         • **app_path** - required - see `aacp_application_full_path` in the Variables table above.
                         • **app_description** - required - see `aacp_application_description` in the Variables table above.
-                        • **display_name** - 
+                        • **display_name** - required - see `aacp_display_name` in the Variables table above.
+                        • **minos_regex** - required - regex pattern to use when looking to derive the minimum OS version from `[SystemRequirement][CheckCompatibility][Content]` from within `Application.json`
+                        • **unsupported_versions_dict** - optional - Array containg the versions of incompatible titles, and a reason why
+                        • **version_comparison_key** - required - the key in the titles info.plist to use for version comparisions.
+                        
                                     
