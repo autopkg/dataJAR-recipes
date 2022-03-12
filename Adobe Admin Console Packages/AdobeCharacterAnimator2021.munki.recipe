@@ -6,7 +6,7 @@
         <string>Imports Adobe Character Animator 2021 into Munki, please review:
 https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md</string>
         <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Adobe Characte rAnimator 2021</string>
+        <string>com.github.dataJAR-recipes.munki.Adobe Character Animator 2021</string>
         <key>Input</key>
         <dict>
             <key>MUNKI_CATEGORY</key>
