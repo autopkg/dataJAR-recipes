@@ -3,10 +3,10 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Imports Adobe Substance 3D Designer into Munki, please review:
+        <string>Imports Adobe Substance 3D Painter into Munki, please review:
 https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md</string>
         <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Adobe Substance 3D Designer</string>
+        <string>com.github.dataJAR-recipes.munki.Adobe Substance 3D Painter</string>
         <key>Input</key>
         <dict>
             <key>MUNKI_CATEGORY</key>
@@ -14,7 +14,7 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
             <key>MUNKI_DEVELOPER</key>
             <string>Adobe</string>
             <key>NAME</key>
-            <string>AdobeSubstance3DDesigner</string>
+            <string>AdobeSubstance3DPainter</string>
             <key>MUNKI_REPO_SUBDIR</key>
             <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
             <key>pkginfo</key>
