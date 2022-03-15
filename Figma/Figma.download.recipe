@@ -3,13 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Downloads the current release version of Figma.</string>
+	<string>Downloads the current release version of Figma.
+		url for x86: https://desktop.figma.com/mac/Figma.zip
+		url for arm64: https://desktop.figma.com/mac-arm/Figma.zip
+	</string>
 	<key>Identifier</key>
 	<string>com.github.dataJAR-recipes.download.Figma</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
 		<string>Figma</string>
+		<key>url</key>
+		<string>https://desktop.figma.com/mac-arm/Figma.zip</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>0.5.1</string>
@@ -20,8 +25,6 @@
 			<string>URLDownloader</string>
 			<key>Arguments</key>
 			<dict>
-				<key>url</key>
-				<string>https://desktop.figma.com/mac/%NAME%.zip</string>
 				<key>filename</key>
 				<string>%NAME%.zip</string>
 			</dict>
