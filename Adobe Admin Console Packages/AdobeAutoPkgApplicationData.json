@@ -346,6 +346,15 @@
                 "display_name": "Adobe Prelude 2021",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "22.0": {
+                "app_bundle_id": "com.adobe.Prelude.CC22",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Prelude 2022/Adobe Prelude 2022.app",
+                "app_description": "Metadata ingest, logging and rough cuts.",
+                "display_name": "Adobe Prelude 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
