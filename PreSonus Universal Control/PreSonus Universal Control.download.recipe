@@ -19,11 +19,11 @@
                 <key>Arguments</key>
                 <dict>
                     <key>re_pattern</key>
-                    <string>\/\/pae-web\.presonusmusic\.com\/downloads\/products\/dmg\/PreSonus_UniversalControl_\S*\.dmg</string>
+                    <string>pae-web\.presonusmusic\.com/downloads/products/dmg/PreSonus_Universal_Control-[0-9]+\.dmg</string>
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>url</key>
-                    <string>https://www.presonus.com/products/StudioLive-AR8-USB/downloads</string>
+                    <string>https://www.presonus.com/products/Universal-Control/downloads</string>
                 </dict>
                 <key>Processor</key>
                 <string>URLTextSearcher</string>
@@ -32,10 +32,14 @@
                 <key>Arguments</key>
                 <dict>
                     <key>url</key>
-                    <string>https:%match%</string>
+                    <string>https://%match%</string>
                 </dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
             </dict>
             <dict>
                 <key>Arguments</key>
