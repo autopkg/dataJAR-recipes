@@ -29,6 +29,10 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 <string>%MUNKI_DEVELOPER%</string>
                 <key>name</key>
                 <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true/>
+                <key>unattended_uninstall</key>
+                <true/>
             </dict>
         </dict>
         <key>MinimumVersion</key>
