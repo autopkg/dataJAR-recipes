@@ -77,7 +77,7 @@ class CaseChanger(Processor):
                     f"{self.env['wanted_case']}")
 
 
-        if not self.env['wanted_case'] in ('capitalize', 'lower', 'title', 'upper'):
+        if self.env['wanted_case'] not in ['capitalize', 'lower', 'title', 'upper']:
             self.env['changed_string'] = self.env['input_string'].self.env['wanted_case']()
         else:
             raise ProcessorError(f"wanted_case ({self.env['wanted_case']}) is not set to one of "
