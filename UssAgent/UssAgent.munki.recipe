@@ -93,14 +93,14 @@ FIREFOX_PREF="all.js"
 IFS=$'\n'
 
 #Loops through the list of network services
-for i in $(/usr/sbin/networksetup -listallnetworkservices | /usr/bin/tail +2 ); 
+for i in $(/usr/sbin/networksetup -listallnetworkservices | /usr/bin/tail +2 );
 
-    do  
-        
+    do
+
         # Turn off auto proxy
         /usr/sbin/networksetup -setsocksfirewallproxystate "$i" off
         /bin/echo "Turned off Socks Firewall Proxy for interface $i"
-    
+
     done
 
 unset IFS
@@ -138,7 +138,7 @@ unset IFS
                     <string>/Applications/UssAgent.app</string>
                 </array>
                 <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
+                <string>CFBundleShortVersionString</string>
             </dict>
         </dict>
         <dict>
