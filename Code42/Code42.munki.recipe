@@ -35,6 +35,10 @@
             <string>Code42</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>x86_64</string>
+            </array>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
