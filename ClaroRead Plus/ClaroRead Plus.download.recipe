@@ -12,9 +12,18 @@
         <string>ClaroReadPlus</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>The vender has renamed this App to ClaroRead. See the new recipes https://github.com/autopkg/dataJAR-recipes/blob/master/ClaroRead/ClaroRead.download.recipe. Please remove this from your list of recipes.</string>
+             </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
