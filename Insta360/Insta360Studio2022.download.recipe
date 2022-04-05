@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the Insta360 Studio 2021 application.</string>
+    <string>Downloads the Insta360 Studio 2022 application.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.insta360studio2021</string>
+    <string>com.github.dataJAR-recipes.download.insta360studio2022</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>insta360studio2021</string>
+        <string>insta360studio2022</string>
         <key>DOWNLOAD_URL</key>
         <string>https://openapi.insta360.com/app/v1/common/upgrade/studiox_mac</string>
         <key>USER_AGENT</key>
@@ -21,22 +21,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>The vender has replaced this App with their 2022 version. See the 2022 recipes https://github.com/autopkg/dataJAR-recipes/blob/master/Insta360/Insta360Studio2022.download.recipe. Please remove this from your list of recipes.</string>
-             </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>(https://res\.insta360\.com/static/.*/Insta360_Studio_2021_.*\.pkg)</string>
+                <string>(https://file\.insta360\.com/static/infr_base/([0-9]+([a-zA-Z]+[0-9]+)+)/Insta360.*\.pkg)</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
