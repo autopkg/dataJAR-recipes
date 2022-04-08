@@ -25,7 +25,7 @@
             <key>category</key>
             <string>Applications</string>
             <key>display_name</key>
-            <string>OpenVPN</string>
+            <string>BrowserStackLocal</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
