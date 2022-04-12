@@ -16,10 +16,10 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 11.*\&quot;,\&quot;dlgList&quot;:\[{&quot;.*&quot;,\&quot;code\&quot;:\&quot;(?P&lt;downloadGroup&gt;FUS-[\d]+?)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;orderId\&quot;:.*}</string>
+                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 11.*\&quot;,\&quot;dlgList\&quot;:\[{\&quot;.*\&quot;,\&quot;code\&quot;:\&quot;(?P&lt;downloadGroup&gt;FUS-\d.*)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;isFirmwareImage\&quot;:.*,\&quot;orderId\&quot;:.*}</string>
                 <!--
                     Example for 11.x:
-                    {"name":"VMware Fusion 11.5.5","dlgList":[{"name":"VMware Fusion 11.5.5 (for Intel-based Macs)","code":"FUS-1155","releaseDate":"2020-05-28T19:00:00Z","productId":"798","releasePackageId":"46541","orderId":5}
+                    {"name":"VMware Fusion 11.5.7","dlgList":[{"name":"VMware Fusion 11.5.7 (for Intel-based Macs)","code":"FUS-1157","releaseDate":"2020-11-19T20:00:00Z","productId":"798","releasePackageId":"55757","isFirmwareImage":null,"orderId":1}
                 -->
                 <key>url</key>
                 <string>https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=11_0&amp;dlgType=PRODUCT_BINARY</string>
