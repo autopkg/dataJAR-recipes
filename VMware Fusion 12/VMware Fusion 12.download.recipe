@@ -18,7 +18,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 12.*\&quot;,\&quot;dlgList\&quot;:\[{\&quot;.*\&quot;,\&quot;code\&quot;:\&quot;(?P&lt;download_group&gt;FUS-\d.*)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;orderId\&quot;:.*}</string>
+                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 12.*\&quot;,\&quot;dlgList\&quot;:\[{\&quot;.*\&quot;,\&quot;code\&quot;:\&quot;(?P&lt;download_group&gt;FUS-\d.*)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;isFirmwareImage\&quot;:.*,\&quot;orderId\&quot;:.*}</string>
                 <!--
                     Example for 12.x:
                     {"name":"VMware Fusion 12.0.0 (for Intel-based Macs)","code":"FUS-1200","releaseDate":"2020-09-14T07:00:00Z","productId":"1040","releasePackageId":"52084","orderId":1}
