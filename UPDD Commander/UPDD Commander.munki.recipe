@@ -24,6 +24,15 @@
             <string>UPDD Commander</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+             <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Performs a silent uninstall: https://support.touch-base.com/Documentation/50152/Uninstall-procedure
+#
+/Library/Application\ Support/UPDD/UPDD\ Uninstall.app/Contents/MacOS/UPDD\ Uninstall -s
+exit 0</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
