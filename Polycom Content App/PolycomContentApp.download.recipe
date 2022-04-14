@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>PolycomContentApp</string>
         <key>SEARCH_URL</key>
-        <string>https://support.polycom.com/content/support/north-america/usa/en/support/video/polycom-content-app.html</string>
+        <string>https://www.poly.com/us/en/support/products/video-conferencing/accessories/content-app</string>
         <key>POLYCOMRPDESKTOP_DMG_REPATTERN</key>
         <string>https://downloads\.polycom\.com/video/content-app/PolycomContentApp_(?P&lt;version&gt;.*?_.*?_.*?)_(?P&lt;bundle_version&gt;.*?)\.dmg</string>
     </dict>
@@ -43,12 +43,12 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>CodeSignatureVerifier</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>input_path</key>   
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
                 <string>%pathname%/*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
