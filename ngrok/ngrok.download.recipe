@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://bin\.equinox\.io/c/.*?/ngrok-stable-darwin-amd64\.zip</string>
+                <string>(https://bin\.equinox\.io/c/([a-zA-Z]+(\d[a-zA-Z]+)+)/ngrok-v3-stable-darwin-amd64\.zip)</string>
                 <key>url</key>
                 <string>https://ngrok.com/download</string>
             </dict>
