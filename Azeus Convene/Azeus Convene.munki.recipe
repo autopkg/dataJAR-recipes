@@ -8,12 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Azeus Convene</string>
     <key>Input</key>
     <dict>
-        <key>APP_FILENAME</key>
-        <string>Convene</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>Azeus Convene</string>
+        <string>AzeusConvene</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -118,6 +116,19 @@ Convene allows you to control the whole meeting process effortlessly.</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/downloads</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

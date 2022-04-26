@@ -8,10 +8,8 @@
     <string>com.github.dataJAR-recipes.download.Azeus Convene</string>
     <key>Input</key>
     <dict>
-        <key>APP_FILENAME</key>
-        <string>Convene</string>
         <key>NAME</key>
-        <string>Azeus Convene</string>
+        <string>AzeusConvene</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
