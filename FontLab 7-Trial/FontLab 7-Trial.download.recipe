@@ -14,9 +14,27 @@
         <string>https://download.fontlab.com/fontlab-7/appcast-mac.xml</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Requires python2 (which it ships in a separate pkg). As python2 is EOL, this isn't recommended - https://github.com/autopkg/dataJAR-recipes/issues/213</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>SparkleUpdateInfoProvider</string>
