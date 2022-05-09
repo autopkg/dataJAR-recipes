@@ -2,16 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Comment</key>
-    <string>The vender has replaced this App with their 22 version. Please see the 22 recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/MindManager%2022. Please remove this from your list of recipes.</string>
     <key>Description</key>
-    <string>Downloads latest version of MindManager 14 and imports into Munki.</string>
+    <string>Downloads latest version of MindManager 22 and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.MindManager 14</string>
+    <string>com.github.dataJAR-recipes.munki.MindManager 22</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>MindManager14</string>
+        <string>MindManager22</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -23,11 +21,13 @@
             <key>category</key>
             <string>Applications</string>
             <key>developer</key>
-            <string>Talkdesk</string>
+            <string>Corel Corporation</string>
             <key>description</key>
-            <string>Take your productivity and projects to new heights and expand your teaming capabilities.</string>
+            <string>Bring clarity and structure to plans, projects, and processes
+
+Visual productivity tools and mind mapping software that take you and your organization to where you want to be.</string>
             <key>display_name</key>
-            <string>MindManager 14</string>
+            <string>Mind Manager 22</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -37,9 +37,9 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.0.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.MindManager 14</string>
+    <string>com.github.dataJAR-recipes.download.MindManager 22</string>
     <key>Process</key>
     <array>
         <dict>
