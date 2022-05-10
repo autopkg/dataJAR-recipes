@@ -124,7 +124,6 @@ Convene allows you to control the whole meeting process effortlessly.</string>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/Applications</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    <string>%RECIPE_CACHE_DIR%/downloads</string>
                 </array>
             </dict>
             <key>Processor</key>
