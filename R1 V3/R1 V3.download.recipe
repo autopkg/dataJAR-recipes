@@ -21,9 +21,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>/assets/products/downloads/software/r1/dbaudio-software-r1-v3\..*?-mac\.dmg</string>
+                <string>http://swupdate\.dbaudio\.com/net_update/R1_V3/R1_V([0-9]+(\.[0-9]+)+)\.dmg</string>
                 <key>url</key>
-                <string>https://www.dbaudio.com/global/en/products/software/r1/#tab-downloads</string>
+                <string>http://swupdate.dbaudio.com/net_update/R1_V3_WebUpdate.xml</string>
             </dict>
         </dict>
         <dict>
@@ -32,7 +32,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.dbaudio.com/%match%</string>
+                <string>http://swupdate.dbaudio.com/net_update/R1_V3/R1_V%match%.dmg</string>
             </dict>
         </dict>
         <dict>
