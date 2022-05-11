@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of MetashapePro and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.MetashapePro</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MetashapePro</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Discover intelligent photogrammetry with Metashape
+
+Process digital images and generate 3D spatial data. Fast and highly accurate.</string>
+            <key>developer</key>
+            <string>ZHIVOISOFT, OOO</string>
+            <key>display_name</key>
+            <string>MetashapePro</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# This script aims to remove the need for admin credentials to licence the Application
+#
+# Related article: https://agisoft.freshdesk.com/support/solutions/articles/31000126204-how-to-create-an-offline-activation-request-file
+# Related article: https://agisoft.freshdesk.com/support/solutions/articles/31000133073-floating-license-activation-procedure
+#
+# Create folders
+mkdir -p "/Library/Application Support/Agisoft/Metashape Pro"
+mkdir -p "/Library/Application Support/Reprise"
+#
+# Set the required permissions
+chmod 777 "/Library/Application Support/Agisoft/Metashape Pro"
+chmod 777 "/Library/Application Support/Reprise"
+#
+exit</string>
+            <key>preuninstall_script</key>
+            <string>#!/bin/bash
+#
+# Created from: https://agisoft.freshdesk.com/support/solutions/articles/31000135640-how-to-uninstall-agisoft-metashape
+#
+# Removes the licence before uninstall
+/Applications/MetashapePro.app/Contents/MacOS/MetashapePro --deactivate
+#
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.MetashapePro</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/MetashapePro.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
