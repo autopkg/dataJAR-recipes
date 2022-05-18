@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.hudl.com/downloads/elite</string>
                 <key>re_pattern</key>
-                <string>href=\"(https://static\.hudl\.com/craft/elite/downloads/Hudlsportscode.*12.*\.dmg.*)\"</string>
+                <string>href=\"(https://static\.hudl\.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg.*)\"</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
