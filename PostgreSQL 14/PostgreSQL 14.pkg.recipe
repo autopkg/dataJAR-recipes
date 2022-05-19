@@ -57,7 +57,7 @@
 install_dir=$(dirname $0)
 
 # install with no UI
-"${install_dir}/postgresql-%match%-1-osx.app/Contents/MacOS/osx-x86_64" --unattendedmodeui none --mode unattended</string>
+"${install_dir}/postgresql-%match%-1-osx.app/Contents/MacOS/installbuilder.sh" --unattendedmodeui none --mode unattended</string>
             </dict>
         </dict>
         <dict>
