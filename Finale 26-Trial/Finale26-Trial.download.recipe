@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Finale 26 full installer.</string>
+    <string>Downloads the latest version of Finale full installer (version 26 or later).</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Finale26-Trial</string>
     <key>Input</key>
@@ -12,8 +12,6 @@
         <string>26</string>
         <key>NAME</key>
         <string>Finale</string>
-        <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.4</string>
@@ -26,11 +24,6 @@
             <dict>
                 <key>re_pattern</key>
                 <string>https://makemusic-downloads.makemusic.com/Finale/(%MAJOR_VERSION%(\.\d+)+)/</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>%USER_AGENT%</string>
-                </dict>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
@@ -42,11 +35,6 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>%USER_AGENT%</string>
-                </dict>
                 <key>url</key>
                 <string>http://makemusic-downloads.makemusic.com/Finale/%version%/Mac/en-US/FinaleSetup.dmg</string>
             </dict>
