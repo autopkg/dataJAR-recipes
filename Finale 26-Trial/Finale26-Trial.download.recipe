@@ -34,7 +34,7 @@
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
-                <string>https://downloads2.makemusic.com/xml/en/Finale26Mac.xml</string>
+                <string>https://downloads2.makemusic.com/xml/en/Finale%MAJOR_VERSION%Mac.xml</string>
             </dict>
         </dict>
         <dict>
