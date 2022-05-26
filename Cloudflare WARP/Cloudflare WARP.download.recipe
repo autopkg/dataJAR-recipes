@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Cloudflare WARP.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Cloudflare WARP</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>CloudflareWARP</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>appcast_url</key>
+                <string>https://api.appcenter.ms/v0.1/public/sparkle/apps/87d9992a-351c-44a9-849b-3f9a89d63d18</string>
+            </dict>
+            <key>Processor</key>
+            <string>SparkleUpdateInfoProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%version%.zip</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Cloudflare Inc. (68WVV388M8)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Cloudflare_WARP.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
