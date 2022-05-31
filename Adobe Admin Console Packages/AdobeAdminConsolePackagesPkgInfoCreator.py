@@ -60,6 +60,11 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
     description = __doc__
 
     input_variables = {
+        'NAME': {
+            'required': True,
+            'description': 'The name specified when creating the download from the Adobe Admin Console. '
+            'Normally, this is supplied in the environment as a recipe/override Input variable.',
+        }
     }
 
     output_variables = {
