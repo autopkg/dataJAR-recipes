@@ -12,11 +12,20 @@
         <string>AsperaConnect</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated, the vendor now proves a .pkg installer</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>Copier</string>

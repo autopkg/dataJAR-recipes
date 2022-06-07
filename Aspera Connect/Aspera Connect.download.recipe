@@ -21,11 +21,11 @@
              <key>Arguments</key>
              <dict>
                  <key>url</key>
-                 <string>https://www.ibm.com/aspera/connect/</string>
+                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
                  <key>re_pattern</key>
-                 <string>https://.*?\.cloudfront\.net</string>
+                 <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)_macOS_x86_64\.pkg)</string>
                  <key>result_output_var_name</key>
-                 <string>baseurl</string>
+                 <string>match</string>
              </dict>
          </dict>
          <dict>
@@ -34,23 +34,22 @@
              <key>Arguments</key>
              <dict>
                  <key>url</key>
-                 <string>%baseurl%/connect_latest/v4/connectversions.min.js</string>
+                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
                  <key>re_pattern</key>
-                 <string>title:\"Mac Intel Installer\",type:\"application/octet-stream\",href:\"(bin/ibm-aspera-connect_.*?_macOS_x86_64\.dmg)\"</string>
+                 <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)_macOS_x86_64\.pkg</string>
                  <key>result_output_var_name</key>
-                 <string>downloadpath</string>
+                 <string>version</string>
              </dict>
          </dict>
-
          <dict>
              <key>Processor</key>
              <string>URLDownloader</string>
              <key>Arguments</key>
              <dict>
                  <key>filename</key>
-                 <string>%NAME%.dmg</string>
+                 <string>%NAME%.pkg</string>
                  <key>url</key>
-                 <string>%baseurl%/connect_latest/v4/%downloadpath%</string>
+                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/%match%</string>
              </dict>
          </dict>
          <dict>
@@ -58,16 +57,20 @@
              <string>EndOfCheckPhase</string>
          </dict>
          <dict>
-             <key>Processor</key>
-             <string>CodeSignatureVerifier</string>
-             <key>Arguments</key>
-             <dict>
-                 <key>input_path</key>
-                 <string>%pathname%/IBM Aspera Connect Installer.app</string>
-                 <key>requirement</key>
-                 <string>identifier "com.ibm.installer.IBM-Aspera-Connect-Installer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RJ747GSBCT</string>
-             </dict>
-         </dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Aspera, Inc. (RJ747GSBCT)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
      </array>
  </dict>
  </plist>
