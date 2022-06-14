@@ -12,9 +12,18 @@
         <string>Acronis Files Connect</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The download for Acronis Files Connect is now only available to customers with a valid support contract. Please remove this recipe from your workflows.</string>
+            </dict>
+        <key>Processor</key>
+        <string>DeprecationWarning</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
