@@ -17,38 +17,25 @@
     <array>
         <dict>
             <key>Arguments</key>
-             <dict>
-                <key>re_pattern</key>
-                <string>ref=\"https://static\.hudl\.com/craft/elite/downloads/HudlSportscode([0-9]+(\.[0-9]+)+)\.dmg.*\"</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
-                <key>url</key>
-                <string>https://www.hudl.com/downloads/elite</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.hudl.com/downloads/elite</string>
-                <key>re_pattern</key>
-                <string>href=\"(https://static\.hudl\.com/craft/elite/downloads/HudlSportscode.*12.*\.dmg.*)\"</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
+                <key>appcast_url</key>
+                <string>https://s3.amazonaws.com/sportscode64-updates/sportscode64_appcast.xml</string>
             </dict>
+            <key>Processor</key>
+            <string>SparkleUpdateInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.zip</string>
+                <string>%NAME%-%version%.zip</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -64,19 +51,15 @@
             <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/HudlSportsCode12/HudlSportscode%version%.dmg/Hudl Sportscode.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Users/thomas.muat/hudl-work/Sportscode64/Hudl Sportscode.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.hudl.Sportscode64" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4M6T2C723P")</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
