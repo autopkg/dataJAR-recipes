@@ -12,9 +12,18 @@
         <string>renpy6</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new Ren’Py v8 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/renpy%208</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -53,7 +62,7 @@
                 </dict>
             </dict>
         </dict>
-	    <dict>
+        <dict>
             <key>Processor</key>
             <string>Copier</string>
             <key>Arguments</key>
