@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Cubase 12.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Cubase 12</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Cubase12</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(https://download\.steinberg\.net/automated_updates/sda_downloads/([0-9]+([a-zA-Z]+[0-9]+)+)-[0-9]+-([0-9]+([a-zA-Z]+[0-9]+)+)a-([0-9]+([a-zA-Z]+[0-9]+)+)-9([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/Cubase_([0-9]+(\.[0-9]+)+)_Installer_mac\.dmg)\" title=\"Download\" target=\"_blank\" class=\"external-link-new-window\">⬇ macOS</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://o.steinberg.net/en/support/downloads/cubase_12/cubase_pro_12.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Steinberg Media Technologies GmbH (5PMY476BJ6)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%/Cubase 12.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
