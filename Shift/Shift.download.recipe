@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://update.tryshift.com</string>
                 <key>filename</key>
-                <string>%NAME%.dmg</string>
+                <string>%NAME%.zip</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -36,12 +36,25 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Shift.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Shift.app</string>
                 <key>requirement</key>
                 <string>identifier "com.rdbrck.shift" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = TYR24A9JU5</string>
             </dict>
