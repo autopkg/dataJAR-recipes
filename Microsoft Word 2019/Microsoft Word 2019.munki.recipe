@@ -24,6 +24,8 @@
         <string>apps/%NAME%</string>
         <key>MINIMUM_OS_VERSION</key>
         <string>10.14.0</string>
+        <key>pkg_ids_set_optional_true</key>
+        <array/>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -78,13 +80,6 @@
             </dict>
         </dict>
         <dict>
-            <key>Arguments</key>
-			<dict>
-				<key>pkg_ids_set_optional_true</key>
-				<array>
-					<string>com.microsoft.package.Microsoft_AutoUpdate.app</string>
-				</array>
-			</dict>
             <key>Processor</key>
             <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
             <key>_note</key>
