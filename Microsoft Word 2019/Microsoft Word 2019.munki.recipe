@@ -77,6 +77,19 @@
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
         </dict>
+        <dict>
+            <key>Arguments</key>
+			<dict>
+				<key>pkg_ids_set_optional_true</key>
+				<array>
+					<string>com.microsoft.package.Microsoft_AutoUpdate.app</string>
+				</array>
+			</dict>
+            <key>Processor</key>
+            <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
+            <key>_note</key>
+            <string>Uses pkg_ids_set_optional_true from Input</string>
+        </dict>
     </array>
 </dict>
 </plist>
