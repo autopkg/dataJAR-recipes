@@ -17,24 +17,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>href=\"(https://www\.clarosoftware\.com/download/claroreadmac)\" style</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
-                <key>url</key>
-                <string>https://www.clarosoftware.com/portfolio/claroreadmac/</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>https://www.clarosoftware.com/download/claroreadmac</string>
             </dict>
         </dict>
         <dict>
