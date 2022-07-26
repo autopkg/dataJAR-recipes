@@ -53,8 +53,17 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/**/Hudl Sportscode*.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Users/thomas.muat/hudl-work/Sportscode64/Hudl Sportscode.app</string>
+                <string>%found_filename%</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.hudl.Sportscode64" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4M6T2C723P")</string>
             </dict>

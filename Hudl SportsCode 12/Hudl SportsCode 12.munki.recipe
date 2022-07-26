@@ -44,7 +44,7 @@
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
                 <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Users/thomas.muat/hudl-work/Sportscode64/</string>
+                <string>%found_filename%</string>
             </dict>
             <key>Processor</key>
             <string>DmgCreator</string>
