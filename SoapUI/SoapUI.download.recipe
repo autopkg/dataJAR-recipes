@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SoapUI.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.SoapUI</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SoapUIInstaller</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+        <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>newVersion="(\d(\.\d)+)"</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>http://dl.eviware.com/version-update/soapui-updates-os.xml</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://dl.eviware.com/soapuios/%version%/SoapUI-%version%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/SoapUI %version% Installer.app</string>
+                <key>requirement</key>
+                <string>always</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/SoapUI %version% Installer.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+    </array>
+</dict>
+</plist>
