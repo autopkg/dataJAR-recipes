@@ -26,6 +26,18 @@
             <string>SoapUI</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>##!/bin/zsh
+
+# Remove the Application
+rm -rf /Applications/SoapUI*.app
+
+# Forget the package receipt
+pkgutil --forget com.smartbear.SoapUI.pkg
+
+exit</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_install</key>
