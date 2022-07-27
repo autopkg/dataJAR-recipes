@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.pkg.SoapUI</string>
+    <string>com.github.dataJAR-recipes.pkg.SoapUI</string>
     <key>Process</key>
     <array>
         <dict>
