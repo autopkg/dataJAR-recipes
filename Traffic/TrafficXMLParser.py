@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 
 # Copyright 2020 dataJAR
 #
@@ -26,23 +26,20 @@ from autopkglib import Processor, ProcessorError
 
 
 __all__ = ["TrafficXMLParser"]
-__version__ = '1.1'
+__version__ = "1.1"
 
 
 class TrafficXMLParser(Processor):
     """Parses /META-INF/AIR/application.xml from the copied .air installer"""
+
     description = __doc__
     input_variables = {
-        "app_xml": {
-            "required": True,
-            "description": "Path to the application.xml."
-        },
+        "app_xml": {"required": True, "description": "Path to the application.xml."},
     }
 
     output_variables = {
         "bundleid": {
-            "description":
-                "Bundled ID.",
+            "description": "Bundled ID.",
         },
         "version": {
             "description": "The value of CFBundleShortVersionString for the app bundle."
@@ -52,12 +49,16 @@ class TrafficXMLParser(Processor):
     def main(self):
         """Parses /META-INF/AIR/application.xml from the copied .air installer"""
         if not os.path.exists(self.env["app_xml"]):
-            raise ProcessorError("application.xml not found at %s" % self.env["app_xml"])
+            raise ProcessorError(
+                "application.xml not found at %s" % self.env["app_xml"]
+            )
         else:
             tree = ElementTree.parse(self.env["app_xml"])
-            for b_id in tree.iterfind('{http://ns.adobe.com/air/application/24.0}id'):
+            for b_id in tree.iterfind("{http://ns.adobe.com/air/application/24.0}id"):
                 self.env["bundleid"] = b_id.text
-            for ver_num in tree.iterfind('{http://ns.adobe.com/air/application/24.0}versionNumber'):
+            for ver_num in tree.iterfind(
+                "{http://ns.adobe.com/air/application/24.0}versionNumber"
+            ):
                 self.env["version"] = ver_num.text
 
             self.output("bundleid: %s" % self.env["bundleid"])

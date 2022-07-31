@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 
 # Copyright 2020 dataJAR
 #
@@ -28,7 +28,7 @@ from autopkglib import Processor, ProcessorError
 
 
 __all__ = ["DistributionPkgInfo"]
-__version__ = '1.1.1'
+__version__ = "1.1.1"
 
 
 class DistributionPkgInfo(Processor):
@@ -54,27 +54,34 @@ class DistributionPkgInfo(Processor):
     # pylint: disable=too-many-branches
     def main(self):
         """Cobbled together from various sources, should extract information from a
-           Distribution pkg"""
+        Distribution pkg"""
         # Build dir as needed,pinched with <3 from:
         # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/FlatPkgUnpacker.py#L72
         # Extract pkg info, pinched with <3 from:
         # https://github.com/munki/munki/blob/master/code/client/munkilib/pkgutils.py#L374
         self.env["abspkgpath"] = os.path.join(self.env["pkg_path"])
         file_path = os.path.join(self.env["RECIPE_CACHE_DIR"], "downloads")
-        cmd_toc = ['/usr/bin/xar', '-tf', self.env["abspkgpath"]]
-        proc = subprocess.Popen(cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        cmd_toc = ["/usr/bin/xar", "-tf", self.env["abspkgpath"]]
+        proc = subprocess.Popen(
+            cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
         (toc, err) = proc.communicate()
-        toc = toc.decode("utf-8") .strip().split('\n')
+        toc = toc.decode("utf-8").strip().split("\n")
 
         if proc.returncode == 0:
             # Walk trough the TOC entries
             if not os.path.exists(file_path):
                 os.mkdir(file_path)
 
-            for toc_entry in [item for item in toc
-                              if item.startswith('Distribution')]:
-                cmd_extract = ['/usr/bin/xar', '-xf', self.env["abspkgpath"], \
-                               toc_entry, '-C', file_path]
+            for toc_entry in [item for item in toc if item.startswith("Distribution")]:
+                cmd_extract = [
+                    "/usr/bin/xar",
+                    "-xf",
+                    self.env["abspkgpath"],
+                    toc_entry,
+                    "-C",
+                    file_path,
+                ]
                 _ = subprocess.call(cmd_extract)
         else:
             raise ProcessorError("pkg not found at pkg_path")
@@ -90,13 +97,17 @@ class DistributionPkgInfo(Processor):
             tree = ElementTree.parse(dist_path)
             _ = tree.getroot()
             try:
-                for elem in tree.iter(tag='product'):
+                for elem in tree.iter(tag="product"):
                     version = elem.get("version")
-                for elem in tree.iter(tag='pkg-ref'):
+                for elem in tree.iter(tag="pkg-ref"):
                     pkg_id = elem.get("id")
             except ElementTree.ParseError as err:
-                print(("Can't parse distribution file %s: %s"
-                       % ('dist_path', err.strerror)))
+                print(
+                    (
+                        "Can't parse distribution file %s: %s"
+                        % ("dist_path", err.strerror)
+                    )
+                )
 
         if not pkg_id:
             raise ProcessorError("cannot get pkg_id")
@@ -109,5 +120,6 @@ class DistributionPkgInfo(Processor):
             self.env["version"] = version
             os.remove(dist_path)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     PROCESSOR = DistributionPkgInfo()

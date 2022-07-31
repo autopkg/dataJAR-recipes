@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 #
-# Copyright 2014 Justin Rummel, 
+# Copyright 2014 Justin Rummel,
 #
 # Updates added 2018 by macmule:
 # https://github.com/autopkg/justinrummel-recipes/pull/7

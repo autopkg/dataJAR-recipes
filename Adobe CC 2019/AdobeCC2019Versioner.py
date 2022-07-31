@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 
 # Copyright 2021 dataJAR
 #
@@ -33,236 +33,277 @@ except ImportError:
 from autopkglib import Processor, ProcessorError
 
 
-__all__ = ['AdobeCC2019Versioner']
-__version__ = ['1.2.1']
+__all__ = ["AdobeCC2019Versioner"]
+__version__ = ["1.2.1"]
 
 
 class AdobeCC2019Versioner(Processor):
     """Parses generated Adobe Admin Console CC 2019 pkgs for
-       detailed application path and bundle version info"""
+    detailed application path and bundle version info"""
 
     description = __doc__
-    input_variables = {
-
-    }
+    input_variables = {}
 
     output_variables = {
-        'additional_pkginfo': {
-            'description':
-                'Some pkginfo fields extracted from the Adobe metadata.',
+        "additional_pkginfo": {
+            "description": "Some pkginfo fields extracted from the Adobe metadata.",
         },
-        'jss_inventory_name': {
-            'description': 'Application title for jamf pro smart group criteria.',
+        "jss_inventory_name": {
+            "description": "Application title for jamf pro smart group criteria.",
         },
-        'version': {
-            'description': ('The value of CFBundleShortVersionString for the app bundle. '
-                            'This may match user_facing_version, but it may also be more '
-                            'specific and add another version component.'),
+        "version": {
+            "description": (
+                "The value of CFBundleShortVersionString for the app bundle. "
+                "This may match user_facing_version, but it may also be more "
+                "specific and add another version component."
+            ),
         },
     }
-
 
     def main(self):
         """Find the Adobe*_Install.pkg in the Downloads dir based on the name"""
 
-        download_path = os.path.expanduser('~/Downloads')
-        self.env['PKG'] = os.path.join(download_path, self.env['NAME'], \
-                            'Build', self.env['NAME'] + '_Install.pkg')
-        self.output('pkg %s' % self.env['PKG'])
-        self.env['uninstaller_pkg_path'] = glob.glob(os.path.join\
-        (os.path.dirname(self.env['PKG']), '*_Uninstall.pkg'))[0]
+        download_path = os.path.expanduser("~/Downloads")
+        self.env["PKG"] = os.path.join(
+            download_path, self.env["NAME"], "Build", self.env["NAME"] + "_Install.pkg"
+        )
+        self.output("pkg %s" % self.env["PKG"])
+        self.env["uninstaller_pkg_path"] = glob.glob(
+            os.path.join(os.path.dirname(self.env["PKG"]), "*_Uninstall.pkg")
+        )[0]
 
         self.process_installer()
 
-
     def process_installer(self):
-        '''
+        """
         Determine a pkginfo, version and jss inventory name from the created package.
 
         Inputs:
             PKG: Path to the pkg
         Outputs:
             app_json/proxy_xml: The path of the files that within the pkg's
-        '''
+        """
 
         install_lang = None
 
-        option_xml_path = os.path.join(self.env['PKG'], 'Contents', 'Resources', 'optionXML.xml')
-        self.output('Processing %s' % option_xml_path)
+        option_xml_path = os.path.join(
+            self.env["PKG"], "Contents", "Resources", "optionXML.xml"
+        )
+        self.output("Processing %s" % option_xml_path)
         option_xml = ElementTree.parse(option_xml_path)
 
-        for hd_media in option_xml.findall('.//HDMedias/HDMedia'):
-            if hd_media.findtext('MediaType') == 'Product':
-                install_lang = hd_media.findtext('installLang')
-                self.env['sap_code'] = hd_media.findtext('SAPCode')
-                self.output('SAP Code: %s' % self.env['sap_code'])
-                self.env['target_folder'] = hd_media.findtext('TargetFolderName')
+        for hd_media in option_xml.findall(".//HDMedias/HDMedia"):
+            if hd_media.findtext("MediaType") == "Product":
+                install_lang = hd_media.findtext("installLang")
+                self.env["sap_code"] = hd_media.findtext("SAPCode")
+                self.output("SAP Code: %s" % self.env["sap_code"])
+                self.env["target_folder"] = hd_media.findtext("TargetFolderName")
 
         if install_lang is None:
-            for ribs_media in option_xml.findall('.//Medias/Media'):
-                install_lang = ribs_media.findtext('installLang')
-                self.env['sap_code'] = ribs_media.findtext('SAPCode')
-                self.output('SAP Code: %s' % self.env['sap_code'])
-                self.env['target_folder'] = ribs_media.findtext('TargetFolderName')
+            for ribs_media in option_xml.findall(".//Medias/Media"):
+                install_lang = ribs_media.findtext("installLang")
+                self.env["sap_code"] = ribs_media.findtext("SAPCode")
+                self.output("SAP Code: %s" % self.env["sap_code"])
+                self.env["target_folder"] = ribs_media.findtext("TargetFolderName")
 
-        self.env['app_json'] = os.path.join(self.env['PKG'], 'Contents/Resources/HD', \
-                                       self.env['target_folder'], 'Application.json')
+        self.env["app_json"] = os.path.join(
+            self.env["PKG"],
+            "Contents/Resources/HD",
+            self.env["target_folder"],
+            "Application.json",
+        )
 
         # If Application.json exists, we're looking at a HD installer
-        if os.path.exists(self.env['app_json']):
-            if not self.env['sap_code'] is 'APRO':
-                self.output('Installer is HyperDrive')
-                self.output('app_json: %s' % self.env['app_json'])
+        if os.path.exists(self.env["app_json"]):
+            if not self.env["sap_code"] is "APRO":
+                self.output("Installer is HyperDrive")
+                self.output("app_json: %s" % self.env["app_json"])
                 self.process_hd_installer()
         else:
             # If not a HD installer Acrobat is a 'current' title with a
             # RIBS PKG installer we can extract needed metadata from
-            self.env['proxy_xml'] = os.path.join(self.env['PKG'], 'Contents/Resources/Setup', \
-                                                      self.env['target_folder'], 'proxy.xml')
-            if not os.path.exists(self.env['proxy_xml']):
-                raise ProcessorError('APRO selected, proxy.xml not found at: %s' \
-                                                          % self.env['proxy_xml'])
+            self.env["proxy_xml"] = os.path.join(
+                self.env["PKG"],
+                "Contents/Resources/Setup",
+                self.env["target_folder"],
+                "proxy.xml",
+            )
+            if not os.path.exists(self.env["proxy_xml"]):
+                raise ProcessorError(
+                    "APRO selected, proxy.xml not found at: %s" % self.env["proxy_xml"]
+                )
             else:
                 self.process_apro_installer()
 
-
     def process_apro_installer(self):
-        '''
+        """
         Process APRO installer -
             proxy_xml: Path to proxy_xml if pkg is APRO
-        '''
+        """
 
-        self.output('Processing Acrobat installer')
-        self.output('proxy_xml: %s' % self.env['proxy_xml'])
+        self.output("Processing Acrobat installer")
+        self.output("proxy_xml: %s" % self.env["proxy_xml"])
 
-        tree = ElementTree.parse(self.env['proxy_xml'])
+        tree = ElementTree.parse(self.env["proxy_xml"])
         root = tree.getroot()
 
-        app_bundle_text = root.findtext\
-                      ('./ThirdPartyComponent/Metadata/Properties/Property[@name=\'path\']')
-        app_bundle = app_bundle_text.split('/')[1]
-        self.output('app_bundle: %s' % app_bundle)
+        app_bundle_text = root.findtext(
+            "./ThirdPartyComponent/Metadata/Properties/Property[@name='path']"
+        )
+        app_bundle = app_bundle_text.split("/")[1]
+        self.output("app_bundle: %s" % app_bundle)
 
-        app_path_text = root.findtext('./InstallDir/Platform')
-        self.output('app_path_text: %s' % app_path_text)
+        app_path_text = root.findtext("./InstallDir/Platform")
+        self.output("app_path_text: %s" % app_path_text)
 
-        app_path = app_path_text.split('/')[1]
-        self.output('app_path: %s' % app_path)
+        app_path = app_path_text.split("/")[1]
+        self.output("app_path: %s" % app_path)
 
-        installed_path = os.path.join('/Applications', app_path, app_bundle)
-        self.output('installed_path: %s' % installed_path)
+        installed_path = os.path.join("/Applications", app_path, app_bundle)
+        self.output("installed_path: %s" % installed_path)
 
-        app_version = root.findtext('./InstallerProperties/Property[@name=\'ProductVersion\']')
-        self.output('app_version: %s' % app_version)
+        app_version = root.findtext(
+            "./InstallerProperties/Property[@name='ProductVersion']"
+        )
+        self.output("app_version: %s" % app_version)
 
-        self.env['display_name'] = app_path + ' CC 2019'
-        self.output('display_name: %s' % self.env['display_name'])
+        self.env["display_name"] = app_path + " CC 2019"
+        self.output("display_name: %s" % self.env["display_name"])
 
-        self.env['vers_compare_key'] = 'CFBundleShortVersionString'
-        self.output('vers_compare_key: %s' % self.env['vers_compare_key'])
+        self.env["vers_compare_key"] = "CFBundleShortVersionString"
+        self.output("vers_compare_key: %s" % self.env["vers_compare_key"])
 
-        app_bundle_id = 'com.adobe.Acrobat.Pro'
-        self.output('app_bundle_id: %s' % app_bundle_id)
+        app_bundle_id = "com.adobe.Acrobat.Pro"
+        self.output("app_bundle_id: %s" % app_bundle_id)
 
         self.create_pkginfo(app_bundle, app_bundle_id, app_version, installed_path)
 
-
     # pylint: disable=too-many-branches
     def process_hd_installer(self):
-        '''
+        """
         Process HD installer -
             app_json: Path to the Application JSON from within the PKG
-        '''
+        """
 
-        #pylint: disable=too-many-locals, too-many-statements
-        self.output('Processing HD installer')
-        with open(self.env['app_json']) as json_file:
+        # pylint: disable=too-many-locals, too-many-statements
+        self.output("Processing HD installer")
+        with open(self.env["app_json"]) as json_file:
             load_json = json.load(json_file)
 
             # AppLaunch is not always in the same format, but is splittable
-            if 'AppLaunch' in load_json:  # Bridge CC is HD but does not have AppLaunch
-                app_launch = load_json['AppLaunch']
-                self.output('app_launch: %s' % app_launch)
-                app_details = list(re.split('/', app_launch))
-                if app_details[2].endswith('.app'):
+            if "AppLaunch" in load_json:  # Bridge CC is HD but does not have AppLaunch
+                app_launch = load_json["AppLaunch"]
+                self.output("app_launch: %s" % app_launch)
+                app_details = list(re.split("/", app_launch))
+                if app_details[2].endswith(".app"):
                     app_bundle = app_details[2]
                     app_path = app_details[1]
                 else:
                     app_bundle = app_details[1]
-                    app_path = list(re.split('/', (load_json['InstallDir']['value'])))[1]
-                self.output('app_bundle: %s' % app_bundle)
-                self.output('app_path: %s' % app_path)
+                    app_path = list(re.split("/", (load_json["InstallDir"]["value"])))[
+                        1
+                    ]
+                self.output("app_bundle: %s" % app_bundle)
+                self.output("app_path: %s" % app_path)
 
-                installed_path = os.path.join('/Applications', app_path, app_bundle)
-                self.output('installed_path: %s' % installed_path)
+                installed_path = os.path.join("/Applications", app_path, app_bundle)
+                self.output("installed_path: %s" % installed_path)
 
-                if not app_path.endswith('CC') and not app_path.endswith('CC 2019'):
-                    self.env['display_name'] = app_path + ' CC 2019'
-                elif app_path.endswith('CC') and not app_path.endswith('CC 2019'):
-                    self.env['display_name'] = app_path + ' 2019'
+                if not app_path.endswith("CC") and not app_path.endswith("CC 2019"):
+                    self.env["display_name"] = app_path + " CC 2019"
+                elif app_path.endswith("CC") and not app_path.endswith("CC 2019"):
+                    self.env["display_name"] = app_path + " 2019"
                 else:
-                    self.env['display_name'] = app_path
-                self.output('display_name: %s' % self.env['display_name'])
+                    self.env["display_name"] = app_path
+                self.output("display_name: %s" % self.env["display_name"])
 
-                zip_file = load_json['Packages']['Package'][0]['PackageName']
-                self.output('zip_file: %s' % zip_file)
+                zip_file = load_json["Packages"]["Package"][0]["PackageName"]
+                self.output("zip_file: %s" % zip_file)
 
-                zip_path = os.path.join(self.env['PKG'], 'Contents/Resources/HD', \
-                                    self.env['target_folder'], zip_file + '.zip')
-                self.output('zip_path: %s' % zip_path)
+                zip_path = os.path.join(
+                    self.env["PKG"],
+                    "Contents/Resources/HD",
+                    self.env["target_folder"],
+                    zip_file + ".zip",
+                )
+                self.output("zip_path: %s" % zip_path)
 
-                with zipfile.ZipFile(zip_path, mode='r') as myzip:
-                    with myzip.open(zip_file + '.pimx') as mytxt:
+                with zipfile.ZipFile(zip_path, mode="r") as myzip:
+                    with myzip.open(zip_file + ".pimx") as mytxt:
                         txt = mytxt.read()
                         tree = ElementTree.fromstring(txt)
                         # Loop through .pmx's Assets, look for target=[INSTALLDIR],
                         # then grab Assets Source.
                         # Break when found .app/Contents/Info.plist
-                        for elem in tree.findall('Assets'):
-                            for i in  elem.getchildren():
-                                if i.attrib['target'].upper().startswith('[INSTALLDIR]'):
-                                    bundle_location = i.attrib['source']
-                                    self.output('bundle_location: %s' % bundle_location)
+                        for elem in tree.findall("Assets"):
+                            for i in elem.getchildren():
+                                if (
+                                    i.attrib["target"]
+                                    .upper()
+                                    .startswith("[INSTALLDIR]")
+                                ):
+                                    bundle_location = i.attrib["source"]
+                                    self.output("bundle_location: %s" % bundle_location)
                                 else:
                                     continue
-                                if not bundle_location.startswith('[StagingFolder]'):
+                                if not bundle_location.startswith("[StagingFolder]"):
                                     continue
-                                elif bundle_location.endswith('Icons') or \
-                                         bundle_location.endswith('AMT'):
+                                elif bundle_location.endswith(
+                                    "Icons"
+                                ) or bundle_location.endswith("AMT"):
                                     continue
                                 else:
                                     bundle_location = bundle_location[16:]
-                                    if bundle_location.endswith('.app'):
-                                        zip_bundle = os.path.join('1', bundle_location, \
-                                                                 'Contents/Info.plist')
+                                    if bundle_location.endswith(".app"):
+                                        zip_bundle = os.path.join(
+                                            "1", bundle_location, "Contents/Info.plist"
+                                        )
                                     else:
-                                        zip_bundle = os.path.join('1', bundle_location, \
-                                                     app_bundle, 'Contents/Info.plist')
+                                        zip_bundle = os.path.join(
+                                            "1",
+                                            bundle_location,
+                                            app_bundle,
+                                            "Contents/Info.plist",
+                                        )
                                     try:
                                         with myzip.open(zip_bundle) as myplist:
                                             plist = myplist.read()
                                             data = load_plist(plist)
-                                            if self.env['sap_code'] == 'LTRM':
-                                                self.env['vers_compare_key'] = 'CFBundleVersion'
+                                            if self.env["sap_code"] == "LTRM":
+                                                self.env[
+                                                    "vers_compare_key"
+                                                ] = "CFBundleVersion"
                                             else:
-                                                self.env['vers_compare_key'] = \
-                                                  'CFBundleShortVersionString'
-                                            self.output('vers_compare_key: %s' % \
-                                                   self.env['vers_compare_key'])
-                                            app_version = data[self.env['vers_compare_key']]
-                                            app_bundle_id = data['CFBundleIdentifier']
-                                            self.output('app_bundle_id: %s' % app_bundle_id)
-                                            self.output('staging_folder: %s' % bundle_location)
-                                            self.output('staging_folder_path: %s' % zip_bundle)
-                                            self.output('app_version: %s' % app_version)
-                                            self.output('app_bundle: %s' % app_bundle)
+                                                self.env[
+                                                    "vers_compare_key"
+                                                ] = "CFBundleShortVersionString"
+                                            self.output(
+                                                "vers_compare_key: %s"
+                                                % self.env["vers_compare_key"]
+                                            )
+                                            app_version = data[
+                                                self.env["vers_compare_key"]
+                                            ]
+                                            app_bundle_id = data["CFBundleIdentifier"]
+                                            self.output(
+                                                "app_bundle_id: %s" % app_bundle_id
+                                            )
+                                            self.output(
+                                                "staging_folder: %s" % bundle_location
+                                            )
+                                            self.output(
+                                                "staging_folder_path: %s" % zip_bundle
+                                            )
+                                            self.output("app_version: %s" % app_version)
+                                            self.output("app_bundle: %s" % app_bundle)
                                             break
                                     except zipfile.BadZipfile:
                                         continue
 
                 # Now we have the deets, let's use them
-                self.create_pkginfo(app_bundle, app_bundle_id, app_version, installed_path)
-
+                self.create_pkginfo(
+                    app_bundle, app_bundle_id, app_version, installed_path
+                )
 
     def create_pkginfo(self, app_bundle, app_bundle_id, app_version, installed_path):
         """Create pkginfo with found details
@@ -273,27 +314,29 @@ class AdobeCC2019Versioner(Processor):
               installed_path (str): The path where the installed item will be installed.
         """
 
-        self.env['jss_inventory_name'] = app_bundle
-        self.env['pkg_path'] = self.env['PKG']
-        self.env['version'] = app_version
+        self.env["jss_inventory_name"] = app_bundle
+        self.env["pkg_path"] = self.env["PKG"]
+        self.env["version"] = app_version
 
         pkginfo = {
-            'display_name': self.env['display_name'],
-            'minimum_os_version': self.env['MINIMUM_OS_VERSION']
+            "display_name": self.env["display_name"],
+            "minimum_os_version": self.env["MINIMUM_OS_VERSION"],
         }
 
-        if 'pkginfo' not in self.env or 'installs' not in self.env['pkginfo']:
-            pkginfo['installs'] = [{
-                self.env['vers_compare_key']: self.env['version'],
-                'path': installed_path,
-                'type': 'application',
-                'version_comparison_key': self.env['vers_compare_key'],
-                'CFBundleIdentifier': app_bundle_id,
-            }]
+        if "pkginfo" not in self.env or "installs" not in self.env["pkginfo"]:
+            pkginfo["installs"] = [
+                {
+                    self.env["vers_compare_key"]: self.env["version"],
+                    "path": installed_path,
+                    "type": "application",
+                    "version_comparison_key": self.env["vers_compare_key"],
+                    "CFBundleIdentifier": app_bundle_id,
+                }
+            ]
 
-        self.env['additional_pkginfo'] = pkginfo
-        self.output('additional_pkginfo: %s' % self.env['additional_pkginfo'])
+        self.env["additional_pkginfo"] = pkginfo
+        self.output("additional_pkginfo: %s" % self.env["additional_pkginfo"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     PROCESSOR = AdobeCC2019Versioner()
