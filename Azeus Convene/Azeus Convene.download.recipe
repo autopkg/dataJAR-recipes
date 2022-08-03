@@ -16,34 +16,34 @@
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>hubfs/app-downloads/Azeus%20Convene\.v([0-9]+(\.[0-9]+)+)\.dmg</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
+                <string>(/hubfs/app-downloads/Azeus%20Convene.*MacOS\.dmg)</string>
                 <key>url</key>
                 <string>https://www.azeusconvene.co.uk/app-and-laptop-downloads</string>
             </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://www.azeusconvene.co.uk/hubfs/app-downloads/Azeus%20Convene.v%version%.dmg</string>
+                <string>https://www.azeusconvene.co.uk/%match%</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -55,8 +55,6 @@
                 <key>input_path</key>
                 <string>%pathname%/Convene Installer.pkg</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
