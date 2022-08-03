@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 
 '''
 Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
