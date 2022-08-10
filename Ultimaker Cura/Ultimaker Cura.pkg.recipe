@@ -28,7 +28,7 @@
                 <dict>
                     <key>CFBundleIdentifier</key>
                     <string>bundleid</string>
-                    <key>CFBundleVersion</key>
+                    <key>CFBundleShortVersionString</key>
                     <string>version</string>
                 </dict>
             </dict>
