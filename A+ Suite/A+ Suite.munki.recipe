@@ -71,6 +71,22 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_ids_set_optional_true</key>
+                <array>
+                    <string>com.aver.officeAddinInstaller</string>
+                    <string>com.aver.pkg.AVerCMIOPlugIn</string>
+                    <string>com.aver.asuiteForMac.cyusb</string>
+                    <string>com.AVerMedia.AVerFlash</string>
+                    <string>com.aver.AVerVDig</string>
+                    <string>com.aver.asuiteForMac.AVer</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
