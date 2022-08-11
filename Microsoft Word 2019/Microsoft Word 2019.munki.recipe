@@ -24,6 +24,8 @@
         <string>apps/%NAME%</string>
         <key>MINIMUM_OS_VERSION</key>
         <string>10.14.0</string>
+        <key>pkg_ids_set_optional_true</key>
+        <array/>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -76,6 +78,12 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
+            <key>_note</key>
+            <string>Uses pkg_ids_set_optional_true from Input</string>
         </dict>
     </array>
 </dict>
