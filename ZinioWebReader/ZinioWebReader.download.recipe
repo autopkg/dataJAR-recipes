@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https:\/\/www\.zinio\.com\/static\/assets\/desktop-app\/([0-9]+(_[0-9]+)+)\/ZinioDesktopReaderSetup\.dmg</string>
+                <string>href=\"\/static\/assets\/desktop-app\/([0-9]+(_[0-9]+)+)\/ZinioDesktopReaderSetup\.dmg\"</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
