@@ -48,10 +48,10 @@ fi
 
 legacySF="/Applications/Suitcase Fusion.app"
 
-if [ -d $legacySF ]
+if [ -d "${legacySF}" ]
 then
 	/bin/echo "Found older version of Suitcase Fusion, removing..."
-	/bin/rm -rf $legacySF
+	/bin/rm -rf "${legacySF}"
 fi</string>
             <key>unattended_install</key>
             <true/>
