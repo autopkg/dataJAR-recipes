@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Suitcase Fusion 23 and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Suitcase Fusion 23</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SuitcaseFusion23</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/Extensis/Suitcase</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+           	<key>category</key>
+			<string>Productivity</string>
+			<key>developer</key>
+			<string>Extensis</string>
+            <key>description</key>
+            <string>You love fonts. But wrangling your font collection? Not so much. Welcome to Suitcase Fusion, the gold standard in font management for creative professionals.</string>
+            <key>display_name</key>
+            <string>Suitcase Fusion 23</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# If Connect Fonts is installed, install it's plugins
+#
+
+pluginInstaller="/Applications/Connect Fonts.app/Contents/Resources/plugin-installer"
+
+if [ -f "${pluginInstaller}" ]
+then
+    /bin/echo "Found ${pluginInstaller}, running..."
+    "${pluginInstaller}" --install-all > /dev/null 2>&amp;1
+fi
+
+#
+# If former Version of Suitcase is found, remove it
+#
+
+legacySF="/Applications/Suitcase Fusion.app"
+
+if [ -d $legacySF ]
+then
+	/bin/echo "Found older version of Suitcase Fusion, removing..."
+	/bin/rm -rf $legacySF
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.3.1</string>
+    <key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 23</string>
+    <key>Process</key>
+	<array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
