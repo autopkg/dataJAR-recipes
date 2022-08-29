@@ -24,6 +24,8 @@
             <dict>
                 <key>app_path</key>
                 <string>%pathname%/4K Video Downloader.app</string>
+                	<key>pkg_path</key>
+                	<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
             </dict>
         </dict>
     </array>
