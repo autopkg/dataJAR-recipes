@@ -2,81 +2,83 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of AWS CLI tools and makes a pkg of it then uploads it to the JSS.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.AWSCLI</string>
-	<key>Input</key>
-	<dict>
-		<key>CATEGORY</key>
-		<string>Productivity</string>
-		<key>GROUP_NAME</key>
-		<string>%NAME%-update-smart</string>
-		<key>GROUP_TEMPLATE</key>
-		<string>AWSCLISmartGroupTemplate.xml</string>
-		<key>NAME</key>
-		<string>AWSCLI</string>
-		<key>POLICY_CATEGORY</key>
-		<string>Testing</string>
-		<key>POLICY_TEMPLATE</key>
-		<string>PolicyTemplate.xml</string>
-		<key>SELF_SERVICE_DESCRIPTION</key>
-		<string>The AWS Command Line Interface (CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.</string>
-		<key>SELF_SERVICE_ICON</key>
-		<string>AWSCLI.png</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.4.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.homebysix.pkg.AWSCLI</string>
-	<key>Process</key>
-	<array>
+    <key>Description</key>
+    <string>Downloads the latest version of AWS CLI tools and makes a pkg of it then uploads it to the JSS.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.jss.AWSCLI</string>
+    <key>Input</key>
+    <dict>
+        <key>CATEGORY</key>
+        <string>Productivity</string>
+        <key>GROUP_NAME</key>
+        <string>%NAME%-update-smart</string>
+        <key>GROUP_TEMPLATE</key>
+        <string>AWSCLISmartGroupTemplate.xml</string>
+        <key>NAME</key>
+        <string>AWSCLI</string>
+        <key>POLICY_CATEGORY</key>
+        <string>Testing</string>
+        <key>POLICY_TEMPLATE</key>
+        <string>PolicyTemplate.xml</string>
+        <key>SELF_SERVICE_DESCRIPTION</key>
+        <string>The AWS Command Line Interface (CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.</string>
+        <key>SELF_SERVICE_ICON</key>
+        <string>AWSCLI.png</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.homebysix.pkg.AWSCLI</string>
+    <key>Process</key>
+    <array>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>This recipe has been deprecated.</string>
-             </dict>
-           	<key>Processor</key>
+                <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+
+Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+            </dict>
+            <key>Processor</key>
             <string>DeprecationWarning</string>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>category</key>
-				<string>%CATEGORY%</string>
-				<key>extension_attributes</key>
-				<array>
-					<dict>
-						<key>ext_attribute_path</key>
-						<string>AWSCLIExtensionAttribute.xml</string>
-					</dict>
-				</array>
-				<key>groups</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>%GROUP_NAME%</string>
-						<key>smart</key>
-						<true/>
-						<key>template_path</key>
-						<string>%GROUP_TEMPLATE%</string>
-					</dict>
-				</array>
-				<key>policy_category</key>
-				<string>%POLICY_CATEGORY%</string>
-				<key>policy_template</key>
-				<string>%POLICY_TEMPLATE%</string>
-				<key>prod_name</key>
-				<string>%NAME%</string>
-				<key>self_service_description</key>
-				<string>%SELF_SERVICE_DESCRIPTION%</string>
-				<key>self_service_icon</key>
-				<string>%SELF_SERVICE_ICON%</string>
-			</dict>
-			<key>Processor</key>
-			<string>JSSImporter</string>
-		</dict>
-	</array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>category</key>
+                <string>%CATEGORY%</string>
+                <key>extension_attributes</key>
+                <array>
+                    <dict>
+                        <key>ext_attribute_path</key>
+                        <string>AWSCLIExtensionAttribute.xml</string>
+                    </dict>
+                </array>
+                <key>groups</key>
+                <array>
+                    <dict>
+                        <key>name</key>
+                        <string>%GROUP_NAME%</string>
+                        <key>smart</key>
+                        <true/>
+                        <key>template_path</key>
+                        <string>%GROUP_TEMPLATE%</string>
+                    </dict>
+                </array>
+                <key>policy_category</key>
+                <string>%POLICY_CATEGORY%</string>
+                <key>policy_template</key>
+                <string>%POLICY_TEMPLATE%</string>
+                <key>prod_name</key>
+                <string>%NAME%</string>
+                <key>self_service_description</key>
+                <string>%SELF_SERVICE_DESCRIPTION%</string>
+                <key>self_service_icon</key>
+                <string>%SELF_SERVICE_ICON%</string>
+            </dict>
+            <key>Processor</key>
+            <string>JSSImporter</string>
+        </dict>
+    </array>
 </dict>
 </plist>

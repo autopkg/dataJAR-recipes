@@ -12,7 +12,7 @@
             <string>SomeAdobe2020Title</string>
             <key>MINIMUM_OS_VERSION</key>
             <string>10.14.0</string>
-        	<key>SELF_SERVICE_DESCRIPTION</key>
+            <key>SELF_SERVICE_DESCRIPTION</key>
             <string>Some description.</string>
             <key>CATEGORY</key>
             <string>Productivity</string>
@@ -38,10 +38,21 @@
             <string></string>
         </dict>
         <key>MinimumVersion</key>
-        <string>1.0.0</string>
+        <string>1.1.0</string>
         <key>Process</key>
         <array>
-        	<dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>warning_message</key>
+                    <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+
+Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+                </dict>
+                <key>Processor</key>
+                <string>DeprecationWarning</string>
+            </dict>
+            <dict>
                 <key>Processor</key>
                 <string>Adobe2020Versioner</string>
             </dict>
@@ -57,6 +68,7 @@
                 </dict>
             </dict>
             <dict>
+
                 <key>Processor</key>
                 <string>JSSImporter</string>
                 <key>Arguments</key>

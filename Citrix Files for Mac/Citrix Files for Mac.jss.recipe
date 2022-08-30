@@ -26,11 +26,22 @@
         <string>CitrixFiles.png</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.Citrix Files for Mac</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+
+Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>JSSImporter</string>

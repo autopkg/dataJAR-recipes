@@ -2,74 +2,85 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of renpy 6 and then uploads to the JSS</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.renpy 6</string>
-	<key>Input</key>
-	<dict>
-		<key>CATEGORY</key>
-		<string>Applications</string>
-		<key>GROUP_NAME</key>
-		<string>%NAME%-update-smart</string>
-		<key>GROUP_TEMPLATE</key>
+    <key>Description</key>
+    <string>Downloads the current release version of renpy 6 and then uploads to the JSS</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.jss.renpy 6</string>
+    <key>Input</key>
+    <dict>
+        <key>CATEGORY</key>
+        <string>Applications</string>
+        <key>GROUP_NAME</key>
+        <string>%NAME%-update-smart</string>
+        <key>GROUP_TEMPLATE</key>
         <string>renpy 6-SmartGroupTemplate.xml</string>
-		<key>NAME</key>
-		<string>renpy6</string>
-		<key>POLICY_CATEGORY</key>
-		<string>Testing</string>
-		<key>POLICY_TEMPLATE</key>
-		<string>PolicyTemplate.xml</string>
-		<key>SELF_SERVICE_DESCRIPTION</key>
+        <key>NAME</key>
+        <string>renpy6</string>
+        <key>POLICY_CATEGORY</key>
+        <string>Testing</string>
+        <key>POLICY_TEMPLATE</key>
+        <string>PolicyTemplate.xml</string>
+        <key>SELF_SERVICE_DESCRIPTION</key>
         <string>Ren'Py is a visual novel engine – used by thousands of creators from around the world – that helps you use words, images, and sounds to tell interactive stories that run on computers and mobile devices. These can be both visual novels and life simulation games. The easy to learn script language allows anyone to efficiently write large visual novels, while its Python scripting is enough for complex simulation games.</string>
         <key>SELF_SERVICE_ICON</key>
-		<string>renpy6.png</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.renpy 6</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>category</key>
-				<string>%CATEGORY%</string>
-				<key>extension_attributes</key>
+        <string>renpy6.png</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.renpy 6</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+
+Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>category</key>
+                <string>%CATEGORY%</string>
+                <key>extension_attributes</key>
                 <array>
                     <dict>
                         <key>ext_attribute_path</key>
                         <string>renpy 6-CFBundleVersionExtensionAttribute.xml</string>
                     </dict>
                 </array>
-				<key>groups</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>%GROUP_NAME%</string>
-						<key>smart</key>
-						<true/>
-						<key>template_path</key>
-						<string>%GROUP_TEMPLATE%</string>
-					</dict>
-				</array>
-				<key>policy_category</key>
-				<string>%POLICY_CATEGORY%</string>
-				<key>policy_template</key>
-				<string>%POLICY_TEMPLATE%</string>
-				<key>prod_name</key>
-				<string>renpy</string>
-				<key>self_service_description</key>
-				<string>%SELF_SERVICE_DESCRIPTION%</string>
-				<key>self_service_icon</key>
-				<string>%SELF_SERVICE_ICON%</string>
-				<key>version</key>
-				<string>%version%</string>
-			</dict>
-			<key>Processor</key>
-			<string>JSSImporter</string>
-		</dict>
-	</array>
+                <key>groups</key>
+                <array>
+                    <dict>
+                        <key>name</key>
+                        <string>%GROUP_NAME%</string>
+                        <key>smart</key>
+                        <true/>
+                        <key>template_path</key>
+                        <string>%GROUP_TEMPLATE%</string>
+                    </dict>
+                </array>
+                <key>policy_category</key>
+                <string>%POLICY_CATEGORY%</string>
+                <key>policy_template</key>
+                <string>%POLICY_TEMPLATE%</string>
+                <key>prod_name</key>
+                <string>renpy</string>
+                <key>self_service_description</key>
+                <string>%SELF_SERVICE_DESCRIPTION%</string>
+                <key>self_service_icon</key>
+                <string>%SELF_SERVICE_ICON%</string>
+                <key>version</key>
+                <string>%version%</string>
+            </dict>
+            <key>Processor</key>
+            <string>JSSImporter</string>
+        </dict>
+    </array>
 </dict>
 </plist>

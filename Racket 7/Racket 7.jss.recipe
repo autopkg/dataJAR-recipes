@@ -7,77 +7,88 @@
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.jss.Racket 7</string>
     <key>Input</key>
-	<dict>
-		<key>CATEGORY</key>
-		<string>Development</string>
-		<key>GROUP_NAME</key>
-		<string>%NAME%-update-smart</string>
-		<key>GROUP_TEMPLATE</key>
-		<string>SmartGroupTemplate.xml</string>
-		<key>JSS_INVENTORY_NAME</key>
+    <dict>
+        <key>CATEGORY</key>
+        <string>Development</string>
+        <key>GROUP_NAME</key>
+        <string>%NAME%-update-smart</string>
+        <key>GROUP_TEMPLATE</key>
+        <string>SmartGroupTemplate.xml</string>
+        <key>JSS_INVENTORY_NAME</key>
         <string>DrRacket.app</string>
-		<key>NAME</key>
-		<string>Racket7</string>
-		<key>POLICY_CATEGORY</key>
-		<string>Testing</string>
-		<key>POLICY_TEMPLATE</key>
-		<string>PolicyTemplate.xml</string>
-		<key>SELF_SERVICE_DESCRIPTION</key>
-		<string>Racket is a general-purpose programming language as well as the world’s first ecosystem for developing and deploying new languages. Make your dream language, or use one of the dozens already available.</string>
-		<key>SELF_SERVICE_ICON</key>
-		<string>Racket7.png</string>
-	</dict>
+        <key>NAME</key>
+        <string>Racket7</string>
+        <key>POLICY_CATEGORY</key>
+        <string>Testing</string>
+        <key>POLICY_TEMPLATE</key>
+        <string>PolicyTemplate.xml</string>
+        <key>SELF_SERVICE_DESCRIPTION</key>
+        <string>Racket is a general-purpose programming language as well as the world’s first ecosystem for developing and deploying new languages. Make your dream language, or use one of the dozens already available.</string>
+        <key>SELF_SERVICE_ICON</key>
+        <string>Racket7.png</string>
+    </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.Racket 7</string>
+    <string>1.1.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Racket 7</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>FileMover</string>
-			<key>Arguments</key>
-			<dict>
-				<key>source</key>
-				<string>%pkg_path%</string>
-				<key>target</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>category</key>
-				<string>%CATEGORY%</string>
-				<key>groups</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>%GROUP_NAME%</string>
-						<key>smart</key>
-						<true/>
-						<key>template_path</key>
-						<string>%GROUP_TEMPLATE%</string>
-					</dict>
-				</array>
-				<key>jss_inventory_name</key>
-				<string>%JSS_INVENTORY_NAME%</string>
-				<key>pkg_path</key>
-				<string>%target%</string>
-				<key>policy_category</key>
-				<string>%POLICY_CATEGORY%</string>
-				<key>policy_template</key>
-				<string>%POLICY_TEMPLATE%</string>
-				<key>prod_name</key>
-				<string>Racket 7</string>
-				<key>self_service_description</key>
-				<string>%SELF_SERVICE_DESCRIPTION%</string>
-				<key>self_service_icon</key>
-				<string>%SELF_SERVICE_ICON%</string>
-			</dict>
-			<key>Processor</key>
-			<string>JSSImporter</string>
-		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+
+Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%pkg_path%</string>
+                <key>target</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>category</key>
+                <string>%CATEGORY%</string>
+                <key>groups</key>
+                <array>
+                    <dict>
+                        <key>name</key>
+                        <string>%GROUP_NAME%</string>
+                        <key>smart</key>
+                        <true/>
+                        <key>template_path</key>
+                        <string>%GROUP_TEMPLATE%</string>
+                    </dict>
+                </array>
+                <key>jss_inventory_name</key>
+                <string>%JSS_INVENTORY_NAME%</string>
+                <key>pkg_path</key>
+                <string>%target%</string>
+                <key>policy_category</key>
+                <string>%POLICY_CATEGORY%</string>
+                <key>policy_template</key>
+                <string>%POLICY_TEMPLATE%</string>
+                <key>prod_name</key>
+                <string>Racket 7</string>
+                <key>self_service_description</key>
+                <string>%SELF_SERVICE_DESCRIPTION%</string>
+                <key>self_service_icon</key>
+                <string>%SELF_SERVICE_ICON%</string>
+            </dict>
+            <key>Processor</key>
+            <string>JSSImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>
