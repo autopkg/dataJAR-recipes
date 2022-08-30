@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>SpitfireAudio</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://www.spitfireaudio.com/library-manager/download/mac/</string>
+        <string>https://www2.spitfireaudio.com/library-manager/download/mac/</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
