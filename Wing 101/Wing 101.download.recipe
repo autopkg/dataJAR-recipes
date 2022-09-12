@@ -24,24 +24,11 @@ Set the ARCHITECTURE override to "intel" to download the Intel or "arm64" for Ap
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://wingware.com/pub/wing-101/?C=M;O=D</string>
+                <string>https://wingware.com/downloads/wing-101</string>
                 <key>re_pattern</key>
-                <string>&lt;img src=\&quot;/icons/folder\.gif\&quot; alt=\&quot;\[DIR\]\&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;.*/\&quot;&gt;(.*)/&lt;</string>
+                <string>href=\"https://wingware\.com/pub/wing-101/(\d(\.\d)+)/CHANGELOG\.txt\">Change Log</string>
                 <key>result_output_var_name</key>
-                <string>first_match</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://wingware.com/pub/wing-101/%first_match%</string>
-                <key>re_pattern</key>
-                <string>href=\"(.*-%ARCHITECTURE%\.dmg)\"</string>
-                <key>result_output_var_name</key>
-                <string>second_match</string>
+                <string>version</string>
             </dict>
         </dict>
         <dict>
@@ -50,7 +37,7 @@ Set the ARCHITECTURE override to "intel" to download the Intel or "arm64" for Ap
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://wingware.com/pub/wing-101/%first_match%/%second_match%</string>
+                <string>https://wingware.com/pub/wing-101/%version%/wing-101-%version%-%ARCHITECTURE%.dmg</string>
             </dict>
         </dict>
         <dict>
