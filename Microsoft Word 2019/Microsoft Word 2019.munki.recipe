@@ -81,7 +81,7 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
+            <string>MunkiOptionalReceiptEditor</string>
             <key>_note</key>
             <string>Uses pkg_ids_set_optional_true from Input</string>
         </dict>
