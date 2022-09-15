@@ -3,13 +3,22 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe of the Axure RP 10 Trial.</string>
+    <string>Download recipe of the Axure RP 10 Trial.
+    
+NOTE: Axure has created two binaries for Intel and ARM hardware.  
+Modify the URL in your override to accomodate accordingly.
+
+Intel URL: https://axure.cachefly.net/AxureRP-Setup.dmg
+ARM URL: https://axure.cachefly.net/AxureRP-Setup-arm64.dmg
+	</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Axure RP 10-Trial</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>AxureRP10-Trial</string>
+        <key>URL</key>
+        <string>https://axure.cachefly.net/AxureRP-Setup.dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -21,7 +30,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://axure.cachefly.net/AxureRP-Setup.dmg</string>
+                <string>%URL%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
