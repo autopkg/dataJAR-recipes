@@ -19,7 +19,9 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string> </string>
+            <string>Head Tracker is a USB device that quickly and precisely captures your head orientation up to 100 times per second.
+
+It’s comfortable, affordable, and leaves your eyes in the real world.</string>
             <key>developer</key>
             <string>Supperware Ltd</string>
             <key>display_name</key>
