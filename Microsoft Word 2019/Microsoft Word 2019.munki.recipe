@@ -51,7 +51,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>2.6.0</string>
     <key>ParentRecipe</key>
     <string>com.github.rtrouton.pkg.microsoftword365</string>
     <key>Process</key>
