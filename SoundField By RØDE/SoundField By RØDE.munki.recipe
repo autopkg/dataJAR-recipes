@@ -56,6 +56,8 @@ An intuitive interface coupled with legendary RØDE accessibility makes the 'Sou
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked/*.pkg</string>
+                <key>output</key>
+                <string>found_basename</string>
             </dict>
             <key>Processor</key>
             <string>FileFinder</string>
