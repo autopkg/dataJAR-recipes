@@ -35,7 +35,7 @@ An intuitive interface coupled with legendary RØDE accessibility makes the 'Sou
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>2.3.2</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.SoundField By RØDE</string>
     <key>Process</key>
@@ -56,8 +56,6 @@ An intuitive interface coupled with legendary RØDE accessibility makes the 'Sou
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked/*.pkg</string>
-                <key>output</key>
-                <string>found_basename</string>
             </dict>
             <key>Processor</key>
             <string>FileFinder</string>
