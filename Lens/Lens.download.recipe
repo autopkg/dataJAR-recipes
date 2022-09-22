@@ -33,7 +33,7 @@
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>re_pattern</key>
-                <string>(Lens-([0-9]+(\.[0-9]+)+)-latest\.([0-9]+(\.[0-9]+)+)%ARCHITECTURE%-mac\.zip)</string>
+                <string>(Lens-[0-9]*\.[0-9]+[0-9]*\.[0-9]+-latest%ARCHITECTURE%-mac\.zip)</string>
                 <key>re_flags</key>
                 <array>
                     <string>IGNORECASE</string>
