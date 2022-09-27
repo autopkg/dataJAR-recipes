@@ -18,7 +18,7 @@
         <key>SEARCH_URL</key>
         <string>https://university.fosshub.com/projects.json</string>
         <key>SEARCH_PATTERN</key>
-        <string>https://university.fosshub.com/Protected/[\S]+\/[\S]+\/audacity-macos-[\S]+\.dmg</string>
+        <string>https://university.fosshub.com/Protected/[\S]+\/[\S]+\/audacity-macOS-[\S]+\.dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.9</string>
