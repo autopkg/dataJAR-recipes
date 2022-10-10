@@ -48,7 +48,7 @@
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>This recipe has been deprecated. The softyware title is now unsuppoted by the vendor please see: https://o.steinberg.net/index.php?id=15126&amp;L=1 for further info. All download links currently direct to a 404 error page.</string>
+                <string>This recipe has been deprecated. The software title is now unsupported by the vendor please see: https://o.steinberg.net/index.php?id=15126&amp;L=1 for further info. All download links currently direct to a 404 error page.</string>
             </dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>
