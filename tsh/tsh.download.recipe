@@ -19,7 +19,7 @@
         <key>Arguments</key>
         <dict>
             <key>url</key>
-            <string>https://dashboard.gravitational.com/webapi/releases-oss?product=teleport&amp;page=0</string>
+            <string>https://goteleport.com/docs/ver/10.0/installation/#macos</string>
             <key>re_pattern</key>
             <string>https:\/\/get.gravitational.com\/tsh-([\d\.]*).pkg</string>
             <key>result_output_var_name</key>
