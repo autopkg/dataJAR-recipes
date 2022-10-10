@@ -43,11 +43,29 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.WaveLab LE 9</string>
     <key>Process</key>
     <array>
+         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The softyware title is now unsuppoted by the vendor please see: https://o.steinberg.net/index.php?id=15126&amp;L=1 for further info. All download links currently direct to a 404 error page.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
