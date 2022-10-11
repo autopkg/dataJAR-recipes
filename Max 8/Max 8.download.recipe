@@ -12,7 +12,7 @@
         <string>Max 8</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,9 +21,89 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://cycling74.com/thanks-for-downloading-max/?os=mac</string>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://\w*-maxmspjitter.s3.amazonaws.com/Max8\S.*.dmg)</string>
+                <string>([A-Za-z0-9]+-maxmspjitter\.s3\.amazonaws\.com)</string>
+                <key>result_output_var_name</key>
+                <string>BASE_URL</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
+                <key>re_pattern</key>
+                <string>version:"(\d)\.\d\.\d"</string>
+                <key>result_output_var_name</key>
+                <string>VERSION_1</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
+                <key>re_pattern</key>
+                <string>version:"\d\.(\d)\.\d"</string>
+                <key>result_output_var_name</key>
+                <string>VERSION_2</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
+                <key>re_pattern</key>
+                <string>version:"\d\.\d\.(\d)"</string>
+                <key>result_output_var_name</key>
+                <string>VERSION_3</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
+                <key>re_pattern</key>
+                <string>m=\{date:r\(\)\(\"\d\d-\d\d-20(\d\d)\",\"MM-DD-YYYY\"\)</string>
+                <key>result_output_var_name</key>
+                <string>YEAR</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
+                <key>re_pattern</key>
+                <string>m=\{date:r\(\)\(\"(\d\d)-\d\d-20\d\d\",\"MM-DD-YYYY\"\)</string>
+                <key>result_output_var_name</key>
+                <string>MONTH</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cycling74.com/_next/static/chunks/pages/thanks-for-downloading-max-e277ddb83654f055.js</string>
+                <key>re_pattern</key>
+                <string>m=\{date:r\(\)\(\"\d\d-(\d\d)-20\d\d\",\"MM-DD-YYYY\"\)</string>
+                <key>result_output_var_name</key>
+                <string>DAY</string>
             </dict>
         </dict>
         <dict>
@@ -31,6 +111,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>url</key>
+                <string>%BASE_URL%/Max%VERSION_1%%VERSION_2%%VERSION_3%_%YEAR%%MONTH%%DAY%.dmg</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
