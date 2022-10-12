@@ -33,9 +33,9 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.smithjw.download.DisplayLink_Manager</string>
+    <string>com.github.smithjw.pkg.DisplayLink_Manager</string>
     <key>Process</key>
     <array>
         <dict>
@@ -46,7 +46,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
                 <key>flat_pkg_path</key>
-                <string>%pathname%</string>
+                <string>%RECIPE_CACHE_DIR%/downloads/DisplayLink_Manager.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -117,12 +117,12 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%RECIPE_CACHE_DIR%/DisplayLink_Manager-%version%.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
         </dict>
-        <dict>
+         <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
@@ -131,6 +131,7 @@
                 <array>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/downloads</string>
                 </array>
             </dict>
         </dict>
