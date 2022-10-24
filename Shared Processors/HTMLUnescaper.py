@@ -72,8 +72,6 @@ class HTMLUnescaper(Processor):
 
         self.env['unescaped_string'] = html.unescape(self.env['input_string'])
 
-        self.output(f"unescaped_string: {self.env['unescaped_string']}")
-
 
 if __name__ == '__main__':
     PROCESSOR = HTMLUnescaper()
