@@ -8,6 +8,8 @@
 	<string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
 	<key>Input</key>
 	<dict>
+		<key>ARCH</key>
+		<string>x86_64</string>
 		<key>NAME</key>
 		<string>OpenVPNConnectClient3</string>
 		<key>USER_AGENT</key>
@@ -49,7 +51,7 @@
 			<key>Arguments</key>
 			<dict>
 				<key>input_path</key>
-				<string>%pathname%/OpenVPN_Connect*.pkg</string>
+				<string>%pathname%/OpenVPN_Connect*%ARCH%*.pkg</string>
 				<key>expected_authority_names</key>
 				<array>
 					<string>Developer ID Installer: OPENVPN TECHNOLOGIES, INC. (ACV7L3WCD8)</string>
