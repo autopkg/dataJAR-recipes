@@ -2,64 +2,121 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Comment</key>
-	<string>Created with Recipe Robot v1.1.2 (https://github.com/homebysix/recipe-robot)</string>
-	<key>Description</key>
-	<string>Downloads the latest version of CrashPlan and imports it into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.CrashPlan</string>
-	<key>Input</key>
-	<dict>
-		<key>APP_FILENAME</key>
-		<string>CrashPlan</string>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>CrashPlan</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>blocking_applications</key>
-			<array>
-				<string>Electron Helper (Renderer).app</string>
-				<string>CrashPlan.app</string>
-				<string>Electron Helper (GPU).app</string>
-				<string>CrashPlanService.app</string>
-				<string>Electron Helper (Plugin).app</string>
-				<string>Electron Helper.app</string>
-			</array>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string> </string>
-			<key>developer</key>
-			<string>Code 42 Software</string>
-			<key>display_name</key>
-			<string>CrashPlan</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.0.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.CrashPlan</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest version of CrashPlan and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.CrashPlan</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>CrashPlan</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Code42.app</string>
+                <string>Code42Service.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Cloud Backup Solutions for the Remote and Hybrid Workforce.</string>
+            <key>developer</key>
+            <string>CrashPlan</string>
+            <key>display_name</key>
+            <string>CrashPlan</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Taken from vendors documentation: https://support.crashplan.com/hc/en-us/articles/9025086987661-Uninstall-the-CrashPlan-app-for-CrashPlan
+#
+/Applications/Code42.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.CrashPlan</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Install Code42.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/code42.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Code42.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
 </dict>
 </plist>
