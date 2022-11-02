@@ -51,7 +51,7 @@ class QuarantineRemover(Processor):
 
     description = __doc__
     input_variables = {
-        'quarantined_file_path': {
+        'quarantined_files_path': {
             'required': True,
             'description': ('Path to the file we\'re to remove the com.apple.quarantine '
                             'attribute from.'),
@@ -64,17 +64,17 @@ class QuarantineRemover(Processor):
         '''
 
         # Raise if file doesn't exist
-        if not os.path.exists(self.env['quarantined_file_path']):
-            raise ProcessorError(f"{self.env['quarantined_file_path']} does not exist...")
+        if not os.path.exists(self.env['quarantined_files_path']):
+            raise ProcessorError(f"{self.env['quarantined_files_path']} does not exist...")
 
         # Pinched with <3 from:
         # https://github.com/autopkg/autopkg/blob/7ba6e9da183683e9991882b99cba0d30d359bda8/Code/autopkgserver/itemcopier.py#L172-L177
         # remove com.apple.quarantine attribute if exists
         try:
-            if "com.apple.quarantine" in xattr.xattr(self.env['quarantined_file_path']).list():
-                xattr.xattr(self.env['quarantined_file_path']).remove("com.apple.quarantine")
+            if "com.apple.quarantine" in xattr.xattr(self.env['quarantined_files_path']).list():
+                xattr.xattr(self.env['quarantined_files_path']).remove("com.apple.quarantine")
                 self.output(f"Removed com.apple.quarantine from "
-                            f"{self.env['quarantined_file_path']}...")
+                            f"{self.env['quarantined_files_path']}...")
         except BaseException as err:
             raise ProcessorError(f"Error removing xattr: {err}") from err
 
