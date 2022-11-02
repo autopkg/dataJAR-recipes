@@ -57,6 +57,7 @@ class QuarantineRemover(Processor):
                             'attribute from.'),
         }
     }
+    output_variables = {}
 
     def main(self):
         '''
