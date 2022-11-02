@@ -17,31 +17,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>Requires python2. As python2 is EOL, we're deprecating - https://github.com/autopkg/dataJAR-recipes/issues/213</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://www.legamaster.com/downloads/software</string>
                 <key>re_pattern</key>
-                <string>\"/(fileadmin/user_upload/Software/Legamaster_all_in_one_.*\.zip)\"&gt;Download macOS</string>
+                <string>href=\"/(fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_UPDD_([0-9]+(_[0-9]+)+)\.zip)\">Download macOS all in one driver</string>
             </dict>
         </dict>
         <dict>
@@ -89,10 +71,9 @@
                 <key>input_path</key>
                 <string>%found_filename%/Install UPDD.app</string>
                 <key>requirement</key>
-                <string>identifier "com.touch-base.Install-updd" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U86H28HG4S</string>
+                <string>identifier "com.touch-base.install-updd" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U86H28HG4S</string>
             </dict>
         </dict>
     </array>
 </dict>
 </plist>
-

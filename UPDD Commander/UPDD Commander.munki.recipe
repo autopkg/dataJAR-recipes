@@ -40,7 +40,7 @@ exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.UPDD Commander</string>
     <key>Process</key>
@@ -53,7 +53,7 @@ exit 0</string>
                 <key>source_pkg</key>
                 <string>%input_path%/Contents/Resources/UPDD.pkg</string>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
             </dict>
         </dict>
         <dict>
@@ -64,7 +64,7 @@ exit 0</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -118,6 +118,15 @@ exit 0</string>
         </dict>
         <dict>
             <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>quarantined_files_path</key>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
@@ -126,7 +135,7 @@ exit 0</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
@@ -138,7 +147,6 @@ exit 0</string>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>
