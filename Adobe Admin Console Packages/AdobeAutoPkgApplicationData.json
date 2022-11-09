@@ -309,6 +309,15 @@
                 "display_name": "Adobe Photoshop 2022",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.Photoshop",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Photoshop 2023/Adobe Photoshop 2023.app",
+                "app_description": "Create beautiful graphics, photos and art anywhere.",
+                "display_name": "Adobe Photoshop 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
