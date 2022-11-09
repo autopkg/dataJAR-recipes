@@ -29,7 +29,7 @@
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>##!/bin/zsh
+            <string>#!/bin/zsh
 
 # Remove the Application
 rm -rf /Applications/SoapUI*.app
