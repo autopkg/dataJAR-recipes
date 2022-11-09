@@ -62,9 +62,13 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
     description = __doc__
 
     input_variables = {
-        "aacp_packages_path": {
-            "required": False,
-            "description": f"Path to look for source packages. Defaults to {DEFAULT_AACP_PACKAGES_PATH}",
+        'aacp_package_name': {
+            'required': False,
+            'description': f"Name of the AACP package. Defaults to %NAME%",
+        },
+        'aacp_packages_path': {
+            'required': False,
+            'description': f"Path to look for source packages. Defaults to {DEFAULT_AACP_PACKAGES_PATH}",
         },
     }
 
@@ -143,7 +147,11 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         # Progress notification
         self.output("Starting versioner process...")
 
-        # Get set packages_path
+        # Set package_name
+        self.env['aacp_package_name'] = self.env.get('aacp_package_name', self.env['NAME'])
+        self.output(f"aacp_package_name: {self.env['aacp_package_name']}")
+
+        # Set packages_path
         self.env['aacp_packages_path'] = self.env.get('aacp_packages_path', DEFAULT_AACP_PACKAGES_PATH)
         self.output(f"aacp_packages_path: {self.env['aacp_packages_path']}")
 
@@ -159,8 +167,8 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # Path to Adobe*_Install.pkg
         self.env['aacp_install_pkg_path'] = (os.path.join(self.env['aacp_packages_path'],
-                                                          self.env['NAME'], 'Build',
-                                                          self.env['NAME'] + '_Install.pkg'))
+                                                          self.env['aacp_package_name'], 'Build',
+                                                          self.env['aacp_package_name'] + '_Install.pkg'))
 
         # Check that the path exists, raise if not
         if not os.path.exists(self.env['aacp_install_pkg_path']):
@@ -170,8 +178,8 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # Path to Adobe*_Uninstall.pkg
         self.env['aacp_uninstall_pkg_path'] = (os.path.join(self.env['aacp_packages_path'],
-                                                            self.env['NAME'], 'Build',
-                                                            self.env['NAME'] + '_Uninstall.pkg'))
+                                                            self.env['aacp_package_name'], 'Build',
+                                                            self.env['aacp_package_name'] + '_Uninstall.pkg'))
 
         # Check that the path exists, raise if not
         if not os.path.exists(self.env['aacp_uninstall_pkg_path']):
