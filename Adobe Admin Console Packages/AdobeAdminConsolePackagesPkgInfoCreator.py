@@ -50,6 +50,8 @@ from autopkglib import (Processor,
 __all__ = ['AdobeAdminConsolePackagesPkgInfoCreator']
 __version__ = ['1.0']
 
+DEFAULT_AACP_PACKAGES_PATH = os.path.expanduser('~/Downloads/')
+
 
 # Class def
 class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
@@ -60,6 +62,10 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
     description = __doc__
 
     input_variables = {
+        "aacp_packages_path": {
+            "required": False,
+            "description": f"Path to look for source packages. Defaults to {DEFAULT_AACP_PACKAGES_PATH}",
+        },
     }
 
     output_variables = {
@@ -138,7 +144,7 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         self.output("Starting versioner process...")
 
         # Get set packages_path
-        self.env['aacp_packages_path'] = os.path.expanduser('~/Downloads/')
+        self.env['aacp_packages_path'] = self.env.get('aacp_packages_path', DEFAULT_AACP_PACKAGES_PATH)
         self.output(f"aacp_packages_path: {self.env['aacp_packages_path']}")
 
         # Check that packages_path exists
