@@ -41,7 +41,7 @@ Please urgently consider moving to Jamf-Uploader. There are some excellent resou
             </dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>
-        </dict>s
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
