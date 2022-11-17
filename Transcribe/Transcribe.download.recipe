@@ -3,18 +3,36 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Transcribe!.</string>
+    <string>Downloads latest version of Transcribe!.
+
+To download the x86_64 version use "intel" in the DOWNLOAD_ARCH variable.
+To download the arm64 version use "arm" in the DOWNLOAD_ARCH variable.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Transcribe</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Transcribe!</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>intel</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.4.0</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(downmo/[0-9]+/transcribe-%DOWNLOAD_ARCH%-([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>https://www.seventhstring.com/xscribe/download_mac.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -23,7 +41,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://www.seventhstring.com/xscribe/transcribe.dmg</string>
+                <string>https://www.seventhstring.com/xscribe/%version%</string>
             </dict>
         </dict>
         <dict>
