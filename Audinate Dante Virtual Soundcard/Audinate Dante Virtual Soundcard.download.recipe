@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Audinate Dante Virtual Soundcard.</string>
+    <string>Downloads latest version of Audinate Dante Virtual Soundcard.
+
+For the "SPARKLE_FEED_URL" variable:
+    x86_64 - https://software-updates-dvs.audinate.com/DanteVirtualSoundcard/appcast/DanteVirtualSoundcard-OSX.xml
+    arm64 - https://software-updates.audinate.com/DanteVirtualSoundcard/appcast/macOS/DanteVirtualSoundcard-macOS.xml</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Audinate Dante Virtual Soundcard</string>
     <key>Input</key>
@@ -14,7 +18,7 @@
         <string>https://software-updates-dvs.audinate.com/DanteVirtualSoundcard/appcast/DanteVirtualSoundcard-OSX.xml</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
@@ -31,10 +35,10 @@
             <string>URLDownloader</string>
         </dict>
         <dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>
@@ -45,21 +49,21 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pkg_path%</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: Audinate Pty Ltd (P4WCR6Y822)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pkg_path%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Audinate Pty Ltd (P4WCR6Y822)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
