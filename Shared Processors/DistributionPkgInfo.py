@@ -1,40 +1,58 @@
-#!/usr/bin/python
+# pylint: disable = invalid-name
+'''
+Copyright (c) 2022, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+DESCRIPTION
+See docstring for DistributionPkgInfo class
+'''
 
-# Copyright 2020 dataJAR
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# pylint: disable=import-error, too-few-public-methods
-
-"""See docstring for DistributionPkgInfo class"""
-
-from __future__ import absolute_import
-from __future__ import print_function
+# Standard imports
 import os
 import subprocess
 from xml.etree import ElementTree
 
+# Other imports
+# pylint: disable=import-error
 from autopkglib import Processor, ProcessorError
 
 
+# Processor information
 __all__ = ["DistributionPkgInfo"]
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 
+# Class
+# pylint: disable = too-few-public-methods
 class DistributionPkgInfo(Processor):
-    """Parses a distribution pkg to pull the info, other formats to be added later"""
+    '''
+        Parses a distribution pkg to pull the info, other formats to be added later
+    '''
 
     description = __doc__
+
     input_variables = {
         "pkg_path": {
             "required": True,
@@ -53,8 +71,15 @@ class DistributionPkgInfo(Processor):
 
     # pylint: disable=too-many-branches
     def main(self):
-        """Cobbled together from various sources, should extract information from a
-           Distribution pkg"""
+        '''
+            Cobbled together from various sources, should extract information from a
+            Distribution pkg
+        '''
+
+        # Var declaration
+        version = None
+        pkg_id = None
+
         # Build dir as needed,pinched with <3 from:
         # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/FlatPkgUnpacker.py#L72
         # Extract pkg info, pinched with <3 from:
@@ -62,9 +87,10 @@ class DistributionPkgInfo(Processor):
         self.env["abspkgpath"] = os.path.join(self.env["pkg_path"])
         file_path = os.path.join(self.env["RECIPE_CACHE_DIR"], "downloads")
         cmd_toc = ['/usr/bin/xar', '-tf', self.env["abspkgpath"]]
-        proc = subprocess.Popen(cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        (toc, err) = proc.communicate()
-        toc = toc.decode("utf-8") .strip().split('\n')
+        with (subprocess.Popen(cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            as proc):
+            (toc, err) = proc.communicate()
+        toc = toc.decode("utf-8").strip().split('\n')
 
         if proc.returncode == 0:
             # Walk trough the TOC entries
@@ -79,35 +105,40 @@ class DistributionPkgInfo(Processor):
         else:
             raise ProcessorError("pkg not found at pkg_path")
 
+        # Path to Distribution
         dist_path = os.path.join(file_path, "Distribution")
 
-        version = None
-        pkg_id = None
-
+        # If we cannot location Distribution, raise
         if not os.path.exists(dist_path):
             raise ProcessorError("Cannot find Distribution")
-        else:
-            tree = ElementTree.parse(dist_path)
-            _ = tree.getroot()
-            try:
-                for elem in tree.iter(tag='product'):
-                    version = elem.get("version")
-                for elem in tree.iter(tag='pkg-ref'):
-                    pkg_id = elem.get("id")
-            except ElementTree.ParseError as err:
-                print(("Can't parse distribution file %s: %s"
-                       % ('dist_path', err.strerror)))
 
+        # Read in XML
+        tree = ElementTree.parse(dist_path)
+        # Iterate over XML, raise if fails
+        try:
+            _ = tree.getroot()
+            for elem in tree.iter(tag='product'):
+                version = elem.get("version")
+            for elem in tree.iter(tag='pkg-ref'):
+                pkg_id = elem.get("id")
+        except ElementTree.ParseError as err:
+            self.output(f"Can't parse distribution file {dist_path}: {err.strerror}")
+
+        # Raise of cannot get pkg_id
         if not pkg_id:
             raise ProcessorError("cannot get pkg_id")
-        else:
-            self.env["pkg_id"] = pkg_id
 
+        self.env["pkg_id"] = pkg_id
+
+        # Raise if cannot get version
         if not version:
             raise ProcessorError("cannot get version")
-        else:
-            self.env["version"] = version
-            os.remove(dist_path)
+
+        self.env["version"] = version
+
+        # Tidy up
+        os.remove(dist_path)
+
 
 if __name__ == '__main__':
     PROCESSOR = DistributionPkgInfo()
