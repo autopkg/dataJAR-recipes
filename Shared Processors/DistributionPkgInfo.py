@@ -1,5 +1,5 @@
 # pylint: disable = invalid-name
-'''
+"""
 Copyright (c) 2022, dataJAR Ltd.  All rights reserved.
      Redistribution and use in source and binary forms, with or without
      modification, are permitted provided that the following conditions are met:
@@ -27,7 +27,7 @@ SUPPORT FOR THIS PROGRAM
             http://www.datajar.co.uk
 DESCRIPTION
 See docstring for DistributionPkgInfo class
-'''
+"""
 
 # Standard imports
 import os
@@ -41,15 +41,15 @@ from autopkglib import Processor, ProcessorError
 
 # Processor information
 __all__ = ["DistributionPkgInfo"]
-__version__ = '1.1.2'
+__version__ = "1.1.2"
 
 
 # Class
 # pylint: disable = too-few-public-methods
 class DistributionPkgInfo(Processor):
-    '''
-        Parses a distribution pkg to pull the info, other formats to be added later
-    '''
+    """
+    Parses a distribution pkg to pull the info, other formats to be added later
+    """
 
     description = __doc__
 
@@ -71,10 +71,10 @@ class DistributionPkgInfo(Processor):
 
     # pylint: disable=too-many-branches
     def main(self):
-        '''
-            Cobbled together from various sources, should extract information from a
-            Distribution pkg
-        '''
+        """
+        Cobbled together from various sources, should extract information from a
+        Distribution pkg
+        """
 
         # Var declaration
         version = None
@@ -86,21 +86,29 @@ class DistributionPkgInfo(Processor):
         # https://github.com/munki/munki/blob/master/code/client/munkilib/pkgutils.py#L374
         self.env["abspkgpath"] = os.path.join(self.env["pkg_path"])
         file_path = os.path.join(self.env["RECIPE_CACHE_DIR"], "downloads")
-        cmd_toc = ['/usr/bin/xar', '-tf', self.env["abspkgpath"]]
-        with (subprocess.Popen(cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            as proc):
+        cmd_toc = ["/usr/bin/xar", "-tf", self.env["abspkgpath"]]
+        with (
+            subprocess.Popen(
+                cmd_toc, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+        ) as proc:
             (toc, err) = proc.communicate()
-        toc = toc.decode("utf-8").strip().split('\n')
+        toc = toc.decode("utf-8").strip().split("\n")
 
         if proc.returncode == 0:
             # Walk trough the TOC entries
             if not os.path.exists(file_path):
                 os.mkdir(file_path)
 
-            for toc_entry in [item for item in toc
-                              if item.startswith('Distribution')]:
-                cmd_extract = ['/usr/bin/xar', '-xf', self.env["abspkgpath"], \
-                               toc_entry, '-C', file_path]
+            for toc_entry in [item for item in toc if item.startswith("Distribution")]:
+                cmd_extract = [
+                    "/usr/bin/xar",
+                    "-xf",
+                    self.env["abspkgpath"],
+                    toc_entry,
+                    "-C",
+                    file_path,
+                ]
                 _ = subprocess.call(cmd_extract)
         else:
             raise ProcessorError("pkg not found at pkg_path")
@@ -117,12 +125,12 @@ class DistributionPkgInfo(Processor):
         # Iterate over XML, raise if fails
         try:
             _ = tree.getroot()
-            for elem in tree.iter(tag='product'):
+            for elem in tree.iter(tag="product"):
                 version = elem.get("version")
-            for elem in tree.iter(tag='pkg-ref'):
+            for elem in tree.iter(tag="pkg-ref"):
                 pkg_id = elem.get("id")
-        except ElementTree.ParseError as err:
-            self.output(f"Can't parse distribution file {dist_path}: {err.strerror}")
+        except ElementTree.ParseError as error:
+            self.output(f"Can't parse distribution file {dist_path}: {error.strerror}")
 
         # Raise of cannot get pkg_id
         if not pkg_id:
@@ -140,5 +148,5 @@ class DistributionPkgInfo(Processor):
         os.remove(dist_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     PROCESSOR = DistributionPkgInfo()
