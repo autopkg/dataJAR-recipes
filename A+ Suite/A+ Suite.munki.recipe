@@ -33,7 +33,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>2.7.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.A+ Suite</string>
     <key>Process</key>
