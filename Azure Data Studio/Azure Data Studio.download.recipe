@@ -12,16 +12,29 @@
         <string>Azure Data Studio</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(https://go\.microsoft\.com/fwlink/\?linkid=[0-9]+)\" rel=\"nofollow\">Universal</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://github.com/microsoft/azuredatastudio/releases</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>https://go.microsoft.com/fwlink/?linkid=2192971</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
