@@ -21,11 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://en\.fss\.flashforge\.com/10000/software/.*?\.zip</string>
+                <string>MacOS.*\n*.*\n*.*\n*.*\n*.*\n*.*\n*.*\n*.*\n.*\"(.*\.zip)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
-                <string>https://www.flashforge.com/download-center?category=15</string>
+                <string>https://www.flashforge.com/download-center/63</string>
             </dict>
         </dict>
         <dict>

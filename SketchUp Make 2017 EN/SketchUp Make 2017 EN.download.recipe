@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SketchUp Make 2017. 
+    <string>This recipe has been deprecated, please see https://help.sketchup.com/en/make-access for further information
+
+Downloads the latest version of SketchUp Make 2017.
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -19,9 +21,18 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
         <string>SketchUpMake2017-EN</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated, please see https://help.sketchup.com/en/make-access for further information</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>

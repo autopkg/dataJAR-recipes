@@ -23,7 +23,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%BASE_URL%/download</string>
+                <string>%BASE_URL%/download/archive/index.html</string>
                 <key>re_pattern</key>
                 <string>href="(/download/nb12[\d]+/nb12[\d]+.html)"</string>
                 <key>result_output_var_name</key>
@@ -37,19 +37,6 @@
             <dict>
                 <key>url</key>
                 <string>%BASE_URL%%match%</string>
-                <key>re_pattern</key>
-                <string>href="(.*\/Apache-NetBeans-12\.[\d].*-bin-macosx\.dmg)"</string>
-                <key>result_output_var_name</key>
-                <string>match2</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>%match2%</string>
                 <key>re_pattern</key>
                 <string>href="(.*\/Apache-NetBeans-12\.[\d].*-bin-macosx\.dmg)"</string>
                 <key>result_output_var_name</key>
@@ -69,21 +56,21 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>   
-			<key>Processor</key>   
-			<string>CodeSignatureVerifier</string>   
-			<key>Arguments</key>   
-			<dict>   
-				<key>input_path</key>   
-				<string>%pathname%/Apache NetBeans 12.*.pkg</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: The Apache Software Foundation (2GLGAFWEQD)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Apache NetBeans 12.*.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: The Apache Software Foundation (2GLGAFWEQD)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>

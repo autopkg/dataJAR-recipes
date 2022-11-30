@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of HDX RealTime Media Engine for Microsoft Skype for Business.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.HDXRealTimeMediaEngine</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>HDXRealTimeMediaEngine</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The HDX RealTime Media Engine is a plug-in to the Citrix Receiver to support clear, crisp high-definition audio-video calls, particularly with Microsoft Skype® for Business. Users can seamlessly participate in audio-video or audio-only calls to and from other HDX RealTime Media Engine users, native Skype® for Business and Lync® client users, and other standards-based desktop video and conference room systems.</string>
+            <key>developer</key>
+            <string>Citrix Systems, Inc</string>
+            <key>display_name</key>
+            <string>HDX RealTime Media Engine</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+
+# Uninstall script for HDXRTME.
+# remove the files installed by our installer
+rm -drf "/Library/Application Support/Citrix/PlugIns/HDXRTME-m32g"
+rm -rf "/Library/PreferencePanes/Citrix HDX RealTime Media Engine.prefPane"
+
+pkgutil --forget com.citrix.hdxrtme.HDXRTME-m32g.pkg > /dev/null 2&gt;&amp;1
+pkgutil --forget com.citrix.hdxrtme.MacRTMEVersion.pkg > /dev/null 2&gt;&amp;1
+
+exit 0</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.HDXRealTimeMediaEngine</string>
+    <key>Process</key>
+    <array>
+    	<dict>
+    		<key>Arguments</key>
+    		<dict>
+        		<key>destination_path</key>
+        		<string>%RECIPE_CACHE_DIR%/payload</string>
+        		<key>flat_pkg_path</key>
+        		<string>%pathname%/Install HDXRealTimeMediaEngine.pkg</string>
+        		<key>purge_destination</key>
+        		<true></true>
+    		</dict>
+    		<key>Processor</key>
+    		<string>FlatPkgUnpacker</string>
+		</dict>
+		<dict>
+    		<key>Arguments</key>
+    		<dict>
+        		<key>destination_path</key>
+        		<string>%RECIPE_CACHE_DIR%/unpack</string>
+        		<key>pkg_payload_path</key>
+        		<string>%RECIPE_CACHE_DIR%/payload/HDXRTME-m32g.pkg/Payload</string>
+        		<key>purge_destination</key>
+        		<true></true>
+   			</dict>
+    		<key>Processor</key>
+    		<string>PkgPayloadUnpacker</string>
+		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -17,13 +17,22 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(MIDIMonitor\.dmg)\">Download</string>
+                <key>url</key>
+                <string>https://www.snoize.com/MIDIMonitor</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.snoize.com/MIDIMonitor/MIDIMonitor.zip</string>
-                <key>filename</key>
-                <string>%NAME%.zip</string>
+                <string>https://www.snoize.com/MIDIMonitor/%match%</string>
             </dict>
         </dict>
         <dict>
@@ -32,38 +41,11 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.zip</string>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications/</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%destination_path%/MIDI Monitor.app</string>
+                <string>%pathname%/MIDI Monitor.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.snoize.MIDIMonitor" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YDJAW5GX9U)</string>
             </dict>

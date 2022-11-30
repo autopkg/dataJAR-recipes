@@ -31,7 +31,7 @@
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>re_pattern</key>
-                <string>resolume.*?\.dmg</string>
+                <string>//.*\..*\..*/Resolume_Arena.*\.dmg</string>
                 <key>re_flags</key>
                 <array>
                     <string>IGNORECASE</string>
@@ -49,7 +49,9 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_PAGE_URL%/%url%</string>
+                <string>https:%url%</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
             </dict>
         </dict>
         <dict>

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Comment</key>
+    <string>The vender has replaced this App with their 22 version. Please see the 22 recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/MindManager%2022. Please remove this from your list of recipes.</string>
     <key>Description</key>
     <string>Downloads latest version of MindManager 14 and imports into Munki.</string>
     <key>Identifier</key>
@@ -35,7 +37,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.MindManager 14</string>
     <key>Process</key>

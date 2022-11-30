@@ -2,58 +2,67 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of SF Symbols 2</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.SF Symbols 2</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>SFSymbols2</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.5.0</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>https://devimages-cdn\.apple\.com/design/resources/download/SF-Symbols-2\..*?\.dmg</string>
-				<key>url</key>
-				<string>https://developer.apple.com/sf-symbols/</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%match%</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/SF Symbols.pkg</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Development Update</string>
-					<string>Apple Software Update Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest version of SF Symbols 2</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.SF Symbols 2</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SFSymbols2</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. SF Symbols 2 is no longer available for download. Please use the new SF Symbols 3 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/SF%20Symbols%203</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://devimages-cdn\.apple\.com/design/resources/download/SF-Symbols-2\..*?\.dmg</string>
+                <key>url</key>
+                <string>https://developer.apple.com/sf-symbols/</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/SF Symbols.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Development Update</string>
+                    <string>Apple Software Update Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>

@@ -24,6 +24,15 @@
             <string>UPDD Commander</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+             <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Performs a silent uninstall: https://support.touch-base.com/Documentation/50152/Uninstall-procedure
+#
+/Library/Application\ Support/UPDD/UPDD\ Uninstall.app/Contents/MacOS/UPDD\ Uninstall -s
+exit 0</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -31,11 +40,22 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.UPDD Commander</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%input_path%/Contents/Resources/UPDD.pkg</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
@@ -44,7 +64,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 <key>flat_pkg_path</key>
-                <string>%input_path%</string>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -98,18 +118,16 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
+            <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>quarantined_files_path</key>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgCopier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_pkg</key>
-                <string>%input_path%</string>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-            </dict>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -117,7 +135,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%RECIPE_CACHE_DIR%/UPDD.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
@@ -129,7 +147,6 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>

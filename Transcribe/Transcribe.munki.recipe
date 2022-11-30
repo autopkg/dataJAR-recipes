@@ -3,13 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Transcribe! and imports it into Munki.</string>
+    <string>Downloads the latest version of Transcribe! and imports it into Munki.
+
+To set the supported_architectures key use the INSTALL_ARCH variable. "x86_64" for Intel. "arm64" for Apple Silicone.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Transcribe</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Transcribe!</string>
+        <key>INSTALL_ARCH</key>
+        <string></string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -26,6 +30,10 @@
             <string>Transcribe!</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%INSTALL_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -33,12 +41,12 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.4.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Transcribe</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>

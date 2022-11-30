@@ -33,7 +33,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.A+ Suite</string>
     <key>Process</key>
@@ -67,6 +67,22 @@
                 <string>%found_filename%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiOptionalReceiptEditor</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_ids_set_optional_true</key>
+                <array>
+                    <string>com.aver.officeAddinInstaller</string>
+                    <string>com.aver.pkg.AVerCMIOPlugIn</string>
+                    <string>com.aver.asuiteForMac.cyusb</string>
+                    <string>com.AVerMedia.AVerFlash</string>
+                    <string>com.aver.AVerVDig</string>
+                    <string>com.aver.asuiteForMac.AVer</string>
+                </array>
             </dict>
         </dict>
         <dict>

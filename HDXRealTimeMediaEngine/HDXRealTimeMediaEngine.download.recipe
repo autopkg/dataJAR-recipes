@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of HDX RealTime Media Engine for Microsoft Skype for Business.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.HDXRealTimeMediaEngine</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>HDXRealTimeMediaEngine</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.citrix.com/en-au/downloads/citrix-receiver/additional-client-software/hdx-realtime-media-engine-29400.html</string>
+                <key>re_pattern</key>
+                <string>rel=\"/(/downloads\.citrix\.com/11449/HDX_RealTime_Media_Engine_.*_for_OSX\.dmg.*?)\"</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https:/%match%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Install HDXRealTimeMediaEngine.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Citrix Systems, Inc. (S272Y5R93J)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

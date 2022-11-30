@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Sound Siphon 3 and imports it into Munki.
+
+Installed at the login window to stop GUI prompts.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Sound Siphon 3</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SoundSiphon3</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Sound Siphon makes it easy to capture your Mac’s audio. Use it to create virtual input audio devices that send audio from one app to another. Or, record right in the Sound Siphon app.</string>
+            <key>category</key>
+            <string>Development</string>
+            <key>developer</key>
+            <string>Static Z Software</string>
+            <key>display_name</key>
+            <string>Sound Siphon 3</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Installs the plugins.pkg
+#
+
+# PKG name to look for
+pkgPath="/Applications/Sound Siphon.app/Contents/Frameworks/SoundSiphonPublic.framework/Versions/A/Resources/SoundSiphonPlugInInstaller.pkg"
+
+if [ -e "${pkgPath}" ]
+then
+    /bin/echo "Found ${pkgPath}, installing..."
+    /usr/sbin/installer -pkg "${pkgPath}" -target /
+fi</string>
+            <key>RestartAction</key>
+            <string>RequireLogout</string>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Call uninstall script from .app bundle, if found
+#
+
+uninstallScript="/Applications/Sound Siphon.app/Contents/Resources/uninstall_soundsiphon"
+
+if [ -e "${uninstallScript}" ]
+then
+    /bin/echo "Found ${uninstallScript}, installing..."
+    /bin/sh "${uninstallScript}"
+fi</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Sound Siphon 3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

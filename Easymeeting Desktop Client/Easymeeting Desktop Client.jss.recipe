@@ -2,35 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of Easymeeting Desktop Client and then uploads to the JSS</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.Easymeeting Desktop Client</string>
-	<key>Input</key>
-	<dict>
-		<key>CATEGORY</key>
-		<string>Applications</string>
-		<key>GROUP_NAME</key>
-		<string>%NAME%-update-smart</string>
+    <key>Description</key>
+    <string>Downloads the current release version of Easymeeting Desktop Client and then uploads to the JSS</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.jss.Easymeeting Desktop Client</string>
+    <key>Input</key>
+    <dict>
+        <key>CATEGORY</key>
+        <string>Applications</string>
+        <key>GROUP_NAME</key>
+        <string>%NAME%-update-smart</string>
         <key>GROUP_TEMPLATE</key>
         <string>SmartGroupTemplate.xml</string>
-		<key>NAME</key>
-		<string>EasymeetingDesktopClient</string>
-		<key>POLICY_CATEGORY</key>
-		<string>Testing</string>
-		<key>POLICY_TEMPLATE</key>
-		<string>PolicyTemplate.xml</string>
-		<key>SELF_SERVICE_DESCRIPTION</key>
+        <key>NAME</key>
+        <string>EasymeetingDesktopClient</string>
+        <key>POLICY_CATEGORY</key>
+        <string>Testing</string>
+        <key>POLICY_TEMPLATE</key>
+        <string>PolicyTemplate.xml</string>
+        <key>SELF_SERVICE_DESCRIPTION</key>
         <string>Finally, a video client that was developed to put usability first. Search, Dial and Meet !</string>
         <key>SELF_SERVICE_ICON</key>
-		<string>EasymeetingDesktopClient.png</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.Easymeeting Desktop Client</string>
-	<key>Process</key>
-	<array>
+        <string>EasymeetingDesktopClient.png</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Easymeeting Desktop Client</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+
+Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>JSSImporter</string>
@@ -65,6 +76,6 @@
                 <string>%version%</string>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>

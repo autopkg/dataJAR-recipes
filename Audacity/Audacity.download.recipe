@@ -3,63 +3,50 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>This recipe uses FossHub to check for available software updates. 
-    All users should contact FossHub directly (https://www.fosshub.com/contact.html) to seek permission to use an automated tool for the purpose of redistributing this software on their internal network, as specified in their Terms of Service (https://www.fosshub.com/tos.html#fh-tou-o7). 
-    You will need to provide them the IP address of the machine downloading FossHub software. 
-    This recipe does not perform any tracking (cookies, advertising identifiers, and similar technologies) and respects the EU General Data Protection Regulation (GDPR) guidelines.
-    This recipe downloads the latest Audacity dmg.
-    For more information see: https://macmule.com/2019/03/17/fosshub-autopkg</string>
+    <string>Downloads the latest version of Audacity.
+
+Set the ARCHITECTURE variable to "x86_64" for Intel
+
+Set the ARCHITECTURE variable to "arm64" for Apple Silicone
+</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Audacity</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Audacity</string>
-        <key>SEARCH_URL</key>
-        <string>https://university.fosshub.com/projects.json</string>
-        <key>SEARCH_PATTERN</key>
-        <string>https://university.fosshub.com/Protected/[\S]+\/[\S]+\/audacity-macos-[\S]+\.dmg</string>
+        <key>ARCHITECTURE</key>
+        <string>x86_64</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.9</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%SEARCH_URL%</string>
-                <key>re_pattern</key>
-                <string>%SEARCH_PATTERN%</string>
+                <key>asset_regex</key>
+                <string>audacity-macOS-(\d(\.\d)+)-%ARCHITECTURE%\.dmg</string>
+                <key>github_repo</key>
+                <string>audacity/audacity</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%match%</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%pathname%/Audacity.app/Contents/Info.plist</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -67,6 +54,8 @@
                 <key>requirement</key>
                 <string>identifier "org.audacityteam.audacity" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = AWEYX923UX</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

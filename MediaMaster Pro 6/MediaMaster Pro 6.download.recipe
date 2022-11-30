@@ -17,6 +17,24 @@
 	<array>
         <dict>
             <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Download is now behind a form, as such this recipe no longer works.</string>
+             </dict>
+        </dict>
+        <dict>   
+            <key>Processor</key>   
+            <string>StopProcessingIf</string>   
+            <key>Arguments</key>   
+            <dict>   
+                <key>predicate</key>   
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
@@ -53,7 +71,7 @@
                 <key>input_path</key>
                 <string>%pathname%/ArKaos_MediaMaster_6.*/MediaMaster.app</string>
                 <key>requirement</key>
-                <string>identifier "com.ArKaos.MediaMaster5" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = SKE5HH5VKW</string>
+                <string>identifier "com.ArKaos.MediaMaster6" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = SKE5HH5VKW</string>
 			</dict>
 		</dict>
     </array>

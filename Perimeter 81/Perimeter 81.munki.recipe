@@ -22,6 +22,7 @@
             <string>Applications</string>
             <key>description</key>
             <string>Perimeter 81 is a Zero Trust Network as a Service that helps you to secure your team’s network, including valuable local and cloud resources.
+
 Incorporating the highest standards of Zero Trust Security, Perimeter 81 users can create adaptive least-privilege access policies based on device, identity, role, and location.</string>
             <key>developer</key>
             <string>Safer Social</string>
@@ -38,40 +39,66 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.3</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.Perimeter 81</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Perimeter 81.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/installer_payload</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Perimeter 81.app</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-    	<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-		</dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Perimeter 81.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>

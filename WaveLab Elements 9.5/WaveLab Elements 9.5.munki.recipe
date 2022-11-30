@@ -39,34 +39,28 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.WaveLab Elements 9.5</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-                <key>source_pkg</key>
-                <string>%pathname%/WaveLab Elements 9.5 Update.pkg</string>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The software title is now unsupported by the vendor please see: https://o.steinberg.net/index.php?id=15126&amp;L=1 for further info. All download links currently direct to a 404 error page.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/</string>
-                <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-                <key>purge_destination</key>
-                <true/>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Processor</key>

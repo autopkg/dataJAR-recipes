@@ -2,30 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of 4K Video Downloader and makes a package.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.4K Video Downloader</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>4KVideoDownloader</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.0.0</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.4K Video Downloader</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>AppPkgCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>app_path</key>
-                <string>%pathname%/4K Video Downloader.app</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Downloads the latest version of 4K Video Downloader and makes a package.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.pkg.4K Video Downloader</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>4KVideoDownloader</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0.0</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.4K Video Downloader</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>app_path</key>
+				<string>%pathname%/4K Video Downloader.app</string>
+				<key>pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>AppPkgCreator</string>
+		</dict>
+	</array>
 </dict>
 </plist>

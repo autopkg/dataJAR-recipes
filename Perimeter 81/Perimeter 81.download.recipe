@@ -10,20 +10,44 @@
     <dict>
         <key>NAME</key>
         <string>Perimeter81</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://static.perimeter81.com/apps/osx/Perimeter81.pkg</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"https://static\.perimeter81\.com/agents/mac/Perimeter81_([0-9]+(\.[0-9]+)+)\.pkg\"</string>
+                <key>result_output_var_name</key>
+                <string>version1</string>
+                <key>url</key>
+                <string>https://support.perimeter81.com/v1/docs/downloading-the-agent</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"https://static\.perimeter81\.com/agents/mac/Perimeter81_\d\.\d\.\d\.([0-9]+)\.pkg\"</string>
+                <key>result_output_var_name</key>
+                <string>version2</string>
+                <key>url</key>
+                <string>https://support.perimeter81.com/v1/docs/downloading-the-agent</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://static.perimeter81.com/agents/mac/Perimeter81_%version1%.pkg</string>
             </dict>
         </dict>
         <dict>
@@ -32,7 +56,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Perimeter81.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/downloads/Perimeter81_%version1%.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Safer Social Ltd. (924635PD62)</string>

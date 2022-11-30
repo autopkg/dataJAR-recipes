@@ -3,13 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of Postman. Taken from bnpl-recipes repo. thanks to TSPARR for the Code Signature Check</string>
+    <string>Downloads the current release version of Postman. Taken from bnpl-recipes repo. thanks to TSPARR for the Code Signature Check.
+
+Set DOWNLOAD_URL with the required download url:
+x86_64: https://dl.pstmn.io/download/latest/osx_64
+arm64: https://dl.pstmn.io/download/latest/osx_arm64
+</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.postman</string>
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_URL</key>
-        <string>https://dl.pstmn.io/download/latest/osx</string>
+        <string>https://dl.pstmn.io/download/latest/osx_64</string>
         <key>NAME</key>
         <string>Postman</string>
     </dict>

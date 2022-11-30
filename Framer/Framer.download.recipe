@@ -3,38 +3,32 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Framer.</string>
+    <string>Downloads latest version of Framer.
+
+The Download_URL variable defaults to Intel
+
+- For Intel use:         https://updates.framer.com/electron/darwin/x64/Framer.zip
+- For Apple Silicon use: https://updates.framer.com/electron/darwin/arm64/Framer.zip</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Framer</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Framer</string>
+        <key>DOWNLOAD_URL</key>
+        <string>https://updates.framer.com/electron/darwin/x64/Framer.zip</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.0.0</string>
     <key>Process</key>
     <array>
-       <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>https://updates\.framer\.com/electron/darwin/x64/Framer\.zip</string>
-                <key>result_output_var_name</key>
-                <string>match</string>
-                <key>url</key>
-                <string>https://www.framer.com/downloads/</string>
-            </dict>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%match%</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
         </dict>
         <dict>

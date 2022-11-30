@@ -40,10 +40,10 @@
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
-                <string>%pathname%/Ultimaker Cura.app</string>
+                <string>%pathname%/Ultimaker-Cura.app</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleVersion</key>
+                    <key>CFBundleShortVersionString</key>
                     <string>version</string>
                 </dict>
             </dict>
@@ -70,7 +70,7 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
+                <string>CFBundleShortVersionString</string>
             </dict>
         </dict>
     </array>

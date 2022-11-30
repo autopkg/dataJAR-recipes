@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Connect Fonts and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Connect Fonts</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>ConnectFonts</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>All Your Fonts, All In One Place
+
+With Connect Fonts you can just say “no” to font guessing games and scavenger hunts. Sort, organize, and compare your fonts in a single cloud-based platform. Easily share fonts with your team members and view your fonts on any device.</string>
+            <key>developer</key>
+            <string>Extensis</string>
+            <key>display_name</key>
+            <string>Connect Fonts</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# If Suitcase Fusion is installed, install it's plugins
+#
+
+pluginInstaller="/Applications/Connect Fonts.app/Contents/Resources/plugin-installer"
+
+if [ -f "${pluginInstaller}" ]
+then
+    /bin/echo "Found ${pluginInstaller}, running..."
+    "${pluginInstaller}" --install-all > /dev/null 2>&amp;1
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Connect Fonts</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -13,13 +13,15 @@
         <key>NAME</key>
         <string>HudlSportsCode12</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
             <key>description</key>
             <string>The new Hudl Sportscode is more powerful and more intuitive with better scripting, faster interactions and easier integrations with your custom workflow.</string>
+            <key>developer</key>
+            <string>Agile Sports Technologies</string>
             <key>display_name</key>
             <string>Hudl SportsCode 12</string>
             <key>name</key>
@@ -31,32 +33,32 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.0.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Hudl SportsCode 12</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%found_filename%</string>
+            </dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>DmgCreator</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%found_filename%</string>
+                <string>%dmg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/unzip</string>
-                </array>
-            </dict>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

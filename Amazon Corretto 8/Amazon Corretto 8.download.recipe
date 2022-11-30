@@ -3,39 +3,26 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Amazon Corretto 8.
-Set PRERELEASE to a non-empty string to download prereleases, either
-via Input in an override or via the -k option,
-i.e.: `-k PRERELEASE=yes`.
-
-NOTE: URLTextSearcher is used as the releases on GitHub have no releases.</string>
+    <string>Downloads the latest version of Amazon Corretto 8.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Amazon Corretto 8</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>AmazonCorretto8</string>
-        <key>PRERELEASE</key>
-        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>https://corretto\.aws/downloads/resources/8\..*?/amazon-corretto-8\..*?-macosx-x64\.pkg</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://github.com/corretto/corretto-8/releases/latest</string>
+                <string>https://corretto.aws/downloads/latest/amazon-corretto-8-x64-macos-jdk.pkg</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>

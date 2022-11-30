@@ -11,43 +11,47 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>CrashPlanForSmallBusiness</string>
+        <string>CrashPlanforSmallBusiness</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
             <array>
-                <string>Electron Helper (Renderer).app</string>
                 <string>Code42.app</string>
-                <string>Electron Helper (GPU).app</string>
-                <string>Code42 Service.app</string>
-                <string>Electron Helper (Plugin).app</string>
-                <string>Electron Helper.app</string>
+                <string>Code42Service.app</string>
             </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Enterprise-grade data loss protection at small business prices. CrashPlan® for Small Business makes protecting files on your devices easy.</string>
+            <string>Cloud Backup Solutions for the Remote and Hybrid Workforce.</string>
             <key>developer</key>
-            <string>Code 42 Software</string>
+            <string>CrashPlan</string>
             <key>display_name</key>
             <string>CrashPlan for Small Business</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Taken from vendors documentation: https://support.crashplan.com/hc/en-us/articles/8724535075213-Uninstall-CrashPlan-for-Small-Business
+#
+/Applications/Code42.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
             <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.CrashPlan for Small Business</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -57,56 +61,40 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0755</string>
-                </dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications</string>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/code42.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+         <dict>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
+                <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Code42.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -114,18 +102,20 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
-                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

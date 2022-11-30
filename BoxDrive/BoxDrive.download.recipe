@@ -17,24 +17,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://www.box.com/en-gb/resources/downloads/drive</string>
-                <key>re_pattern</key>
-                <string>(https://\w+\.\w+\.\w+/box-installers/desktop/releases/mac/Box.pkg)</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>%match%</string>
+                <string>https://e3.boxcdn.net/box-installers/desktop/releases/mac/Box.pkg</string>
             </dict>
         </dict>
         <dict>

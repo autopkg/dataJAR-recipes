@@ -15,18 +15,14 @@
     <string>0.2.0</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
+         <dict>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>https://www\.browserstack\.com/local-testing/downloads/native-app/.*/BrowserStackLocal\.dmg</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
-                <key>url</key>
-                <string>https://www.browserstack.com/docs/live/local-testing#Chrome_and_Firefox</string>
+                <key>appcast_url</key>
+                <string>https://www.browserstack.com/local-testing/downloads/native-app/mac/appcast.xml</string>
             </dict>
+            <key>Processor</key>
+            <string>SparkleUpdateInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -37,12 +33,25 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/BrowserStackLocal.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/BrowserStackLocal.app</string>
                 <key>requirement</key>
                 <string>identifier "com.browserstack.local" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = CL769MBK8C</string>
             </dict>

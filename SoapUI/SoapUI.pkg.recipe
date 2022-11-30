@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SoapUI and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.SoapUI</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SoapUI</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.SoapUI</string>
+    <key>Process</key>
+     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/SoapUI %version% Installer.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/SoapUI %version% Installer.app</string>
+                <key>overwrite</key>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%/SoapUI %version% Installer.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#!/bin/bash
+
+# https://www.soapui.org/getting-started/installing-soapui/installing-on-mac/
+# Silent installation documentation is sadly lacking from the vendor.
+# For up to date command line install options, download the installer .app and run: /Volumes/SoapUI/SoapUI\ %version% \ Installer.app/Contents/MacOS/JavaApplicationStub -h
+#
+# The following command line options are available
+# -varfile [file]   Use a response file
+# -c                Run in console mode
+# -q                Run in unattended mode
+# -dir [directory]  In unattended mode, set the installation directory
+# -overwrite        In unattended mode, overwrite all files
+# -nofilefailures   In unattended mode, ignore file installation failures
+# -splash [title]   In unattended mode, show a progress window
+# -Dname=value      Set system properties
+# -h                Show this help
+
+# Determine working directory
+install_dir=`dirname $0`
+
+# Unattended installation of SoapUI Application
+"${install_dir}/SoapUI %version% Installer.app/Contents/MacOS/JavaApplicationStub" -q</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array/>
+                    <key>id</key>
+                    <string>com.smartbear.SoapUI.pkg</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <key>pkgtype</key>
+                    <string>flat</string>
+                    <key>scripts</key>
+                    <string>Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                    <string>%pkgroot%</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

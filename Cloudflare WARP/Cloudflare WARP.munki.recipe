@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Cloudflare WARP and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Cloudflare WARP</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>CloudflareWARP</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Updater.app</string>
+                <string>LoginLauncherApp.app</string>
+                <string>Cloudflare WARP.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.
+
+The WARP client sits between your device and the Internet, and has several connection modes to better suit different needs.</string>
+            <key>developer</key>
+            <string>Cloudflare Inc</string>
+            <key>display_name</key>
+            <string>Cloudflare WARP</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/usr/bin/env bash
+#
+# Uninstall script amended from Cloudflare WARP.app/Contents/Resources/uninstall.sh
+# Vendor Documentation https://developers.cloudflare.com/warp-client/get-started/macos/
+#
+
+set -u
+
+deleteRegistration() {
+    echo &quot;Deleting registration&quot;
+    warp-cli delete
+}
+
+unloadAndRemoveDaemon() {
+    DAEMON_PLIST_PATH=&quot;/Library/LaunchDaemons/com.cloudflare.1dot1dot1dot1.macos.warp.daemon.plist&quot;
+
+    # If plist file exists, unload using launchctl command. If launchctl fails,
+    # kill existing process and remove the plist file.
+    #
+    # If plist file does not exist, kill existing process and return.
+    echo &quot;Stopping and unloading CloudflareWARP daemon.&quot;
+
+    if [ -f &quot;$DAEMON_PLIST_PATH&quot; ]; then
+        launchctl unload -w &quot;$DAEMON_PLIST_PATH&quot;
+
+        if [ $? -eq 0 ]; then
+            echo &quot;Stopped and unloaded &apos;CloudflareWARP&apos; daemon process.&quot;
+        else
+            error=$(launchctl error $?)
+            echo &quot;Error unloading daemon process. error: ${error}&quot;
+            pkill -x &quot;CloudflareWARP&quot; &amp;&amp; echo &quot;Killed &apos;CloudflareWARP&apos; daemon process.&quot;
+        fi
+
+        rm -f &quot;$DAEMON_PLIST_PATH&quot; &amp;&amp; echo &quot;Removed daemon plist file.&quot;
+    else
+        # If plist is not present for any reason, OS might restart the killed process so
+        # remove the daemon binary first before killing the process.
+        DAEMON_BINARY_PATH=&quot;/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP&quot;
+
+        echo &quot;&apos;CloudflareWARP&apos; daemon plist file does not exist. Killing daemon process.&quot;
+
+        if [ -f &quot;$DAEMON_BINARY_PATH&quot; ]; then
+            echo &quot;Removing &apos;CloudflareWARP&apos; binary from app folder.&quot;
+            rm -f &quot;$DAEMON_BINARY_PATH&quot;
+        else
+            echo &quot;&apos;${DAEMON_BINARY_PATH}&apos; not found!&quot;
+        fi
+
+        pkill -x &quot;CloudflareWARP&quot; &amp;&amp; echo &quot;Killed &apos;CloudflareWARP&apos; daemon process.&quot;
+    fi
+}
+
+checkAndKillGUIProcess() {
+    echo &quot;Stopping &apos;Cloudflare WARP&apos; GUI process.&quot;
+
+    pid=$(pgrep &quot;Cloudflare WARP&quot;)
+
+    if [ $? -eq 0 ] &amp;&amp; [ $pid -gt 0 ]; then
+        echo &quot;&apos;Cloudflare WARP&apos; GUI process running with pid: ${pid}.&quot;;
+        pkill -x &quot;Cloudflare WARP&quot;
+
+        if [ $? -eq 0 ]; then
+            echo &quot;Killed &apos;Cloudflare WARP&apos; GUI process.&quot;
+        else
+            echo &quot;Cannot kill Cloudflare WARP GUI process. Continuing with uninstallation.&quot;
+        fi
+    else
+        echo &quot;Cloudflare WARP GUI process not running.&quot;
+    fi
+}
+
+deleteAppFolder() {
+    APP_FOLDER=&quot;/Applications/Cloudflare WARP.app&quot;
+
+    if [ -d &quot;$APP_FOLDER&quot; ]; then
+        echo &quot;Removing &apos;Cloudflare WARP&apos; app folder.&quot;
+        rm -rf &quot;$APP_FOLDER&quot;
+        pkgutil --forget com.cloudflare.1dot1dot1dot1.macos
+    else
+        echo &quot;&apos;${APP_FOLDER}&apos; not found!&quot;
+    fi
+}
+
+deleteKeyChainSecrets() {
+    security -q delete-generic-password -l &quot;WARP&quot; -a &quot;WARPSecret&quot;  &quot;/Library/Keychains/System.keychain&quot; &gt;/dev/null 2&gt;&amp;1
+    security -q delete-generic-password -l &quot;WARP&quot; -a &quot;WARPClient&quot;  &quot;/Library/Keychains/System.keychain&quot; &gt;/dev/null 2&gt;&amp;1
+}
+
+deleteSettingsAndLogFiles() {
+    LOG_FOLDER=&quot;/Library/Application Support/Cloudflare&quot;
+
+    if [ -d &quot;${LOG_FOLDER}&quot; ]; then
+        echo &quot;Removing settings and log files folder.&quot;
+        rm -rf &quot;$LOG_FOLDER&quot;
+    fi
+
+    for user in /Users/*; do
+        user_log_dir=&quot;$user/Library/Logs/Cloudflare&quot;
+        if [[ -d &quot;$user_log_dir&quot; ]]; then
+            rm -rf &quot;$user_log_dir&quot;
+        fi
+    done
+
+}
+
+    defaults delete &quot;com.cloudflare.1dot1dot1dot1.macos&quot;
+
+checkAndKillGUIProcess
+deleteRegistration
+unloadAndRemoveDaemon
+deleteKeyChainSecrets
+deleteAppFolder
+deleteSettingsAndLogFiles
+
+echo &quot;Finished uninstallation!&quot;
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Cloudflare WARP</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Cloudflare_WARP.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Cloudflare_WARP.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Cloudflare WARP.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Cloudflare WARP.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Cloudflare WARP.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

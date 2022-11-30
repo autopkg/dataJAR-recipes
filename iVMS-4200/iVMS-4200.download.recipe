@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of iVMS-4200.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.iVMS-4200</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>iVMS4200</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(https://us\.hikvision\.com/sites/default/files/software/ivms-[0-9]+_mac_v([0-9]+(\.[0-9]+)+)\.pkg_\.zip)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://us.hikvision.com/en/products/logiciel/ivms-4200-series/free-client-software-hikvision-devices-ivms-4200-macos</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -14,7 +14,7 @@
         <string>DraftSight</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
@@ -36,16 +36,16 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>CodeSignatureVerifier</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>input_path</key>   
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
                 <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Dassault Systemes (AYR48YN343)</string>
+                    <string>Developer ID Installer: Dassault Systemes SE (AYR48YN343)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>

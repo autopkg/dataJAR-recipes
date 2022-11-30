@@ -12,7 +12,7 @@
         <string>UPDDCommander</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.legamaster.com/downloads/software</string>
                 <key>re_pattern</key>
-                <string>\"/(fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_.*\.zip)\"&gt;Download macOS</string>
+                <string>href=\"/(fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_UPDD_([0-9]+(_[0-9]+)+)\.zip)\">Download macOS all in one driver</string>
             </dict>
         </dict>
         <dict>
@@ -60,7 +60,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/Legamaster all in one *.dmg</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/UPDD*.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -68,14 +68,10 @@
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: Touch-Base Ltd (U86H28HG4S)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
                 <key>input_path</key>
-                <string>%found_filename%/*.pkg</string>
+                <string>%found_filename%/Install UPDD.app</string>
+                <key>requirement</key>
+                <string>identifier "com.touch-base.install-updd" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = U86H28HG4S</string>
             </dict>
         </dict>
     </array>

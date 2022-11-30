@@ -63,7 +63,7 @@
             <key>Arguments</key>
             <dict>
                 <key>source_path</key>
-                <string>%destination_path%/SwitchResX Installer.app/Contents/Resources/SwitchResX.prefPane</string>
+                <string>%destination_path%/SwitchResX Installer.app/Contents/PlugIns/SwitchResX.prefPane</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Library/PreferencePanes/SwitchResX.prefPane</string>
                 <key>overwrite</key>
@@ -88,7 +88,7 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/unzip/</string>                      
+                    <string>%RECIPE_CACHE_DIR%/unzip/</string>
                 </array>
             </dict>
         </dict>

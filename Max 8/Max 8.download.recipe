@@ -12,7 +12,7 @@
         <string>Max 8</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,9 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://cycling74.com/thanks-for-downloading-max/?os=mac</string>
+                <string>https://cycling74.com/downloads</string>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://\w*-maxmspjitter.s3.amazonaws.com/Max8\S.*.dmg)</string>
+                <string>href=\"(https://([a-zA-Z]+([0-9]+[a-zA-Z]+)+)-maxmspjitter\.s3\.amazonaws\.com/Max[0-9]+_[0-9]+\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
             </dict>
         </dict>
         <dict>
@@ -31,6 +33,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>

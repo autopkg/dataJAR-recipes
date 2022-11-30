@@ -1,130 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
- <plist version="1.0">
- <dict>
-     <key>Description</key>
-     <string>Downloads the latest version of Aspera Connect and imports it into Munki.</string>
-     <key>Identifier</key>
-     <string>com.github.dataJAR-recipes.munki.Aspera Connect</string>
-     <key>Input</key>
-     <dict>
-         <key>NAME</key>
-         <string>Aspera Connect</string>
-         <key>MUNKI_REPO_SUBDIR</key>
-         <string>apps/%NAME%</string>
-         <key>pkginfo</key>
-         <dict>
-             <key>catalogs</key>
-             <array>
-                 <string>testing</string>
-             </array>
-             <key>description</key>
-             <string>Push the limits of maximum-speed transfers. Aspera Connect helps you securely move files and folders of any size.</string>
-             <key>developer</key>
-             <string>IBM Corp</string>
-             <key>display_name</key>
-             <string>Aspera Connect</string>
-             <key>name</key>
-             <string>%NAME%</string>
-             <key>unattended_install</key>
-             <true/>
-             <key>unattended_uninstall</key>
-             <true/>
-         </dict>
-     </dict>
-     <key>MinimumVersion</key>
-     <string>0.6.1</string>
-     <key>ParentRecipe</key>
-     <string>com.github.dataJAR-recipes.pkg.Aspera Connect</string>
-     <key>Process</key>
-     <array>
-       <dict>
-            <key>Processor</key>
-            <string>Copier</string>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Aspera Connect and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Aspera Connect</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Aspera Connect</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Aspera Crypt.app</string>
+                <string>Aspera Connect.app</string>
+                <string>IBM Aspera Launcher.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>IBM Aspera Connect
+
+High-performance transfer client
+
+Push the limits of maximum-speed transfers. Aspera Connect helps you securely move file and folders of any size.</string>
+            <key>developer</key>
+            <string>IBM Corp</string>
+            <key>display_name</key>
+            <string>Aspera Connect</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>removepackages</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
+    <key>Process</key>
+    <array>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/scripts/IBM Aspera Connect Installer.app</string>
-                <key>source_path</key>
-                <string>%pathname%/IBM Aspera Connect Installer.app</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-ConnectApp.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-LauncherApp.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-CryptApp.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Aspera Crypt.app</string>
+                    <string>/Applications/IBM Aspera Launcher.app</string>
+                    <string>/Applications/Aspera Connect.app</string>
+                </array>
+            </dict>
+        <key>Processor</key>
+        <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
-                <string>%RECIPE_CACHE_DIR%/scripts/IBM Aspera Connect Installer.app/Contents/Resources/AsperaApps.zip</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
-                <key>purge_destination</key>
-                <true/>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/IBM Aspera Launcher.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
+                </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
-         <dict>
-             <key>Processor</key>
-             <string>MunkiInstallsItemsCreator</string>
+        <dict>
              <key>Arguments</key>
              <dict>
-                 <key>faux_root</key>
-                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                 <key>installs_item_paths</key>
-                 <array>
-                     <string>/Applications/Aspera Connect.app</string>
-                     <string>/Applications/Aspera Crypt.app</string>
-                     <string>/Applications/IBM Aspera Launcher.app</string>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%pathname%</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                </dict>
+                <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
                  </array>
-             </dict>
-         </dict>
-         <dict>
-             <key>Processor</key>
-             <string>MunkiPkginfoMerger</string>
-         </dict>
-         <dict>
-             <key>Processor</key>
-             <string>Versioner</string>
-             <key>Arguments</key>
-             <dict>
-                 <key>input_plist_path</key>
-                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Aspera Connect.app/Contents/Info.plist</string>
-             </dict>
-         </dict>
-         <dict>
-             <key>Processor</key>
-             <string>MunkiPkginfoMerger</string>
-             <key>Arguments</key>
-             <dict>
-                 <key>additional_pkginfo</key>
-                 <dict>
-                     <key>version</key>
-                     <string>%version%</string>
-                 </dict>
-             </dict>
-         </dict>
-         <dict>  
-             <key>Processor</key>
-             <string>MunkiImporter</string>
-             <key>Arguments</key>
-             <dict>
-                 <key>pkg_path</key>
-                 <string>%pkg_path%</string>
-                 <key>repo_subdirectory</key>
-                 <string>%MUNKI_REPO_SUBDIR%</string>
-             </dict>
-         </dict>
-         <dict>
-             <key>Processor</key>
-             <string>PathDeleter</string>
-             <key>Arguments</key>
-             <dict>
-                 <key>path_list</key>
-                 <array>
-                     <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-                     <string>%RECIPE_CACHE_DIR%/scripts/</string>
-                 </array>
-             </dict>
-         </dict>
-     </array>
- </dict>
- </plist> 
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
