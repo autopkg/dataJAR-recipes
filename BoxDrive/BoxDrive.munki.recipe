@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Box Drive and then uploads to munki.</string>
+    <string>Downloads the latest version of Box Drive and then uploads to munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.boxdrive</string>
     <key>Input</key>
@@ -12,12 +14,14 @@
         <string>Applications/%NAME%</string>
         <key>NAME</key>
         <string>BoxDrive</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
-			<array>
-				<string>Box</string>
-			</array>
+            <array>
+                <string>Box</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -35,7 +39,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.boxdrive</string>
     <key>Process</key>
@@ -80,6 +84,8 @@
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 <key>installs_item_paths</key>
