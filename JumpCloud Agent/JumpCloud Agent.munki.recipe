@@ -4,13 +4,14 @@
 <dict>
     <key>Description</key>
     <string>Downloads the current release version of the JumpCloud Agent and then uploads to munki.
-    
+
     NOTE: The bootstrap.json file should be deployed to /opt/jc/agentBootstrap.json before
-    installing this PKG, else you'll be prompted for the connect_key. 
+    installing this PKG, else you'll be prompted for the connect_key.
     Amend the preinstall_script for this.
-    
+
     See: https://support.jumpcloud.com/customer/portal/articles/2389320-agent-deployment-via-command-line
-    </string>
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.JumpCloud Agent</string>
     <key>Input</key>
@@ -19,6 +20,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>JumpCloud Agent</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -31,8 +34,6 @@
             <string>JumpCloud</string>
             <key>display_name</key>
             <string>JumpCloud Agent</string>
-            <key>minimum_os_version</key>
-            <string>10.11</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>preinstall_script</key>
@@ -110,7 +111,7 @@ rm -rf /Applications/Jumpcloud.app</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.JumpCloud Agent</string>
     <key>Process</key>
@@ -152,6 +153,8 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <array>
                     <string>/Applications/Jumpcloud.app</string>
                 </array>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
         <dict>

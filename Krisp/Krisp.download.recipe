@@ -12,7 +12,7 @@
             <string>krisp</string>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.5.0</string>
+        <string>1.1.1</string>
         <key>Process</key>
         <array>
             <dict>
@@ -25,6 +25,10 @@
                     <key>url</key>
                     <string>https://download.krisp.ai/mac?btn=downloadMac_AccountFooter</string>
                 </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
             </dict>
             <dict>
                 <key>Processor</key>

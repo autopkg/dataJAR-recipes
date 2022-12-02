@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Imports the latest version of the Isadora 3 software into Munki.</string>
+    <string>Imports the latest version of the Isadora 3 software into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Isadora 3</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>Isadora</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/troikatronix</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
             <dict>
                 <key>catalogs</key>
@@ -32,6 +36,8 @@
                 <true/>
             </dict>
         </dict>
+     <key>MinimumVersion</key>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Isadora 3</string>
     <key>Process</key>
@@ -75,6 +81,8 @@
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
        <dict>

@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest trial version of Jump Desktop Connect and imports into Munki.</string>
+    <string>Downloads the latest trial version of Jump Desktop Connect and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Jump Desktop Connect</string>
     <key>Input</key>
@@ -12,8 +14,10 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>JumpDesktopConnect</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -31,7 +35,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Jump Desktop Connect</string>
     <key>Process</key>
@@ -96,6 +100,8 @@
                 <array>
                     <string>/Applications/Jump Desktop Connect.app</string>
                 </array>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
         <dict>
@@ -133,7 +139,7 @@
                 <key>path_list</key>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>                       
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
                 </array>
             </dict>
         </dict>

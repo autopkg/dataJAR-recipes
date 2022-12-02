@@ -12,7 +12,7 @@
         <string>Isadora3</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -38,10 +38,6 @@
                 <key>url</key>
                 <string>https://troikatronix.com/%match%</string>
             </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Processor</key>

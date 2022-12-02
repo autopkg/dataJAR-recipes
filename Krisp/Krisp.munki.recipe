@@ -3,7 +3,9 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest version of krisp and imports into Munki</string>
+        <string>Downloads the latest version of krisp and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.munki.krisp</string>
         <key>Input</key>
@@ -12,6 +14,8 @@
             <string>apps/%NAME%</string>
             <key>NAME</key>
             <string>krisp</string>
+            <key>DERIVE_MIN_OS</key>
+            <string>YES</string>
             <key>pkginfo</key>
             <dict>
                 <key>catalogs</key>
@@ -37,7 +41,7 @@
             </dict>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.5.0</string>
+        <string>2.7</string>
         <key>ParentRecipe</key>
         <string>com.github.dataJAR-recipes.download.krisp</string>
         <key>Process</key>
@@ -79,6 +83,8 @@
                     <array>
                         <string>/Applications/krisp.app</string>
                     </array>
+                    <key>derive_minimum_os_version</key>
+                    <string>%DERIVE_MIN_OS%</string>
                 </dict>
             </dict>
             <dict>
