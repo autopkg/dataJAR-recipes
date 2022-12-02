@@ -2,65 +2,69 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of OpenVPN Connect Client 3 and imports it into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.OpenVPN Connect Client 3</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>OpenVPNConnectClient3</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>Official OpenVPN client for Mac for connecting to VPN servers using the OpenVPN protocol.</string>
-			<key>developer</key>
-			<string>OpenVPN</string>
-			<key>category</key>
-			<string>Utilities</string>
-			<key>display_name</key>
-			<string>OpenVPN</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.0.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>FileFinder</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pattern</key>
-				<string>%pathname%/OpenVPN*%ARCH%*.pkg</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>Copier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/OpenVPN_%ARCH%.pkg</string>
-				<key>overwrite</key>
-				<true/>
-				<key>source_path</key>
-				<string>%pathname%/OpenVPN*%ARCH%*.pkg</string>
-			</dict>
-		</dict>
-		<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of OpenVPN Connect Client 3 and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.OpenVPN Connect Client 3</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>OpenVPNConnectClient3</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Official OpenVPN client for Mac for connecting to VPN servers using the OpenVPN protocol.</string>
+            <key>developer</key>
+            <string>OpenVPN</string>
+            <key>category</key>
+            <string>Utilities</string>
+            <key>display_name</key>
+            <string>OpenVPN</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/OpenVPN*%ARCH%*.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/OpenVPN_%ARCH%.pkg</string>
+                <key>overwrite</key>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%/OpenVPN*%ARCH%*.pkg</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
@@ -95,6 +99,8 @@
                 <array>
                     <string>/Applications/OpenVPN Connect/OpenVPN Connect.app</string>
                 </array>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
         <dict>
@@ -131,17 +137,17 @@
                 </dict>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
         <string>%RECIPE_CACHE_DIR%/OpenVPN_%ARCH%.pkg</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-		</dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
@@ -149,11 +155,11 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>  
-                    <string>%RECIPE_CACHE_DIR%/unpack/</string>                      
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>

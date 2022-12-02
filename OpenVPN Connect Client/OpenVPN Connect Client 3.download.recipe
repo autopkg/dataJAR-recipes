@@ -2,64 +2,64 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of the OpenVPN Connect Client 3 for Mac.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
-	<key>Input</key>
-	<dict>
-		<key>ARCH</key>
-		<string>x86_64</string>
-		<key>NAME</key>
-		<string>OpenVPNConnectClient3</string>
-		<key>USER_AGENT</key>
-		<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36</string>
-	 </dict>
-	<key>MinimumVersion</key>
-	<string>0.2.0</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://openvpn.net/vpn-server-resources/connecting-to-access-server-with-macos</string>
-				<key>re_pattern</key>
-				<string>(/downloads/openvpn-connect-v3-.*.dmg)</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://openvpn.net%url%</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/OpenVPN_Connect*%ARCH%*.pkg</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: OPENVPN TECHNOLOGIES, INC. (ACV7L3WCD8)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest version of the OpenVPN Connect Client 3 for Mac.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
+    <key>Input</key>
+    <dict>
+        <key>ARCH</key>
+        <string>x86_64</string>
+        <key>NAME</key>
+        <string>OpenVPNConnectClient3</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36</string>
+     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://openvpn.net/vpn-server-resources/connecting-to-access-server-with-macos</string>
+                <key>re_pattern</key>
+                <string>(/downloads/openvpn-connect-v3-.*.dmg)</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://openvpn.net%url%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/OpenVPN_Connect*%ARCH%*.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: OPENVPN TECHNOLOGIES, INC. (ACV7L3WCD8)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>

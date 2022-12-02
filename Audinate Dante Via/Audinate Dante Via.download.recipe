@@ -14,7 +14,7 @@
         <string>https://software-updates-via.audinate.com/DanteVia/appcast/DanteVia-OSX.xml</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -31,10 +31,10 @@
             <string>URLDownloader</string>
         </dict>
         <dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>
@@ -45,21 +45,21 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pkg_path%</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: Audinate Pty Ltd (P4WCR6Y822)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pkg_path%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Audinate Pty Ltd (P4WCR6Y822)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
