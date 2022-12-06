@@ -14,7 +14,7 @@
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -36,7 +36,7 @@
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
-        	<key>Arguments</key>
+            <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%match%</string>

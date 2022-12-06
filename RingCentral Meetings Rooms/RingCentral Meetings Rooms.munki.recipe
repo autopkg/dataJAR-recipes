@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of RingCentral Meetings Rooms</string>
+    <string>Downloads the latest version of RingCentral Meetings Rooms
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.RingCentral Meetings Rooms</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>apps/RingCentral</string>
         <key>NAME</key>
         <string>RingCentral Meetings Rooms</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -26,8 +30,6 @@
             <string>RingCentral Meetings Rooms is the “Every Room” video conferencing solution. It is a next-generation cloud-based video conference room solution without the expensive proprietary hardware needed with traditional video conference room systems. It is easy to configure with off-the-shelf equipment and delivers HD video, audio,and web conferencing capabilities.</string>
             <key>display_name</key>
             <string>RingCentral Meetings Rooms</string>
-            <key>minimum_os_version</key>
-            <string>10.14</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -35,7 +37,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.RingCentral Meetings Rooms</string>
     <key>Process</key>
@@ -77,6 +79,8 @@
                 <array>
                     <string>/Applications/RingCentral Rooms.app</string>
                 </array>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
        <dict>

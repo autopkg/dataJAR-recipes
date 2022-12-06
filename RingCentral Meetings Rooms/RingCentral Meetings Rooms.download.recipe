@@ -14,7 +14,7 @@
         <string>https://downloads.ringcentral.com/RCM/RC/rooms/mac/RingCentralRoomsSetup.pkg</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
