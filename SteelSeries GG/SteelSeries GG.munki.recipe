@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Steel Series GG and imports it into Munki.</string>
+    <string>Downloads the latest version of Steel Series GG and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Steel Series GG</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>SteelSeriesGG</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -33,7 +37,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Steel Series GG</string>
     <key>Process</key>
@@ -57,7 +61,7 @@
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/Steel Series GG/</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/SteelSeries GG</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/SteelSeriesGG.pkg/Payload</string>
                 <key>purge_destination</key>
@@ -70,10 +74,12 @@
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/SteelSeries GG</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Steel Series GG/SteelSeries GG.app</string>
+                    <string>/Applications/SteelSeries GG/SteelSeries GG.app</string>
                 </array>
             </dict>
         </dict>
@@ -87,7 +93,7 @@
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/Steel Series GG/SteelSeries GG.app/Contents/Info.plist</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/SteelSeries GG/Applications/SteelSeries GG/SteelSeries GG.app/Contents/Info.plist</string>
                 <key>plist_keys</key>
                 <dict>
                     <key>CFBundleShortVersionString</key>
@@ -140,8 +146,8 @@ Hence setting the munkiimport_pkgname to SteelSeries-GG-%version%</string>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/Applications</string>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
         </dict>
