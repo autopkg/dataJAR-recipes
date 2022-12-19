@@ -8,37 +8,27 @@
     <string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
     <key>Input</key>
     <dict>
-        <key>ARCH</key>
-        <string>x86_64</string>
         <key>NAME</key>
         <string>OpenVPNConnectClient3</string>
-        <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36</string>
-     </dict>
+    </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://openvpn.net/vpn-server-resources/connecting-to-access-server-with-macos</string>
-                <key>re_pattern</key>
-                <string>(/downloads/openvpn-connect-v3-.*.dmg)</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
-            </dict>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15</string>
+                    <key>Referer</key>
+                    <string>https://openvpn.net/client-connect-vpn-for-mac-os/;auto</string>
+                </dict>
                 <key>url</key>
-                <string>https://openvpn.net%url%</string>
+                <string>https://openvpn.net/downloads/openvpn-connect-v3-macos.dmg</string>
             </dict>
         </dict>
         <dict>
