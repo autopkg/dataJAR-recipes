@@ -18,6 +18,24 @@
             <dict>
                 <key>Arguments</key>
                 <dict>
+                    <key>warning_message</key>
+                    <string>This recipe has been deprecated. The XAMPP VM App is no longer availabe from the vendor. Please remove from your runs.</string>
+                </dict>
+                <key>Processor</key>
+                <string>DeprecationWarning</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>predicate</key>
+                    <string>TRUEPREDICATE</string>
+                </dict>
+                <key>Processor</key>
+                <string>StopProcessingIf</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
                     <key>re_pattern</key>
                     <string>href=\"(https://sourceforge\.net/projects/xampp/files/XAMPP%20Mac%20OS%20X/(\d(\.\d)+)/xampp-osx-(\d(\.\d)+)-[0-9]+-vm\.dmg)\"</string>
                     <key>result_output_var_name</key>
