@@ -106,9 +106,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
-                    <string>%RECIPE_CACHE_DIR%/Payload/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/lib/python3.10/site-packages</string>
-                    <string>%RECIPE_CACHE_DIR%/Payload</string>
+                    <string>%RECIPE_CACHE_DIR%/unpacked/</string>
+                    <string>%RECIPE_CACHE_DIR%/Payload/</string>
                 </array>
             </dict>
             <key>Processor</key>
