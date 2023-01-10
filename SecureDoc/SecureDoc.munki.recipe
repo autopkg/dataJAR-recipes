@@ -68,7 +68,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/SecureDoc_2.0.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked/SecureDoc.pkg/Payload</string>
                 <key>purge_destination</key>
                 <false/>
             </dict>
