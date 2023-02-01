@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.clevertouch.com/uk/clevershare2g</string>
                 <key>re_pattern</key>
-                <string>(https://saharaplc\.s3\.eu-west-2\.amazonaws\.com/Clevershare([+-]?(?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:[eE]([+-]?\d+))?/Clients/([0-9]+(\.[0-9]+)+)/[0-9]+/Clevershare_notarized\.dmg)</string>
+                <string>(https://saharaplc\.s3\.eu-west-2\.amazonaws\.com/Clevershare\+\d/Clients/(\d(\.\d)+)/Clevershare\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
