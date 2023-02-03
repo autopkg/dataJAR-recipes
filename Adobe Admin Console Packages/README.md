@@ -20,15 +20,19 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 
 |||||
 |:---:|:---:|:---:|:---:
-|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2022| AdobePremiereRush|
+|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2023| AdobePremiereRush|
 |AdobeAfterEffects2021| AdobeCharacterAnimator2022| AdobeLightroomCC| AdobePremiereRush2.0|
-|AdobeAfterEffects2022| AdobeDimension| AdobeLightroomClassic|AdobeSubstance3DDesigner|
-|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2021|AdobeSubstance3DPainter|
-|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2022|AdobeSubstance3DSampler|
-|AdobeAudition2021| AdobeIllustrator2022| AdobePhotoshop2021|AdobeSubstance3DStager|
-|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2022|AdobeXD|
-|AdobeBridge2021| AdobeInCopy2022| AdobePremierePro2021||
-|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022||
+|AdobeAfterEffects2022| AdobeCharacterAnimator2023| AdobeLightroomClassic| AdobeSubstance3DDesigner|
+|AdobeAfterEffects2022| AdobeDimension| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
+|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
+|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
+|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| AdobeXD|
+|AdobeAudition2021| AdobeIllustrator2023| AdobePhotoshop2022| |
+|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2023| |
+|AdobeAudition2023| AdobeInCopy2021| AdobePrelude2021| |
+|AdobeBridge2021| AdobeInCopy2022| AdobePrelude2022| |
+|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2021| |
+|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2022| |
 2. Download the DMG from the [Adobe Admin Console](https://adminconsole.adobe.com)
 3. Load the .app
 4. Download the title to your ~/Downloads
@@ -142,6 +146,15 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
                 "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
                 "app_description": "Quickly output video files for virtually any screen.",
                 "display_name": "Adobe Media Encoder 2022",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "23.0": {
+                "app_bundle_id": "com.adobe.ame.application.23",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2023/Adobe Media Encoder 2023.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
