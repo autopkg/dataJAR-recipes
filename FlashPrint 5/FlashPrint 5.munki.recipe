@@ -59,7 +59,20 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/FlashPrint 5*/FlashPrint 5*.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%found_filename%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unzip/</string>
+                <key>purge_destination</key>
+                <true/>
             </dict>
         </dict>
         <dict>
@@ -70,7 +83,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
                 <key>pkg_payload_path</key>
-                <string>%found_filename%/Contents/Archive.pax.gz</string>
+                <string>%RECIPE_CACHE_DIR%/pkg_unzip/FlashPrint 5.pkg/Contents/Archive.pax.gz</string>
             </dict>
         </dict>
         <dict>
@@ -126,7 +139,7 @@
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
                 <key>dmg_root</key>
-                <string>%found_filename%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
             </dict>
         </dict>
         <dict>
@@ -148,6 +161,7 @@
                 <key>path_list</key>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unzip</string>
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>
             </dict>
