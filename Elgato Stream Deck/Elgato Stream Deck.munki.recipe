@@ -5,7 +5,9 @@
     <key>Description</key>
     <string>Downloads the latest version of Elgato Stream Deck and imports it into Munki.
 
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.
+
+To force MunkiImporter to import the pkg, set FORCE_MUNKIIMPORT to a non-empty string.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Elgato Stream Deck</string>
     <key>Input</key>
@@ -16,6 +18,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>FORCE_MUNKIIMPORT</key>
+        <string></string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -186,6 +190,8 @@ For further info please see https://github.com/autopkg/dataJAR-recipes/issues/27
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
