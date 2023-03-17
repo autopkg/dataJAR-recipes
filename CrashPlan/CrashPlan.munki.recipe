@@ -18,6 +18,8 @@
             <array>
                 <string>Code42.app</string>
                 <string>Code42Service.app</string>
+                <string>CrashPlan.app</string>
+                <string>CrashPlanService.app</string>
             </array>
             <key>catalogs</key>
             <array>
@@ -38,7 +40,7 @@
 #
 # Taken from vendors documentation: https://support.crashplan.com/hc/en-us/articles/9025086987661-Uninstall-the-CrashPlan-app-for-CrashPlan
 #
-/Applications/Code42.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
+/Applications/CrashPlan.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -57,7 +59,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
                 <key>flat_pkg_path</key>
-                <string>%pathname%/Install Code42.pkg</string>
+                <string>%pathname%/Install CrashPlan.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -70,7 +72,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/code42.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/crashplan.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -84,7 +86,7 @@
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Code42.app</string>
+                    <string>/Applications/CrashPlan.app</string>
                 </array>
             </dict>
             <key>Processor</key>
