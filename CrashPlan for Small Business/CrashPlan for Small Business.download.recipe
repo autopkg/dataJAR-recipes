@@ -12,7 +12,7 @@
         <string>CrashPlanforSmallBusiness</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -35,12 +35,12 @@
             <dict>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Code 42 Software (9YV9435DHD)</string>
+                    <string>Developer ID Installer: CrashPlan Group, LLC (UGHXR79U6M)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%pathname%/Install CrashPlan for Small Business.pkg</string>
+                <string>%pathname%/Install CrashPlan.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
