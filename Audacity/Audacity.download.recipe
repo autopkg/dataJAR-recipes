@@ -8,6 +8,8 @@
 Set the ARCHITECTURE variable to "x86_64" for Intel
 
 Set the ARCHITECTURE variable to "arm64" for Apple Silicone
+
+Set the ARCHITECTURE variable to "universal" for universal
 </string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Audacity</string>
