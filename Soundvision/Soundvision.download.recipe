@@ -19,11 +19,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(\d(\.\d)+)\/\">(\d(\.\d)+)\/</string>
+                <string>class=\"version\">([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
-                <string>https://www.l-acoustics.com/documentation/SOFTWARE/Soundvision/Soundvision/Mac/</string>
+                <string>https://www.l-acoustics.com/products/soundvision/</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
