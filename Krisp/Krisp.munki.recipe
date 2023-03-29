@@ -59,28 +59,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>true</string>
                 </dict>
             </dict>
-			<dict>
-				<key>Processor</key>
-				<string>FileFinder</string>
-				<key>Arguments</key>
-				<dict>
-					<key>pattern</key>
-					<string>%RECIPE_CACHE_DIR%/installer_unpack/krisp-app.uli.pkg/Scripts/krisp_app_*.pkg</string>
-				</dict>
-			</dict>
-            <dict>
-                <key>Processor</key>
-                <string>FlatPkgUnpacker</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/app_pkg_unpack/</string>
-                    <key>flat_pkg_path</key>
-                    <string>%found_filename%</string>
-                    <key>purge_destination</key>
-                    <true/>
-                </dict>
-            </dict>
             <dict>
                 <key>Processor</key>
                 <string>PkgPayloadUnpacker</string>
@@ -89,9 +67,9 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <key>destination_path</key>
                     <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                     <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/app_pkg_unpack/krisp.app.pkg/Payload</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/Audio.pkg/Payload</string>
                     <key>purge_destination</key>
-                    <true/>
+                    <string>true</string>
                 </dict>
             </dict>
             <dict>
@@ -156,7 +134,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <array>
                         <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
                         <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
-                        <string>%RECIPE_CACHE_DIR%/app_pkg_unpack/</string>
                     </array>
                 </dict>
             </dict>
