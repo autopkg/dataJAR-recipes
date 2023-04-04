@@ -24,7 +24,7 @@ To download the arm64 version use "arm" in the DOWNLOAD_ARCH variable.</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(downmo/[0-9]+/transcribe-%DOWNLOAD_ARCH%-([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
+                <string>href=\"(downmo/transcribe-%DOWNLOAD_ARCH%-([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
