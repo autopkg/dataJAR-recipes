@@ -23,7 +23,7 @@
                 <key>re_pattern</key>
                 <string>href=&quot;(https:\/\/oc\.zylia\.pl\/index\.php\/s\/\S.*)&quot;&gt;ZYLIA Studio .*&lt;br \/&gt;&amp;#8203;for Mac OS X&lt;\/a&gt;&lt;\/div&gt;</string>
                 <key>url</key>
-                <string>https://www.zylia.co/zylia-studio-download.html</string>
+                <string>https://blog.zylia.co/zylia-studio-download.html</string>
             </dict>
         </dict>
         <dict>
