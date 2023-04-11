@@ -18,23 +18,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>url=\"(https://nounproject\.s3\.amazonaws\.com/mac/Noun-Project-([0-9]+(\.[0-9]+)+))\.zip\"</string>
-                <key>result_output_var_name</key>
-                <string>DL_URL</string>
-                <key>url</key>
-                <string>https://thenounproject.com/for-mac/feed/</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>%DL_URL%.dmg</string>
+                <string>https://nounproject.s3.amazonaws.com/mac/NounProject.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
