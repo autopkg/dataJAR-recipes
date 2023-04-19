@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of NoFWL.
+
+To download the Intel version use "x86_64" in the ARCH variable.
+To download the Apple Silicon version use "aarch64" in the ARCH variable.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.NoFWL</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>NoFWL</string>
+        <key>ARCH</key>
+        <string>x86_64</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>asset_regex</key>
+                <string>NoFWL_([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)_macos_%ARCH%\.dmg$</string>
+                <key>github_repo</key>
+                <string>lencx/nofwl</string>
+            </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%version%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
