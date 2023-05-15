@@ -28,7 +28,7 @@ SUPPORT FOR THIS PROGRAM
     For more information or support, please utilise the following resources:
             http://www.datajar.co.uk
 DESCRIPTION
-See docstring for CaseChanger class
+See docstring for FirefoxGetLocaleAndVersion class
 '''
 
 # Standard imports
