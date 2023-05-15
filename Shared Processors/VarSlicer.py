@@ -60,7 +60,7 @@ class VarSlicer(Processor):
             'description': ('The slice we want to apply to input_string'),
         },
         'sliced_string_name': {
-            'description': ('The name of the output variable that is returned after slice_slice '
+            'description': ('The name of the output variable that is returned after slice_pattern '
                             'has been applied to input_string.'
                             'If not specified, will default to "slice_string".'),
             "required": False,
@@ -70,7 +70,7 @@ class VarSlicer(Processor):
 
     output_variables = {
         'sliced_string_name': {
-            'description': ('The value of inpu_string once slice by slice_slice'),
+            'description': ('The value of input_string once sliced by slice_pattern'),
         },
     }
 
@@ -83,7 +83,7 @@ class VarSlicer(Processor):
         output_var_name = self.env["sliced_string_name"]
 
         # Progress notification
-        self.output(f"Looking to slice {self.env['input_string']} by ({self.env['slice_slice']})")
+        self.output(f"Looking to slice {self.env['input_string']} by ({self.env['slice_pattern']})")
 
         # Slice as needed, raising if fails
         try:
@@ -92,7 +92,7 @@ class VarSlicer(Processor):
             self.env[output_var_name] = self.env['input_string'][var_slice]
         except TypeError as err_msg:
             raise ProcessorError("Cannot slice self.env['input_string'] with: "
-                                 "{self.env['slice_slice']}, : ") from err_msg
+                                 "{self.env['slice_pattern']}, : ") from err_msg
 
         # Progress notification
         self.output(f"slice_string: {self.env['slice_string']}")
