@@ -44,9 +44,9 @@ __version__ = '1.0'
 # pylint: disable = too-few-public-methods
 class VarSlicer(Processor):
     '''
-        Slicers the passed variable at the slice specified, retuning the slice at the 1st index.
-        
-        Raises if 
+        Slicers the passed variable at the slice specified.
+
+        Raises if cannot slice
     '''
 
     description = __doc__
@@ -81,17 +81,18 @@ class VarSlicer(Processor):
 
         # Var declaration
         output_var_name = self.env["sliced_string_name"]
-        
+
         # Progress notification
         self.output(f"Looking to slice {self.env['input_string']} by ({self.env['slice_slice']})")
-        
+
         # Slice as needed, raising if fails
         try:
             var_slice = slice('sliced_string_name')
-			# slice as needed
-			self.env[output_var_name] = self.env['input_string'][var_slice][0]
-		except TypeError as err_msg:
-		        raise ProcessorError("Cannot slice self.env['input_string'] with: {self.env['slice_slice']}, :") from locale_parse_error
+            # slice as needed
+            self.env[output_var_name] = self.env['input_string'][var_slice]
+        except TypeError as err_msg:
+            raise ProcessorError("Cannot slice self.env['input_string'] with: "
+                                 "{self.env['slice_slice']}, : ") from err_msg
 
         # Progress notification
         self.output(f"slice_string: {self.env['slice_string']}")
