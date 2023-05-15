@@ -55,13 +55,14 @@ class VarSlicer(Processor):
             'required': True,
             'description': ('Variable we\'re looking to slice.'),
         },
-        'slice_pattern': {
+        'slice_tuple_pattern': {
             'required': True,
-            'description': ('The slice we want to apply to input_string'),
+            'description': ('The slice we want to apply to input_string. '
+                            'A tuple with 3 members is required'),
         },
         'sliced_string_name': {
-            'description': ('The name of the output variable that is returned after slice_pattern '
-                            'has been applied to input_string.'
+            'description': ('The name of the output variable that is returned after '
+                            'slice_tuple_pattern has been applied to input_string.'
                             'If not specified, will default to "slice_string".'),
             "required": False,
             "default": "slice_string",
@@ -70,7 +71,7 @@ class VarSlicer(Processor):
 
     output_variables = {
         'sliced_string_name': {
-            'description': ('The value of input_string once sliced by slice_pattern'),
+            'description': ('The value of input_string once sliced by slice_tuple_pattern'),
         },
     }
 
@@ -83,19 +84,40 @@ class VarSlicer(Processor):
         output_var_name = self.env["sliced_string_name"]
 
         # Progress notification
-        self.output(f"Looking to slice {self.env['input_string']} by ({self.env['slice_pattern']})")
+        self.output(f"Looking to slice {self.env['input_string']} by "
+                    f"({self.env['slice_tuple_pattern']})")
 
         # Slice as needed, raising if fails
         try:
-            var_slice = slice('sliced_string_name')
-            # slice as needed
+            # Convert slice_tuple_pattern to tuple
+            var_tuple = tuple(((self.env["slice_tuple_pattern"].replace(' ', '')).split(',')))
+            # First item for tuple
+            if var_tuple[0] != "None":
+                first_item = int(var_tuple[0])
+            else:
+                first_item = None
+            # Second item for tuple
+            if var_tuple[1] != "None":
+                second_item = int(var_tuple[1])
+            else:
+                second_item = None
+            # Third item for tuple
+            if var_tuple[2] != "None":
+                third_item = int(var_tuple[2])
+            else:
+                third_item = None
+            # Create the slice
+            var_slice = slice(first_item, second_item,third_item)
+            # Slice, using the above
             self.env[output_var_name] = self.env['input_string'][var_slice]
-        except TypeError as err_msg:
+            # Perform the slice
+            #self.env['slice_string'] = 
+        except (IndexError, TypeError) as err_msg:
             raise ProcessorError("Cannot slice self.env['input_string'] with: "
-                                 "{self.env['slice_pattern']}, : ") from err_msg
+                                 "{self.env['slice_tuple_pattern']}, : ") from err_msg
 
         # Progress notification
-        self.output(f"slice_string: {self.env['slice_string']}")
+        self.output(f"soutput_var_name: {self.env[output_var_name]}")
 
 
 if __name__ == '__main__':
