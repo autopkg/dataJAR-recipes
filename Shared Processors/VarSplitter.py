@@ -87,7 +87,7 @@ class VarSplitter(Processor):
         self.output(f"Looking to split {self.env['input_string']} by {self.env['split_slice']}")
 
         # Split as needed
-        self.env[output_var_name] = self.env['input_string'][int(self.env['split_slice'])][0]
+        self.env[output_var_name] = self.env['input_string'][':' + int(self.env['split_slice'])][0]
         self.output(f"split_string: {self.env['split_string']}")
 
 
