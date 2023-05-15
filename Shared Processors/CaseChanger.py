@@ -43,7 +43,7 @@ __version__ = '1.0'
 # pylint: disable = too-few-public-methods
 class CaseChanger(Processor):
     '''
-        Parses a JSON file, returning the value of the supplied key.
+        Changes case of a variable, as per the requested case
 
         Raising if the key is not found.
     '''
