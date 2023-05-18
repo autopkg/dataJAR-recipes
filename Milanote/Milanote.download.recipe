@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.milanote.com/download-mac-app</string>
                 <key>re_pattern</key>
-                <string>https://milanote-app-releases\.s3\.amazonaws\.com/Milanote-.*\.dmg</string>
+                <string>(https://releases\.milanote\.com/Milanote-([0-9]+(\.[0-9]+)+)\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
