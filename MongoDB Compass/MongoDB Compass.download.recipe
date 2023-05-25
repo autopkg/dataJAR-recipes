@@ -10,8 +10,6 @@
     <dict>
         <key>NAME</key>
         <string>MongoDB Compass</string>
-        <key>VERSION_NUMBER</key>
-        <string>https://downloads\.mongodb\.com/compass/mongodb-compass-([0-9]+(\.[0-9]+)+)-darwin-x64\.dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -22,18 +20,15 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.mongodb.com/download-center/compass</string>
                 <key>re_pattern</key>
-                <string>%VERSION_NUMBER%</string>
+                <string>\"(https://downloads\.mongodb\.com/compass/mongodb-compass-.*?-darwin-x64\.dmg)\"},</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://www.mongodb.com/try/download/compass</string>
             </dict>
         </dict>
         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://downloads.mongodb.com/compass/mongodb-compass-%match%-darwin-x64.dmg</string>
-            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -42,6 +37,8 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -49,19 +46,6 @@
                 <key>requirement</key>
                 <string>identifier "com.mongodb.compass" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4XWMY46275"</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%pathname%/MongoDB Compass.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
-            </dict>
-            <key>Processor</key>
-            <string>Versioner</string>
         </dict>
     </array>
 </dict>
