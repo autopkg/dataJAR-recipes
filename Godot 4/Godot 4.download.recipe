@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of Godot 3.</string>
+    <string>Download recipe for the latest version of Godot 4.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Godot 3</string>
+    <string>com.github.dataJAR-recipes.download.Godot 4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Godot3</string>
+        <string>Godot4</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -21,7 +21,7 @@
                 <key>github_repo</key>
                 <string>godotengine/godot</string>
                 <key>asset_regex</key>
-                <string>Godot_v3.\d\.\d+-stable_mono_osx\.universal\.zip</string>
+                <string>Godot_v4.\d\.\d+-stable_macos\.universal\.zip</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>

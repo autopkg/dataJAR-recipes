@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Godot 3 and imports into Munki.</string>
+    <string>Downloads the latest version of Godot 4 and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Godot 3</string>
+    <string>com.github.dataJAR-recipes.munki.Godot 4</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>Godot3</string>
+        <string>Godot4</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -23,11 +23,11 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Godot provides a huge set of common tools, so you can just focus on making your game without reinventing the wheel.
+            <string>The game engine you've been waiting for.
 
-Godot is completely free and open source under the very permissive MIT license. No strings attached, no royalties, nothing. Your game is yours, down to the last line of engine code.</string>
+The Godot Engine is a free, all-in-one, cross-platform game engine that makes it easy for you to create 2D and 3D games.</string>
             <key>display_name</key>
-            <string>Godot 3</string>
+            <string>Godot 4</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -39,7 +39,7 @@ Godot is completely free and open source under the very permissive MIT license. 
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Godot 3</string>
+    <string>com.github.dataJAR-recipes.download.Godot 4</string>
     <key>Process</key>
     <array>
         <dict>
