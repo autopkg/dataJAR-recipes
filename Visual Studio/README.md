@@ -32,19 +32,19 @@ Optional installs are:
 Some Optional installs also have dependancies which are listed in the `installationmanifest.json` - please refer to this for an updated list when deciding what to include.
 
 - Xamarin.Android
-	- Microsoft Build Of OpenJDK
-	- Eclipse Temurin JDK
-	- Xamarin Profiler
-	- Mono Framework
-	- Android SDK
+    - Microsoft Build Of OpenJDK
+    - Eclipse Temurin JDK
+    - Xamarin Profiler
+    - Mono Framework
+    - Android SDK
 
 - Xamarin.iOS
-	- Xamarin Profiler
-	- Mono Framework
+    - Xamarin Profiler
+    - Mono Framework
 
 - Xamarin.Mac
-	- Xamarin Profiler
-	- Mono Framework
+    - Xamarin Profiler
+    - Mono Framework
 
 ## Munki
 
@@ -52,16 +52,16 @@ For folks using the Munki recipes, you could use the `update_for` key in your ov
 
 ```
 <key>update_for</key>
-	<array>
-		<string>VisualStudio</string>
-	</array>
+    <array>
+        <string>VisualStudio</string>
+    </array>
 ```
 
 To ensure .NET 6 installs before .NET 7 you could use the `requires` key in your override.
 
 ```
 <key>requires</key>
-	<array>
-		<string>DotNet6</string>
-	</array>
+    <array>
+        <string>DotNet6</string>
+    </array>
 ```
