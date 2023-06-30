@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.download.Shotcut</string>
+    <string>com.github.dataJAR-recipes.download.Shotcut</string>
     <key>Process</key>
     <array>
         <dict>
