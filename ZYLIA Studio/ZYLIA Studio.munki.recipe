@@ -19,7 +19,7 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>ZYLIA Studio is a dedicated application which enables recording and processing of every tune created by the band. 
+            <string>ZYLIA Studio is a dedicated application which enables recording and processing of every tune created by the band.
 ​You can also separate your tracks using ZYLIA Studio.</string>
             <key>developer</key>
             <string>ZYLIA</string>
@@ -34,12 +34,12 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.ZYLIA Studio</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
