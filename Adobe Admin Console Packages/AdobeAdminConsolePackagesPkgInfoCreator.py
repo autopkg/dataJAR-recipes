@@ -149,7 +149,7 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         self.output("Starting versioner process...")
 
         # Set package_name
-        self.env['aacp_package_name'] = self.env.get('aacp_package_name', self.env['NAME'])
+        self.env['aacp_package_name'] = self.env.get('aacp_package_name')
         self.output(f"aacp_package_name: {self.env['aacp_package_name']}")
 
         # Set packages_path
