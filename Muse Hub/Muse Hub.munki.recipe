@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Muse Hub and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Muse Hub</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MuseHub</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Muse Hub brings creative tools to everyone. Download free apps, sample libraries, plugins and more for music and audio production.</string>
+            <key>developer</key>
+            <string>MuseScore BVBA</string>
+            <key>display_name</key>
+            <string>Muse Hub</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+launchDaemon="/Library/LaunchDaemons/com.muse.museservice.plist"
+helperToolPath="/Library/PrivilegedHelperTools/com.muse.museservice"
+helperTool="com.muse.museservice"
+
+# Check for Library/PrivilegedHelperTools, create the target directory if needed
+if [[ ! -d "/Library/PrivilegedHelperTools" ]]; then
+    /bin/mkdir -p "/Library/PrivilegedHelperTools"
+    /bin/chmod 755 "/Library/PrivilegedHelperTools"
+    /usr/sbin/chown -R root:wheel "/Library/PrivilegedHelperTools"
+fi
+
+# Copy the Privileged Helper Tool
+/bin/cp -f "/Applications/Muse Hub.app/Contents/XPCServices/HelperInstaller.xpc/Contents/Library/LaunchServices/$helperTool" "$helperToolPath"
+
+# Check for and delete any pre-existing Launch Daemon
+if [[ -d "$launchDaemon" ]]; then
+    /bin/launchctl unload "$launchDaemon"
+    rm -rf "$launchDaemon"
+fi
+
+# Create the new Launch Daemon
+/usr/libexec/PlistBuddy -c "Add KeepAlive bool" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Set KeepAlive true" "$launchDaemon"
+
+/usr/libexec/PlistBuddy -c "Add Label string" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Set Label $helperTool" "$launchDaemon"
+
+/usr/libexec/PlistBuddy -c "Add MachServices dict" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Add MachServices:$helperTool bool" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Set MachServices:$helperTool true" "$launchDaemon"
+
+/usr/libexec/PlistBuddy -c "Add Program string" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Set Program $helperToolPath" "$launchDaemon"
+
+/usr/libexec/PlistBuddy -c "Add ProgramArguments array" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Add ProgramArguments:0 string" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Set ProgramArguments:0 $helperToolPath" "$launchDaemon"
+
+/usr/libexec/PlistBuddy -c "Add RunAtLoad bool" "$launchDaemon"
+/usr/libexec/PlistBuddy -c "Set RunAtLoad true" "$launchDaemon"
+
+/bin/launchctl load "$launchDaemon"
+
+exit 0</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+/Applications/Muse\ Hub.app/Contents/XPCServices/HelperInstaller.xpc/Contents/Resources/uninstall-xpc.sh
+
+rm -rf /Applications/Muse\ Hub.app
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Muse Hub</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

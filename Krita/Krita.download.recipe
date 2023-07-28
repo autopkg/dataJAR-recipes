@@ -13,7 +13,7 @@
         <key>DOWNLOAD_URL</key>
         <string>https://krita.org/en/download/krita-desktop/</string>
         <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>https://download.kde.org/stable/krita/\d.*\S.*/krita-\d.*\.dmg</string>
+                <string>href=(https://download\.kde\.org/stable/krita/([0-9]+(\.[0-9]+)+)/krita-([0-9]+(\.[0-9]+)+)\.dmg)</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>

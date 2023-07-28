@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest client installer for Sassafras KeyAccess and imports it into Munki.</string>
+    <string>Downloads the latest client installer for Sassafras KeyAccess and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Sassafras KeyAccess</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>SassafrasKeyAccess</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -41,7 +45,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Sassafras KeyAccess</string>
     <key>Process</key>
@@ -152,6 +156,8 @@
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
         <dict>
@@ -202,8 +208,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>  
-                    <string>%RECIPE_CACHE_DIR%/unpack/</string>                      
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
         </dict>

@@ -12,7 +12,7 @@
         <string>Hunchly</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://www\.hunch\.ly/installers/HunchlyInstaller\.pkg</string>
+                <string>https://downloadmirror\.hunch\.ly/currentversion/HunchlyInstaller\.pkg</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>

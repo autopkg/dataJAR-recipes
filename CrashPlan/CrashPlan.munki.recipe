@@ -8,6 +8,8 @@
     <string>com.github.dataJAR-recipes.munki.CrashPlan</string>
     <key>Input</key>
     <dict>
+        <key>FORCE_MUNKIIMPORT</key>
+        <string>YES!</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
@@ -18,6 +20,8 @@
             <array>
                 <string>Code42.app</string>
                 <string>Code42Service.app</string>
+                <string>CrashPlan.app</string>
+                <string>CrashPlanService.app</string>
             </array>
             <key>catalogs</key>
             <array>
@@ -38,7 +42,7 @@
 #
 # Taken from vendors documentation: https://support.crashplan.com/hc/en-us/articles/9025086987661-Uninstall-the-CrashPlan-app-for-CrashPlan
 #
-/Applications/Code42.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
+/Applications/CrashPlan.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -57,7 +61,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
                 <key>flat_pkg_path</key>
-                <string>%pathname%/Install Code42.pkg</string>
+                <string>%pathname%/Install CrashPlan.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -70,7 +74,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/code42.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/crashplan.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -80,11 +84,36 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>system\.version\.ProductVersion, &apos;([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)&apos;</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpack/Distribution</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Code42.app</string>
+                    <string>/Applications/CrashPlan.app</string>
                 </array>
             </dict>
             <key>Processor</key>
@@ -101,6 +130,8 @@
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

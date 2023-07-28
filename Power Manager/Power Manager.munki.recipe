@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Power Manager and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.PowerManager</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>PowerManager</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Power Manager.app</string>
+                <string>Power Manager Notifications.app</string>
+                <string>Power Manager Software Update.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Power Manager lets you automate sophisticated tasks and improve your Mac's power management.</string>
+            <key>developer</key>
+            <string>Dragon Systems Software Limited</string>
+            <key>display_name</key>
+            <string>Power Manager</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Vendor Documentation is here https://www.dssw.co.uk/powermanager/guide/removing-power-manager.html
+#
+/usr/sbin/installer -pkg "/Applications/Power Manager.app/Contents/Resources/remove-power-manager.pkg" -target /
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.PowerManager</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/Power Manager Application.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Power Manager.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

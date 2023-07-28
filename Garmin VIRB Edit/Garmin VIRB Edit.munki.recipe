@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Garmin VIRB Edit and imports it into Munki.</string>
+    <string>Downloads the latest version of Garmin VIRB Edit and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Garmin VIRB Edit</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>GarminVIRBEdit</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -33,7 +37,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Garmin VIRB Edit</string>
     <key>Process</key>
@@ -43,6 +47,8 @@
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/payload_unpack</string>
                 <key>installs_item_paths</key>

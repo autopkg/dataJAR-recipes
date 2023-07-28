@@ -4,11 +4,11 @@
 <dict>
     <key>Description</key>
     <string>This recipe downloads and imports the full installer pkg for Microsoft Word 2019 into Munki
-    
+
 	This is accomplished via the Office 365 recipes from rtrouton-recipes.
-	
+
     These in turn, utilise the fwlink's found on macadmins.software
-    
+
     These can have a volume license applied using appropriate pkg downloadable from Microsofts VLSC</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Microsoft Word 2019</string>
@@ -51,7 +51,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.rtrouton.pkg.microsoftword365</string>
     <key>Process</key>
@@ -81,7 +81,7 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>com.github.keeleysam.recipes.GoogleTalkPlugin/MunkiPkginfoReceiptsEditor</string>
+            <string>MunkiOptionalReceiptEditor</string>
             <key>_note</key>
             <string>Uses pkg_ids_set_optional_true from Input</string>
         </dict>

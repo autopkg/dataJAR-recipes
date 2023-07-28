@@ -19,22 +19,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"https://static\.perimeter81\.com/agents/mac/Perimeter81_([0-9]+(\.[0-9]+)+)\.pkg\"</string>
+                <string>href=\/\/static\.perimeter81\.com/agents/mac/Perimeter81_([0-9]+(\.[0-9]+)+)\.pkg</string>
                 <key>result_output_var_name</key>
                 <string>version1</string>
-                <key>url</key>
-                <string>https://support.perimeter81.com/v1/docs/downloading-the-agent</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>href=\"https://static\.perimeter81\.com/agents/mac/Perimeter81_\d\.\d\.\d\.([0-9]+)\.pkg\"</string>
-                <key>result_output_var_name</key>
-                <string>version2</string>
                 <key>url</key>
                 <string>https://support.perimeter81.com/v1/docs/downloading-the-agent</string>
             </dict>

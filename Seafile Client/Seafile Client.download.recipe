@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.seafile.com/en/download/</string>
                 <key>re_pattern</key>
-                <string>https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-client-8.*.dmg</string>
+                <string>(https://s3\.eu-central-1\.amazonaws\.com/download\.seadrive\.org/seafile-client-([0-9]+(\.[0-9]+)+)\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>

@@ -4,20 +4,29 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of balenaEtcher.
+
+** Please note it's advised to only use ONE of the below variables **
+
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
-i.e.: `-k PRERELEASE=yes`</string>
+i.e.: `-k PRERELEASE=yes`
+
+Set LATESTONLY to a non-empty string to download latest, either
+via Input in an override or via the -k option,
+i.e.: `-k LATESTONLY=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.balenaEtcher</string>
     <key>Input</key>
     <dict>
         <key>PRERELEASE</key>
         <string></string>
+        <key>LATESTONLY</key>
+        <string></string>
         <key>NAME</key>
-        <string>KeeWeb</string>
+        <string>balenaEtcher</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -31,6 +40,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <string>balena-io/etcher</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
+                <key>latest_only</key>
+                <string>%LATESTONLY%</string>
             </dict>
         </dict>
         <dict>

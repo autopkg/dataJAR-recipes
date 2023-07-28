@@ -12,7 +12,7 @@
         <string>ActivDriver</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
@@ -23,28 +23,28 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://support.prometheanworld.com/sfc/servlet.shepherd/document/download/0696f00000DQjuoAAD?operationContext=S1</string>
+                <string>https://support.prometheanworld.com/sfc/servlet.shepherd/document/download/0696f00000GrLgtAAF?operationContext=S1</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>   
-			<key>Processor</key>   
-			<string>CodeSignatureVerifier</string>   
-			<key>Arguments</key>   
-			<dict>   
-				<key>input_path</key>   
-				<string>%pathname%/ActivDriver.pkg</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: Promethean (PQ96WVYU2E)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/ActivDriver.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Promethean (PQ96WVYU2E)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>

@@ -12,18 +12,36 @@
             <string>XAMPP</string>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.5.0</string>
+        <string>1.1.0</string>
         <key>Process</key>
         <array>
             <dict>
                 <key>Arguments</key>
                 <dict>
+                    <key>warning_message</key>
+                    <string>This recipe has been deprecated. The XAMPP VM App is no longer availabe from the vendor. Please remove from your runs.</string>
+                </dict>
+                <key>Processor</key>
+                <string>DeprecationWarning</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>predicate</key>
+                    <string>TRUEPREDICATE</string>
+                </dict>
+                <key>Processor</key>
+                <string>StopProcessingIf</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
                     <key>re_pattern</key>
-                    <string>href=\"(https://sourceforge\.net/projects/xampp/files/XAMPP%20Mac%20OS%20X/(\d(\.\d)+)/xampp-osx-(\d(\.\d)+)-\d-vm\.dmg)\"</string>
+                    <string>href=\"(https://sourceforge\.net/projects/xampp/files/XAMPP%20Mac%20OS%20X/(\d(\.\d)+)/xampp-osx-(\d(\.\d)+)-[0-9]+-vm\.dmg)\"</string>
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>url</key>
-                    <string>https://www.apachefriends.org/index.html</string>
+                    <string>https://www.apachefriends.org/download.html</string>
                 </dict>
                 <key>Processor</key>
                 <string>URLTextSearcher</string>

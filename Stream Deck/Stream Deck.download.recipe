@@ -12,7 +12,7 @@
         <string>StreamDeck</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -26,12 +26,12 @@
                 <string>https://gc-updates.elgato.com/mac/sd-update/final/download-website.php</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>CodeSignatureVerifier</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>input_path</key>   
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
                 <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>

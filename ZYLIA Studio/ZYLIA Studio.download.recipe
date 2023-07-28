@@ -12,7 +12,7 @@
         <string>ZYLIAStudio</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=&quot;(https:\/\/oc\.zylia\.pl\/index\.php\/s\/\S.*)&quot;&gt;ZYLIA Studio .*&lt;br \/&gt;&amp;#8203;for Mac OS X&lt;\/a&gt;&lt;\/div&gt;</string>
+                <string>https://oc\.zylia\.pl/index\.php/s/[A-Za-z0-9]+/download</string>
                 <key>url</key>
                 <string>https://www.zylia.co/zylia-studio-download.html</string>
             </dict>
@@ -31,8 +31,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-            	<key>filename</key>
-            	<string>%NAME%.pkg</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
@@ -41,21 +41,21 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-        <dict>   
-			<key>Processor</key>   
-			<string>CodeSignatureVerifier</string>   
-			<key>Arguments</key>   
-			<dict>   
-				<key>input_path</key>   
-				<string>%pathname%</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: ZYLIA SP Z O O (2J3Y9E4AS7)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: ZYLIA SP Z O O (2J3Y9E4AS7)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>manifest URL obtained from this thread on Jamf Nation: https://community.jamf.com/t5/jamf-pro/visual-studio-for-mac-deployment/m-p/292547/highlight/true#M260110</string>
+    <key>Description</key>
+    <string>Downloads the latest version of DotNet 7 for Visual Studio and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.DotNet 7</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>DotNet7</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>DotNet 7 for Visual Studio
+
+NET is a developer platform with tools and libraries for building any type of app, including web, mobile, desktop, games, IoT, cloud, and microservices.</string>
+            <key>developer</key>
+            <string>Microsoft Corporation</string>
+            <key>display_name</key>
+            <string>DotNet 7</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.DotNet 7</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\"minimumSupportedOsVersion\": \"([0-9]*\.[0-9]+)\",</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>https://aka.ms/vsmac/manifest/17-stable</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/dotnet-sdk-7.%DotNet7SDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

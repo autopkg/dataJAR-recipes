@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Code42 and imports it into Munki.</string>
+    <string>Downloads the latest version of Code42 and imports it into Munki.
+
+This recipe has been deprecated. Please use the new recipes located here: https://github.com/autopkg/apizz-recipes/tree/master/Code42</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Code42</string>
     <key>Input</key>
@@ -72,9 +74,7 @@ rm -r /Library/Application\ Support/CrashPlan/</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>This recipe has been deprecated. The Code42 App is only availabe to download from the Admin Console.
-
-See https://support.code42.com/Incydr/Admin/Code42_console_reference/Downloads_reference#Overview for details.</string>
+                <string>This recipe has been deprecated. Please use the new recipes located here: https://github.com/autopkg/apizz-recipes/tree/master/Code42</string>
             </dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>

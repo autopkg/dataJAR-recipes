@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest LXFree installer in a disk image. </string>
+    <string>Downloads latest LXFree installer in a disk image.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.LXFree</string>
     <key>Input</key>
@@ -14,7 +14,7 @@
         <string>https://www.claudeheintzdesign.com/downloads/lxfree_install.dmg</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.0</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -48,4 +48,3 @@
     </array>
 </dict>
 </plist>
-

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Go
+
+To download the Apple Silicon version use "arm64" in the ARCH_TYPE variable.
+To download the Intel version use "amd64" in the ARCH_TYPE variable.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.autopkg.download.Go</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Go</string>
+        <key>ARCH_TYPE</key>
+        <string>amd64</string>
+    </dict>
+    <key>MiniumumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(/dl/go([0-9]+(\.[0-9]+)+)\.darwin-%ARCH_TYPE%\.pkg)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD</string>
+                <key>url</key>
+                <string>https://go.dev/dl/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://go.dev%DOWNLOAD%</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+        <key>Arguments</key>
+        <dict>
+            <key>input_path</key>
+            <string>%pathname%</string>
+            <key>expected_authority_names</key>
+            <array>
+                <string>Developer ID Installer: Google LLC (EQHXZ8M8AV)</string>
+                <string>Developer ID Certification Authority</string>
+                <string>Apple Root CA</string>
+            </array>
+        </dict>
+        <key>Processor</key>
+        <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

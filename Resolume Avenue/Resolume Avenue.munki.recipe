@@ -83,7 +83,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Alley.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Alley_Software.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack/Alley</string>
             </dict>
@@ -186,8 +186,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack/</string>
                 </array>
             </dict>
         </dict>

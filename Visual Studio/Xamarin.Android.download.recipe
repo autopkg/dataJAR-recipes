@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>manifest URL obtained from this thread on Jamf Nation: https://community.jamf.com/t5/jamf-pro/visual-studio-for-mac-deployment/m-p/292547/highlight/true#M260110</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Xamarin.Android Framework for Visual Studio.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Xamarin Android</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>XamarinAndroid</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/xamarin\.android-([0-9]+(\.[0-9]+)+)\.pkg)</string>
+                <key>result_output_var_name</key>
+                <string>XamarinAndroid_URL</string>
+                <key>url</key>
+                <string>https://aka.ms/vsmac/manifest/17-stable</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/xamarin\.android-(([0-9]+(\.[0-9]+)+))\.pkg</string>
+                <key>result_output_var_name</key>
+                <string>XamarinAndroid_VERSION</string>
+                <key>url</key>
+                <string>https://aka.ms/vsmac/manifest/17-stable</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>xamarin.android-%XamarinAndroid_VERSION%.pkg</string>
+                <key>url</key>
+                <string>%XamarinAndroid_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/xamarin.android-%XamarinAndroid_VERSION%.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Microsoft Corporation (UBF8T346G9)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

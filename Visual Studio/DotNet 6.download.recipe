@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>manifest URL obtained from this thread on Jamf Nation: https://community.jamf.com/t5/jamf-pro/visual-studio-for-mac-deployment/m-p/292547/highlight/true#M260110</string>
+    <key>Description</key>
+    <string>Downloads the latest version of DotNet 6 for Visual Studio.
+
+For the ARCH_TYPE variable use "x64" for Intel or "arm64" for Apple Silicon</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.DotNet 6</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>DotNet6</string>
+        <key>ARCH_TYPE</key>
+        <string>x64</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+       <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/dotnet-sdk-6.([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-osx-%ARCH_TYPE%\.pkg)</string>
+                <key>result_output_var_name</key>
+                <string>DotNet6SDK_URL</string>
+                <key>url</key>
+                <string>https://aka.ms/vsmac/manifest/17-stable</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/dotnet-sdk-6.(([A-Za-z0-9]+(\.[A-Za-z0-9]+)+))-osx-%ARCH_TYPE%\.pkg</string>
+                <key>result_output_var_name</key>
+                <string>DotNet6SDK_VERSION</string>
+                <key>url</key>
+                <string>https://aka.ms/vsmac/manifest/17-stable</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>dotnet-sdk-6.%DotNet6SDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
+                <key>url</key>
+                <string>%DotNet6SDK_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/dotnet-sdk-6.%DotNet6SDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Microsoft Corporation (UBF8T346G9)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

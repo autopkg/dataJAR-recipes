@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Insta360 Studio 2023.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Insta360 Studio 2023</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Insta360Studio2023</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>url=\"(https://file\.insta360\.com/static/[A-Za-z0-9]+/Insta360%20Studio%202023_[0-9]+_[0-9]+_signed\.pkg\.zip)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://openapi.insta360.com/app/v1/studio/upgrade/insta360_studio_mac</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Host</key>
+                    <string>file.insta360.com</string>
+                    <key>accept</key>
+                    <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15</string>
+                    <key>accept-language</key>
+                    <string>en-GB,en;q=0.9</string>
+                </dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Shenzhen Arashi Vision Co., Ltd. (UBX9CH9GDX)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Insta360 Studio 2023*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

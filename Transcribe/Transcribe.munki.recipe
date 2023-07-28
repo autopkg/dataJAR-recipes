@@ -5,7 +5,8 @@
     <key>Description</key>
     <string>Downloads the latest version of Transcribe! and imports it into Munki.
 
-To set the supported_architectures key use the INSTALL_ARCH variable. "x86_64" for Intel. "arm64" for Apple Silicone.</string>
+To download the x86_64 version use "intel" in the DOWNLOAD_ARCH variable.
+To download the arm64 version use "arm" in the DOWNLOAD_ARCH variable.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Transcribe</string>
     <key>Input</key>

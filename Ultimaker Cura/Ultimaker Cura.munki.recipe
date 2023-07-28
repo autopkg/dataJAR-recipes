@@ -29,7 +29,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Ultimaker Cura</string>
     <key>Process</key>
@@ -40,7 +40,7 @@
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
-                <string>%pathname%/Ultimaker-Cura.app</string>
+                <string>%pathname%/UltiMaker Cura.app</string>
                 <key>plist_keys</key>
                 <dict>
                     <key>CFBundleShortVersionString</key>

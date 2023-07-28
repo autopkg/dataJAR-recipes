@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>Godot3</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>blocking_applications</key>
             <array>
                 <string>Godot</string>
@@ -37,7 +37,7 @@ Godot is completely free and open source under the very permissive MIT license. 
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Godot 3</string>
     <key>Process</key>

@@ -63,8 +63,9 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
     input_variables = {
         'aacp_package_name': {
-            'required': False,
-            'description': f"Name of the AACP package. Defaults to %NAME%",
+            'required': True,
+            'description': 'The name specified when creating the download from the Adobe Admin Console. '
+            'Normally, this is supplied in the environment as a recipe/override Input variable.',
         },
         'aacp_packages_path': {
             'required': False,

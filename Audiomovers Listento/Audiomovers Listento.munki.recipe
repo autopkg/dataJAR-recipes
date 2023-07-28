@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Audiomovers Listento and imports into Munki.</string>
+    <string>Downloads the latest version of Audiomovers Listento and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Audiomovers Listento</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>AudiomoversListento</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -31,37 +35,37 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Audiomovers Listento</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack</string>
-				<key>flat_pkg_path</key>
-				<string>%pathname%</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack/Listento.pkg/payload</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Listento.pkg/payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
@@ -75,6 +79,8 @@
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
         <dict>

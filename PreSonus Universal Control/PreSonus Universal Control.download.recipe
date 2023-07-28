@@ -19,11 +19,11 @@
                 <key>Arguments</key>
                 <dict>
                     <key>re_pattern</key>
-                    <string>pae-web\.presonusmusic\.com/downloads/products/dmg/PreSonus_Universal_Control-[0-9]+\.dmg</string>
+                    <string>href=\"//(pae-web\.presonusmusic\.com/downloads/products/dmg/PreSonus_UniversalControl_v([0-9]+(_[0-9]+)+)\.dmg)\"</string>
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>url</key>
-                    <string>https://www.presonus.com/products/Universal-Control/downloads</string>
+                    <string>https://legacy.presonus.com/products/Universal-Control/downloads</string>
                 </dict>
                 <key>Processor</key>
                 <string>URLTextSearcher</string>

@@ -12,7 +12,7 @@
         <string>VCVRack2Free</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1.0</string>
     <key>Process</key>
     <array>
         <dict>
@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://vcvrack.com/Rack#get</string>
                 <key>re_pattern</key>
-                <string>/downloads/RackFree-2.*?-mac\.pkg</string>
+                <string>href=\"/(downloads/RackFree-(\d(\.\d)+)-mac-x64\.pkg)\"</string>
             </dict>
         </dict>
         <dict>
@@ -32,7 +32,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://vcvrack.com%match%</string>
+                <string>https://vcvrack.com/%match%</string>
             </dict>
         </dict>
         <dict>

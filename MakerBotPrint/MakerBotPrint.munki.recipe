@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download the latest version of MakerBot Print and imports it into Munki.</string>
+    <string>Download the latest version of MakerBot Print and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Comment</key>
     <string>Originally sourced from https://github.com/autopkg/joshua-d-miller-recipes/tree/master/MakerBot</string>
     <key>Identifier</key>
@@ -15,7 +17,9 @@
         <key>NAME</key>
         <string>MakerBotPrint</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://s3.amazonaws.com/downloads-makerbot-com/installer/release/MakerBotPrintInstaller.pkg</string>
+        <string>https://downloads.makerbot.com/installer/release/MakerBotPrintInstaller.pkg</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -40,7 +44,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.MakerBotPrint</string>
     <key>Process</key>
@@ -80,6 +84,8 @@
                 <array>
                     <string>/Applications/MakerBot Print.app</string>
                 </array>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
         <dict>
@@ -112,7 +118,7 @@
                 </dict>
             </dict>
         </dict>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
@@ -130,8 +136,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>  
-                    <string>%RECIPE_CACHE_DIR%/unpack/</string>                      
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
         </dict>

@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>MakerBotPrint</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://s3.amazonaws.com/downloads-makerbot-com/installer/release/MakerBotPrintInstaller.pkg</string>
+        <string>https://downloads.makerbot.com/installer/release/MakerBotPrintInstaller.pkg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.3.1</string>

@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SMART Product Drivers and Ink and imports into Munki.</string>
+    <string>Downloads the latest version of SMART Product Drivers and Ink and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.SMARTProductDriversandInk</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>SMARTProductDriversandInk</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -31,7 +35,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.SMARTProductDriversandInk</string>
     <key>Process</key>
@@ -83,6 +87,8 @@
             <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/app_unpack</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/SMART Technologies/SMART Settings.app</string>
@@ -100,8 +106,6 @@
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>minimum_os_version</key>
-                    <string>10.13.0</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>

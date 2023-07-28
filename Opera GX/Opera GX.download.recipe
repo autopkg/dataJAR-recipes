@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Opera GX.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Opera GX</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>OperaGX</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.tar.xz</string>
+                <key>url</key>
+                <string>https://download.opera.com/download/get/?id=60468&amp;autoupdate=1&amp;ni=1&amp;stream=stable&amp;utm_campaign=(none)&amp;utm_lastpage=opera.com/download&amp;utm_medium=ose&amp;utm_site=opera_com&amp;utm_source=google&amp;utm_tryagain=yes</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_format</key>
+                <string>tar</string>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Opera GX.app</string>
+                <key>requirement</key>
+                <string>(identifier "com.operasoftware.Opera" or identifier "com.operasoftware.OperaNext" or identifier "com.operasoftware.OperaDeveloper" or identifier "com.operasoftware.OperaNightly" or identifier "com.operasoftware.OperaGX" or identifier "com.operasoftware.OperaGXNext" or identifier "com.operasoftware.OperaGXDeveloper" or identifier "com.operasoftware.OperaGXNightly" or identifier "com.operasoftware.OperaCrypto" or identifier "com.operasoftware.OperaCryptoNext" or identifier "com.operasoftware.OperaCryptoDeveloper" or identifier "com.operasoftware.OperaCryptoNightly") and (certificate leaf = H"89584386993936e6f38e64eed006f705f2570cbf" or certificate leaf = H"cdf1c39967986616b6cd64c6bd04833a9cb7450d")</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Opera GX.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+    </array>
+</dict>
+</plist>

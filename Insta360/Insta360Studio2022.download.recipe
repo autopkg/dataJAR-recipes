@@ -27,7 +27,7 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
-                <string>(https://file\.insta360\.com/static/infr_base/.*/Insta360%20Studio%([0-9]+(_[0-9]+)+)_signed\.pkg)</string>
+                <string>download_url\":\"(https://file\.insta360\.com/static/[A-Za-z0-9]+/Insta360%20Studio%202022_[0-9]+_[0-9]+_signed\.pkg)\"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>

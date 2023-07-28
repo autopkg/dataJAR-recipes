@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of EW Installation Center, builds a package and imports it to Munki.</string>
+    <string>Downloads the current release version of EW Installation Center, builds a package and imports it to Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.EW Installation Center</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>EWInstallationCenter</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -39,7 +43,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.3</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.EW Installation Center</string>
     <key>Process</key>
@@ -51,6 +55,15 @@
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/unzip/EW Installation Center-*.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>quarantined_files_path</key>
+                <string>%found_filename%</string>
             </dict>
         </dict>
         <dict>
@@ -82,6 +95,8 @@
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 <key>installs_item_paths</key>

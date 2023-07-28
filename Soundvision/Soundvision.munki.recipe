@@ -41,15 +41,26 @@ Be the closest you could ever be to reality</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/Soundvision_%version%_%month%_%year%_MAC/LA_Soundvision_Installer_%version%.dmg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>
