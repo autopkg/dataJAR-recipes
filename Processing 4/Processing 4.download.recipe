@@ -4,17 +4,22 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of Processing 4.
+
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
-i.e.: `-k PRERELEASE=yes`</string>
+i.e.: `-k PRERELEASE=yes`
+
+Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Silicon.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Processing 4</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
+        <key>DOWNLOAD_ARCHITECTURE</key>
+        <string>x64</string>
         <key>NAME</key>
         <string>Processing4</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -30,7 +35,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
-                <string>processing-.*?-macosx.zip</string>
+                <string>processing-.*?-macos-%DOWNLOAD_ARCHITECTURE%.zip</string>
             </dict>
         </dict>
         <dict>

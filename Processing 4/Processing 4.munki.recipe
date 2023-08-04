@@ -3,11 +3,16 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Processing 4 and imports it into Munki.</string>
+    <string>Downloads the latest version of Processing 4 and imports it into Munki.
+
+Set MUNKI_ARCHITECTURE "x86_64" for Intel, use "arm64" for Apple Silicon.
+</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Processing 4</string>
     <key>Input</key>
     <dict>
+        <key>MUNKI_ARCHITECTURE</key>
+        <string>x86_64</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
@@ -26,6 +31,10 @@
             <string>Processing 4</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%MUNKI_ARCHITECTURE%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
