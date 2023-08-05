@@ -48,6 +48,23 @@ fi</string>
     <array>
         <dict>
             <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installs</key>
+                    <array>
+                        <dict>
+                            <key>minimum_update_version</key>
+                            <string>12</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
