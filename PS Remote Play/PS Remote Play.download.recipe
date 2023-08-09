@@ -3,31 +3,38 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest verison of MakerBot Print</string>
-    <key>Comment</key>
-    <string>Originally sourced from https://github.com/autopkg/joshua-d-miller-recipes/tree/master/MakerBot</string>
+    <string>Downloads the latest version of PS Remote Play.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.MakerBotPrint</string>
+    <string>com.github.dataJAR-recipes.download.PS Remote Play</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>MakerBotPrint</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://downloads.makerbot.com/installer/release/MakerBotPrintInstaller.pkg</string>
+        <string>PSRemotePlay</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://remoteplay\.dl\.playstation\.net/remoteplay/module/mac/.*?\.pkg</string>
+                <key>url</key>
+                <string>https://remoteplay.dl.playstation.net/remoteplay/lang/gb/ps5_mac.html</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%match%</string>
             </dict>
         </dict>
         <dict>
@@ -43,7 +50,7 @@
                 <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: MakerBot Industries LLC (R6W34495S7)</string>
+                    <string>Developer ID Installer: Sony Interactive Entertainment Inc. (8UT4NVUACP)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
