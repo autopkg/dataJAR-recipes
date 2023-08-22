@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Pulsar and imports it into Munki.
+
+For the SUPPORTED_ARCH variable use "x86_64" for Intel and "arm64" for Silicon</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Pulsar</string>
+    <key>Input</key>
+    <dict>
+        <key>SUPPORTED_ARCH</key>
+        <string>x86_64</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Pulsar</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>A Community-led Hyper-Hackable Text Editor</string>
+            <key>developer</key>
+            <string>Alexander Liu</string>
+            <key>display_name</key>
+            <string>Pulsar</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+if [ -f "/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress" ]
+then
+  /bin/echo "Found CommandLineTools tmp file. Deleting..."
+  /bin/rm "/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+fi</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/bash
+
+/bin/echo "Checking for Xcode Command Line Tools..."
+xcode-select -p &amp;&gt; /dev/null
+if [ $? -ne 0 ]
+then
+  /bin/echo "Command Line Tools for Xcode missing. Installing from Software Update..."
+  /usr/bin/touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  cmd_line_tools=$(/usr/sbin/softwareupdate -l | grep "\*.*Command Line" | /usr/bin/tail -n 1 | /usr/bin/sed 's/^[^C]* //')
+  /usr/sbin/softwareupdate -i "$cmd_line_tools" --verbose
+else
+  /bin/echo "Command Line Tools for Xcode found. Proceeding with Install..."
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Pulsar</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
