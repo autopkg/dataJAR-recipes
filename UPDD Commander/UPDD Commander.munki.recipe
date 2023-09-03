@@ -96,7 +96,7 @@ exit 0</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>version 7 that supports ([0-9]*\.[0-9]+) thru [0-9]+\.x\.</string>
+                <string>version 7 that supports ([0-9]*\.[0-9]+) thru Sonoma [0-9]+\.x\.</string>
                 <key>result_output_var_name</key>
                 <string>min_os_ver</string>
                 <key>url</key>
