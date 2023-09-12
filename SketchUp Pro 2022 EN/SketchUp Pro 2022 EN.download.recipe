@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SketchUp Pro 2022 EN. 
+    <string>Downloads the latest version of SketchUp Pro 2022 EN.
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -31,6 +31,11 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
                 <string>%NAME%.dmg</string>
                 <key>url</key>
                 <string>https://www.sketchup.com/sketchup/2022/SketchUpPro-dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
+                </dict>
             </dict>
         </dict>
         <dict>
