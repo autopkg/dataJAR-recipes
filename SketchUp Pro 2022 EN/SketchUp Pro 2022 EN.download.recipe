@@ -19,9 +19,27 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
         <string>SketchUpPro2022-EN</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(https://download\.sketchup\.com/SketchUpPro-2022-([0-9]+(-[0-9]+)+)\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://help.sketchup.com/en/downloading-older-versions</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -30,7 +48,7 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://www.sketchup.com/sketchup/2022/SketchUpPro-dmg</string>
+                <string>%DOWNLOAD_URL%</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
