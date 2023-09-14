@@ -1,0 +1,82 @@
+#!/bin/sh
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/libexec
+
+#  preinstall.sh
+#  SFDesktop
+#
+#  Created by Jason Yanchuleff on 10/3/17.
+#  Copyright © 2017 ShareFile. All rights reserved.
+
+
+    APP_NAME="ShareFile"
+    OLD_APP_NAME="Citrix Files"
+    OLD_EXTENSION_PREFIX="CitrixFiles"
+
+    # unmount the fuse drive
+    if [ -e "/Volumes/${OLD_APP_NAME}" ]; then
+        diskutil unmount force "/Volumes/${OLD_APP_NAME}"
+    fi
+
+    # unmount the fuse drive for ShareFile
+    if [ -e "/Volumes/${APP_NAME}" ]; then
+        diskutil unmount force "/Volumes/${APP_NAME}"
+    fi
+
+    # unload the kernel extension prior to overwriting it
+    kextunload -b com.citrix.ctxfuse.filesystems.ctxfuse
+    rm -Rf /Library/Filesystems/ctxfuse.fs
+
+    # remove dylib
+    rm -f /usr/local/lib/libctxfuse.dylib
+    rm -f /usr/local/lib/libctxfuse.2.dylib
+
+    # retrieve the current user
+    currentUser=$(stat -f "%Su" "/dev/console")
+
+    # quit the old app
+    osascript -e "quit app \"${OLD_APP_NAME}\""
+
+    # disable finder extension
+    pluginkit -e ignore -i "com.sharefile.desktop.widget.findesync"
+
+    # remove the old Citrix Files extension
+    pluginkit -r "/Applications/${OLD_APP_NAME}.app/Contents/Plugins/${OLD_EXTENSION_PREFIX}FinderExt.appex"
+
+    # kill any old CFMac Finder extension Processes
+    killall -9 "CitrixFilesFinderExt"
+
+    # remove finder extension for ShareFile
+    pluginkit -r "/Applications/${APP_NAME}.app/Contents/Plugins/${APP_NAME}FinderExt.appex"
+
+    #remove finder extension logs
+    rm -Rf "/Users/${currentUser}/Library/Containers/com.sharefile.desktop.widget.findesync"
+
+    #remove connector database
+    rm -Rf "/Users/${currentUser}/Library/Group Containers/RM4N8HY7K5.group.sharefile.desktop"
+
+    # link the old app bundle to the new one
+    if [ -e "/Applications/${OLD_APP_NAME}.app" ]; then
+        echo "Older Citrix Files detected"
+        rm -Rf "/Applications/${OLD_APP_NAME}"
+        touch "/tmp/com.sharefile.desktop.widget.rename"
+    fi
+
+    # remove app bundle for ShareFile
+    rm -Rf "/Applications/${APP_NAME}.app"
+
+    #Remove ens service plist
+    launchctl unload "/Users/${currentUser}/Library/LaunchAgents/com.citrixfiles.ens.service.plist"
+    rm -Rf "/Users/${currentUser}/Library/LaunchAgents/com.citrixfiles.ens.service.plist"
+
+    # reset application install date
+    sudo -u ${currentUser} defaults delete 'com.sharefile.desktop.widget' 'ApplicationInstallDate'
+
+    # relaunch Finder
+    killall Finder
+
+    # cleanup login items
+    osascript -e 'tell application "System Events" to delete login item "Citrix Files"'
+    # cleanup login items for ShareFile
+    osascript -e 'tell application "System Events" to delete login item "ShareFile"'
+    sudo -u ${currentUser} defaults delete 'com.sharefile.desktop.widget' 'LaunchOnStartupFirstEnabled'
+    exit 0
