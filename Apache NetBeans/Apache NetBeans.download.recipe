@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Apache NetBeans.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Apache NetBeans</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ApacheNetBeans</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href="([0-9]+)/"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_VERSION</string>
+                <key>url</key>
+                <string>https://downloads.apache.org/netbeans/netbeans-installers/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(Apache-NetBeans-[A-Za-z0-9]+\.pkg)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_NAME</string>
+                <key>url</key>
+                <string>https://downloads.apache.org/netbeans/netbeans-installers/%DOWNLOAD_VERSION%/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>https://dlcdn.apache.org/netbeans/netbeans-installers/%DOWNLOAD_VERSION%/%DOWNLOAD_NAME%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: The Apache Software Foundation (2GLGAFWEQD)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

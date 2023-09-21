@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Apache NetBeans 19 and imports it into Munki.</string>
+    <string>Downloads the latest version of Apache NetBeans and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.ApacheNetBeans19</string>
+    <string>com.github.dataJAR-recipes.munki.Apache NetBeans</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>ApacheNetBeans19</string>
+        <string>ApacheNetBeans</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -27,7 +27,7 @@ Development Environment, Tooling Platform and Application Framework.</string>
             <key>developer</key>
             <string>The Apache Software Foundation</string>
             <key>display_name</key>
-            <string>Apache NetBeans 19</string>
+            <string>Apache NetBeans</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -39,7 +39,7 @@ Development Environment, Tooling Platform and Application Framework.</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.ApacheNetBeans19</string>
+    <string>com.github.dataJAR-recipes.download.Apache NetBeans</string>
     <key>Process</key>
     <array>
     <dict>
