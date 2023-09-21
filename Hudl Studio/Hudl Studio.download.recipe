@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest Hudl Studio disk image.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Hudl Studio</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>HudlStudio</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.hudl.com/downloads/elite</string>
+                <key>re_pattern</key>
+                <string>href=\"(https://gfx-releases\.s3\.amazonaws\.com/Studio-([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Studio.app</string>
+                <key>requirement</key>
+                <string>identifier "com.hudl.hudl-graphx" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2YLQ7PASUE"</string>
+                <key>strict_verification</key>
+                <true/>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
