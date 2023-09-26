@@ -101,6 +101,17 @@
             </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>mode</key>
+                <string>777</string>
+                <key>resource_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
