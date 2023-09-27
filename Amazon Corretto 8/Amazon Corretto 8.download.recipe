@@ -3,13 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Amazon Corretto 8.</string>
+    <string>Downloads the latest version of Amazon Corretto 8.  Acceptable ARCH input values are x64 or aarch64</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Amazon Corretto 8</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>AmazonCorretto8</string>
+        <key>ARCH</key>
+        <string>x64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -21,7 +23,7 @@
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://corretto.aws/downloads/latest/amazon-corretto-8-x64-macos-jdk.pkg</string>
+                <string>https://corretto.aws/downloads/latest/amazon-corretto-8-%ARCH%-macos-jdk.pkg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
