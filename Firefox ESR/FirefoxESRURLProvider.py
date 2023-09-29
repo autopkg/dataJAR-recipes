@@ -39,7 +39,7 @@ import json
 from autopkglib import ProcessorError, URLGetter
 
 __all__ = ['FirefoxESRURLProvider']
-__version__ = '1.0'
+__version__ = '1.1'
 
 # pylint: disable = too-few-public-methods
 class FirefoxESRURLProvider(URLGetter):
@@ -86,6 +86,9 @@ class FirefoxESRURLProvider(URLGetter):
         # Raise if both fail.
         try:
             esr_version = version_data['FIREFOX_ESR_NEXT']
+            # if FIREFOX_ESR_NEXT is "", raise
+            if esr_version == "":
+                raise KeyError
             self.output(f"Found FIREFOX_ESR_NEXT version: {esr_version}")
         except KeyError:
             try:
