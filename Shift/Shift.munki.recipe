@@ -3,7 +3,10 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Shift and imports it into Munki.</string>
+    <string>Downloads the latest version of Shift and imports it into Munki.
+
+For Intel use: "x64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Shift</string>
     <key>Input</key>
@@ -12,6 +15,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Shift</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -19,13 +24,18 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Toggle between multiple apps, and accounts, with just one click. Shift is the #1 way productive people stay productive.</string>
+            <string>The workstation for productive people.
+Shift is the desktop app for streamlining and collaborating across accounts and workflows.</string>
             <key>developer</key>
-            <string>Shift Technologies Inc</string>
+            <string>Redbrick Technologies Inc.</string>
             <key>display_name</key>
             <string>Shift</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -33,7 +43,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Shift</string>
     <key>Process</key>
@@ -41,24 +51,13 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>dmg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-                <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-            </dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
-            <key>Arguments</key>
-            <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
