@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Shift and imports it into Munki.
 
-For Intel use: "x64" in the SUPPORTED_ARCH variable
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
 For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Shift</string>
