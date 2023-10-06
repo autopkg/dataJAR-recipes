@@ -282,6 +282,15 @@
                 "display_name": "Adobe Bridge 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleVersion"
+                },
+            "14.0.0": {
+                "app_bundle_id": "com.adobe.bridge14",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe Bridge 2024/Adobe Bridge 2024.app",
+                "app_description": "Centralize your creative assets.",
+                "display_name": "Adobe Bridge 2024",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleVersion"
             }
         }
     },
@@ -416,6 +425,18 @@
                 "app_path": "/Applications/Adobe Photoshop 2023/Adobe Photoshop 2023.app",
                 "app_description": "Create beautiful graphics, photos and art anywhere.",
                 "display_name": "Adobe Photoshop 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "unsupported_versions_dict": {
+                    "24.0": "Adobe Photoshop 24.0 is incompatible as neither the optionXML and/or Application.json contain the needed metadata. Please use a newer version."
+                },
+                "version_comparison_key": "CFBundleShortVersionString"
+                },
+            "25.0": {
+                "app_bundle_id": "com.adobe.Photoshop",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Photoshop 2024/Adobe Photoshop 2024.app",
+                "app_description": "Create beautiful graphics, photos and art anywhere.",
+                "display_name": "Adobe Photoshop 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "unsupported_versions_dict": {
                     "24.0": "Adobe Photoshop 24.0 is incompatible as neither the optionXML and/or Application.json contain the needed metadata. Please use a newer version."
