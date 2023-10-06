@@ -28,7 +28,7 @@ For the ARCH_TYPE variable use
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>Rancher\.Desktop-(\d(\.\d)+)\.%ARCH_TYPE%\.dmg</string>
+                <string>Rancher\.Desktop-([0-9]+(\.[0-9]+)+)\.%ARCH_TYPE%\.dmg$</string>
                 <key>github_repo</key>
                 <string>rancher-sandbox/rancher-desktop</string>
             </dict>
