@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>comments</key>
+    <string>Recipe Notes:
+
+We have to manually create the installs array due it being an App Installer. Luckily the version number of the App installer matches with what ends up being installed on disk.
+
+Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
+
+Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The  installcheck_script checks for a logged in user and bails if there isnt.</string>
     <key>Description</key>
     <string>Downloads the latest version of LogiOptionsPlus and imports it into Munki.</string>
     <key>Identifier</key>
@@ -90,6 +98,127 @@ exit</string>
                             <string>CFBundleShortVersionString</string>
                         </dict>
                     </array>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+
+'''
+Copyright (c) 2023, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+# Standard imports
+# pylint: disable = deprecated-module
+from distutils.version import LooseVersion
+import os
+import plistlib
+import sys
+# pylint: disable = import-error
+from SystemConfiguration import SCDynamicStoreCopyConsoleUser
+
+
+def main():
+    '''
+        Exits with exit code 1 if no-one is logged in.
+
+        If info_plist_path doesn't exist, proceeds with install.
+
+        If info_plist_path exists and is older than munki, proceeds with install.
+
+    '''
+
+    # App path
+    app_path = '/Applications/logioptionsplus.app/'
+    app_version = '%version%'
+    info_plist_path = os.path.join(app_path, 'Contents/Info.plist')
+
+    # Boolean return if user is logged in
+    logged_in = user_logged_in()
+
+    # If a user is logged in
+    if logged_in:
+        # If the app exists
+        if os.path.exists(info_plist_path):
+            # Try to read in info_plist_path, raise if cannot be parsed
+            try:
+                # Read in the plist
+                with open(info_plist_path, "rb") as plist_file:
+                    parsed_plist = plistlib.load(plist_file)
+                # Get version from info.plist
+                installed_version = parsed_plist['CFBundleShortVersionString']
+                print(f"{app_path} version {installed_version}, installed...")
+            # Raising if plist cannot be parsed or version determined from plist
+            # pylint: disable = broad-except
+            except Exception:
+                print(f"Encountered an error when trying to parse {info_plist_path}...")
+                sys.exit(1)
+            # Compare the installed version with this installations
+            if LooseVersion(installed_version) &lt; LooseVersion(app_version):
+                # Local version older, proceed with installation
+                print("Older version of {app_path} located, proceeding with installation...")
+                sys.exit(0)
+            else:
+                # Local version newer, cancelling installation
+                print("Newer or the same version of {app_path} located, cancelling installation...")
+                sys.exit(1)
+        # App is not installed and user is logged in, proceed.
+        else:
+            sys.exit(0)
+
+    # Exit as no-one logged in
+    else:
+        sys.exit(1)
+
+
+def user_logged_in():
+    '''
+        Boolean return if a user is logged in or not
+    '''
+
+    # Returns the username if someone is logged in
+    username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]
+
+    # If a username is returned
+    if username:
+        # If the username isn't loginwindow
+        if username != 'loginwindow':
+            return True
+        # Else we return True
+        return False
+    # If no-one is logged in
+    return False
+
+if __name__ == '__main__':
+    main()</string>
                 </dict>
             </dict>
             <key>Processor</key>
