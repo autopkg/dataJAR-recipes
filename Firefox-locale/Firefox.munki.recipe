@@ -185,11 +185,11 @@ def main():
         # Compare the installed version with this installations
         if LooseVersion(installed_version) &lt; LooseVersion(firefox_version):
             # Local version older, proceed with installation
-            print("Older version of {firefox_path} located, proceeding with installation...")
+            print(f"Older version of {firefox_path} located, proceeding with installation...")
             sys.exit(0)
         else:
             # Local version newer, cancelling installation
-            print("Newer or the same version of {firefox_path} located, cancelling installation...")
+            print(f"Newer or the same version of {firefox_path} located, cancelling installation...")
             sys.exit(1)
     # Raise if we can't find firefox_info_plist
     else:
