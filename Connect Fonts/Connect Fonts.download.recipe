@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>appcast_url</key>
-                <string>https://sparkle.extensis.com/u/ST/EN/suitcase24en.xml</string>
+                <string>https://sparkle.extensis.com/u/ST/EN/suitcase25en.xml</string>
             </dict>
             <key>Processor</key>
             <string>SparkleUpdateInfoProvider</string>
