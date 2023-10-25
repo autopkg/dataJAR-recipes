@@ -27,6 +27,15 @@
                 "display_name": "Adobe Media Encoder 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.ame.application.24",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2024",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
@@ -59,6 +68,15 @@
                 "display_name": "Adobe After Effects 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.AfterEffects",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe After Effects 2024/Adobe After Effects 2024.app",
+                "app_description": "Industry Standard motion graphics & visual effects.",
+                "display_name": "Adobe After Effects 2024",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
@@ -89,6 +107,15 @@
                 "app_path": "/Applications/Adobe InCopy 2023/Adobe InCopy 2023.app",
                 "app_description": "Collaborate with copywriters and editors.",
                 "display_name": "Adobe InCopy 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "19.0": {
+                "app_bundle_id": "com.adobe.InCopy",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe InCopy 2024/Adobe InCopy 2024.app",
+                "app_description": "Collaborate with copywriters and editors.",
+                "display_name": "Adobe InCopy 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
@@ -158,6 +185,15 @@
                 "display_name": "Adobe Audition 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleVersion"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.Audition",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe Audition 2024/Adobe Audition 2024.app",
+                "app_description": "Bring stories to life with audio.",
+                "display_name": "Adobe Audition 2024",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleVersion"
             }
         }
     },
@@ -188,6 +224,15 @@
                 "app_path": "/Applications/Adobe Character Animator 2023/Adobe Character Animator 2023.app",
                 "app_description": "Animate in real time.",
                 "display_name": "Adobe Character Animator 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.Character-Animator.application",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Character Animator 2024/Adobe Character Animator 2024.app",
+                "app_description": "Animate in real time.",
+                "display_name": "Adobe Character Animator 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
@@ -250,6 +295,15 @@
                 "display_name": "Adobe Animate 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleCFBundleVersion"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.Adobe-Animate-2024.application",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe Animate 2024/Adobe Animate 2024.app",
+                "app_description": "A new age for animation. Any platform, device and style.",
+                "display_name": "Adobe Animate 2024",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleCFBundleVersion"
             }
         }
     },
@@ -282,7 +336,7 @@
                 "display_name": "Adobe Bridge 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleVersion"
-                },
+            },
             "14.0.0": {
                 "app_bundle_id": "com.adobe.bridge14",
                 "app_json_version_key": "ProductVersion",
@@ -323,6 +377,15 @@
                 "display_name": "Adobe InDesign 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "19.0": {
+                "app_bundle_id": "com.adobe.InDesign",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe InDesign 2024/Adobe InDesign 2024.app",
+                "app_description": "Design and publish elegant layouts.",
+                "display_name": "Adobe InDesign 2024",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
@@ -353,6 +416,15 @@
                 "app_path": "/Applications/Adobe Illustrator 2023/Adobe Illustrator.app",
                 "app_description": "Create stunning illustrations and graphics.",
                 "display_name": "Adobe Illustrator 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "28.0": {
+                "app_bundle_id": "com.adobe.illustrator",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Illustrator 2024/Adobe Illustrator.app",
+                "app_description": "Create stunning illustrations and graphics.",
+                "display_name": "Adobe Illustrator 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
@@ -430,7 +502,7 @@
                     "24.0": "Adobe Photoshop 24.0 is incompatible as neither the optionXML and/or Application.json contain the needed metadata. Please use a newer version."
                 },
                 "version_comparison_key": "CFBundleShortVersionString"
-                },
+            },
             "25.0": {
                 "app_bundle_id": "com.adobe.Photoshop",
                 "app_json_version_key": "CodexVersion",
@@ -472,6 +544,15 @@
                 "app_path": "/Applications/Adobe Premiere Pro 2023/Adobe Premiere Pro 2023.app",
                 "app_description": "Edit and craft polished films and video.",
                 "display_name": "Adobe Premiere Pro 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.PremierePro.24",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Premiere Pro 2024/Adobe Premiere Pro 2024.app",
+                "app_description": "Edit and craft polished films and video.",
+                "display_name": "Adobe Premiere Pro 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
