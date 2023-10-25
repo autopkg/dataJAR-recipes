@@ -20,19 +20,23 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 
 |||||
 |:---:|:---:|:---:|:---:
-|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2023| AdobePremiereRush|
+|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2024| AdobePremiereRush|
 |AdobeAfterEffects2021| AdobeCharacterAnimator2022| AdobeLightroomCC| AdobePremiereRush2.0|
 |AdobeAfterEffects2022| AdobeCharacterAnimator2023| AdobeLightroomClassic| AdobeSubstance3DDesigner|
-|AdobeAfterEffects2022| AdobeDimension| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
-|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
-|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
-|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| AdobeXD|
-|AdobeAudition2021| AdobeIllustrator2023| AdobePhotoshop2022| |
-|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2023| |
-|AdobeAudition2023| AdobeInCopy2021| AdobePrelude2021| |
-|AdobeBridge2021| AdobeInCopy2022| AdobePrelude2022| |
-|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2021| |
-|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2022| |
+|AdobeAfterEffects2023| AdobeCharacterAnimator2024| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
+|AdobeAfterEffects2024|AdobeDimension| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
+|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
+|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2024| AdobeXD|
+|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| |
+|AdobeAnimate2024| AdobeIllustrator2023| AdobePhotoshop2022| |
+|AdobeAudition2021| AdobeIllustrator2024| AdobePhotoshop2023|
+|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2024| |
+|AdobeAudition2023| AdobeInCopy2022| AdobePrelude2021| |
+|AdobeAudition2024| AdobeInCopy2023|AdobePrelude2022| |
+|AdobeBridge2021| AdobeInCopy2024| AdobePremierePro2021| |
+|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022| |
+|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2023| |
+|AdobeBridge2024| AdobeInDesign2023| AdobePremierePro2024|
 2. Download the DMG from the [Adobe Admin Console](https://adminconsole.adobe.com)
 3. Load the .app
 4. Download the title to your ~/Downloads
@@ -155,6 +159,15 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
                 "app_path": "/Applications/Adobe Media Encoder 2023/Adobe Media Encoder 2023.app",
                 "app_description": "Quickly output video files for virtually any screen.",
                 "display_name": "Adobe Media Encoder 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.ame.application.24",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }
