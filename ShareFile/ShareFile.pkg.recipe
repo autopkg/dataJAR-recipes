@@ -28,6 +28,24 @@ autopkg repo-add jessepeterson-recipes</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Repackaging steps are no longer nessisary as the vendor has amended the preinstall script so that it does not trigger PPPC Prompts</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>
