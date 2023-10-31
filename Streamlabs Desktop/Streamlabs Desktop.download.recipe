@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Streamlabs Desktop.
+
+To download the Intel version leave the ARCH_TYPE variable blank
+To download the Apple Silicon version add "&amp;arm64=true" the ARCH_TYPE variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Streamlabs Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>StreamlabsDesktop</string>
+        <key>ARCH_TYPE</key>
+        <string></string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://streamlabs.com/streamlabs-desktop/download?sdb=1%ARCH_TYPE%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Streamlabs Desktop.app</string>
+                <key>requirement</key>
+                <string>identifier "com.streamlabs.slobs" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UT675MBB9Q</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
