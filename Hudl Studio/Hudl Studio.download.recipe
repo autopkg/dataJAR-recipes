@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.hudl.com/downloads/elite</string>
                 <key>re_pattern</key>
-                <string>href=\"(https://gfx-releases\.s3\.amazonaws\.com/Studio-([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
+                <string>(https://studio-releases\.s3\.amazonaws\.com/Studio-([0-9]+(\.[0-9]+)+)\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
             </dict>
