@@ -294,7 +294,7 @@
                 "app_description": "A new age for animation. Any platform, device and style.",
                 "display_name": "Adobe Animate 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleCFBundleVersion"
+                "version_comparison_key": "CFBundleVersion"
             },
             "24.0": {
                 "app_bundle_id": "com.adobe.Adobe-Animate-2024.application",
@@ -303,7 +303,7 @@
                 "app_description": "A new age for animation. Any platform, device and style.",
                 "display_name": "Adobe Animate 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleCFBundleVersion"
+                "version_comparison_key": "CFBundleVersion"
             }
         }
     },
