@@ -43,7 +43,7 @@
                 <key>input_path</key>
                 <string>%pathname%/atemOSC.app</string>
                 <key>requirement</key>
-                <string>anchor apple generic and identifier "com.atemosc.atemOSC" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = LRNWZB2D4D)</string>
+                <string>identifier "cc.buechele.atemOSC" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = LRNWZB2D4D</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
