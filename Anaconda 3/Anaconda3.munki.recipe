@@ -61,6 +61,24 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor only supports user space installs. Please see https://docs.anaconda.com/free/anaconda/install/mac-os/</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
@@ -81,7 +99,7 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                  <key>destination_path</key>
                  <string>%RECIPE_CACHE_DIR%/tmp/</string>
                  <key>pkg_payload_path</key>
-                 <string>%RECIPE_CACHE_DIR%/unpack/preconda.pkg/Payload</string>
+                 <string>%RECIPE_CACHE_DIR%/unpack/prepare_installation.pkg/Payload</string>
                  <key>purge_destination</key>
                  <true/>
             </dict>
