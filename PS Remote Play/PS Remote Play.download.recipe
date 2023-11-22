@@ -23,7 +23,7 @@
                 <key>re_pattern</key>
                 <string>https://remoteplay\.dl\.playstation\.net/remoteplay/module/mac/.*?\.pkg</string>
                 <key>url</key>
-                <string>https://remoteplay.dl.playstation.net/remoteplay/lang/gb/ps5_mac.html</string>
+                <string>https://remoteplay.dl.playstation.net/remoteplay/lang/gb/1100002.html</string>
             </dict>
         </dict>
         <dict>
