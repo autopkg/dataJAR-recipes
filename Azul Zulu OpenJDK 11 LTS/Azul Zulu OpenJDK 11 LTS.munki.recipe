@@ -35,7 +35,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.3</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.Azul Zulu OpenJDK 11 LTS</string>
     <key>Process</key>
@@ -112,7 +112,7 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Info.plist</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleVersion</key>
+                    <key>CFBundleShortVersionString</key>
                     <string>version</string>
                 </dict>
             </dict>
@@ -140,7 +140,7 @@
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
         </dict>
-        <dict>
+                <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>

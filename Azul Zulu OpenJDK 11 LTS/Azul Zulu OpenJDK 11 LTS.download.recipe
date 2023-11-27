@@ -15,7 +15,7 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
         <string>x</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -24,7 +24,7 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\"(zulu11.*?-ca-jdk11.*?-macosx_%ARCHITECTURE%64\.dmg)\"</string>
+                <string>\"(zulu11.([0-9]+(\.[0-9]+)+)-ca-jdk11.([0-9]+(\.[0-9]+)+)-macosx_%ARCHITECTURE%64\.dmg)\"</string>
                 <key>url</key>
                 <string>https://cdn.azul.com/zulu/bin/?C=M;O=D</string>
             </dict>
