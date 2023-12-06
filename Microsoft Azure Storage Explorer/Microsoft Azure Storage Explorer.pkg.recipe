@@ -26,29 +26,6 @@
                     <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app</string>
                 </dict>
             </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>mode</key>
-                    <string>777</string>
-                    <key>resource_path</key>
-                    <string>%RECIPE_CACHE_DIR%/Applications</string>
-                </dict>
-                <key>Processor</key>
-                <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PathDeleter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <array>
-                        <string>%RECIPE_CACHE_DIR%/Applications</string>
-                        <string>%RECIPE_CACHE_DIR%/Payload</string>
-                    </array>
-                </dict>
-            </dict>
         </array>
     </dict>
 </plist>

@@ -44,7 +44,7 @@
                     <key>destination_path</key>
                     <string>%RECIPE_CACHE_DIR%/Applications</string>
                     <key>purge_destination</key>
-                    <true />
+                    <true/>
                     <key>archive_format</key>
                     <string>zip</string>
                 </dict>
