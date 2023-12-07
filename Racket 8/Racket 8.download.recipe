@@ -3,16 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of Racket 8.</string>
+    <string>Download recipe for the latest version of Racket 8.
+
+To download the Intel Version use "x86_64" in the ARCH_TYPE variable.
+To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Racket 8</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Racket8</string>
+        <key>ARCH_TYPE</key>
+        <string>x86_64</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -23,9 +28,9 @@
                 <key>url</key>
                 <string>https://download.racket-lang.org/all-versions.html</string>
                 <key>re_pattern</key>
-                <string>/racket-v8.\d.*.html</string>
+                <string>href=\"releases/(8.[A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/\">All Installers</string>
                 <key>result_output_var_name</key>
-                <string>DownloadPage</string>
+                <string>DOWNLOAD_VERSION</string>
             </dict>
         </dict>
         <dict>
@@ -34,24 +39,11 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://download.racket-lang.org%DownloadPage%</string>
+                <string>https://download.racket-lang.org/releases/%DOWNLOAD_VERSION%/</string>
                 <key>re_pattern</key>
-                <string>racket-8.\d*-x86_64-macosx-cs.dmg</string>
+                <string>href=\"(installers/racket-(8.[A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-%ARCH_TYPE%-macosx-cs\.dmg)\"</string>
                 <key>result_output_var_name</key>
-                <string>match</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://download.racket-lang.org%DownloadPage%</string>
-                <key>re_pattern</key>
-                <string>(8.\d*)/racket-8.\d*-x86_64-macosx-cs.dmg</string>
-                <key>result_output_var_name</key>
-                <string>match_version</string>
+                <string>DOWNLOAD_URL</string>
             </dict>
         </dict>
         <dict>
@@ -60,7 +52,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://download.racket-lang.org/releases/%match_version%/installers/%match%</string>
+                <string>https://download.racket-lang.org/releases/%DOWNLOAD_VERSION%/%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
