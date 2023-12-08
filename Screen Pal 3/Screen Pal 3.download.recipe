@@ -34,7 +34,7 @@
                 <key>Arguments</key>
                 <dict>
                     <key>input_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                    <string>%pathname%</string>
                     <key>expected_authority_names</key>
                     <array>
                         <string>Developer ID Installer: Big Nerd Software, LLC (48Z4QVLCS5)</string>
