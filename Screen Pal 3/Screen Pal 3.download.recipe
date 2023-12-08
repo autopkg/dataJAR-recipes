@@ -3,7 +3,7 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest version of  ScreenPal 3</string>
+        <string>Downloads the latest version of ScreenPal 3</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.download.ScreenPal 3</string>
         <key>Input</key>
