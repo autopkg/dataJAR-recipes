@@ -35,8 +35,8 @@
             <dict>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>3rd Party Mac Developer Installer: SAHARA PRESENTATION SYSTEMS LTD (LHZP4ZQ39M)</string>
-                    <string>Apple Worldwide Developer Relations Certification Authority</string>
+                    <string>Developer ID Installer: SAHARA PRESENTATION SYSTEMS LTD (LHZP4ZQ39M)</string>
+                    <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
