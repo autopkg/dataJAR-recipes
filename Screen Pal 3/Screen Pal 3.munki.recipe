@@ -36,30 +36,62 @@
     <string>com.github.dataJAR-recipes.download.ScreenPal 3</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
             <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/ScreenPal v3.0.app</string>
-                <key>overwrite</key>
-                <true/>
-                <key>source_path</key>
-                <string>%pathname%/ScreenPal Setup.app/Contents/ScreenPal v3.0.app</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>dmg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-                <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-            </dict>
-        </dict>
+				<key>Processor</key>
+				<string>PkgRootCreator</string>
+				<key>Arguments</key>
+				<dict>
+					<key>pkgroot</key>
+					<string>%RECIPE_CACHE_DIR%/payload/root/</string>
+					<key>pkgdirs</key>
+					<dict>
+						<key>Applications</key>
+						<string>0775</string>
+					</dict>
+				</dict>
+			</dict>
+			<dict>
+				<key>Processor</key>
+				<string>FlatPkgUnpacker</string>
+				<key>Arguments</key>
+				<dict>
+					<key>destination_path</key>
+					<string>%RECIPE_CACHE_DIR%/downloads/unpack</string>
+					<key>flat_pkg_path</key>
+					<string>%pathname%</string>
+				</dict>
+			</dict>
+			<dict>
+				<key>Processor</key>
+				<string>FileFinder</string>
+				<key>Arguments</key>
+				<dict>
+					<key>pattern</key>
+					<string>%RECIPE_CACHE_DIR%/downloads/unpack/*ScreenPal*.pkg</string>
+				</dict>
+			</dict>
+			<dict>
+				<key>Processor</key>
+				<string>PkgPayloadUnpacker</string>
+				<key>Arguments</key>
+				<dict>
+					<key>destination_path</key>
+					<string>%RECIPE_CACHE_DIR%/payload/root/Applications</string>
+					<key>pkg_payload_path</key>
+					<string>%found_filename%/Payload</string>
+				</dict>
+			</dict>
+			<dict>
+				<key>Processor</key>
+				<string>DmgCreator</string>
+				<key>Arguments</key>
+				<dict>
+					<key>dmg_path</key>
+					<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+					<key>dmg_root</key>
+					<string>%RECIPE_CACHE_DIR%/payload/root/Applications</string>
+				</dict>
+			</dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
@@ -78,7 +110,9 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+				    <string>%RECIPE_CACHE_DIR%/downloads/unpack</string>
+				    <string>%pathname%</string>
                 </array>
             </dict>
         </dict>
