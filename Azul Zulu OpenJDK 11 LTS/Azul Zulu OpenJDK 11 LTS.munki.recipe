@@ -112,7 +112,7 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Info.plist</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleShortVersionString</key>
+                    <key>CFBundleVersion</key>
                     <string>version</string>
                 </dict>
             </dict>
