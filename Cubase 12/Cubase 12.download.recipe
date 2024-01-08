@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(https://download\.steinberg\.net/automated_updates/sda_downloads/([0-9]+([a-zA-Z]+[0-9]+)+)-[0-9]+-([0-9]+([a-zA-Z]+[0-9]+)+)a-([0-9]+([a-zA-Z]+[0-9]+)+)-9([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/Cubase_([0-9]+(\.[0-9]+)+)_Installer_mac\.dmg)\" title=\"Download\" target=\"_blank\" class=\"external-link-new-window\">⬇ macOS</string>
+                <string>href=\"(https://download\.steinberg\.net/automated_updates/sda_downloads/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/Cubase_([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)_Installer_mac\.dmg)\" title=\"Download\" target=\"_blank\" class=\"external-link-new-window\">⬇ macOS</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
