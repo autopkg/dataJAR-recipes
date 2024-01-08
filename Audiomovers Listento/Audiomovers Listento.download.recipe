@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(https://audiomovers\.com/storage/plugins/.*?/listento-standalone-.*?-installer-osx-signed\.pkg)\"</string>
+                <string>(https://audiomovers\.com/storage/plugins/([0-9]+(\.[0-9]+)+)/Audiomovers%20Listento%20Application%20Installer%20v([0-9]+(\.[0-9]+)+)%20\([A-Za-z0-9]+\)\.pkg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
