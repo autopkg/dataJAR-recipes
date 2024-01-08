@@ -20,19 +20,23 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 
 |||||
 |:---:|:---:|:---:|:---:
-|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2023| AdobePremiereRush|
+|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2024| AdobePremiereRush|
 |AdobeAfterEffects2021| AdobeCharacterAnimator2022| AdobeLightroomCC| AdobePremiereRush2.0|
 |AdobeAfterEffects2022| AdobeCharacterAnimator2023| AdobeLightroomClassic| AdobeSubstance3DDesigner|
-|AdobeAfterEffects2022| AdobeDimension| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
-|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
-|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
-|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| AdobeXD|
-|AdobeAudition2021| AdobeIllustrator2023| AdobePhotoshop2022| |
-|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2023| |
-|AdobeAudition2023| AdobeInCopy2021| AdobePrelude2021| |
-|AdobeBridge2021| AdobeInCopy2022| AdobePrelude2022| |
-|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2021| |
-|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2022| |
+|AdobeAfterEffects2023| AdobeCharacterAnimator2024| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
+|AdobeAfterEffects2024|AdobeDimension| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
+|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
+|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2024| AdobeXD|
+|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| |
+|AdobeAnimate2024| AdobeIllustrator2023| AdobePhotoshop2022| |
+|AdobeAudition2021| AdobeIllustrator2024| AdobePhotoshop2023|
+|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2024| |
+|AdobeAudition2023| AdobeInCopy2022| AdobePrelude2021| |
+|AdobeAudition2024| AdobeInCopy2023|AdobePrelude2022| |
+|AdobeBridge2021| AdobeInCopy2024| AdobePremierePro2021| |
+|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022| |
+|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2023| |
+|AdobeBridge2024| AdobeInDesign2023| AdobePremierePro2024|
 2. Download the DMG from the [Adobe Admin Console](https://adminconsole.adobe.com)
 3. Load the .app
 4. Download the title to your ~/Downloads
@@ -42,7 +46,7 @@ The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autop
 
 ## Process
 1. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) will create a [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) at: ~/Downloads/adobe_admin_console_recipes_list.txt  
-2. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) next checks ~/Dowmloads for any folders that begin with Adobe  
+2. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) next checks ~/Downloads for any folders that begin with Adobe  
 3. Next, these are checked to see if they contain the *_Install.pkg and *_Uninstall.pkg PKG's, (these will be present if a [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html)).  
 4. If the above steps pass, then the [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-Overrides#recipe-override-directories) searched. If an override is found which starts with the name of the title (as per the table above), and contains the recipe type as passed to [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py), it's identifier is added to the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists)  
 5. If any matching overrides are found, AutoPkg will run the recipes in the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists), generating a report at: ~/Downloads/adobe_admin_console_recipes_report.txt
@@ -155,6 +159,15 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
                 "app_path": "/Applications/Adobe Media Encoder 2023/Adobe Media Encoder 2023.app",
                 "app_description": "Quickly output video files for virtually any screen.",
                 "display_name": "Adobe Media Encoder 2023",
+                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
+                "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.0": {
+                "app_bundle_id": "com.adobe.ame.application.24",
+                "app_json_version_key": "CodexVersion",
+                "app_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
+                "app_description": "Quickly output video files for virtually any screen.",
+                "display_name": "Adobe Media Encoder 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             }

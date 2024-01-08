@@ -3,18 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of pgAdmin 4.</string>
+    <string>Downloads the current release version of pgAdmin 4.
+
+For Intel use: "x86_64" in the ARCH_TYPE variable
+For Apple Silicon use: "arm64" in the ARCH_TYPE variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.pgAdmin4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>pgAdmin4</string>
-        <key>USER_AGENT</key>
-        <string></string>
+        <key>ARCH_TYPE</key>
+        <string>x86_64</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -36,7 +39,7 @@
                 <key>url</key>
                 <string>%match%</string>
                 <key>re_pattern</key>
-                <string>(https://ftp\.postgresql\.org/pub/pgadmin/pgadmin4/.*?/macos/pgadmin4.*?\.dmg)\"&gt;&lt;</string>
+                <string>((https://ftp\.postgresql\.org/pub/pgadmin/pgadmin4/v([0-9]+(\.[0-9]+)+)/macos/pgadmin4-([0-9]+(\.[0-9]+)+)-%ARCH_TYPE%\.dmg))\"&gt;&lt;</string>
             </dict>
         </dict>
         <dict>
@@ -60,7 +63,7 @@
                 <key>input_path</key>
                 <string>%pathname%/pgAdmin 4.app</string>
                 <key>requirement</key>
-                <string>identifier "org.pgadmin.pgadmin4" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "26QKX55P9K"</string>
+                <string>identifier "org.pgadmin.pgadmin4" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = TCHGL2R7C5</string>
             </dict>
         </dict>
     </array>

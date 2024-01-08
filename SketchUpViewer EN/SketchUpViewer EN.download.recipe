@@ -15,17 +15,22 @@
     <string>1.1</string>
     <key>Process</key>
     <array>
-    	<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://www.sketchup.com/sketchup/SketchUpViewer-en-dmg</string>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download.sketchup.com/SketchUp-Viewer.dmg</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
+                </dict>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>

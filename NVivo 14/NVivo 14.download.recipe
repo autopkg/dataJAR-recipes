@@ -34,9 +34,9 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/NVivo.app</string>
+                <string>%pathname%/NVivo 14.app</string>
                 <key>requirement</key>
-                <string>identifier "com.qsrinternational.NVivo-20" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = A66L57342X</string>
+                <string>identifier "com.qsrinternational.NVivo-20" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8F4S7H8S59"</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

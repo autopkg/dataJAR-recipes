@@ -21,11 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(Download/Ladibug-MAC-(\d(\.\d)+)-Setup-(\d(\.\d)+)\.zip)</string>
+                <string>(Download/Ladibug-MAC-([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-Setup-([0-9]+(\.[0-9]+)+)\.zip)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
-                <string>https://www.mylumens.com/en/Downloads_Search?id=1&amp;keyword=ladibug&amp;keyword2=mac</string>
+                <string>https://www.mylumens.com/en/Page/7/ladibug-compatible-list</string>
             </dict>
         </dict>
         <dict>

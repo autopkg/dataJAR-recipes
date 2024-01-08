@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads thev latest ersion of AirParrot 3 and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.AirParrot 3</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>AirParrot3</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Streaming and Mirroring for Windows and macOS
+
+Wirelessly mirror your screen or stream media files to a variety of receivers. AirParrot quickly finds available media receivers on your network and uses quick connect to connect directly to any device running Reflector 4. Easily mirror your screen, extend your desktop or stream files to share videos, audio, presentations and much more!</string>
+            <key>display_name</key>
+            <string>AirParrot 3</string>
+            <key>developer</key>
+            <string>Squirrels LLC</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+# Copies the SquirrelsLoopbackAudioDriver.driver so that admin credentials are not needed on Application launch
+/bin/mkdir -p "/Library/Audio/Plug-Ins/HAL"
+/bin/cp -R "/Applications/AirParrot 3.app/Contents/Resources/User-Space/SquirrelsLoopbackAudioDriver.driver" "/Library/Audio/Plug-Ins/HAL"
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.ahousseini-recipes.download.AirParrot3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

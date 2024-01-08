@@ -12,7 +12,7 @@
         <string>AJAU-TAPUpdater</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,9 +21,24 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\/support\\\/files\\\/8089\\\/en\\/(AJA_U-TAP_Updater_macOS_v.*?\.zip)</string>
+                <string>\/support\\\/files\\\/[A-Za-z0-9]+\\\/en\\/(AJA_U-TAP_Updater_macOS_v([0-9]+(\.[0-9]+)+)\.zip)</string>
                 <key>url</key>
                 <string>https://www.aja.com/products/u-tap-sdi#support</string>
+                <key>result_output_var_name</key>
+                <string>FILE_NAME</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\/support\\\/files\\\/([A-Za-z0-9]+)\\\/en\\/AJA_U-TAP_Updater_macOS_v</string>
+                <key>url</key>
+                <string>https://www.aja.com/products/u-tap-sdi#support</string>
+                <key>result_output_var_name</key>
+                <string>FOLDER_NAME</string>
             </dict>
         </dict>
         <dict>
@@ -32,7 +47,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.aja.com/assets/support/files/8089/en/%match%</string>
+                <string>https://www.aja.com/assets/support/files/%FOLDER_NAME%/en/%FILE_NAME%</string>
             </dict>
         </dict>
         <dict>
@@ -58,7 +73,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/AJA_U-TAP_Updater_*.dmg</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/AJA_U-TAP_Updater_*/AJA_U-TAP_Updater_*.dmg</string>
             </dict>
         </dict>
         <dict>

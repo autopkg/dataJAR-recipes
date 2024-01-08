@@ -2,51 +2,40 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of the Sennheiser Wireless Systems Manager.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Sennheiser Wireless Systems Manager</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>WirelessSystemsManager</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>macOS\n.*?\"(/global_downloads/.*?/agreement)\"</string>
-				<key>url</key>
-				<string>https://en-uk.sennheiser.com/service-support-services-wireless-systems-manager#product-downloads-22799</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>https://sennheiser-sites\.com/responsive-manuals/WSM/Sennheiser_WSM_Setup_.*?\.dmg</string>
-				<key>url</key>
-				<string>https://en-uk.sennheiser.com%match%</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
+    <key>Description</key>
+    <string>Downloads the latest version of the Sennheiser Wireless Systems Manager.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Sennheiser Wireless Systems Manager</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>WirelessSystemsManager</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>downloadLink\":\"(https://www\.sennheiser\.com/globalassets/digizuite/[A-Za-z0-9]+-en-sennheiser_wsm_setup_([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-[A-Za-z0-9]+\.dmg)</string>
+                <key>url</key>
+                <string>https://www.sennheiser.com/en-gb/catalog/products/software/wireless-systems-manager/wsm-111113</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
@@ -58,6 +47,6 @@
                 <string>identifier "com.Sennheiser.WSM" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XKNNU9WTL7</string>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>

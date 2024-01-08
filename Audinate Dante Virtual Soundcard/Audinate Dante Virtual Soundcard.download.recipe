@@ -3,22 +3,16 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Audinate Dante Virtual Soundcard.
-
-For the "SPARKLE_FEED_URL" variable:
-    x86_64 - https://software-updates-dvs.audinate.com/DanteVirtualSoundcard/appcast/DanteVirtualSoundcard-OSX.xml
-    arm64 - https://software-updates.audinate.com/DanteVirtualSoundcard/appcast/macOS/DanteVirtualSoundcard-macOS.xml</string>
+    <string>Downloads latest version of Audinate Dante Virtual Soundcard.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Audinate Dante Virtual Soundcard</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Audinate Dante Virtual Soundcard</string>
-        <key>SPARKLE_FEED_URL</key>
-        <string>https://software-updates-dvs.audinate.com/DanteVirtualSoundcard/appcast/DanteVirtualSoundcard-OSX.xml</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -27,7 +21,7 @@ For the "SPARKLE_FEED_URL" variable:
             <key>Arguments</key>
             <dict>
                 <key>appcast_url</key>
-                <string>%SPARKLE_FEED_URL%</string>
+                <string>https://software-updates.audinate.com/DanteVirtualSoundcard/appcast/macOS/DanteVirtualSoundcard-macOS.xml</string>
             </dict>
         </dict>
         <dict>

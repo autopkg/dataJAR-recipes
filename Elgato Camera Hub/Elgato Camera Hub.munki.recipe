@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>NOTE: The vendors postinstall script renames the app installed on disk from Camera Hub.app to Elgato Camera Hub.app. Thus FileMover is needed in order to generate a correct installs array.
+
+This workflow may break in a future release from the vendor.</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Elgato Camera Hub and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Elgato Camera Hub</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>ElgatoCameraHub</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>QtWebEngineProcess.app</string>
+                <string>Camera Hub.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Unleash your webcam’s full potential.</string>
+            <key>developer</key>
+            <string>Corsair Memory, Inc.</string>
+            <key>display_name</key>
+            <string>Camera Hub</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# This uninstall script is taken from the Elagto Stream Deck Uninstaller Package:
+# https://help.elgato.com/hc/en-us/articles/4420177682189-Elgato-Camera-Hub-Uninstall-Procedure-on-macOS
+
+# kill process
+/usr/bin/killall &quot;Camera Hub&quot; &gt; /dev/null 2&gt;&amp;1 || :
+
+# remove app. bundle
+/bin/rm -rf &quot;/Applications/Camera Hub.app&quot;
+/bin/rm -rf &quot;/Applications/Elgato Camera Hub.app&quot;
+
+# remove support files
+/bin/rm -rf /Library/Application\ Support/Elgato/Camera\ Hub
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Elgato Camera Hub</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/Camera_Hub.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>overwrite</key>
+                <string>true</string>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/Payload/Applications/Camera Hub.app/</string>
+                <key>target</key>
+                <string>%RECIPE_CACHE_DIR%/Payload/Applications/Elgato Camera Hub.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/Payload</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Elgato Camera Hub.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Payload/Applications/Elgato Camera Hub.app/Contents/Info.plist</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                 <key>mode</key>
+                 <string>777</string>
+                 <key>resource_path</key>
+                 <string>%RECIPE_CACHE_DIR%/Payload</string>
+             </dict>
+             <key>Processor</key>
+             <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
+         </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/Payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string> Downloads the latest Firefox ESR release by checking: 
+https://product-details.mozilla.org/1.0/firefox_versions.json for the key: FIREFOX_ESR_NEXT 
+if this exists, then this keys version is used to generate a download URL.
+        
+If FIREFOX_ESR_NEXT does not exist, fails over to FIREFOX_ESR.
+
+Set the 'LOCALE' variable to the required language version.
+
+List of available locale codes here: https://ftp.mozilla.org/pub/firefox/releases/110.0.1/mac/ or here https://ftp.mozilla.org/pub/firefox/releases/latest/README.txt</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Firefox ESR</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/firefox</string>
+        <key>NAME</key>
+        <string>FirefoxESR</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Extended Support Release (ESR), of the Firefox free and open source web browser.</string>
+            <key>display_name</key>
+            <string>Firefox ESR</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Firefox ESR</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

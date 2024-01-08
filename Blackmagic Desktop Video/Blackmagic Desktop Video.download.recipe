@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Black Magic Desktop Video</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Blackmagic Desktop Video</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>BlackmagicDesktopVideo</string>
+        <key>PRODUCT_NAME_PATTERN</key>
+        <string>^Desktop Video (?P&lt;version&gt;\d+\.\d+(\.\d+)?)$</string>
+        <key>REG_FIRSTNAME</key>
+        <string></string>
+        <key>REG_LASTNAME</key>
+        <string></string>
+        <key>REG_EMAIL</key>
+        <string></string>
+        <key>REG_PHONE</key>
+        <string></string>
+        <key>REG_CITY</key>
+        <string></string>
+        <key>REG_STATE</key>
+        <string></string>
+        <key>REG_COUNTRY</key>
+        <string></string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>product_name_pattern</key>
+                <string>%PRODUCT_NAME_PATTERN%</string>
+                <key>product_name</key>
+                <string>Desktop Video</string>
+                <key>registration_info</key>
+                <dict>
+                    <key>firstname</key>
+                    <string>%REG_FIRSTNAME%</string>
+                    <key>lastname</key>
+                    <string>%REG_LASTNAME%</string>
+                    <key>email</key>
+                    <string>%REG_EMAIL%</string>
+                    <key>phone</key>
+                    <string>%REG_PHONE%</string>
+                    <key>city</key>
+                    <string>%REG_CITY%</string>
+                    <key>country</key>
+                    <string>%REG_COUNTRY%</string>
+                    <key>state</key>
+                    <string>%REG_STATE%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.timsutton.download.davinciresolvelite11/BlackMagicURLProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%version%.zip</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Blackmagic Design Inc (9ZGFBWLSYP)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Blackmagic_Desktop_Video_%version%.dmg/Install Desktop Video %version%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

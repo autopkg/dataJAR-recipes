@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>This recipe needs URLGetter modified as per this PR - https://github.com/autopkg/autopkg/pull/850</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Mplus Demo and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Mplus Demo</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MplusDemo</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The MplusDemo contains all of the capabilities of the regular version of Mplus. They include:
+
+• Linear regression with multivariate outcomes
+• Probit regression for binary and ordered categorical variables with multivariate outcomes
+• Logistic regression for binary, ordered, and unordered categorical variables
+• Path analysis
+• Exploratory and confirmatory factor analysis
+• Confirmatory factor analysis with covariates
+• General structural equation modeling
+• Growth modeling
+• Survival analysis
+• Time series analysis
+• Multilevel modeling
+• General latent variable mixture modeling
+
+The Mplus Demo Version is limited only by the number of variables that can be used in an analysis. Following are the limitations:
+
+• Maximum number of dependent variables: 6
+• Maximum number of independent variables: 2
+• Maximum number of between variables in two-level analysis: 2
+• Maximum number of continuous latent variables in time series analysis: 2
+</string>
+            <key>developer</key>
+            <string>Muthen &amp; Muthen</string>
+            <key>display_name</key>
+            <string>Mplus Demo</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Mplus Demo</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

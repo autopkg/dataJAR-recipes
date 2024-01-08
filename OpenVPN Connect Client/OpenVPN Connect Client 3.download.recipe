@@ -3,13 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of the OpenVPN Connect Client 3 for Mac.</string>
+    <string>Downloads the latest version of the OpenVPN Connect Client 3 for Mac.
+
+Set the ARCH variable to "x86_64" for Intel downloads or "arm64" for Apple Silicon downloads.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>OpenVPNConnectClient3</string>
+        <key>ARCH</key>
+        <string>arm64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

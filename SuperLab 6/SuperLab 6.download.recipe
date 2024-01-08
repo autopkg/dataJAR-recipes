@@ -23,9 +23,9 @@
                 <key>url</key>
                 <string>https://cedrus.com/superlab/download.htm</string>
                 <key>re_pattern</key>
-                <string>https://cedrus\.com/superlab/v6/superlab-\S.*.zip</string>
+                <string>href=\"(https://cedrus\.com/superlab/v6/superlab-([0-9]+(\.[0-9]+)+)\.zip)\"</string>
                 <key>result_output_var_name</key>
-                <string>match</string>
+                <string>DOWNLOAD_URL</string>
             </dict>
         </dict>
         <dict>
@@ -36,7 +36,12 @@
                 <key>filename</key>
                 <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>%match%</string>
+                <string>%DOWNLOAD_URL%</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>User-Agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
+                </dict>
             </dict>
         </dict>
         <dict>

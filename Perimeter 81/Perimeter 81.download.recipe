@@ -46,7 +46,7 @@
                 <string>%RECIPE_CACHE_DIR%/downloads/Perimeter81_%version1%.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Safer Social Ltd. (924635PD62)</string>
+                    <string>Developer ID Installer: Perimeter 81 LTD (924635PD62)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>

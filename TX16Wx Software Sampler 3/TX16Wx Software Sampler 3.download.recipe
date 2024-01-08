@@ -12,22 +12,22 @@
             <string>TX16WxSoftwareSampler3</string>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.5.0</string>
+        <string>1.1</string>
         <key>Process</key>
         <array>
-			<dict>
-				<key>Processor</key>
-				<string>URLTextSearcher</string>
-				<key>Arguments</key>
-				<dict>
-					<key>url</key>
-					<string>https://www.tx16wx.com/download/</string>
-					<key>re_pattern</key>
-					<string>data-downloadurl=\"(https://www\.tx16wx\.com/download/tx16wx-software-sampler-3-osx-setup/\?wpdmdl=.*&amp;refresh=.*)\"</string>
-					<key>result_output_var_name</key>
-					<string>url</string>
-				</dict>
-			</dict>
+            <dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>https://www.tx16wx.com/download/</string>
+                    <key>re_pattern</key>
+                    <string>data-downloadurl=\"(https://www\.tx16wx\.com/download/tx16wx-software-sampler-3-osx-universal-[0-9]+-[0-9]+-setup/\?wpdmdl=.*&amp;refresh=.*)\"</string>
+                    <key>result_output_var_name</key>
+                    <string>url</string>
+                </dict>
+            </dict>
             <dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>

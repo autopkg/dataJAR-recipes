@@ -33,7 +33,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Pd-l2ork</string>
     <key>Process</key>
@@ -44,7 +44,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%destination_path%/Pd-l2ork-*.dmg</string>
+                <string>%destination_path%/Purr-Data-*.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -57,6 +57,17 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

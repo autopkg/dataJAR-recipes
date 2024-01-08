@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Audinate Dante Virtual Soundcard and imports into Munki.</string>
+    <string>Downloads the latest version of Audinate Dante Virtual Soundcard and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Audinate Dante Virtual Soundcard</string>
     <key>Input</key>
@@ -12,6 +14,8 @@
         <string>Audinate Dante Virtual Soundcard</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -29,7 +33,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Audinate Dante Virtual Soundcard</string>
     <key>Process</key>
@@ -103,6 +107,8 @@
             <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Dante Virtual Soundcard.app</string>
