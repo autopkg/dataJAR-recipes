@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://k.kramerav.com/support/download.asp?f=58679</string>
+                <string>https://k.kramerav.com/support/download.asp?f=61263</string>
                 <key>re_pattern</key>
                 <string>https://cdn\.kramerav\.com/web/downloads/setups/via_mac_dmg_v.*?\.zip</string>
             </dict>
@@ -71,9 +71,9 @@
                 <key>version</key>
                 <string>%match%</string>
                 <key>index</key>
-                <integer>2</integer>
+                <integer>1</integer>
                 <key>split_on</key>
-                <string>v.</string>
+                <string>_v</string>
             </dict>
         </dict>
         <dict>
