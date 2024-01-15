@@ -25,7 +25,7 @@
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
-                <string>https://www.browserstack.com/docs/live/local-testing#Chrome_and_Firefox</string>
+                <string>https://www.browserstack.com/docs/local-testing/releases-and-downloads</string>
             </dict>
         </dict>
         <dict>
