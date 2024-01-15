@@ -3,13 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Opera GX.</string>
+    <string>Downloads the latest version of Opera GX.
+
+To download for Apple Silicon use "_arm64" in the DOWNLOAD_ARCH variable
+To download for Intel leave the DOWNLOAD_ARCH variable empty</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Opera GX</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>OperaGX</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -18,10 +23,23 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>\(core: ([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)\)</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>https://forums.opera.com/topic/33033/opera-gx-update-released</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>filename</key>
                 <string>%NAME%.tar.xz</string>
                 <key>url</key>
-                <string>https://download.opera.com/download/get/?id=60468&amp;autoupdate=1&amp;ni=1&amp;stream=stable&amp;utm_campaign=(none)&amp;utm_lastpage=opera.com/download&amp;utm_medium=ose&amp;utm_site=opera_com&amp;utm_source=google&amp;utm_tryagain=yes</string>
+                <string>https://download3.operacdn.com/ftp/pub/opera_gx/%version%/mac/Opera_GX_%version%_Autoupdate%DOWNLOAD_ARCH%.tar.xz</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
