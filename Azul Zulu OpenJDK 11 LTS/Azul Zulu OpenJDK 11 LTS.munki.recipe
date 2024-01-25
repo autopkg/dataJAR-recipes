@@ -96,7 +96,7 @@
                     <string>/Library/Java/JavaVirtualMachines/zulu-11.jdk</string>
                 </array>
                 <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
+                <string>CFBundleShortVersionString</string>
             </dict>
         </dict>
         <dict>
@@ -112,7 +112,7 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Info.plist</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleVersion</key>
+                    <key>CFBundleShortVersionString</key>
                     <string>version</string>
                 </dict>
             </dict>
