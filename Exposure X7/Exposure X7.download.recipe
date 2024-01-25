@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Exposure X7</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Exposure X7</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ExposureX7</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>&lt;h2&gt;(7\.[^a-z]*)&lt;\/h2&gt;</string>
+                <key>result_output_var_name</key>
+                <string>EXPOSURE_VERSION</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2.1 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://exposure.software/exposure/exposure-x7-release-notes/</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2.1 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://cdn.exposure.software/downloads/exposure-x7-%EXPOSURE_VERSION%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Exposure X7 Installer.app/Contents/Resources/files/HD/Applications/Exposure X7.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "software.exposure.exposureX7" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J5B52CMB62)</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

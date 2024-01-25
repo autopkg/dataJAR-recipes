@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SF Symbols 5</string>
+    <string>Downloads the latest version of KeyShot Network Rendering 2023.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.SF Symbols 5</string>
+    <string>com.github.dataJAR-recipes.download.KeyShot Network Rendering 2023</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>SFSymbols5</string>
+        <string>KeyShotNetworkRendering2023</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -19,44 +19,44 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(https://devimages-cdn\.apple\.com/design/resources/download/SF-Symbols-5.*\.dmg)\"</string>
+                <string>(https://download\.keyshot\.com/keyshot2023/keyshot_network_rendering_mac64_([0-9]+(\.[0-9]+)+)_([0-9]+(\.[0-9]+)+)\.pkg)</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://developer.apple.com/sf-symbols/</string>
+                <string>https://www.keyshot.com/direct-downloads/</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>name</key>
-                <string>%NAME%.dmg</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/SF Symbols.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Software Update</string>
-                    <string>Apple Software Update Certification Authority</string>
+                    <string>Developer ID Installer: Luxion, Inc (W7B24M74T3)</string>
+                    <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
