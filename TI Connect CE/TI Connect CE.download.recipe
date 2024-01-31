@@ -15,26 +15,13 @@
     <string>1.0.0</string>
     <key>Process</key>
     <array>
-         <dict>
-        <key>Arguments</key>
-        <dict>
-            <key>re_pattern</key>
-            <string>href="(/download/en/ed-tech/.*/.*/TIConnectCE.*\.dmg)"</string>
-            <key>url</key>
-            <string>https://education.ti.com/en-GB/software/details/en/CA9C74CAD02440A69FDC7189D7E1B6C2/swticonnectcesoftware</string>
-            <key>result_output_var_name</key>
-            <string>version</string>
-         </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-            <string>https://education.ti.com/%version%</string>
+            <string>https://education.ti.com/ticonnectce/downloads/ticonnectce-mac</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
