@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of 4K Video Downloader+.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.4K Video DownloaderPlus</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>4KVideoDownloaderPlus</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+            <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://www.4kdownload.com/thanks-for-downloading?source=videodownloaderplus</string>
+                <key>re_pattern</key>
+                <string>href=\"(https://dl\.4kdownload\.com/app/4kvideodownloaderplus_([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)_x64\.dmg\?source=website)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/4K Video Downloader+.app</string>
+                <key>requirement</key>
+                <string>identifier "com.openmedia.4kvideodownloaderplus" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GHQ37VJF83</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
