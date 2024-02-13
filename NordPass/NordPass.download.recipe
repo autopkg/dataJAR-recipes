@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of NordPass.
+
+For Intel downloads leave ARCH_TYPE empty
+For Apple Silicon use "arm/" in ARCH_TYPE</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.NordPass</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>NordPass</string>
+        <key>ARCH_TYPE</key>
+        <string></string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://downloads.npass.app/mac/%ARCH_TYPE%NordPass.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/NordPass.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and certificate leaf[subject.OU] = W5W395V82Y or anchor apple generic and certificate leaf[subject.OU] = XSY9C6M6C5</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
