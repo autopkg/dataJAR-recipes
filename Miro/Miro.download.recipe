@@ -6,8 +6,8 @@
     <string>Downloads the latest version of Miro.
 
 Set DOWNLOAD_URL with the required download url:
-x86_64: https://desktop.miro.com/platforms/darwin/Miro.dmg
-arm64: https://desktop.miro.com/platforms/darwin-arm64/Miro.dmg
+x86_64: https://desktop.miro.com/platforms/darwin/Install-Miro.dmg
+arm64: https://desktop.miro.com/platforms/darwin-arm64/Install-Miro.dmg
 </string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Miro</string>
@@ -16,7 +16,7 @@ arm64: https://desktop.miro.com/platforms/darwin-arm64/Miro.dmg
         <key>NAME</key>
         <string>Miro</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://desktop.miro.com/platforms/darwin/Miro.dmg</string>
+        <string>https://desktop.miro.com/platforms/darwin/Install-Miro.dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
