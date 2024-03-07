@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Burp Suite Professional.
+
+To download Apple Silicon use: "MacOsArm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Burp Suite Professional</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>BurpSuiteProfessional</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>MacOsx</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>Professional / Community ([0-9]+(\.[0-9]+)+)</string>
+                <key>result_output_var_name</key>
+                <string>VERSION</string>
+                <key>url</key>
+                <string>https://portswigger.net/burp/releases/professional/latest</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://portswigger.net/burp/releases/startdownload?product=pro&amp;version=%VERSION%&amp;type=%DOWNLOAD_ARCH%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Burp Suite Professional.app</string>
+                <key>requirement</key>
+                <string>always</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
