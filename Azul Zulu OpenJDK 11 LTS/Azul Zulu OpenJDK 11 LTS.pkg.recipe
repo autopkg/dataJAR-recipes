@@ -38,7 +38,7 @@
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%version%.pkg</string>
                 <key>source_pkg</key>
-                <string>%pathname%/Double-Click to Install Zulu 11.pkg</string>
+                <string>%pathname%/%dmg_found_filename%</string>
             </dict>
         </dict>
     </array>

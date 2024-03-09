@@ -42,6 +42,11 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
             <dict>
                 <key>Processor</key>
                 <string>AdobeAdminConsolePackagesPkgInfoCreator</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>aacp_package_name</key>
+                    <string>%NAME%</string>
+                </dict>
             </dict>
             <dict>
                 <key>Processor</key>

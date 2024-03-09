@@ -43,6 +43,15 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
@@ -54,7 +63,7 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%pathname%/Double-Click to Install Zulu 11.pkg</string>
+                <string>%pathname%/%dmg_found_filename%</string>
             </dict>
         </dict>
     </array>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Notion Calendar.
+
+To download the Intel version use "x64" in the DOWNLOAD_ARCH variable
+To download the Apple Silicon version use "arm64" in the DOWNLOAD_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.NotionCalendar</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Notion Calendar</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>x64</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(https://download\.todesktop\.com/[A-Za-z0-9]+/Notion%20Calendar%([0-9]+(\.[0-9]+)+)%20-%20Build%[A-Za-z0-9]+-%DOWNLOAD_ARCH%\.dmg)</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://download.todesktop.com/210303leazlircz/td-latest-mac.json</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Notion Calendar.app</string>
+                <key>requirement</key>
+                <string>identifier "com.cron.electron" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = R8DNJ3GNHX</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

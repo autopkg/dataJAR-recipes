@@ -50,6 +50,7 @@ from autopkglib import (Processor,
 __all__ = ['AdobeAdminConsolePackagesPkgInfoCreator']
 __version__ = ['1.0']
 
+DEFAULT_AACP_PACKAGES_PATH = os.path.expanduser('~/Downloads/')
 
 # Class def
 class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
@@ -60,11 +61,15 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
     description = __doc__
 
     input_variables = {
-        'NAME': {
+        'aacp_package_name': {
             'required': True,
             'description': 'The name specified when creating the download from the Adobe Admin Console. '
             'Normally, this is supplied in the environment as a recipe/override Input variable.',
-        }
+        },
+        'aacp_packages_path': {
+            'required': False,
+            'description': f'The path to look for source packages. Defaults to {DEFAULT_AACP_PACKAGES_PATH}.',
+        },
     }
 
     output_variables = {
@@ -142,24 +147,28 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         # Progress notification
         self.output("Starting versioner process...")
 
-        # Get set packages_path
-        self.env['aacp_packages_path'] = os.path.expanduser('~/Downloads/')
+        # Set aacp_package_name
+        self.env['aacp_package_name'] = self.env.get('aacp_package_name')
+        self.output(f"aacp_package_name: {self.env['aacp_package_name']}")
+
+        # Set aacp_packages_path
+        self.env['aacp_packages_path'] = self.env.get('aacp_packages_path', DEFAULT_AACP_PACKAGES_PATH)
         self.output(f"aacp_packages_path: {self.env['aacp_packages_path']}")
 
-        # Check that packages_path exists
+        # Check that aacp_packages_path exists
         if not os.path.exists(self.env['aacp_packages_path']):
             raise ProcessorError(f"ERROR: Cannot locate directory, "
                                  f"{self.env['aacp_packages_path']}... exiting...")
 
-        # Check that packages_path is a directory
+        # Check that aacp_packages_path is a directory
         if not os.path.isdir(self.env['aacp_packages_path']):
             raise ProcessorError(f"ERROR: {self.env['aacp_packages_path']} is a not a "
                                   "directory... exiting...")
 
         # Path to Adobe*_Install.pkg
         self.env['aacp_install_pkg_path'] = (os.path.join(self.env['aacp_packages_path'],
-                                                          self.env['NAME'], 'Build',
-                                                          self.env['NAME'] + '_Install.pkg'))
+                                                          self.env['aacp_package_name'], 'Build',
+                                                          self.env['aacp_package_name'] + '_Install.pkg'))
 
         # Check that the path exists, raise if not
         if not os.path.exists(self.env['aacp_install_pkg_path']):
@@ -169,8 +178,8 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # Path to Adobe*_Uninstall.pkg
         self.env['aacp_uninstall_pkg_path'] = (os.path.join(self.env['aacp_packages_path'],
-                                                            self.env['NAME'], 'Build',
-                                                            self.env['NAME'] + '_Uninstall.pkg'))
+                                                            self.env['aacp_package_name'], 'Build',
+                                                            self.env['aacp_package_name'] + '_Uninstall.pkg'))
 
         # Check that the path exists, raise if not
         if not os.path.exists(self.env['aacp_uninstall_pkg_path']):
@@ -575,3 +584,4 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
 if __name__ == '__main__':
     PROCESSOR = AdobeAdminConsolePackagesPkgInfoCreator()
+    PROCESSOR.execute_shell()

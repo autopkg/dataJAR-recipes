@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://www.earmaster.com/all-download.html</string>
                 <key>re_pattern</key>
-                <string>MAC 10\.14 Mojave or newer: &lt;a href=\"(/download/EarMaster7\..*\.pkg)"</string>
+                <string>href=\"(/download/EarMaster7\..*pkg)\">Download EarMaster 7 for macOS 10\.14 or newer</string>
             </dict>
         </dict>
         <dict>

@@ -16,12 +16,27 @@
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(https://devimages-cdn\.apple\.com/design/resources/download/SF-Symbols-5.*\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://developer.apple.com/sf-symbols/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>name</key>
+                <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://devimages-cdn.apple.com/design/resources/download/SF-Symbols-5.dmg</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
         </dict>
         <dict>
