@@ -87,7 +87,7 @@
                 <string>%found_filename%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Panasonic Corporation (58B8GAAYWT)</string>
+                    <string>Developer ID Installer: Panasonic Connect Co., Ltd. (9A3R76Y6MA)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
