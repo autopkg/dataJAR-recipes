@@ -163,6 +163,16 @@
                 "display_name": "Adobe Acrobat DC",
                 "minos_version": "10.15.0",
                 "version_comparison_key": "CFBundleShortVersionString"
+            },
+            "24.1": {
+                "additional_blocking_applications": ["Acrobat Distiller", "Adobe Acrobat", "Acrobat Reader"],
+                "app_bundle_id": "com.adobe.Acrobat.Pro",
+                "app_json_version_key": "ProductVersion",
+                "app_path": "/Applications/Adobe Acrobat DC/Adobe Acrobat.app",
+                "app_description": "The complete PDF solution for a mobile, connected world.",
+                "display_name": "Adobe Acrobat DC",
+                "minos_version": "10.15.0",
+                "version_comparison_key": "CFBundleShortVersionString"
             }
         }
     },
