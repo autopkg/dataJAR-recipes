@@ -18,23 +18,12 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>filename</key>
-                <string>downloads-cp.html</string>
-                <key>url</key>
-                <string>https://www.cardpresso.com/downloads-cp</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>re_pattern</key>
-                <string>href=\"(/downloads/cardpresso_releases/for_mac_osx/cardPresso([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
+                <string>href="(https://www\.cardpresso\.com/downloads/cardpresso_releases/for_mac_osx/cardPresso([0-9]+(\.[0-9]+)+)\.dmg)"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>file://%RECIPE_CACHE_DIR%/downloads/downloads-cp.html</string>
+                <string>https://www.cardpresso.com/cardpresso-software/latest-release/</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -45,7 +34,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://www.cardpresso.com%DOWNLOAD_URL%</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>

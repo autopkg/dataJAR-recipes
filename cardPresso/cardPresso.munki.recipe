@@ -46,7 +46,7 @@
                 <key>result_output_var_name</key>
                 <string>min_os_ver</string>
                 <key>url</key>
-                <string>file://%RECIPE_CACHE_DIR%/downloads/downloads-cp.html</string>
+                <string>https://www.cardpresso.com/cardpresso-software/latest-release/</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -75,17 +75,6 @@
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/downloads/downloads-cp.html</string>
-                </array>
-            </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
