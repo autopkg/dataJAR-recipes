@@ -15,6 +15,8 @@ i.e.: `-k PRERELEASE=yes`</string>
         <string></string>
         <key>NAME</key>
         <string>FreeCAD</string>
+        <key>ARCH</key>
+        <string>x86_64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -30,7 +32,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
-                <string>[\S]+\.dmg</string>
+                <string>[\S]+%ARCH%\.dmg</string>
             </dict>
         </dict>
         <dict>
