@@ -25,9 +25,9 @@
                 <key>Arguments</key>
                 <dict>
                     <key>url</key>
-                    <string>https://nodejs.org/en/download/</string>
+                    <string>https://nodejs.org/en/blog</string>
                     <key>re_pattern</key>
-                    <string>node-v([0-9\.]+).pkg</string>
+                    <string>Node v([0-9]+(\.[0-9]+)+) \(LTS\)</string>
                     <key>result_output_var_name</key>
                     <string>version</string>
                 </dict>
