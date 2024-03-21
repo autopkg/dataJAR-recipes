@@ -28,7 +28,7 @@
                         <string>%USER_AGENT%</string>
                     </dict>
                     <key>re_pattern</key>
-                    <string>url="(https://cdn\.rekordbox\.com/files/[A-Za-z0-9]+/Install_rekordbox_([0-9]+(_[0-9]+)+)\.zip)"</string>
+                    <string>url="(https://cdn\.rekordbox\.com/files/[A-Za-z0-9]+/Install_rekordbox_([0-9]+(_[0-9]+)+)\.pkg_\.zip)"</string>
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>url</key>
