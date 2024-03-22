@@ -3,7 +3,10 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of MongoDB Compass and imports it into Munki.</string>
+    <string>Downloads the latest version of MongoDB Compass and imports it into Munki.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.MongoDB Compass</string>
     <key>Input</key>
@@ -12,6 +15,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>MongoDBCompass</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -28,6 +33,10 @@ Compass is an interactive tool for querying, optimizing, and analyzing your Mong
             <string>MongoDB Compass</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -35,7 +44,7 @@ Compass is an interactive tool for querying, optimizing, and analyzing your Mong
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.MongoDB Compass</string>
     <key>Process</key>

@@ -3,16 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of MongoDB Compass.</string>
+    <string>Downloads the latest version of MongoDB Compass.
+
+To download the Intel version use "x64" in DOWNLOAD_TYPE
+To download the Apple Silicon version use "arm64" in DOWNLOAD_TYPE</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.MongoDB Compass</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>MongoDB Compass</string>
+        <key>DOWNLOAD_TYPE</key>
+        <string>x64</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,14 +26,21 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\"(https://downloads\.mongodb\.com/compass/mongodb-compass-.*?-darwin-x64\.dmg)\"},</string>
+                <string>mongodb-compass-([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-darwin</string>
                 <key>result_output_var_name</key>
-                <string>url</string>
+                <string>DOWNLOAD_VERSION</string>
                 <key>url</key>
                 <string>https://www.mongodb.com/try/download/compass</string>
             </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://downloads.mongodb.com/compass/mongodb-compass-%DOWNLOAD_VERSION%-darwin-%DOWNLOAD_TYPE%.dmg</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
