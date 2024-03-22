@@ -6,7 +6,7 @@
     <string>Downloads the latest version of Azeus Convene.
 
 To download the Intel version set ARCH_TYPE to "v"
-To download the Apple Silicon version set ARCH_TYPE to "aarch64."</string>
+To download the Apple Silicon version set ARCH_TYPE to "aarch64.v"</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Azeus Convene</string>
     <key>Input</key>
