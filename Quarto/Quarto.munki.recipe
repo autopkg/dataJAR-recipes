@@ -51,7 +51,7 @@ fi
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.download.Quarto</string>
+    <string>com.github.dataJAR-recipes.download.Quarto</string>
     <key>Process</key>
     <array>
         <dict>
