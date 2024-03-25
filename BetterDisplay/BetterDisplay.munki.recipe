@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of BetterDisplay and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.BetterDisplay</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>BetterDisplay</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>BetterDisplay is a truly wonderful tool! It lets you convert your displays to fully scalable screens, manage display configuration overrides, allows brightness and color control, provides XDR/HDR brightness upscaling (extra brightness beyond 100% for compatible XDR or HDR displays on Apple Silicon and Intel Macs - multiple methods available), full dimming to black, helps you create and manage virtual screens for your Mac, create Picture in Picture windows of your displays and gives you a host of other features to manage your display's settings easily from the menu bar. It can even disconnect/reconnect displays on-the-fly!</string>
+            <key>developer</key>
+            <string>Istvan Toth</string>
+            <key>display_name</key>
+            <string>BetterDisplay</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2024, dataJAR Ltd.  All rights reserved.
+#
+
+/bin/echo "Disabling Automatic updates..."
+/usr/bin/defaults write /Library/Preferences/pro.betterdisplay.BetterDisplay.plist SUEnableAutomaticChecks -bool false
+/usr/bin/defaults write /Library/Preferences/pro.betterdisplay.BetterDisplay.plist SUAutomaticallyUpdate -bool false</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.BetterDisplay</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
