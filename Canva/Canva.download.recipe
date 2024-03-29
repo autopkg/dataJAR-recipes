@@ -10,8 +10,6 @@
     <dict>
         <key>NAME</key>
         <string>Canva</string>
-        <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -19,18 +17,22 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(Canva.*?\.dmg)</string>
+                <key>url</key>
+                <string>https://desktop-release.canva.com/latest-mac.yml</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>curl_opts</key>
-                <array>
-                    <string>--user-agent</string>
-                    <string>%USER_AGENT%</string>
-                </array>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://www.canva.com/download/mac/universal/canva-desktop</string>
+                <string>https://desktop-release.canva.com/%match%</string>
             </dict>
         </dict>
         <dict>
