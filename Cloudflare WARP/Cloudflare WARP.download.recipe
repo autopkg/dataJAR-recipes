@@ -12,7 +12,7 @@
         <string>CloudflareWARP</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
        <dict>
@@ -53,7 +53,7 @@
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Cloudflare_WARP.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Cloudflare_WARP*.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
