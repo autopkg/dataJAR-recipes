@@ -18,8 +18,8 @@
             <array>
                 <string>testing</string>
             </array>
-			<key>developer</key>
-			<string>Insta360</string>
+            <key>developer</key>
+            <string>Insta360</string>
             <key>description</key>
             <string>Insta360 Studio 2020 allows users to edit videos and photos shot on ONE X, EVO and GO. It contains the Insta360 Plugin for Adobe Premiere Pro..</string>
             <key>display_name</key>
@@ -31,57 +31,66 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.insta360studio2020</string>
+    <string>com.github.dataJAR-recipes.download.insta360studio2020</string>
     <key>Process</key>
-	<array>
+    <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>The vender has replaced this App with their 2021 version. See the 2021 recipes https://github.com/autopkg/dataJAR-recipes/blob/master/Insta360/Insta360Studio2021.munki.recipe. Please remove this from your list of recipes.</string>
-             </dict>
+                <string>This recipe has been deprecated. Please use the new Insta360Studio ones: https://github.com/autopkg/dataJAR-recipes/commit/f4b673d24ea2688c09f1b8918dc46689a454966e</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
-		<dict>
-			<key>Arguments</key>
-				<dict>
-					<key>destination_path</key>
-					<string>%RECIPE_CACHE_DIR%/installer_unpack</string>
-					<key>flat_pkg_path</key>
-					<string>%pathname%</string>
-					<key>purge_destination</key>
-					<true />
-				</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/installer_payload</string>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/installer_unpack/Insta360_Studio_2020.pkg/Payload</string>
-				<key>purge_destination</key>
-				<true />
-			</dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Insta360 Studio 2020.app/Contents/Info.plist</string>
-				<key>plist_version_key</key>
-				<string>CFBundleShortVersionString</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                    <key>flat_pkg_path</key>
+                    <string>%pathname%</string>
+                    <key>purge_destination</key>
+                    <true/>
+                </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/Insta360_Studio_2020.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true />
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Insta360 Studio 2020.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
@@ -94,42 +103,42 @@
                 </dict>
             </dict>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>source_pkg</key>
-				<string>%pathname%</string>
-				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
-			</dict>
-			<key>Processor</key>
-			<string>PkgCopier</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>path_list</key>
-				<array>
-					<string>%RECIPE_CACHE_DIR%/installer_payload/</string>
-					<string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>PathDeleter</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pkg_path%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%pathname%</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>

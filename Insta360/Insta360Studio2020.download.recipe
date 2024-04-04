@@ -20,29 +20,38 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>The vender has replaced this App with their 2021 version. See the 2021 recipes https://github.com/autopkg/dataJAR-recipes/blob/master/Insta360/Insta360Studio2021.download.recipe. Please remove this from your list of recipes.</string>
-             </dict>
+                <string>This recipe has been deprecated. Please use the new Insta360Studio ones: https://github.com/autopkg/dataJAR-recipes/commit/f4b673d24ea2688c09f1b8918dc46689a454966e</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
- 			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%DOWNLOAD_URL%</string>
-				<key>re_pattern</key>
-				<string>(https://res.insta360.com/static/assets/storage/[\S]+/[\S]+/Insta360_Studio_[\S]+pkg)</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+                <key>re_pattern</key>
+                <string>(https://res.insta360.com/static/assets/storage/[\S]+/[\S]+/Insta360_Studio_[\S]+pkg)</string>
                 <key>request_headers</key>
                 <dict>
-                        <key>user-agent</key>
-                        <string>%USER_AGENT%</string>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
                 </dict>
-			</dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -53,8 +62,8 @@
                 <string>%match%</string>
                 <key>request_headers</key>
                 <dict>
-                        <key>user-agent</key>
-                        <string>%USER_AGENT%</string>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
                 </dict>
             </dict>
         </dict>
@@ -62,21 +71,21 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%</string>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Shenzhen Arashi Vision Co., Ltd. (UBX9CH9GDX)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
-			</dict>
-		</dict>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>

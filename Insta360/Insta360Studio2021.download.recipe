@@ -20,13 +20,22 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>The vender has replaced this App with their 2022 version. See the 2022 recipes https://github.com/autopkg/dataJAR-recipes/blob/master/Insta360/Insta360Studio2022.download.recipe. Please remove this from your list of recipes.</string>
-             </dict>
+                <string>This recipe has been deprecated. Please use the new Insta360Studio ones: https://github.com/autopkg/dataJAR-recipes/commit/f4b673d24ea2688c09f1b8918dc46689a454966e</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Processor</key>
