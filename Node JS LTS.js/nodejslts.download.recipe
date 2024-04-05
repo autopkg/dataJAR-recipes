@@ -2,21 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
-        <key>Comment</key>
-        <string>Based on a receipe from gerardkok</string>
         <key>Description</key>
-        <string>Downloads the latest LTS version of Node.js.</string>
+        <string>Downloads the latest LTS version of Node.js.
+
+MAJOR_VERSION needs to be one of the 'latest-v' numbers listed here: https://nodejs.org/dist/</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.download.nodejslts</string>
         <key>Input</key>
         <dict>
             <key>NAME</key>
             <string>nodelts</string>
-            <key>RELEASE</key>
-            <string>latest</string>
+            <key>MAJOR_VERSION</key>
+            <string>20</string>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.6.0</string>
+        <string>1.1</string>
         <key>Process</key>
         <array>
             <dict>
@@ -25,11 +25,11 @@
                 <key>Arguments</key>
                 <dict>
                     <key>url</key>
-                    <string>https://nodejs.org/en/blog</string>
+                    <string>https://nodejs.org/dist/latest-v%MAJOR_VERSION%.x/</string>
                     <key>re_pattern</key>
-                    <string>Node v([0-9]+(\.[0-9]+)+) \(LTS\)</string>
+                    <string>node-v%MAJOR_VERSION%.([0-9]+(\.[0-9]+)+).pkg</string>
                     <key>result_output_var_name</key>
-                    <string>version</string>
+                    <string>MINOR_VERSION</string>
                 </dict>
             </dict>
             <dict>
@@ -38,7 +38,7 @@
                 <key>Arguments</key>
                 <dict>
                     <key>url</key>
-                    <string>https://nodejs.org/dist/v%version%/node-v%version%.pkg</string>
+                    <string>https://nodejs.org/dist/latest-v%MAJOR_VERSION%.x/node-v%MAJOR_VERSION%.%MINOR_VERSION%.pkg</string>
                 </dict>
             </dict>
             <dict>

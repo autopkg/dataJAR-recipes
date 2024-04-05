@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
-        <key>Comment</key>
-        <string>Based on a receipe from gerardkok</string>
         <key>Description</key>
         <string>Downloads the latest LTS version of Node.js and imports into Munki.</string>
         <key>Identifier</key>
@@ -16,8 +14,6 @@
             <string>Development</string>
             <key>NAME</key>
             <string>nodelts</string>
-            <key>RELEASE</key>
-            <string>latest-dubnium</string>
             <key>DISPLAY_NAME</key>
             <string>Node.js LTS</string>
             <key>pkginfo</key>
@@ -46,7 +42,7 @@
             </dict>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.6.0</string>
+        <string>1.1</string>
         <key>ParentRecipe</key>
         <string>com.github.dataJAR-recipes.download.nodejslts</string>
         <key>Process</key>
