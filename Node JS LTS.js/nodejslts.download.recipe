@@ -5,7 +5,7 @@
         <key>Description</key>
         <string>Downloads the latest LTS version of Node.js.
 
-MAJOR_VERSION needs to be one of the 'latest-v' numbers listed here: https://nodejs.org/dist/</string>
+MAJOR_VERSION needs to be one of the 'latest-v' version numbers listed here: https://nodejs.org/dist/</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.download.nodejslts</string>
         <key>Input</key>
