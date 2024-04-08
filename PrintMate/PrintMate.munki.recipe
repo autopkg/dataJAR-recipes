@@ -37,7 +37,7 @@ With a user-friendly interface and advanced features, PrintMate streamlines your
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-ecipes.download.PrintMate</string>
+    <string>com.github.dataJAR-recipes.download.PrintMate</string>
     <key>Process</key>
     <array>
         <dict>
