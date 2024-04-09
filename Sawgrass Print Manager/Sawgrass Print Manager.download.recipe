@@ -15,7 +15,27 @@
     <string>1.1</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Sawgrass Print Manager is no longer maintained by the vendor. This recipe has been deprecated.
+
+Please use recipes for the vendors replacement PrintMate: https://github.com/autopkg/dataJAR-recipes/tree/master/PrintMate</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
