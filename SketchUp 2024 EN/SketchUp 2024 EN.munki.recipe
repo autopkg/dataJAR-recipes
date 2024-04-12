@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SketchUp (formerly SketchUp Pro) 2024 EN and imports into Munki.
+
+Based on: com.github.jps3.download.SketchUpPro
+
+Main changes are non-overridable year and locale.
+Removed superfluous CodeSignatureVerification from PKG.
+</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.SketchUp 2024 EN</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SketchUp2024-EN</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The most intuitive way to design, document and communicate your ideas in 3D</string>
+            <key>display_name</key>
+            <string>SketchUp 2024</string>
+            <key>developer</key>
+            <string>Trimble Inc</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postuninstall_script</key>
+            <string>#!/bin/bash
+#
+# post uninstall script based of the following documentation: https://help.sketchup.com/en/uninstalling-sketchup
+#
+rm -rf "/Library/Application Support/SketchUp 2024"
+
+rm Library/Preferences/com.sketchup.SketchUp.2024.plist
+rm Library/Preferences/com.sketchup.LayOut.2024.plist
+rm Library/Preferences/com.sketchup.StyleBuilder.2024.plist
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.SketchUp 2024 EN</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2024/SketchUp.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/SketchUp 2024/SketchUp.app</string>
+                    <string>/Applications/SketchUp 2024/Layout.app</string>
+                    <string>/Applications/SketchUp 2024/Style Builder.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

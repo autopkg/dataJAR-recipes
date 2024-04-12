@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SketchUp (formerly SketchUp Pro) 2024 EN and creates a PKG.
+
+Based on: com.github.jps3.download.SketchUpPro
+
+Locales can be specified.
+
+Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.SketchUp 2024 EN</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SketchUp2024-EN</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.SketchUp 2024 EN</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/SketchUp 2024/</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2024/</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2024/SketchUp.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>path</key>
+                            <string>/</string>
+                            <key>user</key>
+                            <string>root</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>com.sketchup.%NAME%-%version%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%pkgroot%</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
