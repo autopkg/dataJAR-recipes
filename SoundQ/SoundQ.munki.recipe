@@ -94,6 +94,32 @@ SoundQ is sound library software that integrates with your editor of choice. You
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/SoundQ.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleShortVersionString</key>
+                    <string>VERSION</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%VERSION%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
