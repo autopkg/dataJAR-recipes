@@ -81,7 +81,7 @@ See docstring in main()
 '''
 
 
-from distutils.version import LooseVersion
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 import os
 import subprocess
 import sys

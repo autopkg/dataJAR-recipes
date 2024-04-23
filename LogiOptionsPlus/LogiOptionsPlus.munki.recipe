@@ -136,14 +136,13 @@ See docstring in main()
 
 '''
 
-# Standard imports
-# pylint: disable = deprecated-module
-from distutils.version import LooseVersion
 import os
 import plistlib
 import sys
 # pylint: disable = import-error
 from SystemConfiguration import SCDynamicStoreCopyConsoleUser
+sys.path.insert(0, '/usr/local/munki')
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 
 
 def main():

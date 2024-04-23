@@ -82,10 +82,12 @@ See docstring in main()
 
 '''
 
-from distutils.version import LooseVersion
+
 import os
 import sys
 import subprocess
+sys.path.insert(0, '/usr/local/munki')
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 
 
 def main():
