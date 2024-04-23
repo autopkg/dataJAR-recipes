@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Burp Suite Professional and imports it into Munki.
+    <string>Downloads the latest version of Burp Suite Professional or Community and imports it into Munki.
+
+Defaults to Professional
 
 For Intel use: "x86_64" in the SUPPORTED_ARCH variable
 For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>

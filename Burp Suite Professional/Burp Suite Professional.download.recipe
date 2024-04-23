@@ -3,10 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Burp Suite Professional.
+    <string>Downloads the latest version of Burp Suite Professional or Community.
+
+Defaults to Professional
 
 To download Apple Silicon use: "MacOsArm64" in the DOWNLOAD_ARCH variable
-To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable</string>
+To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable
+
+To download the Professional title use: "pro" in the DOWNLOAD_TITLE variable
+To download the Community title use: "community" in the DOWNLOAD_TITLE variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Burp Suite Professional</string>
     <key>Input</key>
@@ -15,6 +20,8 @@ To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable</string>
         <string>BurpSuiteProfessional</string>
         <key>DOWNLOAD_ARCH</key>
         <string>MacOsx</string>
+        <key>DOWNLOAD_TITLE</key>
+        <string>pro</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -39,7 +46,7 @@ To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://portswigger.net/burp/releases/startdownload?product=pro&amp;version=%VERSION%&amp;type=%DOWNLOAD_ARCH%</string>
+                <string>https://portswigger.net/burp/releases/startdownload?product=%DOWNLOAD_TITLE%&amp;version=%VERSION%&amp;type=%DOWNLOAD_ARCH%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -52,7 +59,7 @@ To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Burp Suite Professional.app</string>
+                <string>%pathname%/Burp Suite*.app</string>
                 <key>requirement</key>
                 <string>always</string>
             </dict>
