@@ -138,7 +138,7 @@ See docstring in main()
 
 # Standard imports
 # pylint: disable = deprecated-module
-from distutils.version import LooseVersion
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 import os
 import plistlib
 import sys
