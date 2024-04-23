@@ -25,6 +25,8 @@ import urllib, urllib2, gzip
 from xml.etree import ElementTree
 from StringIO import StringIO
 from autopkglib import Processor, ProcessorError
+import sys
+sys.path.insert(0, '/usr/local/munki')
 from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 
 __all__ = ["VMwareFusion8URLProvider"]
