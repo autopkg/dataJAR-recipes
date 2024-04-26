@@ -18,6 +18,24 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new recipes https://github.com/autopkg/dataJAR-recipes/tree/master/KeyShot%20Network%20Rendering</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>re_pattern</key>
                 <string>(https://download\.keyshot\.com/keyshot2023/keyshot_network_rendering_mac64_([0-9]+(\.[0-9]+)+)_([0-9]+(\.[0-9]+)+)\.pkg)</string>
                 <key>result_output_var_name</key>

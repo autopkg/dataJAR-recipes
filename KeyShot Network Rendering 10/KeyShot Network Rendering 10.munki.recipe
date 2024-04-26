@@ -43,13 +43,31 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.KeyShot Network Rendering 10</string>
     <key>Process</key>
     <array>
-     <dict>
-        <key>Arguments</key>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new recipes https://github.com/autopkg/dataJAR-recipes/tree/master/KeyShot%20Network%20Rendering</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
