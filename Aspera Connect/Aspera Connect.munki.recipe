@@ -67,7 +67,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-ConnectApp.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-Connect.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -78,7 +78,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-LauncherApp.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-Launcher.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -89,7 +89,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-CryptApp.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-Crypt.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -101,9 +101,9 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Aspera Crypt.app</string>
+                    <string>/Applications/IBM Aspera Connect.app</string>
+                    <string>/Applications/IBM Aspera Crypt.app</string>
                     <string>/Applications/IBM Aspera Launcher.app</string>
-                    <string>/Applications/Aspera Connect.app</string>
                 </array>
             </dict>
         <key>Processor</key>
