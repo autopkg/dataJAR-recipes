@@ -11,7 +11,7 @@
             <key>NAME</key>
             <string>ScreenPal3</string>
             <key>DOWNLOAD_URL</key>
-            <string>https://screenpal.com/getappdownload?platform=mac</string>
+            <string>https://screenpal.com/launcher/pkg?id=2a117414-e268-470f-be56-2d4788a32969&amp;args=screen-recorder-launcher%3A%2F%2Fs%2Fscreenpal.com%2Fstart-recorder%3Fs%3D0</string>
         </dict>
         <key>MinimumVersion</key>
         <string>1.1</string>
