@@ -36,6 +36,10 @@ Your modern workplace at home, in the office, and on the go</string>
             <true/>
             <key>unattended_install</key>
             <true/>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Teams (work or school)</string>
+            </array>
         </dict>
     </dict>
     <key>MinimumVersion</key>
