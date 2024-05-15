@@ -23,7 +23,7 @@
                 <key>url</key>
                 <string>https://vcvrack.com/Rack#get</string>
                 <key>re_pattern</key>
-                <string>href=\"/(downloads/RackFree-(\d(\.\d)+)-mac-x64\.pkg)\"</string>
+                <string>href=\"/(downloads/RackFree-([0-9]+(\.[0-9]+)+)-mac-x64\+arm64\.pkg)\"</string>
             </dict>
         </dict>
         <dict>
