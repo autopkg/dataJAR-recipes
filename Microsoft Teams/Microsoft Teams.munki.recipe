@@ -39,6 +39,7 @@ Your modern workplace at home, in the office, and on the go</string>
             <key>blocking_applications</key>
             <array>
                 <string>Microsoft Teams (work or school)</string>
+                <string>Microsoft Teams</string>
             </array>
         </dict>
     </dict>
