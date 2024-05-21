@@ -12,136 +12,28 @@
         <string>VMwareFusion13</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.VMware Fusion 13</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>AppDmgVersioner</string>
             <key>Arguments</key>
             <dict>
-                <key>dmg_path</key>
-                <string>%pathname%</string>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use https://github.com/autopkg/justinrummel-recipes/blob/master/VMware%20Fusion/VMwareFusion.pkg.recipe</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
-            <string>DittoCopier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%pathname%/%app_name%</string>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications/%app_name%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/Scripts</string>
-                <key>pkgdirs</key>
-                <dict/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FileCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>file_content</key>
-            <string>#!/bin/zsh
-#
-# Pinched with &lt;3 from: https://github.com/autopkg/justinrummel-recipes/blob/42bc13881fe373f771cefec20a53d7844172019f/VMware%20Fusion/VMwareFusion.pkg.munki.recipe
-#
-
-if [[ -e /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool ]]
-then
-        /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool set
-fi</string>
-                <key>file_mode</key>
-                <string>0755</string>
-                <key>file_path</key>
-                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgInfoCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>version</key>
-                <string>%version%</string>
-                <key>template_path</key>
-                <string>PackageInfoTemplate</string>
-                <key>infofile</key>
-                <string>%RECIPE_CACHE_DIR%/PackageInfo</string>
-                <key>pkgtype</key>
-                <string>flat</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_request</key>
-                <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
-                    <key>chown</key>
-                    <array>
-                        <dict>
-                            <key>path</key>
-                            <string>Applications</string>
-                            <key>user</key>
-                            <string>root</string>
-                            <key>group</key>
-                            <string>admin</string>
-                        </dict>
-                    </array>
-                    <key>id</key>
-                    <string>%bundleid%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>pkgroot</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <key>scripts</key>
-                    <string>Scripts</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <string>%RECIPE_CACHE_DIR%/Scripts</string>
-                </array>
-            </dict>
+            <string>StopProcessingIf</string>
         </dict>
     </array>
 </dict>

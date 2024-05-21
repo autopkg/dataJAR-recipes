@@ -7,62 +7,23 @@
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.VMware Fusion 13</string>
     <key>Input</key>
-    <dict/>
+    <dict>
+        <key>NAME</key>
+        <string>VMwareFusion13</string>
+    </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
+            <string>VMwareFusionURLProvider</string>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 13.*\&quot;,\&quot;dlgList\&quot;:\[{\&quot;.*\&quot;,\&quot;code\&quot;:\&quot;(?P&lt;download_group&gt;FUS-\d.*)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;isFirmwareImage\&quot;:.*,\&quot;orderId\&quot;:.*}</string>
-                <!--
-                    Example for 13.x:
-                    {"name":"VMware Fusion 13.0.0","dlgList":[{"name":"VMware Fusion 13.0.0 (for Intel-based and Apple silicon Macs)","code":"FUS-1300","releaseDate":"2022-11-17T08:00:00Z","productId":"1375","releasePackageId":"97001","isFirmwareImage":0,"orderId":1}
-                -->
-                <key>url</key>
-                <string>https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=13_0&amp;dlgType=PRODUCT_BINARY</string>
-                <!--
-                    Example for 13.x:
-                    https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&category=desktop_end_user_computing&product=vmware_fusion&version=13_0&dlgType=PRODUCT_BINARY
-                -->
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>VMware-Fusion-.*\.dmg</string>
-                <!--
-                    Example for 13.x:
-                    VMware-Fusion-13.0.0-20802013_universal.dmg
-                -->
-                <key>result_output_var_name</key>
-                <string>dmg_url</string>
-                <key>url</key>
-                <string>https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=13_0&amp;dlgType=PRODUCT_BINARY&amp;downloadGroup=%download_group%</string>
-                <!--
-                    Example for 13.x:
-                    https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&category=desktop_end_user_computing&product=vmware_fusion&version=13_0&dlgType=PRODUCT_BINARY&downloadGroup=FUS-1300
-                -->
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
-            <key>Arguments</key>
-            <dict>
-                <key>find</key>
-                <string>NEW</string>
-                <key>input_string</key>
-                <string>%download_group%</string>
-                <key>replace</key>
-                <string>New</string>
+                <key>product_name</key>
+                <string>fusion-universal.xml</string>
+                <key>major_version</key>
+                <string>13</string>
             </dict>
         </dict>
         <dict>
@@ -70,21 +31,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>prefetch_filename</key>
-                <true/>
-                <key>request_headers</key>
-                <dict>
-                    <key>Referer</key>
-                    <string>https://www.vmware.com/</string>
-                    <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Safari/605.1.15</string>
-                </dict>
-                <key>url</key>
-                <string>https://download3.vmware.com/software/%output_string%/%dmg_url%</string>
-                <!--
-                    Example for 13.x:
-                   https://download3.vmware.com/software/FUS-1300/VMware-Fusion-13.0.0-20802013_universal.dmg
-                -->
+                <key>filename</key>
+                <string>%NAME%.zip.tar</string>
             </dict>
         </dict>
         <dict>
@@ -93,11 +41,35 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/com.vmware.fusion.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/unziped</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/VMware Fusion.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/unziped/payload/VMware Fusion.app</string>
                 <key>requirement</key>
                 <string>identifier "com.vmware.fusion" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EG7KH642X6</string>
             </dict>
