@@ -19,18 +19,18 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-			<string>&lt;p&gt;Compatible with both iCal and Outlook, the BlueJeans Scheduler for Mac gives you one-click entry to upcoming meetings, lets you schedule future meetings and invite participants, and even start an instant meeting for ad hoc collaboration.&lt;/p&gt;
+            <string>&lt;p&gt;Compatible with both iCal and Outlook, the BlueJeans Scheduler for Mac gives you one-click entry to upcoming meetings, lets you schedule future meetings and invite participants, and even start an instant meeting for ad hoc collaboration.&lt;/p&gt;
 &lt;p&gt;With the BlueJeans Scheduler for Mac, you can:&lt;/p&gt;
 &lt;ul&gt;
-	&lt;li&gt;Connect with iCal, Outlook, and BlueJeans Scheduling to display upcoming BlueJeans meetings in the Mac toolbar&lt;/li&gt;
-	&lt;li&gt;Launch your browser and join meetings with one click&lt;/li&gt;
-	&lt;li&gt;Schedule upcoming meetings and invite participants&lt;/li&gt;
-	&lt;li&gt;Specify default and per-meeting advanced options&lt;/li&gt;
-	&lt;li&gt;Review and cancel upcoming meetings&lt;/li&gt;
+    &lt;li&gt;Connect with iCal, Outlook, and BlueJeans Scheduling to display upcoming BlueJeans meetings in the Mac toolbar&lt;/li&gt;
+    &lt;li&gt;Launch your browser and join meetings with one click&lt;/li&gt;
+    &lt;li&gt;Schedule upcoming meetings and invite participants&lt;/li&gt;
+    &lt;li&gt;Specify default and per-meeting advanced options&lt;/li&gt;
+    &lt;li&gt;Review and cancel upcoming meetings&lt;/li&gt;
 &lt;/ul&gt;
 </string>
             <key>developer</key>
-			<string>Bluejeans</string>
+            <string>Bluejeans</string>
             <key>display_name</key>
             <string>Blue Jeans Scheduler for Mac</string>
             <key>name</key>
@@ -38,28 +38,48 @@
             <key>unattended_install</key>
             <true/>
         </dict>
-		<key>pkginfo_keys_to_copy_from_sparkle_feed</key>
-		<array>
-			<string>minimum_os_version</string>
-		</array>  
+        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
+        <array>
+            <string>minimum_os_version</string>
+        </array>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Blue Jeans Scheduler for Mac</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/%filename%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor has sunset this title.
+
+BlueJeans by Verizon will no longer be providing customer support. Effective March 29 2024</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>

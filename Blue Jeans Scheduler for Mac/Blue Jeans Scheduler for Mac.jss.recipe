@@ -26,7 +26,7 @@
         <string>BlueJeansSchedulerforMac.png</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.Blue Jeans Scheduler for Mac</string>
     <key>Process</key>
@@ -35,12 +35,21 @@
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>Due to an upcoming breaking change by Jamf this recipe has been deprecated, and will be removed from this repo at a future date.
+                <string>This recipe has been deprecated. The vendor has sunset this title.
 
-Please urgently consider moving to Jamf-Uploader. There are some excellent resourses availabe on Graham Pugh’s blog: https://grahamrpugh.com/archives/index.html</string>
+BlueJeans by Verizon will no longer be providing customer support. Effective March 29 2024</string>
             </dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Arguments</key>

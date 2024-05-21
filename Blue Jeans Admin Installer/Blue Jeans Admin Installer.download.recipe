@@ -28,6 +28,26 @@ To download the Intel version use x86_64 in the ARCH_TYPE variable.</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor has sunset this title.
+
+BlueJeans by Verizon will no longer be providing customer support. Effective March 29 2024</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>re_pattern</key>
                 <string>enclosure url=\"https://swdl\.bluejeans\.com/desktop-app/mac/(([0-9]+(\.[0-9]+)+)/([0-9]+(\.[0-9]+)+))/blue</string>
                 <key>result_output_var_name</key>
