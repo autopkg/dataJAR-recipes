@@ -43,6 +43,26 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The versioning of the app seems to be stuck at v3 with the vendor only updating components.
+
+Please also see: https://github.com/autopkg/dataJAR-recipes/pull/311</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 <key>flat_pkg_path</key>

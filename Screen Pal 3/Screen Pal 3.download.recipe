@@ -17,6 +17,26 @@
         <string>1.1</string>
         <key>Process</key>
         <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The versioning of the app seems to be stuck at v3 with the vendor only updating components.
+
+Please also see: https://github.com/autopkg/dataJAR-recipes/pull/311</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
             <dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>
