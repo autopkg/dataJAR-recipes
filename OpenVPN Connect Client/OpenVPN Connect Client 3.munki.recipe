@@ -35,7 +35,26 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>OpenVPN</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+    echo Running the vendors uninstall script...
+"/Applications/OpenVPN Connect/Uninstall OpenVPN Connect.app/Contents/Resources/remove.sh"
+
+    echo Forgetting package receipts...
+/usr/sbin/pkgutil --forget org.openvpn.client.pkg
+/usr/sbin/pkgutil --forget org.openvpn.client_framework.pkg
+/usr/sbin/pkgutil --forget org.openvpn.client_launch.pkg
+/usr/sbin/pkgutil --forget org.openvpn.client_uninstall.pkg
+/usr/sbin/pkgutil --forget org.openvpn.helper_framework.pkg
+/usr/sbin/pkgutil --forget org.openvpn.helper_launch.pkg
+
+exit</string>
             <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
