@@ -12,7 +12,7 @@
         <string>FlashPrint</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -21,14 +21,21 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>MacOS.*\n*.*\n*.*\n*.*\n*.*\n*.\n.*\n.*\"(.*\.zip)</string>
+                <string>(https://en\.fss\.flashforge\.com/[\d]+/software/[\S]+\.zip)\"&gt;&lt;img src=\"//flashforge\.com/cdn/shop/files/apple\.png</string>
                 <key>result_output_var_name</key>
-                <string>url</string>
+                <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://www.flashforge.com/download-center/63</string>
+                <string>https://flashforge.com/pages/software-flashprint</string>
             </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%_mac.zip</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
