@@ -33,9 +33,7 @@ Your modern workplace at home, in the office, and on the go</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
-            <true/>
-            <key>unattended_install</key>
-            <true/>
+            <false/>
             <key>blocking_applications</key>
             <array>
                 <string>Microsoft Teams (work or school)</string>
