@@ -21,9 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(Algodoo_.*-MacOS.dmg)\"</string>
+                <string>\"(http://www\.algodoo\.com/download/Algodoo.*?-MacOS\.dmg)\"</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
                 <key>url</key>
-                <string>https://www.algodoo.com/download/?C=M;O=D</string>
+                <string>https://www.algodoo.com/download</string>
             </dict>
         </dict>
         <dict>
@@ -33,8 +35,6 @@
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
-                <key>url</key>
-                <string>https://www.algodoo.com/download/%match%</string>
             </dict>
         </dict>
         <dict>
