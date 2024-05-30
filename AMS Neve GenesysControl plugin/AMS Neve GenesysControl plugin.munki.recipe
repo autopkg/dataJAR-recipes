@@ -3,15 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of AMS Neve GenesysControl Plugin and imports into Munki.
-
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <string>Downloads the latest version of AMS Neve GenesysControl Plugin and imports into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.AMS Neve GenesysControl Plugin</string>
     <key>Input</key>
     <dict>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>NAME</key>
         <string>AMS Neve GenesysControl Plugin</string>
         <key>MUNKI_REPO_SUBDIR</key>
@@ -108,8 +104,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 <key>installs_item_paths</key>
