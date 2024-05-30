@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of the AMS Neve GenesysControl plugin</string>
+    <string>Downloads latest version of the AMS Neve GenesysControl Plugin</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.AMS Neve GenesysControl plugin</string>
+    <string>com.github.dataJAR-recipes.download.AMS Neve GenesysControl Plugin</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>AMS Neve GenesysControl plugin</string>
+        <string>AMS Neve GenesysControl Plugin</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -17,43 +17,20 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>These recipes have been replaced with: https://github.com/autopkg/dataJAR-recipes/tree/master/Zevrix%20LinkOptimizer%206</string>
-             </dict>
-        </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.ams-neve.com/genesyscontrol-plugin-199-w.asp</string>
                 <key>re_pattern</key>
-                <string>http://ams-neve\.info/ftp/web/Genesys/GenesysControlInstallerMac_\d_\d*\.zip</string>
+                <string>https://www\.ams-neve\.com/wp-content/uploads/2023/10/GenesysControl_v.*?\.zip</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>https://www.ams-neve.com/consoles/genesyscontrol-plugin/</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>filename</key>
-                <string>%NAME%.zip</string>
-            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -67,11 +44,7 @@
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unzip</string>
-                <key>purge_destination</key>
-                <true/>
-                <key>archive_format</key>
-                <string>zip</string>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
             </dict>
         </dict>
         <dict>
@@ -80,44 +53,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%destination_path%/GenesysControlInstaller*.pkg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_pkg</key>
-                <string>%found_filename%</string>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
-                <key>purge_destination</key>
-                <string>true</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%destination_path%/AAX.pkg/Payload</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/aaxpkg_unpack</string>
-                <key>purge_destination</key>
-                <string>true</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
             </dict>
         </dict>
         <dict>
@@ -125,23 +61,14 @@
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%destination_path%/GenesysControl.aaxplugin</string>
-                <key>requirement</key>
-                <string>identifier "com.AMSNeve.GenesysControl" and certificate leaf = H"8eee15e441a44455f2ddad0b222a640a73dbf8c0"</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
+                <key>expected_authority_names</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/aaxpkg_unpack</string>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                    <string>%RECIPE_CACHE_DIR%/pkg_unzip</string>
+                    <string>Developer ID Installer: AMS Neve Ltd (MFS334BU6V)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%found_filename%</string>
             </dict>
         </dict>
     </array>
