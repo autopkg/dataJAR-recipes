@@ -34,19 +34,19 @@
     <string>com.github.dataJAR-recipes.download.AMS Neve GenesysControl Plugin</string>
     <key>Process</key>
     <array>
-     <dict>
-   <key>Processor</key>
-   <string>FlatPkgUnpacker</string>
-   <key>Arguments</key>
-   <dict>
-    <key>destination_path</key>
-    <string>%RECIPE_CACHE_DIR%/unpack</string>
-    <key>flat_pkg_path</key>
-    <string>%found_filename%</string>
-    <key>purge_destination</key>
-    <true/>
-   </dict>
-  </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
@@ -75,19 +75,19 @@
                 </dict>
             </dict>
         </dict>
-  <dict>
-   <key>Processor</key>
-   <string>PkgPayloadUnpacker</string>
-   <key>Arguments</key>
-   <dict>
-    <key>destination_path</key>
-    <string>%RECIPE_CACHE_DIR%/payload/</string>
-    <key>pkg_payload_path</key>
-    <string>%RECIPE_CACHE_DIR%/unpack/AAX.pkg/Payload</string>
-    <key>purge_destination</key>
-    <true/>
-   </dict>
-  </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/AAX.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>Copier</string>
