@@ -6,10 +6,6 @@
     <string>Downloads the latest version of LuLu and imports into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.LuLu</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.LuLu</string>
-    <key>MinimumVersion</key>
-    <string>0.6.0</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -54,6 +50,10 @@ fi</string>
             <key>unattended_uninstall</key>
             <true/>
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.LuLu</string>
     <key>Process</key>
     <array>
         <dict>
