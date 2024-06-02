@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of the OverSight.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.download.OverSight</string>
+    <string>com.github.dataJAR-recipes.download.OverSight</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
