@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.download.Refinitiv Workspace</string>
+    <string>com.github.dataJAR-recipes.download.Refinitiv Workspace</string>
     <key>Process</key>
     <array>
         <dict>
