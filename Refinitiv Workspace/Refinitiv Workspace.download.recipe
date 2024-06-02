@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Refinitiv Workspace.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.download.Refinitiv Workspace</string>
+    <string>com.github.dataJAR-recipes.download.Refinitiv Workspace</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
