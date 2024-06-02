@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ReiKey and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.ReiKey</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.ReiKey</string>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ReiKey</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>ReiKey provides continual protection by monitoring persistence locations. Any new persistent component will trigger a ReiKey alert, allowing malicious items be blocked.</string>
+            <key>developer</key>
+            <string>Objective-See</string>
+            <key>display_name</key>
+            <string>ReiKey</string>
+            <key>items_to_copy</key>
+            <array>
+                <dict>
+                    <key>destination_path</key>
+                    <string>/tmp</string>
+                    <key>mode</key>
+                    <string>a+rx</string>
+                    <key>source_item</key>
+                    <string>ReiKey Installer.app</string>
+                </dict>
+            </array>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Install via the command line installer
+#
+
+installerAppPath="/tmp/ReiKey Installer.app"
+installerApp=$(/usr/bin/basename "${installerAppPath}")
+installerBinary=${installerApp%.*}
+
+if [ -d "${installerAppPath}" ]
+then
+    if "${installerAppPath}"/Contents/MacOS/"${installerBinary}" -install
+    then
+        /bin/echo "ReiKey has been successfully installed, deleting: ${installerAppPath}..."
+        /bin/rm -rf "${installerAppPath}"
+        /bin/echo "Deleted ${installerAppPath}..."
+    else
+        /bin/echo "ERROR: installation failed..."
+        exit 1
+    fi
+else
+    /bin/echo "ERROR: Cannot locate ${installerAppPath}, exiting..."
+    exit 1
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_package</string>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                    <key>tmp</key>
+                    <string>0755</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/ReiKey Installer.app/Contents/Resources/ReiKey.app</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/ReiKey.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/ReiKey.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/ReiKey Installer.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleIdentifier</key>
+                    <string>bundleid</string>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>minimum_os_version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/tmp/ReiKey Installer.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/ReiKey Installer.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/Applications</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/scripts</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+               <key>file_path</key>
+               <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
+               <key>file_mode</key>
+               <string>0755</string>
+               <key>file_content</key>
+               <string>#!/bin/bash
+#
+# Invoke the command line uninstaller
+#
+
+installerAppPath="/tmp/ReiKey Installer.app"
+installerApp=$(/usr/bin/basename "${installerAppPath}")
+installerBinary=${installerApp%.*}
+
+if [ -d "${installerAppPath}" ]
+then
+    if "${installerAppPath}"/Contents/MacOS/"${installerBinary}" -uninstall
+    then
+        /bin/echo "ReiKey has been successfully uninstalled, deleting: ${installerAppPath}..."
+        /bin/rm -rf "${installerAppPath}"
+        /bin/echo "Deleted ${installerAppPath}..."
+    else
+        /bin/echo "ERROR: installation failed..."
+        exit 1
+    fi
+else
+    /bin/echo "ERROR: Cannot locate ${installerAppPath}, exiting..."
+    exit 1
+fi</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>force_pkg_build</key>
+                <true/>
+                <key>pkg_request</key>
+                <dict>
+                    <key>id</key>
+                    <string>%bundleid%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-uninstaller-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <key>scripts</key>
+                    <string>scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>uninstaller_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-uninstaller-%version%.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/scripts</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
