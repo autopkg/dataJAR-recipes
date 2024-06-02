@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of OverSight and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.OverSight</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.OverSight</string>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>OverSight</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Mac malware often spies on users by recording audio and video sessions...sometimes in an undetected manner. OverSight monitors a mac's mic and webcam, alerting the user when the internal mic is activated, or whenever a process accesses the webcam.</string>
+            <key>developer</key>
+            <string>Objective-See</string>
+            <key>display_name</key>
+            <string>OverSight</string>
+            <key>items_to_copy</key>
+            <array>
+                <dict>
+                    <key>destination_path</key>
+                    <string>/tmp</string>
+                    <key>mode</key>
+                    <string>a+rx</string>
+                    <key>source_item</key>
+                    <string>OverSight Installer.app</string>
+                </dict>
+            </array>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+#
+# Install via the command line installer
+#
+
+installerAppPath="/tmp/OverSight Installer.app"
+installerApp=$(/usr/bin/basename "${installerAppPath}")
+installerBinary=${installerApp%.*}
+
+if [ -d "${installerAppPath}" ]
+then
+    if "${installerAppPath}"/Contents/MacOS/"${installerBinary}" -install
+    then
+        /bin/echo "OverSight has been successfully installed, deleting: ${installerAppPath}..."
+        /bin/rm -rf "${installerAppPath}"
+        /bin/echo "Deleted ${installerAppPath}..."
+    else
+        /bin/echo "ERROR: installation failed..."
+        exit 1
+    fi
+else
+    /bin/echo "ERROR: Cannot locate ${installerAppPath}, exiting..."
+    exit 1
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Uninstall via the command line uninstaller
+#
+
+installerAppPath="/Applications/OverSight.app/Contents/Resources/OverSight Installer.app"
+installerApp=$(/usr/bin/basename "${installerAppPath}")
+installerBinary=${installerApp%.*}
+
+if [ -d "${installerAppPath}" ]
+then
+    if "${installerAppPath}"/Contents/MacOS/"${installerBinary}" -uninstall
+    then
+        /bin/echo "OverSight has been successfully uninstalled, deleting: ${installerAppPath}..."
+        /bin/rm -rf "${installerAppPath}"
+        /bin/echo "Deleted ${installerAppPath}..."
+    else
+        /bin/echo "ERROR: installation failed..."
+        exit 1
+    fi
+else
+    /bin/echo "ERROR: Cannot locate ${installerAppPath}, exiting..."
+    exit 1
+fi</string>
+        </dict>
+    </dict>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/OverSight.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/OverSight Installer.app/Contents/Resources/OverSight.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/OverSight.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
