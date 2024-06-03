@@ -6,11 +6,14 @@
     <string>Downloads the latest version of Ultimaker Cura.
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
-i.e.: `-k PRERELEASE=yes`</string>
+i.e.: `-k PRERELEASE=yes`
+Set ARCH to either ARM64 (Apple Silicon) or X64 (Intel). ARM64 is default.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Ultimaker Cura</string>
     <key>Input</key>
     <dict>
+        <key>ARCH</key>
+        <string>ARM64</string>
         <key>PRERELEASE</key>
         <string></string>
         <key>NAME</key>
@@ -43,7 +46,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
-                <string>[\S]+\.dmg</string>
+                <string>[\S]+-%ARCH%\.dmg</string>
             </dict>
         </dict>
         <dict>
