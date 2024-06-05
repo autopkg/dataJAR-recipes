@@ -10,15 +10,11 @@
     <dict>
         <key>NAME</key>
         <string>Resolume Arena</string>
-        <key>CHECK_PAGE_URL</key>
-        <string>https://resolume.com/download/?file=latest_arena</string>
-        <key>DOWNLOAD_PAGE_URL</key>
-        <string>https://resolume.com/download</string>
         <key>USER_AGENT</key>
-        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -27,11 +23,11 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%CHECK_PAGE_URL%</string>
+                <string>https://resolume.com/download/?file=latest_arena</string>
                 <key>result_output_var_name</key>
-                <string>url</string>
+                <string>DOWNLOAD_NAME</string>
                 <key>re_pattern</key>
-                <string>//.*\..*\..*/Resolume_Arena.*\.dmg</string>
+                <string>href=\"https://resolume\.com/download/file\?file=(Resolume_Arena_([0-9]+(_[0-9]+)+)_rev_[A-Za-z0-9]+_Installer\.dmg)\"</string>
                 <key>re_flags</key>
                 <array>
                     <string>IGNORECASE</string>
@@ -49,7 +45,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https:%url%</string>
+                <string>https://dd5sgwxv3xok.cloudfront.net/%DOWNLOAD_NAME%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
