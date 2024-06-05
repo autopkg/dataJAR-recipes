@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>data-link=\"/(content/dam/hikvision/en/support/download/vms/ivms4200-series/software-download/ivms4200-mac\(([A-Za-z0-9]+(-[A-Za-z0-9]+)+)\)/iVMS-4200-V([0-9]+(\.[0-9]+)+)build[0-9]+\.pkg\.zip)\"</string>
+                <string>data-link=\"/(content/dam/hikvision/en/support/download/vms/ivms4200-series/software-download/iVMS-([0-9]+(\.[0-9]+)+)\.pkg\.zip)\"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
