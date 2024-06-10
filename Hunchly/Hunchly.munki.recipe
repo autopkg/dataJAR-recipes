@@ -5,7 +5,10 @@
     <key>Description</key>
     <string>Downloads the latest version of Hunchly and imports into Munki.
 
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Hunchly</string>
     <key>Input</key>
@@ -16,6 +19,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -31,6 +36,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>requires</key>
             <array>
                 <string>GoogleChrome</string>
+            </array>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
             </array>
             <key>unattended_install</key>
             <true/>

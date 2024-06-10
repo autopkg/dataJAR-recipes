@@ -3,32 +3,31 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of the Hunchly</string>
+    <string>Downloads latest version of the Hunchly
+
+To download Apple Silicon use: "_arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Hunchly</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Hunchly</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>https://downloadmirror\.hunch\.ly/currentversion/HunchlyInstaller\.pkg</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://www.hunch.ly/downloads</string>
+                <string>https://downloadmirror.hunch.ly/currentversion/HunchlyInstaller%DOWNLOAD_ARCH%.pkg</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
