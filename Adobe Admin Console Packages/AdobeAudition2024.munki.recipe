@@ -42,11 +42,6 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
             <dict>
                 <key>Processor</key>
                 <string>AdobeAdminConsolePackagesPkgInfoCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>aacp_package_name</key>
-                    <string>%NAME%</string>
-                </dict>
             </dict>
             <dict>
                 <key>Processor</key>
@@ -54,20 +49,9 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 <key>Arguments</key>
                 <dict>
                     <key>dmg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Install-%aacp_application_architecture_type%-%version%.dmg</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-%aacp_application_architecture_type%-%version%.dmg</string>
                     <key>dmg_root</key>
-                    <string>%aacp_install_pkg_path%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>DmgCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>dmg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Uninstall-%aacp_application_architecture_type%-%version%.dmg</string>
-                    <key>dmg_root</key>
-                    <string>%aacp_uninstall_pkg_path%</string>
+                    <string>%aacp_package_path%</string>
                 </dict>
             </dict>
             <dict>
@@ -97,8 +81,6 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                     <string>%RECIPE_CACHE_DIR%/%NAME%_Install-%aacp_application_architecture_type%-%version%.dmg</string>
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
-                    <key>uninstaller_pkg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Uninstall-%aacp_application_architecture_type%-%version%.dmg</string>
                 </dict>
             </dict>
         </array>
