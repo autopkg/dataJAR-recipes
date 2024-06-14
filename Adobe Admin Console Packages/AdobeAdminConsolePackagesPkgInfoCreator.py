@@ -1,41 +1,22 @@
 #!/usr/local/autopkg/python
 # pylint: disable = invalid-name
 '''
-Copyright (c) 2022, dataJAR Ltd.  All rights reserved.
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-             * Redistributions of source code must retain the above copyright
-               notice, this list of conditions and the following disclaimer.
-             * Redistributions in binary form must reproduce the above copyright
-               notice, this list of conditions and the following disclaimer in the
-               documentation and/or other materials provided with the distribution.
-             * Neither data JAR Ltd nor the names of its contributors may be used to
-               endorse or promote products derived from this software without specific
-               prior written permission.
-     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
-     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-SUPPORT FOR THIS PROGRAM
-    This program is distributed 'as is' by DATA JAR LTD.
-    For more information or support, please utilise the following resources:
-            http://www.datajar.co.uk
+Copyright (c) 2024, Jamf Ltd.  All rights reserved.
 
 DESCRIPTION
 
-Generates installation information for Adobe Admin Console Packages
+Generates installation information for Adobe Admin Console Packages.
+
 '''
+
 
 # Standard Imports
 import json
 import os
 import re
+import shutil
+import subprocess
+import tempfile
 import xml
 from xml.etree import ElementTree
 
@@ -48,9 +29,8 @@ from autopkglib import (Processor,
 
 # Define class
 __all__ = ['AdobeAdminConsolePackagesPkgInfoCreator']
-__version__ = ['1.0']
+__version__ = ['2.0']
 
-DEFAULT_AACP_PACKAGES_PATH = os.path.expanduser('~/Downloads/')
 
 # Class def
 class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
@@ -61,79 +41,73 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
     description = __doc__
 
     input_variables = {
-        'aacp_package_name': {
+        'aacp_package_path': {
             'required': True,
-            'description': 'The name specified when creating the download from the Adobe Admin Console. '
-            'Normally, this is supplied in the environment as a recipe/override Input variable.',
-        },
-        'aacp_packages_path': {
-            'required': False,
-            'description': f'The path to look for source packages. Defaults to {DEFAULT_AACP_PACKAGES_PATH}.',
+            'description': "Path to package to import, this will be created within the override "
+                           "by AdobeAdminConsolePackagesImporter.py",
         },
     }
 
     output_variables = {
         'aacp_application_architecture_type': {
-            'description': 'The architecture type for the title, either arm64 or x86_64',
+            'description': "The architecture type for the title, either arm64 or x86_64",
         },
         'aacp_application_bundle_id': {
-            'description': 'Value of the titles CFBundleIdentifier.',
+            'description': "Value of the titles CFBundleIdentifier.",
         },
         'aacp_application_description': {
-            'description': 'Short description of the title.',
+            'description': "Short description of the title.",
         },
         'aacp_application_display_name': {
-            'description': 'Display name of the title.',
+            'description': "Display name of the title.",
         },
         'aacp_application_full_path': {
-            'description': 'Full path to the application bundle on disk, as per Terminal etc, not Finder.',
+            'description': "Full path to the application bundle on disk, as per Terminal etc, "
+                           "not Finder.",
         },
         'aacp_application_install_lang': {
-            'description': 'The titles installation langauage.',
+            'description': "The titles installation langauage.",
         },
         'aacp_application_json_path': {
-            'description': 'Path to the tiles Application.json file.',
+            'description': "Path to the tiles Application.json file.",
         },
         'aacp_application_major_version': {
-            'description': 'The major version of the title.',
+            'description': "The major version of the title.",
         },
         'aacp_application_sap_code': {
-            'description': 'The titles sap code.',
+            'description': "The titles sap code.",
         },
         'aacp_blocking_applications': {
-            'description': 'Sorted set of the conflicting processes.',
-        },
-        'aacp_install_pkg_path': {
-            'description': 'Path to the Adobe*_Install.pkg.',
+            'description': "Sorted set of the conflicting processes.",
         },
         'aacp_json_path': {
-            'description': 'Path to AdobeAutoPkgApplicationData.json.',
+            'description': "Path to AdobeAutoPkgApplicationData.json.",
         },
         'aacp_matched_json': {
             'description': ('dict from AdobeAutoPkgApplicationData.json, which matches the '
                             '"aacp_application_sap_code" and "aacp_application_major_version".'),
         },
         'aacp_option_xml_path': {
-            'description': 'Path to the tiles optionXML.xml file.',
+            'description': "Path to the tiles optionXML.xml file.",
+        },
+        'aacp_package_path': {
+            'description': "Path to package to import, this will be created within the override "
+                           "by AdobeAdminConsolePackagesImporter.py",
         },
         'aacp_parent_dir': {
-            'description': 'Path to parent directory of this processor.',
+            'description': "Path to parent directory of this processor.",
         },
         'aacp_proxy_xml_path': {
-            'description': 'Acrobat only, path to proxy.xml.',
+            'description': "Acrobat only, path to proxy.xml.",
         },
         'aacp_target_folder': {
-            'description': 'The name of the folder within the pkg to check files for metadata.',
-        },
-        'aacp_uninstall_pkg_path': {
-            'description': 'Path to the Adobe*_Uninstall.pkg.',
+            'description': "The name of the folder within the pkg to check files for metadata.",
         },
         'additional_pkginfo': {
-            'description':
-                'Additonal pkginfo fields extracted from the Adobe metadata.',
+            'description': "Additonal pkginfo fields extracted from the Adobe metadata.",
         },
         'version': {
-            'description': 'The titles version.',
+            'description': "The titles version.",
         }
     }
 
@@ -145,68 +119,98 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         '''
 
         # Progress notification
-        self.output("Starting versioner process...")
+        self.output("Starting Adobe Admin Console Packages pkginfo process...")
 
-        # Set aacp_package_name
-        self.env['aacp_package_name'] = self.env.get('aacp_package_name')
-        self.output(f"aacp_package_name: {self.env['aacp_package_name']}")
+        # Set aacp_package_path
+        self.env['aacp_package_path'] = self.env.get('aacp_package_path')
+        # Progress notification
+        self.output(f"aacp_package_path: {self.env['aacp_package_path']}")
 
-        # Set aacp_packages_path
-        self.env['aacp_packages_path'] = self.env.get('aacp_packages_path', DEFAULT_AACP_PACKAGES_PATH)
-        self.output(f"aacp_packages_path: {self.env['aacp_packages_path']}")
+        # If aacp_package_path somehow doesn't exist, raise
+        if not os.path.exists(self.env['aacp_package_path']):
+            # Raise if missing
+            raise ProcessorError(f"ERROR: Cannot find {self.env['aacp_package_path']}, exiting...")
 
-        # Check that aacp_packages_path exists
-        if not os.path.exists(self.env['aacp_packages_path']):
-            raise ProcessorError(f"ERROR: Cannot locate directory, "
-                                 f"{self.env['aacp_packages_path']}... exiting...")
-
-        # Check that aacp_packages_path is a directory
-        if not os.path.isdir(self.env['aacp_packages_path']):
-            raise ProcessorError(f"ERROR: {self.env['aacp_packages_path']} is a not a "
-                                  "directory... exiting...")
-
-        # Path to Adobe*_Install.pkg
-        self.env['aacp_install_pkg_path'] = (os.path.join(self.env['aacp_packages_path'],
-                                                          self.env['aacp_package_name'], 'Build',
-                                                          self.env['aacp_package_name'] + '_Install.pkg'))
-
-        # Check that the path exists, raise if not
-        if not os.path.exists(self.env['aacp_install_pkg_path']):
-            raise ProcessorError(f"ERROR: Cannot find "
-                                 f"{self.env['aacp_install_pkg_path']}... exiting...")
-        self.output(f"aacp_install_pkg_path: {self.env['aacp_install_pkg_path']}")
-
-        # Path to Adobe*_Uninstall.pkg
-        self.env['aacp_uninstall_pkg_path'] = (os.path.join(self.env['aacp_packages_path'],
-                                                            self.env['aacp_package_name'], 'Build',
-                                                            self.env['aacp_package_name'] + '_Uninstall.pkg'))
-
-        # Check that the path exists, raise if not
-        if not os.path.exists(self.env['aacp_uninstall_pkg_path']):
-            raise ProcessorError(f"ERROR: Cannot find {self.env['aacp_uninstall_pkg_path']}, these "
-                                 f"recipes need packages of the Managed Package variety, which "
-                                 f"include _Install and _Uninstall packages.... exiting...")
-        self.output(f"aacp_uninstall_pkg_path {self.env['aacp_uninstall_pkg_path']}")
+        # Get the installers optionXML.xml
+        self.get_option_xml_path()
 
         # Process the titles optionXML.xml
         self.process_optionxml_xml()
+
+
+    def get_option_xml_path(self):
+        '''
+            Returns the path to the installers optionXML.xml
+        '''
+
+        # If aacp_package_path is a directory, then it's a bundle pkg
+        if os.path.isdir(self.env['aacp_package_path']):
+            # Progress notification
+            self.output(f"{self.env['aacp_package_path']} is a bundle pkg, processing...")
+            # Path to the root dir in the pkg
+            self.env['aacp_root_dir'] = os.path.join(self.env['aacp_package_path'],
+                                                              'Contents/Resources')
+        # If not a directory
+        else:
+            # Progress notification
+            self.output(f"{self.env['aacp_package_path']} is a flat pkg, processing...")
+            # Expand the pkg to read the contents
+            self.expand_flat_pkg()
+
+        # If aacp_root_dir does not exist, raise
+        if not os.path.exists(self.env['aacp_root_dir']):
+            # Raise if missing
+            raise ProcessorError(f"ERROR: Cannot find {self.env['aacp_root_dir']}, exiting...")
+
+        # Path to titles optionXML.xml
+        self.env['aacp_option_xml_path'] = os.path.join(self.env['aacp_root_dir'],
+                                                                      'optionXML.xml')
+
+        # If optionXML.xml does not exist, raise
+        if not os.path.exists(self.env['aacp_option_xml_path']):
+            # Raise if missing
+            raise ProcessorError(f"ERROR: Cannot find {self.env['aacp_option_xml_path']}, "
+                                 f"exiting...")
+
+        # Progress notification
+        self.output(f"aacp_option_xml_path: {self.env['aacp_option_xml_path']}")
+
+
+    def expand_flat_pkg(self):
+        '''
+            Expands self.env['aacp_package_path'] to a temp dir for processing.
+        '''
+
+        # Create a temp dir
+        self.env['aacp_temp_dir'] = tempfile.mkdtemp()
+
+        # Progress notification
+        self.output(f"Created a temporary directory: {self.env['aacp_temp_dir']}")
+
+        # If aacp_temp_dir does not exist
+        if not os.path.exists(self.env['aacp_temp_dir']):
+            # Raise if missing
+            raise ProcessorError(f"ERROR: Cannot find {self.env['aacp_temp_dir']}, exiting...")
+
+        # The subprocess command
+        cmd_args = ['/usr/sbin/pkgutil', '--expand', self.env['aacp_package_path'],
+                                 os.path.join(self.env['aacp_temp_dir'], 'expand')]
+
+        # Progress notification
+        self.output(f"Expanding: {self.env['aacp_package_path']}...")
+
+        # Run the command, raising if issues occur
+        subprocess.run(cmd_args, check = True)
+
+        # Path to the root dir in the pkg
+        self.env['aacp_root_dir'] = os.path.join(self.env['aacp_temp_dir'],
+                                             'expand/Install.pkg/Scripts/')
 
 
     def process_optionxml_xml(self):
         '''
             Process the titles optionXML.xml
         '''
-
-        # Var declaration
-        self.env['aacp_application_install_lang'] = None
-
-        # Path to titles optionXML.xml
-        self.env['aacp_option_xml_path'] = os.path.join(self.env['aacp_install_pkg_path'],
-                                                        'Contents', 'Resources', 'optionXML.xml')
-        if not os.path.exists(self.env['aacp_option_xml_path']):
-            raise ProcessorError(f"ERROR: Cannot find {self.env['aacp_option_xml_path']}... "
-                                  "exiting...")
-        self.output(f"aacp_option_xml_path: {self.env['aacp_option_xml_path']}")
 
         # Progress notification
         self.output(f"Processing: {self.env['aacp_option_xml_path']}...")
@@ -221,15 +225,17 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         for hd_media in option_xml.findall('.//HDMedias/HDMedia'):
             # If we have HDMedia, set vars
             if hd_media.findtext('MediaType') == 'Product':
+                self.output("HERE1")
                 self.env['aacp_application_install_lang'] = hd_media.findtext('installLang')
                 self.env['aacp_application_sap_code'] = hd_media.findtext('SAPCode')
                 self.env['aacp_target_folder'] = hd_media.findtext('TargetFolderName')
                 self.env['aacp_application_major_version'] = hd_media.findtext('baseVersion')
 
-        # If no HDMedia is found, then self.env['aacp_application_install_lang'] will be none
-        if not self.env['aacp_application_install_lang']:
+        # If no HDMedia is found, then self.env['aacp_application_install_lang'] will not exist
+        if not 'aacp_application_install_lang' in self.env:
             # Get vars for RIBS media
             for ribs_media in option_xml.findall('.//Medias/Media'):
+                self.output("HERE2")
                 self.env['aacp_application_install_lang'] = ribs_media.findtext('installLang')
                 self.env['aacp_application_sap_code'] = ribs_media.findtext('SAPCode')
                 self.env['aacp_target_folder'] = ribs_media.findtext('TargetFolderName')
@@ -255,25 +261,25 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # If the we're looking at Acrobat, then we need to process things differently
         if self.env['aacp_application_sap_code'] == 'APRO':
-            self.process_apro_installer()
+            self.process_acrobat_installer()
         else:
             # Set application_json_path
-            self.env['aacp_application_json_path'] = os.path.join(self.env['aacp_install_pkg_path'],
-                                                                  'Contents/Resources/HD',
+            self.env['aacp_application_json_path'] = os.path.join(self.env['aacp_root_dir'],
+                                                                  'HD',
                                                                   self.env['aacp_target_folder'],
                                                                   'Application.json')
             # Process HD installer
             self.process_hd_installer()
 
 
-    def process_apro_installer(self):
+    def process_acrobat_installer(self):
         '''
-            Process APRO (Acrobat) installer
+            Process Acrobat installer
         '''
 
         # Progress notification
         self.output("Processing Acrobat installer")
-        self.env['aacp_proxy_xml_path'] = (os.path.join(self.env['aacp_install_pkg_path'],
+        self.env['aacp_proxy_xml_path'] = (os.path.join(self.env['aacp_package_path'],
                                                         'Contents/Resources/Setup',
                                                         self.env['aacp_target_folder'],
                                                         'proxy.xml'))
@@ -470,6 +476,10 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # Now we have the deets, let's use them
         self.create_pkginfo()
+        
+        if 'aacp_temp_dir' in self.env:
+            self.output(f"Deleting: {self.env['aacp_temp_dir']}...")
+            shutil.rmtree(self.env['aacp_temp_dir'])
 
 
     def create_pkginfo(self):
