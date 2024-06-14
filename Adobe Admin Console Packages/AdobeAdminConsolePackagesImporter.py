@@ -38,34 +38,35 @@ def main():
 
     # Setup arparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('type', type=str, help="Recipe type, for example: \"munki\" or \"jamf\"")
+    parser.add_argument('type', help="Recipe type, for example: \"munki\" or \"jamf\"", type=str)
+    parser.add_argument('dir', nargs="?", default="~/Downloads", help="Path to dir containing Adobe installers", type=str)
     arg_parser = parser.parse_args()
 
     # Retrieve passed type
     recipe_type = arg_parser.type.lower()
 
     # Var declarations
-    packages_path = os.path.expanduser('~/Downloads/')
+    packages_path = os.path.expanduser(arg_parser.dir)
     recipe_list_path = os.path.join(packages_path + 'adobe_admin_console_recipes_list.txt')
     report_path = os.path.join(packages_path + 'adobe_admin_console_recipes_report.plist')
 
     # Check that packages_path exists
     if not os.path.exists(packages_path):
         # Exit
-        print(f"ERROR: Cannot locate directory, {packages_path}... exiting...")
+        print(f"ERROR: Cannot locate directory, \"{packages_path}\"... exiting...")
         sys.exit(1)
 
     # Check that packages_path is a directory
     if not os.path.isdir(packages_path):
         # Exit
-        print(f"ERROR: {packages_path} is a not a directory... exiting...")
+        print(f"ERROR: \"{packages_path}\" is a not a directory... exiting...")
         sys.exit(1)
 
     # Parse AdobeAutoPkgApplicationData.json and return a list of names
     app_names_list = get_app_names()
 
     # Check for Adobe installers
-    adobe_installers = look_for_installers(app_names_list, packages_path)
+    adobe_installers = get_adobe_installers(app_names_list, packages_path)
 
     # Get override dirs
     override_dirs = get_override_dirs()
@@ -116,6 +117,86 @@ def create_list(adobe_installers, recipe_list_path):
 
     # Progress notification
     print(f"Created recipe list at: {recipe_list_path}...")
+
+def get_adobe_installers(app_names_list, packages_path):
+    '''
+        Look pkg's starting with names in app_names within the packages_path dir
+    '''
+
+    # Progress notification
+    print(f"Looking in \"{packages_path}\" for Adobe installers...")
+
+    # Var declaration
+    adobe_installers = {}
+    bundle_pkgs = []
+    flat_pkgs = []
+
+    # Get a sorted list of items beginning with Adobe* in ~/Downloads
+    for some_item in sorted(glob.glob(os.path.join(packages_path, '*'))):
+        # Iterate over app_names_list
+        for app_name in app_names_list:
+            # If the items name starts app_name
+            if os.path.basename(some_item).startswith(app_name):
+                # If some_item is a file, and ends with .pkg
+                if os.path.isfile(some_item) and some_item.endswith('.pkg'):
+                    # Create nested dict named after the app_name
+                    adobe_installers[app_name] = {}
+                    # Add pkg_path to adobe_installers[aop_name]
+                    adobe_installers[app_name]['pkg_path'] = some_item
+                    # Add pkg_type to adobe_installers[aop_name]
+                    adobe_installers[app_name]['pkg_type'] = 'flat'
+                # If some_item is a dir
+                elif os.path.isdir(some_item):
+                    # Try to get *_Install.pkg
+                    try:
+                        # Look for the *_Install.pkg
+                        install_pkg = glob.glob(os.path.join(some_item, 'build',
+                                                             '*_Install.pkg'))[0]
+                        # Create nested dict named after the app_name
+                        adobe_installers[app_name] = {}
+                        # Add pkg_path to adobe_installers[aop_name]
+                        adobe_installers[app_name]['pkg_path'] = install_pkg
+                        # Add pkg_type to adobe_installers[aop_name]
+                        adobe_installers[app_name]['pkg_type'] = 'bundle'
+                    # If either *_Install.pkg is missing
+                    except IndexError:
+                        # Pass to run next loop iteration
+                        pass
+
+    # If no Adobe installers found
+    if len(adobe_installers.keys()) == 0:
+        # Progress notification
+        print("WARNNING: 0 Adobe pkg's found, exiting...")
+        # Exit
+        sys.exit(0)
+    # If one Adobe installer is found, notify and proceed
+    elif len(adobe_installers.keys()) == 1:
+        # Progress notification
+        print("1 Adobe pkg found:")
+    # If more than one Adobe installer, notify and proceed
+    else:
+        # Progress notification
+        print(f"{len(adobe_installers.keys())} Adobe pkg's found, in total:")
+
+    # For each installer details
+    for _, installer_details in adobe_installers.items():
+        # If a bundle pkg:
+        if installer_details['pkg_type'] == 'bundle':
+            # Append to bundle_pkgs
+            bundle_pkgs.append(installer_details['pkg_path'])
+        # If a bundle pkg:
+        if installer_details['pkg_type'] == 'flat':
+            # Append to flat_pkgs
+            flat_pkgs.append(installer_details['pkg_path'])
+
+    # Print bundle_pkgs details
+    print_pkg_info(sorted(bundle_pkgs), 'bundle')
+
+    # Print flat_pkgs details
+    print_pkg_info(sorted(flat_pkgs), 'flat')
+
+    # Return a dict of installers
+    return adobe_installers
 
 
 def get_app_names():
@@ -261,87 +342,6 @@ def get_override_identifier(override_path):
 
     # Return override_identifier
     return override_identifier
-
-
-def look_for_installers(app_names_list, packages_path):
-    '''
-        Look pkg's starting with names in app_names within the packages_path dir
-    '''
-
-    # Progress notification
-    print(f"Looking in {packages_path} for Adobe installers...")
-
-    # Var declaration
-    adobe_installers = {}
-    bundle_pkgs = []
-    flat_pkgs = []
-
-    # Get a sorted list of items beginning with Adobe* in ~/Downloads
-    for some_item in sorted(glob.glob(os.path.join(packages_path, '*'))):
-        # Iterate over app_names_list
-        for app_name in app_names_list:
-            # If the items name starts app_name
-            if os.path.basename(some_item).startswith(app_name):
-                # If some_item is a file, and ends with .pkg
-                if os.path.isfile(some_item) and some_item.endswith('.pkg'):
-                    # Create nested dict named after the app_name
-                    adobe_installers[app_name] = {}
-                    # Add pkg_path to adobe_installers[aop_name]
-                    adobe_installers[app_name]['pkg_path'] = some_item
-                    # Add pkg_type to adobe_installers[aop_name]
-                    adobe_installers[app_name]['pkg_type'] = 'flat'
-                # If some_item is a dir
-                elif os.path.isdir(some_item):
-                    # Try to get *_Install.pkg
-                    try:
-                        # Look for the *_Install.pkg
-                        install_pkg = glob.glob(os.path.join(some_item, 'build',
-                                                             '*_Install.pkg'))[0]
-                        # Create nested dict named after the app_name
-                        adobe_installers[app_name] = {}
-                        # Add pkg_path to adobe_installers[aop_name]
-                        adobe_installers[app_name]['pkg_path'] = install_pkg
-                        # Add pkg_type to adobe_installers[aop_name]
-                        adobe_installers[app_name]['pkg_type'] = 'bundle'
-                    # If either *_Install.pkg is missing
-                    except IndexError:
-                        # Pass to run next loop iteration
-                        pass
-
-    # If no Adobe installers found
-    if len(adobe_installers.keys()) == 0:
-        # Progress notification
-        print("WARNNING: 0 Adobe pkg's found, exiting...")
-        # Exit
-        sys.exit(0)
-    # If one Adobe installer is found, notify and proceed
-    elif len(adobe_installers.keys()) == 1:
-        # Progress notification
-        print("1 Adobe pkg found:")
-    # If more than one Adobe installer, notify and proceed
-    else:
-        # Progress notification
-        print(f"{len(adobe_installers.keys())} Adobe pkg's found, in total:")
-
-    # For each installer details
-    for _, installer_details in adobe_installers.items():
-        # If a bundle pkg:
-        if installer_details['pkg_type'] == 'bundle':
-            # Append to bundle_pkgs
-            bundle_pkgs.append(installer_details['pkg_path'])
-        # If a bundle pkg:
-        if installer_details['pkg_type'] == 'flat':
-            # Append to flat_pkgs
-            flat_pkgs.append(installer_details['pkg_path'])
-
-    # Print bundle_pkgs details
-    print_pkg_info(sorted(bundle_pkgs), 'bundle')
-
-    # Print flat_pkgs details
-    print_pkg_info(sorted(flat_pkgs), 'flat')
-
-    # Return a dict of installers
-    return adobe_installers
 
 
 def match_overrides(adobe_installers, override_dirs, recipe_type):
@@ -504,6 +504,8 @@ def update_overrides(adobe_installers):
                     override_content = plistlib.load(read_file)
                 # Set aacp_package_path
                 override_content['Input']['aacp_package_path'] = installer_details['pkg_path']
+                # Set aacp_package_type
+                override_content['Input']['aacp_package_type'] = installer_details['pkg_type']
                 # Open the override for writing
                 with open (installer_details['override_path'], 'wb') as read_file:
                     # Write the updated content to the override
