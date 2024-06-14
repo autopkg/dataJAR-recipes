@@ -37,30 +37,40 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 <string>uninstall_script</string>
                 <key>uninstall_script</key>
                 <string>#!/bin/bash
-    #
-    # Uninstalls via the Adobe uninstall tool
-    # https://helpx.adobe.com/uk/enterprise/using/uninstall-creative-cloud-products.html
-    #
+#
+# Copyright (c) 2024, Jamf Ltd.  All rights reserved.
+#
+# Uninstall via com.adobe.Acrobat.RemoverTool
+# https://www.adobe.com/devnet-docs/acrobatetk/tools/AdminGuide_Mac/macintosh_deployment.html#uninstalling
+#
 
-    # Path to the uninstaller
-    uninstallerPath="/Library/Application Support/Adobe/Adobe Desktop Common/HDBox/Setup"
+# Path to the uninstaller
+uninstallerPath="/Applications/Adobe Acrobat DC/Adobe Acrobat.app/Contents/Helpers/Acrobat Uninstaller.app/Contents/Library/LaunchServices/com.adobe.Acrobat.RemoverTool"
 
-    # If the uninstaller exists
-    if [ -f "${uninstallerPath}" ]
+# If the uninstaller exists
+if [ -f "${uninstallerPath}" ]
+then
+    # Progress notification
+    /bin/echo "Uninstalling %aacp_application_display_name%..."
+    # Attempt the uninstall
+    if "${uninstallerPath}"
     then
         # Progress notification
-        /bin/echo "Uninstalling %aacp_application_display_name%..."
-        # Perform the uninstall
-        "${uninstallerPath}" --baseVersion=%aacp_application_base_version% --deleteUserPreferences=false --platform=macOS --sapCode=%aacp_application_sap_code% --uninstall=1
-        # Progress notification
-        /bin/echo "Uninstalling %aacp_application_display_name%..."
-    # If the uninstaller cannot be found
+        /bin/echo "Successfully uninstalled %aacp_application_display_name%..."
+    # If the uninstall fails
     else
         # Error
-        /bin/echo "ERROR: Cannot locate: ${uninstallerPath}, exiting..."
+        /bin/echo "ERROR: Uninstall of %aacp_application_display_name% failed, exiting..."
         # Exit
         exit 1
-    fi</string>
+    fi
+# If the uninstaller cannot be found
+else
+    # Error
+    /bin/echo "ERROR: Cannot locate: ${uninstallerPath}, exiting..."
+    # Exit
+    exit 1
+fi</string>
             </dict>
         </dict>
         <key>MinimumVersion</key>
