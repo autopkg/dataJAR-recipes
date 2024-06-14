@@ -118,7 +118,7 @@ then
     if "${uninstallerPath}"
     then
         # Progress notification
-        /bin/echo "Uninstalled %aacp_application_display_name%..."
+        /bin/echo "Successfully uninstalled %aacp_application_display_name%..."
     # If the uninstall fails
     else
         # Error
