@@ -19,13 +19,15 @@ import subprocess
 import sys
 import yaml
 
+
 # Append /Library/AutoPkg dir, to allow module import
 # pylint: disable = import-error, wrong-import-position
 sys.path.append("/Library/AutoPkg")
 from autopkglib import globalPreferences
 
+
 # Version
-__version__ = '1.1'
+__version__ = '2.0'
 
 
 # Functions
@@ -69,23 +71,26 @@ def main():
     override_dirs = get_override_dirs()
 
     # Get matching overrides
-    matched_overrides = match_overrides(adobe_installers, override_dirs, recipe_type)
+    adobe_installers = match_overrides(adobe_installers, override_dirs, recipe_type)
+
+    # Update overrides
+    update_overrides(adobe_installers)
 
     # Populate a recipe list
-    create_list(matched_overrides, recipe_list_path)
+    create_list(adobe_installers, recipe_list_path)
 
     # Run recipe list
     run_recipe_list(recipe_list_path, report_path)
 
 
-def create_list(matched_overrides, recipe_list_path):
+def create_list(adobe_installers, recipe_list_path):
     '''
         Create recipe list, deleting existing
     '''
 
     # Var declaration
     line_count = 1
-    override_count = len(matched_overrides)
+    override_count = len(adobe_installers)
 
     # If a file exists at recipe_list_path, delete it
     if os.path.exists(recipe_list_path):
@@ -96,18 +101,18 @@ def create_list(matched_overrides, recipe_list_path):
 
     # Append to recipe_list_path, creating if file is missing
     with open(recipe_list_path, 'a+', encoding='utf-8') as list_file:
-        # For each override
-        for matched_override in matched_overrides:
+        # For each installer details
+        for _, installer_details in adobe_installers.items():
             # If line count is then that override count
             if line_count < override_count:
                 # Write the overrides to recipe_list_path. appending a new line
-                list_file.write(matched_override + '\n')
+                list_file.write(installer_details['override_identifier'] + '\n')
                 # Increment var
                 line_count += 1
             # If we're at the last line
             else:
                 # Write the overrides to recipe_list_path. without appending a new line
-                list_file.write(matched_override)
+                list_file.write(installer_details['override_identifier'])
 
     # Progress notification
     print(f"Created recipe list at: {recipe_list_path}...")
@@ -218,22 +223,21 @@ def get_override_identifier(override_path):
     # Retrieve override name from file
     # Borrowed with <3 from:
     # https://github.com/autopkg/autopkg/blob/405c913deab15042819e2f77f1587a805b7c1ada/Code/autopkglib/__init__.py#L341-L359
-    if override_path.endswith(".yaml"):
+    if override_path.endswith('.yaml'):
         # Try to read it as yaml
         try:
            # Open yaml file
             with open (override_path, 'rb') as read_file:
                 # Create var from the overrides contents
-                recipe_dict = yaml.load(read_file, Loader=yaml.FullLoader)
+                override_content = yaml.load(read_file, Loader=yaml.FullLoader)
                 # Get the overrides identifier
-                override_identifier = recipe_dict["Identifier"]
-        # pylint: disable = broad-except
+                override_identifier = override_content['Identifier']
+        # Raise an exception if the override cannot be parsed
         except yaml.scanner.ScannerError as err_msg:
             # Progress notification
             print(f"\tWARNING: Reading, \"{override_path}\" errored with: {err_msg}")
-            # Pass to run next loop iteration
-            # pylint: disable = unnecessary-pass
-            pass
+            # Return None
+            return None
     # If not a .yaml override
     else:
         # Try to read in the file as a plist
@@ -241,16 +245,15 @@ def get_override_identifier(override_path):
             # Open plist file
             with open (override_path, 'rb') as read_file:
                 # Create var from the overrides contents
-                recipe_dict = plistlib.load(read_file)
+                override_content = plistlib.load(read_file)
                 # Get the overrides identifier
-                override_identifier = recipe_dict["Identifier"]
-        # Raise an exception if the plist cannot be parsed
+                override_identifier = override_content['Identifier']
+        # Raise an exception if the override cannot be parsed
         except plistlib.InvalidFileException as err_msg:
             # Progress notification
             print(f"\tWARNING: Reading, \"{override_path}\" errored with: {err_msg}")
-            # Pass to run next loop iteration
-            # pylint: disable = unnecessary-pass
-            pass
+            # Return None
+            return None
 
     # If we have extracted the override_identifier
     if override_identifier:
@@ -270,8 +273,8 @@ def look_for_installers(app_names_list, packages_path):
 
     # Var declaration
     adobe_installers = {}
-    adobe_installers['bundle_pkgs'] = {}
-    adobe_installers['flat_pkgs'] = {}
+    bundle_pkgs = []
+    flat_pkgs = []
 
     # Get a sorted list of items beginning with Adobe* in ~/Downloads
     for some_item in sorted(glob.glob(os.path.join(packages_path, '*'))):
@@ -281,56 +284,61 @@ def look_for_installers(app_names_list, packages_path):
             if os.path.basename(some_item).startswith(app_name):
                 # If some_item is a file, and ends with .pkg
                 if os.path.isfile(some_item) and some_item.endswith('.pkg'):
-                    # Add adobe_installers['flat_pkgs'][aop_name]
-                    adobe_installers['flat_pkgs'][app_name] = some_item
+                    # Create nested dict named after the app_name
+                    adobe_installers[app_name] = {}
+                    # Add pkg_path to adobe_installers[aop_name]
+                    adobe_installers[app_name]['pkg_path'] = some_item
+                    # Add pkg_type to adobe_installers[aop_name]
+                    adobe_installers[app_name]['pkg_type'] = 'flat'
                 # If some_item is a dir
                 elif os.path.isdir(some_item):
-                    # Try to get *_Install.pkg and *_Uninstall.pkg pkg's
+                    # Try to get *_Install.pkg
                     try:
                         # Look for the *_Install.pkg
                         install_pkg = glob.glob(os.path.join(some_item, 'build',
                                                              '*_Install.pkg'))[0]
-                        # Look for the *_Uninstall.pkg
-                        uninstall_pkg = (glob.glob(os.path.join(some_item, 'build',
-                                                                '*_Uninstall.pkg'))[0])
-                        # Append to adobe_installers['bundle_pkgs'] both pkg's as a list
-                        adobe_installers['bundle_pkgs'][app_name] = [install_pkg, uninstall_pkg]
-                    # If either *_Install.pkg and *_Uninstall.pkg is missing
+                        # Create nested dict named after the app_name
+                        adobe_installers[app_name] = {}
+                        # Add pkg_path to adobe_installers[aop_name]
+                        adobe_installers[app_name]['pkg_path'] = install_pkg
+                        # Add pkg_type to adobe_installers[aop_name]
+                        adobe_installers[app_name]['pkg_type'] = 'bundle'
+                    # If either *_Install.pkg is missing
                     except IndexError:
                         # Pass to run next loop iteration
                         pass
 
-    # If no folders are found, exit
-    if not adobe_installers:
-        # Progress notification
-        print(f"WARNING: No Adobe isntallers found in {packages_path}, exiting..")
-        # Exit
-        sys.exit(0)
-
-    # Total count
-    total_pkgs_count = ((len(adobe_installers['bundle_pkgs']) * 2) +
-                         len(adobe_installers['flat_pkgs']))
-
     # If no Adobe installers found
-    if total_pkgs_count == 0:
+    if len(adobe_installers.keys()) == 0:
         # Progress notification
         print("WARNNING: 0 Adobe pkg's found, exiting...")
         # Exit
         sys.exit(0)
     # If one Adobe installer is found, notify and proceed
-    elif total_pkgs_count == 1:
+    elif len(adobe_installers.keys()) == 1:
         # Progress notification
         print("1 Adobe pkg found:")
     # If more than one Adobe installer, notify and proceed
     else:
         # Progress notification
-        print(f"{total_pkgs_count} Adobe pkg's found, in total:")
+        print(f"{len(adobe_installers.keys())} Adobe pkg's found, in total:")
+
+    # For each installer details
+    for _, installer_details in adobe_installers.items():
+        # If a bundle pkg:
+        if installer_details['pkg_type'] == 'bundle':
+            # Append to bundle_pkgs
+            bundle_pkgs.append(installer_details['pkg_path'])
+        # If a bundle pkg:
+        if installer_details['pkg_type'] == 'flat':
+            # Append to flat_pkgs
+            flat_pkgs.append(installer_details['pkg_path'])
 
     # Print bundle_pkgs details
-    print_pkg_info(adobe_installers['bundle_pkgs'], 'bundle')
+    print_pkg_info(sorted(bundle_pkgs), 'bundle')
 
     # Print flat_pkgs details
-    print_pkg_info(adobe_installers['flat_pkgs'], 'flat')
+    print_pkg_info(sorted(flat_pkgs), 'flat')
 
     # Return a dict of installers
     return adobe_installers
@@ -345,9 +353,8 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
     print("Looking in for overrides...")
 
     # Var declaration
-    matched_overrides = []
-    bundle_pkg_matches = sorted(adobe_installers['bundle_pkgs'].keys())
-    flat_pkg_matches = sorted(adobe_installers['flat_pkgs'].keys())
+    matched_override = None
+    matched_overrides = {}
 
     # For each override_dir
     for override_dir in override_dirs:
@@ -355,20 +362,29 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
         recipe_files = os.listdir(override_dir)
         # For each recipe file
         for recipe_file in recipe_files:
-            # Check against bundle_pkg_matches
-            for bundle_pkg_match in bundle_pkg_matches:
+            # For each adobe_installer
+            for adobe_installer in adobe_installers:
                 # If the override starts with bundle_pkg_match and the type matches
-                if recipe_file.startswith(bundle_pkg_match) and recipe_type in recipe_file:
+                if recipe_file.startswith(adobe_installer) and recipe_type in recipe_file:
+                    # Path to the override
+                    override_path = os.path.join(override_dir, recipe_file)
                     # Get the overrides identifier
-                    matched_overrides.append(get_override_identifier(os.path.join(override_dir,
-                                                                                  recipe_file)))
-            # Check against flat_pkg_matches
-            for flat_pkg_match in flat_pkg_matches:
-                # If the override starts with flat_pkg_match and the type matches
-                if recipe_file.startswith(flat_pkg_match) and recipe_type in recipe_file:
-                    # Get the overrides identifier
-                    matched_overrides.append(get_override_identifier(os.path.join(override_dir,
-                                                                                  recipe_file)))
+                    matched_override = get_override_identifier(override_path)
+                    # If matched_override is not none
+                    if matched_override:
+                        # Append to matched_overrides
+                        matched_overrides[matched_override] = override_path
+                        # Add overrides identifier to adobe_installers dict
+                        adobe_installers[adobe_installer]['override_identifier'] = matched_override
+                        # Add overrides path to adobe_installers dict
+                        adobe_installers[adobe_installer]['override_path'] = override_path
+
+    # For each adobe_installer
+    for adobe_installer in list(adobe_installers):
+        # If we don't have 'override_identifier' for the adobe_installer
+        if 'override_identifier' not in adobe_installers[adobe_installer]:
+            # Remove adobe_installer from the dict
+            adobe_installers.pop(adobe_installer, None)
 
     # If we have no matched overrides, exit
     if not matched_overrides:
@@ -378,8 +394,6 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
         sys.exit(0)
     # If we have matches
     else:
-        # Sort and de-dupe matched_overrides
-        matched_overrides = sorted(set(matched_overrides))
         # If we have only matched 1 override
         if len(matched_overrides) == 1:
             # Progress notification
@@ -389,64 +403,39 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
             # Progress notification
             print(f"{len(matched_overrides)} overrides matched...")
         # For each matched override
-        for matched_override in matched_overrides:
+        for matched_override, matched_path in matched_overrides.items():
             # Progress notification
-            print(f"\t{matched_override}")
+            print(f"\t{matched_override} - {matched_path}")
 
-    # Return matched_overrides
-    return matched_overrides
+    # Return adobe_installers
+    return adobe_installers
 
 
 def print_pkg_info(pkg_list, pkg_type):
     '''
-       Prints out details of the pkg's passed to pkg_list
+       Prints out details of the pkg_type pkg's passed to pkg_list
     '''
 
-    # If pkg_type is bundle
-    if pkg_type == 'bundle':
-        # If no bundle pkg pair found
-        if len(pkg_list) == 0:
+    # If we have 0 pkg_type {pkg_type} pkgs
+    if len(pkg_list) == 0:
+        # Progress notification
+        print(f"0 {pkg_type} pkg's found...")
+    # If more we have one {pkg_type} pkg
+    elif len(pkg_list) == 1:
+        # Progress notification
+        print(f"{len(pkg_list)} {pkg_type} pkg found...")
+        # For each adobe_pkg in pkg_list
+        for adobe_pkg in sorted(pkg_list):
             # Progress notification
-            print("0 bundle pkg pairs found...")
-        # If more we have one bundle pkg pair
-        elif len(pkg_list) == 1:
+            print(f"\t{adobe_pkg}")
+    # If more we have more than one {pkg_type} pkg
+    else:
+        # Progress notification
+        print(f"{len(pkg_list)} {pkg_type} pkg's found...")
+        # For each adobe_pkg in pkg_list
+        for adobe_pkg in sorted(pkg_list):
             # Progress notification
-            print(f"{len(pkg_list)} bundle pkg pair found...")
-            # For each app_name in pkg_list
-            for adobe_pkg in sorted(pkg_list.keys()):
-                # Progress notification
-                print(f"\t{pkg_list[adobe_pkg][0]} and {pkg_list[adobe_pkg][1]}")
-        # If more we have more than one bundle pkg pair
-        else:
-            # Progress notification
-            print(f"{len(pkg_list)} bundle pkg pairs found...")
-            # For each app_name in pkg_list
-            for adobe_pkg in sorted(pkg_list.keys()):
-                # Progress notification
-                print(f"\t{pkg_list[adobe_pkg][0]} and {pkg_list[adobe_pkg][1]}")
-
-    # If pkg_type is flat
-    if pkg_type == 'flat':
-        # If we have 0 pkg_type flat pkgs
-        if len(pkg_list) == 0:
-            # Progress notification
-            print("0 flat pkg's found...")
-        # If more we have one flat pkg
-        elif len(pkg_list) == 1:
-            # Progress notification
-            print(f"{len(pkg_list)} flat pkg found...")
-            # For each adobe_pkg in pkg_list
-            for adobe_pkg in sorted(pkg_list):
-                # Progress notification
-                print(f"\t{pkg_list[adobe_pkg]}")
-        # If more we have more than one flat pkg
-        else:
-            # Progress notification
-            print(f"{len(pkg_list)} flat pkg's found...")
-            # For each adobe_pkg in pkg_list
-            for adobe_pkg in sorted(pkg_list):
-                # Progress notification
-                print(f"\t{pkg_list[adobe_pkg]}")
+            print(f"\t{adobe_pkg}")
 
 
 def run_recipe_list(recipe_list_path, report_path):
@@ -463,18 +452,70 @@ def run_recipe_list(recipe_list_path, report_path):
             # Exit
             sys.exit(1)
 
-    # Notify we're starting
-    print(f"Running recipe_list: {recipe_list_path}")
+    # Progress notification
+    print(f"Running recipe_list: {recipe_list_path}...")
 
     # The subprocess command
     cmd_args = ['/usr/local/bin/autopkg', 'run', '-vv', '--recipe-list', recipe_list_path,
                 '--report-plist', report_path]
 
-    # Notify what command we're about to run.
-    print(f"Running: {cmd_args}...\n\n")
+    # Progress notification
+    print(f"Running: {cmd_args}...\n")
 
     # Run the command, not checking as issues will show in output
     subprocess.run(cmd_args, check = False)
+
+
+def update_overrides(adobe_installers):
+    '''
+        Update the overrides by adding/updating aacp_pkg_path
+    '''
+
+    # Progress notification
+    print("Updating overrides...")
+
+    # For each installer details
+    for _, installer_details in adobe_installers.items():
+        # Progress notification
+        print(f"\tUpdating: {installer_details['override_path']}...")
+        # Borrowed with <3 from:
+        # https://github.com/autopkg/autopkg/blob/405c913deab15042819e2f77f1587a805b7c1ada/Code/autopkglib/__init__.py#L341-L359
+        if installer_details['override_path'].endswith(".yaml"):
+            # Try to read it as yaml
+            try:
+               # Open yaml file
+                with open (installer_details['override_path'], 'a+', encoding='utf-8') as read_file:
+                    # Create var from the overrides contents
+                    override_content = yaml.load(read_file, Loader=yaml.FullLoader)
+            # Raise an exception if the override cannot be parsed
+            except yaml.scanner.ScannerError as err_msg:
+                # Progress notification
+                print(f"ERROR: Reading, \"{installer_details['override_path']}\" errored with: "
+                      f"{err_msg}")
+                # Return None
+                sys.exit(1)
+        # If not a .yaml override
+        else:
+            # Try to read in the file as a plist
+            try:
+                # Open plist file
+                with open (installer_details['override_path'], 'rb') as read_file:
+                    # Create var from the overrides contents
+                    override_content = plistlib.load(read_file)
+                # Set aacp_package_path
+                override_content['Input']['aacp_package_path'] = installer_details['pkg_path']
+                # Open the override for writing
+                with open (installer_details['override_path'], 'wb') as read_file:
+                    # Write the updated content to the override
+                    plistlib.dump(override_content, read_file)
+            # Raise an exception if the override cannot be parsed
+            except plistlib.InvalidFileException as err_msg:
+                # Progress notification
+                print(f"ERROR: Reading, \"{installer_details['override_path']}\" errored with: "
+                      f"{err_msg}")
+                # Return None
+                sys.exit(1)
+
 
 
 if __name__ == '__main__':
