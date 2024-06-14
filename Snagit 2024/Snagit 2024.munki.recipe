@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Snagit and imports it into Munki.
+
+Add your Snagit 2024 licence key to the SNAGIT_2024_LICENCE_KEY variable. </string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Snagit 2024</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Snagit2024</string>
+        <key>SNAGIT_2024_LICENCE_KEY</key>
+        <string></string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Screen capture utility.</string>
+            <key>developer</key>
+            <string>TechSmith Corporation</string>
+            <key>display_name</key>
+            <string>Snagit 2024</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+## postinstall script created from vendors doc here: https://support.techsmith.com/hc/en-us/articles/115007344888-Enterprise-Install-Guidelines-for-Snagit-on-MacOS
+## Uncomment for commands you wish to use
+
+## If it doesn't exist, create licence file
+# if ! [ -f /Users/Shared/TechSmith/Snagit/LicenseKey ]; then
+#  /bin/mkdir -p "/Users/Shared/TechSmith/Snagit" ; /usr/bin/touch /Users/Shared/TechSmith/Snagit/LicenseKey ; /bin/echo "%SNAGIT_2024_LICENCE_KEY%" > /Users/Shared/TechSmith/Snagit/LicenseKey
+# fi
+
+## Install the System Audio Component if OS is unsupported an error will be generated.
+"/Applications/Snagit 2024.app/Contents/Resources/aceinstaller" install
+
+## Deployment Options see this doc for full details: https://support.techsmith.com/hc/en-us/articles/115007344888-Enterprise-Install-Guidelines-for-Snagit-on-MacOS#options-list
+# defaults write com.TechSmith.Snagit2024.plist DisableProductLogin -bool YES
+# defaults write com.TechSmith.Snagit2024.plist HideRegistrationKey -bool YES
+defaults write com.TechSmith.Snagit2024.plist DisableCheckForUpdates -bool YES
+defaults write com.TechSmith.Snagit2024.plist DisableTracking -bool YES
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Snagit 2024</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
