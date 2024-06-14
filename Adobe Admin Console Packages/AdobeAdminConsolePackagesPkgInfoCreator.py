@@ -189,6 +189,9 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
             # Delete aacp_temp_dir
             shutil.rmtree(self.env['aacp_temp_dir'])
 
+        # Set version to aacp_version
+        self.env['version'] = self.env['aacp_version']
+
 
     def create_pkginfo(self):
         '''
@@ -245,7 +248,7 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         # Create pkginfo
         self.env['additional_pkginfo']['installs'] = [{
             'CFBundleIdentifier': self.env['aacp_application_bundle_id'],
-            self.env['aacp_version_compare_key']: self.env['version'],
+            self.env['aacp_version_compare_key']: self.env['aacp_version'],
             'path': self.env['aacp_application_full_path'],
             'type': 'application',
             'version_comparison_key': self.env['aacp_version_compare_key']
@@ -356,10 +359,11 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         root = parse_xml.getroot()
 
         # Get app_version
-        self.env['version'] = (root.findtext
+        self.env['aacp_version'] = (root.findtext
                                    ('./InstallerProperties/Property[@name=\'ProductVersion\']'))
+
         # Progress notification
-        self.output(f"version: {self.env['version']}")
+        self.output(f"aacp_version: {self.env['aacp_version']}")
 
 
     def process_adobe_autopkg_application_data(self):
@@ -492,9 +496,9 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         # Applications version, if not APRO
         if not self.env['aacp_application_sap_code'] == 'APRO':
             # Get version from aacp_matched_json
-            self.env['version'] = self.env['aacp_matched_json']['app_json_version_key']
+            self.env['aacp_version'] = app_json[self.env['aacp_matched_json']['app_json_version_key']]
             # Progress notification
-            self.output(f"version: {self.env['version']}")
+            self.output(f"aacp_version: {self.env['aacp_version']}")
 
         # If the version is unsupported
         if 'unsupported_versions_dict' in self.env['aacp_matched_json']:
@@ -504,7 +508,7 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
             # Parse json for the unsupported_versions_dict
             for unsupported_version in self.env['aacp_matched_json']['unsupported_versions_dict']:
                 # If the version matches
-                if unsupported_version == self.env['version']:
+                if unsupported_version == self.env['aacp_version']:
                     # Raise
                     raise ProcessorError(
             f"{self.env['aacp_matched_json']['unsupported_versions_dict'][unsupported_version]}")
@@ -743,15 +747,39 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         # Progress notification
         self.output(f"Updating: {self.env['aacp_override_path']}...")
 
-        # Borrowed with <3 from:
-        # https://github.com/autopkg/autopkg/blob/405c913deab15042819e2f77f1587a805b7c1ada/Code/autopkglib/__init__.py#L341-L359
-        if self.env['aacp_override_path'].endswith(".yaml"):
+        # Var declaration
+        aacp_vars = {}
+
+        # For each key in self.env
+        for some_key in self.env:
+            # For keys beginning with aacp_ and isn't aacp_autopkg_json
+            if some_key.startswith('aacp_') and some_key != 'aacp_autopkg_json':
+                # Add to aacp
+                aacp_vars[some_key] = self.env[some_key]
+
+        # If a yaml file
+        if (self.env['aacp_override_path'].endswith('.yml') or
+                self.env['aacp_override_path'].endswith('.yaml')):
             # Try to read it as yaml
             try:
-               # Open yaml file
-                with open (self.env['aacp_override_path'], 'a+', encoding='utf-8') as read_file:
+                # Open yaml file, to read
+                with (open(self.env['aacp_override_path'], 'r', encoding = 'utf-8') as
+                  read_file):
                     # Create var from the overrides contents
-                    override_content = yaml.load(read_file, Loader=yaml.FullLoader)
+                    override_content = yaml.safe_load(read_file)
+                # Remove ['Input']['aacp_override_path'], as in ['aacp vars']
+                del override_content['Input']['aacp_override_path']
+                # Remove ['Input']['aacp_package_path'], as in ['aacp vars']
+                del override_content['Input']['aacp_package_path']
+                # Remove ['Input']['aacp_package_type'], as in ['aacp vars']
+                del override_content['Input']['aacp_package_type']
+                # Add aacp_vars dict
+                override_content['aacp_vars'] = aacp_vars
+                # Open yaml file, to write
+                with (open (self.env['aacp_override_path'], 'w', encoding = 'utf-8') as
+                  write_file):
+                    # Write the updated content to the override
+                    yaml.dump(override_content, write_file, default_flow_style=False)
             # Raise an exception if the override cannot be parsed
             except yaml.scanner.ScannerError as err_msg:
                 # Raise
@@ -761,28 +789,22 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         else:
             # Try to read in the file as a plist
             try:
-                # Open plist file
-                with open (self.env['aacp_override_path'], 'rb') as read_file:
+                # Open plist file, to read
+                with open(self.env['aacp_override_path'], 'rb') as read_file:
                     # Create var from the overrides contents
                     override_content = plistlib.load(read_file)
-                # Create aacp vars dict
-                override_content['aacp vars'] = {}
-                # For each key in self.env
-                for some_key in self.env:
-                    # For keys beginning with aacp_
-                    if some_key.startswith('aacp_') and some_key != 'aacp_autopkg_json':
-                        # Add to override_content
-                        override_content['aacp vars'][some_key] = self.env[some_key]
                 # Remove ['Input']['aacp_override_path'], as in ['aacp vars']
                 del override_content['Input']['aacp_override_path']
                 # Remove ['Input']['aacp_package_path'], as in ['aacp vars']
                 del override_content['Input']['aacp_package_path']
                 # Remove ['Input']['aacp_package_type'], as in ['aacp vars']
                 del override_content['Input']['aacp_package_type']
-                # Open the file to update
-                with open (self.env['aacp_override_path'], 'wb') as read_file:
+                # Add aacp_vars dict
+                override_content['aacp_vars'] = aacp_vars
+                # Open the override for writing
+                with open(self.env['aacp_override_path'], 'wb') as write_file:
                     # Write the updated content to the override
-                    plistlib.dump(override_content, read_file)
+                    plistlib.dump(override_content, write_file)
             # Raise an exception if the override cannot be parsed
             except plistlib.InvalidFileException as err_msg:
                 # Raise
