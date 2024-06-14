@@ -303,18 +303,21 @@ def get_override_identifier(override_path):
     # Var declaration
     override_identifier = None
 
-    # Retrieve override name from file
-    # Borrowed with <3 from:
-    # https://github.com/autopkg/autopkg/blob/405c913deab15042819e2f77f1587a805b7c1ada/Code/autopkglib/__init__.py#L341-L359
-    if override_path.endswith('.yaml'):
+    # If a yaml file
+    if override_path.endswith('.yml') or override_path.endswith('.yaml'):
         # Try to read it as yaml
         try:
-           # Open yaml file
-            with open (override_path, 'rb') as read_file:
+            # Open yaml file
+            with open(override_path, 'r', encoding = 'utf-8') as read_file:
                 # Create var from the overrides contents
-                override_content = yaml.load(read_file, Loader=yaml.FullLoader)
+                override_content = yaml.safe_load(read_file)
                 # Get the overrides identifier
                 override_identifier = override_content['Identifier']
+        # If empty, TypeError is raised
+        except TypeError:
+            # Progress notification
+            print(f"\tWARNING: Reading, \"{override_path}\" errored as the override is empty.")
+            return None
         # Raise an exception if the override cannot be parsed
         except yaml.scanner.ScannerError as err_msg:
             # Progress notification
@@ -326,7 +329,7 @@ def get_override_identifier(override_path):
         # Try to read in the file as a plist
         try:
             # Open plist file
-            with open (override_path, 'rb') as read_file:
+            with open(override_path, 'rb') as read_file:
                 # Create var from the overrides contents
                 override_content = plistlib.load(read_file)
                 # Get the overrides identifier
@@ -477,16 +480,34 @@ def update_overrides(adobe_installers):
     for _, installer_details in adobe_installers.items():
         # Progress notification
         print(f"\tUpdating: {installer_details['override_path']}...")
-        # Borrowed with <3 from:
-        # https://github.com/autopkg/autopkg/blob/405c913deab15042819e2f77f1587a805b7c1ada/Code/autopkglib/__init__.py#L341-L359
-        if installer_details['override_path'].endswith(".yaml"):
+        # If a yaml file
+        if (installer_details['override_path'].endswith('.yml') or
+                installer_details['override_path'].endswith('.yaml')):
             # Try to read it as yaml
             try:
-               # Open yaml file
-                with open (installer_details['override_path'], 'a+', encoding='utf-8') as read_file:
+                # Open yaml file, to read
+                with open(installer_details['override_path'], 'r', encoding = 'utf-8') as read_file:
                     # Create var from the overrides contents
-                    override_content = yaml.load(read_file, Loader=yaml.FullLoader)
-            # Raise an exception if the override cannot be parsed
+                    override_content = yaml.safe_load(read_file)
+                # Set aacp_override_path
+                override_content['Input']['aacp_override_path'] = installer_details['override_path']
+                # Set aacp_package_path
+                override_content['Input']['aacp_package_path'] = installer_details['pkg_path']
+                # Set aacp_package_type
+                override_content['Input']['aacp_package_type'] = installer_details['pkg_type']
+                # Open yaml file, to write
+                with (open(installer_details['override_path'], 'w+', encoding = 'utf-8') as
+                  write_file):
+                    # Write the updated content to the override
+                    yaml.dump(override_content, write_file, default_flow_style=False)
+            # If empty, TypeError is raised
+            except TypeError:
+                # Progress notification
+                print(f"ERROR: Reading, \"{installer_details['override_path']}\" errored as "
+                      f"the override is empty.")
+                # Return None
+                sys.exit(1)
+            # Error if the override cannot be parsed
             except yaml.scanner.ScannerError as err_msg:
                 # Progress notification
                 print(f"ERROR: Reading, \"{installer_details['override_path']}\" errored with: "
@@ -497,8 +518,8 @@ def update_overrides(adobe_installers):
         else:
             # Try to read in the file as a plist
             try:
-                # Open plist file
-                with open (installer_details['override_path'], 'rb') as read_file:
+                # Open plist file, to read
+                with open(installer_details['override_path'], 'rb') as read_file:
                     # Create var from the overrides contents
                     override_content = plistlib.load(read_file)
                 # Set aacp_override_path
@@ -508,9 +529,9 @@ def update_overrides(adobe_installers):
                 # Set aacp_package_type
                 override_content['Input']['aacp_package_type'] = installer_details['pkg_type']
                 # Open the override for writing
-                with open (installer_details['override_path'], 'wb') as read_file:
+                with open(installer_details['override_path'], 'wb') as write_file:
                     # Write the updated content to the override
-                    plistlib.dump(override_content, read_file)
+                    plistlib.dump(override_content, write_file)
             # Raise an exception if the override cannot be parsed
             except plistlib.InvalidFileException as err_msg:
                 # Progress notification
