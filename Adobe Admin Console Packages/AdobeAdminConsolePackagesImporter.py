@@ -39,7 +39,8 @@ def main():
     # Setup arparse
     parser = argparse.ArgumentParser()
     parser.add_argument('type', help="Recipe type, for example: \"munki\" or \"jamf\"", type=str)
-    parser.add_argument('dir', nargs="?", default="~/Downloads", help="Path to dir containing Adobe installers", type=str)
+    parser.add_argument('dir', nargs="?", default="~/Downloads",
+                        help="Path to dir containing Adobe installers", type=str)
     arg_parser = parser.parse_args()
 
     # Retrieve passed type
@@ -47,8 +48,8 @@ def main():
 
     # Var declarations
     packages_path = os.path.expanduser(arg_parser.dir)
-    recipe_list_path = os.path.join(packages_path + 'adobe_admin_console_recipes_list.txt')
-    report_path = os.path.join(packages_path + 'adobe_admin_console_recipes_report.plist')
+    recipe_list_path = os.path.join(packages_path, 'adobe_admin_console_recipes_list.txt')
+    report_path = os.path.join(packages_path, 'adobe_admin_console_recipes_report.plist')
 
     # Check that packages_path exists
     if not os.path.exists(packages_path):
@@ -117,6 +118,7 @@ def create_list(adobe_installers, recipe_list_path):
 
     # Progress notification
     print(f"Created recipe list at: {recipe_list_path}...")
+
 
 def get_adobe_installers(app_names_list, packages_path):
     '''
@@ -452,9 +454,6 @@ def run_recipe_list(recipe_list_path, report_path):
             # Exit
             sys.exit(1)
 
-    # Progress notification
-    print(f"Running recipe_list: {recipe_list_path}...")
-
     # The subprocess command
     cmd_args = ['/usr/local/bin/autopkg', 'run', '-vv', '--recipe-list', recipe_list_path,
                 '--report-plist', report_path]
@@ -502,6 +501,8 @@ def update_overrides(adobe_installers):
                 with open (installer_details['override_path'], 'rb') as read_file:
                     # Create var from the overrides contents
                     override_content = plistlib.load(read_file)
+                # Set aacp_override_path
+                override_content['Input']['aacp_override_path'] = installer_details['override_path']
                 # Set aacp_package_path
                 override_content['Input']['aacp_package_path'] = installer_details['pkg_path']
                 # Set aacp_package_type
@@ -517,7 +518,6 @@ def update_overrides(adobe_installers):
                       f"{err_msg}")
                 # Return None
                 sys.exit(1)
-
 
 
 if __name__ == '__main__':
