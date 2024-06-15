@@ -496,7 +496,8 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
         # Applications version, if not APRO
         if not self.env['aacp_application_sap_code'] == 'APRO':
             # Get version from aacp_matched_json
-            self.env['aacp_version'] = app_json[self.env['aacp_matched_json']['app_json_version_key']]
+            self.env['aacp_version'] = (app_json[self.env['aacp_matched_json']
+                                                     ['app_json_version_key']])
             # Progress notification
             self.output(f"aacp_version: {self.env['aacp_version']}")
 
