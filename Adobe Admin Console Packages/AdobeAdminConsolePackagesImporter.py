@@ -160,7 +160,7 @@ def get_adobe_installers(app_names_list, packages_path):
                         adobe_installers[app_name]['pkg_path'] = install_pkg
                         # Add pkg_type to adobe_installers[aop_name]
                         adobe_installers[app_name]['pkg_type'] = 'bundle'
-                    # If either *_Install.pkg is missing
+                    # If *_Install.pkg is missing
                     except IndexError:
                         # Pass to run next loop iteration
                         pass
@@ -192,10 +192,10 @@ def get_adobe_installers(app_names_list, packages_path):
             flat_pkgs.append(installer_details['pkg_path'])
 
     # Print bundle_pkgs details
-    print_pkg_info(sorted(bundle_pkgs), 'bundle')
+    print_pkg_summary(sorted(bundle_pkgs), 'bundle')
 
     # Print flat_pkgs details
-    print_pkg_info(sorted(flat_pkgs), 'flat')
+    print_pkg_summary(sorted(flat_pkgs), 'flat')
 
     # Return a dict of installers
     return adobe_installers
@@ -369,10 +369,23 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
         for recipe_file in recipe_files:
             # For each adobe_installer
             for adobe_installer in adobe_installers:
-                # If the override starts with bundle_pkg_match and the type matches
-                if recipe_file.startswith(adobe_installer) and recipe_type in recipe_file:
-                    # Path to the override
-                    override_path = os.path.join(override_dir, recipe_file)
+                # Var declaration
+                override_path = None
+                # If 'pkg_path' ends with _MACARM.pkg
+                if adobe_installers[adobe_installer]['pkg_path'].endswith('_MACARM.pkg'):
+                    # If the override starts with adobe_installer and the type matches
+                    if (recipe_file.startswith(adobe_installer) and recipe_type in recipe_file
+                      and 'arm64' in recipe_file):
+                        # Path to the override
+                        override_path = os.path.join(override_dir, recipe_file)
+                # If 'pkg_path' does not end with _MACARM.pkg
+                else:
+                    # If the override starts with adobe_installer and the type matches
+                    if recipe_file.startswith(adobe_installer) and recipe_type in recipe_file:
+                        # Path to the override
+                        override_path = os.path.join(override_dir, recipe_file)
+                # If we override_path has a value
+                if override_path:
                     # Get the overrides identifier
                     matched_override = get_override_identifier(override_path)
                     # If matched_override is not none
@@ -390,6 +403,18 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
         if 'override_identifier' not in adobe_installers[adobe_installer]:
             # Remove adobe_installer from the dict
             adobe_installers.pop(adobe_installer, None)
+
+    # Print a summary of the matched overrides
+    print_matched_override_summary(matched_overrides)
+
+    # Return adobe_installers
+    return adobe_installers
+
+
+def print_matched_override_summary(matched_overrides):
+    '''
+        Print a summary of the matched overrides
+    '''
 
     # If we have no matched overrides, exit
     if not matched_overrides:
@@ -412,11 +437,8 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
             # Progress notification
             print(f"\t{matched_override} - {matched_path}")
 
-    # Return adobe_installers
-    return adobe_installers
 
-
-def print_pkg_info(pkg_list, pkg_type):
+def print_pkg_summary(pkg_list, pkg_type):
     '''
        Prints out details of the pkg_type pkg's passed to pkg_list
     '''
