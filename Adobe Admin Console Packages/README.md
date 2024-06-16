@@ -15,37 +15,85 @@ Data within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJA
 
 The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py), generates a large about output variables. These are detailed in the table at the end of this README, and are to be used for folks to write their own recipes.
 
-## Usage
-1. Naming is important to the recipes, to start with you'll need to create [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html) with one of the below names in the [Adobe Admin Console](https://adminconsole.adobe.com):
-
-|||||
-|:---:|:---:|:---:|:---:
-|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2024| AdobePremiereRush|
-|AdobeAfterEffects2021| AdobeCharacterAnimator2022| AdobeLightroomCC| AdobePremiereRush2.0|
-|AdobeAfterEffects2022| AdobeCharacterAnimator2023| AdobeLightroomClassic| AdobeSubstance3DDesigner|
-|AdobeAfterEffects2023| AdobeCharacterAnimator2024| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
-|AdobeAfterEffects2024|AdobeDimension| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
-|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
-|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2024| AdobeXD|
-|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| |
-|AdobeAnimate2024| AdobeIllustrator2023| AdobePhotoshop2022| |
-|AdobeAudition2021| AdobeIllustrator2024| AdobePhotoshop2023|
-|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2024| |
-|AdobeAudition2023| AdobeInCopy2022| AdobePrelude2021| |
-|AdobeAudition2024| AdobeInCopy2023|AdobePrelude2022| |
-|AdobeBridge2021| AdobeInCopy2024| AdobePremierePro2021| |
-|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022| |
-|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2023| |
-|AdobeBridge2024| AdobeInDesign2023| AdobePremierePro2024|
-2. Download the DMG from the [Adobe Admin Console](https://adminconsole.adobe.com)
-3. Load the .app
-4. Download the title to your ~/Downloads
-5. Unzip the zip file
-6. An override is needed for each title, Munki recipes are supplied here. The override needs to start with the a name from the list above, and contain the recipe type. For example, `AdobeAcrobatDC.munki.recipe`
-9. With the above in place, call with the recipe "type" [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py). For example: `./AdobeAdminConsolePackagesImporter.py munki`
+## Quick start gudie
+1. For each Adobe title you want to import:
+   * Download one or more DMG from the [Adobe Admin Console](https://adminconsole.adobe.com), making sure that the name is prefixed with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+   * Load the .app.
+   * Download the title.
+   * If the download is a .zip, unzip it.
+1. Create an override for each title, from the recipes in this directory.
+   * Make sure that the override is prefixed the same as per the name choosen in step 1.
+   * Make sure that the override type is included included within the name, such as `munki`.
+   * If the pkg is an Apple silicon pkg, add arm64 to the override name.
+   * Both plist/xml and yml/yaml overrides are supported.
+1. Run `AdobeAdminConsolePackagesImporter.py`, found within this directory. Passing at least the type key (see below for examples):
+   * `./AdobeAdminConsolePackagesImporter.py munki` - This will look within ~/Downloads/ for Adobe installers and match with .munki overrides.
+   * `./AdobeAdminConsolePackagesImporter.py jamf /Users/Shared/adobe/` - This will look within Users/Shared/adobe/ for Adobe installers and match with jamf overrides.
+1. Add icons as needed. (The icons that are accessible within the pkgs are of to low a resolution to be imported into Munki etc).
 
 ## Process
-1. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) will create a [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) at: ~/Downloads/adobe_admin_console_recipes_list.txt  
+1. Adobe Admin Console
+   * Create a package including just a single title and Creative Cloud Desktop app.
+   * Prefix the package with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+   * Finish creating the package seleting the wanted options and whilst bundle or [flat packages](https://helpx.adobe.com/uk/enterprise/using/create-flat-packages.html) can be created within the Adobe Admin Console. Bundle packages will not install on macOS15+.
+   * Download the DMG.
+   * Load the .app.
+   * Download the title.
+   * If the download is a .zip, unzip it.
+1. Create an override for each title, from the recipes in this directory.
+   * Make sure that the override is prefixed the same as per the name choosen in step 1.
+   * Make sure that the override type is included included within the name, such as `munki`.
+   * If the pkg is an Apple silicon pkg, add arm64 to the override name.
+1. Run [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py):
+   * The minimum arguments `AdobeAdminConsolePackagesImporter.py` needs is the recipe type: `AdobeAdminConsolePackagesImporter.py munki` (for munki recipes).
+   * Optionally, pass the root directory containing the Adobe installers downloaded from the Adobe Admin Console (if this is omitted then `~/Downloads/` is used: AdobeAdminConsolePackagesImporter.py /Users/Shared/adobe/`.
+   * `AdobeAdminConsolePackagesImporter.py` next:
+     * Confirms that the passed directory or the default directory exists, before proceeding.
+     * Parses [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to retrieve a list of application names, (these are the same as found within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names)).
+     * Recursively looks within the defined directory, for .pkg files which start with one of the application names retrieved from the prior step. Recording the path to any matches and if they are a bundle or [flat packages](https://helpx.adobe.com/uk/enterprise/using/create-flat-packages.html) package.
+     * Prints a summary of found pcakages.
+     * Retrieves a list of [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-Overrides#recipe-override-directories) from AutoPkg's preference domain.
+     * Looks within each of the defined [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-Overrides#recipe-override-directories) for overrides that start with:
+       * The same name from the application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names) as the located packages.
+       * ContainS the same recipe type that was passed to [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py).
+       * Optionally, if the pkg contains `MACARM` looks for `arm64` within the overrides file name.
+     * Next, generates a list of each overrides identifier. Which is retreieved from the overrides themselves.
+     * Adds three variables to each matched override:
+       * `aacp_override_path` - the path to the override itself.
+       * `aacp_package_path` - the path to the titles .pkg.
+       * `aacp_package_type` - If the pkg is a bundle of flat pkg.
+     * Creates a [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) containg the overrides identifiers for the overrides which have matched a downloaded Adobe Admin Console package in alphabetical order, within the passed/derived directory. (Examples: `~/Downloads/adobe_admin_console_recipes_list.txt`, `/Users/Shared/adobe/adobe_admin_console_recipes_list.txt`)
+     * Runs the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) via AutoPkg , setting the [report path](https://github.com/autopkg/autopkg/wiki/Processor-Summary-Reporting) to `adobe_admin_console_recipes_report.plist`, within the passed/derived directory. (Examples: `~/Downloads/adobe_admin_console_recipes_report.plist`, `/Users/Shared/adobe/adobe_admin_console_recipes_report.plist`)
+
+## Application names
+|Adobe CC 2024|Adobe CC 2023|Adobe CC 2022|Adobe CC 2021| 
+|:---:|:---:|:---:|:---:|
+|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
+|AdobeAfterEffects2024|AdobeAfterEffects2023|AdobeAfterEffects2022|AdobeAfterEffects2021|
+|AdobeAnimate2024|AdobeAnimate2023|AdobeAnimate2022|AdobeAnimate2021|
+|AdobeAudition2024|AdobeAudition2023|AdobeAudition2022|AdobeAudition2021|
+|AdobeBridge2024|AdobeBridge2023|AdobeBridge2022|AdobeBridge2021|
+|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|AdobeCharacterAnimator2022|AdobeCharacterAnimator2021|
+|AdobeDimension|AdobeDimension|AdobeDimension|AdobeDimension|AdobeDimension|
+|AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
+|AdobeIllustrator2024|AdobeIllustrator2023|AdobeIllustrator2022|AdobeIllustrator2021|
+|AdobeInCopy2024|AdobeInCopy2023|AdobeInCopy2022|AdobeInCopy2021|
+|AdobeInDesign2024|AdobeInDesign2023|AdobeInDesign2022|AdobeInDesign2021|
+|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|
+|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|
+|AdobeMediaEncoder2024|AdobeMediaEncoder2023|AdobeMediaEncoder2022|AdobeMediaEncoder2021|
+|AdobePhotoshop2024|AdobePhotoshop2023|AdobePhotoshop2022|AdobePhotoshop2021|
+|AdobePrelude2022|AdobePrelude2022|AdobePrelude2022|AdobePrelude2021|
+|AdobePremierePro2024|AdobePremierePro2023|AdobePremierePro2022|AdobePremierePro2021|
+|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush|
+|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
+|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
+|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|
+|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|
+|AdobeXD|AdobeXD|AdobeXD|AdobeXD|
+
+## Process
+1.  will create a [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) at: ~/Downloads/adobe_admin_console_recipes_list.txt  
 2. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) next checks ~/Downloads for any folders that begin with Adobe  
 3. Next, these are checked to see if they contain the *_Install.pkg and *_Uninstall.pkg PKG's, (these will be present if a [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html)).  
 4. If the above steps pass, then the [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-Overrides#recipe-override-directories) searched. If an override is found which starts with the name of the title (as per the table above), and contains the recipe type as passed to [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py), it's identifier is added to the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists)  
@@ -137,36 +185,40 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
         "versions": {
             "15.0": {
                 "app_bundle_id": "com.adobe.ame.application.15",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
                 "app_description": "Quickly output video files for virtually any screen.",
+                "app_json_version_key": "CodexVersion",
+                "app_name": "AdobeMediaEncoder2021",
+                "app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
                 "display_name": "Adobe Media Encoder 2021",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             },
             "22.0": {
                 "app_bundle_id": "com.adobe.ame.application.22",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
                 "app_description": "Quickly output video files for virtually any screen.",
+                "app_json_version_key": "CodexVersion",
+                "app_name": "AdobeMediaEncoder2022",
+                "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
                 "display_name": "Adobe Media Encoder 2022",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             },
             "23.0": {
                 "app_bundle_id": "com.adobe.ame.application.23",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2023/Adobe Media Encoder 2023.app",
                 "app_description": "Quickly output video files for virtually any screen.",
+                "app_json_version_key": "CodexVersion",
+                "app_name": "AdobeMediaEncoder2023",
+                "app_path": "/Applications/Adobe Media Encoder 2023/Adobe Media Encoder 2023.app",
                 "display_name": "Adobe Media Encoder 2023",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
             },
             "24.0": {
                 "app_bundle_id": "com.adobe.ame.application.24",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
                 "app_description": "Quickly output video files for virtually any screen.",
+                "app_json_version_key": "CodexVersion",
+                "app_name": "AdobeMediaEncoder2024",
+                "app_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
                 "display_name": "Adobe Media Encoder 2024",
                 "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
                 "version_comparison_key": "CFBundleShortVersionString"
@@ -176,13 +228,14 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
 ```
 
 • **sap_code** - required - see `aacp_application_sap_code` in the Variables table above, this is used to define which title the object covers.  
-• **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.  
-• **additional_blocking_applications** - optional - Array of additional applications to add to the blocking_applications array. In the case of Acrobat, this is actually the blocking_applications array as cannot be retrieved via the same method as the older titles.  
-• **app_bundle_id** - required - see `aacp_application_bundle_id`in the Variables table above.title.  
+• **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.
+• **additional_blocking_applications** - optional - Array of additional applications to add to the blocking_applications array. In the case of Acrobat, this is actually the blocking_applications array as cannot be retrieved via the same method as the older titles.
+• **app_bundle_id** - required - the titles bundle id, if one isn't defived from [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py).
+• **app_description** - required - the titles description, if one isn't defived from [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py).
 • **app_json_version_key** - required - the key within the `Application.json` which holds the titles version.  
-• **app_path** - required - see `aacp_application_full_path` in the Variables table above.  
-• **app_description** - required - see `aacp_application_description` in the Variables table above.  
-• **display_name** - required - see `aacp_display_name` in the Variables table above.  
+• **app_name** - required - the application name to look for, this will match a value within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+• **app_path** - required - see the path to the application bundle, when installed.
+• **display_name** - required - the display name for the title.
 • **minos_regex** - required - regex pattern to use when looking to derive the minimum OS version from `[SystemRequirement][CheckCompatibility][Content]` from within `Application.json`.  
 • **unsupported_versions_dict** - optional - Array containg the versions of incompatible titles, and a reason why.  
 • **version_comparison_key** - required - the key in the titles info.plist to use for version comparisions.  
