@@ -227,15 +227,15 @@ The below details the structure and keys in the [AdobeAutoPkgApplicationData.jso
     },
 ```
 
-• **sap_code** - required - see `aacp_application_sap_code` in the Variables table above, this is used to define which title the object covers.  
-• **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.
-• **additional_blocking_applications** - optional - Array of additional applications to add to the blocking_applications array. In the case of Acrobat, this is actually the blocking_applications array as cannot be retrieved via the same method as the older titles.
-• **app_bundle_id** - required - the titles bundle id, if one isn't defived from [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py).
-• **app_description** - required - the titles description, if one isn't defived from [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py).
-• **app_json_version_key** - required - the key within the `Application.json` which holds the titles version.  
-• **app_name** - required - the application name to look for, this will match a value within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
-• **app_path** - required - see the path to the application bundle, when installed.
-• **display_name** - required - the display name for the title.
-• **minos_regex** - required - regex pattern to use when looking to derive the minimum OS version from `[SystemRequirement][CheckCompatibility][Content]` from within `Application.json`.  
-• **unsupported_versions_dict** - optional - Array containg the versions of incompatible titles, and a reason why.  
-• **version_comparison_key** - required - the key in the titles info.plist to use for version comparisions.  
+* **sap_code** - required - see `aacp_application_sap_code` in the Variables table above, this is used to define which title the object covers.  
+* **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.
+* **additional_blocking_applications** - optional - Array of additional applications to add to the blocking_applications array. In the case of Acrobat, this is actually the blocking_applications array as cannot be retrieved via the same method as the older titles.
+* **app_bundle_id** - required - the titles bundle id, if one isn't defived from [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py).
+* **app_description** - required - the titles description, if one isn't defived from [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py).
+* **app_json_version_key** - required - the key within the `Application.json` which holds the titles version.  
+* **app_name** - required - the application name to look for, this will match a value within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+* **app_path** - required - see the path to the application bundle, when installed.
+* **display_name** - required - the display name for the title.
+* **minos_regex** - required - regex pattern to use when looking to derive the minimum OS version from `[SystemRequirement][CheckCompatibility][Content]` from within `Application.json`.  
+* **unsupported_versions_dict** - optional - Array containg the versions of incompatible titles, and a reason why.  
+* **version_comparison_key** - required - the key in the titles info.plist to use for version comparisions.  
