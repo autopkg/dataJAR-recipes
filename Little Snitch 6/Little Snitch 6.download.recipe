@@ -28,7 +28,7 @@
                         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15</string>
                     </dict>
                     <key>re_pattern</key>
-                    <string>(LittleSnitch-6[0-9]*\.[0-9]+\.dmg)</string>
+                    <string>(https://www\.obdev\.at/downloads/littlesnitch/LittleSnitch-6.([0-9]+(\.[0-9]+)+)\.dmg)</string>
                 </dict>
             </dict>
             <dict>
@@ -39,7 +39,7 @@
                     <key>filename</key>
                     <string>%NAME%.dmg</string>
                     <key>url</key>
-                    <string>https://www.obdev.at/downloads/littlesnitch/%match%</string>
+                    <string>%match%</string>
                 </dict>
             </dict>
             <dict>
