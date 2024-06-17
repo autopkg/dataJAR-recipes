@@ -33,6 +33,44 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 <true/>
                 <key>unattended_uninstall</key>
                 <true/>
+                <key>uninstall_method</key>
+                <string>uninstall_script</string>
+                <key>uninstall_script</key>
+                <string>#!/bin/bash
+#
+# Copyright (c) 2024, Jamf Ltd.  All rights reserved.
+#
+# Uninstall via com.adobe.Acrobat.RemoverTool
+# https://www.adobe.com/devnet-docs/acrobatetk/tools/AdminGuide_Mac/macintosh_deployment.html#uninstalling
+#
+
+# Path to the uninstaller
+uninstallerPath="/Applications/Adobe Acrobat DC/Adobe Acrobat.app/Contents/Helpers/Acrobat Uninstaller.app/Contents/Library/LaunchServices/com.adobe.Acrobat.RemoverTool"
+
+# If the uninstaller exists
+if [ -f "${uninstallerPath}" ]
+then
+    # Progress notification
+    /bin/echo "Uninstalling %aacp_application_display_name%..."
+    # Attempt the uninstall
+    if "${uninstallerPath}"
+    then
+        # Progress notification
+        /bin/echo "Successfully uninstalled %aacp_application_display_name%..."
+    # If the uninstall fails
+    else
+        # Error
+        /bin/echo "ERROR: Uninstall of %aacp_application_display_name% failed, exiting..."
+        # Exit
+        exit 1
+    fi
+# If the uninstaller cannot be found
+else
+    # Error
+    /bin/echo "ERROR: Cannot locate: ${uninstallerPath}, exiting..."
+    # Exit
+    exit 1
+fi</string>
             </dict>
         </dict>
         <key>MinimumVersion</key>
@@ -42,11 +80,6 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
             <dict>
                 <key>Processor</key>
                 <string>AdobeAdminConsolePackagesPkgInfoCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>aacp_package_name</key>
-                    <string>%NAME%</string>
-                </dict>
             </dict>
             <dict>
                 <key>Processor</key>
@@ -54,20 +87,9 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 <key>Arguments</key>
                 <dict>
                     <key>dmg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Install-%aacp_application_architecture_type%-%version%.dmg</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-%aacp_application_architecture_type%-%version%.dmg</string>
                     <key>dmg_root</key>
-                    <string>%aacp_install_pkg_path%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>DmgCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>dmg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Uninstall-%aacp_application_architecture_type%-%version%.dmg</string>
-                    <key>dmg_root</key>
-                    <string>%aacp_uninstall_pkg_path%</string>
+                    <string>%aacp_package_path%</string>
                 </dict>
             </dict>
             <dict>
@@ -83,6 +105,44 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                     <dict>
                         <key>installer_type</key>
                         <string/>
+                        <key>uninstall_method</key>
+                        <string>uninstall_script</string>
+                        <key>uninstall_script</key>
+                        <string>#!/bin/bash
+#
+# Copyright (c) 2024, Jamf Ltd.  All rights reserved.
+#
+# Uninstall via com.adobe.Acrobat.RemoverTool
+# https://www.adobe.com/devnet-docs/acrobatetk/tools/AdminGuide_Mac/macintosh_deployment.html#uninstalling
+#
+
+# Path to the uninstaller
+uninstallerPath="/Applications/Adobe Acrobat DC/Adobe Acrobat.app/Contents/Helpers/Acrobat Uninstaller.app/Contents/Library/LaunchServices/com.adobe.Acrobat.RemoverTool"
+
+# If the uninstaller exists
+if [ -f "${uninstallerPath}" ]
+then
+    # Progress notification
+    /bin/echo "Uninstalling %aacp_application_display_name%..."
+    # Attempt the uninstall
+    if "${uninstallerPath}"
+    then
+        # Progress notification
+        /bin/echo "Successfully uninstalled %aacp_application_display_name%..."
+    # If the uninstall fails
+    else
+        # Error
+        /bin/echo "ERROR: Uninstall of %aacp_application_display_name% failed, exiting..."
+        # Exit
+        exit 1
+    fi
+# If the uninstaller cannot be found
+else
+    # Error
+    /bin/echo "ERROR: Cannot locate: ${uninstallerPath}, exiting..."
+    # Exit
+    exit 1
+fi</string>
                         <key>version</key>
                         <string>%version%</string>
                     </dict>
@@ -94,11 +154,9 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 <key>Arguments</key>
                 <dict>
                     <key>pkg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Install-%aacp_application_architecture_type%-%version%.dmg</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-%aacp_application_architecture_type%-%version%.dmg</string>
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
-                    <key>uninstaller_pkg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%_Uninstall-%aacp_application_architecture_type%-%version%.dmg</string>
                 </dict>
             </dict>
         </array>
