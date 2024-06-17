@@ -27,7 +27,7 @@ from autopkglib import globalPreferences
 
 
 # Version
-__version__ = '2.0'
+__version__ = '2.0.1'
 
 
 # Functions
@@ -381,7 +381,8 @@ def match_overrides(adobe_installers, override_dirs, recipe_type):
                 # If 'pkg_path' does not end with _MACARM.pkg
                 else:
                     # If the override starts with adobe_installer and the type matches
-                    if recipe_file.startswith(adobe_installer) and recipe_type in recipe_file:
+                    if (recipe_file.startswith(adobe_installer) and recipe_type in recipe_file
+                      and not 'arm64' in recipe_file):
                         # Path to the override
                         override_path = os.path.join(override_dir, recipe_file)
                 # If we override_path has a value
