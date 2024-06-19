@@ -7,13 +7,16 @@
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`
-Set ARCH to either ARM64 (Apple Silicon) or X64 (Intel). ARM64 is default.</string>
+Set ARCH to either ARM64 (Apple Silicon) or X64 (Intel). ARM64 is default.
+Set SUPPORTED_ARCH to either arm64 (Apple Silicon) or x86_64 (Intel). arm64 is default.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Ultimaker Cura</string>
     <key>Input</key>
     <dict>
         <key>ARCH</key>
         <string>ARM64</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
         <key>PRERELEASE</key>
         <string></string>
         <key>NAME</key>
