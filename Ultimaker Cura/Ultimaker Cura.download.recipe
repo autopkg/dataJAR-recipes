@@ -14,6 +14,8 @@ Set ARCH to either ARM64 (Apple Silicon) or X64 (Intel). ARM64 is default.</stri
     <dict>
         <key>ARCH</key>
         <string>ARM64</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
         <key>PRERELEASE</key>
         <string></string>
         <key>NAME</key>
