@@ -73,7 +73,7 @@
                 <key>input_path</key>
                 <string>%pkgroot%/usr/local/bin/BrowserStackLocal</string>
                 <key>requirement</key>
-                <string>identifier "BrowserStack Local" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "763K6K6H44"</string>
+                <string>identifier "BrowserStack Local" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YQ5FZQ855D</string>
             </dict>
         </dict>
     </array>
