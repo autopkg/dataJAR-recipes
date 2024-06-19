@@ -31,7 +31,7 @@ from autopkglib import (Processor,
 
 # Define class
 __all__ = ['AdobeAdminConsolePackagesPkgInfoCreator']
-__version__ = ['2.0']
+__version__ = ['2.0.1']
 
 
 # Class
@@ -337,10 +337,24 @@ class AdobeAdminConsolePackagesPkgInfoCreator(Processor):
 
         # Var declaration
         self.env['aacp_blocking_applications'] = []
-        self.env['aacp_proxy_xml_path'] = (os.path.join(self.env['aacp_package_path'],
-                                                        'Contents/Resources/Setup',
-                                                        self.env['aacp_target_folder'],
-                                                        'proxy.xml'))
+
+        # If a bundle pkg
+        if self.env['aacp_package_type'] == 'bundle':
+            # Progress notification
+            self.output(f"{self.env['aacp_package_path']} is a bundle pkg, processing...")
+            # Path to proxy.xml
+            self.env['aacp_proxy_xml_path'] = (os.path.join(self.env['aacp_package_path'],
+                                                               'Contents/Resources/Setup',
+                                                           self.env['aacp_target_folder'],
+                                                           'proxy.xml'))
+        # If a flat pkg
+        if self.env['aacp_package_type'] == 'flat':
+            # Progress notification
+            self.output(f"{self.env['aacp_package_path']} is a flat pkg, processing...")
+            # Path to proxy.xml
+            self.env['aacp_proxy_xml_path'] = (os.path.join(self.env['aacp_root_dir'],
+                                              'Setup', self.env['aacp_target_folder'],
+                                                                         'proxy.xml'))
 
         # Progress notification
         self.output(f"aacp_proxy_xml_path: {self.env['aacp_proxy_xml_path']}")
