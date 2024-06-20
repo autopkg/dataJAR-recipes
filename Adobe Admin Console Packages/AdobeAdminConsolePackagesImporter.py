@@ -27,7 +27,7 @@ from autopkglib import globalPreferences
 
 
 # Version
-__version__ = '2.0.1'
+__version__ = '2.0.2'
 
 
 # Functions
@@ -260,6 +260,11 @@ def get_override_dirs():
     override_dirs = (globalPreferences.get_pref('RECIPE_OVERRIDE_DIRS') or
                      os.path.join(os.path.expanduser('~/Library/'), 'AutoPkg',
                      'RecipeOverrides/').split())
+
+    # If override_dirs is a string
+    if isinstance(override_dirs, str):
+        # Convert to list, expanding if needed
+        override_dirs = [os.path.expanduser(override_dirs)]
 
     # If one override dir is found, notify and proceed
     if len(override_dirs) == 1:
