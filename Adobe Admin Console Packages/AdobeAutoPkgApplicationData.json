@@ -394,7 +394,7 @@
                 "version_comparison_key": "CFBundleVersion"
             },
             "14.0.0": {
-                "app_bundle_id": "com.adobe.bridge14",
+                "app_bundle_id": "com.adobe.bridge",
                 "app_description": "Centralize your creative assets.",
                 "app_json_version_key": "ProductVersion",
                 "app_name": "AdobeBridge2024",
