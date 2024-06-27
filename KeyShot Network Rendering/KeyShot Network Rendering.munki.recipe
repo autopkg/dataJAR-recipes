@@ -48,6 +48,24 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
     <string>com.github.dataJAR-recipes.download.KeyShot Network Rendering</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Unable to download the installer or scrape the website due to CloudFlare Human Check Protections.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
      <dict>
         <key>Arguments</key>
             <dict>
