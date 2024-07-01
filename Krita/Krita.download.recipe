@@ -58,7 +58,7 @@
                 <key>input_path</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/krita.app</string>
                 <key>requirement</key>
-                <string>identifier "org.krita" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5433B4KXM8"</string>
+                <string>identifier "org.krita" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = DL93766A3G</string>
                 <key>strict_verification</key>
                 <true />
             </dict>
