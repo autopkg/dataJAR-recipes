@@ -27,7 +27,7 @@ from autopkglib import globalPreferences
 
 
 # Version
-__version__ = '2.0.2'
+__version__ = '2.0.3'
 
 
 # Functions
@@ -138,7 +138,7 @@ def get_adobe_installers(app_names_list, packages_path):
         # Iterate over app_names_list
         for app_name in app_names_list:
             # If the items name starts app_name
-            if os.path.basename(some_item).startswith(app_name):
+            if os.path.basename(some_item).split('_')[0] == app_name:
                 # If some_item is a file, and ends with .pkg
                 if os.path.isfile(some_item) and some_item.endswith('.pkg'):
                     # Create nested dict named after the app_name
@@ -178,7 +178,7 @@ def get_adobe_installers(app_names_list, packages_path):
     # If more than one Adobe installer, notify and proceed
     else:
         # Progress notification
-        print(f"{len(adobe_installers.keys())} Adobe pkg's found, in total:")
+        print(f"{len(adobe_installers.keys())} Adobe pkg's found, in total.")
 
     # For each installer details
     for _, installer_details in adobe_installers.items():
