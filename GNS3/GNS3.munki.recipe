@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of GNS3 and imports it into Munki.</string>
+    <string>Downloads the latest version of GNS3 and imports it into Munki.
+
+Due to CircleCI deprecating x86_64 Mac instances as of v2.2.48 GNS3 is arm64 only.
+
+See: https://gns3.com/community/blog/gns3-2-2-48-released and https://github.com/GNS3/gns3-gui/issues/3593</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.GNS3</string>
     <key>Input</key>
@@ -26,6 +30,10 @@
             <string>GNS3</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>arm64</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -33,7 +41,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.GNS3</string>
     <key>Process</key>
