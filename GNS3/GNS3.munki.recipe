@@ -5,15 +5,16 @@
     <key>Description</key>
     <string>Downloads the latest version of GNS3 and imports it into Munki.
 
-Due to CircleCI deprecating x86_64 Mac instances as of v2.2.48 GNS3 is arm64 only.
-
-See: https://gns3.com/community/blog/gns3-2-2-48-released and https://github.com/GNS3/gns3-gui/issues/3593</string>
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.GNS3</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
         <key>NAME</key>
         <string>GNS3</string>
         <key>pkginfo</key>
@@ -32,7 +33,7 @@ See: https://gns3.com/community/blog/gns3-2-2-48-released and https://github.com
             <string>%NAME%</string>
             <key>supported_architectures</key>
             <array>
-                <string>arm64</string>
+                <string>%SUPPORTED_ARCH%</string>
             </array>
             <key>unattended_install</key>
             <true/>
