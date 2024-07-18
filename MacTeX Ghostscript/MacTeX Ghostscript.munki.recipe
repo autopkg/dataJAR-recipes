@@ -10,6 +10,8 @@
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>FORCE_MUNKIIMPORT</key>
+        <string></string>
         <key>NAME</key>
         <string>MacTeXGhostscript</string>
         <key>pkginfo</key>
@@ -226,6 +228,8 @@ if __name__ == '__main__':
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
         </dict>
         <dict>
