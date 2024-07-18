@@ -12,26 +12,26 @@
         <string>MacTeXGhostscript</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://pages.uoregon.edu/koch/</string>
-				<key>re_pattern</key>
-				<string>Ghostscript-+[0-9]+\.+[0-9]+\-Full.pkg</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%url%%match%</string>
-			</dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://pages.uoregon.edu/koch/</string>
+                <key>re_pattern</key>
+                <string>(Ghostscript-([0-9]+(\.[0-9]+)+)\.pkg)</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%url%%match%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
