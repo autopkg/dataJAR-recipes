@@ -43,7 +43,7 @@ The Dolby Atmos Composer does that and thereby enables you to quickly get convin
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-ecipes.download.Dolby Atmos Composer Essential</string>
+    <string>com.github.dataJAR-recipes.download.Dolby Atmos Composer Essential</string>
     <key>Process</key>
     <array>
         <dict>
