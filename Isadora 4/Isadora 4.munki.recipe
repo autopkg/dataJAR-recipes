@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Imports the latest version of the Isadora 3 software into Munki.
+    <string>Imports the latest version of the Isadora 4 software into Munki.
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Isadora 3</string>
+    <string>com.github.dataJAR-recipes.munki.Isadora 4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Isadora3</string>
+        <string>Isadora4</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/troikatronix</string>
         <key>DERIVE_MIN_OS</key>
@@ -27,7 +27,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>developer</key>
                  <string>TroikaTronix</string>
                 <key>display_name</key>
-                <string>Isadora 3</string>
+                <string>Isadora 4</string>
                 <key>name</key>
                 <string>%NAME%</string>
                 <key>unattended_install</key>
@@ -39,7 +39,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
      <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Isadora 3</string>
+    <string>com.github.dataJAR-recipes.download.Isadora 4</string>
     <key>Process</key>
     <array>
         <dict>
@@ -61,7 +61,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/Isadora 3</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/Isadora 4</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/isadora-fat-std.pkg/Payload</string>
                 <key>purge_destination</key>
@@ -77,7 +77,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>%RECIPE_CACHE_DIR%/</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Isadora 3/Isadora.app</string>
+                    <string>/Applications/Isadora 4/Isadora.app</string>
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>

@@ -3,20 +3,20 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest Firefox ESR release
+    <string>Downloads the latest version of Fathom and imports it into Munki.
 
-Set the 'LOCALE' variable to the required language version.
-Set the 'OS_TYPE' variable to the required Operating Systems.
-
-List of available locale codes and supported Operating Systems here: https://releases.mozilla.org/pub/firefox/releases/latest-esr/README.txt</string>
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Firefox ESR</string>
+    <string>com.github.dataJAR-recipes.munki.Fathom</string>
     <key>Input</key>
     <dict>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
         <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/firefox</string>
+        <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>FirefoxESR</string>
+        <string>Fathom</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -24,11 +24,19 @@ List of available locale codes and supported Operating Systems here: https://rel
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Extended Support Release (ESR), of the Firefox free and open source web browser.</string>
+            <string>Increase productivity with the #1 rated AI Notetaker
+
+Fathom records, transcribes, highlights, and summarizes your meetings so you can focus on the conversation.</string>
+            <key>developer</key>
+            <string>Fathom Video Inc.</string>
             <key>display_name</key>
-            <string>Firefox ESR</string>
+            <string>Fathom</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -36,14 +44,12 @@ List of available locale codes and supported Operating Systems here: https://rel
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>2.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Firefox ESR</string>
+    <string>com.github.dataJAR-recipes.download.Fathom</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -51,6 +57,8 @@ List of available locale codes and supported Operating Systems here: https://rel
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

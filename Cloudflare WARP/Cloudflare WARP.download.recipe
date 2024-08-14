@@ -19,9 +19,9 @@
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.zip</string>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://1111-releases.cloudflareclient.com/mac/Cloudflare_WARP.zip</string>
+                <string>https://1111-releases.cloudflareclient.com/mac/latest</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -33,19 +33,6 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Cloudflare Inc. (68WVV388M8)</string>
@@ -53,7 +40,7 @@
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Cloudflare_WARP*.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

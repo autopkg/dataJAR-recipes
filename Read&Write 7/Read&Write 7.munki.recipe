@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Imports the latest version of the Read&amp;Write 7 into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.ReadWrite 7</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Read&amp;Write 7</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>description</key>
+                <string>Read&amp;Write is our literacy support tool that offers help for everyday tasks. With tools to meet the needs of different learners, right across the curriculum. Like reading text out loud, understanding unfamiliar words and proofing written work.</string>
+                <key>developer</key>
+                <string>Texthelp Ltd</string>
+                <key>display_name</key>
+                <string>Read&amp;Write 7</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true/>
+                <key>unattended_uninstall</key>
+                <true/>
+            </dict>
+        </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.haircut.download.ReadWrite7</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications/</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

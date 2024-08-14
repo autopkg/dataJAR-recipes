@@ -3,18 +3,31 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest trial version of Catalyst Browse.</string>
+    <string>Downloads the latest version of Isadora 4.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Catalyst Browse</string>
+    <string>com.github.dataJAR-recipes.download.Isadora 4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>CatalystBrowse</string>
+        <string>Isadora4</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                  <key>re_pattern</key>
+                  <string>/files/isadoramac-4.*-std\.dmg</string>
+                  <key>result_output_var_name</key>
+                  <string>match</string>
+                  <key>url</key>
+                  <string>https://troikatronix.com/get-it/</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -23,7 +36,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://support.d-imaging.sony.co.jp/disoft_DL/CatalystBrowse_DL/mac?fm=en</string>
+                <string>https://troikatronix.com/%match%</string>
             </dict>
         </dict>
         <dict>
@@ -31,19 +44,19 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Catalyst Browse*.pkg</string>
+                <string>%pathname%/Isadora Installer.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Sony Corporation (VH49J2FYHE)</string>
+                    <string>Developer ID Installer: Mark Coniglio (Q5V96MD6S6)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

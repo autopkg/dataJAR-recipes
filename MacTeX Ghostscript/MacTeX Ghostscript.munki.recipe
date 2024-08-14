@@ -10,6 +10,8 @@
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>FORCE_MUNKIIMPORT</key>
+        <string></string>
         <key>NAME</key>
         <string>MacTeXGhostscript</string>
         <key>pkginfo</key>
@@ -51,15 +53,15 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%match%</string>
-                <key>index</key>
-                <integer>1</integer>
-                <key>split_on</key>
-                <string>-</string>
+                <key>url</key>
+                <string>https://pages.uoregon.edu/koch/</string>
+                <key>re_pattern</key>
+                <string>Ghostscript-([0-9]+(\.[0-9]+)+)\.pkg</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
             </dict>
         </dict>
         <dict>
@@ -180,6 +182,44 @@ if __name__ == '__main__':
             </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>find</key>
+                <string> </string>
+                <key>input_string</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpack/Distribution</string>
+                <key>replace</key>
+                <string>%20</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>os-version min=\"([0-9]+(\.[0-9]+)+)\"</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>%output_string%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
@@ -188,6 +228,8 @@ if __name__ == '__main__':
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
         </dict>
         <dict>
