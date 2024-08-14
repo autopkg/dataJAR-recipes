@@ -6,23 +6,18 @@
     <string>Downloads the latest version of GNS3.
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
-i.e.: `-k PRERELEASE=yes`
-
-To download Apple Silicon use: "" in the DOWNLOAD_ARCH variable
-To download Intel use: "-intel" in the DOWNLOAD_ARCH variable</string>
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.GNS3</string>
     <key>Input</key>
     <dict>
         <key>PRERELEASE</key>
         <string></string>
-        <key>DOWNLOAD_ARCH</key>
-        <string></string>
         <key>NAME</key>
         <string>GNS3</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1</string>
+    <string>0.6.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -35,7 +30,7 @@ To download Intel use: "-intel" in the DOWNLOAD_ARCH variable</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
-                <string>GNS3-([0-9]+(\.[0-9]+)+)%DOWNLOAD_ARCH%\.dmg$</string>
+                <string>GNS3-.*?\.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -54,7 +49,7 @@ To download Intel use: "-intel" in the DOWNLOAD_ARCH variable</string>
                 <key>input_path</key>
                 <string>%pathname%/GNS3.app</string>
                 <key>requirement</key>
-                <string>identifier "com.gns3.gns3" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5C3VHX9RG5"</string>
+                <string>identifier "net.gns3" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5C3VHX9RG5"</string>
             </dict>
         </dict>
     </array>

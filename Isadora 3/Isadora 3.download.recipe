@@ -12,7 +12,7 @@
         <string>Isadora3</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1</string>
+    <string>1.1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -20,12 +20,12 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>href=\"(https://troikatronix\.com/files/isadoramac-3[A-Za-z0-9]+-std\.dmg)\"</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
-                <key>url</key>
-                <string>https://support.troikatronix.com/support/solutions/articles/13000029004-where-can-i-download-older-versions-of-isadora-</string>
+                  <key>re_pattern</key>
+                  <string>/files/isadoramac-3.*-std\.dmg</string>
+                  <key>result_output_var_name</key>
+                  <string>match</string>
+                  <key>url</key>
+                  <string>https://troikatronix.com/get-it/</string>
             </dict>
         </dict>
         <dict>
@@ -36,7 +36,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://troikatronix.com/%match%</string>
             </dict>
         </dict>
         <dict>
