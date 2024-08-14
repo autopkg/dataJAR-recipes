@@ -19,7 +19,7 @@
                 <key>Arguments</key>
                 <dict>
                     <key>re_pattern</key>
-                    <string>href=\"//(pae-web\.presonusmusic\.com/downloads/products/dmg/PreSonus_UniversalControl_v([0-9]+(_[0-9]+)+)\.dmg)\"</string>
+                    <string>href="//(pae-web\.presonusmusic\.com/downloads/products/dmg/PreSonus_Universal_Control_v([0-9]+(_[0-9]+)+)\.dmg)"</string>
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>url</key>

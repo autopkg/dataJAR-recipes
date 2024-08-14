@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest trial version of Catalyst Browse and imports into Munki.
+    <string>Downloads the latest version of dearVR MICRO and imports it into Munki.
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Catalyst Browse</string>
+    <string>com.github.dataJAR-recipes.munki.dearVRMICRO</string>
     <key>Input</key>
     <dict>
         <key>DERIVE_MIN_OS</key>
@@ -15,7 +15,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>CatalystBrowse</string>
+        <string>dearVRMICRO</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -23,9 +23,13 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>Catalyst Browse, a cross-platform viewing and logging tool for all Sony Pro formats, offers streamlined media management that simplifies your workflow and secures your content.</string>
+            <string>Take the first step into 3D audio production.
+
+Fully immerse your listener with mind-blowing binaural tracks and benefit from Dear Reality’s and Sennheiser AMBEO’s joined forces.</string>
+            <key>developer</key>
+            <string>Dear Reality GmbH</string>
             <key>display_name</key>
-            <string>Catalyst Browse</string>
+            <string>dearVR MICRO</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -37,7 +41,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Catalyst Browse</string>
+    <string>com.github.dataJAR-recipes.download.dearVRMICRO</string>
     <key>Process</key>
     <array>
         <dict>
@@ -46,7 +50,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 <key>flat_pkg_path</key>
-                <string>%pathname%/Catalyst Browse*.pkg</string>
+                <string>%pathname%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -57,14 +61,65 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <string>%RECIPE_CACHE_DIR%/Library/Application Support/Avid/Audio/Plug-Ins</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/Catalyst_Browse.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked/dearvrmicroAax.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/Components</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/dearvrmicroAu.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST3</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/dearvrmicroVst3.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>os-version min=\"([0-9]+(\.[0-9]+)+)\"</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -75,7 +130,9 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Catalyst Browse.app</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/dearVR MICRO.vst3</string>
+                    <string>/Library/Audio/Plug-Ins/Components/dearVR MICRO.component</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/dearVR MICRO.aaxplugin</string>
                 </array>
             </dict>
             <key>Processor</key>
@@ -88,54 +145,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/Catalyst Browse.app</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%pathname%/Catalyst Browse*.pkg</string>
-            </dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-                <key>source_path</key>
-                <string>%pathname%/%dmg_found_filename%</string>
-            </dict>
-            <key>Processor</key>
-            <string>Copier</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
@@ -143,16 +154,16 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/Library</string>
                     <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

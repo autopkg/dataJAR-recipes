@@ -3,21 +3,20 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string> Downloads the latest Firefox ESR release by checking: 
-https://product-details.mozilla.org/1.0/firefox_versions.json for the key: FIREFOX_ESR_NEXT 
-if this exists, then this keys version is used to generate a download URL.
-        
-If FIREFOX_ESR_NEXT does not exist, fails over to FIREFOX_ESR.
+    <string>Downloads the latest Firefox ESR release
 
 Set the 'LOCALE' variable to the required language version.
+Set the 'OS_TYPE' variable to the required Operating Systems.
 
-List of available locale codes here: https://ftp.mozilla.org/pub/firefox/releases/110.0.1/mac/ or here https://ftp.mozilla.org/pub/firefox/releases/latest/README.txt</string>
+List of available locale codes and supported Operating Systems here: https://releases.mozilla.org/pub/firefox/releases/latest-esr/README.txt</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Firefox ESR</string>
     <key>Input</key>
     <dict>
         <key>LOCALE</key>
         <string>en-US</string>
+        <key>OS_TYPE</key>
+        <string>os=osx</string>
         <key>NAME</key>
         <string>FirefoxESR</string>
     </dict>
@@ -27,18 +26,11 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
     <array>
         <dict>
             <key>Processor</key>
-            <string>FirefoxESRURLProvider</string>
-            <key>Arguments</key>
-            <dict>
-                <key>locale</key>
-                <string>%LOCALE%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>url</key>
+                <string>https://download.mozilla.org/?product=firefox-esr-latest&amp;%OS_TYPE%&amp;lang=%LOCALE%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
