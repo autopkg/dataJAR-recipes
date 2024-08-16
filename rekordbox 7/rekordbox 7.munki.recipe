@@ -28,6 +28,16 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>rekordbox 7</string>
                 <key>name</key>
                 <string>%NAME%</string>
+                <key>postinstall_script</key>
+                <string>#!/bin/bash
+
+# Create directories and set permissions needed to stop admin prompt on launch
+/bin/mkdir -p /private/var/slmdata ; /bin/chmod 777 /private/var/slmdata
+/bin/mkdir -p /private/var/.slm ; /bin/chmod 777 /private/var/.slm
+/bin/mkdir -p /private/var/.slmbackup ; /bin/chmod 777 /private/var/.slmbackup
+/bin/mkdir -p /private/var/.slmauth ; /bin/chmod 777 /private/var/.slmauth
+
+exit</string>
                 <key>unattended_install</key>
                 <true/>
                 <key>unattended_uninstall</key>
