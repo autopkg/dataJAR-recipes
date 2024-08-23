@@ -45,17 +45,21 @@
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/R1 V3.app</string>
+                <key>overwrite</key>
+                <true/>
                 <key>source_path</key>
                 <string>%pathname%/R1 V3.app</string>
             </dict>
-            <key>Processor</key>
-            <string>Copier</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -63,8 +67,6 @@
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/Applications</string>
             </dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -77,6 +79,17 @@
                 <string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications/</string>
+                </array>
             </dict>
         </dict>
     </array>
