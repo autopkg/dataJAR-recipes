@@ -4,6 +4,7 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version BambuStudio.
+
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`</string>
@@ -16,8 +17,8 @@ i.e.: `-k PRERELEASE=yes`</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>
-    <key>MiniBambuStudiomVersion</key>
-    <string>0.6.1</string>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -34,6 +35,13 @@ i.e.: `-k PRERELEASE=yes`</string>
             </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%url%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -55,5 +63,3 @@ i.e.: `-k PRERELEASE=yes`</string>
     </array>
 </dict>
 </plist>
-
-
