@@ -15,7 +15,7 @@
 
 # Silently install LogiTune
 
-LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller -silent
+LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No
 
 exit</string>
     </dict>
