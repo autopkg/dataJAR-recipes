@@ -8,9 +8,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </details>
 
 # Adobe Admin Console Packages
-<p align="center"><img width="256" alt="Alert" src="https://github.com/autopkg/dataJAR-recipes/assets/2464974/a468823b-718c-4375-96a3-cb777770f9e4">
+<p align="center"><img width="256" alt="Alert" src="https://github.com/user-attachments/assets/3166e0a9-3c2d-4dfd-8599-a30d26d663ad">
 
 ## About
+
 For information on how these recipes came about (and why), please click [here.](https://macmule.com/2024/06/17/adobe-admin-console-packages-2-0/)
 
 ## Quick start guide
