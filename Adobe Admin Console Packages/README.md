@@ -176,7 +176,10 @@ With v3+, the titles icons can be extracted as per the `--extract-icons` flag.
 
 **A1:** The flat packages do not include a *_Uninstall.pkg, as such the .munki recipes contain uninstallation scripts.. which are the same for all but Acrobat.
 ##
-**Q3:** Why no bundle package support in 3+?
+**Q3:** Why no bundle package support in v3+?
 
 **A3:** Support was dropped as Sequoia doesn't support bundle packages, and it simplifies the code somewhat.
 ##
+**Q4:** What happens if one of the packages needs a different processor architecture than the pkg?
+
+**A4:** That should only apply to 3 of the Substance 3D titles, and hopefully their next releases will have universal packages.
