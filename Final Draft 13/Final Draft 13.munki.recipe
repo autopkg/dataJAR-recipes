@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Final Draft 13 and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Final Draft 13</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_CATEGORY</key>
+        <string>Utilities</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>FinalDraft13</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%MUNKI_CATEGORY%</string>
+            <key>description</key>
+            <string>More Tools. More Productivity. More Progress.
+
+Final Draft 13 is the most customizable version of the world’s bestselling screenwriting software. Take your idea to script with easy-to-use tools so you can get more done with your writing sessions and achieve your goals faster.</string>
+            <key>developer</key>
+            <string>Final Draft</string>
+            <key>display_name</key>
+            <string>Final Draft 13</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+# Suppress Auto-Update.
+defaults write /Library/Preferences/com.finaldraft.finaldraft.v13 SUEnableAutomaticChecks -bool no
+
+exit</string>
+            <key>postuninstall_script</key>
+            <string>#!/bin/bash
+
+# Created from: https://kb.finaldraft.com/hc/en-us/articles/22490602849044-Thoroughly-uninstalling-Final-Draft-13-from-a-Mac
+
+# Remove any preferences.
+defaults delete /Library/Preferences/com.finaldraft.finaldraft.v13
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Final Draft 13</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>quarantined_files_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/Final Draft 13.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
