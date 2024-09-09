@@ -4,17 +4,21 @@
     <dict>
         <key>Description</key>
         <string>Imports Adobe Photoshop 2023 into Munki, please review:
-https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md</string>
+https://github.com/autopkg/dataJAR-test-recipes./blob/master/Adobe%20Admin%20Console%20Packages/README.md</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.munki.Adobe Photoshop 2023</string>
         <key>Input</key>
         <dict>
             <key>MUNKI_CATEGORY</key>
-            <string>Adobe CC 2023</string>
+            <string>Adobe CC</string>
             <key>MUNKI_DEVELOPER</key>
             <string>Adobe</string>
+            <key>MUNKI_DESCRIPTION</key>
+            <string>%aacp_application_description</string>
+            <key>MUNKI_DISPLAY_NAME</key>
+            <string>%aacp_application_display_name%</string>
             <key>NAME</key>
-            <string>AdobePhotoshop2023</string>
+            <string>%aacp_name%</string>
             <key>MUNKI_REPO_SUBDIR</key>
             <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
             <key>pkginfo</key>
@@ -25,8 +29,14 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
                 </array>
                 <key>category</key>
                 <string>%MUNKI_CATEGORY%</string>
+                <key>description</key>
+                <string>%MUNKI_DESCRIPTION%</string>
                 <key>developer</key>
                 <string>%MUNKI_DEVELOPER%</string>
+                <key>display_name</key>
+                <string>%MUNKI_DISPLAY_NAME%</string>
+                <key>minimum_os_version</key>
+                <string>%aacp_minimum_os%</string>
                 <key>name</key>
                 <string>%NAME%</string>
                 <key>unattended_install</key>
@@ -41,32 +51,28 @@ https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%2
         <array>
             <dict>
                 <key>Processor</key>
-                <string>AdobeAdminConsolePackagesPkgInfoCreator</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>DmgCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>dmg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%-%aacp_application_architecture_type%-%version%.dmg</string>
-                    <key>dmg_root</key>
-                    <string>%aacp_package_path%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
                 <string>MunkiPkginfoMerger</string>
                 <key>Arguments</key>
                 <dict>
                     <key>additional_pkginfo</key>
                     <dict>
-                        <key>installer_type</key>
-                        <string/>
+                        <key>installs</key>
+                        <array>
+                            <dict>
+                                <key>CFBundleIdentifier</key>
+                                <string>%aacp_bundle_identifier%</string>
+                                <key>CFBundleShortVersionString</key>
+                                <string>%aacp_bundle_short_version_string%</string>
+                                <key>CFBundleVersion</key>
+                                <string>%aacp_bundle_version%</string>
+                                <key>path</key>
+                                <string>%aacp_application_full_path%</string>
+                                <key>type</key>
+                                <string>application</string>
+                                <key>version_comparison_key</key>
+                                <string>%aacp_version_comparison_key%</string>
+                            </dict>
+                        </array>
                         <key>uninstall_method</key>
                         <string>uninstall_script</string>
                         <key>uninstall_script</key>
@@ -106,7 +112,7 @@ else
     exit 1
 fi</string>
                         <key>version</key>
-                        <string>%version%</string>
+                        <string>%aacp_application_version%</string>
                     </dict>
                 </dict>
             </dict>
@@ -116,7 +122,7 @@ fi</string>
                 <key>Arguments</key>
                 <dict>
                     <key>pkg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%-%aacp_application_architecture_type%-%version%.dmg</string>
+                    <string>%aacp_package_path%</string>
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
                 </dict>
