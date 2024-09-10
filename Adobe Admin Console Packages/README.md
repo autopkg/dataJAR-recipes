@@ -8,10 +8,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </details>
 
 # Adobe Admin Console Packages
-<p align="center"><img width="256" alt="Alert" src="https://github.com/autopkg/dataJAR-recipes/assets/2464974/a468823b-718c-4375-96a3-cb777770f9e4">
+<p align="center"><img width="256" alt="Alert" src="https://github.com/user-attachments/assets/3166e0a9-3c2d-4dfd-8599-a30d26d663ad">
 
 ## About
-For information on how these recipes came about (and why), please click [here.](https://macmule.com/2024/06/17/adobe-admin-console-packages-2-0/)
+
+For information on how these recipes came about (and why), please click [here.]([https://macmule.com/2024/09/09/adobe-admin-console-packages-3-0/))
 
 ## Quick start guide
 > [!IMPORTANT]
@@ -175,7 +176,10 @@ With v3+, the titles icons can be extracted as per the `--extract-icons` flag.
 
 **A1:** The flat packages do not include a *_Uninstall.pkg, as such the .munki recipes contain uninstallation scripts.. which are the same for all but Acrobat.
 ##
-**Q3:** Why no bundle package support in 3+?
+**Q3:** Why no bundle package support in v3+?
 
 **A3:** Support was dropped as Sequoia doesn't support bundle packages, and it simplifies the code somewhat.
 ##
+**Q4:** What happens if one of the packages needs a different processor architecture than the pkg?
+
+**A4:** That should only apply to 3 of the Substance 3D titles, and hopefully their next releases will have universal packages.
