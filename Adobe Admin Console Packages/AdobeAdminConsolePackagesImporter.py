@@ -681,7 +681,7 @@ def match_overrides(adobe_installers: dict, override_dirs: list, recipe_type: st
             # Add the titles name
             installer_data['aacp_name'] = adobe_installer
             # Progress notification
-            print(f"\tMatched aacp_name: {installer_data['aacp_name']"}
+            print(f"\tMatched aacp_name: {installer_data['aacp_name']}"}
 
     # If we have no matched overrides, exit
     if not adobe_installers:
