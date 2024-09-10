@@ -675,7 +675,7 @@ def match_overrides(adobe_installers: dict, override_dirs: list, recipe_type: st
             adobe_installers.pop(adobe_installer, None)
             # Progress notification
             print(f"\tWARNING: Removed {adobe_installer}, as could not find a matching override.")
-        # If we the installer has a matched override
+        # If the installer has a matched override
         else:
             # Add the titles name
             installer_data['aacp_name'] = adobe_installer
