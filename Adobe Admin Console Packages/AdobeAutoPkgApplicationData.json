@@ -44,7 +44,7 @@
     "AdobeAudition2024": {
             "aacp_application_full_path": "/Applications/Adobe Audition 2024/Adobe Audition 2024.app",
             "aacp_application_display_name": "Adobe Audition 2024",
-            "aacp_application_sap_code": "AEFT",
+            "aacp_application_sap_code": "AUDT",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
     "AdobeBridge2023": {
