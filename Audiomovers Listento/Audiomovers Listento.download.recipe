@@ -21,11 +21,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://audiomovers\.com/storage/plugins/([0-9]+(\.[0-9]+)+)/Audiomovers%20Listento%20Application%20Installer%20v([0-9]+(\.[0-9]+)+)%20\([A-Za-z0-9]+\)\.pkg)</string>
+                <string>href=\"(https://audiomovers\.com/downloads/listento-app-mac-installer-[0-9]+-[0-9]*\.[0-9]+)\"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://audiomovers.com/wp/downloads/</string>
+                <string>https://audiomovers.com/downloads/?product=all&amp;os=macos&amp;platform=all&amp;formats=all</string>
             </dict>
         </dict>
         <dict>
