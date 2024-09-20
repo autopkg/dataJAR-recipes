@@ -12,7 +12,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 ## About
 
-For information on how these recipes came about (and why), please click [here.]([https://macmule.com/2024/09/09/adobe-admin-console-packages-3-0/))
+For information on how these recipes came about (and why), please click [here.](https://macmule.com/2024/09/09/adobe-admin-console-packages-3-0/)
 
 ## Quick start guide
 > [!IMPORTANT]
