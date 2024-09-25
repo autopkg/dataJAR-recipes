@@ -31,6 +31,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
@@ -48,7 +50,7 @@
                 <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: ExprsVPN LLC (VMES9GFUQJ)</string>
+                    <string>Developer ID Installer: Expressco Services, LLC (TC292Y5427)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
