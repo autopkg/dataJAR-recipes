@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of IEM Plug-in Suite and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.IEM Plug-in Suite</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>IEMPlug-inSuite</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>DirectivityShaper.app</string>
+                <string>DualDelay.app</string>
+                <string>MatrixMultiplier.app</string>
+                <string>StereoEncoder.app</string>
+                <string>MultiBandCompressor.app</string>
+                <string>RoomEncoder.app</string>
+                <string>DistanceCompensator.app</string>
+                <string>MultiEncoder.app</string>
+                <string>FdnReverb.app</string>
+                <string>OmniCompressor.app</string>
+                <string>CoordinateConverter.app</string>
+                <string>GranularEncoder.app</string>
+                <string>EnergyVisualizer.app</string>
+                <string>AllRADecoder.app</string>
+                <string>DirectionalCompressor.app</string>
+                <string>MultiEQ.app</string>
+                <string>SceneRotator.app</string>
+                <string>ToolBox.app</string>
+                <string>ProbeDecoder.app</string>
+                <string>SimpleDecoder.app</string>
+                <string>BinauralDecoder.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The IEM Plug-in Suite is a free and Open-Source audio plugin suite including Ambisonic plug-ins up to 7th order created by staff and students of the Institute of Electronic Music and Acoustics.</string>
+            <key>developer</key>
+            <string>Institut fuer Elektronische Musik und Akustik der Kunstuniversitaet Graz</string>
+            <key>display_name</key>
+            <string>IEM Plug-in Suite</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.IEM Plug-in Suite</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
