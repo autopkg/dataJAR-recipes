@@ -16,6 +16,28 @@
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor has moved to a Web App.
+
+https://www.naturalreaders.com/webapp.html
+
+Related Issue: https://github.com/autopkg/dataJAR-recipes/issues/348</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
@@ -36,21 +58,21 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-		<dict>   
-			<key>Processor</key>   
-			<string>CodeSignatureVerifier</string>   
-			<key>Arguments</key>   
-			<dict>   
-				<key>input_path</key>   
-				<string>%pathname%</string>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: NaturalSoft (ZNEVFT9THT)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: NaturalSoft (ZNEVFT9THT)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
