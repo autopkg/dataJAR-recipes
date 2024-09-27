@@ -62,6 +62,19 @@ i.e.: `-k PRERELEASE=yes`</string>
                 </dict>
             </dict>
         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/FreeCAD.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "289DJRF23X"</string>
+                <key>strict_verification</key>
+                <true/>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
