@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of LogiTune and imports it into Munki
+    <string>Downloads the latest version of Logi Tune and imports it into Munki
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
@@ -27,90 +27,18 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>developer</key>
             <string>Logitech Inc.</string>
             <key>display_name</key>
-            <string>LogiTune</string>
+            <string>Logi Tune</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/sh
-# This script has been taken unedited from "LogiTuneInstaller.app/Contents/Resources/LocalSupport/LogiTuneUninstaller.pkg" postinstall.
-#
-# uninstaller script for TuneApp; also removes logs and settings;
-# is used both by pkg installer and uninstaller;
-# original file is under uninstaller folder and is copied to installer during build step
 
-# to debug under preinstall script in pkg installer, uncomment
-#logFile='/Users/../1.txt'
-log() {
-  : # nop
-  # echo $1 >> $logFile
-}
+/bin/echo Running the Logi Tune uninstallation script...
+/Library/Application\ Support/logitune/uninstall_app.sh
 
-log "setting params"
-launch_agent_="/Library/LaunchAgents/com.logitech.logitune.launcher.plist"
-app_name_="LogiTune"
-app_location_="/Applications"
-pkg_name="com.logitech.logitune.installer"
-
-log "before launchctl"
-
-# Unload launch agent.
-launchctl unload "${launch_agent_}"
-launchctl stop "${launch_agent_}"
-
-log "launchctl finished"
-# Quit app
-killAll() {
-  echo killing $1...
-  pids=($(pgrep -x $1))
-
-  for pid in "${pids[@]}"; do
-    kill -9 "$pid"
-  done
-}
-killAll $app_name_
-killAll "LogiTuneUpdater"
-killAll "LogiTuneAgent"
-
-log "processes killed"
-
-if [ -e "${app_location_}/${app_name_}.app/Contents/Frameworks/LogiRightSight.app/Contents/Resources/scripts/uninstall_daemon.sh" ]; then
-  "${app_location_}/${app_name_}.app/Contents/Frameworks/LogiRightSight.app/Contents/Resources/scripts/uninstall_daemon.sh"
-fi
-
-# Remove launch agent.
-removeFile() {
-  if [ -f "$1" ]; then
-    rm "$1"
-  fi
-}
-removeFile "${launch_agent_}"
-log "files removed"
-
-# Remove app
-removeDir() {
- if [ -d "$1" ];then
-  rm -rf "$1"
- fi
-}
-app="${app_location_}/${app_name_}.app"
-removeDir "${app}"
-removeDir "${app_location_}/LogiTuneInstaller.app" # in case it was not removed after installation
-log "dirs removed"
-
-sleep 1
-
-# Forget pkgs
-pkgutil --forget "${pkg_name}"
-log "pkgs forgotten"
-
-# delete logs, settings
-removeDir /Users/Shared/logitune
-removeDir $HOME/Library/Application\ Support/logitune
-
-log "exit 0"
-exit 0</string>
+exit</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -130,7 +58,7 @@ exit 0</string>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/LogiTune.app</string>
+                    <string>/Applications/Logi Tune.app</string>
                 </array>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>

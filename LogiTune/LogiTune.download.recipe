@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of LogiTune.</string>
+    <string>Downloads the latest version of Logi Tune.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.LogiTune</string>
     <key>Input</key>
