@@ -6,10 +6,9 @@
     <string>Download recipe of the Axure RP 10 Trial.
     
 NOTE: Axure has created two binaries for Intel and ARM hardware.  
-Modify the URL in your override to accomodate accordingly.
+Modify the architecture  in your override to accomodate accordingly.
 
-Intel URL: https://axure.cachefly.net/AxureRP-Setup.dmg
-ARM URL: https://axure.cachefly.net/AxureRP-Setup-arm64.dmg
+Set ARCHITECTURE to "-arm64" to download for Apple Silicon. Leave blank for Intel.
 	</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Axure RP 10-Trial</string>
@@ -17,8 +16,8 @@ ARM URL: https://axure.cachefly.net/AxureRP-Setup-arm64.dmg
     <dict>
         <key>NAME</key>
         <string>AxureRP10-Trial</string>
-        <key>URL</key>
-        <string>https://axure.cachefly.net/AxureRP-Setup.dmg</string>
+        <key>ARCHITECTURE</key>
+        <string>-arm64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -26,11 +25,22 @@ ARM URL: https://axure.cachefly.net/AxureRP-Setup-arm64.dmg
     <array>
         <dict>
             <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.axure.com/release-history/rp10</string>
+                <key>re_pattern</key>
+                <string>https://axure.cachefly.net/versions/10-0/AxureRP-Setup%ARCHITECTURE%-[\d+]+\.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%URL%</string>
+                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
