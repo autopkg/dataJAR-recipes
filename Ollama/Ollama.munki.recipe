@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Ollama and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Ollama</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Ollama</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Get up and running with Llama 3.2, Mistral, Gemma 2, and other large language models.</string>
+            <key>developer</key>
+            <string>Infra Technologies, Inc</string>
+            <key>display_name</key>
+            <string>Ollama</string>
+            <key>name</key>
+            <string>%NAME%</string>
+             <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+# Script built from: https://github.com/ollama/ollama/issues/851#issuecomment-1889808636
+# Please note admin rights are still needed as the file that records whether first time run has completed is located in the Users home folder. see https://github.com/ollama/ollama/issues/6814
+
+# Install Command Line Tools
+if ! [ -f /usr/local/bin/ollama ]; then
+  /usr/bin/touch /usr/local/bin/ollama ; /bin/ln -s -f /Applications/Ollama.app/Contents/Resources/ollama /usr/local/bin/ollama
+fi
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Ollama</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
