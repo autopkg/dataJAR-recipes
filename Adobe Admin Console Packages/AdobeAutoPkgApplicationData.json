@@ -23,6 +23,12 @@
             "aacp_application_sap_code": "AEFT",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeAfterEffects2025": {
+            "aacp_application_full_path": "/Applications/Adobe After Effects 2025/Adobe After Effects 2025.app",
+            "aacp_application_display_name": "Adobe After Effects 2025",
+            "aacp_application_sap_code": "AEFT",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeAnimate2023": {
             "aacp_application_full_path": "/Applications/Adobe Animate 2023/Adobe Animate 2023.app",
             "aacp_application_display_name": "Adobe Animate 2023",
@@ -47,6 +53,12 @@
             "aacp_application_sap_code": "AUDT",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
+    "AdobeAudition2025": {
+            "aacp_application_full_path": "/Applications/Adobe Audition 2025/Adobe Audition 2025.app",
+            "aacp_application_display_name": "Adobe Audition 2025",
+            "aacp_application_sap_code": "AUDT",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
     "AdobeBridge2023": {
             "aacp_application_full_path": "/Applications/Adobe Bridge 2023/Adobe Bridge 2023.app",
             "aacp_application_display_name": "Adobe Bridge 2023",
@@ -59,6 +71,12 @@
             "aacp_application_sap_code": "KBRG",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
+    "AdobeBridge2025": {
+            "aacp_application_full_path": "/Applications/Adobe Bridge 2025/Adobe Bridge 2025.app",
+            "aacp_application_display_name": "Adobe Bridge 2025",
+            "aacp_application_sap_code": "KBRG",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
     "AdobeCharacterAnimator2023": {
             "aacp_application_full_path": "/Applications/Adobe Character Animator 2023/Adobe Character Animator 2023.app",
             "aacp_application_display_name": "Adobe Character Animator 2023",
@@ -68,6 +86,12 @@
     "AdobeCharacterAnimator2024": {
             "aacp_application_full_path": "/Applications/Adobe Character Animator 2024/Adobe Character Animator 2024.app",
             "aacp_application_display_name":  "Adobe Character Animator 2024",
+            "aacp_application_sap_code": "CHAR",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeCharacterAnimator2025": {
+            "aacp_application_full_path": "/Applications/Adobe Character Animator 2025/Adobe Character Animator 2025.app",
+            "aacp_application_display_name":  "Adobe Character Animator 2025",
             "aacp_application_sap_code": "CHAR",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
@@ -95,6 +119,12 @@
             "aacp_application_sap_code": "ILST",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeIllustrator2025": {
+            "aacp_application_full_path": "/Applications/Adobe Illustrator 2025/Adobe Illustrator.app",
+            "aacp_application_display_name": "Adobe Illustrator 2025",
+            "aacp_application_sap_code": "ILST",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeInCopy2023": {
             "aacp_application_full_path": "/Applications/Adobe InCopy 2023/Adobe InCopy 2023.app",
             "aacp_application_display_name": "Adobe InCopy 2023",
@@ -107,6 +137,12 @@
             "aacp_application_sap_code": "AICY",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeInCopy2025": {
+            "aacp_application_full_path": "/Applications/Adobe InCopy 2025/Adobe InCopy 2025.app",
+            "aacp_application_display_name": "Adobe InCopy 2025",
+            "aacp_application_sap_code": "AICY",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeInDesign2023": {
             "aacp_application_full_path": "/Applications/Adobe InDesign 2023/Adobe InDesign 2023.app",
             "aacp_application_display_name": "Adobe InDesign 2023",
@@ -116,6 +152,12 @@
     "AdobeInDesign2024": {
             "aacp_application_full_path": "/Applications/Adobe InDesign 2024/Adobe InDesign 2024.app",
             "aacp_application_display_name": "Adobe InDesign 2024",
+            "aacp_application_sap_code": "IDSN",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeInDesign2025": {
+            "aacp_application_full_path": "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app",
+            "aacp_application_display_name": "Adobe InDesign 2025",
             "aacp_application_sap_code": "IDSN",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
@@ -143,6 +185,12 @@
             "aacp_application_sap_code": "AME",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeMediaEncoder2025": {
+            "aacp_application_full_path": "/Applications/Adobe Media Encoder 2025/Adobe Media Encoder 2025.app",
+            "aacp_application_display_name": "Adobe Media Encoder 2025",
+            "aacp_application_sap_code": "AME",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobePhotoshop2023": {
             "aacp_application_full_path": "/Applications/Adobe Photoshop 2023/Adobe Photoshop 2023.app",
             "aacp_application_display_name": "Adobe Photoshop 2023",
@@ -155,6 +203,12 @@
             "aacp_application_sap_code": "PHSP",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobePhotoshop2025": {
+            "aacp_application_full_path": "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app",
+            "aacp_application_display_name": "Adobe Photoshop 2025",
+            "aacp_application_sap_code": "PHSP",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobePremierePro2023": {
             "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2023/Adobe Premiere Pro 2023.app",
             "aacp_application_display_name": "Adobe Premiere Pro 2023",
@@ -164,6 +218,12 @@
     "AdobePremierePro2024": {
             "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2024/Adobe Premiere Pro 2024.app",
             "aacp_application_display_name": "Adobe Premiere Pro 2024",
+            "aacp_application_sap_code": "PPRO",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobePremierePro2025": {
+            "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2025/Adobe Premiere Pro 2025.app",
+            "aacp_application_display_name": "Adobe Premiere Pro 2025",
             "aacp_application_sap_code": "PPRO",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },

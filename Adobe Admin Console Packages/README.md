@@ -85,17 +85,20 @@ For information on how these recipes came about (and why), please click [here.](
            1. `aacp_minimum_os` - the installers minimum OS. This might well differ from the actual titles Info.plist's LSMinimumSystemVersion, but if the title cannot be installed then the latter is a moot point.
        1. The directory which the pkg was expanded into, `aacp_pkg_expand_dir`, is deleted.
        1. For each matched package, the following steps occur:
-           1. The pkg is installed:
-           1. The installed Adobe titles Info.plist is read in, the path of which made up of `aacp_application_full_path` + `Contents/Info.plist`. With the below variables being obtained from the Info.plist:
-               1. `aacp_bundle_icon_file` - the value of `CFBundleIconFile`.
-               1. `aacp_bundle_identifier` - the value of `CFBundleIdentifier`
-               1. `aacp_bundle_short_version_string` - the value of `CFBundleShortVersionString`
-               1. `aacp_bundle_version` - the value of `CFBundleVersion`
-               1. `aacp_application_version` - the titles version, this will be either the value of `aacp_bundle_short_version_string` or `aacp_bundle_version`. Which one is dictated by the value of `aacp_version_comparison_key`.
-               1. If `aacp_minimum_os` has not yet be defined. This is set to the value of: `LSMinimumSystemVersion`
-           1. If `--extract-icons` has been passed to `AdobeAdminConsolePackagesImporter.py`, the icon at: `aacp_application_full_path` + `Contents/Resources` + `aacp_bundle_icon_file` is copied to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`, and `aacp_icon_name` is set to the icons name in `%RECIPE_CACHE_DIR%`
-           1. If `--uninstall` has been passed to `AdobeAdminConsolePackagesImporter.py`, `AdobeAdminConsolePackagesImporter.py` will uninstall the application from the Mac that's running: `AdobeAdminConsolePackagesImporter.py`.
-   1. The matched recipes are updated, with each `aacp_` variable being written into the matched overrides Input dict. This allows these values to be used within the override as wanted. Additionally, if the overrides Input dict contains a pkginfo dict, (such as the case with .munki recipes), then:
+           1. If the pkg is can be installed on the Mac running the script:
+               1. The installed Adobe titles Info.plist is read in, the path of which made up of `aacp_application_full_path` + `Contents/Info.plist`. With the below variables being obtained from the Info.plist:
+                   1. `aacp_bundle_icon_file` - the value of `CFBundleIconFile`.
+                   1. `aacp_bundle_identifier` - the value of `CFBundleIdentifier`
+                   1. `aacp_bundle_short_version_string` - the value of `CFBundleShortVersionString`
+                   1. `aacp_bundle_version` - the value of `CFBundleVersion`
+                   1. `aacp_application_version` - the titles version, this will be either the value of `aacp_bundle_short_version_string` or `aacp_bundle_version`. Which one is dictated by the value of `aacp_version_comparison_key`.
+                   1. If `aacp_minimum_os` has not yet be defined. This is set to the value of: `LSMinimumSystemVersion`
+               1. If `--extract-icons` has been passed to `AdobeAdminConsolePackagesImporter.py`, the icon at: `aacp_application_full_path` + `Contents/Resources` + `aacp_bundle_icon_file` is copied to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`, and `aacp_icon_name` is set to the icons name in `%RECIPE_CACHE_DIR%`
+               1. If `--uninstall` has been passed to `AdobeAdminConsolePackagesImporter.py`, `AdobeAdminConsolePackagesImporter.py` will uninstall the application from the Mac that's running: `AdobeAdminConsolePackagesImporter.py`.
+           1. If the pkg is cannot be installed on the Mac running the script, the script looks in the list of Adobe installers for a pkg for the same title, that can be installed on the Mac running the script. If a matching pkg is found:
+               1. Various keys are checked with across both the pkg which can be installed on the Mac running the script, and the pkg which cannot be installed on the Mac the script.
+               1. If all of the keys match, the script will take some of the metadata from the pkg which can be installed on the Mac running the script, and add to the metadata of the the pkg which cannot be installed on the Mac the script.
+   1. The matched recipes overrides are updated, with each `aacp_` variable being written into the matched overrides Input dict. This allows these values to be used within the override as wanted. Additionally, if the overrides Input dict contains a pkginfo dict, (such as the case with .munki recipes), then:
        1. `aacp_blocking_applications` then `blocking_applications` is created with the value of `aacp_blocking_applications`
        1. If `aacp_application_architecture_type` is either arm64 or x64, then this `supported_architectures` is created with the value of `aacp_application_architecture_type`.
    1. A [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) is created, containing the overrides identifiers for the overrides which have matched a downloaded Adobe Admin Console package in alphabetical order, within the passed/derived directory. (Examples: `~/Downloads/adobe_admin_console_recipes_list.txt`, `/Users/Shared/adobe/adobe_admin_console_recipes_list.txt`)
@@ -104,30 +107,30 @@ For information on how these recipes came about (and why), please click [here.](
 ## Application names
 <div align="center">
 
-|Adobe CC 2024|Adobe CC 2023|
-|:---:|:---:|
-|AdobeAcrobatDC|AdobeAcrobatDC|
-|AdobeAfterEffects2024|AdobeAfterEffects2023|
-|AdobeAnimate2024|AdobeAnimate2023|
-|AdobeAudition2024|AdobeAudition2023|
-|AdobeBridge2024|AdobeBridge2023|
-|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
-|AdobeDimension|AdobeDimension|
-|AdobeDreamweaver2021|AdobeDreamweaver2021|
-|AdobeIllustrator2024|AdobeIllustrator2023|
-|AdobeInCopy2024|AdobeInCopy2023|
-|AdobeInDesign2024|AdobeInDesign2023|
-|AdobeLightroomCC|AdobeLightroomCC|
-|AdobeLightroomClassic|AdobeLightroomClassic|
-|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
-|AdobePhotoshop2024|AdobePhotoshop2023|
-|AdobePremierePro2024|AdobePremierePro2023|
-|AdobePremiereRush2.0|AdobePremiereRush2.0|
-|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
-|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
-|AdobeSubstance3DSampler|AdobeSubstance3DSampler|
-|AdobeSubstance3DStager|AdobeSubstance3DStager|
-|AdobeXD|AdobeXD|
+|Adobe CC 2025|Adobe CC 2024|Adobe CC 2023|
+|:---:|:---:|:---:|
+|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
+|AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
+||AdobeAnimate2024|AdobeAnimate2023|
+|AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
+|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
+|AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
+|AdobeDimension|AdobeDimension|AdobeDimension|
+|AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
+|AdobeIllustrator2025|AdobeIllustrator2024|AdobeIllustrator2023|
+|AdobeInCopy2025|AdobeInCopy2024|AdobeInCopy2023|
+|AdobeInDesign2025|AdobeInDesign2024|AdobeInDesign2023|
+|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|
+|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|
+|AdobeMediaEncoder2025|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
+|AdobePhotoshop2025|AdobePhotoshop2024|AdobePhotoshop2023|
+|AdobePremierePro2025|AdobePremierePro2024|AdobePremierePro2023|
+|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|
+|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
+|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
+|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|
+|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|
+|AdobeXD|AdobeXD|AdobeXD|
 
 </div>
 
