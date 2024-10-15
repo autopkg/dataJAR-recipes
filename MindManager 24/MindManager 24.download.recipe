@@ -3,43 +3,43 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Logi Tune.</string>
+    <string>Downloads latest version of MindManager 24.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.LogiTune</string>
+    <string>com.github.dataJAR-recipes.download.MindManager 24</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>LogiTune</string>
+        <string>MindManager24</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://software.vc.logitech.com/downloads/tune/LogiTuneInstaller.dmg</string>
+                <string>https://www.mindmanager.com/mm-mac-dmg</string>
             </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/LogiTuneInstaller.app</string>
+                <string>%pathname%/*.app</string>
                 <key>requirement</key>
-                <string>identifier "com.logitech.logituneInstaller" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = QED4VVPZWA</string>
+                <string>identifier "com.mindjet.mindmanager.24" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = ZF6ZZ779N5</string>
             </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

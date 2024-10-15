@@ -3,58 +3,60 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of the ExpressVPN.</string>
+    <string>Downloads the latest version of IEM Plug-in Suite.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.ExpressVPN</string>
+    <string>com.github.dataJAR-recipes.download.IEM Plug-in Suite</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>ExpressVPN</string>
+        <string>IEMPlug-inSuite</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://www\.expressvpn\.works/clients/mac/expressvpn_mac_.*?_release\.pkg</string>
+                <string>href=\"(https://users\.iem\.at/holzmueller/IEM-Audioplugins/IEMPluginSuite/v([0-9]+(\.[0-9]+)+)/IEMPluginSuite_v([0-9]+(\.[0-9]+)+)\.pkg)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://www.expressvpn.com/latest#mac</string>
+                <string>https://plugins.iem.at/download/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>%match%</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Expressco Services, LLC (TC292Y5427)</string>
+                    <string>Developer ID Installer: Institut fuer Elektronische Musik und Akustik der Kunstuniversitaet Graz (85W2432JR3)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

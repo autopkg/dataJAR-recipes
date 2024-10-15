@@ -5,6 +5,8 @@
     <key>Description</key>
     <string>Downloads the latest version of balenaEtcher.
 
+ARCHITECTURE can be either 'arm64' or 'x64'
+
 ** Please note it's advised to only use ONE of the below variables **
 
 Set PRERELEASE to a non-empty string to download prereleases, either
@@ -18,6 +20,8 @@ i.e.: `-k LATESTONLY=yes`</string>
     <string>com.github.dataJAR-recipes.download.balenaEtcher</string>
     <key>Input</key>
     <dict>
+        <key>ARCHITECTURE</key>
+        <string>arm64</string>
         <key>PRERELEASE</key>
         <string></string>
         <key>LATESTONLY</key>
@@ -35,7 +39,7 @@ i.e.: `-k LATESTONLY=yes`</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>balenaEtcher-.*\.dmg</string>
+                <string>balenaEtcher-.*%ARCHITECTURE%\.dmg</string>
                 <key>github_repo</key>
                 <string>balena-io/etcher</string>
                 <key>include_prereleases</key>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of eqMac and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.eqMac</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>eqMac</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>System Audio processing for macOS
+
+Parametric Equalizer, App Volume Mixer and more...</string>
+            <key>developer</key>
+            <string>Bitgapp Ltd.</string>
+            <key>display_name</key>
+            <string>eqMac</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+# Vendor Documentation: https://help.eqmac.app/en/article/how-to-install-eqmac-driver-automatically-or-manually-1r2dnlk/
+
+/usr/bin/touch "/Library/Audio/Plug-Ins/HAL/"
+/bin/cp -R -p "/Applications/eqMac.app/Contents/Resources/Embedded/eqMac.driver" "/Library/Audio/Plug-Ins/HAL/"
+/bin/cp -r -p "/Applications/eqMac.app/Contents/Resources/Embedded/com.bitgapp.eqmac.helper" "/Library/PrivilegedHelperTools/"
+/bin/cp -p "/Applications/eqMac.app/Contents/Resources/Embedded/com.bitgapp.eqmac.helper.plist" "/Library/LaunchDaemons/"
+
+/usr/sbin/chown root:wheel "/Library/PrivilegedHelperTools/com.bitgapp.eqmac.helper"
+/bin/chmod 544 "/Library/PrivilegedHelperTools/com.bitgapp.eqmac.helper"
+
+/usr/sbin/chown root:wheel "/Library/LaunchDaemons/com.bitgapp.eqmac.helper.plist"
+/bin/chmod 644 "/Library/LaunchDaemons/com.bitgapp.eqmac.helper.plist"
+
+exit</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Vendor Documentation: https://help.eqmac.app/en/article/how-to-uninstall-eqmac-1syrpgj/
+
+/bin/rm -r "/Applications/eqMac.app"
+/bin/rm -r "/Library/PrivilegedHelperTools/com.bitgapp.eqmac.helper"
+/bin/rm -r "/Library/LaunchDaemons/com.bitgapp.eqmac.helper.plist"
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.eqMac</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

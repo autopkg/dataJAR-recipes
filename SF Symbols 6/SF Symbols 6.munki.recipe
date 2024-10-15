@@ -3,47 +3,35 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Cloudflare WARP and imports it into Munki.
+    <string>Downloads the latest version of SF Symbols 6 and imports into Munki
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Cloudflare WARP</string>
+    <string>com.github.dataJAR-recipes.munki.SF Symbols 6</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>CloudflareWARP</string>
+        <string>SFSymbols6</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
         <key>pkginfo</key>
         <dict>
-           <key>blocking_applications</key>
-            <array/>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string>The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.
+            <string>SF Symbols 6
 
-The WARP client sits between your device and the Internet, and has several connection modes to better suit different needs.</string>
+SF Symbols is a library of over 6,000 symbols that are designed to integrate seamlessly with San Francisco, the system font for Apple platforms. Symbols come in nine weights and three scales, automatically align with text, and can be exported and edited using vector graphics editing tools to create custom symbols with shared design characteristics and accessibility features. SF Symbols 6 brings new and enhanced animations, updated annotation tools, and over 800 new symbols.</string>
             <key>developer</key>
-            <string>Cloudflare Inc</string>
+            <string>Apple</string>
             <key>display_name</key>
-            <string>Cloudflare WARP</string>
+            <string>SF Symbols 6</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>uninstall_method</key>
-            <string>uninstall_script</string>
-            <key>uninstall_script</key>
-            <string>#!/bin/bash
-
-# Vendors documentation: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/remove-warp/#macos
-
-cd /Applications/Cloudflare\ WARP.app/Contents/Resources ; ./uninstall.sh -f
-
-exit</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -53,87 +41,101 @@ exit</string>
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Cloudflare WARP</string>
+    <string>com.github.dataJAR-recipes.download.SF Symbols 6</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
                 <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
+                <string>%pathname%/SF Symbols.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/Cloudflare_WARP_*.pkg</string>
-            </dict>
             <key>Processor</key>
-            <string>FileFinder</string>
-        </dict>
-        <dict>
+            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/%found_basename%/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/SFSymbols.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Cloudflare WARP.app</string>
+                    <string>/Applications/SF Symbols.app</string>
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/SF Symbols.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
+                <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
             </dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

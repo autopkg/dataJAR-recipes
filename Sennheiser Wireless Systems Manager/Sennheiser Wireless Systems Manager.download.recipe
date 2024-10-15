@@ -21,14 +21,26 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\"(https://www\.sennheiser\.com/globalassets/digizuite/47222-en-sennheiser-wsm-setup-.*?\.dmg)\\\"</string>
+                <string>\"(https://www\.sennheiser\.com/globalassets/digizuite/[0-9]+-en-sennheiser.*?\.dmg)\\\"</string>
                 <key>url</key>
-                <string>https://www.sennheiser.com/en-gb/catalog/products/software/wireless-systems-manager/wsm-111113</string>
+                <string>https://www.sennheiser.com/en-gb/catalog/products/software/wireless-systems-manager/wsm-111113#Downloads</string>
                 <key>result_output_var_name</key>
-                <string>url</string>
+                <string>DOWNLOAD_URL</string>
             </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15</string>
+                </dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
