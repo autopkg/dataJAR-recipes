@@ -8,11 +8,12 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.0'
+__version__ = '3.1'
 
 
 # Standard Imports
 import argparse
+import copy
 import glob
 import json
 import os
@@ -58,7 +59,7 @@ def main():
     # If we have no value for the above, or we're at the loginwindow.. set username to None
     if user_name in ("", "loginwindow"):
         # Error notification
-        print("ERROR: Cannot determine the logged in user, or noone is logged in, exiting...")
+        print("ERROR: Cannot determine the logged in user, or no one is logged in, exiting...")
         # Exit
         sys.exit(1)
 
@@ -87,12 +88,12 @@ def main():
     adobe_installers = get_adobe_installers(application_data, packages_path)
 
     # Progress notification
-    print(f"{len(adobe_installers.keys())} Adobe pkg(s) found:")
+    print(f"{len(adobe_installers)} Adobe pkg(s) found:")
 
     # For each found installer
-    for _, installer_data in adobe_installers.items():
+    for adobe_installer in adobe_installers:
         # Print
-        print(f"\t{installer_data['aacp_package_path']}")
+        print(f"\t{adobe_installer}")
 
     # Get RECIPE_CACHE_DIR and RECIPE_OVERRIDE_DIRS from com.github.autopkg.plist
     override_dirs, recipe_cache_dir = get_autopkg_dirs(user_name)
@@ -100,22 +101,28 @@ def main():
     # Progress notification
     print(f"Retrieved {len(override_dirs)} override dir(s)...")
 
+    # Get Adobe overrides
+    adobe_override_file_paths = get_adobe_overrides(application_data, override_dirs, recipe_type)
+
+    # Progress notification
+    print(f"{len(adobe_override_file_paths)} Adobe overrides found...")
+
     # Get matching overrides
-    adobe_installers = match_overrides(adobe_installers, override_dirs, recipe_type)
+    adobe_installers = match_overrides(adobe_override_file_paths, adobe_installers)
 
     # Progress notification
     print(f"{len(adobe_installers)} override(s) matched...")
 
     # For each matched override
-    for _, installer_dict in adobe_installers.items():
+    for adobe_installer, installer_dict in adobe_installers.items():
         # Progress notification
         print(f"\t{installer_dict['aacp_override_identifier']} - "
-            f"{installer_dict['aacp_override_path']}")
+              f"{installer_dict['aacp_override_path']} {adobe_installer}")
 
     # Expand the installers to retrieve more details, deleting the temp dirs when done
     adobe_installers = expand_installers(adobe_installers)
 
-    # If "adobe_installers" is empty
+    # If "matched_adobe_installers" is empty
     if not adobe_installers:
         # Progress notification
         print("WARNING: No installers left to process.. exiting...")
@@ -125,7 +132,10 @@ def main():
     # Install the Adobe title(s) locally, to retrieve details once installed, getting icon and/or
     # uninstalling as wanted
     adobe_installers = install_adobe_titles(adobe_installers, arg_parser, recipe_cache_dir,
-        user_name)
+                       user_name)
+
+    # Update any matched installers
+    adobe_installers = get_matched_installers_metadata(adobe_installers)
 
     # Update overrides
     update_overrides(adobe_installers)
@@ -190,13 +200,13 @@ def copy_icons_to_cache_dirs(icon_path: str, destination_path: str, recipe_cache
 
 def create_list(adobe_installers: dict, recipe_list_path: str, user_name: str):
     """
-    Creates/overwrites the recipe list at: "recipe_list_path". Adding only the overrides
+    Creates/overwrites the recipe list at: `recipe_list_path`. Adding only the overrides
     which have been matched to installers.
 
     Parameters
     ----------
     adobe_installers: dict
-        Dict containing information around on the Adobe titles.
+        Dict containing information for all the matched Adobe titles.
     recipe_list_path: str
         Full path to the recipe list to create/update.
     user_name: str
@@ -238,71 +248,77 @@ def expand_installers(adobe_installers: dict) -> dict:
     Parameters
     ----------
     adobe_installers: dict
-        Dict containing information around on the Adobe titles.
+        Dict containing information for all the matched Adobe titles.
 
     Returns
     ------
     adobe_installers: dict
-        dict containing the data on the matched Adobe installers and their additional data
+        Dict containing the data on the matched Adobe installers and their additional data
         retrieved from having installed them locally.
     """
 
     # For each adobe installer
-    for adobe_installer, installer_data in list(adobe_installers.items()):
+    for adobe_installer in adobe_installers:
         # Var declaration
-        installer_data['aacp_pkg_expand_dir'] = os.path.join(tempfile.mkdtemp(), 'expand')
+        adobe_installers[adobe_installer]['aacp_pkg_expand_dir'] = (os.path.join(tempfile.mkdtemp(),
+                                                                    'expand'))
         # Progress notification
-        print(f"Expanding: {installer_data['aacp_package_path']} to "
-            f"{installer_data['aacp_pkg_expand_dir']}...")
+        print(f"Expanding: {adobe_installer} to "
+              f"{adobe_installers[adobe_installer]['aacp_pkg_expand_dir']}...")
         # Run subprocess
-        run_subprocess(['/usr/sbin/pkgutil', '--expand', installer_data['aacp_package_path'],
-            installer_data['aacp_pkg_expand_dir']])
+        run_subprocess(['/usr/sbin/pkgutil', '--expand', adobe_installer,
+                       adobe_installers[adobe_installer]['aacp_pkg_expand_dir']])
         # Process optionXML.xml, found within the scripts directory of the expanded pkg
-        (installer_data['aacp_application_base_version'],
-            installer_data['aacp_application_install_lang'],
-                installer_data['aacp_application_architecture_type'],
-                    installer_data['aacp_target_folder']) = (
-                        parse_optionxml_xml(os.path.join(installer_data['aacp_pkg_expand_dir'],
-                            'Install.pkg/Scripts/optionXML.xml')))
-        # If "adobe_installer" is not AdobeAcrobatDC
-        if not adobe_installer == 'AdobeAcrobatDC':
+        adobe_installers[adobe_installer] = parse_optionxml_xml(adobe_installers[adobe_installer])
+        # If `adobe_installer` is not AdobeAcrobatDC
+        if not adobe_installers[adobe_installer]['aacp_name'] == 'AdobeAcrobatDC':
             # Process Application.json, found within a sub dir of /Scripts/HD/ in the expanded pkg
-            (installer_data['aacp_application_description'],
-                installer_data['aacp_blocking_applications'],
-                    installer_data['aacp_minimum_os']) = parse_application_json(
-                        os.path.join(installer_data['aacp_pkg_expand_dir'],
-                            'Install.pkg/Scripts/HD/', installer_data['aacp_target_folder'],
-                                'Application.json'), installer_data)
+            adobe_installers[adobe_installer] = (
+              parse_application_json(adobe_installers[adobe_installer]))
         # Sort
-        installer_data = dict(sorted(installer_data.items()))
+        adobe_installers[adobe_installer] = dict(sorted(adobe_installers[adobe_installer].items()))
         # Try to
         try:
             # Progress notification
-            print(f"Deleting: {installer_data['aacp_pkg_expand_dir']}...")
-            # Delete "installer_data['aacp_pkg_expand_dir']"
-            shutil.rmtree(os.path.dirname(installer_data['aacp_pkg_expand_dir']))
+            print(f"Deleting: {adobe_installers[adobe_installer]['aacp_pkg_expand_dir']}...")
+            # Delete "adobe_installers[adobe_installer]['aacp_pkg_expand_dir']"
+            shutil.rmtree(os.path.dirname(adobe_installers[adobe_installer]['aacp_pkg_expand_dir']))
         # If not defined
         except OSError as err_msg:
             # Error notification
-            print(f"ERROR: Deleting installer_data['aacp_pkg_expand_dir'] failed with {err_msg}, "
-                  f"exiting...")
+            print(f"ERROR: Deleting adobe_installers[adobe_installer]['aacp_pkg_expand_dir'] "
+                  f"failed with {err_msg}, exiting...")
             # Exit
             sys.exit(1)
 
     # For each adobe_installer
-    for adobe_installer, installer_data in list(adobe_installers.items()):
+    for adobe_installer in dict(adobe_installers.items()):
         # If the installer is not a universal installer
-        if installer_data['aacp_application_architecture_type'] != 'macuniversal':
-            # Get the running Mac's processor
+        if (adobe_installers[adobe_installer]['aacp_application_architecture_type'] !=
+            'macuniversal'):
+            # Get the running Macs processor
             host_arch = platform.machine()
-            # If the installers architecture isn't the same as the running Mac's
-            if installer_data['aacp_application_architecture_type'] != 'host_arch':
-                # Remove adobe_installer from the dict
-                adobe_installers.pop(adobe_installer, None)
+            # If the installers architecture isn't the same as the running Ma's
+            if adobe_installers[adobe_installer]['aacp_application_architecture_type'] != host_arch:
                 # Progress notification
-                print(f"\tWARNING: Removed {adobe_installer}, as it can only install on: "
-                      f"{installer_data['aacp_application_architecture_type']}, and this Mac's "
-                      f"processor is: {host_arch}.")
+                print(f"\t{adobe_installer} cannot be installed on this Mac as required a "
+                      f"different processor architecture, looking for an installer for the "
+                      f"same title from which we can copy the metadata from.")
+                # Check `abobe_installers` for a matching pkg
+                matched_installer = match_installer(adobe_installers[adobe_installer],
+                                                    adobe_installers)
+                # If we have a matched installer
+                if matched_installer:
+                    # Add to the installers entry in the dict
+                    adobe_installers[adobe_installer]['aacp_matched_installer'] = matched_installer
+                # If we couldn't match an installer
+                else:
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it can only install on: "
+                 f"{adobe_installers[adobe_installer]['aacp_application_architecture_type']}, "
+                 f"and this Macs processor is: {host_arch}.")
+                    # Remove adobe_installer from the dict
+                    adobe_installers.pop(adobe_installer, None)
 
     # Returns
     return adobe_installers
@@ -310,20 +326,21 @@ def expand_installers(adobe_installers: dict) -> dict:
 
 def get_adobe_installers(application_data: dict, packages_path: str) -> dict:
     """
-    Looks within "packages_path" for flat packages that names start with the top level keys
-    within "application_data". Returning a dict.
+    Looks within `packages_path` for flat packages that names start with the top level keys
+    within `application_data`. Returning a dict.
 
     Parameters
     ----------
     application_data: dict
-        Dict containing information around on the Adobe titles.
+        Dict containing information on the Adobe titles, populated via:
+        `AdobeAutoPkgApplicationData.json`
     packages_path: str
         Path to look for the packages.
 
     Returns
     ------
     adobe_installers: dict
-        dict containing the data on the matched Adobe installers and their additional data.
+        Dict containing the data on the matched Adobe installers and their additional data.
     """
 
     # Progress notification
@@ -335,19 +352,29 @@ def get_adobe_installers(application_data: dict, packages_path: str) -> dict:
     # Get a sorted list of items beginning with Adobe* in ~/Downloads
     for some_item in sorted(glob.glob(os.path.join(packages_path, '*'))):
         # Iterate over application_data
-        for app_name in application_data:
-            # If the items name starts app_name
-            if os.path.basename(some_item).split('_')[0] == app_name:
+        for aacp_name in application_data:
+            # Var declaration
+            installer_data = {}
+            # If the items name starts aacp_name
+            if os.path.basename(some_item).split('_')[0] == aacp_name:
                 # If some_item is a file, and ends with .pkg
                 if os.path.isfile(some_item) and some_item.endswith('.pkg'):
-                    # Create nested dict named after the app_name
-                    adobe_installers[app_name] = application_data[app_name]
-                    # Add aacp_package_path to adobe_installers[aop_name]
-                    adobe_installers[app_name]['aacp_package_path'] = some_item
+                    # Add `application_data` to `installer_data`
+                    installer_data = application_data[aacp_name]
+                    # Add `aacp_name` to `installer_data`
+                    installer_data['aacp_name'] = aacp_name
+                    # Progress notification
+                    print(f"\t{some_item}'s aacp_name: {aacp_name}")
+                    # Add `aacp_package_path` to `installer_data`
+                    installer_data['aacp_package_path'] = some_item
+                    # Progress notification
+                    print(f"\t{some_item}'s aacp_package_path: {some_item}")
+                    # Added nested dict to `adobe_installers`
+                    adobe_installers[some_item] = installer_data
                 # If some_item is a dir
                 elif os.path.isdir(some_item):
                     # Warning notification
-                    print(f"WARNNING: Skipping {some_item}, as it is a bundle pkg...")
+                    print(f"\tWARNNING: Skipping {some_item}, as it is a bundle pkg...")
 
     # If no Adobe installers found
     if len(adobe_installers.keys()) == 0:
@@ -358,6 +385,50 @@ def get_adobe_installers(application_data: dict, packages_path: str) -> dict:
 
     # Returns
     return adobe_installers
+
+
+def get_adobe_overrides(application_data: dict, override_dirs: list, recipe_type: str) -> list:
+    """
+    Returns a list of override paths, that start with the application names found in:
+    `AdobeAutoPkgApplicationData.json`
+
+    Parameters
+    ----------
+    application_data: dict
+        Dict containing information on the Adobe titles, populated via:
+        `AdobeAutoPkgApplicationData.json`
+    override_dirs: list
+        List containing directories to search for overrides.
+    recipe_type: str
+        The type of recipe to look for.
+
+    Returns
+    ------
+    adobe_override_file_paths: list
+        List of override paths, that start with the application names found in:
+        `AdobeAutoPkgApplicationData.json`
+    """
+
+    # Var declaration
+    adobe_override_file_paths = []
+
+    # For each override_dir
+    for override_dir in override_dirs:
+        # Progress notification
+        print(f"Looking for overrides, in: {override_dir}")
+        # For each `adobe_override_file_path` in each of the `override_dirs`
+        for adobe_override_file_path in glob.glob(os.path.join(override_dir, '*')):
+            # Get the overrides filename
+            adobe_override_file_name = os.path.basename(adobe_override_file_path)
+            # If the `adobe_override_file_name` starts with an Adobe title, and contains
+            # `recipe_type`
+            if (adobe_override_file_name.startswith(tuple(application_data.keys())) and
+              recipe_type in adobe_override_file_name):
+                # Append to `adobe_override_file_paths`
+                adobe_override_file_paths.append(adobe_override_file_path)
+
+    # Return
+    return sorted(adobe_override_file_paths)
 
 
 def get_autopkg_dirs(user_name: str) -> (list, str):
@@ -398,7 +469,6 @@ def get_autopkg_dirs(user_name: str) -> (list, str):
 
     # Progress notification
     print(f"\tRECIPE_CACHE_DIR = {recipe_cache_dir}")
-
 
     # Progress notification
     print("Retrieving RECIPE_OVERRIDE_DIRS...")
@@ -444,9 +514,46 @@ def get_autopkg_dirs(user_name: str) -> (list, str):
     return sorted(override_dirs), recipe_cache_dir
 
 
+def get_matched_installers_metadata(adobe_installers: dict) -> dict:
+    """
+    If any installer in `adobe_installers` has `aacp_matched_installer` set, then add any
+    additional dict items to the installer from the `aacp_matched_installer`'s dict
+
+    Parameters
+    ----------
+    adobe_installers: dict
+        Dict containing information for all the matched Adobe titles.
+
+    Returns
+    -------
+    adobe_installers: dict
+        Dict containing information for all the matched Adobe titles.
+    """
+
+    # For each title in adobe_installers
+    for adobe_installer in adobe_installers:
+        # If the title has the `aacp_matched_installer` key
+        matched_installer = adobe_installers[adobe_installer].get('aacp_matched_installer', None)
+        # If `matched_installer`
+        if matched_installer:
+            # For each key in the `matched_installer` dict
+            for some_key, some_value in adobe_installers[matched_installer].items():
+                # Try to
+                try:
+                    # Get the key from the `adobe_installer`
+                    adobe_installers[adobe_installer][some_key]
+                # If the key is missing
+                except KeyError:
+                    # Add the key to the `adobe_installer` dict
+                    adobe_installers[adobe_installer][some_key] = some_value
+
+    # Return
+    return adobe_installers
+
+
 def get_override_identifier(aacp_override_path: str) -> str:
     """
-    Returns the identifier of the override specified at "aacp_override_path".
+    Returns the identifier of the override specified at `aacp_override_path`.
 
     Parameters
     ----------
@@ -480,10 +587,6 @@ def get_override_identifier(aacp_override_path: str) -> str:
         # Return None
         return None
 
-    # If we have extracted the aacp_override_identifier
-    if aacp_override_identifier:
-        print(f"\t{aacp_override_path}, has identifier: {aacp_override_identifier}...")
-
     # Return
     return aacp_override_identifier
 
@@ -497,7 +600,7 @@ def install_adobe_titles(adobe_installers: dict, arg_parser: argparse.Namespace,
     Parameters
     ----------
     adobe_installers: dict
-        Dict containing information around on the Adobe titles.
+        Dict containing information for all the matched Adobe titles.
     arg_parser: argparse.Namespace
         The arguments passed to script, to see if we're to get an applications icon and to
         uninstall.
@@ -509,283 +612,381 @@ def install_adobe_titles(adobe_installers: dict, arg_parser: argparse.Namespace,
     Returns
     ------
     adobe_installers: dict
-        dict containing the data on the matched Adobe installers and their additional data
+        Dict containing the data on the matched Adobe installers and their additional data
         retrieved from having installed them locally.
     """
 
     # For each adobe installer
     for adobe_installer, installer_data in adobe_installers.items():
-        # Progress notification
-        print(f"Installing: {installer_data['aacp_package_path']}...")
-        # Run subprocess
-        run_subprocess(['/usr/bin/sudo', '/usr/sbin/installer', '-pkg',
-            installer_data['aacp_package_path'], '-target', '/'])
-        # Var declaration
-        info_plist_path = os.path.join(installer_data['aacp_application_full_path'],
-            'Contents/Info.plist')
-        # Read the info.plist
-        info_plist_content = read_plist_file(info_plist_path)
-        # Progress notification
-        print(f"Retrieving keys from: {info_plist_path}...")
-        # Get value for "CFBundleIconFile"
-        if not info_plist_content['CFBundleIconFile'].endswith('.icns'):
-           # Append .icns
-            adobe_installers[adobe_installer]['aacp_bundle_icon_file'] = (
-                info_plist_content['CFBundleIconFile'] + '.icns')
-        # If CFBundleIconFile doesn't need '.icns' added
-        else:
-            # Don't append .icns
-            adobe_installers[adobe_installer]['aacp_bundle_icon_file'] = (
-                info_plist_content['CFBundleIconFile'])
-        # Progress notification
-        print(f"\tRetrieved aacp_bundle_icon_file: "
-            f"{adobe_installers[adobe_installer]['aacp_bundle_icon_file']}")
-        # Get value for "CFBundleIdentifier"
-        adobe_installers[adobe_installer]['aacp_bundle_identifier'] = (
-            info_plist_content['CFBundleIdentifier'])
-        # Progress notification
-        print(f"\tRetrieved aacp_bundle_identifier: "
-            f"{adobe_installers[adobe_installer]['aacp_bundle_identifier']}")
-        # Get value for "CFBundleShortVersionString"
-        adobe_installers[adobe_installer]['aacp_bundle_short_version_string'] = (
-            info_plist_content['CFBundleShortVersionString'])
-        # Progress notification
-        print(f"\tRetrieved aacp_bundle_short_version_string: "
-            f"{adobe_installers[adobe_installer]['aacp_bundle_short_version_string']}")
-        # Get value for "CFBundleVersion"
-        adobe_installers[adobe_installer]['aacp_bundle_version'] = (
-            info_plist_content['CFBundleVersion'])
-        # Progress notification
-        print(f"\tRetrieved aacp_bundle_version: "
-            f"{adobe_installers[adobe_installer]['aacp_bundle_version']}")
-        # If "aacp_version_comparison_key" is "CFBundleVersion"
-        if adobe_installers[adobe_installer]['aacp_version_comparison_key'] == 'CFBundleVersion':
-           # Set "aacp_application_version" to the value of "aacp_bundle_version"
-            adobe_installers[adobe_installer]['aacp_application_version'] = (
-            adobe_installers[adobe_installer]['aacp_bundle_version'])
-        # If short version
-        else:
-            # Set "aacp_application_version" to the value of "aacp_bundle_short_version_string"
-            adobe_installers[adobe_installer]['aacp_application_version'] = (
-            adobe_installers[adobe_installer]['aacp_bundle_short_version_string'])
-        # If we've not already retrieved the titles minimum os
-        if not 'aacp_minimum_os' in adobe_installers[adobe_installer]:
-            # Get the key from the plist
-            plist_key_value = info_plist_content['LSMinimumSystemVersion']
-            # Retrieve the value from the info.plist, and update the "adobe_installers" dict
-            adobe_installers[adobe_installer]['aacp_minimum_os'] = plist_key_value
+        # If the installer_data doesn't have the `aacp_matched_installer` key
+        if not installer_data.get('aacp_matched_installer'):
             # Progress notification
-            print(f"\tRetrieved aacp_minimum_os: {plist_key_value}")
-        # If we're to get the applications icon
-        if arg_parser.extract_icons:
-            # Path to the title icon
-            icon_path = os.path.join(installer_data['aacp_application_full_path'],
-                'Contents/Resources', adobe_installers[adobe_installer]['aacp_bundle_icon_file'])
-            # Path to the recipes cache directory
-            recipe_cache_path = os.path.join(recipe_cache_dir,
-                installer_data['aacp_override_identifier'])
-            # Name of the icon file when moved
-            icon_name = adobe_installer + '.icns'
-            # Add name to dict
-            adobe_installers[adobe_installer]['aacp_icon_name'] = icon_name
-            # Full path to the icons destination
-            destination_path = os.path.join(recipe_cache_path, icon_name)
-            # Get the application icons
-            copy_icons_to_cache_dirs(icon_path, destination_path, recipe_cache_path,  user_name)
-        # If we're to get uninstall the applications
-        if arg_parser.uninstall:
-            # Uninstall the Adobe titles
-            uninstall_adobe_titles(installer_data)
+            print(f"Installing: {adobe_installer}...")
+            # Run subprocess
+            run_subprocess(['/usr/bin/sudo', '/usr/sbin/installer', '-pkg', adobe_installer,
+                            '-target', '/'])
+            # Var declaration
+            info_plist_path = os.path.join(installer_data['aacp_application_full_path'],
+                'Contents/Info.plist')
+            # Read the info.plist
+            info_plist_content = read_plist_file(info_plist_path)
+            # Progress notification
+            print(f"Retrieving keys from: {info_plist_path}...")
+            # Get value for "CFBundleIconFile"
+            if not info_plist_content['CFBundleIconFile'].endswith('.icns'):
+               # Append .icns
+                adobe_installers[adobe_installer]['aacp_bundle_icon_file'] = (
+                    info_plist_content['CFBundleIconFile'] + '.icns')
+            # If CFBundleIconFile doesn't need '.icns' added
+            else:
+                # Don't append .icns
+                adobe_installers[adobe_installer]['aacp_bundle_icon_file'] = (
+                    info_plist_content['CFBundleIconFile'])
+            # Progress notification
+            print(f"\tRetrieved aacp_bundle_icon_file: "
+                f"{adobe_installers[adobe_installer]['aacp_bundle_icon_file']}")
+            # Get value for "CFBundleIdentifier"
+            adobe_installers[adobe_installer]['aacp_bundle_identifier'] = (
+                info_plist_content['CFBundleIdentifier'])
+            # Progress notification
+            print(f"\tRetrieved aacp_bundle_identifier: "
+                f"{adobe_installers[adobe_installer]['aacp_bundle_identifier']}")
+            # Get value for "CFBundleShortVersionString"
+            adobe_installers[adobe_installer]['aacp_bundle_short_version_string'] = (
+                info_plist_content['CFBundleShortVersionString'])
+            # Progress notification
+            print(f"\tRetrieved aacp_bundle_short_version_string: "
+                f"{adobe_installers[adobe_installer]['aacp_bundle_short_version_string']}")
+            # Get value for "CFBundleVersion"
+            adobe_installers[adobe_installer]['aacp_bundle_version'] = (
+                info_plist_content['CFBundleVersion'])
+            # Progress notification
+            print(f"\tRetrieved aacp_bundle_version: "
+                f"{adobe_installers[adobe_installer]['aacp_bundle_version']}")
+            # If "aacp_version_comparison_key" is "CFBundleVersion"
+            if (adobe_installers[adobe_installer]['aacp_version_comparison_key'] ==
+                'CFBundleVersion'):
+               # Set "aacp_application_version" to the value of "aacp_bundle_version"
+                adobe_installers[adobe_installer]['aacp_application_version'] = (
+                adobe_installers[adobe_installer]['aacp_bundle_version'])
+            # If short version
+            else:
+                # Set "aacp_application_version" to the value of "aacp_bundle_short_version_string"
+                adobe_installers[adobe_installer]['aacp_application_version'] = (
+                adobe_installers[adobe_installer]['aacp_bundle_short_version_string'])
+            # If we've not already retrieved the titles minimum os
+            if not 'aacp_minimum_os' in adobe_installers[adobe_installer]:
+                # Get the key from the plist
+                plist_key_value = info_plist_content['LSMinimumSystemVersion']
+                # Retrieve the value from the info.plist, and update the "adobe_installers" dict
+                adobe_installers[adobe_installer]['aacp_minimum_os'] = plist_key_value
+                # Progress notification
+                print(f"\tRetrieved aacp_minimum_os: {plist_key_value}")
+            # If we're to get the applications icon
+            if arg_parser.extract_icons:
+                # Path to the title icon
+                icon_path = os.path.join(installer_data['aacp_application_full_path'],
+                  'Contents/Resources', adobe_installers[adobe_installer]['aacp_bundle_icon_file'])
+                # Path to the recipes cache directory
+                recipe_cache_path = os.path.join(recipe_cache_dir,
+                    installer_data['aacp_override_identifier'])
+                # Name of the icon file when moved
+                icon_name = adobe_installer + '.icns'
+                # Add name to dict
+                adobe_installers[adobe_installer]['aacp_icon_name'] = icon_name
+                # Full path to the icons destination
+                destination_path = os.path.join(recipe_cache_path, icon_name)
+                # Get the application icons
+                copy_icons_to_cache_dirs(icon_path, destination_path, recipe_cache_path,  user_name)
+            # If we're to uninstall the titles
+            if arg_parser.uninstall:
+                # Uninstall the Adobe titles
+                uninstall_adobe_titles(installer_data)
 
     # Returns
     return adobe_installers
 
 
-def match_overrides(adobe_installers: dict, override_dirs: list, recipe_type: str):
+def match_installer(adobe_installer: dict, adobe_installers: dict) -> str:
+    """
+    Checks `adobe_installers`, looking for a match for `adobe_installer` that installs the
+    same title, but for a different processor architecture.
+
+    Parameters
+    ----------
+    adobe_installer: dict
+        Dict containing information on a single title.
+    adobe_installers: dict
+        Dict containing information for all the matched Adobe titles.
+
+    Returns
+    -------
+    matched_installer: str
+        A matched installers path, or None if no match.
+    """
+
+    # Var declaration
+    matched_installer = None
+
+    # For each adobe installer
+    for some_installer in adobe_installers:
+        # If for the same app
+        if adobe_installers[some_installer]['aacp_name'] == adobe_installer['aacp_name']:
+            # If `aacp_application_base_version` values do not match
+            if not (adobe_installers[some_installer]['aacp_application_base_version'] ==
+                adobe_installer['aacp_application_base_version']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's applicarion base version: "
+                      f"{adobe_installers[some_installer]['aacp_application_base_version']}, "
+                      f"does not match {adobe_installer['aacp_application_base_version']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `install_lang` values do not match
+            if not (adobe_installers[some_installer]['aacp_application_install_lang'] ==
+                adobe_installer['aacp_application_install_lang']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's install language: "
+                      f"{adobe_installers[some_installer]['aacp_application_install_lang']}, "
+                      f"does not match {adobe_installer['aacp_application_install_lang']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `sap_code` values do not match
+            if not (adobe_installers[some_installer]['aacp_application_sap_code'] ==
+                adobe_installer['aacp_application_sap_code']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's SAP code: "
+                      f"{adobe_installers[some_installer]['aacp_application_sap_code']}, "
+                      f"does not match {adobe_installer['aacp_application_sap_code']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `sap_code` values do not match
+            if not (adobe_installers[some_installer]['aacp_base_version'] ==
+                adobe_installer['aacp_base_version']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's base version: "
+                      f"{adobe_installers[some_installer]['aacp_base_version']}, "
+                      f"does not match {adobe_installer['aacp_base_version']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `aacp_blocking_applications` values do not match
+            if not (adobe_installers[some_installer]['aacp_blocking_applications'] ==
+                adobe_installer['aacp_blocking_applications']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's blocking applications: "
+                      f"{adobe_installers[some_installer]['aacp_blocking_applications']}, "
+                      f"does not match {adobe_installer['aacp_blocking_applications']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `aacp_codex_version` values do not match
+            if not (adobe_installers[some_installer]['aacp_codex_version'] ==
+                adobe_installer['aacp_codex_version']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's codex version: "
+                      f"{adobe_installers[some_installer]['aacp_codex_version']}, "
+                      f"does not match {adobe_installer['aacp_codex_version']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `aacp_minimum_os` values do not match
+            if not (adobe_installers[some_installer]['aacp_minimum_os'] ==
+                adobe_installer['aacp_minimum_os']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's minimum OS: "
+                      f"{adobe_installers[some_installer]['aacp_minimum_os']}, "
+                      f"does not match {adobe_installer['aacp_minimum_os']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # If `aacp_product_version` values do not match
+            if not (adobe_installers[some_installer]['aacp_product_version'] ==
+                adobe_installer['aacp_product_version']):
+                # Progress notification
+                print(f"\tWARNING: Removing {adobe_installer}, as it's product version: "
+                      f"{adobe_installers[some_installer]['aacp_product_version']}, "
+                      f"does not match {adobe_installer['aacp_product_version']} "
+                      f"(from: {adobe_installer}")
+                # Exit loop
+                break
+            # Set `matched_installer`
+            matched_installer = adobe_installer['aacp_package_path']
+            # Progress notification
+            print(f"\t{adobe_installer['aacp_package_path']} matches: {some_installer}, so "
+                  f"we'll use {adobe_installer['aacp_package_path']}'s metadata.")
+            # Return
+            return matched_installer
+
+    # Return
+    return matched_installer
+
+
+def match_overrides(adobe_override_file_paths: list, adobe_installers: dict) -> (dict, list):
     """
     Matches the found overrides to their installer.
 
     Parameters
     ----------
+    adobe_override_file_paths: list
+        List of override paths, that start with the application names found in:
+        `AdobeAutoPkgApplicationData.json
     adobe_installers: dict
-        Dict containing information around on the Adobe installers.
-    override_dirs: list
-        List containing directories to search for overrides.
-    recipe_type: str
-        The type of recipe to look for.
+        Dict containing information for all the matched Adobe installers.
 
     Returns
     ------
-    adobe_installers: dict
-        dict containing the data on the matched Adobe installers additional data and matched
+    matched_adobe_installers: dict
+        Dict containing the data on the matched Adobe installers additional data and matched
         override paths.
+    unmatched_installers: list
+        List containing the unmatched installers.
     """
 
     # Var declaration
-    recipe_files = []
-
-    # For each override_dir
-    for override_dir in override_dirs:
-        # Progress notification
-        print(f"Looking for overrides, in: {override_dir}")
-        # Generate a list containing all recipe files
-        recipe_files += glob.glob(os.path.join(override_dir, '*'))
+    matched_adobe_installers = {}
 
     # For each recipe file
-    for recipe_file in recipe_files:
+    for adobe_override_file_path in adobe_override_file_paths:
         # For each adobe_installer
         for adobe_installer in adobe_installers:
-            # Var declaration
-            override_details = {}
-            # If "aacp_package_path" ends with _MACARM.pkg
-            if adobe_installers[adobe_installer]['aacp_package_path'].endswith('_MACARM.pkg'):
+            # If `adobe_installer` ends with _MACARM.pkg
+            if adobe_installer.endswith('MACARM.pkg'):
                 # If the override starts with adobe_installer and the type matches
-                if (os.path.basename(recipe_file).startswith(adobe_installer) and recipe_type
-                    in recipe_file and 'arm64' in recipe_file):
-                    # Path to the override
-                    override_details['path'] = recipe_file
-            # If "aacp_package_path" does not end with _MACARM.pkg
+                if (os.path.basename(adobe_override_file_path).startswith(
+                      adobe_installers[adobe_installer]['aacp_name']) and 'arm64' in
+                        adobe_override_file_path):
+                    # Deep copy the nested dict
+                    matched_adobe_installers[adobe_installer] = (
+                      copy.deepcopy(adobe_installers[adobe_installer]))
+                    # Add the path to the override
+                    matched_adobe_installers[adobe_installer]['aacp_override_path'] = (
+                      adobe_override_file_path)
+                    # Add the overrides identifier to adobe_installers dict
+                    matched_adobe_installers[adobe_installer]['aacp_override_identifier'] = (
+                      get_override_identifier(adobe_override_file_path))
+            # If `adobe_installer` does not end with _MACARM.pkg
             else:
                 # If the override starts with adobe_installer and the type matches
-                if (os.path.basename(recipe_file).startswith(adobe_installer) and recipe_type
-                    in recipe_file and not 'arm64' in recipe_file):
+                if (os.path.basename(adobe_override_file_path).startswith(
+                      adobe_installers[adobe_installer]['aacp_name']) and not 'arm64' in
+                        adobe_override_file_path):
+                    # Deep copy the nested dict
+                    matched_adobe_installers[adobe_installer] = (
+                      copy.deepcopy(adobe_installers[adobe_installer]))
                     # Path to the override
-                    override_details['path'] = recipe_file
-            # Try to
-            try:
-                # Get the overrides identifier
-                override_details['identifier'] = (
-                        get_override_identifier(override_details['path']))
-                # If we have a path and identifier
-                if override_details['identifier'] and override_details['path']:
-                    # Add overrides identifier to adobe_installers dict
-                    adobe_installers[adobe_installer]['aacp_override_identifier'] = (
-                        override_details['identifier'])
-                    # Add overrides path to adobe_installers dict
-                    adobe_installers[adobe_installer]['aacp_override_path'] = (
-                       override_details['path'])
-            # If we don't have one of the above defined
-            except KeyError:
-                pass
-
-    # For each adobe_installer
-    for adobe_installer, installer_data in list(adobe_installers.items()):
-        # If we don't have "aacp_override_identifier" for the adobe_installer
-        if 'aacp_override_identifier' not in adobe_installers[adobe_installer]:
-            # Remove adobe_installer from the dict
-            adobe_installers.pop(adobe_installer, None)
-            # Progress notification
-            print(f"\tWARNING: Removed {adobe_installer}, as could not find a matching override.")
-        # If the installer has a matched override
-        else:
-            # Add the titles name
-            installer_data['aacp_name'] = adobe_installer
-            # Progress notification
-            print(f"\tMatched aacp_name: {installer_data['aacp_name']}")
-
-    # If we have no matched overrides, exit
-    if not adobe_installers:
-        # Error notification
-        print("ERROR: 0 overrides matched, exiting...")
-        # Exit
-        sys.exit(1)
+                    matched_adobe_installers[adobe_installer]['aacp_override_path'] = (
+                      adobe_override_file_path)
+                    # Add the overrides identifier to adobe_installers dict
+                    matched_adobe_installers[adobe_installer]['aacp_override_identifier'] = (
+                      get_override_identifier(adobe_override_file_path))
 
     # Return adobe_installers
-    return adobe_installers
+    return matched_adobe_installers
 
 
-def parse_application_json(application_json_path: str, installer_data: dict):
+def parse_application_json(adobe_installer: dict) -> dict:
     """
     Parses the installers Application.json file
 
     Parameters
     ----------
-    application_json_path: str
-        Path to the application_json_path file.
-    installer_data: dict
-        Dict containing information around on the Adobe installers.
+    adobe_installer: dict
+        Dict containing information on a single Adobe installer.
 
     Returns
     ------
-    aacp_application_description: str
-        The applications short description.
-    aacp_blocking_applications: list
-        List of applications that need to be quit, before installation can proceed.
-    aacp_minimum_os: str
-        The installers minimum OS.
+    adobe_installer: str
+        Dict containing the data on the matched Adobe installers with added data from the
+        titles Application.json file.
     """
+
+    # Var declaration
+    application_json_path = (os.path.join(adobe_installer['aacp_pkg_expand_dir'],
+                             'Install.pkg/Scripts/HD/', adobe_installer['aacp_target_folder'],
+                             'Application.json'))
+    blocking_applications = []
 
     # Read in the "application_json_path" to a variable
     application_json = read_json_file(application_json_path)
 
-    # Var declaration
-    aacp_application_description = None
-    aacp_blocking_applications = []
-    aacp_minimum_os = None
+    # Get BaseVersion
+    adobe_installer['aacp_base_version'] = application_json['BaseVersion']
+
+    # Get CodexVersion
+    adobe_installer['aacp_codex_version'] = application_json['CodexVersion']
+
+    # Get ProductVersion
+    adobe_installer['aacp_product_version'] = application_json['ProductVersion']
 
     # For each Tagline from within "application_json"
     for tag_line in application_json["ProductDescription"]["Tagline"]["Language"]:
         # Get the Tagline that matches the aacp_application_aacp_application_install_lang locale
-        if tag_line['locale'] == installer_data['aacp_application_install_lang']:
-            # Set "aacp_application_description" to the matched Tagline
-            aacp_application_description = tag_line['value']
-            # If "aacp_application_description" doesn't end with a: .
-            if not aacp_application_description.endswith('.'):
-                # Add . to the end
-                aacp_application_description += '.'
+        if tag_line['locale'] == adobe_installer['aacp_application_install_lang']:
+            # If the Tagline doesn't end with a: .
+            if not tag_line['value'].endswith('.'):
+                # Set `aacp_application_description` to the matched Tagline, with '.' appended.
+                adobe_installer['aacp_application_description'] = tag_line['value'] + '.'
+            # If the Tagline ends with a: .
+            else:
+                # Set `aacp_application_description` to the matched Tagline
+                adobe_installer['aacp_application_description'] = tag_line['value']
 
     # For each conflicting_process crom within "application_json"
     for conflicting_process in application_json['ConflictingProcesses']['ConflictingProcess']:
         # If forceKillAllowed is not set to False
         if not conflicting_process['forceKillAllowed']:
-            # Add to "aacp_blocking_applications"
-            aacp_blocking_applications.append(conflicting_process['ProcessDisplayName'])
+            # Add to `blocking_applications`
+            blocking_applications.append(conflicting_process['ProcessDisplayName'])
 
     # Remove duplicates and sort "aacp_blocking_applications"
-    aacp_blocking_applications = sorted(set(aacp_blocking_applications))
+    adobe_installer['aacp_blocking_applications'] = sorted(set(blocking_applications))
 
     # Get aacp_minimum_os from within "application_json"
-    aacp_minimum_os = (re.search('macChecks={minOSVersion:\\\"(.*?)\\\"',
-        application_json['SystemRequirement']['CheckCompatibility']['Content'])[1])
+    adobe_installer['aacp_minimum_os'] = (re.search('macChecks={minOSVersion:\\\"(.*?)\\\"',
+                                          application_json['SystemRequirement']
+                                          ['CheckCompatibility']['Content'])[1])
 
     # Progress notification
-    print(f"\tRetrieved aacp_application_description: {aacp_application_description}")
+    print(f"\tRetrieved aacp_base_version: {adobe_installer['aacp_base_version']}")
 
     # Progress notification
-    print(f"\tRetrieved aacp_blocking_applications: {aacp_blocking_applications}")
+    print(f"\tRetrieved aacp_codex_version: {adobe_installer['aacp_codex_version']}")
 
     # Progress notification
-    print(f"\tRetrieved aacp_minimum_os: {aacp_minimum_os}")
+    print(f"\tRetrieved aacp_product_version: {adobe_installer['aacp_product_version']}")
+
+    # Progress notification
+    print(f"\tRetrieved aacp_application_description: "
+          f"{adobe_installer['aacp_application_description']}")
+
+    # Progress notification
+    print(f"\tRetrieved aacp_blocking_applications: "
+          f"{adobe_installer['aacp_blocking_applications']}")
+
+    # Progress notification
+    print(f"\tRetrieved aacp_minimum_os: {adobe_installer['aacp_minimum_os']}")
 
     # Return
-    return (aacp_application_description, aacp_blocking_applications, aacp_minimum_os)
+    return adobe_installer
 
 
-def parse_optionxml_xml(optionxml_path: str) -> (str, str, str, str):
+def parse_optionxml_xml(adobe_installer: dict) -> dict:
     """
     Parses the installers optionXML.xml.
 
-    Parameters
-    ----------
-    optionxml_path: str
-        Path to the optionXML.xml file.
-
     Returns
     ------
-    aacp_application_base_version: str
-        The titles base version, required for uninstalls.
-    aacp_application_install_lang: str
-        The installers language.
-    aacp_application_architecture_type: list
-        The installers support architecture, either: arm64, macuniversal or x86_64
-    aacp_target_folder: str
-        The installer titles main application folder.
+    adobe_installer: str
+        Dict containing the data on the matched Adobe installers with added data from the
+        titles Application.json file.
     """
 
     # Var declaration
-    aacp_application_base_version = None
-    aacp_application_install_lang = None
-    aacp_target_folder = None
+    optionxml_path = (os.path.join(adobe_installer['aacp_pkg_expand_dir'],
+                                  'Install.pkg/Scripts/optionXML.xml'))
 
     # Read in the optionXML.xml to a variable
     option_xml = read_xml_file(optionxml_path)
@@ -798,51 +999,55 @@ def parse_optionxml_xml(optionxml_path: str) -> (str, str, str, str):
         # If we have HDMedia, set vars
         if hd_media.findtext('MediaType') == 'Product':
             # Get the aacp_application_base_version
-            aacp_application_base_version = hd_media.findtext('baseVersion')
+            adobe_installer['aacp_application_base_version'] = hd_media.findtext('baseVersion')
             # Get the value for aacp_application_install_lang
-            aacp_application_install_lang = hd_media.findtext('installLang')
+            adobe_installer['aacp_application_install_lang'] = hd_media.findtext('installLang')
             # Get the value for TargetFolderName
-            aacp_target_folder = hd_media.findtext('TargetFolderName')
+            adobe_installer['aacp_target_folder'] = hd_media.findtext('TargetFolderName')
 
     # If no HDMedia is found, aacp_application_install_lang will not exist
-    if not aacp_application_install_lang:
+    if not adobe_installer.get('aacp_application_install_lang'):
         # Get vars for RIBS media
         for ribs_media in option_xml.findall('.//Medias/Media'):
             # Get the prodVersion, setting as aacp_application_base_version
-            aacp_application_base_version = ribs_media.findtext('prodVersion')
+            adobe_installer['aacp_application_base_version'] = ribs_media.findtext('prodVersion')
             # Get the value for aacp_application_install_lang
-            aacp_application_install_lang = ribs_media.findtext('installLang')
+            adobe_installer['aacp_application_install_lang'] = ribs_media.findtext('installLang')
             # Get the value for TargetFolderName
-            aacp_target_folder = ribs_media.findtext('TargetFolderName')
+            adobe_installer['aacp_target_folder'] = ribs_media.findtext('TargetFolderName')
 
     # Get the installers supported architecture
-    aacp_application_architecture_type = (option_xml.findtext('ProcessorArchitecture').lower())
+    adobe_installer['aacp_application_architecture_type'] = (option_xml.findtext(
+                                                             'ProcessorArchitecture').lower())
 
     # If "adobe_installer['aacp_application_architecture_type']" is not arm64, macuniversal or x64
-    if not aacp_application_architecture_type in ['arm64', 'macuniversal', 'x64']:
+    if (not adobe_installer['aacp_application_architecture_type'] in
+        ['arm64', 'macuniversal', 'x64']):
         # Error notification
         print(f"ERROR: ProcessorArchitecture in {optionxml_path}, is neither arm64, macuniversal "
-            f"nor x64. Instead: {aacp_application_architecture_type}, was returned.")
+              f"nor x64. Instead: {adobe_installer['aacp_application_architecture_type']}, was "
+              f"returned.")
         # Exit
         sys.exit(1)
 
     # If "aacp_application_architecture_type" is "x64"
-    if aacp_application_architecture_type == 'x64':
+    if adobe_installer['aacp_application_architecture_type'] == 'x64':
         # Replace
-        aacp_application_architecture_type = 'x86_64'
+        adobe_installer['aacp_application_architecture_type'] = 'x86_64'
 
     # Progress notification
-    print(f"\tRetrieved aacp_application_install_lang: {aacp_application_install_lang}")
+    print(f"\tRetrieved aacp_application_install_lang: "
+          f"{adobe_installer['aacp_application_install_lang']}")
 
     # Progress notification
-    print(f"\tRetrieved aacp_application_architecture_type: {aacp_application_architecture_type}")
+    print(f"\tRetrieved aacp_application_architecture_type: "
+          f"{adobe_installer['aacp_application_architecture_type']}")
 
     # Progress notification
-    print(f"\tRetrieved aacp_target_folder: {aacp_target_folder}")
+    print(f"\tRetrieved aacp_target_folder: {adobe_installer['aacp_target_folder']}")
 
     # Return
-    return (aacp_application_base_version, aacp_application_install_lang,
-        aacp_application_architecture_type, aacp_target_folder)
+    return adobe_installer
 
 
 def read_file(file_path: str) -> str:
@@ -902,7 +1107,7 @@ def read_json_file(json_path: str) -> dict:
     Returns
     ------
     json_content: dict
-        dict containing the contents of "json_path".
+        Dict containing the contents of "json_path".
     """
 
     # Var declaration
@@ -944,7 +1149,7 @@ def read_plist_file(plist_path: str) -> dict:
     Returns
     ------
     plist_content: dict
-        dict containing the contents of "plist_path".
+        Dict containing the contents of "plist_path".
     """
 
     # Var declaration
@@ -1027,7 +1232,7 @@ def read_yaml_file(yaml_path: str) -> dict:
     Returns
     ------
     yaml_content: dict
-        dict containing the contents of "yaml_path".
+        Dict containing the contents of "yaml_path".
     """
 
     # Var declaration
@@ -1072,7 +1277,7 @@ def run_recipe_list(recipe_list_path: str, report_path: str, user_name: str):
     recipe_list_path: list
         Path to the recipe list.
     report_path: str
-    	Path for AutoPkg to write it's report to.
+        Path for AutoPkg to write it's report to.
     user_name: str
         The logged in users user name.
     """
@@ -1206,7 +1411,7 @@ def update_override_content(installer_data: dict, override_content: dict) -> dic
         Dict containing information around on an Adobe title.
     override_content: dict
         Dict containing the overrides content.
-    
+
     Returns
     -------
     override_content: dict
@@ -1267,7 +1472,7 @@ def update_overrides(adobe_installers: dict):
     Parameters
     ----------
     adobe_installers: dict
-        Dict containing information around on the Adobe installers.
+        Dict containing information for all the matched Adobe installers.
     """
 
     # Progress notification
