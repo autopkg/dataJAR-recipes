@@ -8,7 +8,7 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.1'
+__version__ = '3.1.1'
 
 
 # Standard Imports
@@ -1480,19 +1480,18 @@ def update_overrides(adobe_installers: dict):
 
     # For each adobe installer
     for _, installer_data in list(adobe_installers.items()):
-        print(installer_data)
         # Progress notification
         print(f"\tUpdating: {installer_data['aacp_override_path']}...")
         # If a yaml file
         if (installer_data['aacp_override_path'].endswith('.yml') or
                 installer_data['aacp_override_path'].endswith('.yaml')):
             # Read in the override as a plist
-            override_content = read_plist_file(installer_data['aacp_override_path'])
+            override_content = read_yaml_file(installer_data['aacp_override_path'])
             # Update the content with data in "installer_data"
             override_content = update_override_content(installer_data, override_content)
             # Try to read it as yaml
             try:
-                # Open yaml file, to write
+                # Open the override for writing
                 with (open(installer_data['aacp_override_path'], 'w+', encoding = 'utf-8') as
                   write_file):
                     # Write the updated content to the override
