@@ -8,7 +8,7 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.1.1'
+__version__ = '3.1.2'
 
 
 # Standard Imports
@@ -691,7 +691,7 @@ def install_adobe_titles(adobe_installers: dict, arg_parser: argparse.Namespace,
                 recipe_cache_path = os.path.join(recipe_cache_dir,
                     installer_data['aacp_override_identifier'])
                 # Name of the icon file when moved
-                icon_name = adobe_installer + '.icns'
+                icon_name = adobe_installers[adobe_installer]['aacp_name'] + '.icns'
                 # Add name to dict
                 adobe_installers[adobe_installer]['aacp_icon_name'] = icon_name
                 # Full path to the icons destination
