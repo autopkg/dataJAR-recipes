@@ -57,7 +57,7 @@ For information on how these recipes came about (and why), please click [here.](
    1. Optionally, add the flag `--uninstall` this will uninstall the title from the Mac running `AdobeAdminConsolePackagesImporter.py`, once it has gathered the needed metadata.
    1. Confirms that the passed directory or the default directory exists, before proceeding.
    1. Parses [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to retrieve a list of titles names, (these are the same as found within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names)). The json also contains:
-       1. `aacp_name` - the titles name, this will be a name from: he [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+       1. `aacp_name` - the titles name, this will be a name from: [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
        1. `aacp_application_full_path` - the titles full path when installed, used to get the titles Info.plist and to generate an installs array for the supplied .munki recipes.
        1. `aacp_application_description` - Acrobat only, as the the description cannot be obtained from it's pkg itself.
        1. `aacp_blocking_applications` - Acrobat only, as not obtained in the same way as the rest of the Adobe CC titles.
