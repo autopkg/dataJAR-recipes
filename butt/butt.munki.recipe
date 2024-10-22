@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of butt and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.butt</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>butt</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>BUTT (Broadcast Using This Tool) is an easy to use, multi OS streaming tool.
+
+It supports Icecast, Shoutcast and WebRTC and runs on Windows, macOS and Linux.
+The main purpose of BUTT is to stream live audio from your computers microphone or line input
+to an Icecast, Shoutcast or WebRTC (WHIP) server. If you want you can also record your broadcast locally
+on your computer.
+
+With BUTT you can not directly stream audio files. However, with the help of tools like
+Voicemeeter (Windows), Blackhole (macOS) and PulseAudio (Linux) you can also stream audio files
+directly from your favorite music player.</string>
+            <key>developer</key>
+            <string>Daniel Noethen</string>
+            <key>display_name</key>
+            <string>butt</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.butt</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
