@@ -14,7 +14,7 @@ https://github.com/autopkg/dataJAR-test-recipes./blob/master/Adobe%20Admin%20Con
             <key>MUNKI_DEVELOPER</key>
             <string>Adobe</string>
             <key>MUNKI_DESCRIPTION</key>
-            <string>%aacp_application_description</string>
+            <string>%aacp_application_description%</string>
             <key>MUNKI_DISPLAY_NAME</key>
             <string>%aacp_application_display_name%</string>
             <key>NAME</key>
