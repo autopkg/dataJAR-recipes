@@ -5,11 +5,11 @@
     <key>Description</key>
     <string>Downloads the latest release of Max 9.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Max9</string>
+    <string>com.github.dataJAR-recipes.download.Max 9</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Max 9</string>
+        <string>Max9</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1.0</string>
