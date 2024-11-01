@@ -8,7 +8,7 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.1.2'
+__version__ = '3.1.3'
 
 
 # Standard Imports
@@ -476,16 +476,15 @@ def get_autopkg_dirs(user_name: str) -> (list, str):
     # If "RECIPE_OVERRIDE_DIRS" is defined within "autopkg_preferences"
     if 'RECIPE_OVERRIDE_DIRS' in autopkg_preferences:
         # Set "override_dirs" to "RECIPE_OVERRIDE_DIRS"
-        override_dirs = os.path.expanduser(autopkg_preferences['RECIPE_OVERRIDE_DIRS']).split()
+        # If override_dirs is a list
+        if isinstance(autopkg_preferences['RECIPE_OVERRIDE_DIRS'], list):
+            override_dirs = [os.path.expanduser(x) for x in autopkg_preferences['RECIPE_OVERRIDE_DIRS']]
+        else:
+            override_dirs = [os.path.expanduser(autopkg_preferences['RECIPE_OVERRIDE_DIRS'])]
     # If not defined
     else:
         # Set to the default path
         override_dirs = [os.path.expanduser('~/Library/AutoPkg/RecipeOverrides')]
-
-    # If override_dirs is a string
-    if isinstance(override_dirs, str):
-        # Convert to list, expanding if needed
-        override_dirs = [os.path.expanduser(override_dirs)]
 
     # Progress notification
     print("Using override dir(s):")
