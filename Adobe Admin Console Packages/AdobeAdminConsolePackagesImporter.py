@@ -8,7 +8,7 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.1.2'
+__version__ = '3.1.3'
 
 
 # Standard Imports
