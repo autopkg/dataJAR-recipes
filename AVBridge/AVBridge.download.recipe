@@ -24,22 +24,23 @@ To download Intel leave the DOWNLOAD_ARCH variable empty</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href="(/download/avbridge/AVBridge%DOWNLOAD_ARCH%\.dmg)"</string>
+                <string>version: (\d(\.\d)+)</string>
                 <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
+                <string>DOWNLOAD_VERSION</string>
                 <key>url</key>
-                <string>https://www.banyan-av.com/avbridge</string>
+                <string>https://www.banyan-av.com/download/avbridge/latest.yml</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>
+
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://www.banyan-av.com%DOWNLOAD_URL%</string>
+                <string>https://www.banyan-av.com/download/avbridge/AVBridge-%DOWNLOAD_VERSION%%DOWNLOAD_ARCH%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
