@@ -33,7 +33,6 @@ To download Intel leave the DOWNLOAD_ARCH variable empty</string>
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>
-
         <dict>
             <key>Arguments</key>
             <dict>
