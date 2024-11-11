@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>data-href=\"(https://veikk\.com/image/catalog/Software/new/VKTablet_Install_([0-9]+(\.[0-9]+)+)\.zip\?v=[A-Za-z0-9]+)\"</string>
+                <string>data-href=\"(https://veikk\.com/image/catalog/Software/VKTablet_Install_([0-9]+(\.[0-9]+)+)\.zip\?v=[A-Za-z0-9]+)\"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
