@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release of Outset from Github and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Outset</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>config/outset</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>Outset</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Outset is a utility application which automatically processes scripts and packages during the boot sequence, user logins, or on demand.</string>
+            <key>developer</key>
+            <string>Mac Admins Open Source</string>
+            <key>display_name</key>
+            <string>Outset</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/zsh
+
+# Script amended from the pkg preinstall with reference to https://github.com/macadmins/outset/wiki/FAQ#removing-outset
+#
+
+LD_ROOT=&quot;/Library/LaunchDaemons&quot;
+LA_ROOT=&quot;/Library/LaunchAgents&quot;
+
+
+USER_ID=$(id -u &quot;$(/usr/bin/stat -f %Su /dev/console)&quot;)
+
+## LaunchDaemons
+DAEMONS=(
+    &quot;${LD_ROOT}/com.github.outset.boot.plist&quot;
+    &quot;${LD_ROOT}/com.github.outset.cleanup.plist&quot;
+    &quot;${LD_ROOT}/com.github.outset.login-privileged.plist&quot;
+    &quot;${LD_ROOT}/io.macadmins.outset.boot.plist&quot;
+    &quot;${LD_ROOT}/io.macadmins.outset.cleanup.plist&quot;
+    &quot;${LD_ROOT}/io.macadmins.outset.login-privileged.plist&quot;
+)
+
+## LaunchAgents
+AGENTS=(
+    &quot;${LA_ROOT}/com.github.outset.login.plist&quot;
+    &quot;${LA_ROOT}/com.github.outset.on-demand.plist&quot;
+    &quot;${LA_ROOT}/io.macadmins.outset.login.plist&quot;
+    &quot;${LA_ROOT}/io.macadmins.outset.login-window.plist&quot;
+    &quot;${LA_ROOT}/io.macadmins.outset.on-demand.plist&quot;
+)
+
+# Unload if present
+for daemon in $DAEMONS; do
+    if [ -e &quot;${daemon}&quot; ]; then
+        /bin/launchctl bootout system &quot;${daemon}&quot;
+        rm -fv &quot;${daemon}&quot;
+    fi
+done
+
+for agent in $AGENTS; do
+    if [ -e &quot;${agent}&quot; ]; then
+        if [ ${USER_ID} -ne 0 ]; then
+            /bin/launchctl bootout gui/${USER_ID} &quot;${agent}&quot;
+        fi
+        rm -fv &quot;${agent}&quot;
+    fi
+done
+
+rm -rfv /usr/local/outset
+pkgutil --forget io.macadmins.Outset
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Outset</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Outset-*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%found_filename%/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/usr/local/outset</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>overwrite</key>
+                <true/>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Library</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/usr/local/outset/Outset.app/Contents/Library/</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/usr/local/outset/Outset.app</string>
+                    <string>/usr/local/outset/outset</string>
+                    <string>/Library/LaunchAgents/io.macadmins.Outset.login-window.plist</string>
+                    <string>/Library/LaunchAgents/io.macadmins.Outset.login.plist</string>
+                    <string>/Library/LaunchAgents/io.macadmins.Outset.on-demand.plist</string>
+                    <string>/Library/LaunchDaemons/io.macadmins.Outset.boot.plist</string>
+                    <string>/Library/LaunchDaemons/io.macadmins.Outset.cleanup.plist</string>
+                    <string>/Library/LaunchDaemons/io.macadmins.Outset.login-privileged.plist</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>changes</key>
+                <array>
+                    <dict>
+                        <key>path</key>
+                        <string>/usr/local/outset/Outset.app</string>
+                        <key>version_comparison_key</key>
+                        <string>CFBundleVersion</string>
+                    </dict>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-test-recipes.Shared Processors/InstallsArrayVersionComparisonKeyChanger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
