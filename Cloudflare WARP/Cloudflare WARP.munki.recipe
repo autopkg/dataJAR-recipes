@@ -113,12 +113,26 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Cloudflare WARP.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
+                <key>pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
