@@ -180,7 +180,7 @@ exit</string>
                 </array>
             </dict>
             <key>Processor</key>
-            <string>com.github.dataJAR-test-recipes.Shared Processors/InstallsArrayVersionComparisonKeyChanger</string>
+            <string>com.github.dataJAR-recipes.Shared Processors/InstallsArrayVersionComparisonKeyChanger</string>
         </dict>
         <dict>
             <key>Processor</key>
