@@ -116,7 +116,7 @@ exit</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>macos ([0-9]*\.[0-9]+) \([A-Za-z]+\) or higher</string>
+                <string>macOS ([0-9]*\.[0-9]+) \([A-Za-z]+\) or higher</string>
                 <key>result_output_var_name</key>
                 <string>min_os_ver</string>
                 <key>url</key>
