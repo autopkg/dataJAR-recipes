@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Elevate24 and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Elevate24</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Elevate24</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array/>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Elevate24 is a macOS Privileged Access Management solution that provides IT teams with visibility and monitoring capabilities to ensure compliance. It allows users to request limited privileges for a specific period, improving security and end-user experience.</string>
+            <key>developer</key>
+            <string>Jigsaw Systems Ltd</string>
+            <key>display_name</key>
+            <string>Elevate24</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+# Uninstall script taken from: https://github.com/Jigsaw24/Elevate24/blob/main/Documentation/UninstallElevate24.sh
+
+#############################################################
+# Owned by Jigsaw24
+# CHANGE LOG:
+#   v1.0.0 - 25-09-2024
+#############################################################
+
+loggedInUser=$( scutil &lt;&lt;&lt; &quot;show State:/Users/ConsoleUser&quot; | awk &apos;/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }&apos; )
+userID=$(/usr/bin/id -u $loggedInUser)
+
+result=&quot;&quot;
+if [ -e /Library/LaunchAgents/com.jigsaw24.Elevate24.plist ]; then
+    result=$(/bin/launchctl asuser $userID /bin/launchctl unload /Library/LaunchAgents/com.jigsaw24.Elevate24.plist)
+fi
+if [ -e /Library/LaunchDaemons/com.jigsaw24.Elevate24Helper.plist ]; then
+    /bin/launchctl unload /Library/LaunchDaemons/com.jigsaw24.Elevate24Helper.plist
+fi
+if [ -e Library/LaunchAgents/com.jigsaw24.Elevate24.plist ]; then
+    /bin/launchctl unload Library/LaunchAgents/com.jigsaw24.Elevate24.plist
+fi
+
+pkill -9 Elevate24
+result=$(/bin/launchctl asuser $userID /usr/bin/pkill -9 Elevate24)
+
+rm -Rf /Applications/Elevate24.app
+rm -Rf /Library/LaunchDaemons/com.jigsaw24.Elevate24Helper.plist
+rm -Rf /Library/LaunchAgents/com.jigsaw24.Elevate24.plist
+rm -Rf /Library/PrivilegedHelperTools/com.jigsaw24.Elevate24Helper
+rm -Rf /Library/PrivilegedHelperTools/com.jigsaw24.Elevate24Helper.app
+rm -Rf /Library/Application\ Support/Elevate24
+rm -Rf /Users/$loggedInUser/Library/Application\ Support/com.jigsaw24.Elevate24
+
+pkgutil --forget elevate24
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Elevate24</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Elevate24.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Elevate24.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
