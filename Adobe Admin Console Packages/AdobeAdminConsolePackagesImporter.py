@@ -8,7 +8,7 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.1.3'
+__version__ = '3.1.4'
 
 
 # Standard Imports
@@ -298,7 +298,7 @@ def expand_installers(adobe_installers: dict) -> dict:
             'macuniversal'):
             # Get the running Macs processor
             host_arch = platform.machine()
-            # If the installers architecture isn't the same as the running Ma's
+            # If the installers architecture isn't the same as the running Mac's
             if adobe_installers[adobe_installer]['aacp_application_architecture_type'] != host_arch:
                 # Progress notification
                 print(f"\t{adobe_installer} cannot be installed on this Mac as required a "
@@ -475,11 +475,14 @@ def get_autopkg_dirs(user_name: str) -> (list, str):
 
     # If "RECIPE_OVERRIDE_DIRS" is defined within "autopkg_preferences"
     if 'RECIPE_OVERRIDE_DIRS' in autopkg_preferences:
-        # Set "override_dirs" to "RECIPE_OVERRIDE_DIRS"
         # If override_dirs is a list
         if isinstance(autopkg_preferences['RECIPE_OVERRIDE_DIRS'], list):
-            override_dirs = [os.path.expanduser(x) for x in autopkg_preferences['RECIPE_OVERRIDE_DIRS']]
+            # Add as list
+            override_dirs = ([os.path.expanduser(x) for x in
+              autopkg_preferences['RECIPE_OVERRIDE_DIRS']])
+        # If override_dirs is not a list
         else:
+            # Set "override_dirs" to "RECIPE_OVERRIDE_DIRS"
             override_dirs = [os.path.expanduser(autopkg_preferences['RECIPE_OVERRIDE_DIRS'])]
     # If not defined
     else:
@@ -537,14 +540,13 @@ def get_matched_installers_metadata(adobe_installers: dict) -> dict:
         if matched_installer:
             # For each key in the `matched_installer` dict
             for some_key, some_value in adobe_installers[matched_installer].items():
-                # Try to
-                try:
-                    # Get the key from the `adobe_installer`
-                    adobe_installers[adobe_installer][some_key]
-                # If the key is missing
-                except KeyError:
-                    # Add the key to the `adobe_installer` dict
+                # If `some_key` isn't in `adobe_installers[adobe_installer]`
+                if not adobe_installers[adobe_installer].get(some_key, None):
+                    # Set to the value for the key in `matched_installer`
                     adobe_installers[adobe_installer][some_key] = some_value
+            # Set `aacc` to `aacp_matched_installer`
+            adobe_installers[adobe_installer]['aacp_package_path'] = (
+              adobe_installers[adobe_installer]['aacp_matched_installer'])
 
     # Return
     return adobe_installers
@@ -729,95 +731,98 @@ def match_installer(adobe_installer: dict, adobe_installers: dict) -> str:
 
     # For each adobe installer
     for some_installer in adobe_installers:
-        # If for the same app
-        if adobe_installers[some_installer]['aacp_name'] == adobe_installer['aacp_name']:
-            # If `aacp_application_base_version` values do not match
-            if not (adobe_installers[some_installer]['aacp_application_base_version'] ==
-                adobe_installer['aacp_application_base_version']):
+        # Ignore the same pkg
+        if not some_installer == adobe_installer['aacp_package_path']:
+            # If for the same app
+            if adobe_installers[some_installer]['aacp_name'] == adobe_installer['aacp_name']:
+                # If `aacp_application_base_version` values do not match
+                if not (adobe_installers[some_installer]['aacp_application_base_version'] ==
+                    adobe_installer['aacp_application_base_version']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as a base version of: "
+                          f"{adobe_installers[some_installer]['aacp_application_base_version']}, "
+                          f"does not match {adobe_installer['aacp_application_base_version']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `install_lang` values do not match
+                if not (adobe_installers[some_installer]['aacp_application_install_lang'] ==
+                    adobe_installer['aacp_application_install_lang']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's install language: "
+                          f"{adobe_installers[some_installer]['aacp_application_install_lang']}, "
+                          f"does not match {adobe_installer['aacp_application_install_lang']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `sap_code` values do not match
+                if not (adobe_installers[some_installer]['aacp_application_sap_code'] ==
+                    adobe_installer['aacp_application_sap_code']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's SAP code: "
+                          f"{adobe_installers[some_installer]['aacp_application_sap_code']}, "
+                          f"does not match {adobe_installer['aacp_application_sap_code']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `sap_code` values do not match
+                if not (adobe_installers[some_installer]['aacp_base_version'] ==
+                    adobe_installer['aacp_base_version']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's base version: "
+                          f"{adobe_installers[some_installer]['aacp_base_version']}, "
+                          f"does not match {adobe_installer['aacp_base_version']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `aacp_blocking_applications` values do not match
+                if not (adobe_installers[some_installer]['aacp_blocking_applications'] ==
+                    adobe_installer['aacp_blocking_applications']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's blocking applications: "
+                          f"{adobe_installers[some_installer]['aacp_blocking_applications']}, "
+                          f"does not match {adobe_installer['aacp_blocking_applications']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `aacp_codex_version` values do not match
+                if not (adobe_installers[some_installer]['aacp_codex_version'] ==
+                    adobe_installer['aacp_codex_version']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's codex version: "
+                          f"{adobe_installers[some_installer]['aacp_codex_version']}, "
+                          f"does not match {adobe_installer['aacp_codex_version']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `aacp_minimum_os` values do not match
+                if not (adobe_installers[some_installer]['aacp_minimum_os'] ==
+                    adobe_installer['aacp_minimum_os']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's minimum OS: "
+                          f"{adobe_installers[some_installer]['aacp_minimum_os']}, "
+                          f"does not match {adobe_installer['aacp_minimum_os']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # If `aacp_product_version` values do not match
+                if not (adobe_installers[some_installer]['aacp_product_version'] ==
+                    adobe_installer['aacp_product_version']):
+                    # Progress notification
+                    print(f"\tWARNING: Removing {adobe_installer}, as it's product version: "
+                          f"{adobe_installers[some_installer]['aacp_product_version']}, "
+                          f"does not match {adobe_installer['aacp_product_version']} "
+                          f"(from: {adobe_installer}")
+                    # Exit loop
+                    break
+                # Set `matched_installer`, to `some_installer`
+                matched_installer = some_installer
                 # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's applicarion base version: "
-                      f"{adobe_installers[some_installer]['aacp_application_base_version']}, "
-                      f"does not match {adobe_installer['aacp_application_base_version']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `install_lang` values do not match
-            if not (adobe_installers[some_installer]['aacp_application_install_lang'] ==
-                adobe_installer['aacp_application_install_lang']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's install language: "
-                      f"{adobe_installers[some_installer]['aacp_application_install_lang']}, "
-                      f"does not match {adobe_installer['aacp_application_install_lang']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `sap_code` values do not match
-            if not (adobe_installers[some_installer]['aacp_application_sap_code'] ==
-                adobe_installer['aacp_application_sap_code']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's SAP code: "
-                      f"{adobe_installers[some_installer]['aacp_application_sap_code']}, "
-                      f"does not match {adobe_installer['aacp_application_sap_code']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `sap_code` values do not match
-            if not (adobe_installers[some_installer]['aacp_base_version'] ==
-                adobe_installer['aacp_base_version']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's base version: "
-                      f"{adobe_installers[some_installer]['aacp_base_version']}, "
-                      f"does not match {adobe_installer['aacp_base_version']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `aacp_blocking_applications` values do not match
-            if not (adobe_installers[some_installer]['aacp_blocking_applications'] ==
-                adobe_installer['aacp_blocking_applications']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's blocking applications: "
-                      f"{adobe_installers[some_installer]['aacp_blocking_applications']}, "
-                      f"does not match {adobe_installer['aacp_blocking_applications']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `aacp_codex_version` values do not match
-            if not (adobe_installers[some_installer]['aacp_codex_version'] ==
-                adobe_installer['aacp_codex_version']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's codex version: "
-                      f"{adobe_installers[some_installer]['aacp_codex_version']}, "
-                      f"does not match {adobe_installer['aacp_codex_version']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `aacp_minimum_os` values do not match
-            if not (adobe_installers[some_installer]['aacp_minimum_os'] ==
-                adobe_installer['aacp_minimum_os']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's minimum OS: "
-                      f"{adobe_installers[some_installer]['aacp_minimum_os']}, "
-                      f"does not match {adobe_installer['aacp_minimum_os']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # If `aacp_product_version` values do not match
-            if not (adobe_installers[some_installer]['aacp_product_version'] ==
-                adobe_installer['aacp_product_version']):
-                # Progress notification
-                print(f"\tWARNING: Removing {adobe_installer}, as it's product version: "
-                      f"{adobe_installers[some_installer]['aacp_product_version']}, "
-                      f"does not match {adobe_installer['aacp_product_version']} "
-                      f"(from: {adobe_installer}")
-                # Exit loop
-                break
-            # Set `matched_installer`
-            matched_installer = adobe_installer['aacp_package_path']
-            # Progress notification
-            print(f"\t{adobe_installer['aacp_package_path']} matches: {some_installer}, so "
-                  f"we'll use {adobe_installer['aacp_package_path']}'s metadata.")
-            # Return
-            return matched_installer
+                print(f"\t{adobe_installer['aacp_package_path']} matches the metadate from: "
+                      f"{some_installer}, so we'll use {adobe_installer['aacp_package_path']}'s "
+                      f"post-installation retrieved metadata.")
+                # Return
+                return matched_installer
 
     # Return
     return matched_installer
