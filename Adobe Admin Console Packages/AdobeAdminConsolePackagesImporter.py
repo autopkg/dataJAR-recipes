@@ -309,8 +309,10 @@ def expand_installers(adobe_installers: dict) -> dict:
                                                     adobe_installers)
                 # If we have a matched installer
                 if matched_installer:
-                    # Add to the installers entry in the dict
+                    # Set `adobe_installer['aacp_matched_installer']` to `matched_installer`
                     adobe_installers[adobe_installer]['aacp_matched_installer'] = matched_installer
+                    # Set `adobe_installer['aacp_package_path']` to `adobe_installer`
+                    adobe_installers[adobe_installer]['aacp_package_path'] = adobe_installer
                 # If we couldn't match an installer
                 else:
                     # Progress notification
@@ -540,13 +542,10 @@ def get_matched_installers_metadata(adobe_installers: dict) -> dict:
         if matched_installer:
             # For each key in the `matched_installer` dict
             for some_key, some_value in adobe_installers[matched_installer].items():
-                # If `some_key` isn't in `adobe_installers[adobe_installer]`
+                # If `some_key` isn't in `adobe_installers[matched_installer]`
                 if not adobe_installers[adobe_installer].get(some_key, None):
                     # Set to the value for the key in `matched_installer`
                     adobe_installers[adobe_installer][some_key] = some_value
-            # Set `aacc` to `aacp_matched_installer`
-            adobe_installers[adobe_installer]['aacp_package_path'] = (
-              adobe_installers[adobe_installer]['aacp_matched_installer'])
 
     # Return
     return adobe_installers
@@ -815,12 +814,12 @@ def match_installer(adobe_installer: dict, adobe_installers: dict) -> str:
                           f"(from: {adobe_installer}")
                     # Exit loop
                     break
-                # Set `matched_installer`, to `some_installer`
-                matched_installer = some_installer
                 # Progress notification
-                print(f"\t{adobe_installer['aacp_package_path']} matches the metadate from: "
+                print(f"\t{adobe_installer['aacp_package_path']} matches the metadata from: "
                       f"{some_installer}, so we'll use {adobe_installer['aacp_package_path']}'s "
                       f"post-installation retrieved metadata.")
+                # Set `matched_installer` to `adobe_installer['aacp_package_path']`
+                matched_installer = adobe_installer['aacp_package_path']
                 # Return
                 return matched_installer
 
