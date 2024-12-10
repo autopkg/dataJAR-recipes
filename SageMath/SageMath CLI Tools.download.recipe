@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SageMath CLI Tools.
+
+Requires The SageMath Application. Recipes available here: https://github.com/autopkg/dataJAR-recipes/tree/master/SageMath
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.SageMath CLI Tools</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SageMathCLITools</string>
+        <key>PRERELEASE</key>
+        <string></string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>asset_regex</key>
+                <string>Recommended_[0-9]+_[0-9]+\.pkg$</string>
+                <key>github_repo</key>
+                <string>3-manifolds/Sage_macOS</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
+            </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Marc Culler (A3LBEGBB69)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
