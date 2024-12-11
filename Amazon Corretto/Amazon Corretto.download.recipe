@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Amazon Corretto.
+
+To download Apple Silicon use: "aarch64" in the DOWNLOAD_ARCH variable
+To download Intel use: "x64" in the DOWNLOAD_ARCH variable
+
+Set MAJOR_VERSION to the major version you wish to download. Currently: 8, 11, 15, 16, 17, 18, 19, 20, 21, 22 or 23</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Amazon Corretto</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AmazonCorretto%MAJOR_VERSION%</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string></string>
+        <key>MAJOR_VERSION</key>
+        <string></string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>https://corretto.aws/downloads/latest/amazon-corretto-%MAJOR_VERSION%-%DOWNLOAD_ARCH%-macos-jdk.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: AMZN Mobile LLC (94KV3E626L)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
