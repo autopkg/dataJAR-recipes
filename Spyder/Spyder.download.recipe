@@ -4,6 +4,7 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of Spyder.
+Set ARCH to either arm64 or x86_64 to download the appropriate version for your architecture.
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`</string>
@@ -15,6 +16,8 @@ i.e.: `-k PRERELEASE=yes`</string>
         <string></string>
         <key>NAME</key>
         <string>Spyder</string>
+        <key>ARCH</key>
+        <string>arm64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -26,7 +29,7 @@ i.e.: `-k PRERELEASE=yes`</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>Spyder.dmg</string>
+                <string>Spyder-macOS-%ARCH%</string>
                 <key>github_repo</key>
                 <string>spyder-ide/spyder</string>
                 <key>include_prereleases</key>
@@ -40,6 +43,21 @@ i.e.: `-k PRERELEASE=yes`</string>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: NumFOCUS, Inc. (2YJ64GUAVW)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -12,6 +12,8 @@
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Spyder</string>
+        <key>ARCH</key>
+        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -28,6 +30,10 @@
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
+			<key>supported_architectures</key>
+			<array>
+				<string>%ARCH%</string>
+			</array>
         </dict>
     </dict>
     <key>MinimumVersion</key>
