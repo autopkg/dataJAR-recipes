@@ -132,10 +132,11 @@ def main():
     # Install the Adobe title(s) locally, to retrieve details once installed, getting icon and/or
     # uninstalling as wanted
     adobe_installers = install_adobe_titles(adobe_installers, arg_parser, recipe_cache_dir,
-                       user_name)
+                         user_name)
 
     # Update any matched installers
-    adobe_installers = get_matched_installers_metadata(adobe_installers)
+    adobe_installers = get_matched_installers_metadata(adobe_installers, arg_parser,
+                         recipe_cache_dir, user_name)
 
     # Update overrides
     update_overrides(adobe_installers)
@@ -518,7 +519,8 @@ def get_autopkg_dirs(user_name: str) -> (list, str):
     return sorted(override_dirs), recipe_cache_dir
 
 
-def get_matched_installers_metadata(adobe_installers: dict) -> dict:
+def get_matched_installers_metadata(adobe_installers: dict, arg_parser: argparse.Namespace,
+  recipe_cache_dir: str, user_name: str) -> dict:
     """
     If any installer in `adobe_installers` has `aacp_matched_installer` set, then add any
     additional dict items to the installer from the `aacp_matched_installer`'s dict
@@ -527,6 +529,13 @@ def get_matched_installers_metadata(adobe_installers: dict) -> dict:
     ----------
     adobe_installers: dict
         Dict containing information for all the matched Adobe titles.
+    arg_parser: argparse.Namespace
+        The arguments passed to script, to see if we're to get an applications icon and to
+        uninstall.
+    recipe_cache_dir: str
+        Path to the recipe_cache_dir.
+    user_name: str
+        The logged in users user name.
 
     Returns
     -------
@@ -546,6 +555,23 @@ def get_matched_installers_metadata(adobe_installers: dict) -> dict:
                 if not adobe_installers[adobe_installer].get(some_key, None):
                     # Set to the value for the key in `matched_installer`
                     adobe_installers[adobe_installer][some_key] = some_value
+            # If we're to get the applications icon, we'll need to copy the icon from the
+            # matched overrides cache.
+            if arg_parser.extract_icons:
+                # Name of the icon file when moved
+                icon_name = adobe_installers[adobe_installer]['aacp_name'] + '.icns'
+                # Add name to dict
+                adobe_installers[adobe_installer]['aacp_icon_name'] = icon_name
+                # Path to the matched overrides cache directory
+                icon_path = os.path.join(recipe_cache_dir,
+                  adobe_installers[matched_installer]['aacp_override_identifier'], icon_name)
+                # Path to the recipes cache directory
+                recipe_cache_path = os.path.join(recipe_cache_dir,
+                    adobe_installers[adobe_installer]['aacp_override_identifier'])
+                # Full path to the icons destination
+                destination_path = os.path.join(recipe_cache_path, icon_name)
+                # Get the application icons
+                copy_icons_to_cache_dirs(icon_path, destination_path, recipe_cache_path,  user_name)
 
     # Return
     return adobe_installers
