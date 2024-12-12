@@ -30,18 +30,75 @@
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-			<key>supported_architectures</key>
-			<array>
-				<string>%ARCH%</string>
-			</array>
+            <key>supported_architectures</key>
+            <array>
+                <string>%ARCH%</string>
+            </array>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Spyder</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>id=&quot;org\.spyder-ide\.Spyder\.pkg\.prepare_installation&quot; version=&quot;([0-9]+(\.[0-9]+)+)&quot;</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>installs</key>
+                    <array>
+                        <dict>
+                            <key>CFBundleIdentifier</key>
+                            <string>org.spyder-ide.Spyder-6</string>
+                            <key>CFBundleName</key>
+                            <string>Spyder 6</string>
+                            <key>CFBundleShortVersionString</key>
+                            <string>%version%</string>
+                            <key>CFBundleVersion</key>
+                            <string>%version%</string>
+                            <key>path</key>
+                            <string>/Applications/Spyder 6.app</string>
+                            <key>type</key>
+                            <string>application</string>
+                            <key>version_comparison_key</key>
+                            <string>CFBundleShortVersionString</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
