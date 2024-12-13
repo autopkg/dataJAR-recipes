@@ -146,6 +146,26 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>MunkiPkginfoMerger</string>
             </dict>
             <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>changes</key>
+                <array>
+                    <dict>
+                        <key>path</key>
+                        <string>/Library/Application Support/Avid/Audio/Plug-Ins/FabFilter Pro-Q 4.aaxplugin</string>
+                        <key>CFBundleIdentifier</key>
+                        <string>com.fabfilter.Pro-Q.AAX.4</string>
+                    </dict>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/InstallsArrayCFBundleIdentifierChanger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+            <dict>
                 <key>Arguments</key>
                 <dict>
                     <key>input_plist_path</key>
