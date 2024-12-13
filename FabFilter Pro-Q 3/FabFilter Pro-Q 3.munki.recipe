@@ -33,11 +33,29 @@
             </dict>
         </dict>
         <key>MinimumVersion</key>
-        <string>0.5.0</string>
+        <string>1.1</string>
         <key>ParentRecipe</key>
         <string>com.github.dataJAR-recipes.download.FabFilter Pro-Q 3</string>
         <key>Process</key>
         <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>warning_message</key>
+                    <string>This recipe has been deprecated. Please use new ones located here: https://github.com/autopkg/dataJAR-recipes/tree/master/FabFilter%20Pro-Q%204</string>
+                </dict>
+                <key>Processor</key>
+                <string>DeprecationWarning</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>predicate</key>
+                    <string>TRUEPREDICATE</string>
+                </dict>
+                <key>Processor</key>
+                <string>StopProcessingIf</string>
+            </dict>
             <dict>
                 <key>Arguments</key>
                 <dict>
