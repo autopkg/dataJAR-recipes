@@ -21,14 +21,14 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>filepathOrUrl: \"(https://dl.sharefile.com/.*mac) \"</string>
+                <string>https://dl.sharefile.com/sfmac</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15</string>
                 </dict>
                 <key>url</key>
-                <string>https://www.citrix.com/downloads/citrix-content-collaboration/product-software/sharefile-for-mac.html</string>
+                <string>https://www.sharefile.com/apps-integrations</string>
             </dict>
         </dict>
         <dict>
