@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Pandoc and imports it into Munki.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Pandoc</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
+        <key>NAME</key>
+        <string>Pandoc</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The universal markup converter
+
+Pandoc is a Haskell library for converting from one markup format to another, and a command-line tool that uses this library.</string>
+            <key>developer</key>
+            <string>John Macfarlane</string>
+            <key>display_name</key>
+            <string>Pandoc</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Pandoc</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/pandoc.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PandocVersioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>binary_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/pandoc</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+# pylint: disable = invalid-name
+
+'''
+Copyright (c) 2024, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+import os
+import subprocess
+import sys
+sys.path.insert(0, '/usr/local/munki')
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+
+
+def main():
+    '''
+        Returns the the version from the Pandoc binary
+
+        Exit 1 if Pandoc is installed and newer than what we have in Munki.
+
+    '''
+
+    binary_path = '/usr/local/bin/pandoc'
+    munki_version = '%version%'
+    binary_version = None
+
+    # If binary exists
+    if os.path.isfile(binary_path):
+        # Get binary version, from: https://github.com/jgm/pandoc/blob/58cc5cc57ee4721acde7c7ef99bf964252611805/doc/getting-started.md?plain=1#L303
+        # raise if we error
+        try:
+            binary_version = subprocess.check_output([binary_path, '--version']
+                                                    ).split()[1].decode('utf-8')
+        except subprocess.CalledProcessError:
+            print("Encountered an error when ascertaining Pandoc version, "
+                  "proceeding with install...")
+            sys.exit(0)
+    # If binary is missing
+    else:
+        print("Cannot find {}, proceeding with install...".format(binary_path))
+        sys.exit(0)
+
+    # Check binary_version against munki_version
+    if LooseVersion(binary_version) &lt; LooseVersion(munki_version):
+        print("Older version of Pandoc,  proceeding with install...")
+        sys.exit(0)
+    print("Version of Pandoc same or newer than the munki version, skipping...")
+    sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
