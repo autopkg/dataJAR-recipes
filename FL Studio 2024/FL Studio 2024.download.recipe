@@ -40,7 +40,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://support.image-line.com/redirect/flstudio20_mac_installer</string>
+                <string>https://support.image-line.com/redirect/flstudio_mac_installer</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
