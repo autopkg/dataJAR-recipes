@@ -152,6 +152,8 @@ With this connection, support staff can remotely connect to a device and view th
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Microsoft Remote Help.app</string>
