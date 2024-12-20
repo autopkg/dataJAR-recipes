@@ -3,16 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of SoapUI and creates a package.</string>
+    <string>Downloads the latest version of SoapUI and creates a package.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.SoapUI</string>
     <key>Input</key>
     <dict>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
         <key>NAME</key>
         <string>SoapUI</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.SoapUI</string>
     <key>Process</key>
@@ -96,7 +101,7 @@ install_dir=`dirname $0`
                     <key>id</key>
                     <string>com.smartbear.SoapUI.pkg</string>
                     <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
+                    <string>%NAME%-%SUPPORTED_ARCH%-%version%</string>
                     <key>pkgroot</key>
                     <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                     <key>pkgtype</key>
