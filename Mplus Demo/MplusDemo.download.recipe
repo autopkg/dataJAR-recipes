@@ -19,24 +19,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>/download/MplusDemo.*?\.pkg</string>
-                <key>url</key>
-                <string>https://www.statmodel.com/demo.shtml</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://www.statmodel.com%match%</string>
+                <string>https://www.statmodel.com/download/MplusDemo.pkg</string>
             </dict>
         </dict>
         <dict>
