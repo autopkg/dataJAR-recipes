@@ -20,10 +20,12 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
+                <key>comment</key>
+                <string>Because the macOS link is an image with no usable text, we're matching the SECOND instance of a zip file link on the page. If the macOS image link moves position relative to the Windows image link, this may need to be adjusted.</string>
                 <key>re_pattern</key>
-                <string>MacOS&lt;\D*.*(https:.*\.zip)\"</string>
+                <string>(?:https://en\.fss\.flashforge\.com/10000/software/[0-9a-f]+\.zip).*(https://en\.fss\.flashforge\.com/10000/software/[0-9a-f]+\.zip)</string>
                 <key>url</key>
-                <string>https://industry.flashforge.com/download-center/63</string>
+                <string>https://enterprise.flashforge.com/pages/flashprint</string>
             </dict>
         </dict>
         <dict>
