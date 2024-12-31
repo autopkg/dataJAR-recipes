@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Windows 32-bit installer&lt;/a&gt;, &lt;a href=\"(http://www\.jgoodies\.com/download/jdiskreport/jdiskreport-.*?-mac\.zip)\"&gt;Mac OS X</string>
+                <string>https://www.jgoodies.com/download/jdiskreport/jdiskreport-[\d_]+-mac.zip</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
