@@ -51,7 +51,7 @@ Vanta helps companies scale security practices and automate compliance for the i
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.VantaAgent</string>
+    <string>com.github.nstrauss.download.VantaAgent</string>
     <key>Process</key>
     <array>
         <dict>
