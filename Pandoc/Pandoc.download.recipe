@@ -27,6 +27,15 @@ To download Intel use: "x86_64" in the DOWNLOAD_ARCH variable</string>
         <key>Process</key>
         <array>
             <dict>
+                <key>Processor</key>
+                <string>DeprecationWarning</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>warning_message</key>
+                    <string>Consider switching to the Pandoc recipes in the jleggat-recipes repo. This recipe is deprecated and will be removed in the future.</string>
+                </dict>
+            </dict>
+            <dict>
                 <key>Arguments</key>
                 <dict>
                     <key>github_repo</key>
