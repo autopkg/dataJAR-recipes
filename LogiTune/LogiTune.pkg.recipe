@@ -22,7 +22,7 @@ exit</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.LogiTune</string>
+    <string>com.github.ahousseini-recipes.download.LogiTune</string>
     <key>Process</key>
     <array>
         <dict>
