@@ -43,7 +43,7 @@ Use "x86_64" for "arm64" for SUPPORTED_ARCH </string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Anki</string>
+    <string>com.github.hansen-m.download.Anki</string>
     <key>Process</key>
     <array>
         <dict>
