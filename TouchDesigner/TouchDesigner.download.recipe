@@ -22,6 +22,15 @@ Use "intel" in the ARCH_TYPE variable to download for Intel computers</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Consider switching to the TouchDesigner recipes in the moofit-recipes repo. This recipe is deprecated and will be removed in the future.</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>request_headers</key>

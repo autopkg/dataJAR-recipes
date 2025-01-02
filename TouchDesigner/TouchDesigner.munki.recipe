@@ -55,7 +55,7 @@ exit</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.TouchDesigner</string>
+    <string>com.github.moofit-recipes.download.touchdesigner</string>
     <key>Process</key>
     <array>
         <dict>
