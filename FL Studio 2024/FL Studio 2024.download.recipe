@@ -22,6 +22,8 @@
                 <dict>
                     <key>user-agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15</string>
+                    <key>Referer</key>
+                    <string>https://www.image-line.com/</string>
                     <key>Accept</key>
                     <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
                     <key>Sec-Fetch-Site</key>
@@ -52,6 +54,8 @@
                 <dict>
                     <key>user-agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15</string>
+                    <key>Referer</key>
+                    <string>https://www.image-line.com/</string>
                     <key>Accept</key>
                     <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
                     <key>Sec-Fetch-Site</key>
