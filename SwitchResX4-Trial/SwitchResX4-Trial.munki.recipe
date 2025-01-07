@@ -84,6 +84,26 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>changes</key>
+                <array>
+                    <dict>
+                        <key>path</key>
+                        <string>/Library/PreferencePanes/SwitchResX.prefPane</string>
+                        <key>CFBundleIdentifier</key>
+                        <string>fr.madrau.switchresx.prefpane</string>
+                    </dict>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/InstallsArrayCFBundleIdentifierChanger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>
