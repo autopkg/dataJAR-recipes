@@ -25,9 +25,9 @@
             <key>developer</key>
             <string>Millisecond Software</string>
             <key>display_name</key>
-            <string>Inquisit Lab</string>
+            <string>Inquisit Lab %MAJOR_VERSION%</string>
             <key>name</key>
-            <string>%NAME%</string>
+            <string>%NAME%%MAJOR_VERSION%</string>
             <key>unattended_install</key>
             <true/>
             <key>uninstall_method</key>
