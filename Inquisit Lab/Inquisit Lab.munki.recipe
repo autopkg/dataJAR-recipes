@@ -63,6 +63,49 @@ fi</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/Inquisit.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Inquisit %MAJOR_VERSION%.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
