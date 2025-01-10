@@ -53,6 +53,26 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe is no longer functional and has been deprecated. Citrix Receiver is end of life.
+
+See https://www.citrix.com/downloads/citrix-receiver/additional-client-software/ for more info</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>flat_pkg_path</key>
