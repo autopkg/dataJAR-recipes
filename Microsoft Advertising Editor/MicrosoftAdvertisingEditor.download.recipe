@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_URL</key>
-        <string>https://msbingadseditor.blob.core.windows.net/production-mac/c/MicrosoftAdvertisingEditor.dmg</string>
+        <string>https://aka.ms/baemacproddownload</string>
         <key>NAME</key>
         <string>MicrosoftAdvertisingEditor</string>
     </dict>
