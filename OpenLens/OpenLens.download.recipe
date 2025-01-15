@@ -23,7 +23,7 @@ Use "-arm64" in the "ARCH" variable to download for Apple Silicon. Leave blank f
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>OpenLens-.*%ARCH%\.dmg$</string>
+                <string>OpenLens-([0-9]+(\.[0-9]+)+)-[0-9]+%ARCH%\.dmg$</string>
                 <key>github_repo</key>
                 <string>MuhammedKalkan/OpenLens</string>
             </dict>
