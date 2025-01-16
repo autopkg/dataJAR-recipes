@@ -120,6 +120,17 @@ done</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/Audio/Plug-Ins/Components/TX16Wx.component/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
