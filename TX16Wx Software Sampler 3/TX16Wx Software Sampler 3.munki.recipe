@@ -22,8 +22,6 @@
             <string>TX16Wx Software Sampler is a plug-in for the creative musician, inspired and modeled after the best hardware samplers with all the ease and new exiting features of modern software.</string>
             <key>display_name</key>
             <string>TX16Wx Software Sampler 3</string>
-            <key>minimum_os_version</key>
-            <string>10.9.0</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -50,7 +48,7 @@ done</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.TX16Wx Software Sampler 3</string>
     <key>Process</key>
@@ -116,6 +114,52 @@ done</string>
             </dict>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>changes</key>
+                <array>
+                    <dict>
+                        <key>path</key>
+                        <string>/Library/Audio/Plug-Ins/Components/TX16Wx.component</string>
+                        <key>CFBundleIdentifier</key>
+                        <string>com.cwitec.TX16Wx</string>
+                    </dict>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/InstallsArrayCFBundleIdentifierChanger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/Audio/Plug-Ins/Components/TX16Wx.component/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
