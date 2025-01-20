@@ -10,11 +10,9 @@
     <dict>
         <key>NAME</key>
         <string>RAWViewer</string>
-        <key>BASE_URL</key>
-        <string>https://www.sonycreativesoftware.com</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -23,25 +21,25 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%BASE_URL%/download/rawviewer</string>
+                <string>https://www.sony.co.uk/electronics/support/software/00339639</string>
                 <key>re_pattern</key>
-                <string>(\d+)">RAW Viewer \(RWV-10\) \| macOS</string>
+                <string>\"(https:\\/\\/download\.pro\.sony\\/[0-9]+\\/[0-9]+\\/[A-Za-z0-9]+\\/RAW_Viewer_([0-9]+(_[0-9]+)+)_mac\.zip)\"</string>
                 <key>result_output_var_name</key>
-                <string>first_match</string>
+                <string>DOWNLOAD_URL</string>
             </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%BASE_URL%/download/rawviewer</string>
-                <key>re_pattern</key>
-                <string>id="dl_\S+_%first_match%" name="dl_\S+" href="(\/download\/link\?id=\S+)\"</string>
-                <key>result_output_var_name</key>
-                <string>second_match</string>
+                <key>find</key>
+                <string>\</string>
+                <key>input_string</key>
+                <string>%DOWNLOAD_URL%</string>
+                <key>replace</key>
+                <string></string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -51,7 +49,7 @@
                 <key>filename</key>
                 <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>%BASE_URL%/%second_match%</string>
+                <string>%output_string%</string>
             </dict>
         </dict>
         <dict>
