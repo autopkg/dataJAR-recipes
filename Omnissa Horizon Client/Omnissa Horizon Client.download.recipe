@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Omnissa Horizon Client for Mac.
+
+To download a specific major version, override the HORIZON_MAJOR_VERSION variable with a value below:
+
+Version 8: 8
+    </string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Omnissa Horizon Client</string>
+    <key>Input</key>
+    <dict>
+        <key>HORIZON_MAJOR_VERSION</key>
+        <string>8</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>{\"name\":\"Omnissa Horizon Client for macOS\",\"code\":\"(?P&lt;downloadGroup&gt;(?P&lt;clientGroup&gt;CART.*?)_MAC_.*?)\",\"releaseDate\":\".*\",\"productId\":\".*\",\"releasePackageId\":\".*\",\"isFirmwareImage\":.*,\"orderId\":.*}</string>
+                <key>comment</key>
+                <string>Example for 8.14.0:
+                    {"name":"Omnissa Horizon Client for macOS","code":"CART25FQ4_MAC_2412","releaseDate":"2024-12-24 00:00:00.0","productId":"1562","releasePackageId":"118889","isFirmwareImage":null}],"orderId":2}</string>
+                <key>url</key>
+                <string>https://customerconnect.omnissa.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=omnissa_horizon_clients&amp;version=%HORIZON_MAJOR_VERSION%&amp;dlgType=PRODUCT_BINARY</string>
+                <key>comment</key>
+                <string>Example for 8.14.0:
+                    https://customerconnect.omnissa.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=omnissa_horizon_clients&amp;version=8&amp;dlgType=PRODUCT_BINARY</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>Omnissa-Horizon-Client-.*\.dmg</string>
+                <key>comment</key>
+                <string>Example for 8.14.0:
+                    Omnissa-Horizon-Client-2412-8.14.0-12437218286.dmg
+                </string>
+                <key>result_output_var_name</key>
+                <string>dmg_url</string>
+                <key>url</key>
+                <string>https://customerconnect.omnissa.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;downloadGroup=%downloadGroup%</string>
+                <key>comment</key>
+                <string>Example for 8.14.0:
+                    https://customerconnect.omnissa.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;downloadGroup=CART25FQ4_MAC_2412</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://download3.omnissa.com/software/%downloadGroup%/%dmg_url%</string>
+                <key>comment</key>
+                <string>Example for 8.14.0:
+                    https://download3.omnissa.com/software/CART25FQ4_MAC_2412/Omnissa-Horizon-Client-2412-8.14.0-12437218286.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: VMware, Inc. (EG7KH642X6)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%/Omnissa Horizon Client.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
