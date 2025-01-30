@@ -18,6 +18,28 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe is non functional and has been deprecated. The vendor has has renamed to LogMeIn Resolve Desktop Console.
+
+See https://support.goto.com/ja/resolve/help/whats-new-in-goto-resolve for further details
+
+Please use new recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/LogMeIn%20Resolve%20Desktop%20Console</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>appcast_url</key>
                 <string>https://cdn.console.gotoresolve.com/dtc/update-mac-resolve</string>
             </dict>
