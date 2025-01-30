@@ -1,4 +1,3 @@
-```markdown
 # dataJAR AutoPkg Shared Processors
 
 This repository contains shared processors used in dataJAR's AutoPkg recipes.
