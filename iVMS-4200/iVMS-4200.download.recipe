@@ -12,14 +12,34 @@
         <string>iVMS4200</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The Vendor has discontinued the software.
+
+Please see: https://www.hikvision.com/content/dam/hikvision/en/support/notice/Product-Discontinuation-Notice--of-iVMS-4200-VS.pdf for more details.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>re_pattern</key>
-                <string>data-link=\"/(content/dam/hikvision/en/support/download/vms/ivms4200-series/software-download/iVMS-([0-9]+(\.[0-9]+)+)\.pkg\.zip)\"</string>
+                <string>data-link=\"/(content/dam/hikvision/en/support/download/vms/ivms4200-series/software-download/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/iVMS-4200-([0-9]+(\.[0-9]+)+)\.pkg\.zip)\"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
