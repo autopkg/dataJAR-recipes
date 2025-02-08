@@ -38,6 +38,18 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <true></true>
                 <key>unattended_uninstall</key>
                 <true></true>
+                <key>uninstall_method</key>
+                <string>uninstall_script</string>
+                <key>uninstall_script</key>
+                <string>#!/bin/bash
+# Krisp installer packages have non-standard structure so removepackages won't do anything
+# See https://help.krisp.ai/hc/en-us/articles/360014016199
+rm -rf \
+    "/Applications/krisp.app" \
+    "/Applications/Utilities/krisp" \
+    "/Library/Audio/Plug-Ins/HAL/KrispAudio.driver/"
+launchctl kickstart -kp system/com.apple.audio.coreaudiod
+                </string>
             </dict>
         </dict>
         <key>MinimumVersion</key>
@@ -61,13 +73,35 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             </dict>
             <dict>
                 <key>Processor</key>
+                <string>FileFinder</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pattern</key>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/krisp-app.uli.pkg/Scripts/*.pkg</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>FlatPkgUnpacker</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
+                    <key>flat_pkg_path</key>
+                    <string>%found_filename%</string>
+                    <key>purge_destination</key>
+                    <string>true</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
                 <string>PkgPayloadUnpacker</string>
                 <key>Arguments</key>
                 <dict>
                     <key>destination_path</key>
                     <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                     <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/Audio.pkg/Payload</string>
+                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/krisp.app.pkg/Payload</string>
                     <key>purge_destination</key>
                     <string>true</string>
                 </dict>
@@ -133,6 +167,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <key>path_list</key>
                     <array>
                         <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                        <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
                         <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                     </array>
                 </dict>

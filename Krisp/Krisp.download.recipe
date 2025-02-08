@@ -3,7 +3,14 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest version of krisp</string>
+        <string>Downloads the latest version of krisp
+
+NOTE: This recipe downloads the Intel version of krisp. I haven't found a download URL for
+the Apple Silicon version, but it should work under Rosetta 2.
+
+NOTE 2: This recipe downloads the Pro/Free version of krisp. I haven't found a download
+URL for the Enterprise version. Both versions use the same package receipt, though, so do
+NOT use this recipe if you are on an Enterprise plan or it will overwrite your app.</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.download.krisp</string>
         <key>Input</key>
@@ -23,7 +30,7 @@
                     <key>filename</key>
                     <string>%NAME%.pkg</string>
                     <key>url</key>
-                    <string>https://download.krisp.ai/mac/latest</string>
+                    <string>https://download.krisp.ai/mac</string>
                 </dict>
             </dict>
             <dict>
