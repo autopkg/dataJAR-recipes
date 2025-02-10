@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>This differs from https://github.com/autopkg/wardsparadox-recipes/blob/master/Vernier/SpectralAnalysis.munki.recipe as we match version with the installs array comparison key.</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Vernier Spectral Analysis and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Vernier Spectral Analysis</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>VernierSpectralAnalysis</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Collect, analyze, and share spectrometer data.
+
+Spectral Analysis app makes it easy to incorporate spectroscopy into your biology and chemistry labs</string>
+            <key>developer</key>
+            <string>Vernier Software &amp; Technology</string>
+            <key>display_name</key>
+            <string>Vernier Spectral Analysis</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.wardsparadox.download.vernier.spectralanalysis</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
