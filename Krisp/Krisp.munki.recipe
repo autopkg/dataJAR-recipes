@@ -5,7 +5,10 @@
         <key>Description</key>
         <string>Downloads the latest version of krisp and imports into Munki.
 
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.munki.krisp</string>
         <key>Input</key>
@@ -16,6 +19,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>krisp</string>
             <key>DERIVE_MIN_OS</key>
             <string>YES</string>
+            <key>SUPPORTED_ARCH</key>
+            <string>x86_64</string>
             <key>pkginfo</key>
             <dict>
                 <key>catalogs</key>
@@ -32,12 +37,192 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>%NAME%</string>
                 <key>preinstall_script</key>
                 <string>#!/bin/bash
-            # as per the updated installation pkg allowing this, set trigger file to have it skip launching on post install
-            /usr/bin/touch /private/tmp/do_not_launch_Krisp</string>
+# as per the updated installation pkg allowing this, set trigger file to have it skip launching on post install
+/usr/bin/touch /private/tmp/do_not_launch_Krisp</string>
+                <key>supported_architectures</key>
+                <array>
+                    <string>%SUPPORTED_ARCH%</string>
+                </array>
+                <key>uninstall_method</key>
+                <string>uninstall_script</string>
+                <key>uninstall_script</key>
+                <string>#!/bin/zsh
+# Built from the uninstall scripts in the installer package
+
+# Setup logging
+function log() {
+    echo "$1"
+    /usr/bin/logger -t "Krisp_uninstall" "$1"
+}
+
+function log_error() {
+    echo "ERROR: $1" &gt;&amp;2
+    /usr/bin/logger -t "Krisp_uninstall" "ERROR: $1"
+}
+
+# Function to check command success
+function check_exit_code() {
+    local exit_code=$?
+    local command_name="$1"
+    if [ $exit_code -ne 0 ]; then
+        log_error "$command_name failed with exit code $exit_code"
+        return 1
+    fi
+    return 0
+}
+
+# Function to safely remove files
+function safe_remove() {
+    local path="$1"
+    local type="$2" # "file" or "directory"
+
+    if [[ -e "$path" ]]; then
+        if [[ "$type" == "file" &amp;&amp; -f "$path" ]]; then
+            /bin/rm -f "$path"
+            check_exit_code "Removing file $path" || true
+        elif [[ "$type" == "directory" &amp;&amp; -d "$path" ]]; then
+            /bin/rm -rf "$path"
+            check_exit_code "Removing directory $path" || true
+        fi
+    fi
+}
+
+log "Starting Krisp uninstallation..."
+
+# Define paths
+KRISP_INSTALL_PATH="/Applications/krisp.app"
+KRISP_UNINST_PATH="/Applications/Utilities/krisp"
+KRISP_INFO_PLIST_PATH="Contents/Info.plist"
+CAMERA_PLUGIN="/Library/CoreMediaIO/Plug-Ins/DAL/KrispCamera.plugin"
+DRIVER_INSTALL_PATH="/Library/Audio/Plug-Ins/HAL/KrispAudio.driver"
+CAMERA_ASSISTANT="/Library/LaunchAgents/ai.krisp.krispMac.cameraAssistant.plist"
+KRISP_ELECTRON_VERSION="2.0.0"
+
+# Get current console user and UID
+CONSOLE_UID=$(/usr/bin/stat -f%u /dev/console)
+CONSOLE_USER=$(/usr/bin/stat -f%Su /dev/console)
+
+if [ -z "$CONSOLE_UID" ]; then
+    log_error "Could not determine console user UID"
+    exit 1
+fi
+
+# Check for native installation
+IS_NATIVE_INSTALLED=false
+if [[ -d $KRISP_INSTALL_PATH ]]; then
+    if [[ -f "$KRISP_INSTALL_PATH/$KRISP_INFO_PLIST_PATH" ]]; then
+        PREV_APP_VERSION=$(/usr/bin/defaults read "$KRISP_INSTALL_PATH/$KRISP_INFO_PLIST_PATH" CFBundleVersion 2&gt;/dev/null || echo "unknown")
+        autoload is-at-least
+        if is-at-least "$PREV_APP_VERSION" "$KRISP_ELECTRON_VERSION" 2&gt;/dev/null; then
+            IS_NATIVE_INSTALLED=true
+        fi
+        log "Found installed app version $PREV_APP_VERSION (native: $IS_NATIVE_INSTALLED)"
+    else
+        log "Info.plist not found in expected location"
+    fi
+elif [[ -d $DRIVER_INSTALL_PATH ]]; then
+    if [[ -f "$DRIVER_INSTALL_PATH/Contents/Info.plist" ]]; then
+        PREV_DRIVER_VERSION=$(/usr/bin/defaults read "$DRIVER_INSTALL_PATH/Contents/Info.plist" CFBundleVersion 2&gt;/dev/null || echo "unknown")
+        autoload is-at-least
+        if is-at-least "$PREV_DRIVER_VERSION" "$KRISP_ELECTRON_VERSION" 2&gt;/dev/null; then
+            IS_NATIVE_INSTALLED=true
+        fi
+        log "Found installed audio driver version $PREV_DRIVER_VERSION (native: $IS_NATIVE_INSTALLED)"
+    fi
+elif [[ -d "$CAMERA_PLUGIN" ]]; then
+    IS_NATIVE_INSTALLED=true
+    log "Found installed camera plugin"
+fi
+
+# Stop running instance of Krisp
+log "Stopping Krisp processes..."
+appPID=$(/usr/bin/pgrep -x 'krisp' || true)
+if [ -n "$appPID" ]; then
+    /usr/bin/killall 'krisp' 2&gt;/dev/null || true
+    /usr/sbin/lsof -p "$appPID" +r 1 | /usr/bin/awk '/^=/ { if (T++ &gt;= 5) { exit 1 } }' 2&gt;/dev/null || true
+    if /usr/bin/pgrep -x 'krisp' &gt;/dev/null 2&gt;&amp;1; then
+        /usr/bin/killall -SIGKILL 'krisp' 2&gt;/dev/null || true
+    fi
+fi
+
+# Define arrays of items to remove
+FILES=(
+    "/Users/$CONSOLE_USER/Library/Preferences/ai.krisp.krispMac.analytic.plist"
+    "/Users/$CONSOLE_USER/Library/Preferences/ai.krisp.krispMac.plist"
+    "/Users/$CONSOLE_USER/Library/Preferences/ai.krisp.krispMac.sharedSecrets.plist"
+    "$CAMERA_ASSISTANT"
+    "/Users/$CONSOLE_USER/Library/LaunchAgents/krisp.plist"
+)
+
+FOLDERS=(
+    "/Applications/krisp.app"
+    "/Applications/Utilities/krisp"
+    "/Library/Audio/Plug-Ins/HAL/KrispAudio.driver"
+    "/Library/CoreMediaIO/Plug-Ins/DAL/KrispCamera.plugin"
+    "/Users/$CONSOLE_USER/Library/Application Support/ai.krisp.krispMac.uninstaller"
+    "/Users/$CONSOLE_USER/Library/Application Support/krisp"
+    "/Users/$CONSOLE_USER/Library/Caches/ai.krisp.krispMac"
+    "/Users/$CONSOLE_USER/Library/Caches/ai.krisp.krispMac.uninstaller"
+    "/Users/$CONSOLE_USER/Library/Caches/SentryCrash/krisp"
+    "/Users/$CONSOLE_USER/Library/Caches/krisp"
+)
+
+PKGIDS=(
+    "ai.krisp.krispMacVideo"
+    "ai.krisp.krispMacLaunch"
+    "ai.krisp.krispMac"
+)
+
+# Handle Camera Assistant
+if [[ -d "$CAMERA_PLUGIN" ]]; then
+    log "Stopping camera assistant..."
+    /bin/launchctl asuser "$CONSOLE_UID" /bin/launchctl stop ai.krisp.krispMac.cameraAssistant 2&gt;/dev/null || true
+fi
+
+if [[ -f "$CAMERA_ASSISTANT" ]]; then
+    log "Unloading camera assistant..."
+    /bin/launchctl asuser "$CONSOLE_UID" /bin/launchctl unload -w "$CAMERA_ASSISTANT" 2&gt;/dev/null || true
+fi
+
+# Remove files
+log "Removing files..."
+for file in "${FILES[@]}"; do
+    safe_remove "$file" "file"
+done
+
+# Remove folders
+log "Removing folders..."
+for folder in "${FOLDERS[@]}"; do
+    safe_remove "$folder" "directory"
+done
+
+# Remove package receipts
+log "Removing package receipts..."
+for pkgid in "${PKGIDS[@]}"; do
+    /usr/sbin/pkgutil --volume / --forget "$pkgid" &gt;/dev/null 2&gt;&amp;1 || true
+done
+
+# Reset camera access only if the bundle ID exists in TCC database
+log "Checking TCC database for Krisp..."
+if /usr/bin/tccutil reset Camera ai.krisp.krispMac &gt;/dev/null 2&gt;&amp;1; then
+    log "Successfully reset camera access"
+else
+    log "No TCC entries found for Krisp - skipping camera reset"
+fi
+
+# Restart CoreAudio if driver was present
+if [[ -d "$DRIVER_INSTALL_PATH" ]]; then
+    log "Restarting CoreAudio service..."
+    /usr/bin/killall -9 coreaudiod 2&gt;/dev/null || true
+    sleep 2
+fi
+
+log "Krisp uninstallation completed successfully"
+exit</string>
                 <key>unattended_install</key>
-                <true></true>
+                <true/>
                 <key>unattended_uninstall</key>
-                <true></true>
+                <true/>
             </dict>
         </dict>
         <key>MinimumVersion</key>
@@ -61,13 +246,35 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             </dict>
             <dict>
                 <key>Processor</key>
+                <string>FileFinder</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pattern</key>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/krisp-app*.pkg/Scripts/*.pkg</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>FlatPkgUnpacker</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
+                    <key>flat_pkg_path</key>
+                    <string>%found_filename%</string>
+                    <key>purge_destination</key>
+                    <string>true</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
                 <string>PkgPayloadUnpacker</string>
                 <key>Arguments</key>
                 <dict>
                     <key>destination_path</key>
                     <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                     <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/Audio.pkg/Payload</string>
+                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/krisp.app.pkg/Payload</string>
                     <key>purge_destination</key>
                     <string>true</string>
                 </dict>
@@ -126,6 +333,17 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 </dict>
             </dict>
             <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>mode</key>
+                <string>777</string>
+                <key>resource_path</key>
+                <string>%RECIPE_CACHE_DIR%/app_unpack</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
+        </dict>
+            <dict>
                 <key>Processor</key>
                 <string>PathDeleter</string>
                 <key>Arguments</key>
@@ -133,6 +351,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <key>path_list</key>
                     <array>
                         <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                        <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
                         <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
                     </array>
                 </dict>

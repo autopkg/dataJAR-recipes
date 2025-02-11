@@ -3,27 +3,79 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest version of krisp</string>
+        <string>Downloads the latest version of krisp.
+
+To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "x64" in the DOWNLOAD_ARCH variable
+
+To download from the "standard" (Free, Pro) release channel
+- SEARCH_URL "https://whatsnew.krisp.ai/?categories=cat_fW6tCYWtLyE26"
+- RELEASE_CHANNEL1 "mn"
+- RELEASE_CHANNEL2 leave empty
+
+To download from the "enterprise" release channel
+- SEARCH_URL "https://whatsnew.krisp.ai/?categories=cat_NXgxKYuCvTpF4"
+- RELEASE_CHANNEL1 "enterprise"
+- RELEASE_CHANNEL2 "_Enterprise"</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.download.krisp</string>
         <key>Input</key>
         <dict>
+            <key>DOWNLOAD_ARCH</key>
+            <string>x64</string>
             <key>NAME</key>
             <string>krisp</string>
+            <key>SEARCH_URL</key>
+            <string>https://whatsnew.krisp.ai/?categories=cat_fW6tCYWtLyE26</string>
+            <key>RELEASE_CHANNEL1</key>
+            <string>mn</string>
+            <key>RELEASE_CHANNEL2</key>
+            <string></string>
         </dict>
         <key>MinimumVersion</key>
-        <string>1.1.1</string>
+        <string>1.1</string>
         <key>Process</key>
         <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>re_pattern</key>
+                    <string>Krisp ([0-9]+(\.[0-9]+)+)</string>
+                    <key>result_output_var_name</key>
+                    <string>FULL_VERSION</string>
+                    <key>url</key>
+                    <string>%SEARCH_URL%</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>re_pattern</key>
+                    <string>Krisp (\d\.\d\d)</string>
+                    <key>result_output_var_name</key>
+                    <string>PART_VERSION</string>
+                    <key>url</key>
+                    <string>%SEARCH_URL%</string>
+                </dict>
+                <key>Processor</key>
+                <string>URLTextSearcher</string>
+            </dict>
             <dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>
                 <key>Arguments</key>
                 <dict>
+                <key>request_headers</key>
+                    <dict>
+                        <key>user-agent</key>
+                        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                    </dict>
                     <key>filename</key>
                     <string>%NAME%.pkg</string>
                     <key>url</key>
-                    <string>https://download.krisp.ai/mac/latest</string>
+                    <string>https://cdn.krisp.ai/mp/%RELEASE_CHANNEL1%/%PART_VERSION%/mac/Krisp%RELEASE_CHANNEL2%_%FULL_VERSION%_%DOWNLOAD_ARCH%.pkg</string>
                 </dict>
             </dict>
             <dict>
