@@ -30,7 +30,7 @@ Get the right print driver and right print queue to the right person in the righ
             <string>%NAME%</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
-            <key>ininstall_script</key>
+            <key>uninstall_script</key>
             <string>#!/bin/bash
 # Script taken from /Applications/PaperCut Print Deploy Client/direct-print-monitor/Uninstall.command
 
