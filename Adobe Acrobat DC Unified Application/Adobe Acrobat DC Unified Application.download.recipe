@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>This is the same as building an Acrobat DC installer from the Admin Console</string>
+    <key>Description</key>
+    <string>Downloads the latest release version of Adobe Acrobat DC Unified Application.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Adobe Acrobat DC Unified Application</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AdobeAcrobatDC</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/</string>
+                <key>re_pattern</key>
+                <string>continuous/dccontinuous[\S]+[\d]+[\S]*\.html</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/%match%</string>
+                <key>re_pattern</key>
+                <string>AcrobatDCUpd([\d]+)\.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://ardownload3.adobe.com/pub/adobe/acrobat/mac/AcrobatDC/%match%/AcrobatSCADC%match%_MUI.pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Adobe Inc. (JQ525L2MZD)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

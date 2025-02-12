@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>This is the same as building an Acrobat DC installer from the Admin Console</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Adobe Acrobat DC Unified Application
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Acom.github.dataJAR-recipes.download.Adobe Acrobat DC Unified Application</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES!</string>
+        <key>NAME</key>
+        <string>AdobeAcrobatDC</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>description</key>
+            <string>Do it all with Acrobat.
+
+Create and edit PDFs. Collaborate with ease. E-sign documents and collect signatures. Get everything done in one app, wherever you work. Acrobat’s got it</string>
+            <key>developer</key>
+            <string>Adobe</string>
+            <key>display_name</key>
+            <string>Adobe Acrobat DC</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2024, Jamf Ltd.  All rights reserved.
+#
+# Uninstall via com.adobe.Acrobat.RemoverTool
+# https://www.adobe.com/devnet-docs/acrobatetk/tools/AdminGuide_Mac/macintosh_deployment.html#uninstalling
+#
+
+# Path to the uninstaller
+uninstallerPath="/Applications/Adobe Acrobat DC/Adobe Acrobat.app/Contents/Helpers/Acrobat Uninstaller.app/Contents/Library/LaunchServices/com.adobe.Acrobat.RemoverTool"
+
+# If the uninstaller exists
+if [ -f "${uninstallerPath}" ]
+then
+    # Progress notification
+    /bin/echo "Uninstalling Adobe Acrobat DC..."
+    # Attempt the uninstall
+    if "${uninstallerPath}"
+    then
+        # Progress notification
+        /bin/echo "Successfully uninstalled Adobe Acrobat DC..."
+    # If the uninstall fails
+    else
+        # Error
+        /bin/echo "ERROR: Uninstall of Adobe Acrobat DC failed, exiting..."
+        # Exit
+        exit 1
+    fi
+# If the uninstaller cannot be found
+else
+    # Error
+    /bin/echo "ERROR: Cannot locate: ${uninstallerPath}, exiting..."
+    # Exit
+    exit 1
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Adobe Acrobat DC Unified Application</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Adobe Acrobat DC</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/application_mini.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Adobe Acrobat DC/Adobe Acrobat.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
