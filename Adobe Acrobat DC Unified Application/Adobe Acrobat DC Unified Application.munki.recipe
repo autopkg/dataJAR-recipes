@@ -24,6 +24,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <array>
                 <string>testing</string>
             </array>
+            <key>blocking_applications</key>
+            <array>
+                <string>Acrobat Distiller</string>
+                <string>Adobe Acrobat</string>
+                <string>Adobe Acrobat Pro</string>
+            </array>
             <key>category</key>
             <string>Applications</string>
             <key>description</key>
@@ -36,6 +42,64 @@ Create and edit PDFs. Collaborate with ease. E-sign documents and collect signat
             <string>Adobe Acrobat DC</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+########
+# Sets Reader Mode in Acrobat DC
+#######
+
+# Define the plist path
+PLIST_PATH="/Library/Preferences/com.adobe.Acrobat.Pro.plist"
+
+/bin/echo "Setting the unified Adobe Acrobat Application to allow reader mode..."
+/bin/echo "Target plist path: $PLIST_PATH"
+
+# Check if plist exists
+if [ -f "$PLIST_PATH" ]; then
+    /bin/echo "Existing com.adobe.Acrobat.Pro.plist file found at $PLIST_PATH"
+else
+    /bin/echo "No existing com.adobe.Acrobat.Pro.plist file found. Will create new one at $PLIST_PATH"
+fi
+
+# Create the nested structure if it doesn't exist and set the value
+/bin/echo "Attempting to modify com.adobe.Acrobat.Pro.plist's structure..."
+if /usr/libexec/PlistBuddy -c "Add :DC:FeatureLockdown:bIsSCReducedModeEnforcedEx bool true" "$PLIST_PATH" 2&gt;/dev/null; then
+    /bin/echo "Successfully created bIsSCReducedModeEnforcedEx and set value to true"
+else
+    /bin/echo "bIsSCReducedModeEnforcedEx already exists. Attempting to update value..."
+    if /usr/libexec/PlistBuddy -c "Set :DC:FeatureLockdown:bIsSCReducedModeEnforcedEx true" "$PLIST_PATH"; then
+        /bin/echo "Successfully updated existing bIsSCReducedModeEnforcedEx key value to true"
+    else
+        /bin/echo "Error: Failed to update bIsSCReducedModeEnforcedEx value to true"
+        /bin/exit 1
+    fi
+fi
+
+# Set proper permissions
+/bin/echo "Setting plist permissions to 644..."
+if /bin/chmod 644 "$PLIST_PATH"; then
+    /bin/echo "Successfully set permissions"
+else
+    /bin/echo "Error: Failed to set permissions"
+    /bin/exit 1
+fi
+
+# Verify the changes
+/bin/echo "Verifying changes to com.adobe.Acrobat.Pro.plist contents..."
+/usr/libexec/PlistBuddy -c "Print :DC:FeatureLockdown:bIsSCReducedModeEnforcedEx" "$PLIST_PATH"
+
+# Force preferences cache to reload
+/bin/echo "Reloading preferences cache..."
+if /usr/bin/killall cfprefsd; then
+    /bin/echo "Successfully reloaded preferences cache"
+else
+    /bin/echo "Warning: cfprefsd process not found or error in reloading"
+fi
+
+/bin/echo "Acrobat Reader Mode has been successfully enabled."
+
+exit</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
