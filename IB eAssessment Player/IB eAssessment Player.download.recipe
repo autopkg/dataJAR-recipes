@@ -3,11 +3,16 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of IB eAssessment Player.</string>
+    <string>Download recipe for the latest version of IB eAssessment Player.
+
+To download Apple Silicon use: "apple" in the DOWNLOAD_ARCH variable
+To download Intel use: "intel" in the DOWNLOAD_ARCH varia</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.IB eAssessment Player</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>apple</string>
         <key>NAME</key>
         <string>IBeAssessmentPlayer</string>
     </dict>
@@ -21,7 +26,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(.*?.pkg)\"</string>
+                <string>href=\"(https://d38xcnoiolo92z\.cloudfront\.net/production/macos/IB%20eAssessment%20Player-([0-9]+(\.[0-9]+)+)-%DOWNLOAD_ARCH%\.pkg)\"</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>

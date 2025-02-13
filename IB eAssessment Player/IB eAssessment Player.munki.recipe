@@ -5,7 +5,10 @@
     <key>Description</key>
     <string>Downloads the current release version of IB eAssessment Player and imports into munki.
 
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.IB eAssessment Player</string>
     <key>Input</key>
@@ -16,6 +19,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <string>IBeAssessmentPlayer</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
