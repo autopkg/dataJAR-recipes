@@ -13,25 +13,27 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                     <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>DraftSight is a feature-rich 2D and 3D CAD solution for architects, engineers and construction service providers, as well as professional CAD users, designers, educators and hobbyists.</string>
-                <key>developer</key>
-                 <string>Dassault Systemes</string>
-                <key>display_name</key>
-                <string>DraftSight</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-            </dict>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                 <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>DraftSight is a feature-rich 2D and 3D CAD solution for architects, engineers and construction service providers, as well as professional CAD users, designers, educators and hobbyists.</string>
+            <key>developer</key>
+             <string>Dassault Systemes</string>
+            <key>display_name</key>
+            <string>DraftSight</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.DraftSight</string>
     <key>Process</key>
