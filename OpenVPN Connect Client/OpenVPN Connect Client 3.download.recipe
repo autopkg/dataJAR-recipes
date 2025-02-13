@@ -60,7 +60,7 @@ Set the ARCH variable to "x86_64" for Intel downloads or "arm64" for Apple Silic
                 <string>%pathname%/OpenVPN_Connect*%ARCH%*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: OPENVPN TECHNOLOGIES, INC. (ACV7L3WCD8)</string>
+                    <string>Developer ID Installer: OpenVPN Inc. (ACV7L3WCD8)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
