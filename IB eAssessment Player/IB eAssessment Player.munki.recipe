@@ -39,6 +39,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <string>IB eAssessment Player</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
