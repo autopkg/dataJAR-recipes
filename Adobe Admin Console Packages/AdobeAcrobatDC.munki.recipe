@@ -46,9 +46,20 @@ https://github.com/autopkg/dataJAR-test-recipes./blob/master/Adobe%20Admin%20Con
             </dict>
         </dict>
         <key>MinimumVersion</key>
-        <string>1.0.0</string>
+        <string>1.1</string>
         <key>Process</key>
         <array>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>warning_message</key>
+                    <string>With the release of the Adobe Acrobat Unified Application, this recipe has been deprecated and any future versions of the AdobeAdminConsolePackagesImporter processor may not support this recipe.
+
+Please consider using the Adobe Acrobat DC Unified Application recipes located here: https://github.com/autopkg/dataJAR-recipes/tree/master/Adobe%20Acrobat%20DC%20Unified%20Application</string>
+                </dict>
+                <key>Processor</key>
+                <string>DeprecationWarning</string>
+            </dict>
             <dict>
                 <key>Processor</key>
                 <string>MunkiPkginfoMerger</string>
