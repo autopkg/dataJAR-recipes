@@ -2,42 +2,62 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of SF Symbols 2 and imports into Munki</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.SF Symbols 2</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>SFSymbols2</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>With over 3,100 symbols, SF Symbols is a library of iconography designed to integrate seamlessly with San Francisco, the system font for Apple platforms. Symbols come in nine weights and three scales, and automatically align with text labels. They can be exported and edited in vector graphics editing tools to create custom symbols with shared design characteristics and accessibility features. SF Symbols 3 features over 600 new symbols, enhanced color customization, a new inspector, and improved support for custom symbols.</string>
-			<key>developer</key>
-			<string>Apple</string>
-			<key>display_name</key>
-			<string>SF Symbols 2</string>
-			<key>name</key>
-			<string>%NAME%</string>
+    <key>Description</key>
+    <string>Downloads the latest version of SF Symbols 2 and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.SF Symbols 2</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SFSymbols2</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>With over 3,100 symbols, SF Symbols is a library of iconography designed to integrate seamlessly with San Francisco, the system font for Apple platforms. Symbols come in nine weights and three scales, and automatically align with text labels. They can be exported and edited in vector graphics editing tools to create custom symbols with shared design characteristics and accessibility features. SF Symbols 3 features over 600 new symbols, enhanced color customization, a new inspector, and improved support for custom symbols.</string>
+            <key>developer</key>
+            <string>Apple</string>
+            <key>display_name</key>
+            <string>SF Symbols 2</string>
+            <key>name</key>
+            <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
             <true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.5.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.SF Symbols 2</string>
-	<key>Process</key>
-	<array>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.SF Symbols 2</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated.
+
+Please use https://github.com/autopkg/dataJAR-recipes/tree/master/SF%20Symbols%206 or https://github.com/autopkg/dataJAR-recipes/tree/master/SF%20Symbols%205</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
@@ -129,6 +149,6 @@
                 </array>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>
