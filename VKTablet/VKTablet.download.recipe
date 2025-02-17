@@ -21,8 +21,17 @@
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>Consider switching to the VKTablet Drivers recipes elsewhere in this repo. This recipe is deprecated and will be removed in the future.</string>
+                <string>This recipe has been deprecated. The vendor has changed the install media to a .app installer with no silent install options.</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Arguments</key>
