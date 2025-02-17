@@ -31,21 +31,45 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.autopkg.download.tsh</string>
     <key>Process</key>
     <array>
         <dict>
-        <key>Processor</key>
-        <string>MunkiImporter</string>
-        <key>Arguments</key>
-        <dict>
-            <key>pkg_path</key>
-            <string>%pathname%</string>
-            <key>repo_subdirectory</key>
-            <string>%MUNKI_REPO_SUBDIR%</string>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is none functioning and has been deprecated.
+
+See: https://goteleport.com/blog/teleport-17/
+    - Starting with version 17, Teleport no longer provides a separate tsh.pkg macOS package.
+    - Instead, teleport.pkg and all macOS tarballs include signed and notarized tsh.app and tctl.app.
+
+Recipes for Teleport can be found here: https://github.com/williamtheaker/autopkg-recipes/tree/master/Teleport</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
         </dict>
     </array>
 </dict>
