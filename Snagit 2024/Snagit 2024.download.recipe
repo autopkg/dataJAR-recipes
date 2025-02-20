@@ -18,22 +18,15 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>This recipe is non functioning and has been deprecated. The vendor has renamed to Snagit.app.
-
-Please use new recipes located here: https://github.com/autopkg/dataJAR-recipes/tree/master/Snagit</string>
+                <key>re_pattern</key>
+                <string>(https://download\.techsmith\.com/snagitmac/releases/24[0-9]+/Snagit\.dmg)</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://support.techsmith.com/hc/en-us/articles/360004908652-Desktop-Product-Download-Links</string>
             </dict>
             <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -41,7 +34,7 @@ Please use new recipes located here: https://github.com/autopkg/dataJAR-recipes/
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://download.techsmith.com/snagitmac/releases/Snagit.dmg</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>

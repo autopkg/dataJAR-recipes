@@ -66,26 +66,6 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>This recipe is non functioning and has been deprecated. The vendor has renamed to Snagit.app.
-
-Please use new recipes located here: https://github.com/autopkg/dataJAR-recipes/tree/master/Snagit</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
