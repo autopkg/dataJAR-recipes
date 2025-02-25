@@ -16,21 +16,21 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
+                <key>base_url</key>
                 <string>https://pages.uoregon.edu/koch/</string>
-                <key>re_pattern</key>
-                <string>(Ghostscript-([0-9]+(\.[0-9]+)+)\.pkg)</string>
             </dict>
+            <key>Processor</key>
+            <string>MacTexGhostscriptDownloader</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>%url%%match%</string>
+                <string>%url%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>

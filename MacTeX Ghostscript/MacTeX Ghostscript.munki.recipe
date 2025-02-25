@@ -53,19 +53,6 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://pages.uoregon.edu/koch/</string>
-                <key>re_pattern</key>
-                <string>Ghostscript-([0-9]+(\.[0-9]+)+)\.pkg</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
