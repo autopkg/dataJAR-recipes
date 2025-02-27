@@ -15,13 +15,26 @@
     <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://dl.any-video-converter.com/files/mac/avc/avc/anvsoft/anvsoft-avc.zip</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://www.any-video-converter.com/update/avc_free_mac/latest-mac.yml</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
        <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.dmg</string>
+                <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>https://www.any-video-converter.com/avc_free_mac.dmg</string>
+                <string>%match%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -31,12 +44,25 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Any Video Converter.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Any Video Converter.app</string>
                 <key>requirement</key>
                 <string>identifier "com.anvsoft.avc" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2PZNZ55XW6"</string>
             </dict>
