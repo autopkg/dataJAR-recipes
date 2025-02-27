@@ -35,7 +35,7 @@ Removed superfluous CodeSignatureVerification from PKG.
             <key>postuninstall_script</key>
             <string>#!/bin/bash
 #
-# post uninstall script based of the following documentation: https://help.sketchup.com/en/uninstalling-sketchup 
+# post uninstall script based of the following documentation: https://help.sketchup.com/en/uninstalling-sketchup
 #
 rm -rf "/Library/Application Support/SketchUp 2022"
 
@@ -51,11 +51,34 @@ exit</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.SketchUp Pro 2022 EN</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated.
+
+Please use one of these supported recipes
+- https://github.com/autopkg/dataJAR-recipes/tree/master/SketchUp%202025%20EN
+- https://github.com/autopkg/dataJAR-recipes/tree/master/SketchUp%202024%20EN
+- https://github.com/autopkg/dataJAR-recipes/tree/master/SketchUp%20Pro%202023%20EN</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
