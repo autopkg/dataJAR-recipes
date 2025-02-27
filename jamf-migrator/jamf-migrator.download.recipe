@@ -17,9 +17,29 @@ i.e.: `-k PRERELEASE=yes`</string>
         <string>jamf-migrator</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated due to a change in the name of the Application.
+
+Please see new recipes for Jamf Replicator here: https://github.com/autopkg/dataJAR-recipes/tree/master/Jamf%20Replicator</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
