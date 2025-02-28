@@ -33,12 +33,18 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <string>Krisp Technologies</string>
                 <key>display_name</key>
                 <string>krisp</string>
+                <key>installer_environment</key>
+                <dict>
+                    <key>LOGNAME</key>
+                    <string>root</string>
+                </dict>
                 <key>name</key>
                 <string>%NAME%</string>
-                <key>preinstall_script</key>
+                <key>postinstall_script</key>
                 <string>#!/bin/bash
-# as per the updated installation pkg allowing this, set trigger file to have it skip launching on post install
-/usr/bin/touch /private/tmp/do_not_launch_Krisp</string>
+pkill krisp
+chown -R root:wheel /Applications/krisp.app
+chown -R root:wheel /Library/Audio/Plug-Ins/HAL/KrispAudio.driver</string>
                 <key>supported_architectures</key>
                 <array>
                     <string>%SUPPORTED_ARCH%</string>
