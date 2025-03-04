@@ -37,8 +37,11 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
 #
 rm -rf "/Library/Application Support/SketchUp 2025"
 
-rm Library/Preferences/com.sketchup.SketchUp.2025.plist
-rm Library/Preferences/com.sketchup.LayOut.2025.plist
+currentUser=$( echo "show State:/Users/ConsoleUser" | scutil | awk '/Name :/ { print $3 }' )
+userHomeFolder=$(dscl . -read /users/${currentUser} NFSHomeDirectory | cut -d " " -f 2)
+
+rm "${userHomeFolder}"/Library/Preferences/com.sketchup.SketchUp.2025.plist
+rm "${userHomeFolder}"/Library/Preferences/com.sketchup.LayOut.2025.plist
 
 exit</string>
             <key>unattended_install</key>
