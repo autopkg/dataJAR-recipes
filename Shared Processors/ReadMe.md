@@ -33,6 +33,40 @@ Changes the case of a string value.
     </dict>
 </dict>
 ```
+### CFBundleVersionCombiner
+Combines CFBundleShortVersionString and CFBundleVersion from an app's Info.plist into a single version string.
+
+#### Input Variables
+- **app_path**
+  - **Required**: Yes
+  - **Description**: Path to the app bundle to version.
+
+#### Output Variables
+- **version**
+  - **Description**: Combined version number in format CFBundleShortVersionString.CFBundleVersion
+
+#### Description
+This processor combines the CFBundleShortVersionString and CFBundleVersion from an application's Info.plist into a single version string. This is particularly useful for applications where both version numbers are needed for proper version comparison, such as when the CFBundleVersion contains build numbers or other version-specific information.
+
+The combined version format is: `CFBundleShortVersionString.CFBundleVersion`
+
+For example:
+- If CFBundleShortVersionString is "3.3"
+- And CFBundleVersion is "3125"
+- The combined version will be "3.3.3125"
+
+#### Example Usage
+```xml
+<dict>
+    <key>Processor</key>
+    <string>com.github.dataJAR-recipes.Shared Processors/CFBundleVersionCombiner</string>
+    <key>Arguments</key>
+    <dict>
+        <key>app_path</key>
+        <string>%RECIPE_CACHE_DIR%/payload/Applications/Example.app</string>
+    </dict>
+</dict>
+```
 
 ### ComponentPkgPayloadUnpacker
 A processor that unpacks component package payloads using pkgutil.
