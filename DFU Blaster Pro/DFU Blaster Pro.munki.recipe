@@ -34,6 +34,41 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>DFU Blaster Pro</string>
                 <key>name</key>
                 <string>%NAME%</string>
+                <key>uninstall_method</key>
+                <string>uninstall_script</string>
+                <key>uninstall_script</key>
+                <string>#!/bin/sh
+# Uninstall script taken from the postinstall of the uninstaller package
+
+dir=`/usr/bin/mktemp -d ~/.Trash/DFU_Blaster.XXXXXX`
+    /bin/chmod ugo+rx "${dir}"
+
+if [ -d "/Applications/DFU Blaster.app" ] ; then
+    mv "/Applications/DFU Blaster.app" "${dir}";
+fi
+
+
+if [ -d "/Applications/DFU Blaster Pro.app" ] ; then
+    mv "/Applications/DFU Blaster Pro.app" "${dir}";
+fi
+
+
+if [ -e "/Library/LaunchDaemons/com.twocanoes.dfublasterhelper.plist" ] ; then
+    echo "removing prior DFU Blaster Helper LaunchDaemon"
+    cd "/Library/LaunchDaemons"
+    launchctl stop com.twocanoes.dfublasterhelper
+    launchctl unload com.twocanoes.dfublasterhelper.plist
+    rm com.twocanoes.dfublasterhelper.plist
+    echo "done removing prior DFU Blaster Helper LaunchDaemon"
+
+fi
+
+if [ -e "/Library/PrivilegedHelperTools/com.twocanoes.dfublasterhelper" ] ; then
+    echo "removing prior DFU Blaster Helper Tool"
+    rm "/Library/PrivilegedHelperTools/com.twocanoes.dfublasterhelper"
+    echo "done removing prior DFU Blaster Helper Tool"
+
+fi</string>
                 <key>unattended_install</key>
                 <true/>
                 <key>unattended_uninstall</key>
@@ -82,23 +117,28 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 </dict>
             </dict>
             <dict>
-                <key>Processor</key>
-                <string>MunkiInstallsItemsCreator</string>
                 <key>Arguments</key>
                 <dict>
-                    <key>derive_minimum_os_version</key>
-                    <string>%DERIVE_MIN_OS%</string>
-                    <key>faux_root</key>
-                    <string>%RECIPE_CACHE_DIR%/payload</string>
-                    <key>installs_item_paths</key>
-                    <array>
-                        <string>/Applications/DFU Blaster Pro.app</string>
-                    </array>
-                    <key>version_comparison_key</key>
-                    <string>CFBundleVersion</string>
+                    <key>info_path</key>
+                    <string>%RECIPE_CACHE_DIR%/Applications/DFU Blaster Pro.app</string>
+                    <key>plist_keys</key>
+                    <dict>
+                        <key>LSMinimumSystemVersion</key>
+                        <string>min_os_ver</string>
+                    </dict>
                 </dict>
+                <key>Processor</key>
+                <string>PlistReader</string>
             </dict>
             <dict>
+                 <key>Arguments</key>
+                 <dict>
+                    <key>additional_pkginfo</key>
+                    <dict>
+                        <key>minimum_os_version</key>
+                        <string>%min_os_ver%</string>
+                    </dict>
+                </dict>
                 <key>Processor</key>
                 <string>MunkiPkginfoMerger</string>
             </dict>
