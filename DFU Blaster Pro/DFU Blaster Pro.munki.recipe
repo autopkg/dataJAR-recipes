@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of DFU Blaster Pro and imports it into Munki.
+
+This differs from https://github.com/autopkg/kevinmcox-recipes/blob/master/Twocanoes%20Software/DFUBlaster.munki.recipe due to the use of an installcheck_script that combines CFBundleShortVersionString and CFBundleVersion to use for the comparison.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.munki.DFU Blaster Pro</string>
+        <key>Input</key>
+        <dict>
+            <key>DERIVE_MIN_OS</key>
+            <string>YES</string>
+            <key>NAME</key>
+            <string>DFUBlasterPro</string>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>utilities/DFUBlaster</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>category</key>
+                <string>Utilities</string>
+                <key>description</key>
+                <string>DFU Blaster Pro is the easiest way to put a Mac into DFU mode.</string>
+                <key>developer</key>
+                <string>Twocanoes Software</string>
+                <key>display_name</key>
+                <string>DFU Blaster Pro</string>
+                <key>icon_name</key>
+                <string>DFUBlaster.png</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true/>
+                <key>unattended_uninstall</key>
+                <true/>
+            </dict>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>2.7</string>
+        <key>ParentRecipe</key>
+        <string>com.github.kevinmcox.download.DFUBlaster</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>FlatPkgUnpacker</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <key>flat_pkg_path</key>
+                    <string>%pathname%/DFU Blaster Pro.pkg</string>
+                    <key>purge_destination</key>
+                    <true/>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>PkgPayloadUnpacker</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/</string>
+                    <key>pkg_payload_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/DFU_Blaster_Pro.pkg/payload</string>
+                    <key>purge_destination</key>
+                    <true/>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>com.github.dataJAR-recipes.Shared Processors/CFBundleVersionCombiner</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>app_path</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiInstallsItemsCreator</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>derive_minimum_os_version</key>
+                    <string>%DERIVE_MIN_OS%</string>
+                    <key>faux_root</key>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                    <key>installs_item_paths</key>
+                    <array>
+                        <string>/Applications/DFU Blaster Pro.app</string>
+                    </array>
+                    <key>version_comparison_key</key>
+                    <string>CFBundleVersion</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiPkginfoMerger</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiPkginfoMerger</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>additional_pkginfo</key>
+                    <dict>
+                        <key>installcheck_script</key>
+                        <string>#!/usr/local/munki/munki-python
+"""
+Munki installcheck_script for DFU Blaster Pro
+"""
+
+import os
+import sys
+import plistlib
+from distutils.version import LooseVersion as MunkiLooseVersion
+
+def get_combined_version():
+    """Get combined version from DFU Blaster Pro.app"""
+    app_path = "/Applications/DFU Blaster Pro.app"
+    info_plist = os.path.join(app_path, "Contents/Info.plist")
+
+    if not os.path.exists(info_plist):
+        print(f"Info.plist not found at: {info_plist}")
+        return None
+
+    try:
+        with open(info_plist, 'rb') as f:
+            pl = plistlib.load(f)
+
+        short_version = pl.get('CFBundleShortVersionString', '0')
+        bundle_version = pl.get('CFBundleVersion', '0')
+        combined_version = f"{short_version}.{bundle_version}"
+        print(f"Found combined version: {combined_version}")
+        return combined_version
+    except Exception as e:
+        print(f"Error getting combined version: {str(e)}")
+        return None
+
+def main():
+    # Expected version from CFBundleVersionCombiner
+    expected_version = "%version%"
+    print(f"Expected version: {expected_version}")
+
+    # Check if app exists
+    if not os.path.exists("/Applications/DFU Blaster Pro.app"):
+        print("DFU Blaster Pro.app not found")
+        sys.exit(0)
+
+    # Get current version from app
+    current_version = get_combined_version()
+    if not current_version:
+        print("Could not determine current version")
+        sys.exit(0)
+    print(f"Current version: {current_version}")
+
+    # Compare versions using MunkiLooseVersion
+    if MunkiLooseVersion(current_version) != MunkiLooseVersion(expected_version):
+        print(f"Version mismatch - Expected: {expected_version}, Current: {current_version}")
+        sys.exit(0)
+    print("Versions match")
+
+    # Everything is installed and versions match
+    # Exit 1 means no install/upgrade needed
+    print("All checks passed - no installation needed")
+    sys.exit(1)
+
+if __name__ == '__main__':
+    main()</string>
+                    </dict>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiPkginfoMerger</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%pathname%</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>PathDeleter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>path_list</key>
+                    <array>
+                        <string>%RECIPE_CACHE_DIR%/payload/</string>
+                        <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    </array>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
