@@ -74,7 +74,7 @@ A new benchmark for drawing on tablet</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/XP-PenPenTabletPro.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked/XPPen.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
