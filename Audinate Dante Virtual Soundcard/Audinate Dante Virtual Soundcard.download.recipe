@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Audinate Dante Virtual Soundcard</string>
+        <string>AudinateDanteVirtualSoundcard</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -34,22 +34,11 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PkgCopier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_pkg</key>
-                <string>%pathname%/DanteVirtualSoundcard.pkg</string>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pkg_path%</string>
+                <string>%pathname%/DanteVirtualSoundcard.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Audinate Pty Ltd (P4WCR6Y822)</string>

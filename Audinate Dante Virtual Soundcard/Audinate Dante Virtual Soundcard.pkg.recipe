@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads and modifies the Audinate Dante Virtual Soundcard installer to enable silent installation by removing AppleScript dialogs from the pre and postinstall scripts.
+
+Configure script paths:
+
+Set PREINSTALL_SCRIPT_PATH and POSTINSTALL_SCRIPT_PATH in your override
+These can reference the original recipe's scripts but must be configurable
+Add required repositories:
+
+For checksum verification
+autopkg repo-add hjuutilainen-recipes
+
+For permission management
+autopkg repo-add jessepeterson-recipes</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Audinate Dante Virtual Soundcard</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AudinateDanteVirtualSoundcard</string>
+        <key>PREINSTALL_SCRIPT_PATH</key>
+        <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Virtual Soundcard/Fixed Scripts/preinstall</string>
+        <key>POSTINSTALL_SCRIPT_PATH</key>
+        <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Virtual Soundcard/Fixed Scripts/postinstall</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Audinate Dante Virtual Soundcard</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/DanteVirtualSoundcard.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>algorithm</key>
+                <string>MD5</string>
+                <key>checksum</key>
+                <string>9fffef5a898a2d7a6167e065c4590550</string>
+                <key>pathname</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/preinstall</string>
+            </dict>
+            <key>Comment</key>
+            <string>Verify MD5 matches DanteVirtualSoundcard.pkg preinstall script from Audinate Dante Virtual Soundcard 4.5.1</string>
+            <key>Processor</key>
+            <string>io.github.hjuutilainen.SharedProcessors/ChecksumVerifier</string>
+        </dict>
+         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>algorithm</key>
+                <string>MD5</string>
+                <key>checksum</key>
+                <string>6b63ba8a2a625f18abeb49a5f5b115f2</string>
+                <key>pathname</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/postinstall</string>
+            </dict>
+            <key>Comment</key>
+            <string>Verify MD5 matches DanteVirtualSoundcard.pkg postinstall script from Audinate Dante Virtual Soundcard 4.5.1</string>
+            <key>Processor</key>
+            <string>io.github.hjuutilainen.SharedProcessors/ChecksumVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/preinstall</string>
+                </array>
+            </dict>
+            <key>Comment</key>
+            <string>An edit of Audinate Dante Virtual Soundcard preinstall, commenting out the line that opens the ColorNavigator 7 window following installation</string>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/preinstall</string>
+                <key>source_path</key>
+                <string>%PREINSTALL_SCRIPT_PATH%</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/preinstall</string>
+                <key>mode</key>
+                <string>755</string>
+            </dict>
+            <key>Comment</key>
+            <string>755 POSIX permissions since the postinstall needs to be executable</string>
+            <key>Processor</key>
+            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/postinstall</string>
+                </array>
+            </dict>
+            <key>Comment</key>
+            <string>An edit of Audinate Dante Virtual Soundcard postinstall, commenting out the line that opens the ColorNavigator 7 window following installation</string>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/postinstall</string>
+                <key>source_path</key>
+                <string>%POSTINSTALL_SCRIPT_PATH%</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/postinstall</string>
+                <key>mode</key>
+                <string>755</string>
+            </dict>
+            <key>Comment</key>
+            <string>755 POSIX permissions since the postinstall needs to be executable</string>
+            <key>Processor</key>
+            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload/root</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/root/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/DVS_User_Interface.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/root/Applications/Dante Virtual Soundcard.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/repack</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_pkg</key>
+                <string>%RECIPE_CACHE_DIR%/repack/%NAME%-%version%.pkg</string>
+                <key>source_flatpkg_dir</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgPacker</string>
+        </dict>
+    </array>
+</dict>
+</plist>

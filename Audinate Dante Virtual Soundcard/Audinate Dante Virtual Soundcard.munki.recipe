@@ -11,7 +11,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Audinate Dante Virtual Soundcard</string>
+        <string>AudinateDanteVirtualSoundcard</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
@@ -28,85 +28,44 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>Audinate Dante Virtual Soundcard</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+
+# Uninstall script for Dante Virtual Soundcard
+# Exits 0 if uninstall is successful, 1 if unsuccessful
+
+UNINSTALL_PATH="/Library/Application Support/Audinate/DanteVirtualSoundcard/Uninstall DVS.app/Contents/Resources/uninstall.sh"
+
+# Check if uninstaller exists
+if [ ! -f "$UNINSTALL_PATH" ]; then
+    echo "Error: DVS uninstaller not found"
+    exit 1
+fi
+
+# Run the uninstaller
+"$UNINSTALL_PATH"
+exit $?</string>
             <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Audinate Dante Virtual Soundcard</string>
+    <string>com.github.dataJAR-recipes.pkg.Audinate Dante Virtual Soundcard</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0775</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
-                <key>purge_destination</key>
-                <string>true</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-                <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
-                <key>purge_destination</key>
-                <string>true</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%destination_path%//DVS_User_Interface.pkg/Payload</string>
-                <key>destination_path</key>
-                <string>%pkgroot%/Applications</string>
-                <key>purge_destination</key>
-                <string>true</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%destination_path%/Dante Virtual Soundcard.app/Contents/Info.plist</string>
-            </dict>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <string>%RECIPE_CACHE_DIR%/payload/root</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
@@ -137,22 +96,22 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%RECIPE_CACHE_DIR%/repack/%NAME%-%version%.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
                     <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

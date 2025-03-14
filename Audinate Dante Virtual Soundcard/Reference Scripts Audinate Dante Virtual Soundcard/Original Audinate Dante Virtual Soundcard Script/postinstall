@@ -1,0 +1,93 @@
+#!/bin/sh
+
+echo "Running post-install script in $2"
+
+PLUGINS_HAL_PATH="/Library/Audio/Plug-Ins/HAL"
+DVS_DRIVER_PATH="$PLUGINS_HAL_PATH/DvsAudioPlugIn.driver"
+DVS_LIBRARY_PATH="/Library/Application Support/Audinate/DanteVirtualSoundcard"
+DVS_GUI_PATH="/Applications/Dante Virtual Soundcard.app"
+INSTALL_LOGFILE="/Library/Logs/Audinate/DanteVirtualSoundcard/dvs_install.log"
+
+# Log System Integrity Protection status
+echo "*** System Integrity Protection ***" > $INSTALL_LOGFILE
+csrutil status >> $INSTALL_LOGFILE
+
+# Log the contents of /Library/Audio/Plug-Ins/HAL/
+echo "\n*** Contents of $PLUGINS_HAL_PATH ***" >> $INSTALL_LOGFILE
+ls -al $PLUGINS_HAL_PATH >> $INSTALL_LOGFILE
+
+if [ ! -d "$DVS_DRIVER_PATH" ] ||
+	[ ! -d "$DVS_LIBRARY_PATH" ] ||
+	[ ! -d "$DVS_GUI_PATH" ]; then
+
+# This applescript will show a warning dialog during installation if it fails to update the DVS audio driver
+osascript <<EOF
+
+   	display dialog ("Failed to update the DVS audio driver. Please uninstall DVS first and then try installing DVS again.") with title "Install Dante Virtual Soundcard" with icon caution buttons {"OK"} default button 1
+
+EOF
+
+	echo "\n*** Failed to install the DVS audio driver or the GUI application ***" >> $INSTALL_LOGFILE
+	echo "\n*** Contents of $DVS_DRIVER_PATH ***" >> $INSTALL_LOGFILE
+	ls -al "$DVS_DRIVER_PATH"/* >> $INSTALL_LOGFILE
+	ls -al "$DVS_DRIVER_PATH"/*/* >> $INSTALL_LOGFILE
+	echo "\n*** Contents of $DVS_LIBRARY_PATH ***" >> $INSTALL_LOGFILE
+	ls -al "$DVS_LIBRARY_PATH"/* >> $INSTALL_LOGFILE
+	echo "\n*** Contents of $DVS_GUI_PATH ***" >> $INSTALL_LOGFILE
+	ls -al "$DVS_GUI_PATH"/* >> $INSTALL_LOGFILE
+
+	exit 1
+fi
+
+OLD_COREAUDIOD_PID=$(pgrep coreaudiod)
+
+# Restart coreaudiod to populate DVS Audio Plug-In Driver
+sudo kill -9 $OLD_COREAUDIOD_PID
+
+count=0
+while :
+do
+	sleep 1
+	NEW_COREAUDIOD_PID=$(pgrep coreaudiod)
+	if [ "$NEW_COREAUDIOD_PID" != "$OLD_COREAUDIOD_PID" ]; then
+		break
+	fi
+	count=$((count+1))
+	if [[ $count -eq 10 ]]; then
+		echo "\n*** Failed to restart coreaudiod ***" >> $INSTALL_LOGFILE
+		break
+	fi
+done
+
+# Make sure the DVS Audio Plug-In Driver is running
+count=0
+while :
+do
+	sleep 1
+	DVS_AUDIO_PLUGIN_PID=$(pgrep ".*DvsAudioPlugIn.*")
+	if [ "$DVS_AUDIO_PLUGIN_PID" != "" ]; then
+		echo "\n*** DVS Audio Plug-In driver is running with PID: $DVS_AUDIO_PLUGIN_PID ***" >> $INSTALL_LOGFILE
+		break
+	fi
+	count=$((count+1))
+	if [[ $count -eq 10 ]]; then
+		echo "\n*** DVS Audio Plug-In Driver is not running ***" >> $INSTALL_LOGFILE
+		echo "\n*** Contents of $DVS_DRIVER_PATH ***" >> $INSTALL_LOGFILE
+		ls -al "$DVS_DRIVER_PATH"/* >> $INSTALL_LOGFILE
+		ls -al "$DVS_DRIVER_PATH"/*/* >> $INSTALL_LOGFILE
+		echo "\n*** Disk usage of $DVS_DRIVER_PATH ***" >> $INSTALL_LOGFILE
+		du -h "$DVS_DRIVER_PATH" >> $INSTALL_LOGFILE
+		break
+	fi
+done
+
+# Load manager
+launchctl load -w /Library/LaunchDaemons/com.audinate.dante.DanteVirtualSoundcard.plist > /dev/null 2>&1
+
+osascript <<EOF
+
+   	display dialog "In order to complete the Dante Virtual Soundcard installation process, you will be required to restart your Mac." with title "Install Dante Virtual Soundcard" with icon caution buttons {"Continue"} default button "Continue"
+
+EOF
+
+exit 0
