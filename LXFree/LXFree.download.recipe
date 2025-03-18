@@ -38,6 +38,8 @@
                     <string>--keepalive-time</string>
                     <string>300</string>
                     <string>--compressed</string>
+                    <string>--http1.1</string>
+                    <string>--no-alpn</string>
                 </array>
                 <key>request_headers</key>
                 <dict>
