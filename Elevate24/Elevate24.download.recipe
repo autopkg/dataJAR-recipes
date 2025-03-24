@@ -3,13 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Elevate24.</string>
+    <string>Downloads the latest version of Elevate24.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Elevate24</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Elevate24</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -20,6 +26,8 @@
             <dict>
                 <key>github_repo</key>
                 <string>Jigsaw24/Elevate24</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
