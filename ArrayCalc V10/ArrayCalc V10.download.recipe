@@ -21,8 +21,19 @@
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>Consider switching to the ArrayCalc v11 recipes elsewhere in this repo. Older versions of ArrayCalc can be downloaded here: https://www.dbaudio.com/global/en/products/software/software-archive/. This recipe is deprecated and will be removed in the future.</string>
+                <string>Consider switching to the ArrayCalc v12 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/ArrayCalc%20V12 - Older versions of ArrayCalc can be downloaded here: https://www.dbaudio.com/global/en/products/software/software-archive/.
+
+This recipe is deprecated and will be removed in the future.</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Processor</key>
