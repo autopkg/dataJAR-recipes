@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Meta Quest Remote Desktop.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Meta Quest Remote Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>MetaQuestRemoteDesktop</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href="([^"]+download[^"]+)"[^>]*>.*?Remote Desktop.*?macOS</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15</string>
+                    <key>Accept</key>
+                    <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
+                    <key>Accept-Language</key>
+                    <string>en-GB,en;q=0.9</string>
+                    <key>Cookie</key>
+                    <string>locale=en_GB</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>none</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>navigate</string>
+                    <key>Sec-Fetch-Dest</key>
+                    <string>document</string>
+                </dict>
+                <key>curl_opts</key>
+                <array>
+                    <string>--compressed</string>
+                    <string>--location</string>
+                </array>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://www.meta.com/en-gb/help/quest/569381194082673/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Facebook Technologies, LLC (HXH6UQBHD4)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>Please note to successfully import the package in to your munki repo this PR needs to be resolved: https://github.com/munki/munki/pull/1238 or the changes within need to be made manually.</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Meta Quest Remote Desktop and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Meta Quest Remote Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MetaQuestRemoteDesktop</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>developer</key>
+            <string>Facebook Technologies, LLC</string>
+            <key>description</key>
+            <string>Remote Desktop lets you pair your computer to your Meta Quest headset, streaming what is on your computer screen into VR.</string>
+            <key>display_name</key>
+            <string>Meta Quest Remote Desktop</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Uninstall script for Meta Quest Remote Desktop
+# System-level removal only - no user data affected
+# Based on the install package scripts
+
+# Exit on any error
+set -e
+
+# Define paths
+INSTALL_PATH="/Applications/Meta Quest Remote Desktop.app"
+OLD_INSTALL_PATH="/Applications/VirtualDesktop.app"
+DAEMON_DIR="/Library/PrivilegedHelperTools"
+AUDIO_DRIVERS=(
+    "/Library/Audio/Plug-Ins/HAL/NullAudio.driver"
+    "/Library/Audio/Plug-Ins/HAL/FbRemoteDesktop.driver"
+    "/Library/Audio/Plug-Ins/HAL/OculusRemoteDesktopASP.driver"
+)
+LAUNCH_DAEMONS=(
+    "/Library/LaunchDaemons/com.oculus.xr2dsd.auto.plist"
+    "/Library/LaunchDaemons/com.oculus.xr2dsd.plist"
+)
+
+echo "Starting uninstall script..."
+
+# Function to stop running processes
+stop_processes() {
+    echo "Stopping running processes..."
+    # Stop all related processes
+    pkill -15 "Meta Quest Remote Desktop" 2&gt;/dev/null || true
+    pkill -15 "Meta Quest Remote Desktop Helper" 2&gt;/dev/null || true
+    pkill -15 "OrdServerMac" 2&gt;/dev/null || true
+    pkill -15 "Oculus Remote Desktop" 2&gt;/dev/null || true
+    pkill -15 "Oculus Remote Desktop Server" 2&gt;/dev/null || true
+    pkill -15 "VirtualDesktop" 2&gt;/dev/null || true
+}
+
+# Function to clean launch daemons
+clean_launch_daemons() {
+    echo "Cleaning launch daemons..."
+
+    # Remove launch daemon entries
+    launchctl remove com.oculus.xr2dsd.autoload 2&gt;/dev/null || true
+    launchctl remove com.oculus.xr2dsd.nonauto 2&gt;/dev/null || true
+    launchctl remove com.oculus.xr2dsd 2&gt;/dev/null || true
+    launchctl remove com.meta.mqrd.launcher 2&gt;/dev/null || true
+
+    # Remove launch daemon files
+    for daemon in "${LAUNCH_DAEMONS[@]}"; do
+        if [ -f "$daemon" ]; then
+            echo "Removing daemon: $daemon"
+            launchctl unload "$daemon" 2&gt;/dev/null || true
+            rm -f "$daemon"
+        fi
+    done
+}
+
+# Function to clean application packages
+clean_app_packages() {
+    echo "Removing application packages..."
+
+    # Remove current version
+    if [ -d "$INSTALL_PATH" ]; then
+        echo "Removing current version at $INSTALL_PATH"
+        rm -rf "$INSTALL_PATH"
+    fi
+
+    # Remove old version
+    if [ -d "$OLD_INSTALL_PATH" ]; then
+        echo "Removing old version at $OLD_INSTALL_PATH"
+        rm -rf "$OLD_INSTALL_PATH"
+    fi
+}
+
+# Function to clean audio drivers
+clean_audio_drivers() {
+    echo "Cleaning audio drivers..."
+
+    for driver in "${AUDIO_DRIVERS[@]}"; do
+        if [ -d "$driver" ]; then
+            echo "Removing audio driver: $driver"
+            rm -rf "$driver"
+        fi
+    done
+}
+
+# Function to clean system-level components
+clean_system_components() {
+    echo "Cleaning system-level components..."
+
+    # Remove daemon directory
+    if [ -d "$DAEMON_DIR" ]; then
+        rm -rf "$DAEMON_DIR"
+    fi
+
+    # Clear system-level registration
+    /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -u "$INSTALL_PATH"
+}
+
+# Main execution
+echo "Starting system-level uninstall..."
+
+stop_processes
+clean_launch_daemons
+clean_app_packages
+clean_audio_drivers
+clean_system_components
+
+echo "System-level uninstall completed successfully"
+echo "Note: User-specific preferences and data were preserved"
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Meta Quest Remote Desktop</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Meta Quest Remote Desktop.app</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/Distribution.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Meta Quest Remote Desktop.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Meta Quest Remote Desktop.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
