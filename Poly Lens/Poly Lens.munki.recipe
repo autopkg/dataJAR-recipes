@@ -43,6 +43,24 @@ Customize your compatible personal devices to how you work. Staying up to date w
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new Poly Lens Desktop recipe: https://github.com/autopkg/dataJAR-recipes/tree/master/Poly%20Lens%20Desktop</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>input_plist_path</key>
                 <string>%pathname%/Poly Lens.app/Contents/Info.plist</string>
                 <key>plist_version_key</key>
