@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Comment</key>
-	<string>There is currently only an arm64 version provided by the developer</string>
+    <key>Comment</key>
+    <string>There is currently only an arm64 version provided by the developer</string>
     <key>Description</key>
     <string>Downloads the latest version of Poly Lens Desktop and imports it into Munki.
 
