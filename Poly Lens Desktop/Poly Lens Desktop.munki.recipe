@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Comment</key>
+	<string>There is currently only an arm64 version provided by the developer</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Poly Lens Desktop and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.
+
+For a successful install, there needs to be a logged in user. To achieve this an installcheck_script is used.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Poly Lens Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>PolyLensDesktop</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Control at your fingertips
+
+A single app for customizing your personal devices to how you work, whether that’s in the home or office.</string>
+            <key>developer</key>
+            <string>Polycom</string>
+            <key>display_name</key>
+            <string>Poly Lens Desktop</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>arm64</string>
+            </array>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+
+# Script for uninstalling Poly Lens Desktop
+
+# Function to check if we're at the login window
+is_at_login_window() {
+    # Check if we can get a console user
+    local console_user
+    console_user=$(/usr/bin/stat -f%Su /dev/console)
+    [ "$console_user" = "root" ] || [ -z "$console_user" ]
+}
+
+HELPERS="LegacyHostApp LensControlService"
+
+if is_at_login_window; then
+    echo "Running in login window context"
+    # At login window - just remove the files
+    for helper in $HELPERS; do
+        laplist="/Library/LaunchAgents/com.poly.${helper}.plist"
+        if [ -r "$laplist" ]; then
+            echo "Removing $laplist"
+            sudo rm "$laplist"
+        fi
+    done
+else
+    echo "Running in user context"
+    # Get the logged in user information
+    LOGGED_IN_USER=$(/usr/bin/stat -f%Su /dev/console)
+    LOGGED_IN_UID=$(/usr/bin/id -u "$LOGGED_IN_USER")
+
+    # Unload LaunchAgents as the logged-in user
+    for helper in $HELPERS; do
+        laplist="/Library/LaunchAgents/com.poly.${helper}.plist"
+        if [ -r "$laplist" ]; then
+            echo "Unloading $laplist for user $LOGGED_IN_USER"
+            /bin/launchctl asuser "$LOGGED_IN_UID" /bin/launchctl unload "$laplist"
+            sudo rm "$laplist"
+        fi
+    done
+fi
+
+echo "Terminating any running Lens Desktop app instances"
+if is_at_login_window; then
+    # At login window - simple kill
+    pkill -f "/Applications/Lens Desktop.app/" || true
+    sleep 3
+    pkill -9 -f "/Applications/Lens Desktop.app/" || true
+else
+    # Kill processes as the logged-in user
+    /bin/launchctl asuser "$LOGGED_IN_UID" pkill -f "/Applications/Lens Desktop.app/" || true
+    sleep 3
+    /bin/launchctl asuser "$LOGGED_IN_UID" pkill -9 -f "/Applications/Lens Desktop.app/" || true
+fi
+
+if [ -d "/Applications/Lens Desktop.app" ]; then
+    echo "Removing Poly Lens Desktop app"
+    sudo rm -rf "/Applications/Lens Desktop.app"
+fi
+
+echo "Removing old data and logs"
+if [ -d "/Library/Application Support/Poly" ]; then
+    echo "Removing Poly Lens Desktop system data (registry)"
+    sudo rm -rf "/Library/Application Support/Poly"
+fi
+
+echo "Done"</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.download.polylens</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/%found_basename%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/LensDesktop.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Lens Desktop.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Lens Desktop.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+
+'''
+Copyright (c) 2025, dataJAR Ltd.  All rights reserved.
+     Redistribution and use in source and binary forms, with or without
+     modification, are permitted provided that the following conditions are met:
+             * Redistributions of source code must retain the above copyright
+               notice, this list of conditions and the following disclaimer.
+             * Redistributions in binary form must reproduce the above copyright
+               notice, this list of conditions and the following disclaimer in the
+               documentation and/or other materials provided with the distribution.
+             * Neither data JAR Ltd nor the names of its contributors may be used to
+               endorse or promote products derived from this software without specific
+               prior written permission.
+     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
+     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
+     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SUPPORT FOR THIS PROGRAM
+    This program is distributed 'as is' by DATA JAR LTD.
+    For more information or support, please utilise the following resources:
+            http://www.datajar.co.uk
+'''
+
+import os
+import plistlib
+import sys
+from typing import Optional
+# pylint: disable = import-error
+from SystemConfiguration import SCDynamicStoreCopyConsoleUser
+sys.path.insert(0, '/usr/local/munki')
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+
+
+class AppVersionChecker:
+    def __init__(self):
+        self.app_path = '/Applications/Lens Desktop.app/'
+        self.app_version = '%version%'
+        self.info_plist_path = os.path.join(self.app_path, 'Contents/Info.plist')
+
+    def get_installed_version(self) -&gt; Optional[str]:
+        """
+        Retrieves the installed version from the app's Info.plist
+        Returns: Version string if successful, None if error occurs
+        """
+        if not os.path.exists(self.info_plist_path):
+            return None
+
+        try:
+            with open(self.info_plist_path, "rb") as plist_file:
+                parsed_plist = plistlib.load(plist_file)
+            return parsed_plist['CFBundleVersion']
+        except Exception:
+            print(f"Encountered an error when trying to parse {self.info_plist_path}...")
+            return None
+
+    def should_install(self) -&gt; bool:
+        """
+        Determines if the app should be installed based on version comparison
+        Returns: True if installation should proceed, False otherwise
+        """
+        installed_version = self.get_installed_version()
+
+        if installed_version is None:
+            return True
+
+        print(f"{self.app_path} version {installed_version}, installed...")
+
+        if LooseVersion(installed_version) &lt; LooseVersion(self.app_version):
+            print(f"Older version of {self.app_path} located, proceeding with installation...")
+            return True
+
+        print(f"Newer or the same version of {self.app_path} located, cancelling installation...")
+        return False
+
+
+def user_logged_in() -&gt; bool:
+    '''
+    Boolean return if a user is logged in or not
+    '''
+    username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]
+    return bool(username and username != 'loginwindow')
+
+
+def main():
+    '''
+    Exits with exit code 1 if:
+    - No one is logged in
+    - Info.plist exists and app version is newer than or equal to installation version
+    - Error occurs while parsing Info.plist
+
+    Exits with exit code 0 if:
+    - Info.plist doesn't exist
+    - Info.plist exists and app version is older than installation version
+    '''
+    if not user_logged_in():
+        sys.exit(1)
+
+    checker = AppVersionChecker()
+    sys.exit(0 if checker.should_install() else 1)
+
+
+if __name__ == '__main__':
+    main()</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
