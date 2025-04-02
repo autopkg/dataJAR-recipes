@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>WatchGuardMobileVPNwithSSL</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://software.watchguard.com/SoftwareDownloads?current=true&amp;familyId=a2R2A000002amFiUAI</string>
+        <string>https://software.watchguard.com/SoftwareDownloads?current=true&amp;familyId=a2RVr000000bJA9MAM</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
     </dict>
