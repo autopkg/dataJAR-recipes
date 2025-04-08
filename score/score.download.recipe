@@ -3,13 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of score.</string>
+    <string>Downloads the latest version of score.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.score</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>score</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -20,6 +26,8 @@
             <dict>
                 <key>warning_message</key>
                 <string>This recipe has been deprecated. Please use the new ossia score recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/ossia%20score</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>

@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest Pritunl Client.</string>
+    <string>Downloads the latest Pritunl Client.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.pritunlclient</string>
     <key>Input</key>
@@ -26,6 +30,8 @@
                 <string>pritunl/pritunl-client-electron</string>
                 <key>asset_regex</key>
                 <string>Pritunl.pkg.zip</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
         </dict>
         <dict>

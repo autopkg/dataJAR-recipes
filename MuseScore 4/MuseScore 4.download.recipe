@@ -5,13 +5,19 @@
     <key>Description</key>
     <string>Downloads the latest version of MuseScore 4.
 
-These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master/MuseScore, as are version specific.</string>
+These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master/MuseScore, as are version specific.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.MuseScore 4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>MuseScore4</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -26,6 +32,8 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
                 <string>.*?\.dmg</string>
                 <key>github_repo</key>
                 <string>musescore/MuseScore</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
         </dict>
         <dict>

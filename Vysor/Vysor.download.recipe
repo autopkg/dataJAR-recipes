@@ -29,6 +29,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <string>(.*?\.dmg)</string>
                 <key>github_repo</key>
                 <string>koush/vysor.io</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
         </dict>
         <dict>

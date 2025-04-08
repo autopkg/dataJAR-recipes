@@ -6,7 +6,11 @@
     <string>Downloads the latest version of Anki.
 
 To download the Intel version use "intel" for ARCH_TYPE.
-To download the Apple Silicon version use "apple" for ARCH_TYPE.</string>
+To download the Apple Silicon version use "apple" for ARCH_TYPE.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Anki</string>
     <key>Input</key>
@@ -16,6 +20,8 @@ To download the Apple Silicon version use "apple" for ARCH_TYPE.</string>
         <key>ARCH_TYPE</key>
         <string>intel</string>
         <key>include_prereleases</key>
+        <string></string>
+        <key>PRERELEASE</key>
         <string></string>
     </dict>
     <key>MinimumVersion</key>
@@ -38,6 +44,8 @@ To download the Apple Silicon version use "apple" for ARCH_TYPE.</string>
                 <string>anki-([0-9]+(\.[0-9]+)+)-mac-%ARCH_TYPE%-qt6\.dmg</string>
                 <key>github_repo</key>
                 <string>ankitects/anki</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>

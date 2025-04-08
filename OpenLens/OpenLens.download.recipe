@@ -5,7 +5,11 @@
     <key>Description</key>
     <string>Downloads the latest version of OpenLens.
 
-Use "-arm64" in the "ARCH" variable to download for Apple Silicon. Leave blank for Intel.</string>
+Use "-arm64" in the "ARCH" variable to download for Apple Silicon. Leave blank for Intel.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.OpenLens</string>
     <key>Input</key>
@@ -13,6 +17,8 @@ Use "-arm64" in the "ARCH" variable to download for Apple Silicon. Leave blank f
         <key>NAME</key>
         <string>OpenLens</string>
         <key>ARCH</key>
+        <string></string>
+        <key>PRERELEASE</key>
         <string></string>
     </dict>
     <key>MinimumVersion</key>
@@ -26,6 +32,8 @@ Use "-arm64" in the "ARCH" variable to download for Apple Silicon. Leave blank f
                 <string>OpenLens-([0-9]+(\.[0-9]+)+)-[0-9]+%ARCH%\.dmg$</string>
                 <key>github_repo</key>
                 <string>MuhammedKalkan/OpenLens</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
