@@ -67,7 +67,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-connect.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%-HEAD_macOS_x86_64-connect.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -78,7 +78,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-launcher.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%-HEAD_macOS_x86_64-launcher.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -89,7 +89,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%_macOS_x86_64-crypt.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/Unpacked/ibm-aspera-connect_%version%-HEAD_macOS_x86_64-crypt.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>

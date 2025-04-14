@@ -23,7 +23,7 @@
                  <key>url</key>
                  <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
                  <key>re_pattern</key>
-                 <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)_macOS_x86_64\.pkg)</string>
+                 <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg)</string>
                  <key>result_output_var_name</key>
                  <string>match</string>
              </dict>
@@ -36,7 +36,7 @@
                  <key>url</key>
                  <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
                  <key>re_pattern</key>
-                 <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)_macOS_x86_64\.pkg</string>
+                 <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg</string>
                  <key>result_output_var_name</key>
                  <string>version</string>
              </dict>
