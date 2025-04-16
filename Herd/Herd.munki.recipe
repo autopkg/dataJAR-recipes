@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Herd and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Herd</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Herd</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Laravel development perfected.
+
+One click PHP development environment. Zero dependencies. Zero headaches.</string>
+            <key>developer</key>
+            <string>Beyond Code GmbH</string>
+            <key>display_name</key>
+            <string>Herd</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+# https://herd.laravel.com/docs/macos/troubleshooting/uninstalling#manual-uninstall-steps
+# Uninstall script based on the vendors uninstall script: /Applications/Herd.app/Contents/Resources/uninstall
+
+# Set error handling
+set -e
+
+# Kill Herd process if running (system-wide)
+pkill -f "Herd.app" || true
+sleep 2  # Give process time to terminate
+
+# Remove sudoers file
+if [ -f /etc/sudoers.d/herd ]; then
+    /usr/bin/sudo rm /etc/sudoers.d/herd
+fi
+
+# Remove resolver file if it matches our content
+if [ -f /etc/resolver/test ]; then
+    RESOLVER_CONTENTS=$(cat /etc/resolver/test)
+    if [ "$RESOLVER_CONTENTS" == "nameserver 127.0.0.1" ]; then
+        /usr/bin/sudo rm /etc/resolver/test
+    fi
+fi
+
+# Uninstall privileged helper
+if [ -f /Library/PrivilegedHelperTools/de.beyondco.herd.helper ]; then
+    /usr/bin/sudo /Library/PrivilegedHelperTools/de.beyondco.herd.helper uninstall
+fi
+
+# Remove the app itself
+rm -rf "/Applications/Herd.app"
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Herd</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
