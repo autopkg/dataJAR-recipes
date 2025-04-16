@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of KDiff3.
+
+To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "x86_64" in the DOWNLOAD_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.KDiff3</string>
+    <key>Input</key>
+    <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>x86_64</string>
+        <key>NAME</key>
+        <string>KDiff3</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href="kdiff3-([0-9]+(\.[0-9]+)+)-macos-%DOWNLOAD_ARCH%\.dmg"</string>
+                <key>result_output_var_name</key>
+                <string>VERSION</string>
+                <key>url</key>
+                <string>https://download.kde.org/stable/kdiff3/?C=N;O=D</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%DOWNLOAD_ARCH%-%VERSION%.dmg</string>
+                <key>url</key>
+                <string>https://download.kde.org/stable/kdiff3/kdiff3-%VERSION%-macos-%DOWNLOAD_ARCH%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/kdiff3.app</string>
+                <key>requirement</key>
+                <string>identifier "org.kde.KDiff3" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5433B4KXM8"</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
