@@ -156,6 +156,37 @@ Retrieves Firefox locale and version information.
 </dict>
 ```
 
+### GetBinaryMinimumOSVersion
+Analyzes all binaries within an application bundle to determine the highest minimum OS version requirement.
+
+#### Input Variables
+- **app_path**
+  - **Required**: Yes
+  - **Description**: Path to the application bundle or binary to analyze. Can be a path within a DMG.
+- **search_path**
+  - **Required**: No
+  - **Description**: Specific path within the app bundle to search for binaries.
+  - **Default**: Contents/MacOS
+
+#### Output Variables
+- **min_os_ver**
+  - **Description**: The highest (most restrictive) minimum OS version found across all binaries.
+- **analyzed_binaries**
+  - **Description**: Dictionary of all analyzed binaries and their respective minimum OS versions.
+
+#### Example Usage
+```xml
+<dict>
+    <key>Processor</key>
+    <string>com.github.dataJAR-recipes.Shared Processors/GetBinaryMinimumOSVersion</string>
+    <key>Arguments</key>
+    <dict>
+        <key>app_path</key>
+        <string>%pathname%/Example.app</string>
+    </dict>
+</dict>
+```
+
 ### HTMLUnescaper
 Unescapes HTML entities in a string.
 
