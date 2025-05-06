@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://download\.techsmith\.com/snagitmac/releases/24[0-9]+/Snagit\.dmg)</string>
+                <string>(https://download\.techsmith\.com/snagitmac/releases/24[0-9]+/[Ss]nagit\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
