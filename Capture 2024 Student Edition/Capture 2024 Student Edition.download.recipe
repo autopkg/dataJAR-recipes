@@ -16,6 +16,24 @@
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new ones here: https://github.com/autopkg/dataJAR-recipes/tree/master/Capture%202025%20Student%20Edition</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
             <key>Arguments</key>
