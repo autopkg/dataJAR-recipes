@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Chromium.
+
+To download Apple Silicon use: "Mac_Arm" in the DOWNLOAD_ARCH variable
+To download Intel use: "Mac" in the DOWNLOAD_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Chromium</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Chromium</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>Mac</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                    <key>Referer</key>
+                    <string>https://download-chromium.appspot.com/?platform=%DOWNLOAD_ARCH%&amp;type=snapshots;auto</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>same-origin</string>
+                    <key>Accept</key>
+                    <string>*/*</string>
+                    <key>Sec-Fetch-Dest</key>
+                    <string>empty</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>cors</string>
+                    <key>Priority</key>
+                    <string>u=3, i</string>
+                    <key>Accept-Language</key>
+                    <string>en-GB,en;q=0.9</string>
+                    <key>Accept-Encoding</key>
+                    <string>gzip, deflate, br</string>
+                </dict>
+                <key>re_pattern</key>
+                <string>\{"content":"(?P&lt;BUILDREVISION&gt;[0-9]+)",</string>
+                <key>url</key>
+                <string>https://download-chromium.appspot.com/rev/%DOWNLOAD_ARCH%?type=snapshots</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://commondatastorage.googleapis.com/chromium-browser-snapshots/%DOWNLOAD_ARCH%/%BUILDREVISION%/chrome-mac.zip</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
