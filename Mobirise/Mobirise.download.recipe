@@ -3,18 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of Mobirise.</string>
+    <string>Download recipe for the latest version of Mobirise.
+
+To download Apple Silicon use: "-m" in the DOWNLOAD_ARCH variable
+To download Intel leave DOWNLOAD_ARCH variable empty</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Mobirise</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>-m</string>
         <key>NAME</key>
         <string>Mobirise</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://download.mobirise.com/MobiriseSetup.dmg</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -23,7 +26,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://download.mobirise.com/MobiriseSetup%DOWNLOAD_ARCH%.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -38,7 +41,7 @@
                 <key>input_path</key>
                 <string>%pathname%/Mobirise.app</string>
                 <key>requirement</key>
-                <string>identifier "com.mobirise.Mobirise" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UD4494E573</string>
+                <string>identifier "com.mobirise.Mobirise" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = V324ZB3P82</string>
             </dict>
         </dict>
     </array>
