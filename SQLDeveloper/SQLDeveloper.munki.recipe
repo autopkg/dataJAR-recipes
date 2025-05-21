@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SQLDeveloper and imports it into Munki.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.SQLDeveloper</string>
+    <key>Input</key>
+    <dict>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SQLDeveloper</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>developer</key>
+            <string>Oracle</string>
+            <key>description</key>
+            <string>Oracle SQLDeveloper is a free, integrated development environment that simplifies the development and management of Oracle Database in both traditional and Cloud deployments.
+
+SQLDeveloper offers complete end-to-end development of your PL/SQL applications, a worksheet for running queries and scripts, a DBA console for managing the database, a reports interface, a complete data modeling solution, and a migration platform for moving your 3rd party databases to Oracle.</string>
+            <key>display_name</key>
+            <string>SQLDeveloper</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+if [ -d "/Applications/SQLDeveloper.app" ]; then
+    rm -rf "/Applications/SQLDeveloper.app"
+
+    if [ ! -d "/Applications/SQLDeveloper.app" ]; then
+        echo "Successfully removed SQLDeveloper.app"
+        exit 0
+    else
+        echo "Error: Failed to remove SQLDeveloper.app"
+        exit 1
+    fi
+else
+    echo "SQLDeveloper.app not found in /Applications"
+    exit 0
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.SQLDeveloper</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>app_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/SQLDeveloper.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>SQLDeveloperVersioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/bash
+
+# Compares installed version using /Applications/SQLDeveloper.app/Contents/Resources/sqldeveloper/sqldeveloper/bin/version.properties
+
+# Version we're checking against
+APPLICATION_VERSION="%version%"
+
+INSTALL_DIR="/Applications/SQLDeveloper.app"
+VERSION_FILE="$INSTALL_DIR/Contents/Resources/sqldeveloper/sqldeveloper/bin/version.properties"
+
+# Function for formatted output
+log() {
+    echo "SQLDeveloper_Check: $1" 1&gt;&amp;2
+}
+
+# Function to extract version from properties file
+get_version() {
+    local prop_file="$1"
+    if [[ -f "$prop_file" ]]; then
+        # Extract VER_FULL value from properties file
+        ver=$(grep "^VER_FULL=" "$prop_file" | cut -d'=' -f2 | tr -d '[:space:]')
+        echo "$ver"
+    else
+        echo ""
+    fi
+}
+
+log "Starting version check..."
+log "Application version to install: $APPLICATION_VERSION"
+log "Checking installation at: $INSTALL_DIR"
+
+# Check if SQLDeveloper is installed
+if [[ ! -d "$INSTALL_DIR" ]]; then
+    log "SQLDeveloper is not installed"
+    log "Exit code 0: Installation should proceed"
+    exit 0
+fi
+
+log "SQLDeveloper installation found"
+log "Checking for version file: $VERSION_FILE"
+
+# Check if version.properties exists
+if [[ ! -f "$VERSION_FILE" ]]; then
+    log "Version file not found"
+    log "Exit code 0: Installation should proceed"
+    exit 0
+fi
+
+log "Version file found, extracting version information..."
+
+# Get installed version
+INSTALLED_VERSION=$(get_version "$VERSION_FILE")
+
+if [[ -z "$INSTALLED_VERSION" ]]; then
+    log "Could not determine installed version"
+    log "Exit code 0: Installation should proceed"
+    exit 0
+fi
+
+log "Installed version: $INSTALLED_VERSION"
+log "Comparing versions..."
+
+# Compare versions
+if [[ "$INSTALLED_VERSION" != "$APPLICATION_VERSION" ]]; then
+    log "Versions do not match"
+    log "Exit code 0: Installation should proceed"
+    exit 0
+else
+    log "Versions match"
+    log "Exit code 1: Installation not needed"
+    exit 1
+fi</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+            </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
