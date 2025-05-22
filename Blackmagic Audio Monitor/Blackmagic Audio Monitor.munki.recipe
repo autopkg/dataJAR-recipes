@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Blackmagic Audio Monitor and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.BlackmagicAudioMonitor</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>BlackmagicAudioMonitor</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Blackmagic Audio Monitor 12G G3 is a powerful rack mount audio monitoring solution in a compact 1 rack unit size. This new model features 10G Ethernet SMPTE-2110 IP input to allow monitoring of IP broadcast systems without an external converter. Blackmagic Audio Monitor 12G G3 also includes a large audio meter with accurate ballistics, 12G-SDI input for SD, HD and Ultra HD support, balanced analog XLR, HiFi and AES/EBU inputs and HDMI video output for monitoring SDI and IP video sources.</string>
+            <key>developer</key>
+            <string>Blackmagic Design Inc</string>
+            <key>display_name</key>
+            <string>Blackmagic Audio Monitor</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+UNINSTALLER="/Applications/Blackmagic Audio Monitor/Uninstall Audio Monitor.app/Contents/Resources/uninstall.sh"
+
+# Check if uninstaller exists
+if [ ! -f "$UNINSTALLER" ]; then
+    echo "Error: Uninstaller not found at: $UNINSTALLER"
+    exit 1
+fi
+
+# Make sure uninstaller is executable
+chmod +x "$UNINSTALLER"
+
+echo "Starting Blackmagic Audio Monitor uninstallation..."
+
+# Execute the uninstaller
+"$UNINSTALLER"
+RESULT=$?
+
+if [ $RESULT -eq 0 ]; then
+    echo "Uninstallation completed successfully"
+    exit 0
+else
+    echo "Uninstallation failed with error code: $RESULT"
+    exit 1
+fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.BlackmagicAudioMonitor</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/%NAME%-%version%.pkg</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Blackmagic_Audio_Monitor_%version%.dmg/Install Audio Monitor %version%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/%NAME%-%version%.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        <key>Processor</key>
+        <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/AudioMonitor.pkg/Payload</string>
+                <key>purge_destination</key>
+                <false/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/AudioMonitorAssets.pkg/Payload</string>
+                <key>purge_destination</key>
+                <false/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/AudioMonitorUninstaller.pkg/Payload</string>
+                <key>purge_destination</key>
+                <false/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>system.version.ProductVersion, \"([0-9]+(.[0-9]+)+)\"</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/%NAME%-%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>mode</key>
+                <string>777</string>
+                <key>resource_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
