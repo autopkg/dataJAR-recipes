@@ -75,7 +75,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/Panasonic_P2_AMA_Plugin_Setup_Mac*.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/*/Panasonic_P2_AMA_Plugin_Setup_Mac*.pkg</string>
             </dict>
         </dict>
         <dict>
