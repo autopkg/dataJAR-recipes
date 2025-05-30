@@ -86,21 +86,30 @@ class FirefoxGetLocaleAndVersion(DmgMounter):
             raise ProcessorError(f"Cannot find {omni_path}")
 
         try:
+            # Redirect stderr to /dev/null explicitly in the command
             cmd = ['unzip', '-p', omni_path, 'default.locale']
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            with open(os.devnull, 'w') as devnull:
+                proc = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=devnull,
+                    text=True
+                )
+
             stdout, _ = proc.communicate()
 
-            if proc.returncode != 0:
-                raise ProcessorError("Error extracting locale from omni.ja")
-
-            locale = stdout.decode('utf-8').strip()
+            # Clean and verify the output
+            locale = stdout.strip()
             if not locale:
                 raise ProcessorError("Empty locale returned from omni.ja")
 
+            self.output(f"Found locale: {locale}")
             return locale
 
         except subprocess.SubprocessError as err:
-            raise ProcessorError("Error running unzip command") from err
+            raise ProcessorError(f"Error running unzip command: {err}") from err
+        except Exception as err:
+            raise ProcessorError(f"Unexpected error extracting locale: {err}") from err
 
     def main(self):
         '''Main process'''
