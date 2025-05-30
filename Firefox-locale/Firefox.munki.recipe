@@ -102,99 +102,103 @@ DESCRIPTION
 See docstring in main()
 
 '''
+'''
+Uses unzip command to extract locale information from omni.ja file.
+https://bugzilla.mozilla.org/show_bug.cgi?id=1936505
+'''
 
 # Standard imports
-import configparser
 import os
 import plistlib
 import sys
+import subprocess
 sys.path.insert(0, '/usr/local/munki')
 from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 
 
+def get_firefox_locale(firefox_path):
+    '''Extract locale from omni.ja file'''
+    omni_path = os.path.join(firefox_path, 'Contents/Resources/omni.ja')
+    if not os.path.exists(omni_path):
+        print(f"Cannot find {omni_path}")
+        return None
+
+    try:
+        cmd = ['unzip', '-p', omni_path, 'default.locale']
+        with open(os.devnull, 'w') as devnull:
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=devnull,
+                text=True
+            )
+        stdout, _ = proc.communicate()
+        locale = stdout.strip()
+
+        if not locale:
+            print("Empty locale returned from omni.ja")
+            return None
+
+        return locale
+
+    except subprocess.SubprocessError as err:
+        print(f"Error running unzip command: {err}")
+        return None
+
+
 def main():
-    '''
-        Get locale and version of Firefox.app, (if installed)
-
-        Exit 1 if Firefox.app is installed with the same locale and newer than what we have in Munki
-
-        Exit 1 if Firefox.app is installed with a different locale
-
-    '''
+    '''Checks Firefox locale and version. Exits 0 to install if Firefox is not installed,
+    locale cannot be determined, or version is older with matching locale. Exits 1 to
+    cancel if locales don't match or version is same/newer with matching locale.'''
 
     # Var declaration
     firefox_path = '/Applications/Firefox.app'
-    firefox_locale_ini = os.path.join(firefox_path, 'Contents/Resources/locale.ini')
     firefox_info_plist = os.path.join(firefox_path, 'Contents/Info.plist')
     firefox_locale = '%app_locale%'
     firefox_version = '%app_version%'
 
-    # If Firefox.app is installed, proceed.. else exit 0 so we can install
+    # If Firefox.app is not installed, proceed with installation
     if not os.path.exists(firefox_path):
-        print(f"{firefox_path} not installed, exiting install_check script to install...")
+        print(f"{firefox_path} not installed, proceeding with installation...")
         sys.exit(0)
 
-    # If firefox_locale_ini exists, and this installation isn't for en-US or firefox_locale_ini
-    # exists and this installation IS for en-US
-    if (os.path.exists(firefox_locale_ini) and firefox_locale != 'en-US' or
-        os.path.exists(firefox_locale_ini) and firefox_locale == 'en-US'):
-        # Try Read in the locale, raise if cannot be parsed
-        try:
-            # Create confgparser object
-            app_config = configparser.ConfigParser()
-            app_config.read(firefox_locale_ini)
-            # Setting app_locale
-            app_locale  = app_config['locale']['locale']
-            # If we don't match
-            if not app_locale == firefox_locale:
-                print(f"Installed locale ({app_locale}), differs to the locale of this "
-                      f"installation ({firefox_locale}). cancelling installation...")
-                sys.exit(1)
-            else:
-                print(f"Local installations locale ({app_locale}) matches the locale of this "
-                      f"installation ({firefox_locale}), proceeding...")
-        # Raise if app_locale cannot be retrieved from firefox_locale_ini
-        # pylint: disable = broad-except
-        except Exception:
-            print(f"Encountered an error when trying to parse {firefox_locale_ini}...")
-            sys.exit(1)
-    # If there is no firefox_locale_ini, but this is a non-en-US install
-    elif not os.path.exists(firefox_locale_ini) and firefox_locale != 'en-US':
-        print(f"Locale {firefox_locale} passed, but {firefox_locale_ini} is missing... "
-              f"So current installation is a different locale: en-US...")
-        sys.exit(1)
-    # If no firefox_locale_ini, and this is a en-US install
-    elif not os.path.exists(firefox_locale_ini) and firefox_locale == 'en-US':
-        print(f"{firefox_locale_ini} is missing, as such local is determined as: en-US.")
+    # Get installed Firefox locale
+    installed_locale = get_firefox_locale(firefox_path)
+    if installed_locale is None:
+        print("Could not determine installed Firefox locale, proceeding with installation...")
+        sys.exit(0)
 
-    # If the info.plist exists
+    print(f"Installed locale: {installed_locale}")
+    print(f"Package locale: {firefox_locale}")
+
+    # If locales don't match, cancel installation
+    if installed_locale != firefox_locale:
+        print(f"Installed locale ({installed_locale}) differs from package locale ({firefox_locale})")
+        print("Cancelling installation...")
+        sys.exit(1)
+
+    # Locales match, check version
     if os.path.exists(firefox_info_plist):
-        # Try to read in firefox_info_plist, raise if cannot be parsed
         try:
-            # Read in the plist
             with open(firefox_info_plist, "rb") as plist_file:
                 parsed_plist = plistlib.load(plist_file)
-            # Get version from info.plist
             installed_version = parsed_plist['CFBundleShortVersionString']
-            print(f"{firefox_path} version {installed_version}, installed...")
-        # Raising if plist cannot be parsed or version determined from plist
-        # pylint: disable = broad-except
-        except Exception:
-            print(f"Encountered an error when trying to parse {firefox_info_plist}...")
-            sys.exit(1)
-        # Compare the installed version with this installations
-        if LooseVersion(installed_version) &lt; LooseVersion(firefox_version):
-            # Local version older, proceed with installation
-            print(f"Older version of {firefox_path} located, proceeding with installation...")
+            print(f"Installed version: {installed_version}")
+            print(f"Package version: {firefox_version}")
+
+            if LooseVersion(installed_version) &lt; LooseVersion(firefox_version):
+                print("Installed version is older, proceeding with installation...")
+                sys.exit(0)
+            else:
+                print("Installed version is same or newer, cancelling installation...")
+                sys.exit(1)
+        except Exception as err:
+            print(f"Error reading version info: {err}")
             sys.exit(0)
-        else:
-            # Local version newer, cancelling installation
-            print(f"Newer or the same version of {firefox_path} located, cancelling installation...")
-            sys.exit(1)
-    # Raise if we can't find firefox_info_plist
     else:
-        print("Cannot locate {firefox_info_plist}, proceeding with installation...")
+        print(f"Cannot find {firefox_info_plist}, proceeding with installation...")
         sys.exit(0)
+
 
 if __name__ == '__main__':
     main()</string>

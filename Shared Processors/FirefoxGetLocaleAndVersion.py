@@ -32,30 +32,23 @@ See docstring for FirefoxGetLocaleAndVersion class
 '''
 
 # Standard imports
-import configparser
-import glob
 import os
+import glob
 import plistlib
+import subprocess
 
 # AutoPkg imports
-# pylint: disable = import-error
 from autopkglib.DmgMounter import DmgMounter
 from autopkglib import ProcessorError
 
-
 __all__ = ['FirefoxGetLocaleAndVersion']
-__version__ = '1.0'
+__version__ = '1.1'
 
-
-# pylint: disable = too-few-public-methods
 class FirefoxGetLocaleAndVersion(DmgMounter):
     '''
-        Returns the locale and version of the Firefox.app passed to dmg_path
-
-        Raising if Firefox.app not located at dmg_path.
-
-        Based off of:
-        https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/AppDmgVersioner.py#L69-L86
+    Returns the locale and version of the Firefox.app passed to dmg_path.
+    Uses unzip command to extract locale information from omni.ja file.
+        https://bugzilla.mozilla.org/show_bug.cgi?id=1936505
     '''
 
     description = __doc__
@@ -79,91 +72,63 @@ class FirefoxGetLocaleAndVersion(DmgMounter):
         },
     }
 
-
-
     def find_app(self, path):
-        '''
-            Find app bundle at path
-        '''
-
-        # Look for any .app in the mounted dmg
+        '''Find app bundle at path'''
         apps = glob.glob(os.path.join(path, "*.app"))
-
-        # Raise if no .app found
         if len(apps) == 0:
             raise ProcessorError("No app found in dmg")
-
-        # Return 1st found .app only
         return apps[0]
 
+    def get_locale_from_omni(self, app_path):
+        '''Extract locale from omni.ja file'''
+        omni_path = os.path.join(app_path, 'Contents/Resources/omni.ja')
+        if not os.path.exists(omni_path):
+            raise ProcessorError(f"Cannot find {omni_path}")
+
+        try:
+            cmd = ['unzip', '-p', omni_path, 'default.locale']
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, _ = proc.communicate()
+
+            if proc.returncode != 0:
+                raise ProcessorError("Error extracting locale from omni.ja")
+
+            locale = stdout.decode('utf-8').strip()
+            if not locale:
+                raise ProcessorError("Empty locale returned from omni.ja")
+
+            return locale
+
+        except subprocess.SubprocessError as err:
+            raise ProcessorError("Error running unzip command") from err
 
     def main(self):
-        '''
-            See docstring for the FirefoxGetLocaleAndVersion class
-        '''
-
-        # Mount the image.
+        '''Main process'''
+        # Mount the image
         mount_point = self.mount(self.env["dmg_path"])
 
-        # Wrap all other actions in a try/finally so the image is always
-        # unmounted.
         try:
-
-            # Get the path the the .app in the DMG, raise if no .app found
+            # Get the path to the .app
             app_path = self.find_app(mount_point)
             self.output(f"app_path = {app_path}")
 
-            # Get the path to locale.ini, if doesn't exist and LOCALE is en-US we're good
-            app_locale_ini = os.path.join(app_path, 'Contents/Resources/locale.ini')
-            self.output(f"Looking for {app_locale_ini}...")
-
-            # Get the .app's locale, if app_locale_ini exists
-            if os.path.exists(app_locale_ini):
-                # Progress notification
-                self.output(f"Found: {app_locale_ini}...")
-                # Try Read in the locale, raise if cannot be parsed
-                try:
-                    # Create confgparser object
-                    app_config = configparser.ConfigParser()
-                    app_config.read(app_locale_ini)
-                    # Setting app_locale
-                    self.env['app_locale']  = app_config['locale']['locale']
-                # Raise if app_locale cannot be retrieved from app_locale_ini
-                except Exception as locale_parse_error:
-                    raise ProcessorError("Cannot determine app_locale") from locale_parse_error
-            # en-US doesn't have a app_locale_ini, so if selected then
-            elif self.env["choosen_locale"] == 'en-US':
-                # Setting app_locale
-                self.env['app_locale']  = 'en-US'
-                self.output(f"Setting app_locale to \"en-US\", as {app_locale_ini} does "
-                            f"not exist for the \"en-US\" locale")
-            # Raise if we can't find app_locale_ini and choosen_locale isn't en-US
-            else:
-                raise ProcessorError(f"Cannot find {app_locale_ini}")
-
-            # Progress notification
+            # Get locale from omni.ja
+            self.env['app_locale'] = self.get_locale_from_omni(app_path)
             self.output(f"app_locale: {self.env['app_locale']}")
-            # Now we need to get the version
-            app_info_plist = os.path.join(app_path, 'Contents/Info.plist')
 
-            # If the info.plist exists
+            # Get version from Info.plist
+            app_info_plist = os.path.join(app_path, 'Contents/Info.plist')
             if os.path.exists(app_info_plist):
-                # Try to read in app_info_plist, raise if cannot be parsed
                 try:
-                    # Read in the plist
                     with open(app_info_plist, "rb") as plist_file:
                         parsed_plist = plistlib.load(plist_file)
-                    # Get version from info.plist
                     self.env['app_version'] = parsed_plist['CFBundleShortVersionString']
                     self.output(f"app_version: {self.env['app_version']}")
-                # Raising if plist cannot be parsed or version determined from plist
                 except Exception as info_plist_error:
                     raise ProcessorError(f"Cannot parse {app_info_plist}") from info_plist_error
-            # Raise if we can't find app_info_plist
             else:
                 raise ProcessorError(f"Cannot find {app_info_plist}")
 
-        # Unmount the dmg
         finally:
             self.output("unmounting...")
             self.unmount(self.env["dmg_path"])
