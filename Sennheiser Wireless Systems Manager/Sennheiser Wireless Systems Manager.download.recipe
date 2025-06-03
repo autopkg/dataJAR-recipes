@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>\"(https://www\.sennheiser\.com/globalassets/digizuite/[0-9]+-en-sennheiser_wsm_setup_.*?\.dmg)\\\"</string>
+                <string>(https://www\.sennheiser\.com/globalassets/digizuite/[0-9]+-en-sennheiser_wsm_setup_.*?\.dmg)</string>
                 <key>url</key>
                 <string>https://www.sennheiser.com/en-gb/catalog/products/software/wireless-systems-manager/wsm-111113#Downloads</string>
                 <key>result_output_var_name</key>
