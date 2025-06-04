@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Miniconda 3 and imports it into Munki.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Miniconda3</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Miniconda3</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Miniconda is a free, miniature installation of Anaconda Distribution that includes only conda, Python, the packages they both depend on, and a small number of other useful packages</string>
+            <key>developer</key>
+            <string>Anaconda, Inc</string>
+            <key>display_name</key>
+            <string>Miniconda 3</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Uninstall script based on:
+# https://www.anaconda.com/docs/getting-started/miniconda/uninstall#mac-os-linux
+
+# Define the main Miniconda directory
+MINICONDA_DIR="/opt/miniconda3"
+
+# Array of package receipts to remove
+RECEIPTS=(
+    "io.continuum.pkg.prepare_installation"
+    "io.continuum.pkg.shortcuts"
+    "io.continuum.pkg.run_installation"
+    "io.continuum.pkg.user_post_install"
+    "io.continuum.pkg.pathupdate"
+)
+
+# Check if Miniconda is installed in the specified location
+if [ ! -d "$MINICONDA_DIR" ]; then
+    echo "Miniconda3 installation not found in $MINICONDA_DIR"
+    exit 0
+fi
+
+# First, try to deactivate and reverse conda initialization
+if [ -f "$MINICONDA_DIR/bin/conda" ]; then
+    echo "Removing conda initialization from shell profiles..."
+    source "$MINICONDA_DIR/bin/conda" activate 2>/dev/null || true
+    "$MINICONDA_DIR/bin/conda" init --reverse --all 2>/dev/null || true
+fi
+
+# Check for the uninstaller script (available in Miniconda v24.11.1 and later)
+if [ -f "$MINICONDA_DIR/uninstall.sh" ]; then
+    echo "Using official Miniconda uninstaller..."
+    # Run the uninstaller with sudo -E as we're in a system location
+    # Include arguments to remove caches and system configuration files
+    sudo -E "$MINICONDA_DIR/uninstall.sh" --remove-caches --remove-config-files system
+else
+    echo "Official uninstaller not found (pre-v24.11.1). Performing manual removal..."
+
+    # Remove the entire Miniconda directory
+    sudo rm -rf "$MINICONDA_DIR"
+
+    # Remove conda initialization from system-wide profile if it exists
+    if [ -f "/etc/profile.d/conda.sh" ]; then
+        echo "Removing conda initialization script..."
+        sudo rm -f "/etc/profile.d/conda.sh"
+    fi
+
+    # Clean up any remaining conda-related files in system locations
+    echo "Cleaning up additional conda files..."
+    sudo rm -rf /etc/conda
+
+    # Remove any system-wide conda configuration if it exists
+    if [ -f "/etc/.condarc" ]; then
+        echo "Removing system-wide conda configuration..."
+        sudo rm -f "/etc/.condarc"
+    fi
+fi
+
+# Clean up user-specific conda files
+echo "Cleaning up user-specific conda files..."
+# Loop through all user home directories in /Users
+for USER_HOME in /Users/*; do
+    if [ -d "$USER_HOME" ]; then
+        # Remove user-specific conda files
+        rm -rf "$USER_HOME/.condarc" "$USER_HOME/.conda" "$USER_HOME/.continuum" 2>/dev/null || true
+    fi
+done
+
+# Also clean up root user's conda files
+rm -rf /var/root/.condarc /var/root/.conda /var/root/.continuum 2>/dev/null || true
+
+# Forget package receipts
+echo "Forgetting package receipts..."
+for receipt in "${RECEIPTS[@]}"; do
+    echo "Forgetting receipt: $receipt"
+    pkgutil --forget "$receipt"
+done
+
+echo "Miniconda3 uninstallation complete"
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Miniconda3</string>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>id=\"io\.continuum\.pkg\.prepare_installation\" version=\"(py[0-9]+_([0-9]+(\.[0-9]+)+)-[0-9]+)\"</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
