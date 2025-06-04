@@ -46,7 +46,7 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
 # Define the main Miniconda directory
 MINICONDA_DIR="/opt/miniconda3"
 
-# Array of package receipts to remove
+# Array of package receipts to remove (from distribution file)
 RECEIPTS=(
     "io.continuum.pkg.prepare_installation"
     "io.continuum.pkg.shortcuts"
@@ -61,54 +61,25 @@ if [ ! -d "$MINICONDA_DIR" ]; then
     exit 0
 fi
 
-# First, try to deactivate and reverse conda initialization
-if [ -f "$MINICONDA_DIR/bin/conda" ]; then
-    echo "Removing conda initialization from shell profiles..."
-    source "$MINICONDA_DIR/bin/conda" activate 2>/dev/null || true
-    "$MINICONDA_DIR/bin/conda" init --reverse --all 2>/dev/null || true
+# Remove the main Miniconda directory
+echo "Removing Miniconda3 installation..."
+sudo rm -rf "$MINICONDA_DIR"
+
+# Remove conda initialization from system-wide profile if it exists
+if [ -f "/etc/profile.d/conda.sh" ]; then
+    echo "Removing conda initialization script..."
+    sudo rm -f "/etc/profile.d/conda.sh"
 fi
 
-# Check for the uninstaller script (available in Miniconda v24.11.1 and later)
-if [ -f "$MINICONDA_DIR/uninstall.sh" ]; then
-    echo "Using official Miniconda uninstaller..."
-    # Run the uninstaller with sudo -E as we're in a system location
-    # Include arguments to remove caches and system configuration files
-    sudo -E "$MINICONDA_DIR/uninstall.sh" --remove-caches --remove-config-files system
-else
-    echo "Official uninstaller not found (pre-v24.11.1). Performing manual removal..."
+# Clean up any remaining conda-related files in system locations
+echo "Cleaning up additional conda files..."
+sudo rm -rf /etc/conda
 
-    # Remove the entire Miniconda directory
-    sudo rm -rf "$MINICONDA_DIR"
-
-    # Remove conda initialization from system-wide profile if it exists
-    if [ -f "/etc/profile.d/conda.sh" ]; then
-        echo "Removing conda initialization script..."
-        sudo rm -f "/etc/profile.d/conda.sh"
-    fi
-
-    # Clean up any remaining conda-related files in system locations
-    echo "Cleaning up additional conda files..."
-    sudo rm -rf /etc/conda
-
-    # Remove any system-wide conda configuration if it exists
-    if [ -f "/etc/.condarc" ]; then
-        echo "Removing system-wide conda configuration..."
-        sudo rm -f "/etc/.condarc"
-    fi
+# Remove any system-wide conda configuration if it exists
+if [ -f "/etc/.condarc" ]; then
+    echo "Removing system-wide conda configuration..."
+    sudo rm -f "/etc/.condarc"
 fi
-
-# Clean up user-specific conda files
-echo "Cleaning up user-specific conda files..."
-# Loop through all user home directories in /Users
-for USER_HOME in /Users/*; do
-    if [ -d "$USER_HOME" ]; then
-        # Remove user-specific conda files
-        rm -rf "$USER_HOME/.condarc" "$USER_HOME/.conda" "$USER_HOME/.continuum" 2>/dev/null || true
-    fi
-done
-
-# Also clean up root user's conda files
-rm -rf /var/root/.condarc /var/root/.conda /var/root/.continuum 2>/dev/null || true
 
 # Forget package receipts
 echo "Forgetting package receipts..."
