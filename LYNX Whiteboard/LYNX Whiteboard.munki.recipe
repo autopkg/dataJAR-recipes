@@ -3,11 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of LYNX Whiteboard and imports it into Munki.</string>
+    <string>Downloads the latest version of LYNX Whiteboard and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.LYNX Whiteboard</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
@@ -37,7 +41,7 @@ Create engaging content for collaboration.</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.LYNX Whiteboard</string>
     <key>Process</key>
@@ -71,6 +75,8 @@ Create engaging content for collaboration.</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
@@ -82,6 +88,27 @@ Create engaging content for collaboration.</string>
             <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/LYNX Whiteboard.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
