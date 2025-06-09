@@ -263,40 +263,49 @@ exit</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.smithjw.pkg.DisplayLink_Manager</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/DisplayLink_Manager-%version%.pkg</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
             <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
+            <string>com.github.dataJAR-recipes.Shared Processors/ComponentPkgPayloadUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/DisplayLink_Manager.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/expanded_pkg/Scripts/DisplayLink_Manager-%version%.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/DisplayLinkManagerApp.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked/DisplayLinkManagerApp.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -306,14 +315,14 @@ exit</string>
                     <string>/Applications/DisplayLink Manager.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -326,10 +335,10 @@ exit</string>
                     <string>min_os_version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -340,10 +349,10 @@ exit</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -351,18 +360,21 @@ exit</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-        </dict>
-         <dict>
             <key>Processor</key>
-            <string>PathDeleter</string>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
