@@ -82,10 +82,19 @@ fi</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/Package.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked/%found_basename%/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
