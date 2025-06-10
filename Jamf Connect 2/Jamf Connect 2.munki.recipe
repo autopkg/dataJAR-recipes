@@ -60,11 +60,33 @@ fi</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.yohan460-recipes.download.JamfConnect</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is non functioning and has been deprecated.
+
+The Jamf Connect menu bar app is now deprecated and will no longer receive updates. All future updates and bug fixes for macOS account management capabilities will only be available through Self Service+.
+
+For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-release-notes/page/Jamf_Connect_macOS_Release_Notes.html#d432e145</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
