@@ -1,61 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Jamf Connect Login and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Jamf Connect Login</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest release of Jamf Connect Login and imports it in into Munki.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Jamf Connect Login</string>
-        <key>Input</key>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_CATEGORY</key>
+        <string>Utilities</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>JamfConnectLogin</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/Jamf Connect Login</string>
-            <key>MUNKI_CATEGORY</key>
-            <string>Utilities</string>
-            <key>NAME</key>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%MUNKI_CATEGORY%</string>
+            <key>description</key>
+            <string>Jamf Connect is an identity and access solution that allows administrators to manage authentication and access by connecting a user's local account to their organization's cloud identity (network account).
+
+With Jamf Connect, you can keep your users' macOS passwords and network passwords in sync and compliant, secure and customize the macOS login window with your organization's cloud identity provider (IdP), and control local account privileges on the Mac. Additionally, you gain access to Zero Trust Network Access, which empowers you to create dynamic, cross-platform access policies for your organization's apps, resources, and data.</string>
+            <key>developer</key>
+            <string>Jamf</string>
+            <key>display_name</key>
             <string>Jamf Connect Login</string>
-            <key>pkginfo</key>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Uninstall script lifted from the /JamfConnectLogin/Resources/JamfConnectUninstaller.pkg uninstaller
+
+# Matthew Ward
+# Original: 2020.02.10
+# Updated: 2022.03.21
+# v.20
+# Last Updated by Jacob Hearst
+# This script is intended to disable and remove all Jamf Connect v1 and v2 components.
+# Configuration Profiles will only be removed if they contain com.jamf.connect; If that portion of the script fails, please remove  manually.
+# Validated macOS 10.12 - macOS 11 (Big Sir)
+
+# Quit Connect and Unlock if running
+rm -rf "Application Support/com.jamf.connect.login"
+rm -rf "/Library/Managed Preferences/com.jamf.connect.login.plist"
+
+# Variables
+/usr/bin/logger 'starting script'
+DaemonLD='/Library/LaunchDaemons/com.jamf.connect.daemon.plist'
+
+# Find if there's a console user or not. Blank return if not.
+consoleuser=$( scutil &lt;&lt;&lt; &quot;show State:/Users/ConsoleUser&quot; | awk &apos;/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }&apos; )
+
+# get the UID for the user
+uid=$(/usr/bin/id -u "$consoleuser")
+/usr/bin/logger ''''
+/usr/bin/logger 'Console user is '"$consoleuser"', UID: '"$uid"''
+
+
+# disable and remove LaunchD components
+if [ -f "$DaemonLD" ]; then
+    /bin/echo ''''
+    /bin/echo "Jamf Connect Launch Daemon is present. Unloading and removing"
+    /bin/launchctl unload "$DaemonLD"
+    /bin/rm -f "$DaemonLD"
+    /bin/rm -rf "/Library/Application Support/JamfConnect"
+        else
+    /bin/echo "Jamf Connect launch daemon not installed"
+fi
+
+/bin/echo ''''
+
+/bin/echo "Jamf Connect LaunchAgents removed"
+
+
+# Reset the macOS authentication database to default
+if [ -f "/usr/local/bin/authchanger" ];
+then
+         /usr/local/bin/authchanger -reset
+         /bin/echo ''''
+         /bin/echo "Default macOS loginwindow has been restored"
+         /bin/echo ''''
+         /bin/rm /usr/local/bin/authchanger
+         /bin/rm /usr/local/lib/pam/pam_saml.so.2
+         /bin/rm -r /Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle
+         /bin/echo "Jamf Connect Login components have been removed"
+         /bin/echo ''''
+     else
+         /bin/echo "Jamf Connect Login not installed; can't delete"
+ fi
+
+/bin/echo 'Jamf Connect Applications have been removed'
+/bin/echo ''''
+
+/bin/echo "All Jamf Connect components have been removed."
+/bin/echo ''''</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.yohan460-recipes.download.JamfConnect</string>
+    <key>Process</key>
+    <array>
+    <dict>
+        <key>Arguments</key>
             <dict>
-                <key>catalogs</key>
+                <key>input_path</key>
+                <string>%pathname%/Resources/JamfConnectLaunchAgent.pkg</string>
+                <key>expected_authority_names</key>
                 <array>
-                    <string>testing</string>
+                    <string>Developer ID Installer: JAMF Software (483DWKW443)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
                 </array>
-                <key>category</key>
-                <string>%MUNKI_CATEGORY%</string>
-                <key>description</key>
-                <string>Jamf Connect Login (formerly NoMAD Login+) is an application that allows you to manage authentication with the macOS loginwindow process.</string>
-                <key>developer</key>
-                <string>%NAME%</string>
-                <key>display_name</key>
-                <string>%NAME%</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/JamfConnectLogin.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>Process</key>
-        <array>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>warning_message</key>
-                    <string>This recipe has been deprecated following the release of Jamf Connect 2.0</string>
-                </dict>
-                <key>Processor</key>
-                <string>DeprecationWarning</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/JamfConnectLogin.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
             </dict>
-            <dict>   
-                <key>Processor</key>   
-                <string>StopProcessingIf</string>   
-                <key>Arguments</key>   
-                <dict>   
-                    <key>predicate</key>   
-                    <string>TRUEPREDICATE</string>
-                </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/JCDaemon.pkg/Payload</string>
+                <key>purge_destination</key>
+                <false/>
             </dict>
-        </array>
-    </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Library/Application Support/JamfConnect/JCDaemon.app</string>
+                    <string>/Library/Security/SecurityAgentPlugins/JamfConnectLogin.bundle</string>
+                    <string>/Library/LaunchDaemons/com.jamf.connect.daemon.plist</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
 </plist>
