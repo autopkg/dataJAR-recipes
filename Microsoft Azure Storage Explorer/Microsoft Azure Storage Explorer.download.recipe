@@ -3,17 +3,20 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest version of Microsoft Azure Storage Explorer.</string>
+        <string>Downloads the latest version of Microsoft Azure Storage Explorer.
+
+For x86_64 use "2216184" in PRODUCTID variable.
+For arm64 use "2279415" in PRODUCTID variable.</string>
         <key>Identifier</key>
         <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
         <key>MinimumVersion</key>
-        <string>1.0.0</string>
+        <string>1.1</string>
         <key>Input</key>
         <dict>
             <key>NAME</key>
             <string>Microsoft Azure Storage Explorer</string>
             <key>PRODUCTID</key>
-            <string>708342</string>
+            <string>2279415</string>
             <key>DOWNLOADURL</key>
             <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         </dict>
