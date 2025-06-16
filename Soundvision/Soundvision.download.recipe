@@ -21,35 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Current version:\s+&lt;span class=\&quot;version\&quot;&gt;([0-9]+(\.[0-9]+)+)&lt;/span&gt;</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
-                <key>url</key>
-                <string>https://www.l-acoustics.com/products/soundvision/</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>data-renderer-mark=\"true\">([A-Za-z][A-Za-z][A-Za-z]).*? [0-9]+</string>
-                <key>result_output_var_name</key>
-                <string>month</string>
-                <key>url</key>
-                <string>https://www.l-acoustics.com/products/soundvision/#</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>data-renderer-mark=\"true\">[A-Za-z][A-Za-z][A-Za-z].*? ([0-9]+)</string>
-                <key>result_output_var_name</key>
-                <string>year</string>
+                <string>href="(?P&lt;DOWNLOAD_URL&gt;https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/(?P&lt;version&gt;[0-9]+(.[0-9]+)+)/Soundvision_([0-9]+(.[0-9]+)+)_(?P&lt;month&gt;[A-Za-z]+)_(?P&lt;year&gt;[0-9]+)_MAC.zip)"</string>
                 <key>url</key>
                 <string>https://www.l-acoustics.com/products/soundvision/#</string>
             </dict>
@@ -67,7 +39,7 @@
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Safari/605.1.15</string>
                 </dict>
                 <key>url</key>
-                <string>https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/%version%/Soundvision_%version%_%month%_%year%_MAC.zip</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
         </dict>
         <dict>
