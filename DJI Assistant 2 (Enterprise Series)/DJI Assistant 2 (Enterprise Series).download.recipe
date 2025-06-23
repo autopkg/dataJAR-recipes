@@ -23,14 +23,14 @@
                 <key>url</key>
                 <string>https://www.dji.com/uk/downloads/softwares/assistant-dji-2-for-matrice</string>
                 <key>re_pattern</key>
-                <string>https://dl\.djicdn\.com/downloads/dji_assistant/.*?/DJI\+Assistant\+2\+\(Enterprise\+Series\)\+.*?\.pkg</string>
+                <string>url":"(https://dl.djicdn.com/downloads/dji_assistant/[0-9]+/DJI\+Assistant\+2\+\(Enterprise\+Series\)\+V([0-9]+(.[0-9]+)+).pkg)"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36</string>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15</string>
                 </dict>
                 <key>result_output_var_name</key>
-                <string>match</string>
+                <string>DOWNLOAD_URL</string>
             </dict>
         </dict>
         <dict>
@@ -39,7 +39,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%match%</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
         </dict>
         <dict>
