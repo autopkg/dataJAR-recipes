@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Neo4j Desktop version 1.*</string>
+    <string>Downloads the latest version of Neo4j Desktop version 2</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Neo4j Desktop</string>
+    <string>com.github.dataJAR-recipes.download.Neo4j Desktop 2</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Neo4jDesktop</string>
+        <string>Neo4jDesktop2</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Neo4j Desktop 1.([0-9]+(\.[0-9]+)+)</string>
+                <string>Neo4j Desktop 2.([0-9]+(\.[0-9]+)+)</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
@@ -34,7 +34,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://neo4j.com/artifact.php?name=neo4j-desktop-1.%version%.dmg</string>
+                <string>https://neo4j.com/artifact.php?name=neo4j-desktop-2.%version%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -47,9 +47,9 @@
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/Neo4j Desktop.app</string>
+                <string>%pathname%/Neo4j Desktop 2.app</string>
                 <key>requirement</key>
-                <string>identifier "com.neo4j.neo4j-desktop" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8Z9BGNE3AV"</string>
+                <string>identifier "com.neo4j.neo4j-desktop-2" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8Z9BGNE3AV"</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

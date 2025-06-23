@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Neo4j Desktop 1.* and imports it into Munki.</string>
+    <string>Downloads the latest version of Neo4j Desktop 2 and imports it into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Neo4j Desktop</string>
+    <string>com.github.dataJAR-recipes.munki.Neo4j Desktop 2</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
-        <string>Neo4jDesktop</string>
+        <string>Neo4jDesktop2</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -23,7 +23,7 @@
             <key>developer</key>
             <string>Neo Technology, Inc.</string>
             <key>display_name</key>
-            <string>Neo4j Desktop</string>
+            <string>Neo4j Desktop 2</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Neo4j Desktop</string>
+    <string>com.github.dataJAR-recipes.download.Neo4j Desktop 2</string>
     <key>Process</key>
     <array>
         <dict>
