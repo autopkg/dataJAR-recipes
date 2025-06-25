@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>appcast_url</key>
-                <string>https://appcast.digitalpigeon.com/mac/v4.1/updates.xml</string>
+                <string>https://digitalpigeon-desktop-app.s3-accelerate.amazonaws.com/v4/prod/mac/x64/updates.xml</string>
                 <key>urlencode_path_component</key>
                 <false/>
             </dict>
@@ -53,7 +53,7 @@
                 <key>input_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Digital Pigeon.app</string>
                 <key>requirement</key>
-                <string>anchor apple generic and identifier "com.sixtydigits.DigitalPigeon-CEF" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G5MUBZKV62)</string>
+                <string>anchor apple generic and identifier "com.sixtydigits.digitalpigeon.cef" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = WF9W9ZHVAQ)</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
