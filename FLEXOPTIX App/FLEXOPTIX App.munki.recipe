@@ -2,16 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Amazon Coretto 8 and imports it into Munki.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.FLEXOPTIX App</string>
-    <key>Description</key>
-    <string>Downloads the current release version of Amazon Coretto 8 and imports it into Munki.</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>FLEXOPTIXApp</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>Applications</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>x86_64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -29,6 +34,10 @@ The result is the FLEXOPTIX App, which comes with support for all common Windows
             <string>FLEXOPTIX App</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -37,6 +46,8 @@ The result is the FLEXOPTIX App, which comes with support for all common Windows
     </dict>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.FLEXOPTIX App</string>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
