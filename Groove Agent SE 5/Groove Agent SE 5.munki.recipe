@@ -3,11 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Groove Agent SE 5 and imports it into Munki.</string>
+    <string>Downloads the latest version of Groove Agent SE 5 and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Groove Agent SE 5</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
@@ -43,7 +47,7 @@ Support for VST, AU and AAX plug-in formats means Groove Agent 5 can be used wit
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Groove Agent SE 5</string>
     <key>Process</key>
@@ -77,47 +81,26 @@ Support for VST, AU and AAX plug-in formats means Groove Agent 5 can be used wit
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/Groove Agent SE.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST3/Steinberg</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Groove Agent SE.vst3.pkg/Payload</string>
+                <key>purge_destination</key>
+                <false/>
             </dict>
             <key>Processor</key>
-            <string>Versioner</string>
-        </dict>
-         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/Groove Agent SE.app</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>LSMinimumSystemVersion</key>
-                    <string>min_os_ver</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-        </dict>
-        <dict>
-             <key>Arguments</key>
-             <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>minimum_os_version</key>
-                    <string>%min_os_ver%</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
                 <array>
+                    <string>/Library/Audio/Plug-Ins/VST3/Steinberg/Groove Agent SE.vst3</string>
                     <string>/Applications/Groove Agent SE.app</string>
                 </array>
             </dict>
@@ -125,6 +108,59 @@ Support for VST, AU and AAX plug-in formats means Groove Agent 5 can be used wit
             <string>MunkiInstallsItemsCreator</string>
         </dict>
          <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+            <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST3/Steinberg/Groove Agent SE.vst3/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleIdentifier</key>
+                    <string>bundleid</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>changes</key>
+                <array>
+                    <dict>
+                        <key>path</key>
+                        <string>%/Library/Audio/Plug-Ins/VST3/Steinberg/Groove Agent SE.vst3</string>
+                        <key>CFBundleIdentifier</key>
+                        <string>%bundleid%</string>
+                    </dict>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/InstallsArrayCFBundleIdentifierChanger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST3/Steinberg/Groove Agent SE.vst3/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
@@ -151,6 +187,7 @@ Support for VST, AU and AAX plug-in formats means Groove Agent 5 can be used wit
             <key>Processor</key>
             <string>PathDeleter</string>
         </dict>
+
     </array>
 </dict>
 </plist>
