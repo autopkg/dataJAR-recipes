@@ -12,9 +12,27 @@
         <string>DJIAssistant2ForPhantom</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is non functioning and has been deprecated. Vendor has discontinued updates. See https://www.dji.com/uk/downloads/softwares/assistant-dji-2-for-phantom for more details.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -38,8 +56,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-            	<key>filename</key>
-            	<string>%NAME%.pkg</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
