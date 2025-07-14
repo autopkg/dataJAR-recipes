@@ -285,7 +285,7 @@ exit</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/expanded_pkg/Scripts/DisplayLink_Manager-%version%.pkg</string>
+                <string>%RECIPE_CACHE_DIR%/unpack/expanded_pkg/Scripts/%SOFTWARE_TITLE%-%version%.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
