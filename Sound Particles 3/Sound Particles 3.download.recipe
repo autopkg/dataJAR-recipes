@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Sound Particles 3.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Sound Particles 3</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SoundParticles3</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>&lt;version&gt;(.*?)&lt;/version&gt;</string>
+                <key>url</key>
+                <string>https://www.soundparticles.com/version/sound_particles_sp.xml</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://s3-us-west-1.amazonaws.com/releases.soundparticles.com/SoundParticles.Mac.%match%.dmg</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Sound Particles 3.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.soundparticles.soundparticles3" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3Z5W5J93JM")</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
