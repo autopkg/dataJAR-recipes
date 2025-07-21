@@ -3,18 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Notion Calendar and imports it into Munki.
-
-For Intel use: "x86_64" in the SUPPORTED_ARCH variable
-For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
+    <string>Downloads the latest version of Notion Calendar and imports it into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.NotionCalendar</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>SUPPORTED_ARCH</key>
-        <string></string>
         <key>NAME</key>
         <string>Notion Calendar</string>
         <key>pkginfo</key>
@@ -33,10 +28,6 @@ All of your commitments, now in one place. Meet the beautifully designed, fully 
             <string>Notion Calendar</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>supported_architectures</key>
-            <array>
-                <string>%SUPPORTED_ARCH%</string>
-            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
