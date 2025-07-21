@@ -17,24 +17,13 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>https://.*/?/Muse_Hub\.dmg</string>
-                <key>url</key>
-                <string>https://musescore.org/en/download</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>%match%</string>
+                <string>https://muse-cdn.com/MuseScore_Studio_Installer_via_MuseHub.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -49,7 +38,7 @@
                 <key>input_path</key>
                 <string>%pathname%/Muse Hub.app</string>
                 <key>requirement</key>
-                <string>anchor apple generic and identifier "com.muse.hub" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = K822U9GYSM)</string>
+                <string>anchor apple generic and identifier "com.muse.musehub" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6ZE93BN9HZ")</string>
             </dict>
         </dict>
     </array>
