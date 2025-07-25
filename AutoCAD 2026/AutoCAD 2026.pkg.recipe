@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of AutoCAD 2026 and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.AutoCAD 2026</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AutoCAD2026</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.AutoCAD 2026</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/Install Autodesk AutoCAD 2026 for Mac.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>root/private/tmp</key>
+                    <string>0777</string>
+                    <key>scripts</key>
+                    <string>0755</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/Install Autodesk AutoCAD 2026 for Mac.app</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/root/private/tmp/Install Autodesk AutoCAD 2026 for Mac.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/scripts/postinstall</string>
+                <key>file_content</key>
+                <string>#!/bin/bash
+
+checkLoggedInUserNoExit()
+{
+
+  # Get the logged in user's name
+  loggedInUser=$(echo "show State:/Users/ConsoleUser" | /usr/sbin/scutil | /usr/bin/awk '/Name :/ { print $3 }')
+
+  # Find the user ID for current logged in user
+  loggedInUserID=$(/usr/bin/id -u "${loggedInUser}")
+
+  # Find the home directory for the current logged in user
+  loggedInUserHome=$(/usr/bin/dscl . read "/Users/${loggedInUser}" NFSHomeDirectory | /usr/bin/awk '{print $2}')
+
+  if [[ "${loggedInUser}" &amp;&amp; "${loggedInUser}" != "loginwindow" &amp;&amp; "${loggedInUser}" != "_mbsetupuser" ]]
+  then
+    echo "Logged-in user: ${loggedInUser} (ID: ${loggedInUserID})"
+    echo "home directory: ${loggedInUserHome}"
+  else
+    echo "No user logged in"
+  fi
+
+}
+
+
+installAutoCAD()
+{
+
+  # Change to /tmp where the installer app is copied
+  cd /tmp || exit 1
+
+  installerApp="Install Autodesk AutoCAD 2026 for Mac.app"
+  IFS=$'\n'
+  for COMPONENT_PKG in $(/usr/bin/find "${installerApp}" -name *.pkg ! -name *lic*.pkg)
+  do
+    /bin/echo "Installing ${COMPONENT_PKG}..."
+    /usr/sbin/installer -pkg "${COMPONENT_PKG}" -target /
+    if [ $? -ne 0 ]
+    then
+      /bin/echo "Could not install ${COMPONENT_PKG}. Please inspect the Autodesk setup logs for more info."
+      exit 1
+    else
+      /bin/echo "${COMPONENT_PKG} install successful."
+    fi
+  done
+  COMPONENT_PKG="${installerApp}/Contents/Helper/ObjToInstall/LicregTool/licreg.pkg"
+  /bin/echo "Installing ${COMPONENT_PKG}..."
+  /usr/sbin/installer -pkg "${COMPONENT_PKG}" -target /
+  if [ $? -ne 0 ]
+  then
+    /bin/echo "Could not install ${COMPONENT_PKG}. Please inspect the Autodesk setup logs for more info."
+    exit 1
+  else
+    /bin/echo "${COMPONENT_PKG} install successful."
+  fi
+  for ODIS_SCRIPT in $(/usr/bin/find "${installerApp}" -name "installbuilder.sh")
+  do
+    if [ -n "${ODIS_SCRIPT}" ]; then
+      /bin/echo "Installing ${ODIS_SCRIPT}..."
+      "${ODIS_SCRIPT}" --mode unattended --unattendedmodeui none
+    fi
+  done
+  for POSTINSTALLODISMASTER_SH in $(/usr/bin/find "${installerApp}" -name "postInstallODISMaster.sh")
+  do
+    if [ -n "${POSTINSTALLODISMASTER_SH}" ]
+    then
+      /bin/echo "Installing ${POSTINSTALLODISMASTER_SH}..."
+      if ! "${POSTINSTALLODISMASTER_SH}" nobody
+      then
+        /bin/echo "Could not install ${POSTINSTALLODISMASTER_SH}. Please inspect the Autodesk setup logs for more info."
+        exit 1
+      else
+        /bin/echo "${POSTINSTALLODISMASTER_SH} install successful."
+      fi
+    fi
+  done
+  unset IFS
+
+  returncode="$?"
+
+  # Fix user-specific Autodesk directory ownership - work around vendor permission bug
+  /bin/echo "Setting up user Autodesk directory for logged-in user..."
+
+  # Set up directory for currently logged in user (if any)
+  if [ -n "${loggedInUser}" ] &amp;&amp; [ "${loggedInUser}" != "loginwindow" ] &amp;&amp; [ "${loggedInUser}" != "_mbsetupuser" ]
+  then
+    userAutodeskDir="${loggedInUserHome}/Library/Application Support/Autodesk"
+
+    /bin/echo "Checking for directory: $userAutodeskDir"
+
+    # Create the user's Autodesk directory if it doesn't exist (prevents vendor permission bug)
+    if [ ! -d "$userAutodeskDir" ]
+    then
+      /bin/echo "Creating Autodesk directory: $userAutodeskDir"
+      /bin/mkdir -p "$userAutodeskDir"
+    else
+      /bin/echo "Autodesk directory already exists"
+    fi
+
+    # Set proper ownership and permissions
+    /bin/echo "Setting ownership and permissions for: $userAutodeskDir"
+    /usr/sbin/chown -R "${loggedInUser}:staff" "$userAutodeskDir"
+    /bin/chmod -R 755 "$userAutodeskDir"
+  else
+    /bin/echo "No user currently logged in - directory will be created when user first launches AutoCAD"
+  fi  # Clean up installer app
+  /bin/echo "Cleaning up installer..."
+  /bin/rm -rf "/tmp/${installerApp}"
+
+}
+
+# Execute installation
+checkLoggedInUserNoExit
+installAutoCAD</string>
+                <key>file_mode</key>
+                <string>0755</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>pkgname</key>
+                    <string>AutoCAD2026-%version%</string>
+                    <key>id</key>
+                    <string>com.autodesk.%NAME%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/root</string>
+                    <key>scripts</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

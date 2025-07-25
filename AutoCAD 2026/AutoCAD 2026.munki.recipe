@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of AutoCAD 2026 and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.AutoCAD 2026</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>AutoCAD2026</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Autodesk AutoCAD: Design and drafting software trusted by millions
+
+2D and 3D CAD tools built to accelerate your creativity</string>
+            <key>developer</key>
+            <string>Autodesk</string>
+            <key>display_name</key>
+            <string>AutoCAD 2026</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# AutoCAD 2026 Uninstall Script
+# Based on Autodesk uninstall documentation
+# https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/Clean-uninstall-of-Autodesk-programs-on-a-Mac.html
+# https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/Clean-Uninstall-for-AutoCAD-on-MAC.html
+
+# Function to remove system files/directories
+remove_system_files() {
+    local item="$1"
+    if [ -e "$item" ]; then
+        echo "Removing: $item"
+        /bin/rm -rf "$item"
+        if [ $? -eq 0 ]; then
+            echo "Successfully removed: $item"
+        else
+            echo "Warning: Failed to remove: $item"
+        fi
+    else
+        echo "Not found (skipping): $item"
+    fi
+}
+
+# Function to unload and remove LaunchDaemons
+remove_launch_daemon() {
+    local daemon="$1"
+    local daemon_path="/Library/LaunchDaemons/$daemon"
+
+    if [ -f "$daemon_path" ]; then
+        echo "Unloading LaunchDaemon: $daemon"
+        /bin/launchctl unload "$daemon_path" 2>/dev/null || echo "Warning: Could not unload $daemon (may not be loaded)"
+
+        echo "Removing LaunchDaemon: $daemon_path"
+        /bin/rm -f "$daemon_path"
+        if [ $? -eq 0 ]; then
+            echo "Successfully removed: $daemon_path"
+        else
+            echo "Warning: Failed to remove: $daemon_path"
+        fi
+    else
+        echo "LaunchDaemon not found (skipping): $daemon_path"
+    fi
+}
+
+echo "Starting AutoCAD 2026 uninstall..."
+
+# Step 1: Run the AutoCAD 2026 uninstaller first
+UNINSTALLER="/Applications/Autodesk/AutoCAD 2026/Remove AutoCAD 2026.app/Contents/MacOS/Remove AutoCAD 2026"
+
+if [ -x "$UNINSTALLER" ]; then
+    echo "Running AutoCAD 2026 uninstaller..."
+    "$UNINSTALLER" -silent
+
+    if [ $? -eq 0 ]; then
+        echo "AutoCAD 2026 uninstall completed successfully"
+    else
+        echo "Warning: AutoCAD 2026 uninstaller reported an error, continuing with manual cleanup..."
+    fi
+else
+    echo "AutoCAD 2026 uninstaller not found, proceeding with manual cleanup..."
+fi
+
+# Step 3: Remove AutoCAD 2026 application files
+echo "Removing AutoCAD 2026 application files..."
+remove_system_files "/Applications/Autodesk/AutoCAD 2026"
+
+# If the entire Autodesk folder is empty, remove it
+if [ -d "/Applications/Autodesk" ]; then
+    if [ -z "$(/bin/ls -A "/Applications/Autodesk" 2>/dev/null)" ]; then
+        echo "Autodesk folder is empty, removing it..."
+        remove_system_files "/Applications/Autodesk"
+    else
+        echo "Autodesk folder contains other products, leaving it in place"
+    fi
+fi
+
+echo "AutoCAD 2026 clean uninstall completed"
+echo "Note: User-specific files and shared components are preserved"
+
+# OPTIONAL: Uncomment the sections below to remove shared Autodesk components
+# WARNING: This will affect ALL Autodesk products on the system
+
+# Remove shared Autodesk system files (affects all Autodesk products)
+# echo "Removing shared Autodesk system files..."
+# remove_system_files "/Library/Autodesk"
+# remove_system_files "/Library/Application Support/Autodesk"
+# remove_system_files "/Library/Logs/Autodesk"
+
+# Remove shared Autodesk LaunchDaemons (affects all Autodesk products)
+# echo "Removing shared Autodesk LaunchDaemons..."
+# remove_launch_daemon "com.autodesk.adskaccessservicehost.plist"
+# remove_launch_daemon "com.autodesk.AdskLicensingService.plist"
+
+# Remove AutoCAD-specific FlexNet files (may affect other Autodesk products)
+# echo "Removing AutoCAD FlexNet licensing files..."
+# if [ -d "/Library/Preferences/Flexnet Publisher/FLEXnet" ]; then
+#     echo "Removing adskflex files from FlexNet directory..."
+#     /usr/bin/find "/Library/Preferences/Flexnet Publisher/FLEXnet" -name "adskflex*" -delete 2>/dev/null || true
+# fi
+
+# Remove shared FlexNet Publisher folder (WARNING: Also affects Adobe products!)
+# echo "Removing FlexNet Publisher folder..."
+# echo "WARNING: This may affect Adobe products if installed"
+# remove_system_files "/Library/Application Support/Flexnet Publisher"
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.AutoCAD 2026</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/root/private/tmp/Install Autodesk AutoCAD 2026 for Mac.app/Contents/Helper/ObjToInstall/autocad2026.pkg</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/ComponentPkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload/AutoCAD 2026.app</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Autodesk/AutoCAD 2026/AutoCAD 2026.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload/AutoCAD Plot Style Editor 2026.app</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Autodesk/AutoCAD 2026/AutoCAD Plot Style Editor 2026.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload/Remove AutoCAD 2026.app</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Autodesk/AutoCAD 2026/Remove AutoCAD 2026.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Autodesk/AutoCAD 2026/AutoCAD 2026.app</string>
+                    <string>/Applications/Autodesk/AutoCAD 2026/AutoCAD Plot Style Editor 2026.app</string>
+                    <string>/Applications/Autodesk/AutoCAD 2026/Remove AutoCAD 2026.app</string>
+                </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/AutoCAD2026-%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
