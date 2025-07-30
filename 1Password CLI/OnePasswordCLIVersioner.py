@@ -10,8 +10,6 @@ from __future__ import absolute_import
 import subprocess
 import os
 import sys
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 
 # AutoPkg imports
 from autopkglib import Processor, ProcessorError
