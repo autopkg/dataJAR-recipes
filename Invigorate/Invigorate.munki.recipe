@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Invigorate and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Invigorate</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Invigorate</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Popular multimedia player.</string>
+            <key>developer</key>
+            <string>Orthogonal Art and Science, LLC</string>
+            <key>display_name</key>
+            <string>Invigorate</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Uninstall script for Newfangled Audio Invigorate created from '~/Music/Newfangled Audio/Invigorate/Invigorate User Guide.pdf'
+# Note: User Music folder is intentionally excluded as it sits in user space
+
+# Exit codes:
+# 0 = Success
+# 1 = Error during removal
+
+# Array of plugin paths and audio files to check and remove
+UNINSTALL_PATHS=(
+    "/Library/Audio/Plug-Ins/Components/Invigorate.component"
+    "/Library/Audio/Plug-Ins/VST/Newfangled Audio/Invigorate.vst"
+    "/Library/Audio/Plug-Ins/VST3/Newfangled Audio/Invigorate.vst3"
+    "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Invigorate.aaxplugin"
+    "/Users/Shared/Newfangled Audio/Invigorate"
+)
+
+exit_status=0
+
+# Function to safely remove a path if it exists
+remove_if_exists() {
+    local path="$1"
+    if [ -e "$path" ]; then
+        echo "Removing: $path"
+        rm -rf "$path"
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to remove $path"
+            exit_status=1
+        fi
+    else
+        echo "Path not found (skipping): $path"
+    fi
+}
+
+# Process each plugin path
+for path in "${UNINSTALL_PATHS[@]}"; do
+    remove_if_exists "$path"
+done
+
+exit $exit_status</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Invigorate</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/Invigorate-%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Invigorate and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Invigorate</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Invigorate</string>
+        <key>PKG_ID</key>
+        <string>com.Eventide.Invigorate</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Invigorate</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/Invigorate-1.4.0-osx-installer.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>root/private/tmp</key>
+                    <string>0777</string>
+                    <key>scripts</key>
+                    <string>0755</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/Invigorate-1.4.0-osx-installer.app</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/root/private/tmp/Invigorate-1.4.0-osx-installer.app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/scripts/postinstall</string>
+                <key>file_content</key>
+                <string>#!/bin/bash
+
+# Runs the Invigorate InstallBuilder-based installer from /tmp
+# Moves the Newfangled Audio folder to /Users/Shared
+
+# Define installer paths
+app_name="Invigorate-1.4.0-osx-installer.app"
+installer_bin="/tmp/${app_name}/Contents/MacOS/installbuilder.sh"
+
+# Run the installer in unattended mode
+if [ -x "$installer_bin" ]; then
+    "$installer_bin" --mode unattended --unattendedmodeui none
+    result=$?
+else
+    echo "Installer not found or not executable: $installer_bin" &gt;&amp;2
+    rm -rf "/tmp/${app_name}"
+    exit 1
+fi
+
+# Remove the installer .app from /tmp
+rm -rf "/tmp/${app_name}"
+
+# If installer failed, exit now
+if [ $result -ne 0 ]; then
+    exit $result
+fi
+
+# Now handle the Invigorate folder move
+SOURCE_PATH="/var/root/Music/Newfangled Audio/Invigorate"
+DESTINATION_PATH="/Users/Shared/Newfangled Audio/Invigorate"
+
+# Check if source exists
+if [ ! -d "${SOURCE_PATH}" ]; then
+    echo "WARNING: Source folder '${SOURCE_PATH}' does not exist!"
+    # Don't exit with error since the installer succeeded
+    exit 0
+fi
+
+# Create parent directory if it doesn't exist
+mkdir -p "/Users/Shared/Newfangled Audio"
+
+# Move the folder
+if mv "${SOURCE_PATH}" "${DESTINATION_PATH}"; then
+    chmod -R 755 "${DESTINATION_PATH}"
+    chown -R root:wheel "${DESTINATION_PATH}"
+    echo "Successfully moved folder to ${DESTINATION_PATH}"
+else
+    echo "ERROR: Failed to move folder"
+    # Don't exit with error since the installer succeeded
+fi
+
+exit $result</string>
+                <key>file_mode</key>
+                <string>0755</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>pkgname</key>
+                    <string>Invigorate-%version%</string>
+                    <key>id</key>
+                    <string>%PKG_ID%</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/root</string>
+                    <key>scripts</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
