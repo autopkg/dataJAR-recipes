@@ -2,12 +2,12 @@
 """
 CFBundleVersionCombiner Processor for AutoPkg
 Combines CFBundleShortVersionString and CFBundleVersion from an app into a single version string.
-Uses MunkiLooseVersion for version comparison but outputs string version.
+Uses APLooseVersion for version comparison but outputs string version.
 """
 
 import os.path
 import plistlib
-from distutils.version import LooseVersion as MunkiLooseVersion
+from autopkglib import APLooseVersion as LooseVersion
 
 from autopkglib import Processor, ProcessorError
 
@@ -49,9 +49,9 @@ class CFBundleVersionCombiner(Processor):
             # Combine the versions
             combined_version = f"{short_version}.{bundle_version}"
 
-            # Verify the version string is valid using MunkiLooseVersion
+            # Verify the version string is valid using LooseVersion
             try:
-                MunkiLooseVersion(combined_version)
+                LooseVersion(combined_version)
             except ValueError as err:
                 raise ProcessorError(
                     f"Invalid version string '{combined_version}': {err}")
