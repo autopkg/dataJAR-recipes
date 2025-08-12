@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Slido and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Slido</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Slido</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The easiest way to make your meetings interactive. Engage your participants with live polls, Q&amp;A, quizzes and word clouds — whether you meet in the office, online or in-between.</string>
+            <key>developer</key>
+            <string>sli.do s.r.o</string>
+            <key>display_name</key>
+            <string>Slido</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>requires</key>
+            <array>
+                <string>Microsoft PowerPoint 365</string>
+            </array>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+
+# Run Slido with undocumented install flag
+if [[ -x "/Applications/Slido.app/Contents/MacOS/Slido" ]]; then
+    /Applications/Slido.app/Contents/MacOS/Slido install
+    exit_code=$?
+    if [[ $exit_code -eq 0 ]]; then
+        echo "Slido installation completed successfully"
+    else
+        echo "Slido installation returned exit code: $exit_code"
+    fi
+else
+    echo "Error: Slido binary not found at /Applications/Slido.app/Contents/MacOS/Slido"
+    exit 1
+fi
+
+exit 0</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Slido</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
