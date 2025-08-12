@@ -11,7 +11,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Youlean Loudness Meter 2</string>
+        <string>YouleanLoudnessMeter2</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
@@ -65,23 +65,9 @@ done</string>
             <key>Arguments</key>
             <dict>
                 <key>flat_pkg_path</key>
-                <string>%found_filename%</string>
+                <string>%pathname%/Youlean Loudness Meter 2 - Installer.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0755</string>
-                </dict>
             </dict>
         </dict>
         <dict>
@@ -90,7 +76,7 @@ done</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/Application.pkg/Payload</string>
             </dict>
@@ -101,7 +87,7 @@ done</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
                 <key>installs_item_paths</key>
@@ -115,12 +101,44 @@ done</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Youlean Loudness Meter 2.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Youlean Loudness Meter 2 - Installer.pkg</string>
+                <key>source_path</key>
+                <string>%pathname%/Youlean Loudness Meter 2 - Installer.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%input_path%</string>
+                <string>%RECIPE_CACHE_DIR%/Youlean Loudness Meter 2 - Installer.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
@@ -132,9 +150,8 @@ done</string>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>
             </dict>
         </dict>

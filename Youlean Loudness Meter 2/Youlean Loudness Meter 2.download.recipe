@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://cdn\.youlean\.co/wp-content/uploads/[0-9]+/[0-9]+/Youlean-Loudness-Meter-2-V([0-9]+(\.[0-9]+)+)-macOS\.zip)</string>
+                <string>(https://download.youlean.co/wp-content/uploads/[0-9]+/[0-9]+/Youlean-Loudness-Meter-2-([A-Za-z0-9]+(.[A-Za-z0-9]+)+)-macOS.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
@@ -34,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.zip</string>
+                <string>%NAME%.dmg</string>
             </dict>
         </dict>
         <dict>
@@ -43,35 +43,11 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/</string>
-                <key>purge_destination</key>
-                <true/>
-                <key>archive_format</key>
-                <string>zip</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/**/Youlean Loudness Meter 2 - * Installer.pkg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%found_filename%</string>
+                <string>%pathname%/Youlean Loudness Meter 2 - Installer.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Julijan Nikolic (S7KN6P3F95)</string>
