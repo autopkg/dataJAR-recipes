@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>Downloads the latest version of Blue Cat Gain Suite and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Blue Cat Gain Suite</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>BlueCatGainSuite</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>This plug-in has been designed to provide extreme smoothness and high resolution for both time and frequency: unlike most spectrum analyzers, Blue Cat's Gain Suite is able to display continuous variations even with a very high frequency resolution, thanks to its unique smooth interpolation algorithms.
+
+Most aspects of the audio to frequency display conversion can be managed, which lets you total control over the monitoring. A special thresholding system has been developed to help you see the important parts of the spectrum easily. In case you need extra precision in a particular frequency range, you can zoom the display and check the part of the graph you are interested in.
+
+This plug-in supports Blue Cat's skinning language, so that you can customize the user interface to your personal needs.
+
+For more advanced capabilities, check Blue Cat's Gain Suite Pro plug-in, an extended version that offers many more features, such as saving/restoring curves, precise measurement tools, 3D spectrogram view, MIDI output. For multiple tracks analysis, you can use Blue Cat's Gain Suite Multi plug-in.</string>
+            <key>developer</key>
+            <string>Blue Cat Audio</string>
+            <key>display_name</key>
+            <string>Blue Cat Gain Suite</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Blue Cat Gain Suite</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Install Blue Cat's Gain 3.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Application Support/Avid/Audio/Plug-Ins/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecatgainsuite.aax.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/Components</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecatgainsuite.au.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecatgainsuite.vst.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST3</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecatgainsuite.vst3.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Gain 3 AAX(Mono).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Gain 3 AAX(Stereo).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Gain 3 AAX(Dual).aaxplugin</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Gain 3 AU(Mono).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Gain 3 AU(Stereo).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Gain 3 AU(Dual).component</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(Mono).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(Stereo).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(Dual).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/BC Gain 3 VST3(Mono).vst3</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/BC Gain 3 VST3(Stereo).vst3</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/BC Gain 3 VST3(Dual).vst3</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Application Support/Avid/Audio/Plug-Ins/BC Gain 3 AAX(Mono).aaxplugin/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/Library</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
