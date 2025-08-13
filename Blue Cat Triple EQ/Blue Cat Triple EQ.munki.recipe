@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>Downloads the latest version of Blue Cat Triple EQ and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Blue Cat Triple EQ</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>BlueCatTripleEQ</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>This free EQ includes a low shelf filter, a high shelf filter and a boost/cut peak filter. Its wide range of gain (+/-40 dB per band) and bandwidth (.01 to 5 Octave) makes it very versatile to create any filter shape. The three filters are linked together so that when you change the center frequency or the bandwidth, the parameters of the three filters are modified accordingly: you can control the entire equalizer characteristics with a single mouse click.
+
+The graph shows the computed frequency response of the plug-in, so that you can exactly know how your signal is processed. The controls are directly available on top of the filter graph, making the design of the filter shape even easier.
+
+The plug-in also offers a dual channels version, with independent left/right or mid/side equalization capabilities. Both channels can be linked together in many ways, letting you transform this plugin into a frequency-dependent panner and much more.
+
+The plug-in can be controlled in real time with MIDI or automation: it is capable of absolutely zipper-free clean and continuous time-varying equalization with no latency. it is the ideal companion of our audio analysis tools for signal-dependent side chain filtering.
+
+Want more bands? Check out Blue Cat's Parametr'EQ series.</string>
+            <key>developer</key>
+            <string>Blue Cat Audio</string>
+            <key>display_name</key>
+            <string>Blue Cat Triple EQ</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Blue Cat Triple EQ</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Install Blue Cat's Triple EQ 4.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Application Support/Avid/Audio/Plug-Ins/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecattripleeq.aax.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/Components</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecattripleeq.au.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecattripleeq.vst.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Audio/Plug-Ins/VST3</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/com.bluecataudio.bluecattripleeq.vst3.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Triple EQ 4 AAX(Mono).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Triple EQ 4 AAX(Stereo).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Triple EQ 4 AAX(Dual).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Gain 3 AAX(Mono).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BC Gain 3 AAX(Stereo).aaxplugin</string>
+                    <string>/Library/Application Support/Avid/Audio/Plug-Ins/BBC Gain 3 AAX(Dual).aaxplugin</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Triple EQ 4 AU(Mono).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Triple EQ 4 AU(Stereo).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Triple EQ 4 AU(Dual).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Gain 3 AU(Mono).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Gain 3 AU(Stereo).component</string>
+                    <string>/Library/Audio/Plug-Ins/Components/BC Gain 3 AU(Dual).component</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Triple EQ 4 VST(Mono).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Triple EQ 4 VST(Stereo).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Triple EQ 4 VST(Dual).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(Mono).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(Stereo).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(Dual).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/BC Triple EQ 4 VST3(Mono).vst3</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/BC Triple EQ 4 VST3(Stereo).vst3</string>
+                    <string>/Library/Audio/Plug-Ins/VST3/BC Triple EQ 4 VST3(Dual).vst3</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST3(Mono).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST(3Stereo).vst</string>
+                    <string>/Library/Audio/Plug-Ins/VST/BC Gain 3 VST3(Dual).vst</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Library/Application Support/Avid/Audio/Plug-Ins/BC Triple EQ 4 AAX(Mono).aaxplugin/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/Library</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
