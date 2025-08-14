@@ -146,6 +146,7 @@ Designed to introduce anyone, from end users to professional installers, to the 
                 <array>
                     <string>/Applications/NDI Access Manager.app</string>
                     <string>/Applications/NDI Launcher.app</string>
+                    <string>/Applications/NDI Router.app</string>
                     <string>/Applications/NDI Scan Converter.app</string>
                     <string>/Applications/NDI Test Patterns.app</string>
                     <string>/Applications/NDI Video Monitor.app</string>
