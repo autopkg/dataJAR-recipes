@@ -25,7 +25,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%pathname%/Invigorate-1.4.0-osx-installer.app/Contents/Info.plist</string>
+                <string>%pathname%/%found_basename%/Contents/Info.plist</string>
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
@@ -52,9 +52,9 @@
             <key>Arguments</key>
             <dict>
                 <key>source_path</key>
-                <string>%pathname%/Invigorate-1.4.0-osx-installer.app</string>
+                <string>%pathname%/%found_basename%</string>
                 <key>destination_path</key>
-                <string>%pkgroot%/root/private/tmp/Invigorate-1.4.0-osx-installer.app</string>
+                <string>%pkgroot%/root/private/tmp/Invigorate-installer.app</string>
             </dict>
         </dict>
         <dict>
@@ -71,7 +71,7 @@
 # Moves the Newfangled Audio folder to /Users/Shared
 
 # Define installer paths
-app_name="Invigorate-1.4.0-osx-installer.app"
+app_name="Invigorate-installer.app"
 installer_bin="/tmp/${app_name}/Contents/MacOS/installbuilder.sh"
 
 # Run the installer in unattended mode
