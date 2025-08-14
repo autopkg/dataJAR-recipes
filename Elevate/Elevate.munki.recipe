@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Elevate and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Elevate</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Elevate</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Elevate is a unique dynamics processor purpose built to add glue and life to your mix, drum bus, or any other element. The intuitive radar control allows a seamless transition from energetic compression, through aggressive limiting, to rich overdrive; gluing your mix and giving it presence.
+The result brings your mix forward and gives it the energy you need for a finished record.</string>
+            <key>developer</key>
+            <string>Newfangled Audio</string>
+            <key>display_name</key>
+            <string>Elevate</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Uninstall script for Newfangled Audio Elevate created from '~/Music/Newfangled Audio/Elevate/Elevate User Guide.pdf'
+# Note: User Music folder is intentionally excluded as it sits in user space
+
+# Exit codes:
+# 0 = Success
+# 1 = Error during removal
+
+# Array of plugin paths and audio files to check and remove
+UNINSTALL_PATHS=(
+    "/Library/Audio/Plug-Ins/Components/Newfangled Elevate.component"
+    "/Library/Audio/Plug-Ins/Components/Newfangled EQuivocate.component"
+    "/Library/Audio/Plug-Ins/Components/Newfangled Punctuate.component"
+    "/Library/Audio/Plug-Ins/Components/Newfangled Saturate.component"
+    "/Library/Audio/Plug-Ins/VST/Newfangled Audio/Newfangled Elevate.vst"
+    "/Library/Audio/Plug-Ins/VST/Newfangled Audio/Newfangled EQuivocate.vst"
+    "/Library/Audio/Plug-Ins/VST/Newfangled Audio/Newfangled Punctuate.vst"
+    "/Library/Audio/Plug-Ins/VST/Newfangled Audio/Newfangled Saturate.vst"
+    "/Library/Audio/Plug-Ins/VST3/Newfangled Audio/Newfangled Elevate.vst3"
+    "/Library/Audio/Plug-Ins/VST3/Newfangled Audio/Newfangled EQuivocate.vst3"
+    "/Library/Audio/Plug-Ins/VST3/Newfangled Audio/Newfangled Punctuate.vst3"
+    "/Library/Audio/Plug-Ins/VST3/Newfangled Audio/Newfangled Saturate.vst3"
+    "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Newfangled Elevate.aaxplugin"
+    "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Newfangled EQuivocate.aaxplugin"
+    "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Newfangled Punctuate.aaxplugin"
+    "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Newfangled Saturate.aaxplugin"
+    "/Music/Newfangled Audio/Elevate"
+    
+    "/Users/Shared/Newfangled Audio/Elevate"
+)
+
+exit_status=0
+
+# Function to safely remove a path if it exists
+remove_if_exists() {
+    local path="$1"
+    if [ -e "$path" ]; then
+        echo "Removing: $path"
+        rm -rf "$path"
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to remove $path"
+            exit_status=1
+        fi
+    else
+        echo "Path not found (skipping): $path"
+    fi
+}
+
+# Process each plugin path
+for path in "${UNINSTALL_PATHS[@]}"; do
+    remove_if_exists "$path"
+done
+
+exit $exit_status</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Elevate</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/Elevate-%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
