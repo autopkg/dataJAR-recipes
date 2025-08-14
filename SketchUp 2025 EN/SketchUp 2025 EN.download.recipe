@@ -23,7 +23,7 @@
 				<key>url</key>
 				<string>https://sketchup.trimble.com/en/download/all</string>
 				<key>re_pattern</key>
-				<string>(https://download.sketchup.com/SketchUp-.*.dmg)</string>
+				<string>(https://download.sketchup.com/SketchUp-2025.*.dmg)</string>
 				<key>result_output_var_name</key>
 				<string>DOWNLOAD_URL</string>
 			</dict>
