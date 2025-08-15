@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Generate and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Generate</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Generate</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Generate is based on a set of chaotic generators.  What looks like randomness contains underlying patterns, interconnectedness, constant feedback loops, repetition, self-similarity, fractals, and self-organization.
+
+Each of Generate’s 8 chaotic generators bring out these underlying patterns and create an oscillator that can smoothly fade from a sine wave to total chaos, with an expanse of territory to explore in between.  The musical textures created include distortion, harmonics, grunge, static, and noise.  All of which can be predictably or unpredictably modulated.</string>
+            <key>developer</key>
+            <string>Newfangled Audio</string>
+            <key>display_name</key>
+            <string>Generate</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Uninstall script for Newfangled Audio Generate created from '~/Music/Newfangled Audio/Generate/Generate User Guide.pdf'
+# Note: User Music folder is intentionally excluded as it sits in user space
+
+# Exit codes:
+# 0 = Success
+# 1 = Error during removal
+
+# Array of plugin paths and audio files to check and remove
+UNINSTALL_PATHS=(
+    "/Library/Audio/Plug-Ins/Components/Generate.component"
+    "/Library/Audio/Plug-Ins/VST/Newfangled Audio/Generate.vst"
+    "/Library/Audio/Plug-Ins/VST3/Newfangled Audio/Generate.vst3"
+    "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Generate.aaxplugin"
+    "/Music/Newfangled Audio/Generate"
+    "/Users/Shared/Newfangled Audio/Generate"
+)
+
+exit_status=0
+
+# Function to safely remove a path if it exists
+remove_if_exists() {
+    local path="$1"
+    if [ -e "$path" ]; then
+        echo "Removing: $path"
+        rm -rf "$path"
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to remove $path"
+            exit_status=1
+        fi
+    else
+        echo "Path not found (skipping): $path"
+    fi
+}
+
+# Process each plugin path
+for path in "${UNINSTALL_PATHS[@]}"; do
+    remove_if_exists "$path"
+done
+
+exit $exit_status</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Generate</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/Generate-%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
