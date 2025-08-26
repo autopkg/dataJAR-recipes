@@ -94,6 +94,100 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <dict>
                     <key>CFBundleShortVersionString</key>
                     <string>version</string>
+                    <key>installcheck_script</key>
+                    <string>#!/usr/local/munki/munki-python
+
+'''
+Copyright 2025, Jamf Software, LLC.
+
+DESCRIPTION
+
+See docstring in main()
+
+'''
+
+import os
+import plistlib
+import sys
+# pylint: disable = import-error
+from SystemConfiguration import SCDynamicStoreCopyConsoleUser
+sys.path.insert(0, '/usr/local/munki')
+from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+
+
+def main():
+    '''
+        Exits with exit code 1 if no-one is logged in.
+
+        If info_plist_path doesn't exist, proceeds with install.
+
+        If info_plist_path exists and is older than munki, proceeds with install.
+
+    '''
+
+    # App path
+    app_path = '/Applications/Dante Via.app/'
+    app_version = '%version%'
+    info_plist_path = os.path.join(app_path, 'Contents/Info.plist')
+
+    # Boolean return if user is logged in
+    logged_in = user_logged_in()
+
+    # If a user is logged in
+    if logged_in:
+        # If the app exists
+        if os.path.exists(info_plist_path):
+            # Try to read in info_plist_path, raise if cannot be parsed
+            try:
+                # Read in the plist
+                with open(info_plist_path, "rb") as plist_file:
+                    parsed_plist = plistlib.load(plist_file)
+                # Get version from info.plist
+                installed_version = parsed_plist['CFBundleShortVersionString']
+                print(f"{app_path} version {installed_version}, installed...")
+            # Raising if plist cannot be parsed or version determined from plist
+            # pylint: disable = broad-except
+            except Exception:
+                print(f"Encountered an error when trying to parse {info_plist_path}...")
+                sys.exit(1)
+            # Compare the installed version with this installations
+            if LooseVersion(installed_version) &lt; LooseVersion(app_version):
+                # Local version older, proceed with installation
+                print("Older version of {app_path} located, proceeding with installation...")
+                sys.exit(0)
+            else:
+                # Local version newer, cancelling installation
+                print("Newer or the same version of {app_path} located, cancelling installation...")
+                sys.exit(1)
+        # App is not installed and user is logged in, proceed.
+        else:
+            sys.exit(0)
+
+    # Exit as no-one logged in
+    else:
+        sys.exit(1)
+
+
+def user_logged_in():
+    '''
+        Boolean return if a user is logged in or not
+    '''
+
+    # Returns the username if someone is logged in
+    username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]
+
+    # If a username is returned
+    if username:
+        # If the username isn't loginwindow
+        if username != 'loginwindow':
+            return True
+        # Else we return True
+        return False
+    # If no-one is logged in
+    return False
+
+if __name__ == '__main__':
+    main()</string>
                 </dict>
             </dict>
         </dict>
