@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of aftermath and imports into Munki.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.munki.aftermath</string>
+        <key>Input</key>
+        <dict>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>apps/aftermath</string>
+            <key>MUNKI_CATEGORY</key>
+            <string>Security</string>
+            <key>NAME</key>
+            <string>aftermath</string>
+            <key>DISPLAY_NAME</key>
+            <string>aftermath</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>blocking_applications</key>
+                <array>
+                    <string>aftermath</string>
+                </array>
+                <key>category</key>
+                <string>%MUNKI_CATEGORY%</string>
+                <key>description</key>
+                <string>aftermath is a Swift-based, open-source incident response framework.</string>
+                <key>developer</key>
+                <string>jamf</string>
+                <key>display_name</key>
+                <string>%DISPLAY_NAME%</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>unattended_install</key>
+                <true/>
+                <key>unattended_uninstall</key>
+                <true/>
+            </dict>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>1.1</string>
+        <key>ParentRecipe</key>
+        <string>com.github.dataJAR-recipes.download.aftermath</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%installer_pkg_path%</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                    <key>uninstaller_pkg_path</key>
+                    <string>%uninstaller_pkg_path%</string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>

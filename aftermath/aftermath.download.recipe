@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of aftermath.</string>
+        <key>Identifier</key>
+        <string>com.github.dataJAR-recipes.download.aftermath</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>aftermath</string>
+        </dict>
+        <key>MinimumVersion</key>
+        <string>1.1</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>GitHubReleasesInfoProvider</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>github_repo</key>
+                    <string>jamf/aftermath</string>
+                    <key>asset_regex</key>
+                    <string>aftermath\.pkg$</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+             <dict>
+                <key>Processor</key>
+                <string>com.github.rtrouton.SharedProcessors/VariablePlaceholder</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>installer_pkg_path</key>
+                    <string>%pathname%</string>
+                </dict>
+             </dict>
+            <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%installer_pkg_path%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: Jaron Bradley (C793NB2B2B)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>GitHubReleasesInfoProvider</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>github_repo</key>
+                    <string>jamf/aftermath</string>
+                    <key>asset_regex</key>
+                    <string>aftermathUninstaller\.pkg$</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+            </dict>
+             <dict>
+                <key>Processor</key>
+                <string>com.github.rtrouton.SharedProcessors/VariablePlaceholder</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>uninstaller_pkg_path</key>
+                    <string>%pathname%</string>
+                </dict>
+             </dict>
+        </array>
+    </dict>
+</plist>
