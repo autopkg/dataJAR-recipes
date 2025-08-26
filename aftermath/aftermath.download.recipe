@@ -23,7 +23,7 @@
                     <key>github_repo</key>
                     <string>jamf/aftermath</string>
                     <key>asset_regex</key>
-                    <string>aftermath\.pkg$</string>
+                    <string>Aftermath\.pkg$</string>
                 </dict>
             </dict>
             <dict>
@@ -66,7 +66,7 @@
                     <key>github_repo</key>
                     <string>jamf/aftermath</string>
                     <key>asset_regex</key>
-                    <string>aftermathUninstaller\.pkg$</string>
+                    <string>AftermathUninstaller\.pkg$</string>
                 </dict>
             </dict>
             <dict>
