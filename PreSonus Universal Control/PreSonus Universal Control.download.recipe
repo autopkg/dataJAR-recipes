@@ -23,9 +23,9 @@
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>re_pattern</key>
-                    <string>https://www\.fmicassets\.com/Damroot/Original/10072/PreSonus_Universal_Control_.*?\.dmg</string>
+                    <string>https://www.fmicassets.com/Damroot/Original/10111/PreSonus_Universal_Control_.*?.dmg</string>
                     <key>url</key>
-                    <string>https://www.presonus.com/products/atom-sq-controller</string>
+                    <string>https://uk.presonus.com/products/atom-sq-controller#:~:text=SQ%20Controller%20%2D%20English-,Software,-Universal%20Control</string>
                 </dict>
             </dict>
             <dict>
@@ -42,7 +42,7 @@
                 <string>EndOfCheckPhase</string>
             </dict>
             <dict>
-            	<key>Processor</key>
+                <key>Processor</key>
                 <string>CodeSignatureVerifier</string>
                 <key>Arguments</key>
                 <dict>
