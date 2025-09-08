@@ -184,76 +184,68 @@ Applications that support Adobe Camera Raw include Photoshop, Photoshop Elements
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/usr/local/munki/munki-python
+                    <string>#!/bin/zsh
+# Copyright 2025, Jamf Software, LLC.
 
-'''
-DESCRIPTION
+# DESCRIPTION
+#
+# Get the version of bundle_path, (if installed). This is achieved by splitting
+# the value from the CFBundleVersion, using the version before the `f`.
+# Exit 1 if bundle_path is installed and newer than what we have in Munki
 
-See docstring in main()
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
 
-'''
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
 
-# Standard imports
-import os
-import plistlib
-import sys
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
 
-# Munki imports
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+# Variable declaration
+bundle_path="/Library/Application Support/Adobe/Plug-Ins/CC/File Formats/Camera Raw.plugin"
+bundle_info_plist="$bundle_path/Contents/Info.plist"
+munki_version="%version%"
 
+# If bundle_path is not installed, proceed.. else exit 0 so we can install
+if [[ ! -d "$bundle_path" ]]; then
+    echo "$bundle_path not installed, exiting install_check script to install..."
+    exit 0
+fi
 
-def main():
-    '''
-        Get the version of bundle_path, (if installed). This is achieved by splitting
-        the value from the CFBundleVersion, using the version before the `f`.
+# If the info.plist exists
+if [[ -f "$bundle_info_plist" ]]; then
+    # Get version from info.plist using plutil
+    if installed_version=$(plutil -extract CFBundleVersion raw "$bundle_info_plist" 2&gt;/dev/null); then
+        echo "$bundle_path version $installed_version, installed..."
 
-        Exit 1 if bundle_path is installed and newer than what we have in Munki
-
-    '''
-
-    # Var declaration
-    bundle_path = '/Library/Application Support/Adobe/Plug-Ins/CC/File Formats/Camera Raw.plugin'
-    bundle_info_plist = os.path.join(bundle_path, 'Contents/Info.plist')
-    munki_version = '%version%'
-
-    # If bundle_path is not installed, proceed.. else exit 0 so we can install
-    if not os.path.exists(bundle_path):
-        print(f"{bundle_path} not installed, exiting install_check script to install...")
-        sys.exit(0)
-
-    # If the info.plist exists
-    if os.path.exists(bundle_info_plist):
-        # Try to read in bundle_info_plist, raise if cannot be parsed
-        try:
-            # Read in the plist
-            with open(bundle_info_plist, "rb") as plist_file:
-                parsed_plist = plistlib.load(plist_file)
-            # Get version from info.plist
-            installed_version = parsed_plist['CFBundleVersion']
-            print(f"{bundle_path} version {installed_version}, installed...")
-        # Raising if plist cannot be parsed or version determined from plist
-        # pylint: disable = broad-except
-        except Exception:
-            print(f"Encountered an error when trying to parse {bundle_info_plist}...")
-            sys.exit(1)
         # Compare the installed version with this installations
-        if LooseVersion(installed_version) &lt; LooseVersion(munki_version):
+        if compare_versions "$installed_version" "$munki_version"; then
             # Local version older, proceed with installation
-            print(f"Older version of {bundle_path} located, proceeding with installation...")
-            sys.exit(0)
-        else:
+            echo "Older version of $bundle_path located, proceeding with installation..."
+            exit 0
+        else
             # Local version newer, cancelling installation
-            print(f"Newer or the same version of {bundle_path} located, cancelling installation...")
-            sys.exit(1)
+            echo "Newer or the same version of $bundle_path located, cancelling installation..."
+            exit 1
+        fi
+    else
+        echo "Encountered an error when trying to parse $bundle_info_plist..."
+        exit 1
+    fi
+else
     # Raise if we can't find bundle_info_plist
-    else:
-        print("Cannot locate {bundle_info_plist}, proceeding with installation...")
-        sys.exit(0)
-
-
-if __name__ == '__main__':
-    main()</string>
+    echo "Cannot locate $bundle_info_plist, proceeding with installation..."
+    exit 0
+fi</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
