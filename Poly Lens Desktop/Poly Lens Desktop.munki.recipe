@@ -206,116 +206,110 @@ echo "Done"</string>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/usr/local/munki/munki-python
+                    <string>#!/bin/zsh
 
-'''
-Copyright (c) 2025, dataJAR Ltd.  All rights reserved.
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-             * Redistributions of source code must retain the above copyright
-               notice, this list of conditions and the following disclaimer.
-             * Redistributions in binary form must reproduce the above copyright
-               notice, this list of conditions and the following disclaimer in the
-               documentation and/or other materials provided with the distribution.
-             * Neither data JAR Ltd nor the names of its contributors may be used to
-               endorse or promote products derived from this software without specific
-               prior written permission.
-     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
-     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-SUPPORT FOR THIS PROGRAM
-    This program is distributed 'as is' by DATA JAR LTD.
-    For more information or support, please utilise the following resources:
-            http://www.datajar.co.uk
-'''
+# Copyright 2025, Jamf Software, LLC.
 
-import os
-import plistlib
-import sys
-from typing import Optional
-# pylint: disable = import-error
-from SystemConfiguration import SCDynamicStoreCopyConsoleUser
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+#
+# DESCRIPTION
+#
+# Exits with exit code 1 if:
+# - No one is logged in
+# - Info.plist exists and app version is newer than or equal to installation version
+# - Error occurs while parsing Info.plist
+#
+# Exits with exit code 0 if:
+# - Info.plist doesn't exist
+# - Info.plist exists and app version is older than installation version
 
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
 
-class AppVersionChecker:
-    def __init__(self):
-        self.app_path = '/Applications/Lens Desktop.app/'
-        self.app_version = '%version%'
-        self.info_plist_path = os.path.join(self.app_path, 'Contents/Info.plist')
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
 
-    def get_installed_version(self) -&gt; Optional[str]:
-        """
-        Retrieves the installed version from the app's Info.plist
-        Returns: Version string if successful, None if error occurs
-        """
-        if not os.path.exists(self.info_plist_path):
-            return None
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
 
-        try:
-            with open(self.info_plist_path, "rb") as plist_file:
-                parsed_plist = plistlib.load(plist_file)
-            return parsed_plist['CFBundleVersion']
-        except Exception:
-            print(f"Encountered an error when trying to parse {self.info_plist_path}...")
-            return None
+# Function to check if user is logged in
+user_logged_in() {
+    # Get the console user using scutil
+    local console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
 
-    def should_install(self) -&gt; bool:
-        """
-        Determines if the app should be installed based on version comparison
-        Returns: True if installation should proceed, False otherwise
-        """
-        installed_version = self.get_installed_version()
+    # Check if someone is logged in and it's not loginwindow
+    if [[ -n "$console_user" &amp;&amp; "$console_user" != "loginwindow" ]]; then
+        return 0  # User is logged in
+    else
+        return 1  # No user logged in
+    fi
+}
 
-        if installed_version is None:
-            return True
+# Function to get installed version from Info.plist
+get_installed_version() {
+    local info_plist_path="$1"
 
-        print(f"{self.app_path} version {installed_version}, installed...")
+    if [[ ! -f "$info_plist_path" ]]; then
+        return 1
+    fi
 
-        if LooseVersion(installed_version) &lt; LooseVersion(self.app_version):
-            print(f"Older version of {self.app_path} located, proceeding with installation...")
-            return True
+    # Get version from info.plist using plutil
+    local installed_version=$(plutil -extract CFBundleVersion raw "$info_plist_path" 2&gt;/dev/null)
 
-        print(f"Newer or the same version of {self.app_path} located, cancelling installation...")
-        return False
+    if [[ -n "$installed_version" ]]; then
+        echo "$installed_version"
+        return 0
+    else
+        echo "Encountered an error when trying to parse $info_plist_path..."
+        return 1
+    fi
+}
 
+# Function to determine if app should be installed
+should_install() {
+    local app_path="$1"
+    local app_version="$2"
+    local info_plist_path="$3"
 
-def user_logged_in() -&gt; bool:
-    '''
-    Boolean return if a user is logged in or not
-    '''
-    username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]
-    return bool(username and username != 'loginwindow')
+    local installed_version
+    if installed_version=$(get_installed_version "$info_plist_path"); then
+        echo "$app_path version $installed_version, installed..."
 
+        if compare_versions "$installed_version" "$app_version"; then
+            echo "Older version of $app_path located, proceeding with installation..."
+            return 0  # Should install
+        else
+            echo "Newer or the same version of $app_path located, cancelling installation..."
+            return 1  # Should not install
+        fi
+    else
+        return 0  # Should install (error getting version or doesn't exist)
+    fi
+}
 
-def main():
-    '''
-    Exits with exit code 1 if:
-    - No one is logged in
-    - Info.plist exists and app version is newer than or equal to installation version
-    - Error occurs while parsing Info.plist
+# Main script variables
+app_path="/Applications/Lens Desktop.app/"
+app_version="%version%"
+info_plist_path="$app_path/Contents/Info.plist"
 
-    Exits with exit code 0 if:
-    - Info.plist doesn't exist
-    - Info.plist exists and app version is older than installation version
-    '''
-    if not user_logged_in():
-        sys.exit(1)
+# Check if user is logged in
+if ! user_logged_in; then
+    exit 1
+fi
 
-    checker = AppVersionChecker()
-    sys.exit(0 if checker.should_install() else 1)
-
-
-if __name__ == '__main__':
-    main()</string>
+# Check if installation should proceed
+if should_install "$app_path" "$app_version" "$info_plist_path"; then
+    exit 0  # Proceed with installation
+else
+    exit 1  # Do not install
+fi</string>
                 </dict>
             </dict>
         </dict>
