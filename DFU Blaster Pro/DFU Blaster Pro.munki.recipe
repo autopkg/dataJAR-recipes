@@ -150,68 +150,86 @@ fi</string>
                     <key>additional_pkginfo</key>
                     <dict>
                         <key>installcheck_script</key>
-                        <string>#!/usr/local/munki/munki-python
-"""
-Munki installcheck_script for DFU Blaster Pro
-"""
+                        <string>#!/bin/zsh
 
-import os
-import sys
-import plistlib
-from distutils.version import LooseVersion as MunkiLooseVersion
+# Copyright 2025, Jamf Software, LLC.
 
-def get_combined_version():
-    """Get combined version from DFU Blaster Pro.app"""
-    app_path = "/Applications/DFU Blaster Pro.app"
-    info_plist = os.path.join(app_path, "Contents/Info.plist")
+# Munki installcheck_script for DFU Blaster Pro creates a composite version string for accurate comparison.
+# The script checks if DFU Blaster Pro.app exists at /Applications/DFU Blaster Pro.app
+# Extracts both version components from the Info.plist, combines them (e.g., "1.2.3" + "456" = "1.2.3.456")
+# Compares against the expected version to determine if installation or upgrade is needed.
 
-    if not os.path.exists(info_plist):
-        print(f"Info.plist not found at: {info_plist}")
-        return None
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
 
-    try:
-        with open(info_plist, 'rb') as f:
-            pl = plistlib.load(f)
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
 
-        short_version = pl.get('CFBundleShortVersionString', '0')
-        bundle_version = pl.get('CFBundleVersion', '0')
-        combined_version = f"{short_version}.{bundle_version}"
-        print(f"Found combined version: {combined_version}")
-        return combined_version
-    except Exception as e:
-        print(f"Error getting combined version: {str(e)}")
-        return None
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
 
-def main():
-    # Expected version from CFBundleVersionCombiner
-    expected_version = "%version%"
-    print(f"Expected version: {expected_version}")
+# Function to get combined version from DFU Blaster Pro.app
+get_combined_version() {
+    local app_path="/Applications/DFU Blaster Pro.app"
+    local info_plist="$app_path/Contents/Info.plist"
 
-    # Check if app exists
-    if not os.path.exists("/Applications/DFU Blaster Pro.app"):
-        print("DFU Blaster Pro.app not found")
-        sys.exit(0)
+    if [[ ! -f "$info_plist" ]]; then
+        echo "Info.plist not found at: $info_plist" &gt;&amp;2
+        return 1
+    fi
 
-    # Get current version from app
-    current_version = get_combined_version()
-    if not current_version:
-        print("Could not determine current version")
-        sys.exit(0)
-    print(f"Current version: {current_version}")
+    # Get short version and bundle version using plutil
+    local short_version=$(plutil -extract CFBundleShortVersionString raw "$info_plist" 2&gt;/dev/null)
+    local bundle_version=$(plutil -extract CFBundleVersion raw "$info_plist" 2&gt;/dev/null)
 
-    # Compare versions using MunkiLooseVersion
-    if MunkiLooseVersion(current_version) != MunkiLooseVersion(expected_version):
-        print(f"Version mismatch - Expected: {expected_version}, Current: {current_version}")
-        sys.exit(0)
-    print("Versions match")
+    if [[ -z "$short_version" || -z "$bundle_version" ]]; then
+        echo "Error getting version components from plist" &gt;&amp;2
+        return 1
+    fi
 
-    # Everything is installed and versions match
-    # Exit 1 means no install/upgrade needed
-    print("All checks passed - no installation needed")
-    sys.exit(1)
+    local combined_version="$short_version.$bundle_version"
+    echo "Found combined version: $combined_version" &gt;&amp;2
+    echo "$combined_version"
+    return 0
+}
 
-if __name__ == '__main__':
-    main()</string>
+# Expected version from CFBundleVersionCombiner
+expected_version="%version%"
+echo "Expected version: $expected_version"
+
+# Check if app exists
+if [[ ! -d "/Applications/DFU Blaster Pro.app" ]]; then
+    echo "DFU Blaster Pro.app not found"
+    exit 0
+fi
+
+# Get current version from app
+if current_version=$(get_combined_version); then
+    echo "Current version: $current_version"
+
+    # Compare versions - if they don't match, install
+    if [[ "$current_version" != "$expected_version" ]]; then
+        echo "Version mismatch - Expected: $expected_version, Current: $current_version"
+        exit 0
+    else
+        echo "Versions match"
+        # Everything is installed and versions match
+        # Exit 1 means no install/upgrade needed
+        echo "All checks passed - no installation needed"
+        exit 1
+    fi
+else
+    echo "Could not determine current version"
+    exit 0
+fi</string>
                     </dict>
                 </dict>
             </dict>
