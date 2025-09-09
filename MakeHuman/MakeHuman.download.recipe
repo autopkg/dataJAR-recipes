@@ -12,9 +12,29 @@
         <string>MakeHuman</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is non functional and has been deprecated. The vendor is no longer developing for macOS.
+
+See https://static.makehumancommunity.org/makehuman/releases.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
