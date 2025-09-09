@@ -22,7 +22,7 @@ Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Sil
         <string></string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -35,7 +35,7 @@ Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Sil
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
-                <string>processing-.*?-macos-%DOWNLOAD_ARCHITECTURE%.zip</string>
+                <string>processing-([0-9]+(\.[0-9]+)+)-macos-%DOWNLOAD_ARCHITECTURE%.dmg$</string>
             </dict>
         </dict>
         <dict>
@@ -48,24 +48,11 @@ Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Sil
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Processing.app</string>
+                <string>%pathname%/Processing.app</string>
                 <key>requirement</key>
                 <string>identifier "org.processing.app" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6297K33652"</string>
             </dict>
