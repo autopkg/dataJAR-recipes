@@ -5,8 +5,9 @@
     <key>Description</key>
     <string>Downloads the latest version of Fathom.
 
-To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
-To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
+Note: The following values have changed!
+To download Apple Silicon use: "dmg_arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "dmg" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Fathom</string>
     <key>Input</key>
@@ -14,7 +15,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
         <key>NAME</key>
         <string>Fathom</string>
         <key>DOWNLOAD_ARCH</key>
-        <string>x64</string>
+        <string>dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -23,23 +24,10 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>(https://storage\.googleapis\.com/electron_releases/v([0-9]+(\.[0-9]+)+)/Fathom-darwin-%DOWNLOAD_ARCH%-([0-9]+(\.[0-9]+)+)\.dmg)</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
-                <key>url</key>
-                <string>https://fathom.video/download</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://electron-update.fathom.video/download/%DOWNLOAD_ARCH%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
