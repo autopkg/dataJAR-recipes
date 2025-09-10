@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://download.youlean.co/wp-content/uploads/[0-9]+/[0-9]+/Youlean-Loudness-Meter-2-([A-Za-z0-9]+(.[A-Za-z0-9]+)+)-macOS.dmg)</string>
+                <string>(https://cdn.youlean.co/wp-content/uploads/[0-9]+/[0-9]+/Youlean-Loudness-Meter-2-([A-Za-z0-9]+(.[A-Za-z0-9]+)+)-macOS.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
