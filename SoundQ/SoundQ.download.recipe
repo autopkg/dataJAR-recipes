@@ -19,11 +19,24 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href="(https://pse-soundq.s3.amazonaws.com/SoundQ_v([0-9]+(.[0-9]+)+).pkg\?version=[0-9]+)"</string>
+                <string>https://prosoundeffects.blob.core.windows.net/software-updates/SoundQ/SoundQ_v([0-9]+(.[0-9]+)+).pkg\?version=[0-9]+</string>
                 <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
+                <string>VERSION_1</string>
                 <key>url</key>
-                <string>https://www.prosoundeffects.com/soundq/</string>
+                <string>https://www.prosoundeffects.com/soundq</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>.pkg\?version=([0-9]+)</string>
+                <key>result_output_var_name</key>
+                <string>VERSION_2</string>
+                <key>url</key>
+                <string>https://www.prosoundeffects.com/soundq</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -34,7 +47,7 @@
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://prosoundeffects.blob.core.windows.net/software-updates/SoundQ/SoundQ_v%VERSION_1%.pkg?version=%VERSION_2%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
