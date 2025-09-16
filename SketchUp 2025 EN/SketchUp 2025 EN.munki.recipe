@@ -217,7 +217,6 @@ log_message "System-level SketchUp ${SKETCHUP_YEAR} cleanup process completed</s
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/cookies.txt</string>
                     <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 </array>
             </dict>
