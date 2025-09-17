@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ADSK Licensing and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.ADSK Licensing</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>ADSKLicensing</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Autodesk Desktop Licensing Service</string>
+            <key>developer</key>
+            <string>Granola Labs Ltd</string>
+            <key>display_name</key>
+            <string>ADSK Licensing</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postuninstall_script</key>
+            <string>#!/bin/sh
+
+# Post uninstall script for Autodesk Desktop Licensing Service
+# Based on:
+# - https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-uninstall-Autodesk-Desktop-Licensing-Service.html
+# - https://help.autodesk.com/sfdcarticles/attachments/UninstallAdskLicensingService
+
+# Remove application support directory
+if [ -d "/Library/Application Support/Autodesk/AdskLicensing" ]; then
+    echo "Found /Library/LaunchDaemons/com.autodesk.AdskLicensingService.plist deleting..."
+    rm -rf "/Library/Application Support/Autodesk/AdskLicensing"
+fi
+
+exit</string>
+        <key>preuninstall_script</key>
+        <string>#!/bin/sh
+
+# Pre uninstall script for Autodesk Desktop Licensing Service
+# Based on:
+# - https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-uninstall-Autodesk-Desktop-Licensing-Service.html
+# - https://help.autodesk.com/sfdcarticles/attachments/UninstallAdskLicensingService
+
+# Stop and unload the licensing service daemon
+if [ -f /Library/LaunchDaemons/com.autodesk.AdskLicensingService.plist ]; then
+    echo "Found /Library/Application Support/Autodesk/AdskLicensing unloading and deleting..."
+    launchctl unload /Library/LaunchDaemons/com.autodesk.AdskLicensingService.plist
+    rm -f /Library/LaunchDaemons/com.autodesk.AdskLicensingService.plist
+fi
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.ADSK Licensing</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>macOS: ([0-9]+(\.[0-9]+)+)</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>https://www.autodesk.com/support/technical/article/caas/tsarticles/ts/f5IhBc15i0kOwzBb8lcEN.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+             <key>Arguments</key>
+             <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/adsklicensinginstaller/AdskLicensing-%VERSION%-mac-installer.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
