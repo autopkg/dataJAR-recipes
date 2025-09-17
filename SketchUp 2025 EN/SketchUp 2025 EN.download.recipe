@@ -37,11 +37,6 @@
                 <string>%NAME%.dmg</string>
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
-                <key>curl_opts</key>
-                <array>
-                    <string>--cookie</string>
-                    <string>%RECIPE_CACHE_DIR%/cookies.txt</string>
-                </array>
                 <key>request_headers</key>
                 <dict>
                     <key>User-Agent</key>
