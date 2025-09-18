@@ -342,7 +342,7 @@ Copies and modifies pkginfo files.
 Removes quarantine attributes from files.
 
 #### Input Variables
-- **pathname**
+- **quarantined_files_path**
   - **Required**: Yes
   - **Description**: Path to file or directory to process.
 
@@ -353,7 +353,7 @@ Removes quarantine attributes from files.
     <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
     <key>Arguments</key>
     <dict>
-        <key>pathname</key>
+        <key>quarantined_files_path</key>
         <string>%downloaded_file%</string>
     </dict>
 </dict>
