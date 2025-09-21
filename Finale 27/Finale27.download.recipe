@@ -36,7 +36,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>http://makemusic-downloads.makemusic.com/Finale/%version%/Mac/en-US/FinaleSetup.dmg</string>
+                <string>https://makemusic-downloads.makemusic.com/Finale/%version%/Mac/en-US/FinaleSetup.dmg</string>
             </dict>
         </dict>
         <dict>

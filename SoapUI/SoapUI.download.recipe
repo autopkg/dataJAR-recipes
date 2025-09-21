@@ -28,7 +28,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
-                <string>http://dl.eviware.com/version-update/soapui-updates-os.xml</string>
+                <string>https://dl.eviware.com/version-update/soapui-updates-os.xml</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
