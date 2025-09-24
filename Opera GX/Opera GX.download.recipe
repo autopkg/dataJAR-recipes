@@ -21,17 +21,8 @@ To download for Intel leave the DOWNLOAD_ARCH variable empty</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>\(core: ([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)\)</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
-                <key>url</key>
-                <string>https://forums.opera.com/topic/33033/opera-gx-update-released</string>
-            </dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
+            <string>OperaGXVersionProvider</string>
         </dict>
         <dict>
             <key>Arguments</key>
