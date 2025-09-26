@@ -3,31 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of MindManager 24.</string>
+    <string>Downloads latest version of MindManager 25.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.MindManager 24</string>
+    <string>com.github.dataJAR-recipes.download.MindManager 25</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>MindManager24</string>
+        <string>MindManager25</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>href=\"(https://download\.mindjet\.com/MindManager_Mac_24.([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
-                <key>url</key>
-                <string>https://www.mindmanager.com/en/support/download-library/</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -36,7 +23,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://www.mindmanager.com/mm-mac-dmg</string>
             </dict>
         </dict>
         <dict>
@@ -51,7 +38,7 @@
                 <key>input_path</key>
                 <string>%pathname%/*.app</string>
                 <key>requirement</key>
-                <string>identifier "com.mindjet.mindmanager.24" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = ZF6ZZ779N5</string>
+                <string>identifier "com.mindjet.mindmanager.25" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = ZF6ZZ779N5</string>
             </dict>
         </dict>
     </array>
