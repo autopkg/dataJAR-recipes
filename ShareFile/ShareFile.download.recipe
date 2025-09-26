@@ -55,7 +55,7 @@
                 <string>%pathname%/Install ShareFile.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Citrix Systems, Inc. (S272Y5R93J)</string>
+                    <string>Developer ID Installer: Progress Software Corporation (42TZTUWV4Z)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
