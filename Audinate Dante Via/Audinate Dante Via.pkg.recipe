@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads and modifies the Audinate Dante Via installer to enable silent installation by removing display_alert dialogs from installation scripts.
+
+Modified scripts:
+- DanteViaInstall.command (in Payload at /Library/Application Support/Audinate/DanteVia/Resources/)
+- preinstall (in Scripts archive)
+
+Configure script paths:
+- Set INSTALL_SCRIPT_PATH and PREINSTALL_SCRIPT_PATH in your override if needed
+- These reference the fixed scripts from Reference Scripts directory
+
+Add required repositories:
+- For checksum verification: autopkg repo-add hjuutilainen-recipes
+- For permission management: autopkg repo-add jessepeterson-recipes</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Audinate Dante Via</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AudinateDanteVia</string>
+        <key>INSTALL_SCRIPT_PATH</key>
+        <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Via/Fixed Scripts/DanteViaInstall.command</string>
+        <key>PREINSTALL_SCRIPT_PATH</key>
+        <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Via/Fixed Scripts/preinstall</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Audinate Dante Via</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Comment</key>
+            <string>Extract Payload to get app for versioning</string>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>algorithm</key>
+                <string>MD5</string>
+                <key>checksum</key>
+                <string>3fb197b2d0d38c1dbf591525e7d730c3</string>
+                <key>pathname</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Audinate/DanteVia/Resources/DanteViaInstall.command</string>
+            </dict>
+            <key>Comment</key>
+            <string>Verify MD5 matches DanteViaInstall.command script from Audinate Dante Via 1.4.0. UPDATE THIS CHECKSUM WHEN VENDOR UPDATES THE SCRIPT.</string>
+            <key>Processor</key>
+            <string>io.github.hjuutilainen.SharedProcessors/ChecksumVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Dante Via.app/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Audinate/DanteVia/Resources/DanteViaInstall.command</string>
+                </array>
+            </dict>
+            <key>Comment</key>
+            <string>Delete the original DanteViaInstall.command script that contains dialog prompts</string>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Audinate/DanteVia/Resources/DanteViaInstall.command</string>
+                <key>source_path</key>
+                <string>%INSTALL_SCRIPT_PATH%</string>
+            </dict>
+            <key>Comment</key>
+            <string>Copy the modified DanteViaInstall.command script without dialog prompts</string>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Audinate/DanteVia/Resources/DanteViaInstall.command</string>
+                <key>mode</key>
+                <string>755</string>
+            </dict>
+            <key>Comment</key>
+            <string>Set 755 POSIX permissions since the script needs to be executable</string>
+            <key>Processor</key>
+            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>algorithm</key>
+                <string>MD5</string>
+                <key>checksum</key>
+                <string>4d57c5f4b49e7525c6db0441d1fa73ce</string>
+                <key>pathname</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts/preinstall</string>
+            </dict>
+            <key>Comment</key>
+            <string>Verify MD5 matches preinstall script from Audinate Dante Via 1.4.0. UPDATE THIS CHECKSUM WHEN VENDOR UPDATES THE SCRIPT.</string>
+            <key>Processor</key>
+            <string>io.github.hjuutilainen.SharedProcessors/ChecksumVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts/preinstall</string>
+                </array>
+            </dict>
+            <key>Comment</key>
+            <string>Delete the original preinstall script that contains dialog prompts</string>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts/preinstall</string>
+                <key>source_path</key>
+                <string>%PREINSTALL_SCRIPT_PATH%</string>
+            </dict>
+            <key>Comment</key>
+            <string>Copy the modified preinstall script without dialog prompts</string>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts/preinstall</string>
+                <key>mode</key>
+                <string>755</string>
+            </dict>
+            <key>Comment</key>
+            <string>Set 755 POSIX permissions on preinstall script</string>
+            <key>Processor</key>
+            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/newpkg</string>
+                <key>pkgdirs</key>
+                <dict/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>id</key>
+                    <string>com.audinate.pkg.DanteVia</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%/newpkg</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                    <key>scripts</key>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts</string>
+                </dict>
+            </dict>
+            <key>Comment</key>
+            <string>Create new package with modified payload and modified scripts</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

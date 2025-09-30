@@ -1,0 +1,54 @@
+#!/bin/sh
+
+syslog -s -l error "Dante Via Installer: executing ${0##*/} ($0)"
+
+# Check if user allows restarting coreaudiod
+source DanteViaCommon.sh
+# Comment out dialog - replaced with echo for logging
+# ALERT_RESULT=$(display_alert "'messageText' 'Core Audio will be restarted' 'informativeText' 'The Core Audio background process (coreaudiod) will be restarted, and audio will be interrupted.\n\nContinue with the installation?' 'alertStyle' 1 'firstButtonTitle' 'Continue' 'secondButtonTitle' 'Cancel' 'icon' 'Dante Via.icns'")
+# if [[ "$ALERT_RESULT" == "0" ]]; then
+#     syslog -s -l error "Dante Via Installer: User cancelled installation (through coreaudiod restart prompt)"
+#     delete_silent_install_file
+#     exit 1
+# fi
+echo "WARNING: The Core Audio background process (coreaudiod) will be restarted, and audio will be interrupted during installation."
+
+kill_ui()
+{
+    DANTE_VIA_PID=$(pgrep "Dante Via")
+    if [ ! -z "$DANTE_VIA_PID" ]
+    then
+        echo "Killing Dante Via UI"
+        # If from macOS 11 or later, try first with a graceful exit using AppleScript.
+        # Sparkle has problems with osascript in earlier macOS versions (https://audinate.atlassian.net/browse/DS-1946)
+        MACOS_VERSION=$(sw_vers -productVersion | sed -E 's/^([0-9]+)\..*/\1/g')
+        echo "macOS major version: ($MACOS_VERSION)"
+        MACOS11_OR_LATER=$(bc<<<"$MACOS_VERSION >= 11")
+        if [ "$MACOS11_OR_LATER" -eq 1 ]; then
+            echo "Using AppleScript to quit Via"
+            osascript -e 'quit app "Dante Via"'
+            sleep 1
+        fi
+        kill "$DANTE_VIA_PID"
+    fi
+}
+
+# run legacy upgrade script
+LEGACY_UNINSTALL_SCRIPT="/Library/Application Support/Audinate/DanteVia/DanteViaDaemon.bundle/Contents/Resources/DanteViaUninstall.command"
+if [ -x "$LEGACY_UNINSTALL_SCRIPT" ]
+then
+    kill_ui
+    "$LEGACY_UNINSTALL_SCRIPT" --upgrade
+    exit 0
+fi
+
+# run upgrade script
+UNINSTALL_SCRIPT="/Library/Application Support/Audinate/DanteVia/Resources/DanteViaUninstall.command"
+if [ -x "$UNINSTALL_SCRIPT" ]
+then
+    kill_ui
+    "$UNINSTALL_SCRIPT" --upgrade
+    exit 0
+fi
+
+exit 0

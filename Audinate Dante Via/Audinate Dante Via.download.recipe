@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Audinate Dante Via</string>
+        <string>AudinateDanteVia</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

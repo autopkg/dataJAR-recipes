@@ -11,7 +11,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Audinate Dante Via</string>
+        <string>AudinateDanteVia</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
@@ -30,12 +30,16 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>RestartAction</key>
+            <string>RequireRestart</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Audinate Dante Via</string>
+    <string>com.github.dataJAR-recipes.pkg.Audinate Dante Via</string>
     <key>Process</key>
     <array>
         <dict>
@@ -44,10 +48,14 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>Arguments</key>
             <dict>
                 <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%RECIPE_CACHE_DIR%/AudinateDanteVia.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>purge_destination</key>
+                <true/>
             </dict>
+            <key>Comment</key>
+            <string>Unpack the original package (copied from download recipe) to extract app for installs array</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -85,113 +93,11 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         </dict>
         <dict>
             <key>Processor</key>
-            <string>PlistReader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Dante Via.app/Contents/Info.plist</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-            <key>Arguments</key>
-            <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>installcheck_script</key>
-                    <string>#!/bin/zsh
-
-# Copyright 2025, Jamf Software, LLC.
-#
-# DESCRIPTION
-#
-# Exits with exit code 1 if no-one is logged in.
-# If info_plist_path doesn't exist, proceeds with install.
-# If info_plist_path exists and is older than munki, proceeds with install.
-
-# Function to compare version strings using sort -V
-compare_versions() {
-    local version1="$1"
-    local version2="$2"
-
-    # Use sort -V to compare versions
-    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
-
-    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
-        # version1 is strictly less than version2
-        return 0
-    else
-        # version1 is greater than or equal to version2
-        return 1
-    fi
-}
-
-# Function to check if user is logged in
-user_logged_in() {
-    # Get the console user using system_profiler
-    local console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
-
-    # Check if someone is logged in and it's not loginwindow
-    if [[ -n "$console_user" &amp;&amp; "$console_user" != "loginwindow" ]]; then
-        return 0  # User is logged in
-    else
-        return 1  # No user logged in
-    fi
-}
-
-# App path and version
-app_path="/Applications/Dante Via.app/"
-app_version="%version%"
-info_plist_path="$app_path/Contents/Info.plist"
-
-# Check if user is logged in
-if user_logged_in; then
-    # If the app exists
-    if [[ -f "$info_plist_path" ]]; then
-        # Get version from info.plist using plutil
-        if installed_version=$(plutil -extract CFBundleShortVersionString raw "$info_plist_path" 2&gt;/dev/null); then
-            echo "$app_path version $installed_version, installed..."
-
-            # Compare the installed version with this installations
-            if compare_versions "$installed_version" "$app_version"; then
-                # Local version older, proceed with installation
-                echo "Older version of $app_path located, proceeding with installation..."
-                exit 0
-            else
-                # Local version newer, cancelling installation
-                echo "Newer or the same version of $app_path located, cancelling installation..."
-                exit 1
-            fi
-        else
-            echo "Encountered an error when trying to parse $info_plist_path..."
-            exit 1
-        fi
-    else
-        # App is not installed and user is logged in, proceed.
-        exit 0
-    fi
-else
-    # Exit as no-one logged in
-    exit 1
-fi</string>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%pkg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
