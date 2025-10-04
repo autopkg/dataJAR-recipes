@@ -104,8 +104,6 @@ Please use one of these supported recipes
                     </array>
                     <key>id</key>
                     <string>com.sketchup.%NAME%-%version%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>pkgname</key>
                     <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
