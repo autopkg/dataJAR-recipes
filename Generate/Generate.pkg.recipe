@@ -132,8 +132,6 @@ exit $result</string>
                     <string>Generate-%version%</string>
                     <key>id</key>
                     <string>%PKG_ID%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>pkgroot</key>
                     <string>%RECIPE_CACHE_DIR%/payload/root</string>
                     <key>scripts</key>

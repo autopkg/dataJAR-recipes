@@ -57,8 +57,6 @@ Please see new recipes for Jamf Replicator here: https://github.com/autopkg/data
                     </array>
                     <key>id</key>
                     <string>%BUNDLE_ID%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>pkgname</key>
                     <string>%NAME%-%version%</string>
                     <key>pkgroot</key>

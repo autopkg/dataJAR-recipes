@@ -61,8 +61,6 @@ Also see: https://ngrok.com/blog-post/tcp-endpoints-require-verification for inf
                     <string>com.ngrok.ngrok</string>
                     <key>version</key>
                     <string>%version%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>chown</key>
                     <array>
                         <dict>

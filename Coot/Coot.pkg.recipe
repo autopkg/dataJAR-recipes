@@ -57,8 +57,6 @@
 					</array>
 					<key>id</key>
 					<string>%BUNDLE_ID%-%version%</string>
-					<key>options</key>
-					<string>purge_ds_store</string>
 					<key>pkgname</key>
 					<string>%NAME%-%version%</string>
 					<key>pkgroot</key>

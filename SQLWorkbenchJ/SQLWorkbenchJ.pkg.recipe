@@ -57,8 +57,6 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                     <key>id</key>
                     <string>com.Thomas Kellerer.%NAME%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>chown</key>
                     <array>
                         <dict>
