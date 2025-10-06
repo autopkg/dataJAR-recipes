@@ -66,8 +66,6 @@
                     <string>%NAME%-%VERSION%</string>
                     <key>id</key>
                     <string>%PKG_ID%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>pkgroot</key>
                     <string>%pkgroot%</string>
                     <key>version</key>
