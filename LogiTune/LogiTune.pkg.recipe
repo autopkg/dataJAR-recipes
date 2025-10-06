@@ -14,8 +14,9 @@
         <string>#!/bin/bash
 
 # Silently install LogiTune
+# The undocumented flag `--launch No` has been added to fix a condition where a message would pop up asking the user to reset the keychain. See https://github.com/autopkg/dataJAR-recipes/issues/467
 
-LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No
+LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No --launch No
 
 exit</string>
     </dict>
