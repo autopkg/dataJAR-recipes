@@ -14,9 +14,8 @@
         <string>#!/bin/bash
 
 # Silently install LogiTune
-# The undocumented flag `--launch No` has been added to fix a condition where a message would pop up asking the user to reset the keychain. See https://github.com/autopkg/dataJAR-recipes/issues/467
 
-LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No --launch No
+LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No
 
 exit</string>
     </dict>
@@ -26,6 +25,26 @@ exit</string>
     <string>com.github.ahousseini-recipes.download.LogiTune</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. It is no longer possible to guarantee a safe install though management tooling.
+
+For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>

@@ -54,6 +54,26 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. It is no longer possible to guarantee a safe install though management tooling.
+
+For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
