@@ -5,14 +5,14 @@
     <key>Description</key>
     <string>Download recipe for the latest version of IB eAssessment Player.
 
-To download Apple Silicon use: "apple" in the DOWNLOAD_ARCH variable
-To download Intel use: "intel" in the DOWNLOAD_ARCH varia</string>
+To download Apple Silicon use: "[Aa]pple" in the DOWNLOAD_ARCH variable
+To download Intel use: "[Ii]ntel" in the DOWNLOAD_ARCH varia</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.IB eAssessment Player</string>
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_ARCH</key>
-        <string>apple</string>
+        <string>[Aa]pple</string>
         <key>NAME</key>
         <string>IBeAssessmentPlayer</string>
     </dict>
