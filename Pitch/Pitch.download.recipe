@@ -22,6 +22,11 @@
             <dict>
                 <key>url</key>
                 <string>https://desktop.pitch.com/mac/Pitch.dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15</string>
+                </dict>
             </dict>
         </dict>
         <dict>
