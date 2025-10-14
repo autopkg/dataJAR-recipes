@@ -18,23 +18,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>Download the PictoBlox Installer Version ([0-9]+(.[0-9]+)+) \(.dmg\)</string>
-                <key>result_output_var_name</key>
-                <string>VERSION</string>
-                <key>url</key>
-                <string>https://thestempedia.com/product/pictoblox/download-pictoblox/</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://download.pictoblox.ai/V%VERSION%/PictoBlox_V%VERSION%.dmg</string>
+                <string>https://thestempedia.com/product/pictoblox/download-pictoblox/macos/primary/</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
