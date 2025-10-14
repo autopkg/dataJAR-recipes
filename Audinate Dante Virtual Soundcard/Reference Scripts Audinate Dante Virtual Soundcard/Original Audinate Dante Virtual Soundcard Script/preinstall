@@ -1,22 +1,14 @@
 #!/bin/sh
 
+source common.sh
+
 echo "Running pre-install script in $2"
 
 # Check if user allows restarting coreaudiod
-CORE_AUDIO_CHECK_RESULT=$(osascript -s o <<EOF
-
-	set results to (display dialog "The Core Audio background process (coreaudiod) will be restarted, and audio will be interrupted.\n\nContinue with the installation?" with title "Install Dante Virtual Soundcard" with icon caution buttons {"Continue", "Cancel"} default button "Continue")
-	set button_clicked to button returned of results
-	if button_clicked = "Cancel" then
-		return ""
-	end if
-	return "Continue"
-
-EOF
-)
-
-# If user pressed Cancel then the above script returns '18:237: execution error: User canceled. (-128)'
-if [[ $CORE_AUDIO_CHECK_RESULT != "Continue" ]]; then
+ALERT_RESULT=$(display_alert "'messageText' 'Core Audio will be restarted' 'informativeText' 'The Core Audio background process (coreaudiod) will be restarted, and audio will be interrupted.\n\nContinue with the installation?' 'alertStyle' 1 'firstButtonTitle' 'Continue' 'secondButtonTitle' 'Cancel' 'icon' 'dvs-3.icns'")
+if [[ "$ALERT_RESULT" == "0" ]]; then
+	syslog -s -l error "Dante Virtual Soundcard Installer: User cancelled installation (through coreaudiod restart prompt)"
+	delete_silent_install_file
 	exit 1
 fi
 

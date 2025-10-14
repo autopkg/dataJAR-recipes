@@ -52,7 +52,7 @@ autopkg repo-add jessepeterson-recipes</string>
                 <key>algorithm</key>
                 <string>MD5</string>
                 <key>checksum</key>
-                <string>9fffef5a898a2d7a6167e065c4590550</string>
+                <string>f0fc67f826cb1c896cad06145a1dde7f</string>
                 <key>pathname</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/preinstall</string>
             </dict>
@@ -67,7 +67,7 @@ autopkg repo-add jessepeterson-recipes</string>
                 <key>algorithm</key>
                 <string>MD5</string>
                 <key>checksum</key>
-                <string>6b63ba8a2a625f18abeb49a5f5b115f2</string>
+                <string>4da49517f8cfc16a350da4a46ba6a2ed</string>
                 <key>pathname</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack/DanteVirtualSoundcard.pkg/Scripts/postinstall</string>
             </dict>
