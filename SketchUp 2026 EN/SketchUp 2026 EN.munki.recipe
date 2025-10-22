@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SketchUp (formerly SketchUp Pro) 2026 EN and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.SketchUp 2026 EN</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>SketchUp2026-EN</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The most intuitive way to design, document and communicate your ideas in 3D</string>
+            <key>display_name</key>
+            <string>SketchUp 2026</string>
+            <key>developer</key>
+            <string>Trimble Inc</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postuninstall_script</key>
+            <string>#!/bin/bash
+
+# Remove SketchUp preferences and support files after uninstallation
+# https://help.sketchup.com/en/uninstalling-sketchup
+
+# Configuration - Change this value for different SketchUp versions
+SKETCHUP_YEAR="2026"
+
+# Check if running as root
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root (use sudo)"
+    exit 1
+fi
+
+# Set error handling
+set -e
+
+# Function to log messages
+log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S'): $1"
+}
+
+# Function to safely remove a file or directory
+safe_remove() {
+    local path="$1"
+    local skip_found_message="$2"
+    if [ -e "$path" ]; then
+        if [ "$skip_found_message" != "true" ]; then
+            log_message "Found: $path"
+        fi
+        /bin/rm -rf "$path" 2&gt;/dev/null || {
+            log_message "Retrying with sudo..."
+            sudo /bin/rm -rf "$path"
+        }
+        if [ $? -eq 0 ]; then
+            log_message "Successfully removed: $path"
+            return 0
+        else
+            log_message "Error removing: $path"
+            return 1
+        fi
+    else
+        log_message "Path not found (skipping): $path"
+        return 0
+    fi
+}
+
+# Main cleanup process
+log_message "Starting SketchUp ${SKETCHUP_YEAR} cleanup process"
+
+# Check for and remove system-level SketchUp folder
+SKETCHUP_SUPPORT="/Library/Application Support/SketchUp ${SKETCHUP_YEAR}"
+if [ -d "$SKETCHUP_SUPPORT" ]; then
+    log_message "Found system-level SketchUp ${SKETCHUP_YEAR} folder, proceeding with removal"
+    safe_remove "$SKETCHUP_SUPPORT" "true"
+else
+    log_message "System-level SketchUp ${SKETCHUP_YEAR} folder not found"
+fi
+
+# USER-LEVEL CLEANUP (Commented out by default - uncomment to use)
+# To enable user-level cleanup, remove the '#' from the lines below
+
+## Get all user accounts with UID &gt;= 501
+#users=($(dscl . list /Users UniqueID | awk '$2 &gt;= 501 {print $1}'))
+#
+## Track if we found any SketchUp files to clean up
+#found_files=false
+#
+## Process each user's preferences
+#for user in "${users[@]}"; do
+#    # Get user's home directory
+#    user_home=$(dscl . -read /Users/"${user}" NFSHomeDirectory | awk '{print $NF}')
+#
+#    if [ -d "$user_home" ]; then
+#        log_message "Processing user: $user"
+#
+#        # Define preference files to remove
+#        plist_files=(
+#            "${user_home}/Library/Preferences/com.sketchup.SketchUp.${SKETCHUP_YEAR}.plist"
+#            "${user_home}/Library/Preferences/com.sketchup.LayOut.${SKETCHUP_YEAR}.plist"
+#        )
+#
+#        # Remove each preference file
+#        for plist in "${plist_files[@]}"; do
+#            if [ -f "$plist" ]; then
+#                found_files=true
+#                safe_remove "$plist"
+#            fi
+#        done
+#
+#        # Remove user's SketchUp Application Support folder
+#        user_sketchup_support="${user_home}/Library/Application Support/SketchUp ${SKETCHUP_YEAR}"
+#        if [ -d "$user_sketchup_support" ]; then
+#            found_files=true
+#            safe_remove "$user_sketchup_support"
+#        fi
+#    else
+#        log_message "Warning: Home directory not found for user $user"
+#    fi
+#done
+#
+## Final status message for user-level cleanup
+#if [ "$found_files" = true ]; then
+#    log_message "User-level SketchUp ${SKETCHUP_YEAR} cleanup completed"
+#else
+#    log_message "User-level cleanup completed - no SketchUp files were found"
+#fi
+
+# Final message for system-level cleanup
+log_message "System-level SketchUp ${SKETCHUP_YEAR} cleanup process completed</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.SketchUp 2026 EN</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/SketchUp 2026/SketchUp.app</string>
+                    <string>/Applications/SketchUp 2026/Layout.app</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.davidbpirie.SharedProcessors/RunShellCommand</string>
+            <key>Arguments</key>
+            <dict>
+                <key>subprocess_args</key>
+                <string>/usr/bin/chflags -R nouchg &quot;%RECIPE_CACHE_DIR%/pkgroot&quot;</string>
+                <key>subprocess_timeout</key>
+                <integer>300</integer>
+                <key>subprocess_fail_on_error</key>
+                <false/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>com.github.davidbpirie.SharedProcessors/RunShellCommand</string>
+            <key>Arguments</key>
+            <dict>
+                <key>subprocess_args</key>
+                <string>/bin/chmod -R 777 &quot;%RECIPE_CACHE_DIR%/pkgroot&quot;</string>
+                <key>subprocess_timeout</key>
+                <integer>300</integer>
+                <key>subprocess_fail_on_error</key>
+                <false/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
