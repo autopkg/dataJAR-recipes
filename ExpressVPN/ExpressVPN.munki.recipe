@@ -34,7 +34,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>#!/usr/bin/env bash
 
 #----------------------------------------------------------------------
-# ExpressVPN Uninstal Script
+# ExpressVPN Uninstall Script
 # Developers uninstall tool has been refactored to remove user interaction.
 # User space operations commented out
 # - https://www.expressvpn.com/support/troubleshooting/uninstall-expressvpn-app/?srsltid=AfmBOoqYAXcAuCv-pV_eIqKwYfhhMYHWFyj4LZEvp2r6_TTk1VHu1RNU#mac
