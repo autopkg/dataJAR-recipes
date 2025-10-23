@@ -28,6 +28,204 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>ExpressVPN</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/usr/bin/env bash
+
+#----------------------------------------------------------------------
+# ExpressVPN Uninstal Script
+# Developers uninstall tool has been refactored to remove user interaction.
+# User space operations commented out
+# - https://www.expressvpn.com/support/troubleshooting/uninstall-expressvpn-app/?srsltid=AfmBOoqYAXcAuCv-pV_eIqKwYfhhMYHWFyj4LZEvp2r6_TTk1VHu1RNU#mac
+# - /Applications/ExpressVPN.app/Contents/Resources/uninstall.tool
+#----------------------------------------------------------------------
+
+#----------------------------------------------------------------------
+# Functions
+#----------------------------------------------------------------------
+# Appends a value to an array.
+#
+# @param [String] $1 Name of the variable to modify
+# @param [String] $2 Value to append
+function append() {
+    eval $1[\${#$1[*]}]=$2
+}
+
+# Log function for better visibility in Munki logs
+function log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S'): $1"
+}
+
+# Get all user home directories
+# function get_user_homes() {
+#     /usr/bin/dscl . -list /Users NFSHomeDirectory | /usr/bin/awk '{print $2}' | /usr/bin/grep "^/Users/" | /usr/bin/grep -v "/Users/Shared"
+# }
+
+#----------------------------------------------------------------------
+# Script
+#----------------------------------------------------------------------
+log_message "Starting ExpressVPN uninstallation (system files only)..."
+
+# Collect the directories and files to remove
+system_files=()
+# user_files=()
+
+# System-wide files only
+append system_files "/Applications/ExpressVPN.app"
+append system_files "/Library/Application Support/com.expressvpn.ExpressVPN"
+append system_files "/EV.script.log"
+append system_files "/var/log/EV.script.log"
+append system_files "/var/log/xvpn.postinstall.log"
+append system_files "/Library/Extensions/tun.kext"
+append system_files "/Library/Extensions/tap.kext"
+append system_files "/Library/Extensions/ExpressVPNSplitTunnel.kext"
+append system_files "/Library/Caches/com.expressvpn.ExpressVPN-Update.marker.plist"
+append system_files "/Library/Caches/com.expressvpn.ExpressVPN.marker.plist"
+append system_files "/Library/Caches/com.expressvpn.Updater.marker.plist"
+append system_files "/Library/LaunchDaemons/com.expressvpn.expressvpnd.plist"
+
+# User-specific file patterns (commented out - users can handle these themselves)
+# user_file_patterns=(
+#     "Library/Application Support/com.expressvpn.ExpressVPN"
+#     "Library/Application Support/ExpressVPN"
+#     "Library/Application Support/com.expressvpn.ExpressVPN-staging"
+#     "Library/Preferences/com.expressvpn.ExpressVPN.plist"
+#     "Library/Preferences/com.expressvpn.ExpressVPNGroup.plist"
+#     "Library/Preferences/group.com.expressvpn.ExpressVPN.plist"
+#     "Library/Logs/ExpressVPN"
+#     "Library/Logs/ExpressVPN Launcher"
+#     "Library/Logs/ExpressVPN Update"
+#     "Documents/ExpressVPN Shortcuts"
+#     ".expressvpn.conf"
+#     "Library/LaunchAgents/com.expressvpn.ExpressVPN.agent.plist"
+#     "Library/LaunchAgents/com.expressvpn.ExpressVPN.update.plist"
+#     "Library/LaunchAgents/com.expressvpn.ExpressVPN.updated.plist"
+# )
+
+# Build file list (system files only)
+all_files=("${system_files[@]}")
+# for user_home in $(get_user_homes); do
+#     for pattern in "${user_file_patterns[@]}"; do
+#         all_files+=("$user_home/$pattern")
+#     done
+# done
+
+log_message "System files and directories to be removed:"
+for file in "${all_files[@]}"; do
+    if [ -e "$file" ]; then
+        log_message "    $file"
+    fi
+done
+
+# Unload launch agents for all users (commented out)
+# for user_home in $(get_user_homes); do
+#     user_name=$(basename "$user_home")
+#
+#     # Get user ID for launchctl operations
+#     user_id=$(/usr/bin/id -u "$user_name" 2&gt;/dev/null)
+#
+#     if [ -n "$user_id" ]; then
+#         # Unload updater launch agents
+#         if [ -f "$user_home/Library/LaunchAgents/com.expressvpn.ExpressVPN.update.plist" ]; then
+#             log_message "Unloading ExpressVPN update agent for user $user_name"
+#             /bin/launchctl asuser "$user_id" /bin/launchctl unload -w "$user_home/Library/LaunchAgents/com.expressvpn.ExpressVPN.update.plist" &gt; /dev/null 2&gt;&amp;1
+#         fi
+#
+#         if [ -f "$user_home/Library/LaunchAgents/com.expressvpn.ExpressVPN.updated.plist" ]; then
+#             log_message "Unloading ExpressVPN updated agent for user $user_name"
+#             /bin/launchctl asuser "$user_id" /bin/launchctl unload -w "$user_home/Library/LaunchAgents/com.expressvpn.ExpressVPN.updated.plist" &gt; /dev/null 2&gt;&amp;1
+#         fi
+#     fi
+# done
+
+# Wait for updater processes to exit
+log_message "Waiting for ExpressVPN updater processes to exit..."
+while /usr/bin/pgrep -x "ExpressVPN Update Checker" &gt; /dev/null; do
+    log_message "Waiting for ExpressVPN Update Checker to exit..."
+    sleep 1
+done
+
+while /usr/bin/pgrep -x "expressvpnupdatedlauncher" &gt; /dev/null; do
+    log_message "Waiting for expressvpnupdatedlauncher to exit..."
+    sleep 1
+done
+
+# Quit ExpressVPN application
+if /usr/bin/pgrep -x ExpressVPN &gt; /dev/null; then
+    log_message "Quitting ExpressVPN application..."
+    /usr/bin/pkill -TERM ExpressVPN
+
+    # Wait up to 10 seconds for graceful quit
+    for i in {1..10}; do
+        if ! /usr/bin/pgrep -x ExpressVPN &gt; /dev/null; then
+            break
+        fi
+        sleep 1
+    done
+
+    # Force quit if still running
+    if /usr/bin/pgrep -x ExpressVPN &gt; /dev/null; then
+        log_message "Force quitting ExpressVPN application..."
+        /usr/bin/pkill -KILL ExpressVPN
+    fi
+fi
+
+# Remove ikev2 configurations
+if [ -f "/Applications/ExpressVPN.app/Contents/MacOS/ExpressVPN IKEv2.app/Contents/MacOS/expressvpn-ikehelper" ]; then
+    log_message "Removing IKEv2 configurations..."
+    "/Applications/ExpressVPN.app/Contents/MacOS/ExpressVPN IKEv2.app/Contents/MacOS/expressvpn-ikehelper" --remove &gt; /dev/null 2&gt;&amp;1
+fi
+
+# Remove system files and directories only
+log_message "Removing ExpressVPN system files and directories..."
+for file in "${all_files[@]}"; do
+    if [ -e "$file" ]; then
+        log_message "Removing: $file"
+        /bin/rm -rf "$file"
+    fi
+done
+
+# Remove preferences for all users (commented out)
+# for user_home in $(get_user_homes); do
+#     user_name=$(basename "$user_home")
+#     user_id=$(/usr/bin/id -u "$user_name" 2&gt;/dev/null)
+#
+#     if [ -n "$user_id" ]; then
+#         log_message "Removing preferences for user $user_name"
+#         /bin/launchctl asuser "$user_id" /usr/bin/defaults delete com.expressvpn.ExpressVPN &gt; /dev/null 2&gt;&amp;1
+#         /bin/launchctl asuser "$user_id" /usr/bin/defaults delete com.expressvpn.ExpressVPN-Update &gt; /dev/null 2&gt;&amp;1
+#     fi
+# done
+
+# Remove certificates from system keychain
+log_message "Removing ExpressVPN certificates..."
+/usr/bin/security delete-certificate -Z 'BDE98D55300F49FC535A37286FA8871924971683' &gt; /dev/null 2&gt;&amp;1
+/usr/bin/security delete-certificate -Z '0F846F6BA98D2A5ADFECADD029C55BB589DB0301' &gt; /dev/null 2&gt;&amp;1
+/usr/bin/security delete-identity -c 'ExpressVPN Client' &gt; /dev/null 2&gt;&amp;1
+/usr/bin/security delete-certificate -c 'ExpressVPN Client' &gt; /dev/null 2&gt;&amp;1
+
+# Kill Safari companion processes
+log_message "Killing Safari companion processes..."
+/usr/bin/pkill -9 -f 'ExpressVPN mini' &gt; /dev/null 2&gt;&amp;1
+
+# Verify uninstallation (system files only)
+log_message "Verifying system file removal..."
+uninstall_success=true
+for file in "${all_files[@]}"; do
+    if [ -e "$file" ]; then
+        log_message "ERROR: File still exists after uninstall: $file"
+        uninstall_success=false
+    fi
+done
+
+if [ "$uninstall_success" = true ]; then
+    log_message "ExpressVPN system files successfully removed."
+    exit 0
+else
+    log_message "ERROR: ExpressVPN system file removal incomplete."
+    exit 1
+fi</string>
             <key>unattended_install</key>
             <true/>
         </dict>
