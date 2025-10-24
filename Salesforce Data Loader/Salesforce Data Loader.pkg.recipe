@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Salesforce Data Loader and creates a package.
+
+Please note Java version 17 or above is required for a successful install.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.Salesforce Data Loader</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SalesforceDataLoader</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Salesforce Data Loader</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/dataloader</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>https://a.sfdcstatic.com/developer-website/media/dataloader/dataloader_v([0-9]+(.[0-9]+)+).zip</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>https://developer.salesforce.com/tools/data-loader</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#!/bin/zsh
+
+# Silently install Salesforce Data Loader to the Applications folder
+# - https://github.com/forcedotcom/dataloader/discussions/1646
+
+dataloader/install.command salesforce.installation.dir="/Applications/Salesforce Data Loader"
+
+exit</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array/>
+                    <key>id</key>
+                    <string>com.SaleforceDataLoader.installer.pkg</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <key>pkgtype</key>
+                    <string>flat</string>
+                    <key>scripts</key>
+                    <string>Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+    </array>
+</dict>
+</plist>

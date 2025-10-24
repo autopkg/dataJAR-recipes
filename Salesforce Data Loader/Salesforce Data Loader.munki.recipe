@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Salesforce Data Loader and imports it into Munki.
+
+Please note Java version 17 or above is required for a successful install.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Salesforce Data Loader</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SalesforceDataLoader</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>requires</key>
+            <array>
+                <string>AmazonCoretto24</string>
+            </array>
+            <key>description</key>
+            <string>Client application for the bulk import or export of Salesforce data.
+
+Use it to insert, update, delete, or export Salesforce records.</string>
+            <key>developer</key>
+            <string>Salesforce</string>
+            <key>display_name</key>
+            <string>Salesforce Data Loader</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+# https://developer.salesforce.com/docs/atlas.en-us.dataLoader.meta/dataLoader/loader_uninstall.htm
+
+/bin/echo Removing Salesforce Data Loader...
+
+/bin/rm -rf "/Applications/Salesforce Data Loader"
+
+/usr/sbin/pkgutil --forget com.SaleforceDataLoader.installer.pkg
+
+exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.Salesforce Data Loader</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+                    <string>%RECIPE_CACHE_DIR%/Scripts/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
