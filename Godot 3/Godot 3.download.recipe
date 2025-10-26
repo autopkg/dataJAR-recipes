@@ -81,7 +81,7 @@ i.e.: `-k PRERELEASE=yes`</string>
             <dict>
                 <key>input_path</key>
                 <string>%pkgroot%/Applications/Godot_mono.app</string>
-                <key>requirements</key>
+                <key>requirement</key>
                 <string>identifier "org.godotengine.godot" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6K46PWY5DM"</string>
             </dict>
         </dict>
