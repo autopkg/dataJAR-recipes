@@ -67,6 +67,9 @@ Please note Java version 17 or above is required for a successful install.</stri
 
 dataloader/install.command salesforce.installation.dir="/Applications/Salesforce Data Loader"
 
+# Set permissions on the Salesforce Data Loader folder so the Application will open.
+chmod -R 775 "/Applications/Salesforce Data Loader"
+
 exit</string>
                 <key>file_mode</key>
                 <string>0755</string>
