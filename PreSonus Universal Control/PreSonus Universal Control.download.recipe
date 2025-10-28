@@ -23,7 +23,7 @@
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>re_pattern</key>
-                    <string>https://www.fmicassets.com/Damroot/Original/10111/PreSonus_Universal_Control_.*?.dmg</string>
+                    <string>(https://www.fmicassets.com/Damroot/Original/[0-9]+/PreSonus_Universal_Control_v([0-9]+(_[0-9]+)+)-[A-Za-z0-9]+.dmg)</string>
                     <key>url</key>
                     <string>https://uk.presonus.com/products/atom-sq-controller#:~:text=SQ%20Controller%20%2D%20English-,Software,-Universal%20Control</string>
                 </dict>
