@@ -47,6 +47,26 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor has changed the name of the Application to Harmony SASE, please use the new recipes.
+
+- https://github.com/autopkg/dataJAR-recipes/tree/master/Harmony%20SASE</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>info_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Perimeter 81.app</string>
                 <key>plist_keys</key>
