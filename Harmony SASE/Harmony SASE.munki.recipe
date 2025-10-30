@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of Harmony SASE, builds a package and imports it to Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Harmony SASE</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>HarmonySASE</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array/>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Applications</string>
+            <key>description</key>
+            <string>Harmony SASE is a cloud-based secure access service edge (SASE) platform that helps you secure your network and resources by providing a comprehensive suite of security solutions. With Harmony SASE, you can quickly and easily onboard your network resources, branch offices, and employees into the platform in as little as 15 minutes.</string>
+            <key>developer</key>
+            <string>Check Point Software Technologies Ltd.</string>
+            <key>display_name</key>
+            <string>Harmony SASE</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
+
+# Vendor Documentation: https://support.perimeter81.com/v1/docs/uninstalling-the-agent#macos
+# Note - user space uninstall steps have been commented out
+
+echo "Stopping Application"
+killall Perimeter\ 81 &gt; /dev/null 2&gt;&amp;1
+killall Harmony\ SASE &gt; /dev/null 2&gt;&amp;1
+
+echo "Dropping no-touch flags from the app and all the relevant files"
+chflags -RL noschg /Applications/Perimeter\ 8*.app &gt; /dev/null 2&gt;&amp;1
+chflags -RL noschg /Applications/Harmony\ SAS*.app &gt; /dev/null 2&gt;&amp;1
+chflags -RL noschg /Library/LaunchDaemons/com.perimeter81d.plist &gt; /dev/null 2&gt;&amp;1
+chflags -RL noschg /Library/PrivilegedHelperTools/com.perimeter81d.app &gt; /dev/null 2&gt;&amp;1
+chflags -RL noschg /Library/PrivilegedHelperTools/com.perimeter81.osx.HelperTool &gt; /dev/null 2&gt;&amp;1
+chflags -RL noschg /Library/LaunchDaemons/com.perimeter81.osx.HelperTool.plist &gt; /dev/null 2&gt;&amp;1
+
+echo "Stopping Daemon"
+[ -f /Library/LaunchDaemons/com.perimeter81d.plist ] &amp;&amp; launchctl unload -w /Library/LaunchDaemons/com.perimeter81d.plist
+[ -f /Library/LaunchDaemons/com.harmonySASEd.plist ] &amp;&amp; launchctl unload -w /Library/LaunchDaemons/com.harmonySASEd.plist
+
+echo "Removing Daemon from /Library/PrivilegedHelperTools, LaunchDaemons and 'Application Support'"
+rm -rf /Library/PrivilegedHelperTools/com.perimeter81d.app /Library/LaunchDaemons/com.perimeter81d.plist /Library/Application\ Support/com.perimeter81d
+rm -rf /Library/PrivilegedHelperTools/com.harmonySASEd.app /Library/LaunchDaemons/com.harmonySASEd.plist /Library/Application\ Support/com.harmonySASEd
+
+echo "Removing HelperTool from /Library/PrivilegedHelperTools and LaunchDaemons"
+rm -rf /Library/PrivilegedHelperTools/com.perimeter81.osx.HelperTool /Library/LaunchDaemons/com.perimeter81.osx.HelperTool.plist
+
+echo "Unregistering Application from Spotlight"
+
+/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -u "/Applications/Perimeter 81.app" &gt; /dev/null 2&gt;&amp;1
+/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -u "/Applications/Harmony SASE.app" &gt; /dev/null 2&gt;&amp;1
+
+echo "Removing Application"
+rm -rf /Applications/Perimeter\ 8*.app
+rm -rf /Applications/Harmony\ SAS*.app
+
+echo "Removing SWG certificates from Keychains"
+security delete-certificate -t -c "Perimeter81 Secure Web Gateway 2" &gt; /dev/null 2&gt;&amp;1
+security find-certificate -c "Perimeter81 Secure Web Gateway 2" -a -Z | awk '/SHA-1/{system("security delete-certificate -Z "$NF)}' &gt; /dev/null 2&gt;&amp;1
+
+echo "Removing all the Daemon logs"
+rm -rf /var/log/Perimeter81
+rm -rf /var/log/HarmonySASE
+
+echo "Removing Daemon's user defaults"
+defaults delete com.perimeter81d &gt; /dev/null 2&gt;&amp;1
+defaults delete com.harmonySASEd &gt; /dev/null 2&gt;&amp;1
+
+echo "Removing Daemon's keychains"
+bash -c 'while security delete-generic-password -s com.perimeter81d /Library/Keychains/System.keychain; do :; done' &gt; /dev/null 2&gt;&amp;1
+bash -c 'while security delete-generic-password -s com.harmonySASEd /Library/Keychains/System.keychain; do :; done' &gt; /dev/null 2&gt;&amp;1
+
+echo "Remove support binaries (wg, wg-quick, etc)"
+rm -rf /usr/local/bin/wg /usr/local/bin/wg-quick /usr/local/bin/wireguard-go /usr/local/bin/customer_logs.sh /usr/local/bin/osqueryd
+
+echo "Remove files from /var/root/Library, Application Support, Preferences, HTTPStorages and snowplow"
+rm -rf "/var/root/Library/Application Support/com.perimeter81d"
+rm -f "/var/root/Library/Preferences/com.perimeter81d.plist"
+rm -rf "/var/root/Library/HTTPStorages/com.perimeter81d"
+rm -f "/var/root/Library/HTTPStorages/com.perimeter81d.binarycookies"
+rm -f "/var/root/Library/snowplow/snowplowEvents-default.sqlite"
+
+echo "Removing Yarkon database"
+rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
+
+# COMMENTED OUT: clear other files and folders for all existing users
+# _Users=(`ls /Users | grep -Ev "^(Shared|\.)"`)
+# echo ""
+# for TheUser in "${_Users[@]}"
+# do
+#   echo "Cleaning user-specific data for ${TheUser} (keychains, userdefaults, logs, etc)"
+#
+#   # clean application keychain
+#   -iu "${TheUser}" bash -c "while security delete-generic-password -s com.safervpn.osx.smb login.keychain; do :; done" &gt; /dev/null 2&gt;&amp;1
+#   -iu "${TheUser}" bash -c "while security delete-generic-password -s com.safervpn.osx.smb; do :; done" &gt; /dev/null 2&gt;&amp;1
+#
+#   # clean user defaults
+#   -iu "${TheUser}" defaults delete com.safervpn.osx.smb &gt; /dev/null 2&gt;&amp;1
+#
+#   # clean logs
+#   -iu "${TheUser}" rm -rf "/Users/${TheUser}/Library/Logs/Perimeter81"*
+#   -iu "${TheUser}" rm -rf "/Users/${TheUser}/Library/Logs/HarmonySASE"*
+#
+#   # clean user specific folders
+#   -iu "${TheUser}" rm -rf "/Users/${TheUser}/Library/Saved Application State/com.safervpn.osx.smb.savedState"
+#   -iu "${TheUser}" rm -f "/Users/${TheUser}/Library/Preferences/com.safervpn.osx.smb.plist"
+#   -iu "${TheUser}" rm -rf "/Users/${TheUser}/Library/HTTPStorages/com.safervpn.osx.smb"
+#   -iu "${TheUser}" rm -f "/Users/${TheUser}/Library/LaunchAgents/com.perimeter81.Perimeter81.plist"
+# done</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Harmony SASE</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/Harmony SASE_unsigned.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Harmony SASE.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Harmony SASE.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
