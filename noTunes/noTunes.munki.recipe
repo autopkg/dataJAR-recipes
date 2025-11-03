@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.noTunes</string>
+    <string>com.github.davidbpirie.download.noTunes</string>
     <key>Process</key>
     <array>
         <dict>
