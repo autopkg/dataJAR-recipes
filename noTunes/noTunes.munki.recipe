@@ -35,7 +35,7 @@
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.noTunes</string>
+    <string>com.github.davidbpirie.download.noTunes</string>
     <key>Process</key>
     <array>
         <dict>
@@ -44,7 +44,7 @@
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
                 <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
             </dict>
             <key>Processor</key>
             <string>DmgCreator</string>
@@ -65,7 +65,7 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
             <key>Processor</key>
