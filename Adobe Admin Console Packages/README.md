@@ -108,7 +108,7 @@ For information on how these recipes came about (and why), please click [here.](
 <div align="center">
 
 |Adobe CC 2026|Adobe CC 2025|Adobe CC 2024|Adobe CC 2023|
-|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|
 ||AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
 ||AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
 |||AdobeAnimate2024|AdobeAnimate2023|
