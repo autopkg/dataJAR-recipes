@@ -3,11 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of FlashPrint 5 and imports into Munki.</string>
+    <string>Downloads the latest version of FlashPrint 5 and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.FlashPrint 5</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
@@ -35,23 +39,23 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.FlashPrint 5</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/%found_basename%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -59,9 +63,9 @@
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/FlashPrint 5.pkg/Contents/Archive.pax.gz</string>
+                <string>%RECIPE_CACHE_DIR%/unpacked/FlashPrint.pkg/Payload</string>
             </dict>
         </dict>
         <dict>
@@ -69,6 +73,8 @@
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 <key>installs_item_paths</key>
@@ -140,6 +146,7 @@
                 <array>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 </array>
             </dict>
         </dict>

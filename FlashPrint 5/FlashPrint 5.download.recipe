@@ -20,10 +20,8 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>comment</key>
-                <string>Because the macOS link is an image with no usable text, we're matching the SECOND instance of a zip file link on the page. If the macOS image link moves position relative to the Windows image link, this may need to be adjusted.</string>
                 <key>re_pattern</key>
-                <string>(?:https://en\.fss\.flashforge\.com/10000/software/[0-9a-f]+\.zip).*(https://en\.fss\.flashforge\.com/10000/software/[0-9a-f]+\.zip)</string>
+                <string>(https://flashforge-resource.oss-us-east-1.aliyuncs.com/FlashPrint_([0-9]+(.[0-9]+)+)/FlashPrint_([0-9]+(.[0-9]+)+)_([A-Za-z0-9]+(%[A-Za-z0-9]+)+).zip)</string>
                 <key>url</key>
                 <string>https://enterprise.flashforge.com/pages/flashprint</string>
             </dict>
@@ -42,6 +40,43 @@
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/%found_basename%</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Zhejiang Flashforge 3D Technology Co.,Ltd. (2FJ94BTVV8)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
