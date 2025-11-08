@@ -18,11 +18,11 @@ For information on how these recipes came about (and why), please click [here.](
 > [!IMPORTANT]
 > As of v3+, `AdobeAdminConsolePackagesImporter.py` needs sudo to run, this is due to the fact that `AdobeAdminConsolePackagesImporter.py` v3+ installs the titles locally to retrieve the needed metadata.
 > 
-> The naming of the packages in the Adobe Admin Console has to match a name within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+> The naming of the packages in the Adobe Admin Console has to match a name within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
 
 
 1. For each Adobe title you want to import:
-   1. Download one or more DMG from the [Adobe Admin Console](https://adminconsole.adobe.com), making sure that the name is prefixed with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+   1. Download one or more DMG from the [Adobe Admin Console](https://adminconsole.adobe.com), making sure that the name is prefixed with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
    1. Load the .app.
    1. Download the title.
    1. If the download is a .zip, unzip it.
@@ -40,7 +40,7 @@ For information on how these recipes came about (and why), please click [here.](
 ## Process
 1. Adobe Admin Console
    1. Create a package including just a single title and Creative Cloud Desktop app.
-   1. Prefix the package with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+   1. Prefix the package with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
    1. Finish creating the package selecting, [flat packages](https://helpx.adobe.com/uk/enterprise/using/create-flat-packages.html). Bundle package support has been removed from these recipes as they will not install on macOS15+.
    1. Download the DMG.
    1. Load the .app.
@@ -56,8 +56,8 @@ For information on how these recipes came about (and why), please click [here.](
    1. Optionally, add the flag `--extract-icons`, this will extract any imported titles Icon file to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`.
    1. Optionally, add the flag `--uninstall` this will uninstall the title from the Mac running `AdobeAdminConsolePackagesImporter.py`, once it has gathered the needed metadata.
    1. Confirms that the passed directory or the default directory exists, before proceeding.
-   1. Parses [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to retrieve a list of titles names, (these are the same as found within the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names)). The json also contains:
-       1. `aacp_name` - the titles name, this will be a name from: [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names).
+   1. Parses [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to retrieve a list of titles names, (these are the same as found within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names)). The json also contains:
+       1. `aacp_name` - the titles name, this will be a name from: [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
        1. `aacp_application_full_path` - the titles full path when installed, used to get the titles Info.plist and to generate an installs array for the supplied .munki recipes.
        1. `aacp_application_description` - Acrobat only, as the the description cannot be obtained from it's pkg itself.
        1. `aacp_blocking_applications` - Acrobat only, as not obtained in the same way as the rest of the Adobe CC titles.
@@ -68,7 +68,7 @@ For information on how these recipes came about (and why), please click [here.](
    1. Prints a summary of found packages.
    1. Retrieves a list of [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-overrides#recipe-override-directories) from AutoPkg's preference domain.
    1. Looks within each of the defined [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-overrides#recipe-override-directories) for overrides that:
-       1. Start with the same name from the [application names table](https://github.com/autopkg/dataJAR-recipes/edit/add-adobe-flat-pkg-support/Adobe%20Admin%20Console%20Packages/README.md#names) as the located packages.
+       1. Start with the same name from the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names) as the located packages.
        1. Contains the same recipe type that was passed to [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py).
        1. Optionally, if the pkg contains `MACARM` looks for `arm64` within the overrides file name.
    1. For each package matched with an override:
@@ -107,30 +107,30 @@ For information on how these recipes came about (and why), please click [here.](
 ## Application names
 <div align="center">
 
-|Adobe CC 2025|Adobe CC 2024|Adobe CC 2023|
-|:---:|:---:|:---:|
-|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
-|AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
+|Adobe CC 2026|Adobe CC 2025|Adobe CC 2024|Adobe CC 2023|
+|:---:|:---:|:---:|:---:|
+|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
+||AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
 ||AdobeAnimate2024|AdobeAnimate2023|
-|AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
-|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
-|AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
-|AdobeDimension|AdobeDimension|AdobeDimension|
-|AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
-|AdobeIllustrator2025|AdobeIllustrator2024|AdobeIllustrator2023|
-|AdobeInCopy2025|AdobeInCopy2024|AdobeInCopy2023|
-|AdobeInDesign2025|AdobeInDesign2024|AdobeInDesign2023|
-|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|
-|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|
-|AdobeMediaEncoder2025|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
-|AdobePhotoshop2025|AdobePhotoshop2024|AdobePhotoshop2023|
-|AdobePremierePro2025|AdobePremierePro2024|AdobePremierePro2023|
-|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|
-|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
-|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
-|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|
-|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|
-|AdobeXD|AdobeXD|AdobeXD|
+||AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
+||AdobeBridge2026|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
+||AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
+||AdobeDimension|AdobeDimension|AdobeDimension|
+||AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
+|AdobeIllustrator2026|AdobeIllustrator2025|AdobeIllustrator2024|AdobeIllustrator2023|
+|AdobeInCopy2026|AdobeInCopy2025|AdobeInCopy2024|AdobeInCopy2023|
+|AdobeInDesign2026|AdobeInDesign2025|AdobeInDesign2024|AdobeInDesign2023|
+|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|
+|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|
+||AdobeMediaEncoder2025|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
+|AdobePhotoshop2026|AdobePhotoshop2025|AdobePhotoshop2024|AdobePhotoshop2023|
+||AdobePremierePro2025|AdobePremierePro2024|AdobePremierePro2023|
+|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|
+|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
+|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
+|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|
+|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|
+|AdobeXD|AdobeXD|AdobeXD|AdobeXD|
 
 </div>
 

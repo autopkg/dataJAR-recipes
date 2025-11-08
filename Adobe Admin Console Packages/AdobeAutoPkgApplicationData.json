@@ -77,6 +77,12 @@
             "aacp_application_sap_code": "KBRG",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
+    "AdobeBridge2026": {
+            "aacp_application_full_path": "/Applications/Adobe Bridge 2026/Adobe Bridge 2026.app",
+            "aacp_application_display_name": "Adobe Bridge 2026",
+            "aacp_application_sap_code": "KBRG",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
     "AdobeCharacterAnimator2023": {
             "aacp_application_full_path": "/Applications/Adobe Character Animator 2023/Adobe Character Animator 2023.app",
             "aacp_application_display_name": "Adobe Character Animator 2023",
@@ -125,6 +131,12 @@
             "aacp_application_sap_code": "ILST",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeIllustrator2026": {
+            "aacp_application_full_path": "/Applications/Adobe Illustrator 2026/Adobe Illustrator.app",
+            "aacp_application_display_name": "Adobe Illustrator 2026",
+            "aacp_application_sap_code": "ILST",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeInCopy2023": {
             "aacp_application_full_path": "/Applications/Adobe InCopy 2023/Adobe InCopy 2023.app",
             "aacp_application_display_name": "Adobe InCopy 2023",
@@ -143,6 +155,12 @@
             "aacp_application_sap_code": "AICY",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeInCopy2026": {
+            "aacp_application_full_path": "/Applications/Adobe InCopy 2026/Adobe InCopy 2026.app",
+            "aacp_application_display_name": "Adobe InCopy 2026",
+            "aacp_application_sap_code": "AICY",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeInDesign2023": {
             "aacp_application_full_path": "/Applications/Adobe InDesign 2023/Adobe InDesign 2023.app",
             "aacp_application_display_name": "Adobe InDesign 2023",
@@ -158,6 +176,12 @@
     "AdobeInDesign2025": {
             "aacp_application_full_path": "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app",
             "aacp_application_display_name": "Adobe InDesign 2025",
+            "aacp_application_sap_code": "IDSN",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeInDesign2026": {
+            "aacp_application_full_path": "/Applications/Adobe InDesign 2026/Adobe InDesign 2026.app",
+            "aacp_application_display_name": "Adobe InDesign 2026",
             "aacp_application_sap_code": "IDSN",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
@@ -206,6 +230,12 @@
     "AdobePhotoshop2025": {
             "aacp_application_full_path": "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app",
             "aacp_application_display_name": "Adobe Photoshop 2025",
+            "aacp_application_sap_code": "PHSP",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobePhotoshop2026": {
+            "aacp_application_full_path": "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026.app",
+            "aacp_application_display_name": "Adobe Photoshop 2026",
             "aacp_application_sap_code": "PHSP",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
