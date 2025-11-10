@@ -11,8 +11,8 @@
         <key>NAME</key>
         <string>Pencil</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://pencil.evolus.vn</string>
-   	</dict>
+        <string>http://pencil.evolus.vn</string>
+    </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
