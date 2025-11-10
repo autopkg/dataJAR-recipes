@@ -53,7 +53,7 @@ exit</string>
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Cloudflare WARP</string>
+    <string>com.github.mikestechshop.download.CloudFlareWarp</string>
     <key>Process</key>
     <array>
         <dict>
