@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Videosync 2.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-test-recipes.download.Videosync 2</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Videosync2</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://dist.showsync.com/v1/download/aca1400c-fd2c-4a72-b524-9249eee9feb2/macos-universal/latest</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Videosync 2.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.showsync.videosync" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = F98NTM79RQ)</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
