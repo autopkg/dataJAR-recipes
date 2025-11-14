@@ -28,11 +28,11 @@
                         <string>%USER_AGENT%</string>
                     </dict>
                     <key>re_pattern</key>
-                    <string>https://cdn\.rekordbox\.com/files/.*?/Install_rekordbox_7_.*\.pkg_\.zip</string>
+                    <string>data-url="(https://cdn.rekordbox.com/files/[0-9]+/Install_rekordbox_7_([0-9]+(_[0-9]+)+).pkg_.zip)"</string>
                     <key>result_output_var_name</key>
                     <string>match</string>
                     <key>url</key>
-                    <string>https://rekordbox.com/en/support/faq/v7/</string>
+                    <string>https://rekordbox.com/en/download/</string>
                 </dict>
             </dict>
             <dict>
