@@ -26,6 +26,8 @@ By combining online team collaboration tools with powerful collaborative work ma
             <string>Planview International AB</string>
             <key>display_name</key>
             <string>ProjectPlace</string>
+            <key>minimum_os_version</key>
+            <string>13.0</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -40,31 +42,6 @@ By combining online team collaboration tools with powerful collaborative work ma
     <string>com.github.dataJAR-recipes.download.ProjectPlace</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>Mac OS ([0-9]+(\.[0-9]+)+) and above</string>
-                <key>result_output_var_name</key>
-                <string>min_os_ver</string>
-                <key>url</key>
-                <string>https://success.planview.com/Planview_ProjectPlace/System_Requirements</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-             <key>Arguments</key>
-             <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>minimum_os_version</key>
-                    <string>%min_os_ver%</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
