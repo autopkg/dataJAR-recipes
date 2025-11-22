@@ -43,6 +43,10 @@ To download Intel use: x64"" in the DOWNLOAD_ARCH variable</string>
             <string>URLDownloader</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -54,10 +58,6 @@ To download Intel use: x64"" in the DOWNLOAD_ARCH variable</string>
             </dict>
             <key>Processor</key>
             <string>Unarchiver</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Arguments</key>
