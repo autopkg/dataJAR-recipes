@@ -63,10 +63,6 @@
                 </array>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
     </array>
 </dict>
 </plist>

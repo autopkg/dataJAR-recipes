@@ -50,6 +50,10 @@ Please also see: https://github.com/autopkg/dataJAR-recipes/pull/311</string>
             </dict>
             <dict>
                 <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
                 <string>CodeSignatureVerifier</string>
                 <key>Arguments</key>
                 <dict>
@@ -62,10 +66,6 @@ Please also see: https://github.com/autopkg/dataJAR-recipes/pull/311</string>
                         <string>Apple Root CA</string>
                     </array>
                 </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>EndOfCheckPhase</string>
             </dict>
         </array>
     </dict>

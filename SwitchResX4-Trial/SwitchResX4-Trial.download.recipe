@@ -28,6 +28,10 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
@@ -38,10 +42,6 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Processor</key>
