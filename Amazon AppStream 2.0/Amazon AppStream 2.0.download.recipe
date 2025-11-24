@@ -18,6 +18,26 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new ones for Amazon WorkSpaces Applications: https://github.com/autopkg/dataJAR-recipes/tree/master/Amazon%20WorkSpaces%20Applications
+
+For further information see https://aws.amazon.com/workspaces/applications/</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>appcast_url</key>
                 <string>https://clients.amazonappstream.com/installers/mac/global/appcast.xml</string>
             </dict>
