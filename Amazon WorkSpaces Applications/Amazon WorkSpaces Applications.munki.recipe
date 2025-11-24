@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Amazon WorkSpaces Applications and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Amazon WorkSpaces Applications</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>AmazonWorkSpacesApplications</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Amazon AppStream 2.0.app</string>
+                <string>Amazon WorkSpaces Applications.app</string>
+                <string>Updater.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Amazon WorkSpaces applications (formerly AppsStream 2.0) offers a fully managed solution to deliver software-as-a-service (SaaS) and web-based applications and transform desktop applications into cloud-based services without code changes. It enables global scalability without infrastructure management and supports multi-session capabilities, optimizing resource use and costs across various user types.</string>
+            <key>developer</key>
+            <string>AMZN Mobile LLC</string>
+            <key>display_name</key>
+            <string>Amazon WorkSpaces Applications</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Amazon WorkSpaces Applications</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
