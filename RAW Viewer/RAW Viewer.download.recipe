@@ -59,6 +59,10 @@
         </dict>
         <dict>
             <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
@@ -100,10 +104,6 @@
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_pkg/%NAME%.pkg</string>
             </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
         </dict>
         <dict>
             <key>Processor</key>
