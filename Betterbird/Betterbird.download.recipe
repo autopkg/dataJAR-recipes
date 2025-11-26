@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Betterbird.
+
+To download Apple Silicon use: "-arm64" in the DOWNLOAD_ARCH variable
+To download Intel leave DOWNLOAD_ARCH empty</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Betterbird</string>
+    <key>Input</key>
+    <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string></string>
+        <key>NAME</key>
+        <string>Betterbird</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://www.betterbird.eu/downloads/get.php?os=mac%DOWNLOAD_ARCH%&amp;lang=en-US&amp;version=release</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
