@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Videosync 2.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.download.Videosync 2</string>
+    <string>com.github.dataJAR-recipes.download.Videosync 2</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
