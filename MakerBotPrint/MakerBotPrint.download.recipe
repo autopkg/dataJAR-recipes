@@ -16,7 +16,7 @@
         <string>https://downloads.makerbot.com/installer/release/MakerBotPrintInstaller.pkg</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>

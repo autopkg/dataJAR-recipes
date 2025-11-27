@@ -18,7 +18,7 @@
         <string>https://s3.amazonaws.com/gladinetsupport</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>

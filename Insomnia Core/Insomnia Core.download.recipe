@@ -14,7 +14,7 @@
         <string>https://updates.insomnia.rest/downloads/mac/latest?app=com.insomnia.app&amp;ref=</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.4.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>

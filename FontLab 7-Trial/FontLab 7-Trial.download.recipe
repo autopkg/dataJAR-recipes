@@ -14,7 +14,7 @@
         <string>https://download.fontlab.com/fontlab-7/appcast-mac.xml</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>

@@ -14,7 +14,7 @@
         <string>https://pro.arkaos.com/downloads/mediamaster_mac.php</string>        
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
