@@ -2,77 +2,75 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of Aspera Connect and creates a package</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.pkg.Aspera Connect</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>AsperaConnect</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated, the vendor now proves a .pkg installer</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/scripts/IBM Aspera Connect Installer.app</string>
-                <key>source_path</key>
-                <string>%pathname%/IBM Aspera Connect Installer.app</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-            <key>Arguments</key>
-            <dict>
-                <key>archive_path</key>
-                <string>%RECIPE_CACHE_DIR%/scripts/IBM Aspera Connect Installer.app/Contents/Resources/AsperaApps.zip</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Aspera Connect.app/Contents/Info.plist</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>CFBundleIdentifier</key>
-                    <string>bundleid</string>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FileCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>file_content</key>
-                <string>#!/bin/bash
+	<key>Description</key>
+	<string>Downloads the latest version of Aspera Connect and creates a package</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.pkg.Aspera Connect</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>AsperaConnect</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.Aspera Connect</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated, the vendor now proves a .pkg installer</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/scripts/IBM Aspera Connect Installer.app</string>
+				<key>source_path</key>
+				<string>%pathname%/IBM Aspera Connect Installer.app</string>
+			</dict>
+			<key>Processor</key>
+			<string>Copier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>archive_path</key>
+				<string>%RECIPE_CACHE_DIR%/scripts/IBM Aspera Connect Installer.app/Contents/Resources/AsperaApps.zip</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>Unarchiver</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>info_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Aspera Connect.app/Contents/Info.plist</string>
+				<key>plist_keys</key>
+				<dict>
+					<key>CFBundleIdentifier</key>
+					<string>bundleid</string>
+					<key>CFBundleShortVersionString</key>
+					<string>version</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>PlistReader</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>file_content</key>
+				<string>#!/bin/bash
 
 #
 # Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
@@ -90,58 +88,60 @@ else
     /bin/echo "Cannot locate ${install_dir}/IBM Aspera Connect Installer.app/Contents/Resources/install, exiting..."
     exit 1
 fi</string>
-                <key>file_mode</key>
-                <string>0755</string>
-                <key>file_path</key>
-                <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgdirs</key>
-                <dict/>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_request</key>
-                <dict>
-                    <key>id</key>
-                    <string>%bundleid%</string>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
-                    <key>pkgroot</key>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                    <key>pkgtype</key>
-                    <string>flat</string>
-                    <key>scripts</key>
-                    <string>scripts</string>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                    <string>%RECIPE_CACHE_DIR%/scripts</string>
-                </array>
-            </dict>
-        </dict>
-    </array>
+				<key>file_mode</key>
+				<string>0755</string>
+				<key>file_path</key>
+				<string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
+			</dict>
+			<key>Processor</key>
+			<string>FileCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkgdirs</key>
+				<dict/>
+				<key>pkgroot</key>
+				<string>%RECIPE_CACHE_DIR%/pkgroot</string>
+			</dict>
+			<key>Processor</key>
+			<string>PkgRootCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_request</key>
+				<dict>
+					<key>id</key>
+					<string>%bundleid%</string>
+					<key>pkgname</key>
+					<string>%NAME%-%version%</string>
+					<key>pkgroot</key>
+					<string>%RECIPE_CACHE_DIR%/pkgroot</string>
+					<key>pkgtype</key>
+					<string>flat</string>
+					<key>scripts</key>
+					<string>scripts</string>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>PkgCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>path_list</key>
+				<array>
+					<string>%RECIPE_CACHE_DIR%/%NAME%</string>
+					<string>%RECIPE_CACHE_DIR%/pkgroot</string>
+					<string>%RECIPE_CACHE_DIR%/scripts</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>PathDeleter</string>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -2,49 +2,49 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of iSwiff and imports into Munki.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.iSwiff</string>
-    <key>Input</key>
-    <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>iSwiff</string>
-        <key>pkginfo</key>
-        <dict>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
-            <key>description</key>
-            <string>Play Flash games, animations and movies without your web browser.</string>
-            <key>display_name</key>
-            <string>iSwiff</string>
-            <key>name</key>
-            <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
-        </dict>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.iSwiff</string>
-    <key>Process</key>
+	<key>Description</key>
+	<string>Downloads the latest version of iSwiff and imports into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.iSwiff</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>iSwiff</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Play Flash games, animations and movies without your web browser.</string>
+			<key>display_name</key>
+			<string>iSwiff</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.iSwiff</string>
+	<key>Process</key>
 	<array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>iSwiff needs a manual local install of Flash Player and to set the system clock back (see https://echoone.com/iswiff/) and so this recipe is being retired</string>
-            </dict>
-        </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>iSwiff needs a manual local install of Flash Player and to set the system clock back (see https://echoone.com/iswiff/) and so this recipe is being retired</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
 	</array>
 </dict>
 </plist>

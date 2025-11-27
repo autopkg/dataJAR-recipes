@@ -2,69 +2,69 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of Amazon Corretto 8.  Acceptable ARCH input values are x64 or aarch64</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Amazon Corretto 8</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>AmazonCorretto8</string>
-        <key>ARCH</key>
-        <string>x64</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. Please use the new set located here: https://github.com/autopkg/dataJAR-recipes/tree/master/Amazon%20Corretto</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>filename</key>
-                <string>%NAME%.pkg</string>
-                <key>url</key>
-                <string>https://corretto.aws/downloads/latest/amazon-corretto-8-%ARCH%-macos-jdk.pkg</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: AMZN Mobile LLC (94KV3E626L)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Downloads the latest version of Amazon Corretto 8.  Acceptable ARCH input values are x64 or aarch64</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.Amazon Corretto 8</string>
+	<key>Input</key>
+	<dict>
+		<key>ARCH</key>
+		<string>x64</string>
+		<key>NAME</key>
+		<string>AmazonCorretto8</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. Please use the new set located here: https://github.com/autopkg/dataJAR-recipes/tree/master/Amazon%20Corretto</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%.pkg</string>
+				<key>url</key>
+				<string>https://corretto.aws/downloads/latest/amazon-corretto-8-%ARCH%-macos-jdk.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: AMZN Mobile LLC (94KV3E626L)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

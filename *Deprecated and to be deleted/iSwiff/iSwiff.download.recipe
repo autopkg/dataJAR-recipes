@@ -2,28 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Download recipe for the latest version of iSwiff.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.iSwiff</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>iSwiff</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>iSwiff needs a manual local install of Flash Player and to set the system clock back (see https://echoone.com/iswiff/) and so this recipe is being retired</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Download recipe for the latest version of iSwiff.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.iSwiff</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>iSwiff</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>iSwiff needs a manual local install of Flash Player and to set the system clock back (see https://echoone.com/iswiff/) and so this recipe is being retired</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+	</array>
 </dict>
 </plist>

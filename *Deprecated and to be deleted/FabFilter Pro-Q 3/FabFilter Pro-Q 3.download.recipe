@@ -2,76 +2,76 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of FabFilter Pro-Q 3</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.FabFilter Pro-Q 3</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>FabFilter Pro-Q 3</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. Please use new ones located here: https://github.com/autopkg/dataJAR-recipes/tree/master/FabFilter%20Pro-Q%204</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>/downloads/ffproq3.*?.dmg</string>
-                <key>url</key>
-                <string>https://www.fabfilter.com/download</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://www.fabfilter.com/%match%</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%/*.pkg</string>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: FabFilter (43SG2JNHFW)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Downloads the latest version of FabFilter Pro-Q 3</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.FabFilter Pro-Q 3</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>FabFilter Pro-Q 3</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. Please use new ones located here: https://github.com/autopkg/dataJAR-recipes/tree/master/FabFilter%20Pro-Q%204</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>/downloads/ffproq3.*?.dmg</string>
+				<key>url</key>
+				<string>https://www.fabfilter.com/download</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>https://www.fabfilter.com/%match%</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: FabFilter (43SG2JNHFW)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%/*.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

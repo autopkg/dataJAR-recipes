@@ -2,63 +2,63 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Download recipe for the latest version of renpy 7.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.renpy 7</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>renpy7</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1.0</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. Please use the new Ren’Py v8 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/renpy%208</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://www.renpy.org/latest.html</string>
-                <key>re_pattern</key>
-                <string>https://www.renpy.org/dl/7[\S]+\/renpy-[\S]+\-sdk.dmg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>%match%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%/renpy-*-sdk/renpy.app</string>
-                <key>requirement</key>
-                <string>identifier "Ren'Py Launcher" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XHTE5H7Z79</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Download recipe for the latest version of renpy 7.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.renpy 7</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>renpy7</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. Please use the new Ren’Py v8 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/renpy%208</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>https://www.renpy.org/dl/7[\S]+\/renpy-[\S]+\-sdk.dmg</string>
+				<key>url</key>
+				<string>https://www.renpy.org/latest.html</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>%match%</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%pathname%/renpy-*-sdk/renpy.app</string>
+				<key>requirement</key>
+				<string>identifier "Ren'Py Launcher" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XHTE5H7Z79</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

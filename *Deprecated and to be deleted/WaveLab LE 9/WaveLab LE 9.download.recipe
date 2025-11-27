@@ -2,73 +2,73 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Download recipe for the latest version of WaveLab LE 9</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.WaveLab LE 9</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>WaveLabLE9</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1.0</string>
-    <key>Process</key>
-    <array>
-         <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. The softyware title is now unsuppoted by the vendor please see: https://o.steinberg.net/index.php?id=15126&amp;L=1 for further info. All download links currently direct to a 404 error page.</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>https://download\.steinberg\.net/downloads_software/WaveLab_LE_9/.*?/Mac/WaveLab_LE_9.*?_Update_mac\.dmg</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
-                <key>url</key>
-                <string>https://www.steinberg.net/en/support/downloads/wavelab_9.html</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: Steinberg Media Technologies GmbH (5PMY476BJ6)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
-                <key>input_path</key>
-                <string>%pathname%/WaveLab LE 9 Update.pkg</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Download recipe for the latest version of WaveLab LE 9</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.WaveLab LE 9</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>WaveLabLE9</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. The softyware title is now unsuppoted by the vendor please see: https://o.steinberg.net/index.php?id=15126&amp;L=1 for further info. All download links currently direct to a 404 error page.</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>https://download\.steinberg\.net/downloads_software/WaveLab_LE_9/.*?/Mac/WaveLab_LE_9.*?_Update_mac\.dmg</string>
+				<key>result_output_var_name</key>
+				<string>url</string>
+				<key>url</key>
+				<string>https://www.steinberg.net/en/support/downloads/wavelab_9.html</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Steinberg Media Technologies GmbH (5PMY476BJ6)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%/WaveLab LE 9 Update.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

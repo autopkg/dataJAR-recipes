@@ -2,126 +2,126 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of NaturalReader 16 and imports it into Munki.
+	<key>Description</key>
+	<string>Downloads the latest version of NaturalReader 16 and imports it into Munki.
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.NaturalReader 16</string>
-    <key>Input</key>
-    <dict>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>NaturalReader16</string>
-        <key>pkginfo</key>
-        <dict>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
-            <key>description</key>
-            <string>NaturalReader is a downloadable text-to-speech desktop software for personal use. This easy-to-use software with natural-sounding voices can read to you any text such as Microsoft Word files, webpages, PDF files, and E-mails. Available with a one-time payment for a perpetual license.</string>
-            <key>developer</key>
-            <string>NaturalSoft Ltd</string>
-            <key>display_name</key>
-            <string>NaturalReader 16</string>
-            <key>name</key>
-            <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
-        </dict>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.NaturalReader 16</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. The vendor has moved to a Web App.
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.NaturalReader 16</string>
+	<key>Input</key>
+	<dict>
+		<key>DERIVE_MIN_OS</key>
+		<string>YES</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>NaturalReader16</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>NaturalReader is a downloadable text-to-speech desktop software for personal use. This easy-to-use software with natural-sounding voices can read to you any text such as Microsoft Word files, webpages, PDF files, and E-mails. Available with a one-time payment for a perpetual license.</string>
+			<key>developer</key>
+			<string>NaturalSoft Ltd</string>
+			<key>display_name</key>
+			<string>NaturalReader 16</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.NaturalReader 16</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. The vendor has moved to a Web App.
 
 https://www.naturalreaders.com/webapp.html
 
 Related Issue: https://github.com/autopkg/dataJAR-recipes/issues/348</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/</string>
-                <key>flat_pkg_path</key>
-                <string>%pathname%</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/</string>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/naturalreader16.pkg/Payload</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
-                <key>installs_item_paths</key>
-                <array>
-                    <string>/Applications/NaturalReader 16.app</string>
-                </array>
-                <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_path</key>
-                <string>%pathname%</string>
-                <key>repo_subdirectory</key>
-                <string>%MUNKI_REPO_SUBDIR%</string>
-            </dict>
-        </dict>
-    </array>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/</string>
+				<key>flat_pkg_path</key>
+				<string>%pathname%</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/Applications/</string>
+				<key>pkg_payload_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/naturalreader16.pkg/Payload</string>
+				<key>purge_destination</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>derive_minimum_os_version</key>
+				<string>%DERIVE_MIN_OS%</string>
+				<key>faux_root</key>
+				<string>%RECIPE_CACHE_DIR%</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/NaturalReader 16.app</string>
+				</array>
+				<key>version_comparison_key</key>
+				<string>CFBundleShortVersionString</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
 </dict>
 </plist>

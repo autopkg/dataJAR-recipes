@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of SketchUp Pro 2015 EN. 
+	<key>Description</key>
+	<string>Downloads the latest version of SketchUp Pro 2015 EN.
 
 Based on: com.github.jps3.download.SketchUpPro
 
@@ -11,35 +11,35 @@ Locales can be specified.
 
 Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.
 </string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.SketchUp Pro 2015 EN</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>SketchUpPro2015-EN</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe is now non-functional, only current year-2 are available via https://help.sketchup.com/en/downloading-older-versions now. Please remove it from your list of recipes.</string>
-            </dict>
-        </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.SketchUp Pro 2015 EN</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>SketchUpPro2015-EN</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe is now non-functional, only current year-2 are available via https://help.sketchup.com/en/downloading-older-versions now. Please remove it from your list of recipes.</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+	</array>
 </dict>
 </plist>

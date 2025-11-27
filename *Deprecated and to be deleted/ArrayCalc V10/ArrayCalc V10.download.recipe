@@ -2,74 +2,74 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the current release version of ArrayCalc V10.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.ArrayCalc V10</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>ArrayCalcV10</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>Consider switching to the ArrayCalc v12 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/ArrayCalc%20V12 - Older versions of ArrayCalc can be downloaded here: https://www.dbaudio.com/global/en/products/software/software-archive/.
+	<key>Description</key>
+	<string>Downloads the current release version of ArrayCalc V10.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.ArrayCalc V10</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>ArrayCalcV10</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>Consider switching to the ArrayCalc v12 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/ArrayCalc%20V12 - Older versions of ArrayCalc can be downloaded here: https://www.dbaudio.com/global/en/products/software/software-archive/.
 
 This recipe is deprecated and will be removed in the future.</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>http://swupdate\.dbaudio\.com/net_update/ArrayCalc_V10/ArrayCalc_V([0-9]+(\.[0-9]+)+)\.dmg</string>
-                <key>url</key>
-                <string>http://swupdate.dbaudio.com/net_update/ArrayCalc_V10_WebUpdate.xml</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>http://swupdate.dbaudio.com/net_update/ArrayCalc_V10/ArrayCalc_V%match%.dmg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%/ArrayCalc V10.app</string>
-                <key>requirement</key>
-                <string>identifier "com.dbaudio.ArrayCalc V10" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G24Y233R69</string>
-            </dict>
-        </dict>
-    </array>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>http://swupdate\.dbaudio\.com/net_update/ArrayCalc_V10/ArrayCalc_V([0-9]+(\.[0-9]+)+)\.dmg</string>
+				<key>url</key>
+				<string>http://swupdate.dbaudio.com/net_update/ArrayCalc_V10_WebUpdate.xml</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>http://swupdate.dbaudio.com/net_update/ArrayCalc_V10/ArrayCalc_V%match%.dmg</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%pathname%/ArrayCalc V10.app</string>
+				<key>requirement</key>
+				<string>identifier "com.dbaudio.ArrayCalc V10" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G24Y233R69</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

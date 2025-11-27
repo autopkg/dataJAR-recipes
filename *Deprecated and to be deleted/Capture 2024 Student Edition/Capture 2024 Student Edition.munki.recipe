@@ -2,71 +2,71 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of Capture 2024 Student Edition and imports it into Munki.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Capture 2024 Student Edition</string>
-    <key>Input</key>
-    <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>Capture2024StudentEdition</string>
-        <key>pkginfo</key>
-        <dict>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
-            <key>description</key>
-            <string>Save time with a lighting design, documentation and visualisation software that is both easy to learn and rewarding to use! Capture is a native macOS and Windows application that lets you work with lighting, video, laser, moving scenery and water effects. Where Capture truly excels is with its ease of use and seamless switching between design, documentation and visualisation. This provides an unprecedented level of flexibility and ability to support different types of design processes. It encourages you to try out new workflows and find faster ways of working.</string>
-            <key>developer</key>
-            <string>Capture</string>
-            <key>display_name</key>
-            <string>Capture 2024 Student Edition</string>
-            <key>name</key>
-            <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
-        </dict>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Capture 2024 Student Edition</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. Please use the new ones here: https://github.com/autopkg/dataJAR-recipes/tree/master/Capture%202025%20Student%20Edition</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_path</key>
-                <string>%pathname%</string>
-                <key>repo_subdirectory</key>
-                <string>%MUNKI_REPO_SUBDIR%</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Downloads the latest version of Capture 2024 Student Edition and imports it into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.Capture 2024 Student Edition</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>Capture2024StudentEdition</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>Save time with a lighting design, documentation and visualisation software that is both easy to learn and rewarding to use! Capture is a native macOS and Windows application that lets you work with lighting, video, laser, moving scenery and water effects. Where Capture truly excels is with its ease of use and seamless switching between design, documentation and visualisation. This provides an unprecedented level of flexibility and ability to support different types of design processes. It encourages you to try out new workflows and find faster ways of working.</string>
+			<key>developer</key>
+			<string>Capture</string>
+			<key>display_name</key>
+			<string>Capture 2024 Student Edition</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.Capture 2024 Student Edition</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. Please use the new ones here: https://github.com/autopkg/dataJAR-recipes/tree/master/Capture%202025%20Student%20Edition</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
 </dict>
 </plist>

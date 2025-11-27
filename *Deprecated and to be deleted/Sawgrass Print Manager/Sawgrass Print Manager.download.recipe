@@ -2,96 +2,96 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of Sawgrass Print Manager</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Sawgrass Print Manager</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>Sawgrass Print Manager</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>Sawgrass Print Manager is no longer maintained by the vendor. This recipe has been deprecated.
+	<key>Description</key>
+	<string>Downloads the latest version of Sawgrass Print Manager</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.Sawgrass Print Manager</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Sawgrass Print Manager</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>Sawgrass Print Manager is no longer maintained by the vendor. This recipe has been deprecated.
 
 Please use recipes for the vendors replacement PrintMate: https://github.com/autopkg/dataJAR-recipes/tree/master/PrintMate</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://care.sawgrassink.com/hc/en-us/articles/16593110589595-Download-SPM-for-MacOS</string>
-                <key>re_pattern</key>
-                <string>href=\"(https://download\.sawgrassink\.com/[A-Za-z0-9]+/SPM_MacOS_v([0-9]+(\.[0-9]+)+)_online\.pkg)\"</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>User-Agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
-                    <key>Host</key>
-                    <string>care.sawgrassink.com</string>
-                    <key>Referer</key>
-                    <string>https://care.sawgrassink.com/hc/en-us/sections/4407258685979-Download-Sawgrass-Print-Manager</string>
-                </dict>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>filename</key>
-                <string>%NAME%.pkg</string>
-                <key>request_headers</key>
-                <dict>
-                    <key>User-Agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
-                </dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: Sawgrass Technologies, Inc. (2DD4HMHX5K)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
-            </dict>
-        </dict>
-    </array>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>href=\"(https://download\.sawgrassink\.com/[A-Za-z0-9]+/SPM_MacOS_v([0-9]+(\.[0-9]+)+)_online\.pkg)\"</string>
+				<key>request_headers</key>
+				<dict>
+					<key>Host</key>
+					<string>care.sawgrassink.com</string>
+					<key>Referer</key>
+					<string>https://care.sawgrassink.com/hc/en-us/sections/4407258685979-Download-Sawgrass-Print-Manager</string>
+					<key>User-Agent</key>
+					<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
+				</dict>
+				<key>result_output_var_name</key>
+				<string>DOWNLOAD_URL</string>
+				<key>url</key>
+				<string>https://care.sawgrassink.com/hc/en-us/articles/16593110589595-Download-SPM-for-MacOS</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%.pkg</string>
+				<key>request_headers</key>
+				<dict>
+					<key>User-Agent</key>
+					<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15</string>
+				</dict>
+				<key>url</key>
+				<string>%DOWNLOAD_URL%</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Sawgrass Technologies, Inc. (2DD4HMHX5K)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

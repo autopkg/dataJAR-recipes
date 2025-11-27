@@ -2,22 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version CrashPlan PROe Client and imports into Munki</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.CrashPlanPROeClient</string>
-    <key>Input</key>
-    <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
+	<key>Description</key>
+	<string>Downloads the latest version CrashPlan PROe Client and imports into Munki</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.CrashPlanPROeClient</string>
+	<key>Input</key>
+	<dict>
+		<key>DOWNLOAD_URL</key>
+		<string>https://download.crashplan.com/installs/mac/install/CrashPlanPROe/</string>
+		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>CrashPlanPROeClient</string>
-        <key>SEARCH_URL</key>
-        <string>https://www.crashplan.com/shared/js/cp.download.js</string>
-        <key>SEARCH_PATTERN</key>
-        <string>cp.download.CPPROE_CLIENT_VERSION = \'(?P&lt;version&gt;.*?)\';</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://download.crashplan.com/installs/mac/install/CrashPlanPROe/</string>
+		<key>NAME</key>
+		<string>CrashPlanPROeClient</string>
+		<key>SEARCH_PATTERN</key>
+		<string>cp.download.CPPROE_CLIENT_VERSION = \'(?P&lt;version&gt;.*?)\';</string>
+		<key>SEARCH_URL</key>
+		<string>https://www.crashplan.com/shared/js/cp.download.js</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>
@@ -37,68 +37,66 @@
 			<key>unattended_uninstall</key>
 			<true/>
 		</dict>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>ParentRecipe</key>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>ParentRecipe</key>
 	<string>com.github.homebysix.pkg.CrashPlanPROeClient</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been no longer works and has been deprecated.</string>
-            </dict>
-        </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe is now non-functional, as parent pkg recipe was deleted: https://github.com/autopkg/homebysix-recipes/commit/a8bef0ee56626811992dac34c639122c618d75ab#diff-ce0b34293223285eb9810a1219e7ff05</string>
-            </dict>
-        </dict>
-        <dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
+	<key>Process</key>
+	<array>
+		<dict>
 			<key>Arguments</key>
 			<dict>
-				<key>flat_pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/CrashPlanPROe-%version%.pkg</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/pkgexpand</string>
+				<key>warning_message</key>
+				<string>This recipe has been no longer works and has been deprecated.</string>
 			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
 		</dict>
 		<dict>
-			<key>Processor</key>
-			<string>PkgRootCreator</string>
 			<key>Arguments</key>
 			<dict>
-				<key>pkgroot</key>
-				<string>%RECIPE_CACHE_DIR%/pkgroot</string>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe is now non-functional, as parent pkg recipe was deleted: https://github.com/autopkg/homebysix-recipes/commit/a8bef0ee56626811992dac34c639122c618d75ab#diff-ce0b34293223285eb9810a1219e7ff05</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/pkgexpand</string>
+				<key>flat_pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/CrashPlanPROe-%version%.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
 				<key>pkgdirs</key>
 				<dict>
 					<key>Applications</key>
 					<string>0755</string>
 				</dict>
+				<key>pkgroot</key>
+				<string>%RECIPE_CACHE_DIR%/pkgroot</string>
 			</dict>
+			<key>Processor</key>
+			<string>PkgRootCreator</string>
 		</dict>
 		<dict>
-			<key>Processor</key>
-			<string>PkgPayloadUnpacker</string>
 			<key>Arguments</key>
 			<dict>
 				<key>destination_path</key>
@@ -106,6 +104,8 @@
 				<key>pkg_payload_path</key>
 				<string>%RECIPE_CACHE_DIR%/pkgexpand/crashplan.pkg/Payload</string>
 			</dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
 		</dict>
 		<dict>
 			<key>Arguments</key>
@@ -138,10 +138,10 @@
 			<dict>
 				<key>additional_pkginfo</key>
 				<dict>
-					<key>version</key>
-					<string>%version%</string>
 					<key>uninstall_method</key>
 					<string>/Library/Application Support/CrashPlan/Uninstall.app/Contents/Resources/uninstall.sh</string>
+					<key>version</key>
+					<string>%version%</string>
 				</dict>
 			</dict>
 			<key>Processor</key>
@@ -158,6 +158,6 @@
 			<key>Processor</key>
 			<string>MunkiImporter</string>
 		</dict>
-    </array>
+	</array>
 </dict>
 </plist>

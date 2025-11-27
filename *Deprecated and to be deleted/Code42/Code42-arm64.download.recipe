@@ -2,69 +2,69 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest arm64 version of Code42.
+	<key>Description</key>
+	<string>Downloads the latest arm64 version of Code42.
 
 This recipe has been deprecated. Please use the new recipes located here: https://github.com/autopkg/apizz-recipes/tree/master/Code42</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.Code42-arm64</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>Code42</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1.0</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. Please use the new recipes located here: https://github.com/autopkg/apizz-recipes/tree/master/Code42</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
-                <key>url</key>
-                <string>https://download.code42.com/installs/agent/latest-mac-arm64.dmg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: Code 42 Software (9YV9435DHD)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
-                <key>input_path</key>
-                <string>%pathname%/Install Code42.pkg</string>
-            </dict>
-        </dict>
-    </array>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.Code42-arm64</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Code42</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated. Please use the new recipes located here: https://github.com/autopkg/apizz-recipes/tree/master/Code42</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%.dmg</string>
+				<key>url</key>
+				<string>https://download.code42.com/installs/agent/latest-mac-arm64.dmg</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Code 42 Software (9YV9435DHD)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%/Install Code42.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

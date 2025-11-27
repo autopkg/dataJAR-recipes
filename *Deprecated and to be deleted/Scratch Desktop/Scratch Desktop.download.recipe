@@ -19,24 +19,24 @@
 	<string>1.1</string>
 	<key>Process</key>
 	<array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated following the release of Scratch 3 in place of Scratch Desktop</string>
-             </dict>
-           	<key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
-            </dict>
-        </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>This recipe has been deprecated following the release of Scratch 3 in place of Scratch Desktop</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
 	</array>
 </dict>
 </plist>

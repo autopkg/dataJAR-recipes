@@ -2,58 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the latest version of Vanta Agent.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.VantaAgent</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>VantaAgent</string>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>Consider switching to the VantaAgent recipes in the nstrauss-recipes repo. This recipe is deprecated and will be removed in the future.</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>filename</key>
-                <string>%NAME%.pkg</string>
-                <key>url</key>
-                <string>https://app.vanta.com/osquery/download/macOS</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>expected_authority_names</key>
-                <array>
-                    <string>Developer ID Installer: Vanta Inc (632L25QNV4)</string>
-                    <string>Developer ID Certification Authority</string>
-                    <string>Apple Root CA</string>
-                </array>
-                <key>input_path</key>
-                <string>%pathname%</string>
-            </dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
-        </dict>
-    </array>
+	<key>Description</key>
+	<string>Downloads the latest version of Vanta Agent.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.download.VantaAgent</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>VantaAgent</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>Consider switching to the VantaAgent recipes in the nstrauss-recipes repo. This recipe is deprecated and will be removed in the future.</string>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%.pkg</string>
+				<key>url</key>
+				<string>https://app.vanta.com/osquery/download/macOS</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: Vanta Inc (632L25QNV4)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%pathname%</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
 </dict>
 </plist>

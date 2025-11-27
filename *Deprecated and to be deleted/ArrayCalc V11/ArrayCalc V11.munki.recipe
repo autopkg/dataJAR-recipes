@@ -2,81 +2,81 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Description</key>
-    <string>Downloads the current release version of ArrayCalc V11, builds a package and imports it to Munki.</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.ArrayCalc V11</string>
-    <key>Input</key>
-    <dict>
-        <key>NAME</key>
-        <string>ArrayCalcV11</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps</string>
-        <key>pkginfo</key>
-        <dict>
-            <key>blocking_applications</key>
-            <array>
-                <string>ArrayCalc V11</string>
-            </array>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
-            <key>category</key>
-            <string>Applications</string>
-            <key>description</key>
-            <string>The d&amp;b ArrayCalc simulation software is the simulation tool for d&amp;b line arrays, column and point source loudspeakers as well as subwoofers. This is a comprehensive toolbox for all tasks associated with acoustic design, performance prediction, alignment, rigging and safety parameters.</string>
-            <key>developer</key>
-            <string>d&amp;b audiotechnik GmbH &amp; Co</string>
-            <key>display_name</key>
-            <string>ArrayCalc V11</string>
-            <key>name</key>
-            <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
-        </dict>
-    </dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.ArrayCalc V11</string>
-    <key>Process</key>
-    <array>
-        <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>Consider switching to the ArrayCalc v12 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/ArrayCalc%20V12 - Older versions of ArrayCalc can be downloaded here: https://www.dbaudio.com/global/en/products/software/software-archive/.
+	<key>Description</key>
+	<string>Downloads the current release version of ArrayCalc V11, builds a package and imports it to Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.dataJAR-recipes.munki.ArrayCalc V11</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps</string>
+		<key>NAME</key>
+		<string>ArrayCalcV11</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>blocking_applications</key>
+			<array>
+				<string>ArrayCalc V11</string>
+			</array>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>category</key>
+			<string>Applications</string>
+			<key>description</key>
+			<string>The d&amp;b ArrayCalc simulation software is the simulation tool for d&amp;b line arrays, column and point source loudspeakers as well as subwoofers. This is a comprehensive toolbox for all tasks associated with acoustic design, performance prediction, alignment, rigging and safety parameters.</string>
+			<key>developer</key>
+			<string>d&amp;b audiotechnik GmbH &amp; Co</string>
+			<key>display_name</key>
+			<string>ArrayCalc V11</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.1</string>
+	<key>ParentRecipe</key>
+	<string>com.github.dataJAR-recipes.download.ArrayCalc V11</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>warning_message</key>
+				<string>Consider switching to the ArrayCalc v12 recipes: https://github.com/autopkg/dataJAR-recipes/tree/master/ArrayCalc%20V12 - Older versions of ArrayCalc can be downloaded here: https://www.dbaudio.com/global/en/products/software/software-archive/.
 
 This recipe is deprecated and will be removed in the future.</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_path</key>
-                <string>%pathname%</string>
-                <key>repo_subdirectory</key>
-                <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
-            </dict>
-        </dict>
-    </array>
+			</dict>
+			<key>Processor</key>
+			<string>DeprecationWarning</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>predicate</key>
+				<string>TRUEPREDICATE</string>
+			</dict>
+			<key>Processor</key>
+			<string>StopProcessingIf</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+				<key>version_comparison_key</key>
+				<string>CFBundleShortVersionString</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
 </dict>
 </plist>
