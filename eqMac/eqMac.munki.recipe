@@ -45,6 +45,10 @@ Parametric Equalizer, App Volume Mixer and more...</string>
 /bin/chmod 644 "/Library/LaunchDaemons/com.bitgapp.eqmac.helper.plist"
 
 exit</string>
+            <key>uninstall_method</key>
+
+            <string>uninstall_script</string>
+
             <key>uninstall_script</key>
             <string>#!/bin/bash
 
