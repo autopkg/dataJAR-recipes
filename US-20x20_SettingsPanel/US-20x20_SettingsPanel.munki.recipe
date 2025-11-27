@@ -40,48 +40,59 @@
     <string>com.github.dataJAR-recipes.download.US-20x20SettingsPanel</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Processor</key>
-        <string>Unarchiver</string>
-        <key>Arguments</key>
         <dict>
-            <key>destination_path</key>
-            <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-            <key>purge_destination</key>
-            <true/>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
         </dict>
-    </dict>
-    <dict>
-        <key>Processor</key>
-        <string>FileFinder</string>
-        <key>Arguments</key>
         <dict>
-            <key>pattern</key>
-            <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
+            </dict>
         </dict>
-    </dict>
-    <dict>
-        <key>Arguments</key>
         <dict>
-            <key>source_pkg</key>
-            <string>%found_filename%/US-20x20.pkg</string>
-            <key>pkg_path</key>
-            <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_pkg</key>
+                <string>%found_filename%/US-20x20.pkg</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
-        <key>Processor</key>
-        <string>PkgCopier</string>
-    </dict>
-    <dict>
-        <key>Arguments</key>
         <dict>
-            <key>pkg_path</key>
-            <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-            <key>repo_subdirectory</key>
-            <string>%MUNKI_REPO_SUBDIR%</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
-        <key>Processor</key>
-        <string>MunkiImporter</string>
-    </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+        </dict>
     </array>
 </dict>
 </plist>
