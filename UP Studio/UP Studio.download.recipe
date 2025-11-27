@@ -43,8 +43,6 @@
                 <key>Processor</key>
                 <string>EndOfCheckPhase</string>
             </dict>
-            <key>Comment</key>
-            <string>Code signature verification temporarily disabled due to expired Apple certificate in signing chain. &lt;dict&gt; &lt;key&gt;Arguments&lt;/key&gt; &lt;dict&gt; &lt;key&gt;input_path&lt;/key&gt; &lt;string&gt;%pathname%/Up Studio.app&lt;/string&gt; &lt;key&gt;requirement&lt;/key&gt; &lt;string&gt;(anchor apple generic and certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = &quot;2HU95337PZ&quot;) and identifier &quot;com.tiertime.upStudio&quot;&lt;/string&gt; &lt;/dict&gt; &lt;key&gt;Processor&lt;/key&gt; &lt;string&gt;CodeSignatureVerifier&lt;/string&gt; &lt;/dict&gt;</string>
             <dict>
                 <key>Arguments</key>
                 <dict>
