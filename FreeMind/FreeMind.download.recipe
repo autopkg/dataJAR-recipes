@@ -11,6 +11,8 @@
         <key>NAME</key>
         <string>FreeMind</string>
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.1.0</string>
     <key>Process</key>
     <array>
         <dict>

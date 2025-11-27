@@ -14,7 +14,7 @@
         <string>Disk Inventory X</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Disk Inventory X</string>
     <key>Process</key>

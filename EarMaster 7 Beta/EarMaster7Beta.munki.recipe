@@ -33,7 +33,7 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.2.5</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.EarMaster 7 Beta</string>
     <key>Process</key>

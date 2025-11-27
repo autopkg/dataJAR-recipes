@@ -13,6 +13,8 @@
         <key>DOWNLOAD_URL</key>
         <string>https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg</string>    
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.0</string>
     <key>ParentRecipe</key>
     <string>com.github.hansen-m.download.UnityHub</string>
     <key>Process</key>

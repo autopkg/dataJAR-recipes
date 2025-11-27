@@ -11,6 +11,8 @@
 		<key>NAME</key>
 		<string>framer-modules</string>
 	</dict>
+	<key>MinimumVersion</key>
+	<string>0.0</string>
 	<key>ParentRecipe</key>
 	<string>com.github.dataJAR-recipes.download.framer-modules</string>
 	<key>Process</key>

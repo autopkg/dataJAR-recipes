@@ -56,6 +56,8 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
             <true/>
         </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.hansen-m.download.Anaconda</string>
     <key>Process</key>

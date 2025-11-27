@@ -32,6 +32,8 @@
                      <true/>
                 </dict>
           </dict>
+     <key>MinimumVersion</key>
+     <string>0.1.0</string>
      <key>ParentRecipe</key>
      <string>com.github.rustymyers.download.opentoonz</string>
      <key>Process</key>

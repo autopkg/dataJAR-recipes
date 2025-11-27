@@ -20,7 +20,7 @@ Set ARCHITECTURE to "-arm64" to download for Apple Silicon. Leave blank for Inte
         <string>-arm64</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.3.1</string>
     <key>Process</key>
     <array>
         <dict>

@@ -18,6 +18,8 @@ To download the Intel version use "amd64" in the ARCH_TYPE variable.</string>
     </dict>
     <key>MiniumumVersion</key>
     <string>1.1</string>
+    <key>MinimumVersion</key>
+    <string>0.3.1</string>
     <key>Process</key>
     <array>
         <dict>

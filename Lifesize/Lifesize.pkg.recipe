@@ -11,6 +11,8 @@
         <key>NAME</key>
         <string>Lifesize</string>
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Lifesize</string>
     <key>Process</key>
