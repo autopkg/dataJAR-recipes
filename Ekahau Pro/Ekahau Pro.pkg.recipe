@@ -14,12 +14,18 @@
         <string>Ekahau Pro</string>
          <key>LANGUAGE</key>
         <string>en</string>      
-        <!--This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts --> 
-        <!--Acceptable values for this are: -->
-        <!--"en" for English -->
-        <!--"fr" for French / Française -->
-        <!--"de" for German / Deutsche -->
-        <!--"ja" for Japanese / 日本人-->
+        <key>Comment</key>
+        <string>This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts</string>
+        <key>Comment</key>
+        <string>Acceptable values for this are:</string>
+        <key>Comment</key>
+        <string>&quot;en&quot; for English</string>
+        <key>Comment</key>
+        <string>&quot;fr&quot; for French / Française</string>
+        <key>Comment</key>
+        <string>&quot;de&quot; for German / Deutsche</string>
+        <key>Comment</key>
+        <string>&quot;ja&quot; for Japanese / 日本人</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
