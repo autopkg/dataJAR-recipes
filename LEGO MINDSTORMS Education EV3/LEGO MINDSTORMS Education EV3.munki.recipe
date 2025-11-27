@@ -4,7 +4,7 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of LEGO MINDSTORMS Education EV3 and imports it into Munki.
-    
+
     Based on: https://github.com/autopkg/aysiu-recipes/blob/master/LegoMindstorms/LegoMindstorms.munki.recipe</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.LEGO MINDSTORMS Education EV3</string>
@@ -35,23 +35,45 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.1.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.sebtomasi.download.LegoMindstormsEducation</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated to match the Parent Recipe.
+
+        "The sebtomasi-recipes repo, which includes this recipe, is deprecated and will be removed in the future (details: https://github.com/autopkg/sebtomasi-recipes/issues/26).
+
+        Please search for alternative recipes at autopkgweb.com. If you host a recipe repo in the AutoPkg org and want to take ownership of this recipe, please comment in the issue linked above."</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
-			<dict>
-				<key>flat_pkg_path</key>
-				<string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -68,14 +90,14 @@
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
-			<dict>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>
@@ -105,6 +127,18 @@
                     <string>%pathname%</string>
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                </array>
             </dict>
         </dict>
     </array>
