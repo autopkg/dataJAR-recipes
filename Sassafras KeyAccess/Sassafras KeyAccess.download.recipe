@@ -17,22 +17,11 @@
     <array>
         <dict>
             <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://www.sassafras.com/client-download/</string>
-                <key>re_pattern</key>
-                <string>(https://www\.sassafras\.com/links/ksp-client-\d*-latest\.pkg)</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%match%</string>
+                <string>https://download.sassafras.com/software/release/current/Installers/MacOS/Client/ksp-client.pkg</string>
             </dict>
         </dict>
         <dict>
