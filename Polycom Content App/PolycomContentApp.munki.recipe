@@ -30,6 +30,8 @@
             <string>Polycom</string>
             <key>display_name</key>
             <string>Polycom Content App</string>
+            <key>name</key>
+            <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
         </dict>
