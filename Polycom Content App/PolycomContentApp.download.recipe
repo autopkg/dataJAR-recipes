@@ -10,10 +10,10 @@
     <dict>
         <key>NAME</key>
         <string>PolycomContentApp</string>
-        <key>SEARCH_URL</key>
-        <string>https://www.poly.com/us/en/support/products/video-conferencing/accessories/content-app</string>
         <key>POLYCOMRPDESKTOP_DMG_REPATTERN</key>
         <string>https://downloads\.polycom\.com/video/content-app/PolycomContentApp_(?P&lt;version&gt;.*?_.*?_.*?)_(?P&lt;bundle_version&gt;.*?)\.dmg</string>
+        <key>SEARCH_URL</key>
+        <string>https://www.poly.com/us/en/support/products/video-conferencing/accessories/content-app</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -38,43 +38,43 @@
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%SEARCH_URL%</string>
                 <key>re_pattern</key>
                 <string>(?P&lt;url&gt;%POLYCOMRPDESKTOP_DMG_REPATTERN%)</string>
+                <key>url</key>
+                <string>%SEARCH_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%url%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Polycom (WJCM3F7AQ4)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
