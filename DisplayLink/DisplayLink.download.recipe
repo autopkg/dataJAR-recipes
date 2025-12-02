@@ -4,7 +4,7 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of the DisplayLink Drivers (not Manager).
-	Taken over from bochoven-recipe (https://github.com/autopkg/bochoven-recipes/issues/35)</string>
+    Taken over from bochoven-recipe (https://github.com/autopkg/bochoven-recipes/issues/35)</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.DisplayLink</string>
     <key>Input</key>
@@ -27,12 +27,12 @@
                 <string>Looks like DisplayLink Drivers are no longer available, only the DisplayLink Manager. A .download for DisplayLink Manager can be found at: https://github.com/autopkg/smithjw-recipes/blob/master/DisplayLink/DisplayLink%20Manager.download.recipe.yaml, a .munki recipe at: https://github.com/autopkg/dataJAR-recipes/blob/master/DisplayLink%20Manager/DisplayLink%20Manager.munki.recipe</string>
              </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>
@@ -71,14 +71,14 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pattern</key>
-				<string>%RECIPE_CACHE_DIR%/downloads/*.dmg</string>
-			</dict>
-			<key>Processor</key>
-			<string>FileFinder</string>
-		</dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/*.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

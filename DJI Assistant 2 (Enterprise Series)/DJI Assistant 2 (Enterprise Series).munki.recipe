@@ -38,7 +38,7 @@
     <string>com.github.dataJAR-recipes.download.DJI Assistant 2 (Enterprise Series)</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>

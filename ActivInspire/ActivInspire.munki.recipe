@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>ActivInspire</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -25,9 +25,9 @@
             <key>name</key>
             <string>%NAME%</string>
             <key>requires</key>
-			<array>
-				<string>AdobeFlashPlayer</string>
-			</array>
+            <array>
+                <string>AdobeFlashPlayer</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>

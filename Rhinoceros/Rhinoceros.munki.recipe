@@ -37,10 +37,10 @@
     <key>MinimumVersion</key>
     <string>1.0</string>
     <key>ParentRecipe</key>
-	<string>com.github.hansen-m.download.Rhinoceros</string>
+    <string>com.github.hansen-m.download.Rhinoceros</string>
     <key>Process</key>
-	<array>
-		<dict>
+    <array>
+        <dict>
             <key>Processor</key>
             <string>FileFinder</string>
             <key>Arguments</key>
@@ -49,19 +49,19 @@
                 <string>%RECIPE_CACHE_DIR%/downloads/rhino_*.dmg</string>
             </dict>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%found_filename%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-				<key>version_comparison_key</key>
-				<string>CFBundleShortVersionString</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>

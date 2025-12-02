@@ -20,7 +20,7 @@
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.US-20x20SettingsPanel</string>
     <key>Process</key>
-    <array> 
+    <array>
     <dict>
         <key>Processor</key>
         <string>Unarchiver</string>
@@ -40,7 +40,7 @@
             <key>pattern</key>
             <string>%RECIPE_CACHE_DIR%/%NAME%/US-20x20_*.dmg</string>
         </dict>
-    </dict>   
+    </dict>
     <dict>
         <key>Arguments</key>
         <dict>

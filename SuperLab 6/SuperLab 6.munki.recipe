@@ -20,7 +20,7 @@
             </array>
             <key>description</key>
             <string>Designed for Researchers, not Programmers
- 
+
 Every other tool to build experiments relies on programming. SuperLab has been offering a better way — since 1991. Even complex experiments like staircase and visual thresholds are easy to implement using a point-and-click interface.</string>
             <key>display_name</key>
             <string>SuperLab 6</string>

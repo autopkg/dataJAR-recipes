@@ -36,23 +36,23 @@
     <string>com.github.dataJAR-recipes.pkg.Apple Mastering Tools</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Utilities/Audio to WAVE 96K Droplet.app</string>
-					<string>/Applications/Utilities/Audio to WAVE Droplet.app</string>
-					<string>/Applications/Utilities/Master for iTunes Droplet.app</string>
-					<string>/usr/local/bin/afclip</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Utilities/Audio to WAVE 96K Droplet.app</string>
+                    <string>/Applications/Utilities/Audio to WAVE Droplet.app</string>
+                    <string>/Applications/Utilities/Master for iTunes Droplet.app</string>
+                    <string>/usr/local/bin/afclip</string>
+                </array>
+            </dict>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -61,9 +61,9 @@
                     <string>%version%</string>
                 </dict>
             </dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

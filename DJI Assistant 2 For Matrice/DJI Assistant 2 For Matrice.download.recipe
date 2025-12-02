@@ -24,12 +24,12 @@
                 <string>These recipes have been replaced by: https://github.com/autopkg/dataJAR-recipes/tree/master/DJI%20Assistant%202%20(Enterprise%20Series)</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

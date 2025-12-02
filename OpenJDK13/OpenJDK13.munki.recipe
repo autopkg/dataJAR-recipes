@@ -42,7 +42,7 @@
             <true/>
             <key>uninstallable</key>
             <true/>
-        </dict>        
+        </dict>
     </dict>
     <key>ParentRecipe</key>
     <string>com.github.rtrouton.pkg.OpenJDK13</string>
@@ -57,12 +57,12 @@
                 <string>This has been replaced by OpenJDK 15. See https://github.com/autopkg/dataJAR-recipes/blob/master/OpenJDK15/OpenJDK15.munki.recipe.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

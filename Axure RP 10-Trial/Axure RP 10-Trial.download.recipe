@@ -4,12 +4,12 @@
 <dict>
     <key>Description</key>
     <string>Download recipe of the Axure RP 10 Trial.
-    
-NOTE: Axure has created two binaries for Intel and ARM hardware.  
+
+NOTE: Axure has created two binaries for Intel and ARM hardware.
 Modify the architecture  in your override to accomodate accordingly.
 
 Set ARCHITECTURE to "-arm64" to download for Apple Silicon. Leave blank for Intel.
-	</string>
+    </string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Axure RP 10-Trial</string>
     <key>Input</key>

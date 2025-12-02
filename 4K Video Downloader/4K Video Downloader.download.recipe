@@ -28,8 +28,8 @@
                 <string>match</string>
                 <key>request_headers</key>
                 <dict>
-                		<key>User-Agent</key>
-                		<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36</string>
+                        <key>User-Agent</key>
+                        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36</string>
                 </dict>
             </dict>
         </dict>

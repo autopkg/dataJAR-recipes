@@ -2,34 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of mu-editor and makes a package.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.pkg.mu-editor</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>mu-editor</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.0.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.mu-editor</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>app_path</key>
-				<string>%pathname%/mu-editor.app</string>
-				<key>bundleid</key>
-				<string>com.github.mu-editor-%version%</string>
-				<key>version</key>
-				<string>%version%</string>
-			</dict>
-			<key>Processor</key>
-			<string>AppPkgCreator</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the current release version of mu-editor and makes a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.mu-editor</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>mu-editor</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.mu-editor</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>app_path</key>
+                <string>%pathname%/mu-editor.app</string>
+                <key>bundleid</key>
+                <string>com.github.mu-editor-%version%</string>
+                <key>version</key>
+                <string>%version%</string>
+            </dict>
+            <key>Processor</key>
+            <string>AppPkgCreator</string>
+        </dict>
+    </array>
 </dict>
 </plist>

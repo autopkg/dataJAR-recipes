@@ -21,7 +21,7 @@ i.e.: `-k PRERELEASE=yes`</string>
     <key>Process</key>
     <array>
         <dict>
-        	<key>Processor</key>
+            <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>

@@ -17,7 +17,7 @@
     <string>com.github.dataJAR-recipes.download.Kaspersky Network Agent</string>
     <key>Process</key>
     <array>
-		<dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCopier</string>
             <key>Arguments</key>

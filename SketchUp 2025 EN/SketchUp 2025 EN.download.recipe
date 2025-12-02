@@ -15,19 +15,19 @@
     <string>1.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://sketchup.trimble.com/en/download/all</string>
-				<key>re_pattern</key>
-				<string>(https://download.sketchup.com/SketchUp-2025-([0-9]+(-[0-9]+)+).dmg)</string>
-				<key>result_output_var_name</key>
-				<string>DOWNLOAD_URL</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://sketchup.trimble.com/en/download/all</string>
+                <key>re_pattern</key>
+                <string>(https://download.sketchup.com/SketchUp-2025-([0-9]+(-[0-9]+)+).dmg)</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>

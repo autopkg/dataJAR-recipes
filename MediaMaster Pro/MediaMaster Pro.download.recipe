@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>MediaMasterPro</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://pro.arkaos.com/downloads/mediamaster_mac.php</string>        
+        <string>https://pro.arkaos.com/downloads/mediamaster_mac.php</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -26,12 +26,12 @@
                 <string>With the release of MediaMaster Pro, these recipes has been deprecated. MediaMaster Pro 5 recipes can still be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/MediaMaster%20Pro%205, and MediaMaster Pro 6 recipes found at: https://github.com/autopkg/dataJAR-recipes/tree/master/MediaMaster%20Pro%206.</string>
              </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>
@@ -62,7 +62,7 @@
                     <string>Developer ID Installer: ArKaos SA (SKE5HH5VKW)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
-                </array>            
+                </array>
             </dict>
         </dict>
     </array>

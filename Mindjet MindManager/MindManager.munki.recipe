@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>MindManager</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -45,12 +45,12 @@
                 <string>v14 has been released, as such these recipes have been deprecated and replaced with: https://github.com/autopkg/dataJAR-recipes/tree/master/MindManager%2014.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

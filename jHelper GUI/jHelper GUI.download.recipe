@@ -2,24 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of jHelper GUI.
+    <key>Description</key>
+    <string>Downloads the latest version of jHelper GUI.
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.jHelper GUI</string>
-	<key>Input</key>
-	<dict>
-		<key>PRERELEASE</key>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.jHelper GUI</string>
+    <key>Input</key>
+    <dict>
+        <key>PRERELEASE</key>
         <string></string>
-		<key>NAME</key>
-		<string>jHelper GUI</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
+        <key>NAME</key>
+        <string>jHelper GUI</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
         <dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>
@@ -29,6 +29,6 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <string>jHelper GUI is no longer available for download. Please do not use this recipe.</string>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>

@@ -30,7 +30,7 @@
 # Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
 #
 # v7: https://help.fontlab.com/fontlab/7/manual/FontLab-Multi-Seat-License-Setup/
-# 
+#
 # Set licenseServer &amp; licenseServerPort as needed
 
 licenseServer=""

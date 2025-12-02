@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>ApacheNetBeans12</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -24,10 +24,10 @@
             <string>Apache NetBeans 12</string>
             <key>name</key>
             <string>%NAME%</string>
-			<key>requires</key>
-			<array>
-				<string>OpenJDK</string>
-			</array>
+            <key>requires</key>
+            <array>
+                <string>OpenJDK</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>

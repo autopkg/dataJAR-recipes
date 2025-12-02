@@ -44,7 +44,7 @@
             <true/>
             <key>uninstallable</key>
             <true/>
-        </dict>        
+        </dict>
     </dict>
     <key>ParentRecipe</key>
     <string>com.github.rtrouton.pkg.OpenJDK13</string>
@@ -59,12 +59,12 @@
                 <string>This has been replaced by a recipe which should pull the latest version OpenJDK always. See https://github.com/autopkg/dataJAR-recipes/blob/master/OpenJDK/.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

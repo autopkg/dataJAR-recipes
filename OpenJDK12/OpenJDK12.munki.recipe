@@ -4,21 +4,21 @@
 <dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.OpenJDK12</string>
-	<key>Description</key>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.OpenJDK12</string>
+    <key>Description</key>
     <string>Downloads the current release version of OpenJDK 12, builds a package and imports it to Munki.</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>OpenJDK 12</string>
-		<key>SOFTWARETITLE</key>
-		<string>Java</string>
-		<key>SOFTWARETYPE</key>
-		<string>JDK</string>
-		<key>VENDOR</key>
-		<string>OpenJDK</string>
-		<key>MUNKI_REPO_SUBDIR</key>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>OpenJDK 12</string>
+        <key>SOFTWARETITLE</key>
+        <string>Java</string>
+        <key>SOFTWARETYPE</key>
+        <string>JDK</string>
+        <key>VENDOR</key>
+        <string>OpenJDK</string>
+        <key>MUNKI_REPO_SUBDIR</key>
         <string>%VENDOR%</string>
         <key>pkginfo</key>
         <dict>
@@ -42,10 +42,10 @@
             <true/>
             <key>uninstallable</key>
             <true/>
-        </dict>        
-	</dict>
-	<key>ParentRecipe</key>
-	<string>com.github.rtrouton.pkg.OpenJDK12</string>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.pkg.OpenJDK12</string>
     <key>Process</key>
     <array>
         <dict>
@@ -57,12 +57,12 @@
                 <string>This has been replaced by OpenJDK 15. See https://github.com/autopkg/dataJAR-recipes/blob/master/OpenJDK15/OpenJDK15.munki.recipe.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

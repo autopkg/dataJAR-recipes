@@ -62,18 +62,18 @@
                 <key>input_plist_path</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/Applications/Citrix Files.app/Contents/Info.plist</string>
             </dict>
-        </dict> 
-		<dict>
-			<key>Processor</key>
-			<string>FileMover</string>
-			<key>Arguments</key>
-			<dict>
-				<key>source</key>
-				<string>%pkg_path%</string>
-				<key>target</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
-			</dict>
-		</dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%pkg_path%</string>
+                <key>target</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
@@ -82,10 +82,10 @@
                 <key>path_list</key>
                 <array>
                 <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>                              
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
-        </dict> 
+        </dict>
     </array>
 </dict>
 </plist>

@@ -4,7 +4,7 @@
 <dict>
     <key>Description</key>
     <string>Download recipe for the latest version of Inquisit Lab.
-    
+
 Specify MAJOR_VERSION to limit to the latest update to a specific major release if desired. Tested with version 6 and 7.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Inquisit Lab</string>

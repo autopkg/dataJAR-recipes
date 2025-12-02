@@ -4,21 +4,21 @@
 <dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.AmazonCorrettoJava8</string>
-	<key>Description</key>
-	<string>Downloads the current release version of Amazon Coretto 8, builds a package and imports it into Munki. This is based from the tar version rather than the signed pkg version, so that the true version number can be obtained.</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>Amazon Coretto 8</string>
-		<key>SOFTWARETITLE</key>
-		<string>Java</string>
-		<key>SOFTWARETYPE</key>
-		<string>JDK</string>
-		<key>VENDOR</key>
-		<string>OpenJDK</string>
-		<key>MUNKI_REPO_SUBDIR</key>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.AmazonCorrettoJava8</string>
+    <key>Description</key>
+    <string>Downloads the current release version of Amazon Coretto 8, builds a package and imports it into Munki. This is based from the tar version rather than the signed pkg version, so that the true version number can be obtained.</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Amazon Coretto 8</string>
+        <key>SOFTWARETITLE</key>
+        <string>Java</string>
+        <key>SOFTWARETYPE</key>
+        <string>JDK</string>
+        <key>VENDOR</key>
+        <string>OpenJDK</string>
+        <key>MUNKI_REPO_SUBDIR</key>
         <string>%VENDOR%</string>
         <key>pkginfo</key>
         <dict>
@@ -42,10 +42,10 @@
             <true/>
             <key>uninstallable</key>
             <true/>
-        </dict>        
-	</dict>
-	<key>ParentRecipe</key>
-	<string>com.github.grahampugh.recipes.pkg.AmazonCorrettoJava8</string>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.grahampugh.recipes.pkg.AmazonCorrettoJava8</string>
     <key>Process</key>
     <array>
         <dict>
@@ -57,12 +57,12 @@
                  <string>This recipe has been replaced by - https://github.com/autopkg/dataJAR-recipes/tree/master/Amazon%20Corretto%208</string>
               </dict>
          </dict>
-         <dict>   
-             <key>Processor</key>   
-             <string>StopProcessingIf</string>   
-             <key>Arguments</key>   
-             <dict>   
-                 <key>predicate</key>   
+         <dict>
+             <key>Processor</key>
+             <string>StopProcessingIf</string>
+             <key>Arguments</key>
+             <dict>
+                 <key>predicate</key>
                  <string>TRUEPREDICATE</string>
              </dict>
          </dict>

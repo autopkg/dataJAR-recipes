@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>renpy6</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>blocking_applications</key>
             <array>
                 <string>renpy</string>
@@ -38,7 +38,7 @@
             <string>#!/bin/bash
 #
 # Delete the folder
-# 
+#
 
 if [ -d /Applications/renpy/ ]
 then

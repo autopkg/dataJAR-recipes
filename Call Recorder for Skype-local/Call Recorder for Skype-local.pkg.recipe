@@ -4,7 +4,7 @@
 <dict>
     <key>Description</key>
     <string>This recipe creates a PKG of a locally supplied copy of the "Install Call Recorder for Skype.app".
-    
+
 This recipe is based off of https://github.com/autopkg/foigus-recipes/tree/master/Ecamm but amended for a a local
 copy of the "Install Call Recorder for Skype.app" to be supplied with the -p flag.</string>
     <key>Identifier</key>

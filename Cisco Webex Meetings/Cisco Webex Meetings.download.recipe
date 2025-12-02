@@ -25,16 +25,16 @@
                 <key>warning_message</key>
                 <string>This package from Cisco deploys files into /tmp then uses a post-
                 script to move them into the logged in user's home area. As a result, this
-                isn't mass-deployable and isn't fully patchable. As a result, we have 
+                isn't mass-deployable and isn't fully patchable. As a result, we have
                 depreciated this recipe.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

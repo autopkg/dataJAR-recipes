@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>BUNDLE_ID</key>
-		<string>edu.ucsc.scottlab.coot</string>
+        <string>edu.ucsc.scottlab.coot</string>
         <key>NAME</key>
         <string>Coot</string>
     </dict>
@@ -19,7 +19,7 @@
     <string>com.github.dataJAR-recipes.download.Coot</string>
     <key>Process</key>
     <array>
-    	<dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
@@ -40,54 +40,54 @@
             <string>PkgExtractor</string>
         </dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_request</key>
-				<dict>
-					<key>chown</key>
-					<array>
-						<dict>
-							<key>group</key>
-							<string>admin</string>
-							<key>path</key>
-							<string>/</string>
-							<key>user</key>
-							<string>root</string>
-						</dict>
-					</array>
-					<key>id</key>
-					<string>%BUNDLE_ID%-%version%</string>
-					<key>pkgname</key>
-					<string>%NAME%-%version%</string>
-					<key>pkgroot</key>
-					<string>%RECIPE_CACHE_DIR%/pkgroot</string>
-					<key>version</key>
-					<string>%version%</string>
-				</dict>
-			</dict>
-			<key>Processor</key>
-			<string>PkgCreator</string>
-		</dict>
-		<dict>
-        	<key>Processor</key>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>path</key>
+                            <string>/</string>
+                            <key>user</key>
+                            <string>root</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>%BUNDLE_ID%-%version%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/pkgroot</string>
-            	</array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                </array>
             </dict>
         </dict>
         <dict>
-        	<key>Processor</key>
+            <key>Processor</key>
             <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                	<string>%RECIPE_CACHE_DIR%/unzip</string>
-            	</array>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
             </dict>
         </dict>
     </array>

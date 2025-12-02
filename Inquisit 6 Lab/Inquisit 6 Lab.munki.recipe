@@ -2,36 +2,36 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of Inquisit 6 Lab and imports into munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Inquisit 6 Lab</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>Inquisit6Lab</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>category</key>
-			<string>Development</string>
-			<key>description</key>
-			<string>Inquisit 6 Lab is a powerful tool for designing and administering rich psychological tests and experiments on dedicated computers, whether in the lab, the clinic, or out in the field. Use any of the tests in the Millisecond Test Library, customize them, or program your own.</string>
-			<key>developer</key>
-			<string>Millisecond Software</string>
-			<key>display_name</key>
-			<string>Inquisit 6 Lab</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>uninstall_method</key>
-			<string>uninstall_script</string>
+    <key>Description</key>
+    <string>Downloads the current release version of Inquisit 6 Lab and imports into munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Inquisit 6 Lab</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Inquisit6Lab</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Development</string>
+            <key>description</key>
+            <string>Inquisit 6 Lab is a powerful tool for designing and administering rich psychological tests and experiments on dedicated computers, whether in the lab, the clinic, or out in the field. Use any of the tests in the Millisecond Test Library, customize them, or program your own.</string>
+            <key>developer</key>
+            <string>Millisecond Software</string>
+            <key>display_name</key>
+            <string>Inquisit 6 Lab</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/bash
 # Unload kexts
@@ -40,28 +40,28 @@
 # Delete app bundle
 if [ -d /Applications/Inquisit\ 6.app ]
 then
-	/bin/rm -rf /Applications/Inquisit\ 6.app
+    /bin/rm -rf /Applications/Inquisit\ 6.app
 fi
 
 # Delete Library kext
 if [ -d /Library/Extensions/InquisitParallelPort.kext ]
 then
-	/bin/rm -rf /Library/Extensions/InquisitParallelPort.kext
+    /bin/rm -rf /Library/Extensions/InquisitParallelPort.kext
 fi
 
 # Delete System kext
 if [ -d /System/Library/Extensions/InquisitParallelPort.kext ]
 then
-	/bin/rm -rf /System/Library/Extensions/InquisitParallelPort.kext
+    /bin/rm -rf /System/Library/Extensions/InquisitParallelPort.kext
 fi</string>
-		</dict>
-	</dict>
-  	<key>MinimumVersion</key>
-	<string>1.0.0</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Inquisit 6 Lab</string>
-	<key>Process</key>
-	<array>
+        </dict>
+    </dict>
+      <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Inquisit 6 Lab</string>
+    <key>Process</key>
+    <array>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

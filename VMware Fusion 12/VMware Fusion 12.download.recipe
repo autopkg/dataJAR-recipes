@@ -45,18 +45,18 @@
             </dict>
         </dict>
         <dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
-			<key>Arguments</key>
-			<dict>
-				<key>find</key>
-				<string>NEW</string>
-				<key>input_string</key>
-				<string>%download_group%</string>
-				<key>replace</key>
-				<string>New</string>
-			</dict>
-		</dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+            <key>Arguments</key>
+            <dict>
+                <key>find</key>
+                <string>NEW</string>
+                <key>input_string</key>
+                <string>%download_group%</string>
+                <key>replace</key>
+                <string>New</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>

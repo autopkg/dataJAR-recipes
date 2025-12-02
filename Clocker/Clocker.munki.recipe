@@ -2,45 +2,45 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest stable Clocker and imports it in into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Clocker</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/Clocker</string>
-		<key>MUNKI_CATEGORY</key>
-		<string>Utilities</string>
-		<key>NAME</key>
-		<string>Clocker</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>category</key>
-			<string>%MUNKI_CATEGORY%</string>
-			<key>description</key>
-			<string>Clocker is an macOS menubar utility designed to help you keep track of your friends in different time zones.</string>
-			<key>developer</key>
-			<string>Abhishek Banthia</string>
-			<key>display_name</key>
-			<string>%NAME%</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.0.4</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Clocker</string>
-	<key>Process</key>
-	<array>
-	    <dict>
+    <key>Description</key>
+    <string>Downloads the latest stable Clocker and imports it in into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Clocker</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/Clocker</string>
+        <key>MUNKI_CATEGORY</key>
+        <string>Utilities</string>
+        <key>NAME</key>
+        <string>Clocker</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%MUNKI_CATEGORY%</string>
+            <key>description</key>
+            <string>Clocker is an macOS menubar utility designed to help you keep track of your friends in different time zones.</string>
+            <key>developer</key>
+            <string>Abhishek Banthia</string>
+            <key>display_name</key>
+            <string>%NAME%</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.4</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Clocker</string>
+    <key>Process</key>
+    <array>
+        <dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
@@ -59,28 +59,28 @@
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>DmgCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>dmg_root</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
-				<key>dmg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%dmg_path%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
@@ -92,6 +92,6 @@
                 </array>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>

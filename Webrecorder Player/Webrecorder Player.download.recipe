@@ -29,12 +29,12 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <string>WebArchivePlayer was replaced by webrecorderplayer in 2018, which has been replaced by ArchiveWeb.page. Recipes for ArchiveWeb.page can be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/ArchiveWeb.page.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

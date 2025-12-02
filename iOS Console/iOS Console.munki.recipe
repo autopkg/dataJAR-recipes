@@ -32,7 +32,7 @@
         <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
         <array>
             <string>minimum_os_version</string>
-        </array>  
+        </array>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>

@@ -21,7 +21,7 @@
             <key>description</key>
             <string>With JPEGmini for Mac you can reduce the file size of your photos by up to 5x, while keeping their original quality and JPEG format.</string>
             <key>developer</key>
-			<string>Beamr Imaging Ltd</string>
+            <string>Beamr Imaging Ltd</string>
             <key>display_name</key>
             <string>JPEGmini</string>
             <key>name</key>
@@ -29,10 +29,10 @@
             <key>unattended_install</key>
             <true/>
         </dict>
-		<key>pkginfo_keys_to_copy_from_sparkle_feed</key>
-		<array>
-			<string>minimum_os_version</string>
-		</array>  
+        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
+        <array>
+            <string>minimum_os_version</string>
+        </array>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -40,18 +40,18 @@
     <string>com.github.dataJAR-recipes.download.JPEGmini-Trial</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>dmg_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-				<key>dmg_root</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications/JPEGmini.app</string>
-			</dict>
-			<key>Processor</key>
-			<string>DmgCreator</string>
-		</dict>
-		<dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/JPEGmini.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -63,19 +63,19 @@
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%dmg_path%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-				<key>version_comparison_key</key>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
     </array>
 </dict>
 </plist>

@@ -20,39 +20,39 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>0.6.0</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>GitHubReleasesInfoProvider</string>
-			<key>Arguments</key>
-			<dict>
-				<key>github_repo</key>
-				<string>adobe/adobe-license-decoder.rs</string>
-				<key>include_prereleases</key>
-				<string>%PRERELEASE%</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>GitHubReleasesInfoProvider</string>
-			<key>Arguments</key>
-			<dict>
-				<key>github_repo</key>
-				<string>adobe/adobe-license-decoder.rs</string>
-				<key>include_prereleases</key>
-				<string>%PRERELEASE%</string>
-				<key>asset_regex</key>
-				<string>adobe-license-decoder</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-			<key>Arguments</key>
-			<dict>
-				<key>filename</key>
-				<string>adobe-license-decoder</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+            <key>Arguments</key>
+            <dict>
+                <key>github_repo</key>
+                <string>adobe/adobe-license-decoder.rs</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+            <key>Arguments</key>
+            <dict>
+                <key>github_repo</key>
+                <string>adobe/adobe-license-decoder.rs</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
+                <key>asset_regex</key>
+                <string>adobe-license-decoder</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>adobe-license-decoder</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>

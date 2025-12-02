@@ -13,7 +13,7 @@
         <key>DOWNLOAD_URL</key>
         <string>https://secure.logmeinrescue.com/Files/TechConsoleMAC/LogMeInRescueTechnicianConsoleMAC.dmg</string>
         <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>        
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

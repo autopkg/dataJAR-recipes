@@ -18,10 +18,10 @@
             <array>
                 <string>testing</string>
             </array>
-           	<key>category</key>
-			<string>Productivity</string>
-			<key>developer</key>
-			<string>Extensis</string>
+               <key>category</key>
+            <string>Productivity</string>
+            <key>developer</key>
+            <string>Extensis</string>
             <key>description</key>
             <string>Manage all of your fonts from one source, no matter how many you have—including your system fonts, purchased fonts, fonts synced from Adobe Typekit, Google Fonts, and more. Turn them on and off as you need. Suitcase Fusion offers you the best way to organize, find, view, and use them within your existing workflow.</string>
             <key>display_name</key>
@@ -35,9 +35,9 @@
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 9</string>
+    <string>com.github.dataJAR-recipes.download.Suitcase Fusion 9</string>
     <key>Process</key>
-	<array>
+    <array>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

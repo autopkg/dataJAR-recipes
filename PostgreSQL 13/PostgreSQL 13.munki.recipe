@@ -37,7 +37,7 @@ This installer includes the PostgreSQL server, pgAdmin; a graphical tool for man
 #
 # If the versions uninstaller exists, call it.
 #
-# NOTE: The script states that after running: 
+# NOTE: The script states that after running:
 # "The data directory (/Library/PostgreSQL/13/data) and service user account (postgres) have not been removed.
 #
 

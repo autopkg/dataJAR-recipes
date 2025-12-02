@@ -38,7 +38,7 @@
     <string>com.github.neilmartin83.download.LAPSformacOS</string>
     <key>Process</key>
     <array>
-       <dict>     
+       <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>

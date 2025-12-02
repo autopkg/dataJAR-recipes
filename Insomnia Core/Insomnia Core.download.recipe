@@ -23,16 +23,16 @@
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
-                <string>From: https://insomnia.rest/changelog, "Following the Insomnia 2021.1 release there will no longer be an Insomnia Core or Insomnia Designer, only Insomnia." 
+                <string>From: https://insomnia.rest/changelog, "Following the Insomnia 2021.1 release there will no longer be an Insomnia Core or Insomnia Designer, only Insomnia."
 Insomnia recipes can be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/Insomnia.</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

@@ -36,7 +36,7 @@
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
-        	<key>Arguments</key>
+            <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%match%</string>

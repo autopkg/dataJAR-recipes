@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>AMBEO Orbit</string>
         <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>        
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

@@ -4,11 +4,11 @@
 <dict>
     <key>Description</key>
     <string>This recipe downloads and imports the full installer pkg for Microsoft Outlook 2016 Standalone into Munki
-    
-	This is accomplished via the Office 365 recipes from rtrouton-recipes.
-	
+
+    This is accomplished via the Office 365 recipes from rtrouton-recipes.
+
     These in turn, utilise the fwlink's found on macadmins.software
-    
+
     These can have a volume license applied using appropriate pkg downloadable from Microsofts VLSC</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Microsoft Outlook 2016 Standalone</string>

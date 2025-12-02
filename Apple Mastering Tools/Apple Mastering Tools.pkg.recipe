@@ -4,7 +4,7 @@
 <dict>
     <key>Description</key>
     <string>Downloads and creates a PKG of the latest version of the Apple's Mastering Tools.
-    
+
 NOTE:
 - This recipe depends on jessepeterson's repo being added for the ModeChanger processor.</string>
     <key>Identifier</key>

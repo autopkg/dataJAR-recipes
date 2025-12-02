@@ -2,67 +2,67 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of Vitals.
+    <key>Description</key>
+    <string>Downloads the latest version of Vitals.
 Set PRERELEASE to a non-empty string to download prereleases, either
 via Input in an override or via the -k option,
 i.e.: `-k PRERELEASE=yes`</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Vitals</string>
-	<key>Input</key>
-	<dict>
-		<key>PRERELEASE</key>
-		  <string></string>
-		<key>NAME</key>
-		<string>Vitals</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>GitHubReleasesInfoProvider</string>
-			<key>Arguments</key>
-			<dict>
-				<key>github_repo</key>
-				<string>hmarr/Vitals</string>
-				<key>include_prereleases</key>
-				<string>%PRERELEASE%</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>Unarchiver</string>
-			<key>Arguments</key>
-			<dict>
-				<key>archive_path</key>
-				<string>%pathname%</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Vitals.app</string>
-				<key>requirement</key>
-				<string>identifier "com.hmarr.Vitals" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: Harry Marr (88VTKE8P3N)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-			</dict>
-		</dict>
-	</array>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Vitals</string>
+    <key>Input</key>
+    <dict>
+        <key>PRERELEASE</key>
+          <string></string>
+        <key>NAME</key>
+        <string>Vitals</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+            <key>Arguments</key>
+            <dict>
+                <key>github_repo</key>
+                <string>hmarr/Vitals</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Vitals.app</string>
+                <key>requirement</key>
+                <string>identifier "com.hmarr.Vitals" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: Harry Marr (88VTKE8P3N)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>

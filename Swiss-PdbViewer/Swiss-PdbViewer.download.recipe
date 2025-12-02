@@ -24,25 +24,25 @@
                 <string>Swiss-PdbViewer (aka DeepView) is a 32-bit app and is not compatible with macOS 10.15 Catalina or later (details: https://spdbv.unil.ch/). This recipe is deprecated and will be removed in the future.</string>
             </dict>
         </dict>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://spdbv.vital-it.ch/disclaim.html#</string>
-				<key>re_pattern</key>
-				<string>SPDBV_+[0-9]+\.+[0-9]+\.+[0-9]+\_OSX.zip</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://spdbv.vital-it.ch/download/binaries/%match%</string>
-				<key>filename</key>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://spdbv.vital-it.ch/disclaim.html#</string>
+                <key>re_pattern</key>
+                <string>SPDBV_+[0-9]+\.+[0-9]+\.+[0-9]+\_OSX.zip</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://spdbv.vital-it.ch/download/binaries/%match%</string>
+                <key>filename</key>
                 <string>%NAME%.zip</string>
-			</dict>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -51,19 +51,19 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>archive_path</key>
-				<string>%pathname%</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
-			<key>Processor</key>
-			<string>Unarchiver</string>
-		</dict>
-		<dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>FileFinder</string>
             <key>Arguments</key>
@@ -72,15 +72,15 @@
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/SPDBV_*_OSX/Swiss-PdbViewer.app</string>
             </dict>
         </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%found_filename%/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%found_filename%/Contents/Info.plist</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
     </array>
 </dict>
 </plist>

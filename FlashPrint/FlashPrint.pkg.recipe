@@ -13,7 +13,7 @@
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
-	<key>ParentRecipe</key>
+    <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.FlashPrint</string>
     <key>Process</key>
     <array>
@@ -58,7 +58,7 @@
                 <key>path_list</key>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
-                    <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>                              
+                    <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
                 </array>
             </dict>
         </dict>

@@ -18,10 +18,10 @@
             <array>
                 <string>testing</string>
             </array>
-           	<key>category</key>
-			<string>Productivity</string>
-			<key>developer</key>
-			<string>Extensis</string>
+               <key>category</key>
+            <string>Productivity</string>
+            <key>developer</key>
+            <string>Extensis</string>
             <key>description</key>
             <string>You love fonts. But wrangling your font collection? Not so much. Welcome to Suitcase Fusion, the gold standard in font management for creative professionals.</string>
             <key>display_name</key>
@@ -50,9 +50,9 @@ fi</string>
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 22</string>
+    <string>com.github.dataJAR-recipes.download.Suitcase Fusion 22</string>
     <key>Process</key>
-	<array>
+    <array>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

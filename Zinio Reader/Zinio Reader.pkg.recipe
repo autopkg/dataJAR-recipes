@@ -96,7 +96,7 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%pkgroot%</string>                          
+                    <string>%pkgroot%</string>
                 </array>
             </dict>
         </dict>

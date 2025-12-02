@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>Ekahau Pro</string>
          <key>LANGUAGE</key>
-        <string>en</string>      
+        <string>en</string>
         <key>Comment</key>
         <string>This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts</string>
         <key>Comment</key>
@@ -136,7 +136,7 @@
 ##########################################################################################
 #
 # DESCRIPTION
-# 
+#
 #   Sets the required file for the language chooser to not be shown by pre-setting it.
 #
 ##########################################################################################
@@ -248,7 +248,7 @@ setLanguage ()
             /bin/echo "${language}" > "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
        fi
     } | /usr/bin/tee -a "${debugFile}"
-}   
+}
 
 
 ##########################################################################################
@@ -264,9 +264,9 @@ then
     exit 1
 else
     finish
-fi</string> 
+fi</string>
             </dict>
-        </dict>             
+        </dict>
         <dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -334,8 +334,8 @@ fi</string>
             <dict>
                 <key>path_list</key>
                 <array>
-                    <string>%pkgroot%</string>    
-                    <string>%RECIPE_CACHE_DIR%/Scripts</string>                 
+                    <string>%pkgroot%</string>
+                    <string>%RECIPE_CACHE_DIR%/Scripts</string>
                 </array>
             </dict>
         </dict>

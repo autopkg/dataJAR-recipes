@@ -15,19 +15,19 @@
     <string>0.2.9</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>http://bluegriffon.org/#download</string>
-				<key>re_pattern</key>
-				<string>(http://bluegriffon.org/freshmeat/[0-9a-z\.]+\.[0-9a-z\.]/bluegriffon-[0-9a-z\.]+\.[0-9a-z\.]+\.mac-x86_64.dmg)</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-			</dict>
-		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>http://bluegriffon.org/#download</string>
+                <key>re_pattern</key>
+                <string>(http://bluegriffon.org/freshmeat/[0-9a-z\.]+\.[0-9a-z\.]/bluegriffon-[0-9a-z\.]+\.[0-9a-z\.]+\.mac-x86_64.dmg)</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+            </dict>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>

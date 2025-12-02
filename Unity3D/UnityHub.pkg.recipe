@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>UnityHub</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg</string>    
+        <string>https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.0</string>

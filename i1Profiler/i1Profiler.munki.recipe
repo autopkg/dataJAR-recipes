@@ -34,7 +34,7 @@
             <key>unattended_install</key>
             <true/>
             <key>postinstall_script</key>
-				<string>#!/bin/zsh
+                <string>#!/bin/zsh
 
 echo &quot;fixing i1profiler permissions&quot;
 
@@ -47,7 +47,7 @@ chmod -R g+w /Library/Application\ Support/X-Rite/AmbientMeasurements
 chmod -R g+w /Library/Application\ Support/X-Rite/i1Profiler
 
 echo &quot;done fixing permissions&quot;</string>
-		</dict>
+        </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>

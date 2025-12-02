@@ -52,7 +52,7 @@ fi</string>
     <string>com.github.dataJAR-recipes.pkg.VIA</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>

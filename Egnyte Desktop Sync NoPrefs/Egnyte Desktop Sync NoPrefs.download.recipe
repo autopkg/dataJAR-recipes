@@ -26,12 +26,12 @@
                 <string>From: https://helpdesk.egnyte.com/hc/en-us/articles/201636844 "IMPORTANT NOTICE: Desktop Sync is no longer supported as of December 31st, 2019. Click here to see how you can start using the Desktop App today." A .munki recipe for the replacement app can be found at - https://github.com/autopkg/dataJAR-recipes/tree/master/Egnyte%20Connect, with download and pkg recipes at - https://github.com/autopkg/moofit-recipes/tree/master/Egnyte</string>
             </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

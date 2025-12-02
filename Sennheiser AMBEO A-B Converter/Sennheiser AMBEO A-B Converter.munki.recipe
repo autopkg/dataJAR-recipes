@@ -2,51 +2,51 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of the Sennheiser AMBEO A-B Converter plugin and imports it into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.Sennheiser AMBEO A-B Converter</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/%NAME%</string>
-		<key>NAME</key>
-		<string>AMBEO A-B Converter</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>The AMBEO A-B Converter is the free tool that converts the output of the Sennheiser AMBEO VR Mic into Ambisonics B-Format. After the conversion it is directly compatible with the spatial audio format of both Youtube and Facebook 360 videos. The plugin supports both FuMa and ambiX output and has a specially tuned “Ambisonics Correction Filter” that improves spatial accuracy when used with the AMBEO VR Mic. It’s also possible to define the recording position and adjust the orientation to realign with the camera angle.</string>
-			<key>developer</key>
-			<string>Sennheiser</string>
-			<key>display_name</key>
-			<string>AMBEO A-B Converter</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>0.6.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Sennheiser AMBEO A-B Converter</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%found_filename%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-		</dict>
+    <key>Description</key>
+    <string>Downloads the latest version of the Sennheiser AMBEO A-B Converter plugin and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Sennheiser AMBEO A-B Converter</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>AMBEO A-B Converter</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The AMBEO A-B Converter is the free tool that converts the output of the Sennheiser AMBEO VR Mic into Ambisonics B-Format. After the conversion it is directly compatible with the spatial audio format of both Youtube and Facebook 360 videos. The plugin supports both FuMa and ambiX output and has a specially tuned “Ambisonics Correction Filter” that improves spatial accuracy when used with the AMBEO VR Mic. It’s also possible to define the recording position and adjust the orientation to realign with the camera angle.</string>
+            <key>developer</key>
+            <string>Sennheiser</string>
+            <key>display_name</key>
+            <string>AMBEO A-B Converter</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Sennheiser AMBEO A-B Converter</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
@@ -58,6 +58,6 @@
                 </array>
             </dict>
         </dict>
-	</array>
+    </array>
 </dict>
 </plist>

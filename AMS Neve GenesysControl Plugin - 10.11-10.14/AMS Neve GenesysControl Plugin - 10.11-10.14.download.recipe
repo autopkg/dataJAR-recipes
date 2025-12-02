@@ -24,12 +24,12 @@
                 <string>These recipes have been replaced with: https://github.com/autopkg/dataJAR-recipes/tree/master/AMS%20Neve%20GenesysControl%20plugin</string>
              </dict>
         </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
+        <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
         </dict>

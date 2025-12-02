@@ -13,7 +13,7 @@
         <key>NAME</key>
         <string>SecureSafe</string>
         <key>pkginfo</key>
-        <dict> 
+        <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>

@@ -38,7 +38,7 @@
     <string>com.github.moofit-recipes.download.AudioConverter</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>

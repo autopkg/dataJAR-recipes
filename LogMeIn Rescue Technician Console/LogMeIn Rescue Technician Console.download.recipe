@@ -32,7 +32,7 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>CodeSignatureVerifier</string>          
+            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>

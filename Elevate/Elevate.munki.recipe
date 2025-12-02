@@ -58,7 +58,7 @@ UNINSTALL_PATHS=(
     "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Newfangled Punctuate.aaxplugin"
     "/Library/Application Support/Avid/Audio/Plug-Ins/Newfangled Audio/Newfangled Saturate.aaxplugin"
     "/Music/Newfangled Audio/Elevate"
-    
+
     "/Users/Shared/Newfangled Audio/Elevate"
 )
 

@@ -38,7 +38,7 @@
     <string>com.github.dataJAR-recipes.download.NOW TV Player</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>

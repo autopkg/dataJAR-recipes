@@ -4,8 +4,8 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of Steam and imports it into Munki.
-    
-NOTE: This simply installs Steam.app to /Applications, upon first launch the Steam update process will download about 180 MB of assets to complete the installation. 
+
+NOTE: This simply installs Steam.app to /Applications, upon first launch the Steam update process will download about 180 MB of assets to complete the installation.
 These support files are downloaded to ~/Library/Application Support/Steam for the current user opening the app. These assets must be downloaded for each user on the system.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Steam</string>
@@ -41,7 +41,7 @@ These support files are downloaded to ~/Library/Application Support/Steam for th
     <string>com.github.haircut.download.Steam</string>
     <key>Process</key>
     <array>
-        <dict>  
+        <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
             <key>Arguments</key>

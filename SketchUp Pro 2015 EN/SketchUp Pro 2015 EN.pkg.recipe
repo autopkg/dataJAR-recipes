@@ -3,20 +3,20 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-	<string>Downloads the latest version of SketchUp Pro 2015 EN and creates a PKG.
+    <string>Downloads the latest version of SketchUp Pro 2015 EN and creates a PKG.
 
 Based on: com.github.jps3.download.SketchUpPro
 
 Locales can be specified.
 
 Main changes are non-overridable year, removed superfluous CodeSignatureVerification from PKG.</string>
-	<key>Identifier</key>
+    <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.SketchUp Pro 2015 EN</string>
     <key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>SketchUpPro2015-EN</string>
-	</dict>
+    <dict>
+        <key>NAME</key>
+        <string>SketchUpPro2015-EN</string>
+    </dict>
     <key>MinimumVersion</key>
     <string>0.4.1</string>
     <key>ParentRecipe</key>
@@ -68,25 +68,25 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                	<key>chown</key>
-					<array>
-						<dict>
-							<key>group</key>
-							<string>admin</string>
-							<key>path</key>
-							<string>/</string>
-							<key>user</key>
-							<string>root</string>
-						</dict>
-					</array>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>path</key>
+                            <string>/</string>
+                            <key>user</key>
+                            <string>root</string>
+                        </dict>
+                    </array>
                     <key>id</key>
                     <string>com.sketchup.%NAME%-%version%</string>
                     <key>pkgname</key>
                     <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
-					<string>%pkgroot%</string>
-					<key>version</key>
-					<string>%version%</string>
+                    <string>%pkgroot%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
         </dict>
