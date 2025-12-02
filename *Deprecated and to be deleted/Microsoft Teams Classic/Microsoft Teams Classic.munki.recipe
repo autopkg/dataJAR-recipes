@@ -34,8 +34,6 @@ Your modern workplace at home, in the office, and on the go</string>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_install</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -93,10 +91,10 @@ https://github.com/autopkg/dataJAR-recipes/tree/master/Microsoft%20Teams</string
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Microsoft Teams classic.app</string>

@@ -2,100 +2,100 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of HDX RealTime Media Engine for Microsoft Skype for Business.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.HDXRealTimeMediaEngine</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>HDXRealTimeMediaEngine</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>This recipe is no longer functional and has been deprecated. Citrix Receiver is end of life.
+    <key>Description</key>
+    <string>Downloads the latest version of HDX RealTime Media Engine for Microsoft Skype for Business.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.HDXRealTimeMediaEngine</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>HDXRealTimeMediaEngine</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is no longer functional and has been deprecated. Citrix Receiver is end of life.
 
 See https://www.citrix.com/downloads/citrix-receiver/additional-client-software/ for more info</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>predicate</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-			<key>Processor</key>
-			<string>StopProcessingIf</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>(http://www\.citrix\.com/downloads/citrix-receiver/additional-client-software/hdx-realtime-media-engine-ltsrcu-latest\.html#id[0-9]+)</string>
-				<key>request_headers</key>
-				<dict>
-					<key>user-agent</key>
-					<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
-				</dict>
-				<key>result_output_var_name</key>
-				<string>SEARCH_URL</string>
-				<key>url</key>
-				<string>https://www.citrix.com/content/citrix/en_us/downloads/citrix-receiver.rss</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>rel=\"/(/downloads\.citrix\.com/11449/HDX_RealTime_Media_Engine_.*_for_OSX\.dmg.*?)\"</string>
-				<key>result_output_var_name</key>
-				<string>DOWNLOAD_URL</string>
-				<key>url</key>
-				<string>%SEARCH_URL%</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-				<key>url</key>
-				<string>https:/%DOWNLOAD_URL%</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: Citrix Systems, Inc. (S272Y5R93J)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-				<key>input_path</key>
-				<string>%pathname%/Install HDXRealTimeMediaEngine.pkg</string>
-			</dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-		</dict>
-	</array>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(http://www\.citrix\.com/downloads/citrix-receiver/additional-client-software/hdx-realtime-media-engine-ltsrcu-latest\.html#id[0-9]+)</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                </dict>
+                <key>result_output_var_name</key>
+                <string>SEARCH_URL</string>
+                <key>url</key>
+                <string>https://www.citrix.com/content/citrix/en_us/downloads/citrix-receiver.rss</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>rel=\"/(/downloads\.citrix\.com/11449/HDX_RealTime_Media_Engine_.*_for_OSX\.dmg.*?)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>%SEARCH_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https:/%DOWNLOAD_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Citrix Systems, Inc. (S272Y5R93J)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%/Install HDXRealTimeMediaEngine.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
 </dict>
 </plist>

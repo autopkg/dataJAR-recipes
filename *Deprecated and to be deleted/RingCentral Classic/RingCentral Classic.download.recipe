@@ -2,65 +2,65 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of RingCentral Classic</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.RingCentral Classic</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>RingCentral Classic</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>Consider switching to the FreeFileSync recipes in the psaintemarie-recipes repo. This recipe is deprecated and will be removed in the future.</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>\"macOS\",\"link\":\"(https://downloads\.ringcentral\.com/.*?/.*?/GlipForMac)\"</string>
-				<key>url</key>
-				<string>https://www.ringcentral.com/apps/rc-classic</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-				<key>url</key>
-				<string>%match%</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/Glip.app</string>
-				<key>requirement</key>
-				<string>identifier "com.Glip.Glip" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = M932RC5J66</string>
-			</dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest version of RingCentral Classic</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.RingCentral Classic</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>RingCentral Classic</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Consider switching to the FreeFileSync recipes in the psaintemarie-recipes repo. This recipe is deprecated and will be removed in the future.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\"macOS\",\"link\":\"(https://downloads\.ringcentral\.com/.*?/.*?/GlipForMac)\"</string>
+                <key>url</key>
+                <string>https://www.ringcentral.com/apps/rc-classic</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Glip.app</string>
+                <key>requirement</key>
+                <string>identifier "com.Glip.Glip" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = M932RC5J66</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
 </dict>
 </plist>

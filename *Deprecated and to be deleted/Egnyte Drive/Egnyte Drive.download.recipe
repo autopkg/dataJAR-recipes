@@ -2,37 +2,37 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of Egnyte Drive.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Egnyte Drive</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>Egnyte Drive</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>Egnyte Drive has been replaced with Egyte Connect. Recipes are available for Egnyte Connect.</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>predicate</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-			<key>Processor</key>
-			<string>StopProcessingIf</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest version of Egnyte Drive.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Egnyte Drive</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Egnyte Drive</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Egnyte Drive has been replaced with Egyte Connect. Recipes are available for Egnyte Connect.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+    </array>
 </dict>
 </plist>

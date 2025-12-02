@@ -43,7 +43,7 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1</string>
+    <string>2.7.6</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.KeyShot Network Rendering</string>
     <key>Process</key>
@@ -103,7 +103,7 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
                 <string>%20</string>
             </dict>
             <key>Processor</key>
-            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+            <string>FindAndReplace</string>
         </dict>
         <dict>
             <key>Arguments</key>

@@ -2,84 +2,84 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the version of Apache NetBeans 12.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Apache NetBeans 12</string>
-	<key>Input</key>
-	<dict>
-		<key>BASE_URL</key>
-		<string>https://netbeans.apache.org</string>
-		<key>NAME</key>
-		<string>ApacheNetBeans12</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>Consider switching to the non-version-specific "Apache NetBeans" recipes in this repo, which provide the newest version of NetBeans. This recipe is deprecated and will be removed in the future.</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>href="(/download/nb12[\d]+/nb12[\d]+.html)"</string>
-				<key>result_output_var_name</key>
-				<string>match</string>
-				<key>url</key>
-				<string>%BASE_URL%/download/archive/index.html</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>href="(.*\/Apache-NetBeans-12\.[\d].*-bin-macosx\.dmg)"</string>
-				<key>result_output_var_name</key>
-				<string>url</string>
-				<key>url</key>
-				<string>%BASE_URL%%match%</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>expected_authority_names</key>
-				<array>
-					<string>Developer ID Installer: The Apache Software Foundation (2GLGAFWEQD)</string>
-					<string>Developer ID Certification Authority</string>
-					<string>Apple Root CA</string>
-				</array>
-				<key>input_path</key>
-				<string>%pathname%/Apache NetBeans 12.*.pkg</string>
-			</dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the version of Apache NetBeans 12.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Apache NetBeans 12</string>
+    <key>Input</key>
+    <dict>
+        <key>BASE_URL</key>
+        <string>https://netbeans.apache.org</string>
+        <key>NAME</key>
+        <string>ApacheNetBeans12</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Consider switching to the non-version-specific "Apache NetBeans" recipes in this repo, which provide the newest version of NetBeans. This recipe is deprecated and will be removed in the future.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href="(/download/nb12[\d]+/nb12[\d]+.html)"</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>%BASE_URL%/download/archive/index.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href="(.*\/Apache-NetBeans-12\.[\d].*-bin-macosx\.dmg)"</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>%BASE_URL%%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: The Apache Software Foundation (2GLGAFWEQD)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%/Apache NetBeans 12.*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
 </dict>
 </plist>

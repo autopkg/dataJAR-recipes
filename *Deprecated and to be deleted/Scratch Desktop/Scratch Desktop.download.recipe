@@ -2,41 +2,41 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Download recipe for Scratch Desktop</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Scratch Desktop</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>Scratch Desktop</string>
-		<key>USER_AGENT</key>
-		<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.2 Safari/605.1.15</string>
-		<key>baseurl</key>
-		<string>https://scratch.mit.edu</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>This recipe has been deprecated following the release of Scratch 3 in place of Scratch Desktop</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>predicate</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-			<key>Processor</key>
-			<string>StopProcessingIf</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Download recipe for Scratch Desktop</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Scratch Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Scratch Desktop</string>
+        <key>USER_AGENT</key>
+        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.2 Safari/605.1.15</string>
+        <key>baseurl</key>
+        <string>https://scratch.mit.edu</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated following the release of Scratch 3 in place of Scratch Desktop</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+    </array>
 </dict>
 </plist>

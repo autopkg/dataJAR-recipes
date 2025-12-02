@@ -2,75 +2,75 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of tsh command line tool and imports into Munki.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.autopkg.munki.tsh</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps</string>
-		<key>NAME</key>
-		<string>tsh</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>description</key>
-			<string>The tsh client allows users to login to retrieve short-lived certificates.</string>
-			<key>developer</key>
-			<string>Gravitational</string>
-			<key>display_name</key>
-			<string>Gravitational tsh Client</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.autopkg.download.tsh</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>This recipe is none functioning and has been deprecated.
+    <key>Description</key>
+    <string>Downloads the latest version of tsh command line tool and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.autopkg.munki.tsh</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>NAME</key>
+        <string>tsh</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The tsh client allows users to login to retrieve short-lived certificates.</string>
+            <key>developer</key>
+            <string>Gravitational</string>
+            <key>display_name</key>
+            <string>Gravitational tsh Client</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.autopkg.download.tsh</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is none functioning and has been deprecated.
 
 See: https://goteleport.com/blog/teleport-17/
     - Starting with version 17, Teleport no longer provides a separate tsh.pkg macOS package.
     - Instead, teleport.pkg and all macOS tarballs include signed and notarized tsh.app and tctl.app.
 
 Recipes for Teleport can be found here: https://github.com/williamtheaker/autopkg-recipes/tree/master/Teleport</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>predicate</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-			<key>Processor</key>
-			<string>StopProcessingIf</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-	</array>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
 </dict>
 </plist>

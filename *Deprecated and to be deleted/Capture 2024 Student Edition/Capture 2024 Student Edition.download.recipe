@@ -2,87 +2,87 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the latest version of Capture 2024 Student Edition.</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.download.Capture 2024 Student Edition</string>
-	<key>Input</key>
-	<dict>
-		<key>NAME</key>
-		<string>Capture2024StudentEdition</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>This recipe has been deprecated. Please use the new ones here: https://github.com/autopkg/dataJAR-recipes/tree/master/Capture%202025%20Student%20Edition</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>predicate</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-			<key>Processor</key>
-			<string>StopProcessingIf</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>re_pattern</key>
-				<string>Capture .* Student\.dmg</string>
-				<key>url</key>
-				<string>https://www.capture.se/Downloads/Download-Capture</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>find</key>
-				<string> </string>
-				<key>input_string</key>
-				<string>%match%</string>
-				<key>replace</key>
-				<string>%20</string>
-			</dict>
-			<key>Processor</key>
-			<string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>filename</key>
-				<string>%NAME%.dmg</string>
-				<key>url</key>
-				<string>https://www.capture.se/Portals/0/Downloads/%output_string%</string>
-			</dict>
-			<key>Processor</key>
-			<string>URLDownloader</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>EndOfCheckPhase</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_path</key>
-				<string>%pathname%/Capture 2024 Student Edition.app</string>
-				<key>requirement</key>
-				<string>anchor apple generic and identifier "se.capture.capturestudent" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JE39SD48CJ)</string>
-			</dict>
-			<key>Processor</key>
-			<string>CodeSignatureVerifier</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the latest version of Capture 2024 Student Edition.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Capture 2024 Student Edition</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Capture2024StudentEdition</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7.6</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new ones here: https://github.com/autopkg/dataJAR-recipes/tree/master/Capture%202025%20Student%20Edition</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>Capture .* Student\.dmg</string>
+                <key>url</key>
+                <string>https://www.capture.se/Downloads/Download-Capture</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>find</key>
+                <string> </string>
+                <key>input_string</key>
+                <string>%match%</string>
+                <key>replace</key>
+                <string>%20</string>
+            </dict>
+            <key>Processor</key>
+            <string>FindAndReplace</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://www.capture.se/Portals/0/Downloads/%output_string%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Capture 2024 Student Edition.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "se.capture.capturestudent" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JE39SD48CJ)</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
 </dict>
 </plist>

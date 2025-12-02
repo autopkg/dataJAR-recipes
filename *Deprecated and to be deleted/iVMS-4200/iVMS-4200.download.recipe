@@ -51,6 +51,8 @@ Please see: https://www.hikvision.com/content/dam/hikvision/en/support/notice/Pr
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
                 <key>request_headers</key>
                 <dict>
                     <key>Referer</key>
@@ -58,8 +60,6 @@ Please see: https://www.hikvision.com/content/dam/hikvision/en/support/notice/Pr
                     <key>User-Agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3.1 Safari/605.1.15</string>
                 </dict>
-                <key>filename</key>
-                <string>%NAME%.zip</string>
                 <key>url</key>
                 <string>https://www.hikvision.com/%DOWNLOAD_URL%</string>
             </dict>

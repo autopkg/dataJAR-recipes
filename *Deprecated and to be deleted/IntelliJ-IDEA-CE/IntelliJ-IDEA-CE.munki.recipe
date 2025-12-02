@@ -2,79 +2,79 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>This recipe has been deprecated. Please use the following recipes https://github.com/autopkg/bnpl-recipes/blob/master/JetBrains/IntelliJ-IDEA-CE.munki.recipe</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.munki.intellijideace</string>
-	<key>Input</key>
-	<dict>
-		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/intellij</string>
-		<key>NAME</key>
-		<string>IntelliJ IDEA Community Edition</string>
-		<key>pkginfo</key>
-		<dict>
-			<key>catalogs</key>
-			<array>
-				<string>testing</string>
-			</array>
-			<key>category</key>
-			<string>Developer Tools</string>
-			<key>description</key>
-			<string>Every aspect of IntelliJ IDEA is specifically designed to maximize developer productivity.
+    <key>Description</key>
+    <string>This recipe has been deprecated. Please use the following recipes https://github.com/autopkg/bnpl-recipes/blob/master/JetBrains/IntelliJ-IDEA-CE.munki.recipe</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.intellijideace</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/intellij</string>
+        <key>NAME</key>
+        <string>IntelliJ IDEA Community Edition</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Developer Tools</string>
+            <key>description</key>
+            <string>Every aspect of IntelliJ IDEA is specifically designed to maximize developer productivity.
 
 Together, powerful static code analysis and ergonomic design make development not only productive but also an enjoyable experience.</string>
-			<key>developer</key>
-			<string>JetBrains</string>
-			<key>display_name</key>
-			<string>IntelliJ IDEA Community Edition</string>
-			<key>name</key>
-			<string>%NAME%</string>
-			<key>unattended_install</key>
-			<true/>
-			<key>unattended_uninstall</key>
-			<true/>
-			<key>uninstallable</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.intellijideace</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>This recipe has been deprecated. Please use the following recipes https://github.com/autopkg/bnpl-recipes/blob/master/JetBrains/IntelliJ-IDEA-CE.munki.recipe</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>predicate</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-			<key>Processor</key>
-			<string>StopProcessingIf</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>munkiimport_appname</key>
-				<string>IntelliJ IDEA CE.app</string>
-				<key>pkg_path</key>
-				<string>%pathname%</string>
-				<key>repo_subdirectory</key>
-				<string>%MUNKI_REPO_SUBDIR%</string>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiImporter</string>
-		</dict>
-	</array>
+            <key>developer</key>
+            <string>JetBrains</string>
+            <key>display_name</key>
+            <string>IntelliJ IDEA Community Edition</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstallable</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.intellijideace</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the following recipes https://github.com/autopkg/bnpl-recipes/blob/master/JetBrains/IntelliJ-IDEA-CE.munki.recipe</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>munkiimport_appname</key>
+                <string>IntelliJ IDEA CE.app</string>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
 </dict>
 </plist>

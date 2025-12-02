@@ -2,44 +2,44 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Description</key>
-	<string>Downloads the current release version of jHelper GUI and then uploads to the JSS</string>
-	<key>Identifier</key>
-	<string>com.github.dataJAR-recipes.jss.jHelper GUI</string>
-	<key>Input</key>
-	<dict>
-		<key>CATEGORY</key>
-		<string>Productivity</string>
-		<key>GROUP_NAME</key>
-		<string>%NAME%-update-smart</string>
-		<key>GROUP_TEMPLATE</key>
-		<string>SmartGroupTemplate.xml</string>
-		<key>NAME</key>
-		<string>jHelper GUI</string>
-		<key>POLICY_CATEGORY</key>
-		<string>Testing</string>
-		<key>POLICY_TEMPLATE</key>
-		<string>PolicyTemplate.xml</string>
-		<key>SELF_SERVICE_DESCRIPTION</key>
-		<string>The 'JAMF Helper GUI' is an application written in Swift to provide a Cocoa interface for easily creating JAMF Helper commands. The application provides a GUI control for all of the 'jamfhelper' binary commands to make selecting and formatting the appropriate arguments easier.</string>
-		<key>SELF_SERVICE_ICON</key>
-		<string>jHelperGUI.png</string>
-	</dict>
-	<key>MinimumVersion</key>
-	<string>1.1</string>
-	<key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.pkg.jHelper GUI</string>
-	<key>Process</key>
-	<array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>warning_message</key>
-				<string>jHelper GUI is no longer available for download. Please do not use this recipe.</string>
-			</dict>
-			<key>Processor</key>
-			<string>DeprecationWarning</string>
-		</dict>
-	</array>
+    <key>Description</key>
+    <string>Downloads the current release version of jHelper GUI and then uploads to the JSS</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.jss.jHelper GUI</string>
+    <key>Input</key>
+    <dict>
+        <key>CATEGORY</key>
+        <string>Productivity</string>
+        <key>GROUP_NAME</key>
+        <string>%NAME%-update-smart</string>
+        <key>GROUP_TEMPLATE</key>
+        <string>SmartGroupTemplate.xml</string>
+        <key>NAME</key>
+        <string>jHelper GUI</string>
+        <key>POLICY_CATEGORY</key>
+        <string>Testing</string>
+        <key>POLICY_TEMPLATE</key>
+        <string>PolicyTemplate.xml</string>
+        <key>SELF_SERVICE_DESCRIPTION</key>
+        <string>The 'JAMF Helper GUI' is an application written in Swift to provide a Cocoa interface for easily creating JAMF Helper commands. The application provides a GUI control for all of the 'jamfhelper' binary commands to make selecting and formatting the appropriate arguments easier.</string>
+        <key>SELF_SERVICE_ICON</key>
+        <string>jHelperGUI.png</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.jHelper GUI</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>jHelper GUI is no longer available for download. Please do not use this recipe.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+    </array>
 </dict>
 </plist>

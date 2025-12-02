@@ -24,10 +24,10 @@ i.e.: `-k PRERELEASE=yes`</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. Please use the new ossia score recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/ossia%20score</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use the new ossia score recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/ossia%20score</string>
             </dict>
             <key>Processor</key>
             <string>DeprecationWarning</string>

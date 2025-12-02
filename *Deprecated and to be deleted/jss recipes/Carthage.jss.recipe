@@ -47,8 +47,6 @@ Please urgently consider moving to Jamf-Uploader. There are some excellent resou
             <dict>
                 <key>category</key>
                 <string>%CATEGORY%</string>
-                <key>pkg_path</key>
-                <string>%pathname%</string>
                 <key>groups</key>
                 <array>
                     <dict>
@@ -60,6 +58,8 @@ Please urgently consider moving to Jamf-Uploader. There are some excellent resou
                         <string>%GROUP_TEMPLATE%</string>
                     </dict>
                 </array>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
                 <key>policy_category</key>
                 <string>%POLICY_CATEGORY%</string>
                 <key>policy_template</key>

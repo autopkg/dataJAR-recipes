@@ -86,10 +86,10 @@ Customize your compatible personal devices to how you work. Staying up to date w
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
