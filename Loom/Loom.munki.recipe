@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Loom</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Loom</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/Loom</string>
+        <key>NAME</key>
+        <string>Loom</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

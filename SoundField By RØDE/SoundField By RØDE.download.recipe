@@ -59,14 +59,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/SoundField By RØDE.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: FREEDMAN ELECTRONICS PTY LTD (Z9T72PWTJA)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/SoundField By RØDE.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

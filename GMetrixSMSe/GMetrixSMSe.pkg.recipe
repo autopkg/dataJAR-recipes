@@ -18,13 +18,13 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>AppPkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>app_path</key>
                 <string>%pathname%/GMetrixSMSe.app</string>
             </dict>
+            <key>Processor</key>
+            <string>AppPkgCreator</string>
         </dict>
     </array>
 </dict>

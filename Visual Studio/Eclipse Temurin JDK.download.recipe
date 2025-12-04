@@ -61,14 +61,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/OpenJDK8U-jdk_x64_mac_hotspot_%EclipseTemurinJDK_VERSION%.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Eclipse Foundation, Inc. (JCDTMS22B4)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/OpenJDK8U-jdk_x64_mac_hotspot_%EclipseTemurinJDK_VERSION%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

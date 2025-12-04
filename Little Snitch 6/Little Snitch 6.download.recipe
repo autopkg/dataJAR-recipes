@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Little Snitch 6.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Little Snitch 6</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of Little Snitch 6.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.download.Little Snitch 6</string>
-        <key>Input</key>
-        <dict>
-            <key>NAME</key>
-            <string>LittleSnitch6</string>
-        </dict>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Processor</key>
-                <string>URLTextSearcher</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>url</key>
-                    <string>https://www.obdev.at/products/littlesnitch/download.html</string>
-                    <key>request_headers</key>
-                    <dict>
-                        <key>User-Agent</key>
-                        <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15</string>
-                    </dict>
-                    <key>re_pattern</key>
-                    <string>(https://www\.obdev\.at/downloads/littlesnitch/LittleSnitch-6.*?\.dmg)</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>filename</key>
-                    <string>%NAME%.dmg</string>
-                    <key>url</key>
-                    <string>%match%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>EndOfCheckPhase</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                <key>input_path</key>
-                    <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Little Snitch.app</string>
-                    <key>requirement</key>
-                    <string>identifier "at.obdev.littlesnitch" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MLZF7K7B5R</string>
-                </dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
-            </dict>
-        </array>
+        <key>NAME</key>
+        <string>LittleSnitch6</string>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(https://www\.obdev\.at/downloads/littlesnitch/LittleSnitch-6.*?\.dmg)</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>User-Agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://www.obdev.at/products/littlesnitch/download.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Little Snitch.app</string>
+                <key>requirement</key>
+                <string>identifier "at.obdev.littlesnitch" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MLZF7K7B5R</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
 </plist>

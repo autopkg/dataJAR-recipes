@@ -18,12 +18,12 @@
             <array>
                 <string>testing</string>
             </array>
+            <key>category</key>
+            <string>Applications</string>
             <key>description</key>
             <string>inSSIDer Office sheds light on common Wi-Fi problems like interference from other networks, channel placement, and signal strength issues. Use standalone for Wi-Fi visualization, or add Wi-Spy DBx hardware to see both Wi-Fi and non-Wi-Fi interference.</string>
             <key>developer</key>
             <string>MetaGeek Inc</string>
-            <key>category</key>
-            <string>Applications</string>
             <key>display_name</key>
             <string>inSSIDerOffice</string>
             <key>name</key>
@@ -41,8 +41,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -50,6 +48,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

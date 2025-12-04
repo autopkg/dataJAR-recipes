@@ -2,16 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.flowsync</string>
     <key>Description</key>
     <string>Downloads the current release version of Polar FlowSync and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.flowsync</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>FlowSync</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>Applications</string>
+        <key>NAME</key>
+        <string>FlowSync</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -45,10 +45,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>repo_subdirectory</key>
-                <string>%MUNKI_REPO_SUBDIR%</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

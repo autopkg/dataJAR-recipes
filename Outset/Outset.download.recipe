@@ -22,8 +22,6 @@ i.e.: `-k PRERELEASE=yes</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>github_repo</key>
@@ -31,6 +29,8 @@ i.e.: `-k PRERELEASE=yes</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -41,8 +41,6 @@ i.e.: `-k PRERELEASE=yes</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -54,6 +52,8 @@ i.e.: `-k PRERELEASE=yes</string>
                 <key>input_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

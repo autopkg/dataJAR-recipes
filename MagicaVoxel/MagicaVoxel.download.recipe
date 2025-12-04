@@ -11,73 +11,71 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.MagicaVoxel</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string>yes</string>
         <key>NAME</key>
         <string>MagicaVoxel</string>
+        <key>PRERELEASE</key>
+        <string>yes</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>[\S]+\-10.1[\d].*.zip</string>
                 <key>github_repo</key>
                 <string>ephtracy/ephtracy.github.io</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>[\S]+\-10.1[\d].*.zip</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%-%version%.zip</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
+                <key>archive_format</key>
+                <string>zip</string>
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unzip</string>
                 <key>purge_destination</key>
                 <true/>
-                <key>archive_format</key>
-                <string>zip</string>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
                     <string>0775</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -85,10 +83,10 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unzip/MagicaVoxel-*</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -96,6 +94,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                     <string>%RECIPE_CACHE_DIR%/unzip/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -24,16 +24,20 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             </array>
             <key>category</key>
             <string>Music Production</string>
-            <key>developer</key>
-            <string>image-line</string>
             <key>description</key>
             <string>Meet FL Studio. The fastest way from your brain to your speakers.
 
 FL Studio is the desktop DAW that music-makers across the world use to turn ideas into reality. Whether you’re just starting or are an experienced producer, FL Studio includes everything you need to create music.</string>
+            <key>developer</key>
+            <string>image-line</string>
             <key>display_name</key>
             <string>FL Studio 2024</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -57,10 +61,6 @@ FL Studio is the desktop DAW that music-makers across the world use to turn idea
 /bin/rm -Rf "/Library/Application Support/Image-Line"
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -72,10 +72,10 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%/Install FL Studio.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Install FL Studio.pkg</string>
             </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
@@ -144,10 +144,10 @@ exit</string>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>minimum_os_version</key>
                     <string>%min_os_ver%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
             <key>Processor</key>

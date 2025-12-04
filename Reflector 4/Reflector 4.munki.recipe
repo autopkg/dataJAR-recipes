@@ -8,30 +8,30 @@
     <string>com.github.dataJAR-recipes.munki.Reflector 4</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Reflector4</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Reflector4</string>
         <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Discover how easy it is to wirelessly share and record your favorite devices. No cables, adapters or confusing hardware. Present, teach or entertain from the palm of your hand.</string>
-                <key>developer</key>
-                <string>Squirrels LLC</string>
-                <key>display_name</key>
-                <string>Reflector 4</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-            </dict>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Discover how easy it is to wirelessly share and record your favorite devices. No cables, adapters or confusing hardware. Present, teach or entertain from the palm of your hand.</string>
+            <key>developer</key>
+            <string>Squirrels LLC</string>
+            <key>display_name</key>
+            <string>Reflector 4</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
+    </dict>
     <key>MinimumVersion</key>
     <string>0.1.0</string>
     <key>ParentRecipe</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -48,6 +46,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

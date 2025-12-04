@@ -12,10 +12,10 @@ For the ARCH_TYPE variable use "x64" for Intel or "aarch64" for Apple Silicon</s
     <string>com.github.dataJAR-recipes.download.Microsoft Build Of OpenJDK</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>MicrosoftBuildOfOpenJDK</string>
         <key>ARCH_TYPE</key>
         <string>x64</string>
+        <key>NAME</key>
+        <string>MicrosoftBuildOfOpenJDK</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -65,14 +65,14 @@ For the ARCH_TYPE variable use "x64" for Intel or "aarch64" for Apple Silicon</s
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/microsoft-jdk-%MicrosoftBuildOfOpenJDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Microsoft Corporation (UBF8T346G9)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/microsoft-jdk-%MicrosoftBuildOfOpenJDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

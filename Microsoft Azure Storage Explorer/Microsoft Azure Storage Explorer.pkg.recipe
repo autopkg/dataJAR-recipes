@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Microsoft Azure Storage Explorer and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.MicrosoftAzureStorageExplorer</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of Microsoft Azure Storage Explorer and creates a package.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.pkg.MicrosoftAzureStorageExplorer</string>
-        <key>MinimumVersion</key>
-        <string>1.0.0</string>
-        <key>Input</key>
-        <dict>
-            <key>NAME</key>
-            <string>Microsoft Azure Storage Explorer</string>
-        </dict>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Processor</key>
-                <string>AppPkgCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>app_path</key>
-                    <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app</string>
-                </dict>
-            </dict>
-        </array>
+        <key>NAME</key>
+        <string>Microsoft Azure Storage Explorer</string>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>app_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>AppPkgCreator</string>
+        </dict>
+    </array>
+</dict>
 </plist>

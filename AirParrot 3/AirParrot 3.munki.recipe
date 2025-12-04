@@ -22,10 +22,10 @@
             <string>Streaming and Mirroring for Windows and macOS
 
 Wirelessly mirror your screen or stream media files to a variety of receivers. AirParrot quickly finds available media receivers on your network and uses quick connect to connect directly to any device running Reflector 4. Easily mirror your screen, extend your desktop or stream files to share videos, audio, presentations and much more!</string>
-            <key>display_name</key>
-            <string>AirParrot 3</string>
             <key>developer</key>
             <string>Squirrels LLC</string>
+            <key>display_name</key>
+            <string>AirParrot 3</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>postinstall_script</key>

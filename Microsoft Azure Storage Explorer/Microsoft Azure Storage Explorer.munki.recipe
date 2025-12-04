@@ -46,50 +46,48 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app/Contents/Info.plist</string>
-                 <key>plist_version_key</key>
+                <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                        <key>version</key>
-                        <string>%version%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/</string>
-                 <key>installs_item_paths</key>
+                <key>installs_item_paths</key>
                 <array>
-                        <string>/Applications/Microsoft Azure Storage Explorer.app</string>
-                 </array>
+                    <string>/Applications/Microsoft Azure Storage Explorer.app</string>
+                </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -97,10 +95,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -108,6 +106,8 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -121,8 +121,6 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -130,6 +128,8 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                     <string>%RECIPE_CACHE_DIR%/Applications</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

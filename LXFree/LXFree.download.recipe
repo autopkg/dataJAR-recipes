@@ -8,22 +8,18 @@
     <string>com.github.dataJAR-recipes.download.LXFree</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>LXFree</string>
         <key>DOWNLOAD_URL</key>
         <string>https://www.claudeheintzdesign.com/downloads/lxfree_install.dmg</string>
+        <key>NAME</key>
+        <string>LXFree</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>curl_opts</key>
                 <array>
                     <string>--location</string>
@@ -43,33 +39,37 @@
                 </array>
                 <key>request_headers</key>
                 <dict>
-                    <key>User-Agent</key>
-                    <string>curl/7.79.1</string>
                     <key>Accept</key>
                     <string>*/*</string>
                     <key>Connection</key>
                     <string>keep-alive</string>
+                    <key>User-Agent</key>
+                    <string>curl/7.79.1</string>
                 </dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/Install LXFree.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Claude Heintz Design (T95243XU48)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/Install LXFree.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

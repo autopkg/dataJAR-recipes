@@ -8,30 +8,30 @@
     <string>com.github.dataJAR-recipes.munki.ReadWrite 7</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Read&amp;Write 7</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Read&amp;Write 7</string>
         <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Read&amp;Write is our literacy support tool that offers help for everyday tasks. With tools to meet the needs of different learners, right across the curriculum. Like reading text out loud, understanding unfamiliar words and proofing written work.</string>
-                <key>developer</key>
-                <string>Texthelp Ltd</string>
-                <key>display_name</key>
-                <string>Read&amp;Write 7</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-            </dict>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Read&amp;Write is our literacy support tool that offers help for everyday tasks. With tools to meet the needs of different learners, right across the curriculum. Like reading text out loud, understanding unfamiliar words and proofing written work.</string>
+            <key>developer</key>
+            <string>Texthelp Ltd</string>
+            <key>display_name</key>
+            <string>Read&amp;Write 7</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
+    </dict>
     <key>MinimumVersion</key>
     <string>0.1.0</string>
     <key>ParentRecipe</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -48,10 +46,10 @@
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -59,10 +57,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -70,6 +68,8 @@
                     <string>%RECIPE_CACHE_DIR%/Applications/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

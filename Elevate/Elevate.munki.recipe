@@ -27,6 +27,10 @@ The result brings your mix forward and gives it the energy you need for a finish
             <string>Elevate</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -85,10 +89,6 @@ for path in "${UNINSTALL_PATHS[@]}"; do
 done
 
 exit $exit_status</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>

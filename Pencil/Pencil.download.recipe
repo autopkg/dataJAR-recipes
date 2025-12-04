@@ -8,38 +8,38 @@
     <string>com.github.dataJAR-recipes.download.Pencil</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Pencil</string>
         <key>DOWNLOAD_URL</key>
         <string>http://pencil.evolus.vn</string>
+        <key>NAME</key>
+        <string>Pencil</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%/Downloads.html</string>
                 <key>re_pattern</key>
                 <string>href="(\/dl\/V.*\/Pencil-.*.dmg)"</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%/Downloads.html</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>

@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of Microsoft Azure Storage Explorer.
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Microsoft Azure Storage Explorer.
 
 For x86_64 use "2216184" in PRODUCTID variable.
 For arm64 use "2279415" in PRODUCTID variable.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>Input</key>
-        <dict>
-            <key>NAME</key>
-            <string>Microsoft Azure Storage Explorer</string>
-            <key>PRODUCTID</key>
-            <string>2279415</string>
-            <key>DOWNLOADURL</key>
-            <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
-        </dict>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>url</key>
-                    <string>%DOWNLOADURL%</string>
-                    <key>filename</key>
-                    <string>%NAME%.zip</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>EndOfCheckPhase</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>Unarchiver</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>archive_path</key>
-                    <string>%pathname%</string>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/Applications</string>
-                    <key>purge_destination</key>
-                    <true/>
-                    <key>archive_format</key>
-                    <string>zip</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>input_path</key>
-                    <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app</string>
-                    <key>requirement</key>
-                    <string>identifier "com.microsoft.StorageExplorer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UBF8T346G9</string>
-                </dict>
-            </dict>
-        </array>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
+    <key>Input</key>
+    <dict>
+        <key>DOWNLOADURL</key>
+        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
+        <key>NAME</key>
+        <string>Microsoft Azure Storage Explorer</string>
+        <key>PRODUCTID</key>
+        <string>2279415</string>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>%DOWNLOADURL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_format</key>
+                <string>zip</string>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app</string>
+                <key>requirement</key>
+                <string>identifier "com.microsoft.StorageExplorer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UBF8T346G9</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
 </plist>

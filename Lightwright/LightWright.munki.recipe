@@ -6,7 +6,7 @@
     <string>Downloads the current release version of Lightwright 6 and imports it into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.lightwright</string>
-        <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
@@ -18,10 +18,10 @@
             <array>
                 <string>testing</string>
             </array>
-            <key>developer</key>
-            <string>John McKernon Software</string>
             <key>description</key>
             <string>Lightwright is a proprietary software that manages theatrical lighting data and paperwork.</string>
+            <key>developer</key>
+            <string>John McKernon Software</string>
             <key>display_name</key>
             <string>Lightwright</string>
             <key>name</key>
