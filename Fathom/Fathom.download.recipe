@@ -12,10 +12,10 @@ To download Intel use: "dmg" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.download.Fathom</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Fathom</string>
         <key>DOWNLOAD_ARCH</key>
         <string>dmg</string>
+        <key>NAME</key>
+        <string>Fathom</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

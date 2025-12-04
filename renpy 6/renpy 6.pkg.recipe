@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.pkg.renpy 6</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>renpy6</string>
         <key>BUNDLEID</key>
         <string>org.renpy.renpy</string>
+        <key>NAME</key>
+        <string>renpy6</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -20,8 +20,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -32,16 +30,14 @@
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -57,10 +53,14 @@
                     <string>%BUNDLEID%</string>
                     <key>pkgdir</key>
                     <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
                     <string>%pkgroot%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
     </array>
 </dict>

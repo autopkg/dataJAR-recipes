@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.pkg.renpy 8</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>renpy8</string>
         <key>BUNDLEID</key>
         <string>org.renpy.renpy</string>
+        <key>NAME</key>
+        <string>renpy8</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
@@ -20,33 +20,31 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
                     <string>0777</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/renpy-*-sdk</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/renpy</string>
+                <key>source_path</key>
+                <string>%pathname%/renpy-*-sdk</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -57,16 +55,14 @@
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -84,10 +80,14 @@
                     <string>%BUNDLEID%</string>
                     <key>pkgdir</key>
                     <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
                     <string>%pkgroot%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
     </array>
 </dict>

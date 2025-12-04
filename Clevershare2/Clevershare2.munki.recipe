@@ -6,7 +6,7 @@
     <string>Downloads the latest version of Clevershare 2 and imports it into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Clevershare2</string>
-        <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
@@ -18,16 +18,14 @@
             <array>
                 <string>testing</string>
             </array>
-            <key>developer</key>
-            <string>Sahara</string>
             <key>description</key>
             <string>Clevershare 2 is a bi-directional mirroring application that wirelessly connects your iPhone, iPad, Android phone and tablet, Mac, Windows laptop/PC and Chrome devices to your Clevertouch touch screen.</string>
+            <key>developer</key>
+            <string>Sahara</string>
             <key>display_name</key>
             <string>Clevershare 2</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
             <key>postinstall_script</key>
             <string>#!/bin/bash
 
@@ -36,6 +34,8 @@
 /usr/bin/unzip /Applications/Clevershare.app/Contents/Resources/MAXHUBAudio.driver.zip -d /Library/Audio/Plug-Ins/HAL/ -x __MACOSX/*
 
 exit 0</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>

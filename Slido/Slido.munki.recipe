@@ -26,10 +26,6 @@
             <string>Slido</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>requires</key>
-            <array>
-                <string>Microsoft PowerPoint 365</string>
-            </array>
             <key>postinstall_script</key>
             <string>#!/bin/bash
 
@@ -48,6 +44,10 @@ else
 fi
 
 exit 0</string>
+            <key>requires</key>
+            <array>
+                <string>Microsoft PowerPoint 365</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>

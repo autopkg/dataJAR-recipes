@@ -27,9 +27,9 @@
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
-            <true></true>
+            <true/>
             <key>unattended_uninstall</key>
-            <true></true>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -38,17 +38,17 @@
     <string>com.github.ahousseini-recipes.download.Smallpdf</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Processor</key>
-        <string>MunkiImporter</string>
-        <key>Arguments</key>
         <dict>
-            <key>pkg_path</key>
-            <string>%pathname%</string>
-            <key>repo_subdirectory</key>
-            <string>%MUNKI_REPO_SUBDIR%</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
-    </dict>
-</array>
+    </array>
 </dict>
 </plist>

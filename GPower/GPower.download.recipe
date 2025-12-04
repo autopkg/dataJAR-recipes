@@ -43,15 +43,15 @@ Further information can be found here: https://www.psychologie.hhu.de/en/arbeits
                 <array>
                     <string>--insecure</string>
                 </array>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15</string>
-                    <key>Referer</key>
-                    <string>https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower;auto</string>
-                </dict>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Referer</key>
+                    <string>https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower;auto</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15</string>
+                </dict>
                 <key>url</key>
                 <string>https://www.psychologie.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Psychologie/AAP/gpower/GPowerMac_%version%.zip</string>
             </dict>

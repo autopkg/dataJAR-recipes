@@ -37,6 +37,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>iODBC SDK</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -58,10 +62,6 @@ echo "y" | perl "$UNINSTALL_SCRIPT"
 
 
 exit $?</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -187,10 +187,10 @@ exit $?</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/iODBC/iODBC Administrator.app</string>

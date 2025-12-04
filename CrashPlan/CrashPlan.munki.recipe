@@ -35,6 +35,10 @@
             <string>CrashPlan</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -43,10 +47,6 @@
 # Taken from vendors documentation: https://support.crashplan.com/hc/en-us/articles/9025086987661-Uninstall-the-CrashPlan-app-for-CrashPlan
 #
 /Applications/CrashPlan.app/Contents/Helpers/Uninstall.app/Contents/Resources/uninstall.sh</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -85,7 +85,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>system\.version\.ProductVersion, &apos;([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)&apos;</string>
+                <string>system\.version\.ProductVersion, '([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)'</string>
                 <key>result_output_var_name</key>
                 <string>min_os_ver</string>
                 <key>url</key>
@@ -126,12 +126,12 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>force_munkiimport</key>
-                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

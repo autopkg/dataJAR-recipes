@@ -88,23 +88,21 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/JamfConnect.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: JAMF Software (483DWKW443)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/JamfConnect.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -114,10 +112,10 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -127,10 +125,10 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -140,14 +138,14 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                     <string>/Applications/Jamf Connect.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -160,10 +158,10 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                     <string>min_os_version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -171,10 +169,10 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                 <key>source_pkg</key>
                 <string>%pathname%/JamfConnect.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -185,10 +183,10 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -196,10 +194,10 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -208,6 +206,8 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                     <string>%RECIPE_CACHE_DIR%/payload</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -36,6 +36,8 @@ With Jamf Connect, you can keep your users' macOS passwords and network password
             <string>Jamf Connect Login</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -61,7 +63,7 @@ rm -rf "/Library/Managed Preferences/com.jamf.connect.login.plist"
 DaemonLD='/Library/LaunchDaemons/com.jamf.connect.daemon.plist'
 
 # Find if there's a console user or not. Blank return if not.
-consoleuser=$( scutil &lt;&lt;&lt; &quot;show State:/Users/ConsoleUser&quot; | awk &apos;/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }&apos; )
+consoleuser=$( scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ &amp;&amp; ! /loginwindow/ { print $3 }' )
 
 # get the UID for the user
 uid=$(/usr/bin/id -u "$consoleuser")
@@ -106,10 +108,6 @@ then
 
 /bin/echo "All Jamf Connect components have been removed."
 /bin/echo ''''</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_install</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -118,17 +116,17 @@ then
     <string>com.github.yohan460-recipes.download.JamfConnect</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Arguments</key>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/Resources/JamfConnectLaunchAgent.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: JAMF Software (483DWKW443)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/Resources/JamfConnectLaunchAgent.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

@@ -4,59 +4,59 @@
 <dict>
     <key>Description</key>
     <string>Downloads latest version of Aspera Connect.</string>
-     <key>Identifier</key>
+    <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
-     <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>AsperaConnect</string>
-     </dict>
+    </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
-     <key>Process</key>
+    <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-             <key>Arguments</key>
+            <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg)</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
                 <key>url</key>
                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
-                 <key>re_pattern</key>
-                <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg)</string>
-                 <key>result_output_var_name</key>
-                <string>match</string>
-             </dict>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-             <key>Arguments</key>
+            <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
                 <key>url</key>
                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
-                 <key>re_pattern</key>
-                <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg</string>
-                 <key>result_output_var_name</key>
-                <string>version</string>
             </dict>
-         </dict>
-        <dict>
             <key>Processor</key>
-            <string>URLDownloader</string>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/%match%</string>
-             </dict>
-         </dict>
+                <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -71,6 +71,6 @@
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
         </dict>
-     </array>
- </dict>
- </plist>
+    </array>
+</dict>
+</plist>

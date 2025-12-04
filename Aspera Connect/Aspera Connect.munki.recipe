@@ -36,12 +36,12 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
             <string>Aspera Connect</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>uninstall_method</key>
-            <string>removepackages</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>removepackages</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -106,8 +106,8 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                     <string>/Applications/IBM Aspera Launcher.app</string>
                 </array>
             </dict>
-        <key>Processor</key>
-        <string>MunkiInstallsItemsCreator</string>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -164,13 +164,13 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
         </dict>
         <dict>
             <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
             <string>MunkiImporter</string>
         </dict>
         <dict>
@@ -180,7 +180,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
                 <array>
                     <string>%RECIPE_CACHE_DIR%/Unpacked</string>
                     <string>%RECIPE_CACHE_DIR%/Applications</string>
-                 </array>
+                </array>
             </dict>
             <key>Processor</key>
             <string>PathDeleter</string>

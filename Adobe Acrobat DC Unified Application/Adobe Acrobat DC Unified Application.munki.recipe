@@ -14,21 +14,21 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <dict>
         <key>DERIVE_MIN_OS</key>
         <string>YES!</string>
-        <key>NAME</key>
-        <string>AdobeAcrobatDC</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>AdobeAcrobatDC</string>
         <key>pkginfo</key>
         <dict>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
             <key>blocking_applications</key>
             <array>
                 <string>Acrobat Distiller</string>
                 <string>Adobe Acrobat</string>
                 <string>Adobe Acrobat Pro</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
             </array>
             <key>category</key>
             <string>Applications</string>
@@ -100,6 +100,10 @@ fi
 /bin/echo "Acrobat Reader Mode has been successfully enabled."
 
 exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -138,10 +142,6 @@ else
     # Exit
     exit 1
 fi</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>

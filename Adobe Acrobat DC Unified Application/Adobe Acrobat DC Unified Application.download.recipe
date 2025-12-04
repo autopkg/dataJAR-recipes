@@ -18,54 +18,54 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/</string>
                 <key>re_pattern</key>
                 <string>continuous/dccontinuous[\S]+[\d]+[\S]*\.html</string>
+                <key>url</key>
+                <string>https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/%match%</string>
-                <key>re_pattern</key>
-                <string>AcrobatDCUpd([\d]+)\.dmg</string>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>AcrobatDCUpd([\d]+)\.dmg</string>
+                <key>url</key>
+                <string>https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/%match%</string>
+            </dict>
             <key>Processor</key>
-            <string>URLDownloader</string>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://ardownload3.adobe.com/pub/adobe/acrobat/mac/AcrobatDC/%match%/AcrobatSCADC%match%_MUI.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Adobe Inc. (JQ525L2MZD)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
