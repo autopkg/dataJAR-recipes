@@ -17,10 +17,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.RancherDesktop</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Rancher Desktop</string>
         <key>ARCH_TYPE</key>
         <string>aarch64</string>
+        <key>NAME</key>
+        <string>Rancher Desktop</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

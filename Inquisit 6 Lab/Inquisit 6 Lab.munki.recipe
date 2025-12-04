@@ -56,15 +56,13 @@ then
 fi</string>
         </dict>
     </dict>
-        <key>MinimumVersion</key>
+    <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Inquisit 6 Lab</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -72,6 +70,8 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

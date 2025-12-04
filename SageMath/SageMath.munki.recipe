@@ -52,10 +52,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/SageMath.app</string>
-                <key>source_path</key>
-                <string>%pathname%/*.app</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/*.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>

@@ -8,37 +8,35 @@
     <string>com.github.dataJAR-recipes.download.Insomnia Core</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>InsomniaCore</string>
         <key>DOWNLOAD_URL</key>
         <string>https://updates.insomnia.rest/downloads/mac/latest?app=com.insomnia.app&amp;ref=</string>
+        <key>NAME</key>
+        <string>InsomniaCore</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>From: https://insomnia.rest/changelog, "Following the Insomnia 2021.1 release there will no longer be an Insomnia Core or Insomnia Designer, only Insomnia."
 Insomnia recipes can be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/Insomnia.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -46,14 +44,14 @@ Insomnia recipes can be found at: https://github.com/autopkg/dataJAR-recipes/tre
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -61,6 +59,8 @@ Insomnia recipes can be found at: https://github.com/autopkg/dataJAR-recipes/tre
                 <key>requirement</key>
                 <string>identifier "com.insomnia.app" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = FX44YY62GV</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

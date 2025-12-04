@@ -13,10 +13,10 @@
     <string>com.github.dataJAR-recipes.download.DVDStyler</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>DVDStyler</string>
         <key>DOWNLOAD_URL</key>
         <string>https://university.fosshub.com/projects.json</string>
+        <key>NAME</key>
+        <string>DVDStyler</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.2 Safari/605.1.15</string>
     </dict>
@@ -25,31 +25,31 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
                 <string>https://university\.fosshub\.com/Protected/\S*/DVDStyler-\S*-MacOSX\.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>request_headers</key>
-                <dict>
-                        <key>User-Agent</key>
-                        <string>%USER_AGENT%</string>
-                </dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>User-Agent</key>
+                    <string>%USER_AGENT%</string>
+                </dict>
                 <key>url</key>
                 <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -58,4 +58,3 @@
     </array>
 </dict>
 </plist>
-

@@ -10,12 +10,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.Sassafras KeyAccess</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>SassafrasKeyAccess</string>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -28,15 +28,13 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <array>
                 <string>testing</string>
             </array>
+            <key>description</key>
+            <string>Sassafras KeyAccess client software can connect devices to your KeyServer.</string>
             <key>developer</key>
             <string>Sassafras Software</string>
             <key>display_name</key>
-            <string>Sassafras KeyAccess</string>
-            <key>description</key>
-            <string>Sassafras KeyAccess client software can connect devices to your KeyServer.</string>
-            <key>name</key>
             <string>%NAME%</string>
-            <key>display_name</key>
+            <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
@@ -51,100 +49,100 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccess.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot/Library</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccess.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyCheckout.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/KeyCheckout</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyCheckout.pkg/Payload</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyCheckout/KeyAccess/KeyCheckout.app</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot/Library/KeyAccess/KeyCheckout.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyCheckout/KeyAccess/KeyCheckout.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyVerify.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/KeyVerify</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyVerify.pkg/Payload</string>
             </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyVerify/KeyAccess/KeyVerify.app</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/KeyAccess/KeyVerify.app</string>
-            </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref.pkg/Payload</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref</string>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/KeyAccess/KeyVerify.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyVerify/KeyAccess/KeyVerify.app</string>
+            </dict>
             <key>Processor</key>
             <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref/PreferencePanes/KeyAccessPref.prefPane</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/PreferencePanes/KeyAccessPref.prefPane</string>
-            </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/PreferencePanes/KeyAccessPref.prefPane</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref/PreferencePanes/KeyAccessPref.prefPane</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
                 <key>installs_item_paths</key>
@@ -156,17 +154,15 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -177,10 +173,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -189,10 +185,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -200,10 +196,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -212,6 +208,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

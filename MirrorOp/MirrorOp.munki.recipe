@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.MirrorOp</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>MirrorOp</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MirrorOp</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -20,10 +20,10 @@
             </array>
             <key>category</key>
             <string>Applications</string>
-            <key>developer</key>
-            <string>Barco NV</string>
             <key>description</key>
             <string>With MirrorOp sender installed on your computer, you can not only watch videos or surf the internet on a larger display with friends, but also remotely operate your computer as if you were in front of it.</string>
+            <key>developer</key>
+            <string>Barco NV</string>
             <key>display_name</key>
             <string>MirrorOp</string>
             <key>name</key>

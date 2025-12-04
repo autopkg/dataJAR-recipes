@@ -20,13 +20,13 @@
             <dict>
                 <key>re_pattern</key>
                 <string>EmbravaConnectForMac_v([0-9]+(\.[0-9]+)+).pkg</string>
-                <key>result_output_var_name</key>
-                <string>VERSION</string>
                 <key>request_headers</key>
                 <dict>
                     <key>User-Agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>VERSION</string>
                 <key>url</key>
                 <string>https://embrava.github.io/embrava/EmbravaConnect/version.json</string>
             </dict>
@@ -38,13 +38,13 @@
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
-                <key>url</key>
-                <string>https://embrava.github.io/embrava/EmbravaConnect/EmbravaConnectForMac_v%VERSION%.pkg</string>
                 <key>request_headers</key>
                 <dict>
                     <key>User-Agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</string>
                 </dict>
+                <key>url</key>
+                <string>https://embrava.github.io/embrava/EmbravaConnect/EmbravaConnectForMac_v%VERSION%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -56,14 +56,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Embrava Pty Ltd (22SZ8ZMVWG)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

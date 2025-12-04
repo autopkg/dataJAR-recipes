@@ -26,10 +26,6 @@
             <string>SageMath CLI Tools</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>update_for</key>
-            <array>
-                <string>SageMath</string>
-            </array>
             <key>requires</key>
             <array>
                 <string>SageMath</string>
@@ -38,6 +34,10 @@
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>update_for</key>
+            <array>
+                <string>SageMath</string>
+            </array>
         </dict>
     </dict>
     <key>MinimumVersion</key>

@@ -18,10 +18,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.viewsonicglobal.com/public/products_download/software/cd/vCastSender_for_Mac.zip</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://www.viewsonicglobal.com/public/products_download/software/cd/vCastSender_for_Mac.zip</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -55,14 +55,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/%found_basename%/vCastSender.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: ViewSonic International Corp. (AVR9NC3MVW)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/%found_basename%/vCastSender.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

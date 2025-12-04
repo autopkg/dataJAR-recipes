@@ -18,10 +18,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Audacity</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Audacity</string>
         <key>ARCHITECTURE</key>
         <string>x86_64</string>
+        <key>NAME</key>
+        <string>Audacity</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

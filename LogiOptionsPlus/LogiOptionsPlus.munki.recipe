@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>comments</key>
-    <string>Recipe Notes:
-
-We have to manually create the installs array due it being an App Installer. Luckily the version number of the App installer matches with what ends up being installed on disk.
-
-Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
-
-Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The  installcheck_script checks for a logged in user and bails if there isnt.</string>
     <key>Description</key>
     <string>Downloads the latest version of LogiOptionsPlus and imports it into Munki.</string>
     <key>Identifier</key>
@@ -34,6 +26,10 @@ Due to what we think is a bug the Logi Options+ Installer hangs at the Login Win
             <string>Logi Options+</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -42,10 +38,6 @@ Due to what we think is a bug the Logi Options+ Installer hangs at the Login Win
 rm -Rf /Applications/logioptionsplus.app
 #
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -61,10 +53,10 @@ exit</string>
                 <string>%RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>LSMinimumSystemVersion</key>
-                    <string>min_os_ver</string>
                     <key>CFBundleVersion</key>
                     <string>CFBV</string>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
                 </dict>
             </dict>
             <key>Processor</key>
@@ -75,31 +67,6 @@ exit</string>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>minimum_os_version</key>
-                    <string>%min_os_ver%</string>
-                    <key>installs</key>
-                    <array>
-                        <dict>
-                            <key>type</key>
-                            <string>application</string>
-                            <key>CFBundleIdentifier</key>
-                            <string>com.logi.optionsplus</string>
-                            <key>CFBundleName</key>
-                            <string>logioptionsplus</string>
-                            <key>path</key>
-                            <string>/Applications/logioptionsplus.app</string>
-                            <key>CFBundleShortVersionString</key>
-                            <string>%CFBV%</string>
-                            <key>CFBundleVersion</key>
-                            <string>%CFBV%</string>
-                            <key>minosversion</key>
-                            <string>%min_os_ver%</string>
-                            <key>version_comparison_key</key>
-                            <string>CFBundleShortVersionString</string>
-                        </dict>
-                    </array>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>installcheck_script</key>
                     <string>#!/bin/zsh
 
@@ -177,6 +144,31 @@ else
     # Exit as no-one logged in
     exit 1
 fi</string>
+                    <key>installs</key>
+                    <array>
+                        <dict>
+                            <key>type</key>
+                            <string>application</string>
+                            <key>CFBundleIdentifier</key>
+                            <string>com.logi.optionsplus</string>
+                            <key>CFBundleName</key>
+                            <string>logioptionsplus</string>
+                            <key>path</key>
+                            <string>/Applications/logioptionsplus.app</string>
+                            <key>CFBundleShortVersionString</key>
+                            <string>%CFBV%</string>
+                            <key>CFBundleVersion</key>
+                            <string>%CFBV%</string>
+                            <key>minosversion</key>
+                            <string>%min_os_ver%</string>
+                            <key>version_comparison_key</key>
+                            <string>CFBundleShortVersionString</string>
+                        </dict>
+                    </array>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
             <key>Processor</key>
@@ -207,5 +199,13 @@ fi</string>
             <string>PathDeleter</string>
         </dict>
     </array>
+    <key>comments</key>
+    <string>Recipe Notes:
+
+We have to manually create the installs array due it being an App Installer. Luckily the version number of the App installer matches with what ends up being installed on disk.
+
+Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
+
+Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The  installcheck_script checks for a logged in user and bails if there isnt.</string>
 </dict>
 </plist>

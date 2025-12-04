@@ -73,12 +73,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Catalyst Prepare.app</string>
                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
@@ -111,8 +111,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -120,6 +118,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
             <key>Arguments</key>

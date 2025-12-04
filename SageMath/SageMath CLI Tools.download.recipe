@@ -52,14 +52,14 @@ i.e.: `-k PRERELEASE=yes</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Marc Culler (A3LBEGBB69)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

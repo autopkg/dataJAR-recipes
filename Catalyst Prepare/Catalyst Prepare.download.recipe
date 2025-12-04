@@ -16,8 +16,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -25,6 +23,8 @@
                 <key>url</key>
                 <string>https://support.d-imaging.sony.co.jp/disoft_DL/CatalystPrepare_DL/mac?fm=en</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -33,14 +33,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/Catalyst Prepare *.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Sony Corporation (VH49J2FYHE)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/Catalyst Prepare *.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

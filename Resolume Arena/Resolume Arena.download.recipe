@@ -18,56 +18,56 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://resolume.com/download/?file=latest_arena</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_NAME</string>
-                <key>re_pattern</key>
-                <string>href=\"https://resolume\.com/download/file\?file=(Resolume_Arena_([0-9]+(_[0-9]+)+)_rev_[A-Za-z0-9]+_Installer\.dmg)\"</string>
                 <key>re_flags</key>
                 <array>
                     <string>IGNORECASE</string>
                 </array>
+                <key>re_pattern</key>
+                <string>href=\"https://resolume\.com/download/file\?file=(Resolume_Arena_([0-9]+(_[0-9]+)+)_rev_[A-Za-z0-9]+_Installer\.dmg)\"</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
                     <string>%USER_AGENT%</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_NAME</string>
+                <key>url</key>
+                <string>https://resolume.com/download/?file=latest_arena</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://dd5sgwxv3xok.cloudfront.net/%DOWNLOAD_NAME%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://dd5sgwxv3xok.cloudfront.net/%DOWNLOAD_NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-        <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/Resolume Arena Installer.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Resolume (Z9Y8N6Q4L8)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/Resolume Arena Installer.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

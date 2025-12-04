@@ -71,13 +71,13 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/GetBinaryMinimumOSVersion</string>
             <key>Arguments</key>
             <dict>
                 <key>app_path</key>
                 <string>%pathname%/SpringToolsForEclipse.app</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/GetBinaryMinimumOSVersion</string>
         </dict>
         <dict>
             <key>Arguments</key>

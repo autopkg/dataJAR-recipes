@@ -8,8 +8,6 @@
     <string>com.github.dataJAR-recipes.pkg.LogiTune</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>LogiTune</string>
         <key>INSTALL_SCRIPT</key>
         <string>#!/bin/bash
 
@@ -18,6 +16,8 @@
 LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No
 
 exit</string>
+        <key>NAME</key>
+        <string>LogiTune</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -61,10 +61,10 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-                <key>source_path</key>
-                <string>%pathname%/LogiTuneInstaller.app/Contents/Resources/Applications</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/LogiTuneInstaller.app/Contents/Resources/Applications</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -100,10 +100,10 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Scripts/LogiTuneInstaller.app</string>
-                <key>source_path</key>
-                <string>%pathname%/LogiTuneInstaller.app</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/LogiTuneInstaller.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>

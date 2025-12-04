@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.DHS</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>DHS</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>DHS</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -48,10 +46,10 @@
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/unzip</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -59,10 +57,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -70,6 +68,8 @@
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

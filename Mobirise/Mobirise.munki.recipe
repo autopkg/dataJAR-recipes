@@ -25,10 +25,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             </array>
             <key>category</key>
             <string>Utilities</string>
-            <key>developer</key>
-            <string>Mobirise</string>
             <key>description</key>
             <string>Mobirise is a free offline app for Window and Mac to easily create small/medium websites, landing pages, online resumes and portfolios, promo sites for apps, events, services and products.</string>
+            <key>developer</key>
+            <string>Mobirise</string>
             <key>display_name</key>
             <string>Mobirise</string>
             <key>name</key>
@@ -50,8 +50,6 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -59,6 +57,8 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

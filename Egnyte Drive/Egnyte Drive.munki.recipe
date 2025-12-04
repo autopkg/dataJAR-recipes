@@ -8,26 +8,26 @@
     <string>com.github.dataJAR-recipes.nunki.EgnyteDrive</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Egnyte Drive</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Egnyte Drive</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Egnyte Drive</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
-                <key>blocking_applications</key>
-                <array>
-                    <string>Egnyte Drive</string>
-                </array>
             <key>category</key>
             <string>Applications</string>
-            <key>developer</key>
-            <string>Egnyte</string>
             <key>description</key>
             <string>Easily browse all the Egnyte files and folders that you have access to directly from Mac Finder.</string>
+            <key>developer</key>
+            <string>Egnyte</string>
             <key>display_name</key>
             <string>Egnyte Drive</string>
             <key>name</key>
@@ -43,8 +43,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -52,6 +50,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

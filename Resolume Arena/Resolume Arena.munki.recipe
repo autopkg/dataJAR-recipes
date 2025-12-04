@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Resolume Arena</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Resolume Arena</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Resolume Arena</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -41,19 +41,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%pathname%/Resolume Arena Installer.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/Resolume Arena Installer.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -63,67 +61,67 @@
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Arena.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Arena.pkg/Payload</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Alley_Software.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack/Alley</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Resolume_Alley_Software.pkg/Payload</string>
             </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Alley/Applications/Resolume Alley</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Alley</string>
-            </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire.pkg/Payload</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire</string>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Alley</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Alley/Applications/Resolume Alley</string>
+            </dict>
             <key>Processor</key>
             <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire/Applications/Resolume Wire</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Wire</string>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire.pkg/Payload</string>
+            </dict>
             <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Resolume Wire</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire/Applications/Resolume Wire</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -137,14 +135,14 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -155,10 +153,10 @@
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -167,10 +165,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -178,10 +176,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -190,6 +188,8 @@
                     <string>%RECIPE_CACHE_DIR%/pkg_unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -1,43 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of DFU Blaster Pro and imports it into Munki.
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of DFU Blaster Pro and imports it into Munki.
 
 This differs from https://github.com/autopkg/kevinmcox-recipes/blob/master/Twocanoes%20Software/DFUBlaster.munki.recipe due to the use of an installcheck_script that combines CFBundleShortVersionString and CFBundleVersion to use for the comparison.
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.DFU Blaster Pro</string>
-        <key>Input</key>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.DFU Blaster Pro</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>utilities/DFUBlaster</string>
+        <key>NAME</key>
+        <string>DFUBlasterPro</string>
+        <key>pkginfo</key>
         <dict>
-            <key>DERIVE_MIN_OS</key>
-            <string>YES</string>
-            <key>NAME</key>
-            <string>DFUBlasterPro</string>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>utilities/DFUBlaster</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>category</key>
-                <string>Utilities</string>
-                <key>description</key>
-                <string>DFU Blaster Pro is the easiest way to put a Mac into DFU mode.</string>
-                <key>developer</key>
-                <string>Twocanoes Software</string>
-                <key>display_name</key>
-                <string>DFU Blaster Pro</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>uninstall_method</key>
-                <string>uninstall_script</string>
-                <key>uninstall_script</key>
-                <string>#!/bin/sh
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Utilities</string>
+            <key>description</key>
+            <string>DFU Blaster Pro is the easiest way to put a Mac into DFU mode.</string>
+            <key>developer</key>
+            <string>Twocanoes Software</string>
+            <key>display_name</key>
+            <string>DFU Blaster Pro</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
 # Uninstall script taken from the postinstall of the uninstaller package
 
 dir=`/usr/bin/mktemp -d ~/.Trash/DFU_Blaster.XXXXXX`
@@ -69,88 +73,82 @@ if [ -e "/Library/PrivilegedHelperTools/com.twocanoes.dfublasterhelper" ] ; then
     echo "done removing prior DFU Blaster Helper Tool"
 
 fi</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-            </dict>
         </dict>
-        <key>MinimumVersion</key>
-        <string>2.7</string>
-        <key>ParentRecipe</key>
-        <string>com.github.kevinmcox.download.DFUBlaster</string>
-        <key>Process</key>
-        <array>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.kevinmcox.download.DFUBlaster</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>FlatPkgUnpacker</string>
-                <key>Arguments</key>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/DFU Blaster Pro.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/DFU_Blaster_Pro.pkg/payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>app_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/CFBundleVersionCombiner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
+                <key>plist_keys</key>
                 <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    <key>flat_pkg_path</key>
-                    <string>%pathname%/DFU Blaster Pro.pkg</string>
-                    <key>purge_destination</key>
-                    <true/>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>PkgPayloadUnpacker</string>
-                <key>Arguments</key>
+                <key>additional_pkginfo</key>
                 <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/payload/</string>
-                    <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack/DFU_Blaster_Pro.pkg/payload</string>
-                    <key>purge_destination</key>
-                    <true/>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>com.github.dataJAR-recipes.Shared Processors/CFBundleVersionCombiner</string>
-                <key>Arguments</key>
+                <key>additional_pkginfo</key>
                 <dict>
-                    <key>app_path</key>
-                    <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>info_path</key>
-                    <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
-                    <key>plist_keys</key>
-                    <dict>
-                        <key>LSMinimumSystemVersion</key>
-                        <string>min_os_ver</string>
-                    </dict>
-                </dict>
-                <key>Processor</key>
-                <string>PlistReader</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>additional_pkginfo</key>
-                    <dict>
-                        <key>minimum_os_version</key>
-                        <string>%min_os_ver%</string>
-                    </dict>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>additional_pkginfo</key>
-                    <dict>
-                        <key>installcheck_script</key>
-                        <string>#!/bin/zsh
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh
 
 # Copyright 2025, Jamf Software, LLC.
 
@@ -230,36 +228,38 @@ else
     echo "Could not determine current version"
     exit 0
 fi</string>
-                    </dict>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </array>
             </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PathDeleter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <array>
-                        <string>%RECIPE_CACHE_DIR%/payload/</string>
-                        <string>%RECIPE_CACHE_DIR%/unpack</string>
-                    </array>
-                </dict>
-            </dict>
-        </array>
-    </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

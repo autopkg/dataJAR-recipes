@@ -30,6 +30,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>Logi Tune</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -39,10 +43,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
 /Library/Application\ Support/logitune/uninstall_app.sh
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -74,14 +74,14 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Logi Tune.app</string>
                 </array>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
