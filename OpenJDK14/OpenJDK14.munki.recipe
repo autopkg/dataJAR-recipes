@@ -2,26 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>MinimumVersion</key>
-    <string>1.1</string>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.OpenJDK14</string>
     <key>Description</key>
     <string>Downloads the current release version of OpenJDK 14, builds a package and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.OpenJDK14</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>OpenJDK 14</string>
         <key>MAJOR_VERSION</key>
         <string>14</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>%VENDOR%</string>
+        <key>NAME</key>
+        <string>OpenJDK 14</string>
         <key>SOFTWARETITLE</key>
         <string>Java</string>
         <key>SOFTWARETYPE</key>
         <string>JDK</string>
         <key>VENDOR</key>
         <string>OpenJDK</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>%VENDOR%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -46,27 +44,29 @@
             <true/>
         </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.rtrouton.pkg.OpenJDK13</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>This has been replaced by OpenJDK 15. See https://github.com/autopkg/dataJAR-recipes/blob/master/OpenJDK15/OpenJDK15.munki.recipe.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
     </array>
 </dict>

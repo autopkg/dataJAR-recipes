@@ -6,7 +6,7 @@
     <string>Downloads the latest version of krita and imports it into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.krita</string>
-        <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
@@ -18,10 +18,10 @@
             <array>
                 <string>testing</string>
             </array>
-            <key>developer</key>
-            <string>Krita Foundation</string>
             <key>description</key>
             <string>krita is a professional FREE and open source painting program.</string>
+            <key>developer</key>
+            <string>Krita Foundation</string>
             <key>display_name</key>
             <string>krita</string>
             <key>name</key>

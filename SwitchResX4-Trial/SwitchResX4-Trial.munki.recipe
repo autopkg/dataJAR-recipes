@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.SwitchResX4-Trial</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>SwitchResX4-Trial</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SwitchResX4-Trial</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -65,8 +65,6 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -76,6 +74,8 @@
                     <string>/Library/PreferencePanes/SwitchResX.prefPane</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -114,8 +114,6 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -123,6 +121,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

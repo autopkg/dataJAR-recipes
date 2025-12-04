@@ -14,12 +14,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.Elgato Camera Hub</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>ElgatoCameraHub</string>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -39,6 +39,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>Camera Hub</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -48,20 +50,16 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
 # https://help.elgato.com/hc/en-us/articles/4420177682189-Elgato-Camera-Hub-Uninstall-Procedure-on-macOS
 
 # kill process
-/usr/bin/killall &quot;Camera Hub&quot; &gt; /dev/null 2&gt;&amp;1 || :
+/usr/bin/killall "Camera Hub" &gt; /dev/null 2&gt;&amp;1 || :
 
 # remove app. bundle
-/bin/rm -rf &quot;/Applications/Camera Hub.app&quot;
-/bin/rm -rf &quot;/Applications/Elgato Camera Hub.app&quot;
+/bin/rm -rf "/Applications/Camera Hub.app"
+/bin/rm -rf "/Applications/Elgato Camera Hub.app"
 
 # remove support files
 /bin/rm -rf /Library/Application\ Support/Elgato/Camera\ Hub
 
 exit 0</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_install</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -112,10 +110,10 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/Payload</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/Payload</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Elgato Camera Hub.app</string>
@@ -129,17 +127,15 @@ exit 0</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%RECIPE_CACHE_DIR%/Payload/Applications/Elgato Camera Hub.app/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -148,6 +144,8 @@ exit 0</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -165,12 +163,12 @@ exit 0</string>
             <dict>
                 <key>mode</key>
                 <string>777</string>
-                 <key>resource_path</key>
+                <key>resource_path</key>
                 <string>%RECIPE_CACHE_DIR%/Payload</string>
-             </dict>
+            </dict>
             <key>Processor</key>
             <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
-         </dict>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>

@@ -28,6 +28,10 @@ One click PHP development environment. Zero dependencies. Zero headaches.</strin
             <string>Herd</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -64,10 +68,6 @@ fi
 rm -rf "/Applications/Herd.app"
 
 exit 0</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>

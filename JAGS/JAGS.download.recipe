@@ -11,8 +11,6 @@
         <key>NAME</key>
         <string>JAGS</string>
     </dict>
-    <key>MiniumumVersion</key>
-    <string>1.1</string>
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>Process</key>
@@ -31,35 +29,37 @@
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/%DOWNLOAD_NAME%</string>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/%DOWNLOAD_NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-        <key>Arguments</key>
-        <dict>
-            <key>input_path</key>
-            <string>%pathname%</string>
-            <key>expected_authority_names</key>
-            <array>
-                <string>Developer ID Installer: Matthew Denwood (5SKYAC3SYX)</string>
-                <string>Developer ID Certification Authority</string>
-                <string>Apple Root CA</string>
-            </array>
-        </dict>
-        <key>Processor</key>
-        <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Matthew Denwood (5SKYAC3SYX)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
+    <key>MiniumumVersion</key>
+    <string>1.1</string>
 </dict>
 </plist>

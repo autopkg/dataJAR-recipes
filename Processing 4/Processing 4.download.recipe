@@ -26,17 +26,17 @@ Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Sil
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>processing-([0-9]+(\.[0-9]+)+)-macos-%DOWNLOAD_ARCHITECTURE%.dmg$</string>
                 <key>github_repo</key>
                 <string>processing/processing4</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>processing-([0-9]+(\.[0-9]+)+)-macos-%DOWNLOAD_ARCHITECTURE%.dmg$</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -47,8 +47,6 @@ Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Sil
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -56,6 +54,8 @@ Set DOWNLOAD_ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Sil
                 <key>requirement</key>
                 <string>identifier "org.processing.app" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6297K33652"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

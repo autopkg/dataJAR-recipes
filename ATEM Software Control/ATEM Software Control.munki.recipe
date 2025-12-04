@@ -28,6 +28,10 @@ The world’s most advanced live production switcher control software!</string>
             <string>ATEM Software Control</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -36,10 +40,6 @@ The world’s most advanced live production switcher control software!</string>
 /Applications/Blackmagic\ ATEM\ Switchers/Uninstall\ ATEM.app/Contents/Resources/uninstall.sh
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -69,8 +69,8 @@ exit</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        <key>Processor</key>
-        <string>FlatPkgUnpacker</string>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
             <key>Arguments</key>

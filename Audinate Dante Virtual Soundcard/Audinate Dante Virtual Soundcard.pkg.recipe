@@ -22,10 +22,10 @@ autopkg repo-add jessepeterson-recipes</string>
     <dict>
         <key>NAME</key>
         <string>AudinateDanteVirtualSoundcard</string>
-        <key>PREINSTALL_SCRIPT_PATH</key>
-        <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Virtual Soundcard/Fixed Scripts/preinstall</string>
         <key>POSTINSTALL_SCRIPT_PATH</key>
         <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Virtual Soundcard/Fixed Scripts/postinstall</string>
+        <key>PREINSTALL_SCRIPT_PATH</key>
+        <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Virtual Soundcard/Fixed Scripts/preinstall</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

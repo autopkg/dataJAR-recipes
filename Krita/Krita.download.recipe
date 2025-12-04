@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.download.krita</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>krita</string>
         <key>DOWNLOAD_URL</key>
         <string>https://krita.org/en/download/</string>
+        <key>NAME</key>
+        <string>krita</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15</string>
     </dict>
@@ -20,12 +20,8 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
                 <string>href=\"?(https://download\.kde\.org/stable/krita/([0-9]+(\.[0-9]+)+)/krita\S*\.dmg)</string>
                 <key>request_headers</key>
@@ -35,24 +31,26 @@
                 </dict>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -60,8 +58,10 @@
                 <key>requirement</key>
                 <string>identifier "org.krita" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = DL93766A3G</string>
                 <key>strict_verification</key>
-                <true />
+                <true/>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
