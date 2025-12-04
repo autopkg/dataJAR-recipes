@@ -39,7 +39,7 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.Perimeter 81</string>
     <key>Process</key>
