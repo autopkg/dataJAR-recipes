@@ -81,14 +81,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%found_filename%/*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Shenzhen Ugee Technology Co.,Ltd. (W5WXKF6844)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%found_filename%/*.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

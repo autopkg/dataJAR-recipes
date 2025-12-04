@@ -15,10 +15,10 @@ i.e.: `-k PRERELEASE=yes</string>
     <string>com.github.dataJAR-recipes.download.Nagstamon</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Nagstamon</string>
         <key>DOWNLOAD_ARCH</key>
         <string>Intel</string>
+        <key>NAME</key>
+        <string>Nagstamon</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

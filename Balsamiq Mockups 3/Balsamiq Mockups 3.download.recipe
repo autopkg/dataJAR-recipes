@@ -10,28 +10,25 @@
     <dict>
         <key>NAME</key>
         <string>BalsamiqMockups3</string>
-
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://build_archives.s3.amazonaws.com/Mockups/Mockups-3/Balsamiq-Mockups-3-macOS.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -39,6 +36,8 @@
                 <key>requirement</key>
                 <string>identifier "BalsamiqMockups3.EDE15CF69E11F7F7D45B5430C7D37CC6C3545E3C.1" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3DPKD72KQ7"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

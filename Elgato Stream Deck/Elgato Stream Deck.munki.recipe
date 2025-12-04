@@ -12,14 +12,14 @@ To force MunkiImporter to import the pkg, set FORCE_MUNKIIMPORT to a non-empty s
     <string>com.github.dataJAR-recipes.munki.Elgato Stream Deck</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>ElgatoStreamDeck</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
         <key>FORCE_MUNKIIMPORT</key>
         <string></string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>ElgatoStreamDeck</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -34,6 +34,10 @@ To force MunkiImporter to import the pkg, set FORCE_MUNKIIMPORT to a non-empty s
             <string>Elgato Stream Deck</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -47,47 +51,43 @@ launchctl unload -w /Library/LaunchAgents/com.elgato.StreamDeck.plist &gt; /dev/
 launchctl unload -w $HOME/Library/LaunchAgents/com.elgato.StreamDeck.plist &gt; /dev/null 2&gt;&amp;1
 
 # kill the Stream Deck application if it was launched manually
-killall &quot;Stream Deck&quot; &gt; /dev/null 2&gt;&amp;1 || true
+killall "Stream Deck" &gt; /dev/null 2&gt;&amp;1 || true
 
 # delete previous Stream Deck app (as it may have different name)
 rm -f /Library/LaunchAgents/com.elgato.StreamDeck.plist
 rm -f $HOME/Library/LaunchAgents/com.elgato.StreamDeck.plist
 
 # remove app
-rm -rf &quot;/Applications/Stream Deck.app&quot;
-rm -rf &quot;/Applications/Elgato Stream Deck.app&quot;
+rm -rf "/Applications/Stream Deck.app"
+rm -rf "/Applications/Elgato Stream Deck.app"
 
 # remove STREAMDECKSHM
-su - $USER -c &quot;/bin/rm -rf ~/Library/Caches/STREAMDECKSHM&quot;
+su - $USER -c "/bin/rm -rf ~/Library/Caches/STREAMDECKSHM"
 
 # remove cache
-su - $USER -c &quot;/bin/rm -rf ~/Library/Caches/elgato/StreamDeck&quot;
-su - $USER -c &quot;/bin/rm -rf ~/Library/Caches/com.elgato.StreamDeck&quot;
+su - $USER -c "/bin/rm -rf ~/Library/Caches/elgato/StreamDeck"
+su - $USER -c "/bin/rm -rf ~/Library/Caches/com.elgato.StreamDeck"
 
 # remove com.elgato.StreamDeck in Application Support (Profiles, HockeyApp)
-su - $USER -c &quot;/bin/rm -rf ~/Library/Application\ Support/com.elgato.StreamDeck&quot;
+su - $USER -c "/bin/rm -rf ~/Library/Application\ Support/com.elgato.StreamDeck"
 
 # remove preferences
-su - $USER -c &quot;defaults delete com.elgato.StreamDeck&quot;
-su - $USER -c &quot;/bin/rm -rf ~/Library/Preferences/com.elgato.StreamDeck.plist&quot;
+su - $USER -c "defaults delete com.elgato.StreamDeck"
+su - $USER -c "/bin/rm -rf ~/Library/Preferences/com.elgato.StreamDeck.plist"
 
 # remove logs
-su - $USER -c &quot;/bin/rm -rf ~/Library/Logs/StreamDeck&quot;
+su - $USER -c "/bin/rm -rf ~/Library/Logs/StreamDeck"
 
 # remove OBS related stuff
-PLUGIN_NAME=&quot;StreamDeckPlugin&quot;
+PLUGIN_NAME="StreamDeckPlugin"
 
-OBS_PLUGINS_DIR_V2=&quot;$HOME/Library/Application Support/obs-studio/plugins&quot;
-rm -rf &quot;$OBS_PLUGINS_DIR_V2/$PLUGIN_NAME.plugin&quot;
+OBS_PLUGINS_DIR_V2="$HOME/Library/Application Support/obs-studio/plugins"
+rm -rf "$OBS_PLUGINS_DIR_V2/$PLUGIN_NAME.plugin"
 
-OBS_PLUGINS_DIR=&quot;/Library/Application Support/obs-studio/plugins&quot;
-rm -rf &quot;$OBS_PLUGINS_DIR/$PLUGIN_NAME&quot;
+OBS_PLUGINS_DIR="/Library/Application Support/obs-studio/plugins"
+rm -rf "$OBS_PLUGINS_DIR/$PLUGIN_NAME"
 
 exit 0</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -97,21 +97,19 @@ exit 0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -121,14 +119,10 @@ exit 0</string>
                 <key>purge_destination</key>
                 <false/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Comment</key>
-            <string>The Stream Deck installer package has a postinstall script that renames the bundled "Stream Deck.app" to "Elgato Stream Deck.app"
-
-This ensures we're able to create an installs array that doesn't cause install loops.
-
-For further info please see https://github.com/autopkg/dataJAR-recipes/issues/270</string>
             <key>Arguments</key>
             <dict>
                 <key>overwrite</key>
@@ -138,40 +132,44 @@ For further info please see https://github.com/autopkg/dataJAR-recipes/issues/27
                 <key>target</key>
                 <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Elgato Stream Deck.app</string>
             </dict>
+            <key>Comment</key>
+            <string>The Stream Deck installer package has a postinstall script that renames the bundled "Stream Deck.app" to "Elgato Stream Deck.app"
+
+This ensures we're able to create an installs array that doesn't cause install loops.
+
+For further info please see https://github.com/autopkg/dataJAR-recipes/issues/270</string>
             <key>Processor</key>
             <string>FileMover</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Elgato Stream Deck.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%destination_path%Applications/Elgato Stream Deck.app/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -180,14 +178,14 @@ For further info please see https://github.com/autopkg/dataJAR-recipes/issues/27
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>force_munkiimport</key>
@@ -197,10 +195,10 @@ For further info please see https://github.com/autopkg/dataJAR-recipes/issues/27
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -209,6 +207,8 @@ For further info please see https://github.com/autopkg/dataJAR-recipes/issues/27
                     <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -13,12 +13,12 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <string>com.github.dataJAR-recipes.munki.Hunchly</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Hunchly</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Hunchly</string>
         <key>SUPPORTED_ARCH</key>
         <string></string>
         <key>pkginfo</key>
@@ -54,8 +54,6 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -65,10 +63,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -78,12 +76,14 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>installs_item_paths</key>
@@ -92,17 +92,15 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -113,10 +111,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -125,10 +123,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -136,10 +134,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -148,6 +146,8 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

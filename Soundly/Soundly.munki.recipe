@@ -6,7 +6,7 @@
     <string>Downloads the latest version of Soundly and imports it into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Soundly</string>
-        <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
@@ -18,11 +18,11 @@
             <array>
                 <string>testing</string>
             </array>
-            <key>developer</key>
-            <string>Sahara</string>
             <key>description</key>
             <string>Find your perfect sound in the massive Soundly cloud library, use our powerful search engine on your local files, and Drag and Drop sounds to your favorite tools!
             </string>
+            <key>developer</key>
+            <string>Sahara</string>
             <key>display_name</key>
             <string>Soundly</string>
             <key>name</key>

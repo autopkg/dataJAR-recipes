@@ -16,21 +16,19 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                    <key>re_pattern</key>
-                    <string>/files/isadoramac-4.*-std\.dmg</string>
-                    <key>result_output_var_name</key>
-                    <string>match</string>
-                    <key>url</key>
-                    <string>https://troikatronix.com/get-it/</string>
+                <key>re_pattern</key>
+                <string>/files/isadoramac-4.*-std\.dmg</string>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://troikatronix.com/get-it/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -38,25 +36,27 @@
                 <key>url</key>
                 <string>https://troikatronix.com/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/Isadora Installer.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Mark Coniglio (Q5V96MD6S6)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/Isadora Installer.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

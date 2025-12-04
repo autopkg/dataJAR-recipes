@@ -10,32 +10,32 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.Isadora 4</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Isadora4</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/troikatronix</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/troikatronix</string>
+        <key>NAME</key>
+        <string>Isadora4</string>
         <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Isadora is a proprietary graphic programming environment, with emphasis on real-time manipulation of digital video.</string>
-                <key>developer</key>
-                <string>TroikaTronix</string>
-                <key>display_name</key>
-                <string>Isadora 4</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-            </dict>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Isadora is a proprietary graphic programming environment, with emphasis on real-time manipulation of digital video.</string>
+            <key>developer</key>
+            <string>TroikaTronix</string>
+            <key>display_name</key>
+            <string>Isadora 4</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
+    </dict>
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
@@ -43,8 +43,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -54,10 +52,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -67,12 +65,14 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/</string>
                 <key>installs_item_paths</key>
@@ -81,17 +81,15 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -99,10 +97,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>source_pkg</key>
                 <string>%pathname%/Isadora Installer.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -110,10 +108,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -122,6 +120,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

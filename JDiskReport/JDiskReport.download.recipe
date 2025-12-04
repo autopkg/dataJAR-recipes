@@ -16,8 +16,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -27,6 +25,8 @@
                 <key>url</key>
                 <string>https://www.jgoodies.com/downloads/jdiskreport/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>

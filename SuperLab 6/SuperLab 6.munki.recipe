@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.SuperLab 6</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>SuperLab6</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SuperLab6</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -37,19 +37,17 @@ Every other tool to build experiments relies on programming. SuperLab has been o
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>dmg_root</key>
-                <string>%destination_path%SuperLab 6.app</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%destination_path%SuperLab 6.app</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -57,10 +55,10 @@ Every other tool to build experiments relies on programming. SuperLab has been o
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -68,6 +66,8 @@ Every other tool to build experiments relies on programming. SuperLab has been o
                     <string>%destination_path%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

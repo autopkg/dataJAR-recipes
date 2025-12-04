@@ -8,36 +8,34 @@
     <string>com.github.dataJAR-recipes.download.MediaMaster Pro</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>MediaMasterPro</string>
         <key>DOWNLOAD_URL</key>
         <string>https://pro.arkaos.com/downloads/mediamaster_mac.php</string>
+        <key>NAME</key>
+        <string>MediaMasterPro</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>With the release of MediaMaster Pro, these recipes has been deprecated. MediaMaster Pro 5 recipes can still be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/MediaMaster%20Pro%205, and MediaMaster Pro 6 recipes found at: https://github.com/autopkg/dataJAR-recipes/tree/master/MediaMaster%20Pro%206.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -45,25 +43,27 @@
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/ArKaos_MediaMaster*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: ArKaos SA (SKE5HH5VKW)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/ArKaos_MediaMaster*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

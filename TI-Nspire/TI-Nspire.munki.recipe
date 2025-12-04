@@ -39,8 +39,6 @@ Symbolically solve equations, factor and expand variable expressions, complete t
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -53,29 +51,29 @@ Symbolically solve equations, factor and expand variable expressions, complete t
                     <string>min_os_version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/payload</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleShortVersionString</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/TI-Nspire CX Student Software.app</string>
                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -86,10 +84,10 @@ Symbolically solve equations, factor and expand variable expressions, complete t
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -97,6 +95,8 @@ Symbolically solve equations, factor and expand variable expressions, complete t
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

@@ -11,33 +11,31 @@ To download Intel leave the DOWNLOAD_ARCH variable empty</string>
     <string>com.github.dataJAR-recipes.download.Axure RP 11</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AxureRP11</string>
         <key>DOWNLOAD_ARCH</key>
         <string></string>
+        <key>NAME</key>
+        <string>AxureRP11</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://axure.cachefly.net/AxureRP-Setup%DOWNLOAD_ARCH%.dmg</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://axure.cachefly.net/AxureRP-Setup%DOWNLOAD_ARCH%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -45,6 +43,8 @@ To download Intel leave the DOWNLOAD_ARCH variable empty</string>
                 <key>requirement</key>
                 <string>identifier "com.axure.AxureRP11" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = HUMW6UU796</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -11,10 +11,10 @@ To download Intel use: "" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.download.Hunchly</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Hunchly</string>
         <key>DOWNLOAD_ARCH</key>
         <string></string>
+        <key>NAME</key>
+        <string>Hunchly</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -36,19 +36,19 @@ To download Intel use: "" in the DOWNLOAD_ARCH variable</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Dark River Systems Inc. (979L7J7YW8)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

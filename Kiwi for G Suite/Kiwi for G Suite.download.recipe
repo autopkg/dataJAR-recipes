@@ -8,60 +8,60 @@
     <string>com.github.dataJAR-recipes.download.Kiwi for G Suite</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>KiwiforGSuite</string>
         <key>DOWNLOAD_URL</key>
         <string>https://kiwiforgsuite.s3.amazonaws.com/mac/release/Kiwi+for+G+Suite.pkg</string>
+        <key>NAME</key>
+        <string>KiwiforGSuite</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>As per: https://kiwiforgmail.zendesk.com/hc/en-us/articles/360050366172-Kiwi-for-Gmail-and-Kiwi-for-G-Suite-3-0-Changes-from-2-0, Kiwi for G Suite is now Kiwi for Gmail.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Zive, Inc. (ND86S98S6P)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

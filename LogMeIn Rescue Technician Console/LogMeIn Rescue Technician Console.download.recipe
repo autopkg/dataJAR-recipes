@@ -8,31 +8,29 @@
     <string>com.github.dataJAR-recipes.download.LogMeInRescueTechnicianConsole</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>LogMeIn Rescue Technician Console</string>
         <key>DOWNLOAD_URL</key>
         <string>https://secure.logmeinrescue.com/Files/TechConsoleMAC/LogMeInRescueTechnicianConsoleMAC.dmg</string>
+        <key>NAME</key>
+        <string>LogMeIn Rescue Technician Console</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -40,6 +38,8 @@
                 <key>requirement</key>
                 <string>anchor apple generic and certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GFNFVT632V</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

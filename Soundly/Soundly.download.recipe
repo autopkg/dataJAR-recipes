@@ -8,44 +8,42 @@
     <string>com.github.dataJAR-recipes.download.Soundly</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Soundly</string>
         <key>DOWNLOAD_URL</key>
         <string>https://getsoundly.com</string>
+        <key>NAME</key>
+        <string>Soundly</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
                 <string>(https://storage.googleapis.com/soundlyapp/Soundly.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -53,8 +51,10 @@
                 <key>requirement</key>
                 <string>identifier "com.soundly.Soundly" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "67Y6N7VTDG"</string>
                 <key>strict_verification</key>
-                <true />
+                <true/>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

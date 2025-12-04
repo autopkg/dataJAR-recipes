@@ -57,10 +57,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%pathname%/*.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/*.pkg</string>
             </dict>
             <key>Processor</key>
             <string>PkgCopier</string>
@@ -70,8 +70,8 @@
             <dict>
                 <key>path_list</key>
                 <array>
-                <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
-                <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
                 </array>
             </dict>
             <key>Processor</key>

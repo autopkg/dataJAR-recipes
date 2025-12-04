@@ -15,16 +15,16 @@
     <string>1.0.0</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Arguments</key>
         <dict>
-            <key>re_pattern</key>
-            <string>href="(/download/en/ed-tech/.*/.*/TINspireCX.*\.dmg)"</string>
-            <key>url</key>
-            <string>https://education.ti.com/en/software/details/en/AFCFF2853BC34DEFB4C0B8B156F92404/ti-nspirecx_pc_full</string>
-            <key>result_output_var_name</key>
-            <string>version</string>
-        </dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href="(/download/en/ed-tech/.*/.*/TINspireCX.*\.dmg)"</string>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>https://education.ti.com/en/software/details/en/AFCFF2853BC34DEFB4C0B8B156F92404/ti-nspirecx_pc_full</string>
+            </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>
@@ -34,7 +34,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-            <string>https://education.ti.com/%version%</string>
+                <string>https://education.ti.com/%version%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>

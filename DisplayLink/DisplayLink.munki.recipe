@@ -44,10 +44,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%found_filename%/DisplayLink Software Installer.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%/DisplayLink Software Installer.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -57,10 +57,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                    <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack/DisplayLinkDriverSignedKexts.pkg/Payload</string>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/version_check</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/version_check</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/DisplayLinkDriverSignedKexts.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -75,16 +75,16 @@
             <string>PlistReader</string>
         </dict>
         <dict>
-                <key>Arguments</key>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
                 <dict>
-                        <key>additional_pkginfo</key>
-                        <dict>
-                                <key>version</key>
-                                <string>%version%</string>
-                        </dict>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>

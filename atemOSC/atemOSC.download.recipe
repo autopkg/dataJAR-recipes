@@ -50,10 +50,10 @@ i.e.: `-k PRERELEASE=yes`</string>
             <dict>
                 <key>input_path</key>
                 <string>%pathname%/atemOSC.app</string>
-                <key>strict_verification</key>
-                <false/>
                 <key>requirement</key>
                 <string>identifier "cc.buechele.atemOSC" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = LRNWZB2D4D</string>
+                <key>strict_verification</key>
+                <false/>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
