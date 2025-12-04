@@ -34,13 +34,13 @@
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.mosen.munki.IDEA-IU/JetbrainsURLProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>product_code</key>
                 <string>IIC</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.mosen.munki.IDEA-IU/JetbrainsURLProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -51,17 +51,15 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>AppDmgVersioner</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>AppDmgVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -69,6 +67,8 @@
                 <key>requirement</key>
                 <string>identifier "com.jetbrains.intellij.ce" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2ZEFAR8TH3"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

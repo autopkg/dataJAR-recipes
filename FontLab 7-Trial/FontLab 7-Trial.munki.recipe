@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.FontLab 7-Trial</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>FontLab7-Trial</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>FontLab7-Trial</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -61,8 +61,6 @@ fi</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -70,10 +68,10 @@ fi</string>
                 <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -82,10 +80,10 @@ fi</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -95,6 +93,8 @@ fi</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
