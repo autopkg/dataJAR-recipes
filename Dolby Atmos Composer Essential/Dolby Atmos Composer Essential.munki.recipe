@@ -126,10 +126,10 @@ The Dolby Atmos Composer does that and thereby enables you to quickly get convin
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Library/Audio/Plug-Ins/VST3/fiedler audio atmos composer essential.vst3</string>

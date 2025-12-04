@@ -16,25 +16,25 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://downloads.clouduss.com/macosx/?C=M;O=D</string>
                 <key>re_pattern</key>
                 <string>([0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.][0-9a-z\.][0-9a-z\.][0-9a-z\.])</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://downloads.clouduss.com/macosx/?C=M;O=D</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://downloads.clouduss.com/macosx/%match%/UssAgent%20%match%.dmg</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://downloads.clouduss.com/macosx/%match%/UssAgent%20%match%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -44,8 +44,6 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -53,10 +51,10 @@
                 <key>requirement</key>
                 <string>identifier "com.trustlayer.UssAgent-Installer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8YZYJ76YM8"</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -64,6 +62,8 @@
                 <key>requirement</key>
                 <string>identifier "com.trustlayer.UssAgent-Uninstaller" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8YZYJ76YM8"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -81,13 +81,13 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
             </dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
@@ -106,20 +106,20 @@
             <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
                 <string>%destination_path%/UssAgent.app</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
                     <key>CFBundleIdentifier</key>
                     <string>bundleid</string>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
     </array>
 </dict>

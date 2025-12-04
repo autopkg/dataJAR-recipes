@@ -70,10 +70,10 @@
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
-                <key>source_path</key>
-                <string>%found_filename%/PaperCut Print Deploy Client.pkg</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%found_filename%/PaperCut Print Deploy Client.pkg</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -81,14 +81,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: PaperCut Software International Pty Ltd (B5N3YV5P2H)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

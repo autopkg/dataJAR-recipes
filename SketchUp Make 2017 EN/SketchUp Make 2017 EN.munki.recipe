@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/MakepertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Description</key>
@@ -16,30 +16,30 @@ Removed superfluous CodeSignatureVerification from PKG.
     <string>com.github.dataJAR-recipes.munki.SketchUp Make 2017 EN</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>SketchUpMake2017-EN</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SketchUpMake2017-EN</string>
         <key>pkginfo</key>
         <dict>
-            <key>catalogs</key>
-            <array>
-                <string>testing</string>
-            </array>
-            <key>description</key>
-            <string>The easy, fun, and free way to draw in 3D.</string>
-            <key>display_name</key>
-            <string>SketchUp Make 2017</string>
-            <key>developer</key>
-            <string>Trimble Navigation Ltd</string>
-            <key>name</key>
-            <string>%NAME%</string>
             <key>blocking_applications</key>
             <array>
                 <string>SketchUp</string>
                 <string>Style Builder</string>
                 <string>Layout</string>
             </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The easy, fun, and free way to draw in 3D.</string>
+            <key>developer</key>
+            <string>Trimble Navigation Ltd</string>
+            <key>display_name</key>
+            <string>SketchUp Make 2017</string>
+            <key>name</key>
+            <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -53,8 +53,6 @@ Removed superfluous CodeSignatureVerification from PKG.
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -63,31 +61,31 @@ Removed superfluous CodeSignatureVerification from PKG.
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/SketchUp 2017/SketchUp.app</string>
                     <string>/Applications/SketchUp 2017/Layout.app</string>
                     <string>/Applications/SketchUp 2017/Style Builder.app</string>
                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -95,10 +93,10 @@ Removed superfluous CodeSignatureVerification from PKG.
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -106,6 +104,8 @@ Removed superfluous CodeSignatureVerification from PKG.
                     <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

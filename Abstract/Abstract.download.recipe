@@ -16,17 +16,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://api.goabstract.com/releases/latest</string>
                 <key>re_pattern</key>
                 <string>(https://downloads.goabstract.com/mac/Abstract-[\S]+\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>https://api.goabstract.com/releases/latest</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>

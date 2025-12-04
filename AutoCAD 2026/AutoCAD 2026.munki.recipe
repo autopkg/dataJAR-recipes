@@ -32,6 +32,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>AutoCAD 2026</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -141,10 +145,6 @@ echo "Note: User-specific files and shared components are preserved"
 # remove_system_files "/Library/Application Support/Flexnet Publisher"
 
 exit 0</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -156,10 +156,10 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/payload/root/private/tmp/Install Autodesk AutoCAD 2026 for Mac.app/Contents/Helper/ObjToInstall/autocad2026.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/root/private/tmp/Install Autodesk AutoCAD 2026 for Mac.app/Contents/Helper/ObjToInstall/autocad2026.pkg</string>
             </dict>
             <key>Processor</key>
             <string>com.github.dataJAR-recipes.Shared Processors/ComponentPkgPayloadUnpacker</string>
@@ -167,10 +167,10 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/payload/AutoCAD 2026.app</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Autodesk/AutoCAD 2026/AutoCAD 2026.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload/AutoCAD 2026.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -178,10 +178,10 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/payload/AutoCAD Plot Style Editor 2026.app</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Autodesk/AutoCAD 2026/AutoCAD Plot Style Editor 2026.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload/AutoCAD Plot Style Editor 2026.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -189,10 +189,10 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/payload/Remove AutoCAD 2026.app</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Autodesk/AutoCAD 2026/Remove AutoCAD 2026.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/payload/Remove AutoCAD 2026.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>

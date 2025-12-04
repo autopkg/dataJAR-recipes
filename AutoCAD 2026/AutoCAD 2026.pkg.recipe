@@ -29,12 +29,8 @@
             <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>root/private/tmp</key>
@@ -42,26 +38,26 @@
                     <key>scripts</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/Install Autodesk AutoCAD 2026 for Mac.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/root/private/tmp/Install Autodesk AutoCAD 2026 for Mac.app</string>
+                <key>source_path</key>
+                <string>%pathname%/Install Autodesk AutoCAD 2026 for Mac.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>file_path</key>
-                <string>%RECIPE_CACHE_DIR%/payload/scripts/postinstall</string>
                 <key>file_content</key>
                 <string>#!/bin/bash
 
@@ -179,19 +175,21 @@ checkLoggedInUserNoExit
 installAutoCAD</string>
                 <key>file_mode</key>
                 <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/scripts/postinstall</string>
             </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>AutoCAD2026-%version%</string>
                     <key>id</key>
                     <string>com.autodesk.%NAME%</string>
+                    <key>pkgname</key>
+                    <string>AutoCAD2026-%version%</string>
                     <key>pkgroot</key>
                     <string>%RECIPE_CACHE_DIR%/payload/root</string>
                     <key>scripts</key>
@@ -200,6 +198,8 @@ installAutoCAD</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
     </array>
 </dict>

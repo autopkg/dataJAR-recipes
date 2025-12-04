@@ -15,10 +15,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.NoFWL</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>NoFWL</string>
         <key>ARCH</key>
         <string>x86_64</string>
+        <key>NAME</key>
+        <string>NoFWL</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

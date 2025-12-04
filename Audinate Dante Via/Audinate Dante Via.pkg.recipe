@@ -20,10 +20,10 @@ Add required repositories:
     <string>com.github.dataJAR-recipes.pkg.Audinate Dante Via</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AudinateDanteVia</string>
         <key>INSTALL_SCRIPT_PATH</key>
         <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Via/Fixed Scripts/DanteViaInstall.command</string>
+        <key>NAME</key>
+        <string>AudinateDanteVia</string>
         <key>PREINSTALL_SCRIPT_PATH</key>
         <string>%RECIPE_DIR%/Reference Scripts Audinate Dante Via/Fixed Scripts/preinstall</string>
     </dict>
@@ -179,39 +179,39 @@ Add required repositories:
             <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/newpkg</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/newpkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
                     <key>id</key>
                     <string>com.audinate.pkg.DanteVia</string>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
                     <key>pkgdir</key>
                     <string>%RECIPE_CACHE_DIR%/newpkg</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
                     <string>%RECIPE_CACHE_DIR%/payload</string>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>scripts</key>
                     <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
             <key>Comment</key>
             <string>Create new package with modified payload and modified scripts</string>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
             <key>Arguments</key>

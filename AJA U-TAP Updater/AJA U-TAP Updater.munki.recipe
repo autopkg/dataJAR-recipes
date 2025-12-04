@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.AJA U-TAP Updater</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AJAU-TAPUpdater</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>NAME</key>
+        <string>AJAU-TAPUpdater</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -47,8 +47,6 @@ Powered 3G-SDI Capture</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -56,10 +54,10 @@ Powered 3G-SDI Capture</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -67,6 +65,8 @@ Powered 3G-SDI Capture</string>
                     <string>%RECIPE_CACHE_DIR%/unzip/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -18,12 +18,12 @@
             <array>
                 <string>testing</string>
             </array>
-                <key>category</key>
+            <key>category</key>
             <string>Productivity</string>
-            <key>developer</key>
-            <string>Elastic Projects</string>
             <key>description</key>
             <string>Abstract is a platform for modern design teams to work together.</string>
+            <key>developer</key>
+            <string>Elastic Projects</string>
             <key>display_name</key>
             <string>Abstract</string>
             <key>name</key>

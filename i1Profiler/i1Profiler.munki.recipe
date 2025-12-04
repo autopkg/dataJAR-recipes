@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.i1Profiler</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>i1Profiler</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/XRite</string>
+        <key>NAME</key>
+        <string>i1Profiler</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -31,12 +31,10 @@
             <string>10.6.0</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
             <key>postinstall_script</key>
-                <string>#!/bin/zsh
+            <string>#!/bin/zsh
 
-echo &quot;fixing i1profiler permissions&quot;
+echo "fixing i1profiler permissions"
 
 chown -R root:staff /Library/Application\ Support/X-Rite/AmbientMeasurements
 
@@ -46,7 +44,9 @@ chmod -R g+w /Library/Application\ Support/X-Rite/AmbientMeasurements
 
 chmod -R g+w /Library/Application\ Support/X-Rite/i1Profiler
 
-echo &quot;done fixing permissions&quot;</string>
+echo "done fixing permissions"</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -56,23 +56,21 @@ echo &quot;done fixing permissions&quot;</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/%NAME%.pkg</string>
-                <key>skip_payload</key>
-                <false/>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/%NAME%.pkg</string>
                 <key>purge_destination</key>
                 <true/>
+                <key>skip_payload</key>
+                <false/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -80,10 +78,10 @@ echo &quot;done fixing permissions&quot;</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot/i1profiler.pkg/Payload</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -95,14 +93,14 @@ echo &quot;done fixing permissions&quot;</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -110,10 +108,10 @@ echo &quot;done fixing permissions&quot;</string>
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -122,10 +120,10 @@ echo &quot;done fixing permissions&quot;</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -133,10 +131,10 @@ echo &quot;done fixing permissions&quot;</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -145,6 +143,8 @@ echo &quot;done fixing permissions&quot;</string>
                     <string>%RECIPE_CACHE_DIR%/pkg_payload</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

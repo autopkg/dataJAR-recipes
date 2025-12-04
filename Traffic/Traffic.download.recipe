@@ -16,19 +16,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://traffic-live-dist.s3.amazonaws.com/update_2_5.xml</string>
                 <key>re_pattern</key>
                 <string>((\S+)\.air)</string>
+                <key>url</key>
+                <string>https://traffic-live-dist.s3.amazonaws.com/update_2_5.xml</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -36,6 +34,8 @@
                 <key>url</key>
                 <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
