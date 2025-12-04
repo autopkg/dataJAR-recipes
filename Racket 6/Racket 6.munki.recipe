@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Racket 6</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Racket6</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Racket6</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -27,10 +27,10 @@
             </array>
             <key>description</key>
             <string>Racket is a general-purpose programming language as well as the world’s first ecosystem for developing and deploying new languages. Make your dream language, or use one of the dozens already available.</string>
-            <key>display_name</key>
-            <string>Racket 6</string>
             <key>developer</key>
             <string>PLT Inc</string>
+            <key>display_name</key>
+            <string>Racket 6</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -46,8 +46,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -56,10 +54,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -72,14 +70,14 @@
                     <string>/Applications/Racket v%version%/Slideshow.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -87,10 +85,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -98,6 +96,8 @@
                     <string>%pkgroot%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

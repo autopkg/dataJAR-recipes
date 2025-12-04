@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.download.WatchGuard Mobile VPN with SSL</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>WatchGuardMobileVPNwithSSL</string>
         <key>DOWNLOAD_URL</key>
         <string>https://software.watchguard.com/SoftwareDownloads?current=true&amp;familyId=a2RVr000000bJA9MAM</string>
+        <key>NAME</key>
+        <string>WatchGuardMobileVPNwithSSL</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10</string>
     </dict>
@@ -20,12 +20,8 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>re_pattern</key>
                 <string>href="(https://cdn.watchguard.com/SoftwareCenter/Files/MUVPN_SSL/[\S]+/WG-MVPN-SSL_[\S]+\.dmg)"</string>
                 <key>request_headers</key>
@@ -35,16 +31,20 @@
                 </dict>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -63,31 +63,29 @@
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
         </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/client_installer_unpack/Applications</string>
-                    <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/client.pkg/Payload</string>
-                    <key>purge_destination</key>
-                    <string>true</string>
-                </dict>
-                <key>Processor</key>
-                <string>PkgPayloadUnpacker</string>
-            </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/client_installer_unpack/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/client.pkg/Payload</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
             <key>Processor</key>
-            <string>FileFinder</string>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/WatchGuardMobileVPNwithSSL.dmg/WatchGuard Mobile VPN*.mpkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -95,10 +93,10 @@
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/downloads/WatchGuardMobileVPNwithSSL.dmg/%dmg_found_filename%</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -106,8 +104,10 @@
                 <key>requirement</key>
                 <string>anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "84ZK5S5258"</string>
                 <key>strict_verification</key>
-                <true />
+                <true/>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

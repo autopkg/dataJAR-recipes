@@ -11,68 +11,66 @@ To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
     <string>com.github.dataJAR-recipes.download.Racket 8</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Racket8</string>
         <key>ARCH_TYPE</key>
         <string>x86_64</string>
+        <key>NAME</key>
+        <string>Racket8</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://download.racket-lang.org/all-versions.html</string>
                 <key>re_pattern</key>
                 <string>href=\"releases/(8.[A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/\"&gt;All Installers</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_VERSION</string>
+                <key>url</key>
+                <string>https://download.racket-lang.org/all-versions.html</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://download.racket-lang.org/releases/%DOWNLOAD_VERSION%/</string>
                 <key>re_pattern</key>
                 <string>href=\"(installers/racket-(8.[A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-%ARCH_TYPE%-macosx-cs\.dmg)\"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://download.racket-lang.org/releases/%DOWNLOAD_VERSION%/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://download.racket-lang.org/releases/%DOWNLOAD_VERSION%/%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://download.racket-lang.org/releases/%DOWNLOAD_VERSION%/%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%pathname%/Racket v8.*/DrRacket.app</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -80,19 +78,19 @@ To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.DrRacket" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%pathname%/%dmg_found_filename%/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -100,10 +98,10 @@ To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.PLT Games" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -111,10 +109,10 @@ To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.Racket Documentation" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -122,6 +120,8 @@ To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.Slideshow" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

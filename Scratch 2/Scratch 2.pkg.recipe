@@ -32,31 +32,31 @@
             <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Install Scratch 2.app/Contents/Resources/Scratch 2</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/Scratch 2.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Install Scratch 2.app/Contents/Resources/Scratch 2</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
                 <string>%pkgroot%/Applications/Scratch 2.app</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
                     <key>CFBundleIdentifier</key>
                     <string>bundleid</string>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
             <key>Arguments</key>

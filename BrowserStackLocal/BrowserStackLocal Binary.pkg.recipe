@@ -11,34 +11,26 @@
         <key>NAME</key>
         <string>BrowserStackLocalBinary</string>
     </dict>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.BrowserStackLocal Binary</string>
     <key>MinimumVersion</key>
     <string>0.5.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.BrowserStackLocal Binary</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>BrowserStackLocalBinaryVersioner</string>
             <key>Arguments</key>
             <dict>
                 <key>binary_path</key>
                 <string>%pkgroot%/usr/local/bin/BrowserStackLocal</string>
             </dict>
+            <key>Processor</key>
+            <string>BrowserStackLocalBinaryVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
-                    <key>version</key>
-                    <string>%version%</string>
-                    <key>id</key>
-                    <string>com.browserstack.local.binary</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -52,12 +44,18 @@
                             <string>0755</string>
                         </dict>
                     </array>
+                    <key>id</key>
+                    <string>com.browserstack.local.binary</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -65,6 +63,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -16,47 +16,45 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://wingware.com/downloads/wing-101</string>
                 <key>re_pattern</key>
                 <string>/downloads/wing-101/.*/binaries&amp;os=macos</string>
                 <key>result_output_var_name</key>
                 <string>macos_url</string>
+                <key>url</key>
+                <string>https://wingware.com/downloads/wing-101</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://wingware.com/%macos_url%</string>
                 <key>re_pattern</key>
                 <string>/get&amp;prod=wing-101&amp;target=(pub/wing-101/.*/wing-101-.*\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://wingware.com/%macos_url%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://wingware.com/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -64,6 +62,8 @@
                 <key>requirement</key>
                 <string>identifier "com.wingware.wing-101" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "9D63R52894"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

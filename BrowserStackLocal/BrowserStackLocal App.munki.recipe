@@ -18,12 +18,12 @@
             <array>
                 <string>testing</string>
             </array>
+            <key>category</key>
+            <string>Applications</string>
             <key>description</key>
             <string>BrowserStackLocal.app lets you test work-in-progress web and mobile apps at scale without hosting them on public staging environments, within Chrome or Firefox.</string>
             <key>developer</key>
             <string>BrowserStack</string>
-            <key>category</key>
-            <string>Applications</string>
             <key>display_name</key>
             <string>BrowserStackLocal</string>
             <key>name</key>
@@ -52,8 +52,6 @@
             <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -61,6 +59,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

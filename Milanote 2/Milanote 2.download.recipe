@@ -16,35 +16,35 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>These recipes have been replaced by: https://github.com/autopkg/dataJAR-recipes/tree/master/Milanote.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.milanote.com/download-mac-app</string>
                 <key>re_pattern</key>
                 <string>https://milanote-app-releases.s3.amazonaws.com/Milanote-2.[\S]+\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>https://www.milanote.com/download-mac-app</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>

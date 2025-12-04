@@ -8,10 +8,14 @@
     <string>com.github.dataJAR-recipes.munki.Post Haste</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Post Haste</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Post Haste</string>
+        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
+        <array>
+            <string>minimum_os_version</string>
+        </array>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -29,10 +33,6 @@
             <key>unattended_install</key>
             <true/>
         </dict>
-        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
-        <array>
-            <string>minimum_os_version</string>
-        </array>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -41,8 +41,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -50,6 +48,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

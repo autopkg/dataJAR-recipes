@@ -18,34 +18,32 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%url%</string>
                 <key>index</key>
                 <integer>4</integer>
                 <key>split_on</key>
                 <string>-</string>
+                <key>version</key>
+                <string>%url%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%version%</string>
                 <key>index</key>
                 <integer>0</integer>
                 <key>split_on</key>
                 <string>.pkg</string>
+                <key>version</key>
+                <string>%version%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -55,14 +53,12 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Library</key>
@@ -84,11 +80,13 @@
                     <key>scripts</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -98,10 +96,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -111,10 +109,10 @@
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/Scripts/cleanold</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -122,10 +120,10 @@
                 <key>mode</key>
                 <string>a+x</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -155,10 +153,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -167,6 +165,8 @@
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.BrowserStackLocal Binary</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>BrowserStackLocalBinary</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>BrowserStackLocalBinary</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -37,14 +37,10 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>installcheck_script</key>
                     <string>#!/bin/zsh
 
@@ -95,12 +91,14 @@ else
     echo "Cannot locate browserstacklocal binary, proceeding with install..."
     exit 0
 fi</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -108,6 +106,8 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

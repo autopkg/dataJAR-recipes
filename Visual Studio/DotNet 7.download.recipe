@@ -12,10 +12,10 @@ For the ARCH_TYPE variable use "x64" for Intel or "arm64" for Apple Silicon</str
     <string>com.github.dataJAR-recipes.download.DotNet 7</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>DotNet7</string>
         <key>ARCH_TYPE</key>
         <string>x64</string>
+        <key>NAME</key>
+        <string>DotNet7</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -65,14 +65,14 @@ For the ARCH_TYPE variable use "x64" for Intel or "arm64" for Apple Silicon</str
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/dotnet-sdk-7.%DotNet7SDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Microsoft Corporation (UBF8T346G9)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/dotnet-sdk-7.%DotNet7SDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

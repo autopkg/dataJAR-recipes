@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.ShareFile Sync</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>ShareFile Sync</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>ShareFile Sync</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -20,10 +20,10 @@
             </array>
             <key>category</key>
             <string>Applications</string>
-            <key>developer</key>
-            <string>ShareFile Sync</string>
             <key>description</key>
             <string>ShareFile Sync for Mac is designed to provide ShareFile customers with an easy way to access and synchronize personal folders from your ShareFile account to your local computer.</string>
+            <key>developer</key>
+            <string>ShareFile Sync</string>
             <key>display_name</key>
             <string>ShareFile Sync</string>
             <key>name</key>
@@ -39,13 +39,13 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>ShareFile Sync has been replaced with Citrix Files for Mac. Recipes are available for Files for Mac.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
     </array>
 </dict>

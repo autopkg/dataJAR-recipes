@@ -12,16 +12,16 @@
     <string>com.github.dataJAR-recipes.munki.Microsoft Outlook 365</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOADURL</key>
+        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
+        <key>MINIMUM_OS_VERSION</key>
+        <string>11.0</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Microsoft Outlook 365</string>
         <key>PRODUCTID</key>
         <string>525137</string>
-        <key>DOWNLOADURL</key>
-        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
-        <key>MINIMUM_OS_VERSION</key>
-        <string>11.0</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -53,8 +53,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -63,10 +61,10 @@
                     <string>%MINIMUM_OS_VERSION%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -74,6 +72,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>
