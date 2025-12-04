@@ -70,7 +70,7 @@ rm -rf '/Applications/PaperCut Print Deploy Client'
 # Remove the install receipt reference which the Mac uses to know what packages are installed.
 # If these are not removed then the mac can block us from installing previous versions
 #
-rm -f /private/var/db/receipts/com.papercut.printdeploy.client.*  2>/dev/null
+rm -f /private/var/db/receipts/com.papercut.printdeploy.client.*  2&gt;/dev/null
 
 echo "Uninstall complete."</string>
             <key>unattended_install</key>

@@ -28,7 +28,7 @@ To download the Intel Version use "aarch64" in the ARCH_TYPE variable.</string>
                 <key>url</key>
                 <string>https://download.racket-lang.org/all-versions.html</string>
                 <key>re_pattern</key>
-                <string>href=\"releases/(8.[A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/\">All Installers</string>
+                <string>href=\"releases/(8.[A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/\"&gt;All Installers</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_VERSION</string>
             </dict>

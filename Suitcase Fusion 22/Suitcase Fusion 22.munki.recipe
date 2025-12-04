@@ -39,7 +39,7 @@ pluginInstaller="/Applications/Suitcase Fusion.app/Contents/Resources/plugin-ins
 if [ -f "${pluginInstaller}" ]
 then
     /bin/echo "Found ${pluginInstaller}, running..."
-    "${pluginInstaller}" --install-all > /dev/null 2>&amp;1
+    "${pluginInstaller}" --install-all &gt; /dev/null 2&gt;&amp;1
 fi</string>
             <key>unattended_install</key>
             <true/>

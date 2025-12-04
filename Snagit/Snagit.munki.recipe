@@ -38,7 +38,7 @@ Add your Snagit licence key to the SNAGIT_LICENCE_KEY variable. </string>
 
 ## If it doesn't exist, create licence file
 # if ! [ -f /Users/Shared/TechSmith/Snagit/LicenseKey ]; then
-#  /bin/mkdir -p "/Users/Shared/TechSmith/Snagit" ; /usr/bin/touch /Users/Shared/TechSmith/Snagit/LicenseKey ; /bin/echo "%SNAGIT_LICENCE_KEY%" > /Users/Shared/TechSmith/Snagit/LicenseKey
+#  /bin/mkdir -p "/Users/Shared/TechSmith/Snagit" ; /usr/bin/touch /Users/Shared/TechSmith/Snagit/LicenseKey ; /bin/echo "%SNAGIT_LICENCE_KEY%" &gt; /Users/Shared/TechSmith/Snagit/LicenseKey
 # fi
 
 ## Deployment Options see this doc for full details: https://support.techsmith.com/hc/en-us/articles/115007344888-Enterprise-Install-Guidelines-for-Snagit-on-MacOS#options-list

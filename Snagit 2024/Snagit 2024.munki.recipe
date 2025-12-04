@@ -38,7 +38,7 @@ Add your Snagit 2024 licence key to the SNAGIT_2024_LICENCE_KEY variable. </stri
 
 ## If it doesn't exist, create licence file
 # if ! [ -f /Users/Shared/TechSmith/Snagit/LicenseKey ]; then
-#  /bin/mkdir -p "/Users/Shared/TechSmith/Snagit" ; /usr/bin/touch /Users/Shared/TechSmith/Snagit/LicenseKey ; /bin/echo "%SNAGIT_2024_LICENCE_KEY%" > /Users/Shared/TechSmith/Snagit/LicenseKey
+#  /bin/mkdir -p "/Users/Shared/TechSmith/Snagit" ; /usr/bin/touch /Users/Shared/TechSmith/Snagit/LicenseKey ; /bin/echo "%SNAGIT_2024_LICENCE_KEY%" &gt; /Users/Shared/TechSmith/Snagit/LicenseKey
 # fi
 
 ## Install the System Audio Component if OS is unsupported an error will be generated.

@@ -245,7 +245,7 @@ setLanguage ()
             /bin/echo "Creating /Applications/Ekahau Pro.app/Contents/Java/LANGUAGE, if missing..."
             /usr/bin/touch "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
             /bin/echo "Writing language to LANGUAGE..."
-            /bin/echo "${language}" > "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
+            /bin/echo "${language}" &gt; "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
        fi
     } | /usr/bin/tee -a "${debugFile}"
 }

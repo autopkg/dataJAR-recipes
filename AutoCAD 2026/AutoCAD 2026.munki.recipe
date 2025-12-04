@@ -65,7 +65,7 @@ remove_launch_daemon() {
 
     if [ -f "$daemon_path" ]; then
         echo "Unloading LaunchDaemon: $daemon"
-        /bin/launchctl unload "$daemon_path" 2>/dev/null || echo "Warning: Could not unload $daemon (may not be loaded)"
+        /bin/launchctl unload "$daemon_path" 2&gt;/dev/null || echo "Warning: Could not unload $daemon (may not be loaded)"
 
         echo "Removing LaunchDaemon: $daemon_path"
         /bin/rm -f "$daemon_path"
@@ -103,7 +103,7 @@ remove_system_files "/Applications/Autodesk/AutoCAD 2026"
 
 # If the entire Autodesk folder is empty, remove it
 if [ -d "/Applications/Autodesk" ]; then
-    if [ -z "$(/bin/ls -A "/Applications/Autodesk" 2>/dev/null)" ]; then
+    if [ -z "$(/bin/ls -A "/Applications/Autodesk" 2&gt;/dev/null)" ]; then
         echo "Autodesk folder is empty, removing it..."
         remove_system_files "/Applications/Autodesk"
     else
@@ -132,7 +132,7 @@ echo "Note: User-specific files and shared components are preserved"
 # echo "Removing AutoCAD FlexNet licensing files..."
 # if [ -d "/Library/Preferences/Flexnet Publisher/FLEXnet" ]; then
 #     echo "Removing adskflex files from FlexNet directory..."
-#     /usr/bin/find "/Library/Preferences/Flexnet Publisher/FLEXnet" -name "adskflex*" -delete 2>/dev/null || true
+#     /usr/bin/find "/Library/Preferences/Flexnet Publisher/FLEXnet" -name "adskflex*" -delete 2&gt;/dev/null || true
 # fi
 
 # Remove shared FlexNet Publisher folder (WARNING: Also affects Adobe products!)

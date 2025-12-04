@@ -59,7 +59,7 @@ licenseKey=""
 if [ -n "${licenseKey}" ]
 then
     /bin/echo "Creating activation file /tmp/activation.xml..."
-    /bin/echo -n "${activationFile}" > /tmp/activation.xml
+    /bin/echo -n "${activationFile}" &gt; /tmp/activation.xml
     /bin/echo "Licensing NVivo..."
     '/Applications/NVivo 12.app/Contents/MacOS/NVivo 12' -initialize "${licenseKey}" -activate /tmp/activation.xml
     /bin/rm /tmp/activation.xml

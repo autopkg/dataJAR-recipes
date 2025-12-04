@@ -67,7 +67,7 @@ USS_DAEMON_PLIST=com.censornet.${PRODUCTNAME}Proxy.plist
 USS_AGENT_ID="$LAUNCH_AGENTS_DIR"/"$USS_AGENT_PLIST"
 USS_DAEMON_ID="$LAUNCH_DAEMONS_DIR"/"$USS_DAEMON_PLIST"
 
-/bin/launchctl unload -F "$USS_DAEMON_ID" 2>/dev/null
+/bin/launchctl unload -F "$USS_DAEMON_ID" 2&gt;/dev/null
 
 # bundles
 /bin/rm -rf "$APPLICATION_DIR"/"$PRODUCTNAME".app

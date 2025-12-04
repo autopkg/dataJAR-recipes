@@ -42,8 +42,8 @@
 rm -drf "/Library/Application Support/Citrix/PlugIns/HDXRTME-m32g"
 rm -rf "/Library/PreferencePanes/Citrix HDX RealTime Media Engine.prefPane"
 
-pkgutil --forget com.citrix.hdxrtme.HDXRTME-m32g.pkg > /dev/null 2&gt;&amp;1
-pkgutil --forget com.citrix.hdxrtme.MacRTMEVersion.pkg > /dev/null 2&gt;&amp;1
+pkgutil --forget com.citrix.hdxrtme.HDXRTME-m32g.pkg &gt; /dev/null 2&gt;&amp;1
+pkgutil --forget com.citrix.hdxrtme.MacRTMEVersion.pkg &gt; /dev/null 2&gt;&amp;1
 
 exit 0</string>
         </dict>

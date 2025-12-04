@@ -23,7 +23,7 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>dmg\">(.*?\.dmg)</string>
+                <string>dmg\"&gt;(.*?\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>

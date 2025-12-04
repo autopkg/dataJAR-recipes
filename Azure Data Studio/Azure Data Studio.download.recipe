@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(https://go\.microsoft\.com/fwlink/\?linkid=[0-9]+)\" rel=\"nofollow\">Universal</string>
+                <string>href=\"(https://go\.microsoft\.com/fwlink/\?linkid=[0-9]+)\" rel=\"nofollow\"&gt;Universal</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>

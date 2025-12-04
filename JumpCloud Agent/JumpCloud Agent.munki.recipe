@@ -78,7 +78,7 @@ fi
 launchctl remove com.jumpcloud.darwin-agent
 rm /Library/LaunchDaemons/com.jumpcloud.darwin-agent.plist
 
-sw_vers -productVersion | cut -d'.' -f1-2  | grep '^10.9$' &amp;> /dev/null
+sw_vers -productVersion | cut -d'.' -f1-2  | grep '^10.9$' &amp;&gt; /dev/null
 if [[ $? -ne 0 ]]; then
     security authorizationdb read system.login.console | \
         sed 's# &lt;string>jumpcloud-loginwindow:invoke &lt;/string>#&lt;string>loginwindow:login&lt;/string>;#' | \
@@ -89,7 +89,7 @@ rm -rf /Library/Security/SecurityAgentPlugins/jumpcloud-loginwindow.bundle
 rm -rf /opt/jc
 
 # if the service account is present, delete it:
-if (id -u _jumpcloudserviceaccount > /dev/null 2>&amp;1); then
+if (id -u _jumpcloudserviceaccount &gt; /dev/null 2&gt;&amp;1); then
     dscl . -delete /Users/_jumpcloudserviceaccount
 fi
 
@@ -97,7 +97,7 @@ fi
 # first unload the app for all console users (logged in on UI)
 for uid in $(ps -axo uid,args | grep -i "[l]oginwindow.app" | awk '{ print $1 }')
 do
-    if launchctl asuser "$uid" launchctl list 'com.jumpcloud.jcagent-tray' &amp;> /dev/null; then
+    if launchctl asuser "$uid" launchctl list 'com.jumpcloud.jcagent-tray' &amp;&gt; /dev/null; then
         launchctl bootout gui/"$uid" '/Library/LaunchAgents/com.jumpcloud.jcagent-tray.plist'
     fi
 done

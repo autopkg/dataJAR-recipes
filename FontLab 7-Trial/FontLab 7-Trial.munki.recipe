@@ -43,8 +43,8 @@ prefPath="/Library/Preferences/"
 if [ -n "${licenseServer}" ] &amp;&amp; [ -n "${licenseServerPort}" ]
 then
     /bin/echo "Creating ${prefPath}${licenseFile}..."
-    /bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" > "${prefPath}""${licenseFile}"
-    /bin/echo -n "ISV fontlab" >> "${prefPath}""${licenseFile}"
+    /bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" &gt; "${prefPath}""${licenseFile}"
+    /bin/echo -n "ISV fontlab" &gt;&gt; "${prefPath}""${licenseFile}"
     /bin/echo "Making ${prefPath}${licenseFile} executable..."
     /bin/chmod +x "${prefPath}""${licenseFile}"
     /bin/echo "Setting permissions on ${prefPath}${licenseFile}..."
