@@ -54,7 +54,7 @@ exit</string>
     <string>com.github.wegotoeleven-recipes.pkg.LogiOptionsPlus</string>
     <key>Process</key>
     <array>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -71,8 +71,8 @@ exit</string>
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

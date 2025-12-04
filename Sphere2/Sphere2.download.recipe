@@ -22,7 +22,7 @@
                 <dict>
                     <key>warning_message</key>
                     <string>These recipes have been deprecated in favour of: https://github.com/autopkg/dataJAR-recipes/tree/master/A%2B%20Suite</string>
-                 </dict>
+                </dict>
             </dict>
             <dict>
                 <key>Processor</key>

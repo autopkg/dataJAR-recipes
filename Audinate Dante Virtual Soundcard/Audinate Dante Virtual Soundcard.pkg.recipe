@@ -61,7 +61,7 @@ autopkg repo-add jessepeterson-recipes</string>
             <key>Processor</key>
             <string>io.github.hjuutilainen.SharedProcessors/ChecksumVerifier</string>
         </dict>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>algorithm</key>

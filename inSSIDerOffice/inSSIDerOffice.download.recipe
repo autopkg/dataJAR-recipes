@@ -2,56 +2,56 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-     <key>Description</key>
-     <string>Downloads the latest version of inSSIDerOffice.</string>
+    <key>Description</key>
+    <string>Downloads the latest version of inSSIDerOffice.</string>
      <key>Identifier</key>
-     <string>com.github.dataJAR-recipes.download.inSSIDerOffice</string>
+    <string>com.github.dataJAR-recipes.download.inSSIDerOffice</string>
      <key>Input</key>
-     <dict>
-          <key>NAME</key>
-          <string>inSSIDerOffice</string>
-     </dict>
-     <key>MinimumVersion</key>
-     <string>1.0.0</string>
+    <dict>
+            <key>NAME</key>
+            <string>inSSIDerOffice</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
      <key>Process</key>
-     <array>
-          <dict>
+    <array>
+            <dict>
                 <key>Processor</key>
                 <string>URLTextSearcher</string>
                 <key>Arguments</key>
                 <dict>
-                     <key>re_pattern</key>
-                     <string>http://files\.metageek\.com/downloads/archives/MacSSIDer-Office/inSSIDerOffice-.*\.dmg</string>
+                    <key>re_pattern</key>
+                    <string>http://files\.metageek\.com/downloads/archives/MacSSIDer-Office/inSSIDerOffice-.*\.dmg</string>
                      <key>url</key>
-                     <string>https://www.metageek.com/downloads/</string>
+                    <string>https://www.metageek.com/downloads/</string>
                 </dict>
-          </dict>
-          <dict>
+            </dict>
+            <dict>
                 <key>Processor</key>
                 <string>URLDownloader</string>
                 <key>Arguments</key>
                 <dict>
-                     <key>filename</key>
-                     <string>%NAME%.dmg</string>
+                    <key>filename</key>
+                    <string>%NAME%.dmg</string>
                      <key>url</key>
-                     <string>%match%</string>
+                    <string>%match%</string>
                 </dict>
-          </dict>
-          <dict>
+            </dict>
+            <dict>
                 <key>Processor</key>
                 <string>EndOfCheckPhase</string>
-          </dict>
-          <dict>
+            </dict>
+            <dict>
                 <key>Processor</key>
                 <string>CodeSignatureVerifier</string>
                 <key>Arguments</key>
                 <dict>
-                     <key>input_path</key>
-                     <string>%pathname%/inSSIDerOffice.app</string>
-                     <key>requirement</key>
-                     <string>identifier "com.metageek.inSSIDerOffice" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "88LZLW84N5"</string>
+                    <key>input_path</key>
+                    <string>%pathname%/inSSIDerOffice.app</string>
+                    <key>requirement</key>
+                    <string>identifier "com.metageek.inSSIDerOffice" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "88LZLW84N5"</string>
                 </dict>
-          </dict>
-     </array>
+            </dict>
+    </array>
 </dict>
 </plist>

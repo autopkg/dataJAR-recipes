@@ -42,7 +42,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>Processor</key>
                 <string>EndOfCheckPhase</string>
             </dict>
-             <dict>
+            <dict>
                 <key>Processor</key>
                 <string>com.github.rtrouton.SharedProcessors/VariablePlaceholder</string>
                 <key>Arguments</key>
@@ -50,7 +50,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                     <key>installer_pkg_path</key>
                     <string>%pathname%</string>
                 </dict>
-             </dict>
+            </dict>
             <dict>
                 <key>Processor</key>
                 <string>CodeSignatureVerifier</string>
@@ -83,7 +83,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>Processor</key>
                 <string>URLDownloader</string>
             </dict>
-             <dict>
+            <dict>
                 <key>Processor</key>
                 <string>com.github.rtrouton.SharedProcessors/VariablePlaceholder</string>
                 <key>Arguments</key>
@@ -91,7 +91,7 @@ i.e.: `-k PRERELEASE=yes`</string>
                     <key>uninstaller_pkg_path</key>
                     <string>%pathname%</string>
                 </dict>
-             </dict>
+            </dict>
         </array>
     </dict>
 </plist>

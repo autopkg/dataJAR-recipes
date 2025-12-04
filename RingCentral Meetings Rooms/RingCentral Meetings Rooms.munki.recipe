@@ -83,20 +83,20 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
-       <dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-          <key>Processor</key>
-          <string>Versioner</string>
-          <key>Arguments</key>
-          <dict>
-              <key>input_plist_path</key>
-              <string>%destination_path%/Contents/Info.plist</string>
-              <key>plist_version_key</key>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%destination_path%/Contents/Info.plist</string>
+                <key>plist_version_key</key>
               <string>CFBundleShortVersionString</string>
-          </dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>

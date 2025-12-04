@@ -21,7 +21,7 @@ For the ARCH_TYPE variable use "x64" for Intel or "arm64" for Apple Silicon</str
     <string>1.1</string>
     <key>Process</key>
     <array>
-       <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>

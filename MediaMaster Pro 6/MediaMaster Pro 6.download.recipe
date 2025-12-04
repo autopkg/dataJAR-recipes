@@ -22,7 +22,7 @@
             <dict>
                 <key>warning_message</key>
                 <string>Download is now behind a form, as such this recipe no longer works.</string>
-             </dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>

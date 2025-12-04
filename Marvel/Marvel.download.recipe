@@ -35,7 +35,7 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-          <key>Processor</key>
+            <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>

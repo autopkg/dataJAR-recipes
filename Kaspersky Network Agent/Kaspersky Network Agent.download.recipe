@@ -22,7 +22,7 @@
             <dict>
                 <key>warning_message</key>
                 <string>This recipe no longer works, and as such has been deprecated. The product seems to have had 3 major updates since this recipe was written, and cannot find a way to download the latest release at the time or writing this.</string>
-             </dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>

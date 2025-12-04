@@ -62,8 +62,8 @@ The Microsoft Build of OpenJDK is a new no-cost long-term supported distribution
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

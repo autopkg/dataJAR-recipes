@@ -21,7 +21,7 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.SoapUI</string>
     <key>Process</key>
-     <array>
+    <array>
         <dict>
             <key>Arguments</key>
             <dict>

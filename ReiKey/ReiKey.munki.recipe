@@ -187,12 +187,12 @@ fi</string>
             <string>FileCreator</string>
             <key>Arguments</key>
             <dict>
-               <key>file_path</key>
-               <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
-               <key>file_mode</key>
-               <string>0755</string>
-               <key>file_content</key>
-               <string>#!/bin/bash
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_content</key>
+                <string>#!/bin/bash
 #
 # Invoke the command line uninstaller
 #

@@ -18,41 +18,41 @@
     <key>Process</key>
     <array>
         <dict>
-             <key>Arguments</key>
-                 <dict>
-                     <key>destination_path</key>
-                     <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+            <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
                      <key>flat_pkg_path</key>
-                     <string>%pathname%</string>
+                    <string>%pathname%</string>
                      <key>purge_destination</key>
-                     <true />
-                 </dict>
-             <key>Processor</key>
-             <string>FlatPkgUnpacker</string>
+                    <true />
+                </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
          </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
-                 <key>destination_path</key>
-                 <string>%RECIPE_CACHE_DIR%/installer_payload</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload</string>
                  <key>pkg_payload_path</key>
-                 <string>%RECIPE_CACHE_DIR%/installer_unpack/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/Payload</string>
                  <key>purge_destination</key>
-                 <true />
-             </dict>
-             <key>Processor</key>
-             <string>PkgPayloadUnpacker</string>
+                <true />
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
          </dict>
-         <dict>
-             <key>Arguments</key>
-             <dict>
-                 <key>input_plist_path</key>
-                 <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Kiwi for G Suite.app/Contents/Info.plist</string>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Kiwi for G Suite.app/Contents/Info.plist</string>
                  <key>plist_version_key</key>
-                 <string>CFBundleShortVersionString</string>
+                <string>CFBundleShortVersionString</string>
              </dict>
              <key>Processor</key>
-             <string>Versioner</string>
+            <string>Versioner</string>
          </dict>
         <dict>
             <key>Processor</key>
@@ -66,17 +66,17 @@
             </dict>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
-                 <key>path_list</key>
-                 <array>
-                     <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_payload/</string>
                      <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
                  </array>
              </dict>
-             <key>Processor</key>
-             <string>PathDeleter</string>
-         </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
     </array>
 </dict>
 </plist>

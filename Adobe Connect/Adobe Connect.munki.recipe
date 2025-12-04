@@ -38,7 +38,7 @@
     <string>com.github.dataJAR-recipes.download.Adobe Connect</string>
     <key>Process</key>
     <array>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>

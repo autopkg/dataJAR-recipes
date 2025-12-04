@@ -20,8 +20,8 @@
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                 <key>url</key>
-                 <string>https://www.apple.com/apple-music/apple-digital-masters/docs/au_lab.zip</string>
+                <key>url</key>
+                <string>https://www.apple.com/apple-music/apple-digital-masters/docs/au_lab.zip</string>
             </dict>
         </dict>
         <dict>

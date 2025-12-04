@@ -99,8 +99,8 @@ From Hollywood blockbuster composers and Billboard Hot 100 producers right throu
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -123,7 +123,7 @@ From Hollywood blockbuster composers and Billboard Hot 100 producers right throu
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
         </dict>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>

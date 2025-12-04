@@ -55,19 +55,19 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-         <key>Processor</key>
-          <string>CodeSignatureVerifier</string>
-          <key>Arguments</key>
-          <dict>
-              <key>input_path</key>
-               <string>%pathname%/Resolume Arena Installer.pkg</string>
-               <key>expected_authority_names</key>
-               <array>
-                   <string>Developer ID Installer: Resolume (Z9Y8N6Q4L8)</string>
-                   <string>Developer ID Certification Authority</string>
+        <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Resolume Arena Installer.pkg</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Resolume (Z9Y8N6Q4L8)</string>
+                    <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
-               </array>
-          </dict>
+                </array>
+            </dict>
         </dict>
     </array>
 </dict>

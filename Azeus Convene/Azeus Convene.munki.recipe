@@ -131,8 +131,8 @@ Convene allows you to control the whole meeting process effortlessly.</string>
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

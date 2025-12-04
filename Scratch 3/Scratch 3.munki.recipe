@@ -18,7 +18,7 @@
             <array>
                 <string>testing</string>
             </array>
-               <key>category</key>
+                <key>category</key>
             <string>Programming</string>
             <key>developer</key>
             <string>MIT</string>

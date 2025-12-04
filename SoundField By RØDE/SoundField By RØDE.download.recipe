@@ -13,9 +13,9 @@
     </dict>
     <key>MinimumVersion</key>
     <string>1.1.0</string>
-   <key>Process</key>
+    <key>Process</key>
     <array>
-       <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>

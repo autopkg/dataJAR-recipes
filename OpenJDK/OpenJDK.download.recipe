@@ -54,48 +54,48 @@
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-               <key>pkgroot</key>
-               <string>%RECIPE_CACHE_DIR%/Scripts</string>
-               <key>pkgdirs</key>
-               <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                <key>pkgdirs</key>
+                <dict/>
             </dict>
-         </dict>
-         <dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-               <key>pkgroot</key>
-               <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-               <key>pkgdirs</key>
-               <dict>
-                  <key>Library</key>
-                  <string>0755</string>
-                  <key>Library/Java</key>
-                  <string>0755</string>
-                  <key>Library/Java/JavaVirtualMachines</key>
-                  <string>0755</string>
-               </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Library</key>
+                    <string>0755</string>
+                    <key>Library/Java</key>
+                    <string>0755</string>
+                    <key>Library/Java/JavaVirtualMachines</key>
+                    <string>0755</string>
+                </dict>
             </dict>
-         </dict>
-         <dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
-               <key>archive_path</key>
+                <key>archive_path</key>
                <string>%pathname%</string>
-               <key>destination_path</key>
+                <key>destination_path</key>
                <string>%pkgroot%/Library/Java/JavaVirtualMachines</string>
-               <key>purge_destination</key>
-               <true/>
+                <key>purge_destination</key>
+                <true/>
             </dict>
-         </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

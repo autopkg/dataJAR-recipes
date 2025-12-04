@@ -128,8 +128,8 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -151,8 +151,8 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
             <string>Versioner</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>
@@ -163,7 +163,7 @@ Push the limits of maximum-speed transfers. Aspera Connect helps you securely mo
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-             <key>Arguments</key>
+            <key>Arguments</key>
                 <dict>
                     <key>pkg_path</key>
                     <string>%pathname%</string>

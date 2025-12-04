@@ -12,7 +12,7 @@ i.e.: `-k PRERELEASE=yes`</string>
     <key>Input</key>
     <dict>
         <key>PRERELEASE</key>
-          <string></string>
+            <string></string>
         <key>NAME</key>
         <string>Vitals</string>
     </dict>

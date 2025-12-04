@@ -49,7 +49,7 @@
             <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
-               <key>pkg_request</key>
+                <key>pkg_request</key>
                 <dict>
                     <key>chown</key>
                     <array>

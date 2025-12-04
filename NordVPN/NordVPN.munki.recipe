@@ -33,7 +33,7 @@ Even if you think you have nothing to hide â€” no one likes to be watched. Thatâ
             <string>NordVPN</string>
             <key>name</key>
             <string>%NAME%</string>
-             <key>postuninstall_script</key>
+            <key>postuninstall_script</key>
             <string>#!/bin/bash
 #
 launchctl unload /Library/LaunchDaemons/com.nordvpn.macos.helper.plist
@@ -92,8 +92,8 @@ rm /Library/LaunchDaemons/com.nordvpn.macos.helper.plist</string>
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

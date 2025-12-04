@@ -18,7 +18,7 @@
             <array>
                 <string>testing</string>
             </array>
-               <key>blocking_applications</key>
+                <key>blocking_applications</key>
                 <array>
                     <string>Egnyte Drive</string>
                 </array>

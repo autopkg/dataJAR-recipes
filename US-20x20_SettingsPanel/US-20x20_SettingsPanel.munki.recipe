@@ -36,7 +36,7 @@
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
-     <key>ParentRecipe</key>
+    <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.US-20x20SettingsPanel</string>
     <key>Process</key>
     <array>

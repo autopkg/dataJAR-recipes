@@ -50,10 +50,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <string>Versioner</string>
             <key>Arguments</key>
             <dict>
-                 <key>input_plist_path</key>
-                 <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app/Contents/Info.plist</string>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Azure Storage Explorer.app/Contents/Info.plist</string>
                  <key>plist_version_key</key>
-                 <string>CFBundleVersion</string>
+                <string>CFBundleVersion</string>
             </dict>
         </dict>
         <dict>
@@ -61,11 +61,11 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
-                 <key>additional_pkginfo</key>
-                 <dict>
-                      <key>version</key>
-                      <string>%version%</string>
-                 </dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                        <key>version</key>
+                        <string>%version%</string>
+                </dict>
             </dict>
         </dict>
         <dict>
@@ -73,11 +73,11 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
-                 <key>faux_root</key>
-                 <string>%RECIPE_CACHE_DIR%/</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/</string>
                  <key>installs_item_paths</key>
-                 <array>
-                      <string>/Applications/Microsoft Azure Storage Explorer.app</string>
+                <array>
+                        <string>/Applications/Microsoft Azure Storage Explorer.app</string>
                  </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>

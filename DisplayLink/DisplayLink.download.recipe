@@ -25,7 +25,7 @@
             <dict>
                 <key>warning_message</key>
                 <string>Looks like DisplayLink Drivers are no longer available, only the DisplayLink Manager. A .download for DisplayLink Manager can be found at: https://github.com/autopkg/smithjw-recipes/blob/master/DisplayLink/DisplayLink%20Manager.download.recipe.yaml, a .munki recipe at: https://github.com/autopkg/dataJAR-recipes/blob/master/DisplayLink%20Manager/DisplayLink%20Manager.munki.recipe</string>
-             </dict>
+            </dict>
         </dict>
         <dict>
             <key>Processor</key>

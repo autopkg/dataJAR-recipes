@@ -112,8 +112,8 @@ When you’re giving a presentation that matters, be understood with mmhmm</stri
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>

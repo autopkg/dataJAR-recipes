@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
- <plist version="1.0">
- <dict>
-     <key>Description</key>
-     <string>Downloads latest version of Aspera Connect.</string>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of Aspera Connect.</string>
      <key>Identifier</key>
-     <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
+    <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
      <key>Input</key>
-     <dict>
-         <key>NAME</key>
-         <string>AsperaConnect</string>
+    <dict>
+        <key>NAME</key>
+        <string>AsperaConnect</string>
      </dict>
-     <key>MinimumVersion</key>
-     <string>1.1</string>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
      <key>Process</key>
-     <array>
-         <dict>
-             <key>Processor</key>
-             <string>URLTextSearcher</string>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
              <key>Arguments</key>
-             <dict>
-                 <key>url</key>
-                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
+            <dict>
+                <key>url</key>
+                <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
                  <key>re_pattern</key>
-                 <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg)</string>
+                <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg)</string>
                  <key>result_output_var_name</key>
-                 <string>match</string>
+                <string>match</string>
              </dict>
-         </dict>
-         <dict>
-             <key>Processor</key>
-             <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
              <key>Arguments</key>
-             <dict>
-                 <key>url</key>
-                 <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
+            <dict>
+                <key>url</key>
+                <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/references.json</string>
                  <key>re_pattern</key>
-                 <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg</string>
+                <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg</string>
                  <key>result_output_var_name</key>
-                 <string>version</string>
-             </dict>
+                <string>version</string>
+            </dict>
          </dict>
-         <dict>
-             <key>Processor</key>
-             <string>URLDownloader</string>
-             <key>Arguments</key>
-             <dict>
-                 <key>filename</key>
-                 <string>%NAME%.pkg</string>
-                 <key>url</key>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>url</key>
                  <string>https://d3gcli72yxqn2z.cloudfront.net/downloads/connect/latest/%match%</string>
              </dict>
          </dict>
-         <dict>
-             <key>Processor</key>
-             <string>EndOfCheckPhase</string>
-         </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
          <dict>
             <key>Arguments</key>
             <dict>

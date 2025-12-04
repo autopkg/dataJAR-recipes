@@ -28,7 +28,7 @@
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>
-       <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>

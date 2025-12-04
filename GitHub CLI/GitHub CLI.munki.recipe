@@ -67,8 +67,8 @@ GitHub CLI brings GitHub to your terminal. Free and open source.</string>
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

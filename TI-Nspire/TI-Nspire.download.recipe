@@ -24,7 +24,7 @@
             <string>https://education.ti.com/en/software/details/en/AFCFF2853BC34DEFB4C0B8B156F92404/ti-nspirecx_pc_full</string>
             <key>result_output_var_name</key>
             <string>version</string>
-         </dict>
+        </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>

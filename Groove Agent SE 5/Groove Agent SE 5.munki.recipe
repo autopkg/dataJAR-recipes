@@ -107,7 +107,7 @@ Support for VST, AU and AAX plug-in formats means Groove Agent 5 can be used wit
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
         </dict>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>

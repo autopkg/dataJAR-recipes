@@ -56,7 +56,7 @@ then
 fi</string>
         </dict>
     </dict>
-      <key>MinimumVersion</key>
+        <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Inquisit 6 Lab</string>

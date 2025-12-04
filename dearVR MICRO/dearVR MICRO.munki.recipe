@@ -110,8 +110,8 @@ Fully immerse your listener with mind-blowing binaural tracks and benefit from D
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

@@ -20,12 +20,12 @@
             <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                  <key>re_pattern</key>
-                  <string>/files/isadoramac-4.*-std\.dmg</string>
-                  <key>result_output_var_name</key>
-                  <string>match</string>
-                  <key>url</key>
-                  <string>https://troikatronix.com/get-it/</string>
+                    <key>re_pattern</key>
+                    <string>/files/isadoramac-4.*-std\.dmg</string>
+                    <key>result_output_var_name</key>
+                    <string>match</string>
+                    <key>url</key>
+                    <string>https://troikatronix.com/get-it/</string>
             </dict>
         </dict>
         <dict>

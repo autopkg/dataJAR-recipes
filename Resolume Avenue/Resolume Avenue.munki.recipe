@@ -110,7 +110,7 @@
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack/Wire</string>
             </dict>
         </dict>
-       <dict>
+        <dict>
             <key>Processor</key>
             <string>Copier</string>
             <key>Arguments</key>

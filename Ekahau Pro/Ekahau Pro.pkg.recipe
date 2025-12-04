@@ -12,7 +12,7 @@
     <dict>
         <key>NAME</key>
         <string>Ekahau Pro</string>
-         <key>LANGUAGE</key>
+        <key>LANGUAGE</key>
         <string>en</string>
         <key>Comment</key>
         <string>This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts</string>
@@ -75,17 +75,17 @@
                 </dict>
             </dict>
         </dict>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>FileMover</string>
             <key>Arguments</key>
             <dict>
-               <key>source</key>
-               <string>%RECIPE_CACHE_DIR%/%NAME%/Scripts</string>
-               <key>target</key>
-               <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Scripts</string>
+                <key>target</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts</string>
             </dict>
-         </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>FileCreator</string>

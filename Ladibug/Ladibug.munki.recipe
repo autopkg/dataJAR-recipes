@@ -179,8 +179,8 @@ sudo tccutil reset All tw.com.lumens.Ladibug || true</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>

@@ -15,7 +15,7 @@
     <string>1.1</string>
     <key>Process</key>
     <array>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>SparkleUpdateInfoProvider</string>
             <key>Arguments</key>

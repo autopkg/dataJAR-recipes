@@ -26,7 +26,7 @@
             <string>%NAME%</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
-             <key>uninstall_script</key>
+            <key>uninstall_script</key>
             <string>#!/bin/bash
 #
 # Performs a silent uninstall: https://support.touch-base.com/Documentation/50152/Uninstall-procedure
@@ -106,8 +106,8 @@ exit 0</string>
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

@@ -40,7 +40,7 @@
     <string>com.github.dataJAR-recipes.download.triptico</string>
     <key>Process</key>
     <array>
-       <dict>
+        <dict>
             <key>Processor</key>
             <string>Unarchiver</string>
             <key>Arguments</key>

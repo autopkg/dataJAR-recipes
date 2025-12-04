@@ -16,12 +16,12 @@
         <dict>
             <key>catalogs</key>
             <array>
-                 <string>testing</string>
+                <string>testing</string>
             </array>
             <key>description</key>
             <string>DraftSight is a feature-rich 2D and 3D CAD solution for architects, engineers and construction service providers, as well as professional CAD users, designers, educators and hobbyists.</string>
             <key>developer</key>
-             <string>Dassault Systemes</string>
+            <string>Dassault Systemes</string>
             <key>display_name</key>
             <string>DraftSight</string>
             <key>name</key>

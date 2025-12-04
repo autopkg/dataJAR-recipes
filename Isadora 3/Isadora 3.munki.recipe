@@ -20,12 +20,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <dict>
                 <key>catalogs</key>
                 <array>
-                     <string>testing</string>
+                    <string>testing</string>
                 </array>
                 <key>description</key>
                 <string>Isadora is a proprietary graphic programming environment, with emphasis on real-time manipulation of digital video.</string>
                 <key>developer</key>
-                 <string>TroikaTronix</string>
+                <string>TroikaTronix</string>
                 <key>display_name</key>
                 <string>Isadora 3</string>
                 <key>name</key>
@@ -36,7 +36,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <true/>
             </dict>
         </dict>
-     <key>MinimumVersion</key>
+    <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Isadora 3</string>
@@ -85,7 +85,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>%DERIVE_MIN_OS%</string>
             </dict>
         </dict>
-       <dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>

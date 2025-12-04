@@ -141,7 +141,7 @@ For full details please see: https://learn.jamf.com/en-US/bundle/jamf-connect-re
                 </array>
             </dict>
         </dict>
-       <dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>

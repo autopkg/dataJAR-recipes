@@ -51,26 +51,26 @@
                 <string>%pkg_path%</string>
             </dict>
         </dict>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-               <key>pkgroot</key>
-               <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-               <key>pkgdirs</key>
-               <dict>
-                  <key>Library</key>
-                  <string>0755</string>
-                  <key>Library/Java</key>
-                  <string>0755</string>
-                  <key>Library/Java/JavaVirtualMachines</key>
-                  <string>0755</string>
-                  <key>Library/Java/JavaVirtualMachines/zulu-11.jdk</key>
-                  <string>0755</string>
-               </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Library</key>
+                    <string>0755</string>
+                    <key>Library/Java</key>
+                    <string>0755</string>
+                    <key>Library/Java/JavaVirtualMachines</key>
+                    <string>0755</string>
+                    <key>Library/Java/JavaVirtualMachines/zulu-11.jdk</key>
+                    <string>0755</string>
+                </dict>
             </dict>
-         </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>

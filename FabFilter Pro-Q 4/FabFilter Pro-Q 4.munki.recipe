@@ -115,8 +115,8 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <string>URLTextSearcher</string>
             </dict>
             <dict>
-                 <key>Arguments</key>
-                 <dict>
+                <key>Arguments</key>
+                <dict>
                     <key>additional_pkginfo</key>
                     <dict>
                         <key>minimum_os_version</key>

@@ -6,7 +6,7 @@
     <string>Downloads the most recent version of Digital Pigeon 4</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Digital Pigeon 4</string>
-   <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Digital Pigeon 4</string>

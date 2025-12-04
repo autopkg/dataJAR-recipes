@@ -10,7 +10,7 @@
     <dict>
         <key>NAME</key>
         <string>LogiTune</string>
-         <key>INSTALL_SCRIPT</key>
+        <key>INSTALL_SCRIPT</key>
         <string>#!/bin/bash
 
 # Silently install LogiTune

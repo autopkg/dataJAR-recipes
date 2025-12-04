@@ -119,8 +119,8 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -145,8 +145,8 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>version</key>
@@ -158,7 +158,7 @@ The power of KeyShot Network Rendering resides in enabling you to continue refin
         </dict>
         <dict>
             <key>Arguments</key>
-             <dict>
+            <dict>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>

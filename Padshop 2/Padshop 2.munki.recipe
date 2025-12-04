@@ -55,7 +55,7 @@ You can edit the smallest bits, grains and building blocks, morphing them into c
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
         </dict>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -68,7 +68,7 @@ You can edit the smallest bits, grains and building blocks, morphing them into c
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
         </dict>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -81,7 +81,7 @@ You can edit the smallest bits, grains and building blocks, morphing them into c
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
         </dict>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -94,7 +94,7 @@ You can edit the smallest bits, grains and building blocks, morphing them into c
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
         </dict>
-         <dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -133,8 +133,8 @@ You can edit the smallest bits, grains and building blocks, morphing them into c
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -160,7 +160,7 @@ You can edit the smallest bits, grains and building blocks, morphing them into c
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
         </dict>
-         <dict>
+        <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>

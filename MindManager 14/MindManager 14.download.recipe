@@ -16,14 +16,14 @@
     <key>Process</key>
     <array>
         <dict>
-             <key>Processor</key>
-             <string>DeprecationWarning</string>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
              <key>Arguments</key>
-             <dict>
-                 <key>warning_message</key>
-                 <string>The vender has replaced this App with their 22 version. Please see the 22 recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/MindManager%2022. Please remove this from your list of recipes.</string>
+            <dict>
+                <key>warning_message</key>
+                <string>The vender has replaced this App with their 22 version. Please see the 22 recipes here: https://github.com/autopkg/dataJAR-recipes/tree/master/MindManager%2022. Please remove this from your list of recipes.</string>
               </dict>
-         </dict>
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>

@@ -35,7 +35,7 @@ G*Power is a tool to compute statistical power analyses for many different t tes
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-             <key>unattended_uninstall</key>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
