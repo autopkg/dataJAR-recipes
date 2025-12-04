@@ -1,52 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest release of Jamf Connect Configuration and imports it in into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Jamf Connect Configuration</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest release of Jamf Connect Configuration and imports it in into Munki.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.Jamf Connect Configuration</string>
-        <key>Input</key>
+        <key>MUNKI_CATEGORY</key>
+        <string>Utilities</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/Jamf Connect Configuration</string>
+        <key>NAME</key>
+        <string>Jamf Connect Configuration</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/Jamf Connect Configuration</string>
-            <key>MUNKI_CATEGORY</key>
-            <string>Utilities</string>
-            <key>NAME</key>
-            <string>Jamf Connect Configuration</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>blocking_applications</key>
-                <array>
-                    <string>Jamf Connect Configuration</string>
-                </array>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>category</key>
-                <string>%MUNKI_CATEGORY%</string>
-                <key>description</key>
-                <string>Jamf Connect Configuration is an app that allows administrators to automatically configure and create computer configuration profiles for Jamf Connect apps.</string>
-                <key>developer</key>
-                <string>%NAME%</string>
-                <key>display_name</key>
-                <string>%NAME%</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true/>
-            </dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Jamf Connect Configuration</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%MUNKI_CATEGORY%</string>
+            <key>description</key>
+            <string>Jamf Connect Configuration is an app that allows administrators to automatically configure and create computer configuration profiles for Jamf Connect apps.</string>
+            <key>developer</key>
+            <string>%NAME%</string>
+            <key>display_name</key>
+            <string>%NAME%</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
-        <key>MinimumVersion</key>
-        <string>1.0.4</string>
-        <key>ParentRecipe</key>
-        <string>com.github.yohan460-recipes.download.JamfConnect</string>
-        <key>Process</key>
-        <array>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.4</string>
+    <key>ParentRecipe</key>
+    <string>com.github.yohan460-recipes.download.JamfConnect</string>
+    <key>Process</key>
+    <array>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -54,23 +52,23 @@
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.jamf.connect.configuration" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "483DWKW443")</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/Jamf Connect Configuration.app</string>
-                <key>source_path</key>
-                <string>%pathname%/* Configuration.app</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/* Configuration.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -80,14 +78,14 @@
                     <string>/Applications/Jamf Connect Configuration.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -95,10 +93,10 @@
                 <key>dmg_root</key>
                 <string>%destination_path%</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -106,10 +104,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -117,6 +115,8 @@
                     <string>%RECIPE_CACHE_DIR%/Applications</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

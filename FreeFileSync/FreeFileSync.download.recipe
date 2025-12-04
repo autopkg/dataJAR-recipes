@@ -16,41 +16,39 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://freefilesync.org/download.php</string>
                 <key>re_pattern</key>
                 <string>href=".*download/(.*FreeFileSync_.*_macOS\.zip)"</string>
-                <key>result_output_var_name</key>
-                <string>match</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://freefilesync.org/download.php</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.freefilesync.org/download/%match%</string>
                 <key>CHECK_FILESIZE_ONLY</key>
                 <true/>
+                <key>url</key>
+                <string>https://www.freefilesync.org/download/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -60,21 +58,23 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Florian Bauer (Y8U4RUM443)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

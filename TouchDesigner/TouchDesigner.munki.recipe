@@ -32,10 +32,6 @@ For Apple Silicon downloads use arm64 for the "SUPPORTED_ARCH" variable</string>
             <string>TouchDesigner</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>supported_architectures</key>
-            <array>
-                <string>%SUPPORTED_ARCH%</string>
-            </array>
             <key>preinstall_script</key>
             <string>#!/bin/bash
 
@@ -46,6 +42,10 @@ For Apple Silicon downloads use arm64 for the "SUPPORTED_ARCH" variable</string>
 /usr/bin/chgrp -R admin "/Library/Application Support/ca.derivative"
 
 exit</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>

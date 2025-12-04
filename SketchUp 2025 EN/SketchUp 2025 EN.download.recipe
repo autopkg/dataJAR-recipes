@@ -16,41 +16,39 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://sketchup.trimble.com/en/download/all</string>
                 <key>re_pattern</key>
                 <string>(https://download.sketchup.com/SketchUp-2025-([0-9]+(-[0-9]+)+).dmg)</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://sketchup.trimble.com/en/download/all</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>request_headers</key>
                 <dict>
                     <key>User-Agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
                 </dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -58,10 +56,10 @@
                 <key>requirement</key>
                 <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -69,6 +67,8 @@
                 <key>requirement</key>
                 <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -37,8 +37,6 @@
 /usr/bin/defaults write /Library/Preferences/pro.betterdisplay.BetterDisplay.plist SUAutomaticallyUpdate -bool false</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_install</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -48,8 +46,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -57,6 +53,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

@@ -16,19 +16,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.earmaster.com/all-download.html</string>
                 <key>re_pattern</key>
                 <string>/download/EarMaster7_beta.*\.pkg</string>
+                <key>url</key>
+                <string>https://www.earmaster.com/all-download.html</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -36,14 +34,14 @@
                 <key>url</key>
                 <string>https://www.earmaster.com%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -55,6 +53,8 @@
                 <key>input_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -36,16 +36,16 @@
     <string>com.github.dataJAR-recipes.download.SonoBus</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Arguments</key>
         <dict>
-            <key>destination_path</key>
-            <string>%RECIPE_CACHE_DIR%/unpack</string>
-            <key>flat_pkg_path</key>
-            <string>%pathname%/SonoBus Installer.pkg</string>
-            <key>purge_destination</key>
-            <true/>
-        </dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/SonoBus Installer.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
         </dict>
@@ -63,8 +63,6 @@
             <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -76,14 +74,14 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -91,10 +89,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -102,6 +100,8 @@
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -16,10 +16,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Stretchly</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Stretchly</string>
         <key>ARCHITECTURE</key>
         <string></string>
+        <key>NAME</key>
+        <string>Stretchly</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

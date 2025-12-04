@@ -20,10 +20,10 @@
             </array>
             <key>category</key>
             <string>Productivity</string>
-            <key>developer</key>
-            <string>Haiku</string>
             <key>description</key>
             <string>Design UI components, powered by motion.</string>
+            <key>developer</key>
+            <string>Haiku</string>
             <key>display_name</key>
             <string>Haiku</string>
             <key>name</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -49,10 +47,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -62,6 +60,8 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

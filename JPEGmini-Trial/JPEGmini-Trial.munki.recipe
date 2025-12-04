@@ -8,10 +8,14 @@
     <string>com.github.dataJAR-recipes.munki.JPEGmini-Trial</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>JPEGmini-Trial</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>JPEGmini-Trial</string>
+        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
+        <array>
+            <string>minimum_os_version</string>
+        </array>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -29,10 +33,6 @@
             <key>unattended_install</key>
             <true/>
         </dict>
-        <key>pkginfo_keys_to_copy_from_sparkle_feed</key>
-        <array>
-            <string>minimum_os_version</string>
-        </array>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>

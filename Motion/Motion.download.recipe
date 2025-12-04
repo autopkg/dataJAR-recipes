@@ -11,10 +11,10 @@ To download Intel use: "amd64" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.download.Motion</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Motion</string>
         <key>DOWNLOAD_ARCH</key>
         <string>amd64</string>
+        <key>NAME</key>
+        <string>Motion</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

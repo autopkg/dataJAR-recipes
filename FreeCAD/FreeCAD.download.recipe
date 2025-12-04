@@ -11,46 +11,44 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.FreeCAD</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
-        <key>NAME</key>
-        <string>FreeCAD</string>
         <key>ARCH</key>
         <string>x86_64</string>
+        <key>NAME</key>
+        <string>FreeCAD</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>FreeCAD_([0-9]+(\.[0-9]+)+)-conda-macOS-%ARCH%-py[0-9]+\.dmg$</string>
                 <key>github_repo</key>
                 <string>FreeCAD/FreeCAD</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>FreeCAD_([0-9]+(\.[0-9]+)+)-conda-macOS-%ARCH%-py[0-9]+\.dmg$</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -61,10 +59,10 @@ i.e.: `-k PRERELEASE=yes`</string>
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -74,6 +72,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>strict_verification</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

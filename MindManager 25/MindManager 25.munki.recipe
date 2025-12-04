@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.MindManager 25</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>MindManager25</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>MindManager25</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -20,12 +20,12 @@
             </array>
             <key>category</key>
             <string>Applications</string>
-            <key>developer</key>
-            <string>Corel Corporation</string>
             <key>description</key>
             <string>Bring clarity and structure to plans, projects, and processes
 
 Visual productivity tools and mind mapping software that take you and your organization to where you want to be.</string>
+            <key>developer</key>
+            <string>Corel Corporation</string>
             <key>display_name</key>
             <string>Mind Manager 25</string>
             <key>name</key>
@@ -43,8 +43,6 @@ Visual productivity tools and mind mapping software that take you and your organ
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -52,6 +50,8 @@ Visual productivity tools and mind mapping software that take you and your organ
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

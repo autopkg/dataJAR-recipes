@@ -40,6 +40,10 @@ A single app for customizing your personal devices to how you work, whether that
             <array>
                 <string>arm64</string>
             </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -109,10 +113,6 @@ if [ -d "/Library/Application Support/Poly" ]; then
 fi
 
 echo "Done"</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -199,8 +199,6 @@ echo "Done"</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -312,16 +310,18 @@ else
 fi</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>

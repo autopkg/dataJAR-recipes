@@ -34,8 +34,6 @@
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -45,6 +43,8 @@
                 <key>url</key>
                 <string>https://audiomovers.com/wp/downloads/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -55,19 +55,19 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Yuriy Shevyrov (US78Y74NNA)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

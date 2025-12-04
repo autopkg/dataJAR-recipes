@@ -41,13 +41,13 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>EmacsMinimumOSVersionParser</string>
             <key>Arguments</key>
             <dict>
                 <key>app_name</key>
                 <string>%app_name%</string>
             </dict>
+            <key>Processor</key>
+            <string>EmacsMinimumOSVersionParser</string>
         </dict>
         <dict>
             <key>Arguments</key>

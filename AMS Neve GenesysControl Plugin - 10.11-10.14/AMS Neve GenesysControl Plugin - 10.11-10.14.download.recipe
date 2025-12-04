@@ -16,26 +16,24 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>These recipes have been replaced with: https://github.com/autopkg/dataJAR-recipes/tree/master/AMS%20Neve%20GenesysControl%20plugin</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -45,6 +43,8 @@
                 <key>url</key>
                 <string>https://www.ams-neve.com/consoles/genesyscontrol-plugin/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -55,8 +55,6 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -64,19 +62,19 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/GenesysControlInstaller*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -86,10 +84,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -99,10 +97,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -110,6 +108,8 @@
                 <key>requirement</key>
                 <string>identifier "com.AMSNeve.GenesysControl" and certificate leaf = H"8eee15e441a44455f2ddad0b222a640a73dbf8c0"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

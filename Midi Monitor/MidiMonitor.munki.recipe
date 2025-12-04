@@ -18,15 +18,13 @@
             <array>
                 <string>testing</string>
             </array>
+            <key>description</key>
+            <string>MIDI Monitor is an app to display MIDI signals going in and out of your Mac. Musicians will find it handy for tracking down confusing MIDI problems, and programmers can use it to test MIDI drivers and applications.</string>
             <key>developer</key>
             <string>Snoize</string>
             <key>display_name</key>
-            <string>MidiMonitor</string>
-            <key>description</key>
-            <string>MIDI Monitor is an app to display MIDI signals going in and out of your Mac. Musicians will find it handy for tracking down confusing MIDI problems, and programmers can use it to test MIDI drivers and applications.</string>
-            <key>name</key>
             <string>%NAME%</string>
-            <key>display_name</key>
+            <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
@@ -39,8 +37,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -48,6 +44,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

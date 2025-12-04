@@ -35,6 +35,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <array>
                 <string>%SUPPORTED_ARCH%</string>
             </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -90,16 +94,12 @@ done
 
 echo "Miniconda3 uninstallation complete"
 exit 0</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Miniconda3</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Miniconda3</string>
     <key>Process</key>
     <array>
         <dict>
