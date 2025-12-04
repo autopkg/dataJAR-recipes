@@ -8,12 +8,12 @@
     <string>com.github.dataJAR-recipes.munki.VantaAgent</string>
     <key>Input</key>
     <dict>
-        <key>SUPPORTED_OS</key>
-        <string>11.0</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>VantaAgent</string>
+        <key>SUPPORTED_OS</key>
+        <string>11.0</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -34,6 +34,10 @@ Vanta helps companies scale security practices and automate compliance for the i
             <string>Vanta Agent</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -42,10 +46,6 @@ Vanta helps companies scale security practices and automate compliance for the i
 # uninstall_script created from https://help.vanta.com/hc/en-us/articles/360050694791-Removing-the-Vanta-Agent
 
 /usr/local/vanta/vanta-cli uninstall</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>

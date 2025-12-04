@@ -34,6 +34,10 @@
 /Applications/Omnissa\ Horizon\ Client.app/Contents/Library/InitUsbServices.tool
 
 exit</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -42,10 +46,6 @@ exit</string>
 /Applications/Omnissa\ Horizon\ Client.app/Contents/Resources/Uninstall\ Omnissa\ Horizon\ Client.app/Contents/Library/uninstall.tool
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -57,10 +57,10 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%/Omnissa Horizon Client.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Omnissa Horizon Client.pkg</string>
             </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
@@ -68,10 +68,10 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/Omnissa.Horizon.Client.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Omnissa.Horizon.Client.pkg/Payload</string>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -96,8 +96,6 @@ exit</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -105,6 +103,8 @@ exit</string>
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
             <key>Arguments</key>

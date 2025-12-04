@@ -11,30 +11,34 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.OpenVPN Connect Client 3</string>
     <key>Input</key>
     <dict>
+        <key>ARCH</key>
+        <string>arm64</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>OpenVPNConnectClient3</string>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
-        <key>ARCH</key>
-        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
+            <key>category</key>
+            <string>Utilities</string>
             <key>description</key>
             <string>Official OpenVPN client for Mac for connecting to VPN servers using the OpenVPN protocol.</string>
             <key>developer</key>
             <string>OpenVPN</string>
-            <key>category</key>
-            <string>Utilities</string>
             <key>display_name</key>
             <string>OpenVPN</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -52,10 +56,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
 /usr/sbin/pkgutil --forget org.openvpn.helper_launch.pkg
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -65,17 +65,15 @@ exit</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%pathname%/OpenVPN*%ARCH%*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -85,53 +83,53 @@ exit</string>
                 <key>source_path</key>
                 <string>%pathname%/OpenVPN*%ARCH%*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/OpenVPN_%ARCH%.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/OpenVPN_%ARCH%.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/tmp-app.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/OpenVPN Connect/OpenVPN Connect.app</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/tmp-app.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/OpenVPN Connect/OpenVPN Connect.app</string>
                 </array>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -142,26 +140,26 @@ exit</string>
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>supported_architectures</key>
                     <array>
                         <string>%ARCH%</string>
                     </array>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -169,10 +167,10 @@ exit</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -181,6 +179,8 @@ exit</string>
                     <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

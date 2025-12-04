@@ -40,10 +40,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -75,15 +75,15 @@
             <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <key>source_pkg</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
     </array>
 </dict>

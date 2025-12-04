@@ -11,10 +11,10 @@ For Apple Silicon use "arm/" in ARCH_TYPE</string>
     <string>com.github.dataJAR-recipes.download.NordPass</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>NordPass</string>
         <key>ARCH_TYPE</key>
         <string></string>
+        <key>NAME</key>
+        <string>NordPass</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

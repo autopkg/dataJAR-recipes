@@ -16,76 +16,76 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>Citrix Files for Mac has been renamed ShareFile as of version 23.8, recipes for ShareFile are available at: https://github.com/autopkg/dataJAR-recipes/tree/master/ShareFile</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.citrix.com/downloads/sharefile/clients-and-plug-ins/citrix-files-for-mac.html</string>
                 <key>re_pattern</key>
                 <string>https://[\S]+\/cfmac</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://www.citrix.com/downloads/sharefile/clients-and-plug-ins/citrix-files-for-mac.html</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%pathname%/Install Citrix Files.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/Install Citrix Files.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pkg_path%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Citrix Systems, Inc. (S272Y5R93J)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pkg_path%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

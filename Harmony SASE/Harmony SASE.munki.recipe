@@ -12,10 +12,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <dict>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
-        <key>NAME</key>
-        <string>HarmonySASE</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>NAME</key>
+        <string>HarmonySASE</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -34,6 +34,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>Harmony SASE</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -127,10 +131,6 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
 #   -iu "${TheUser}" rm -rf "/Users/${TheUser}/Library/HTTPStorages/com.safervpn.osx.smb"
 #   -iu "${TheUser}" rm -f "/Users/${TheUser}/Library/LaunchAgents/com.perimeter81.Perimeter81.plist"
 # done</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
             <key>uninstallable</key>
             <true/>
         </dict>
@@ -144,10 +144,10 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -181,10 +181,10 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <key>source_pkg</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
             </dict>
             <key>Processor</key>
             <string>PkgCopier</string>

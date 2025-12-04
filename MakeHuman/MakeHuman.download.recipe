@@ -36,26 +36,26 @@ See https://static.makehumancommunity.org/makehuman/releases.html</string>
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>http://download.tuxfamily.org/makehuman/releases/</string>
                 <key>re_pattern</key>
                 <string>\"(makehuman-community-.*-macos\.zip)\"</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>http://download.tuxfamily.org/makehuman/releases/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>http://download.tuxfamily.org/makehuman/releases/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>

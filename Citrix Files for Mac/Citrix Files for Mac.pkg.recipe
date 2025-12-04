@@ -18,8 +18,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -29,21 +27,21 @@
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -53,19 +51,19 @@
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/Applications/Citrix Files.app/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileMover</string>
             <key>Arguments</key>
             <dict>
                 <key>source</key>
@@ -73,18 +71,20 @@
                 <key>target</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileMover</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

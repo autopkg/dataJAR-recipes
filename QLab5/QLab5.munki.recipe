@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.QLab5</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>QLab5</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>QLab5</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -43,8 +43,6 @@ Its design is based around concepts and conventions of the theatrical, broadcast
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -52,21 +50,21 @@ Its design is based around concepts and conventions of the theatrical, broadcast
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -74,10 +72,10 @@ Its design is based around concepts and conventions of the theatrical, broadcast
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -85,6 +83,8 @@ Its design is based around concepts and conventions of the theatrical, broadcast
                     <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

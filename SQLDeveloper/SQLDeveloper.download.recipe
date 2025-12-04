@@ -23,10 +23,10 @@ To download Intel use: x64"" in the DOWNLOAD_ARCH variable</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>href=\"//(?P&lt;downloadurl&gt;download\.oracle\.com/otn_software/java/sqldeveloper/sqldeveloper-(?P&lt;version&gt;[0-9]+(\.[0-9]+)+)-macos-%DOWNLOAD_ARCH%\.app\.zip)\"</string>
                 <key>url</key>
                 <string>https://www.oracle.com/uk/database/sqldeveloper/technologies/download/#sqldev-install-mac</string>
-                <key>re_pattern</key>
-                <string>href=\&quot;//(?P&lt;downloadurl&gt;download\.oracle\.com/otn_software/java/sqldeveloper/sqldeveloper-(?P&lt;version&gt;[0-9]+(\.[0-9]+)+)-macos-%DOWNLOAD_ARCH%\.app\.zip)\&quot;</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -34,10 +34,10 @@ To download Intel use: x64"" in the DOWNLOAD_ARCH variable</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://%downloadurl%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://%downloadurl%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>

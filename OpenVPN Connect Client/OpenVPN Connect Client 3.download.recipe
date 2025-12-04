@@ -10,61 +10,61 @@ Set the ARCH variable to "x86_64" for Intel downloads or "arm64" for Apple Silic
     <string>com.github.dataJAR-recipes.download.OpenVPN Connect Client 3</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>OpenVPNConnectClient3</string>
         <key>ARCH</key>
         <string>arm64</string>
+        <key>NAME</key>
+        <string>OpenVPNConnectClient3</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>request_headers</key>
                 <dict>
-                    <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                    <key>Accept-Encoding</key>
+                    <string>gzip, deflate, br</string>
+                    <key>Accept-Language</key>
+                    <string>en-GB,en;q=0.9</string>
                     <key>Referer</key>
                     <string>https://openvpn.net/;auto</string>
+                    <key>Sec-Fetch-Dest</key>
+                    <string>document</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>navigate</string>
                     <key>Sec-Fetch-Site</key>
                     <string>Accept</string>
                     <key>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</key>
                     <string>same-site</string>
-                    <key>Accept-Encoding</key>
-                    <string>gzip, deflate, br</string>
-                    <key>Sec-Fetch-Mode</key>
-                    <string>navigate</string>
-                    <key>Accept-Language</key>
-                    <string>en-GB,en;q=0.9</string>
-                    <key>Sec-Fetch-Dest</key>
-                    <string>document</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
                 </dict>
                 <key>url</key>
                 <string>https://openvpn.net/downloads/openvpn-connect-v3-macos.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/OpenVPN_Connect*%ARCH%*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: OpenVPN Inc. (ACV7L3WCD8)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/OpenVPN_Connect*%ARCH%*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

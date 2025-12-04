@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>comment</key>
-    <string>MAU Auto Update Feed XML found in this file: /private/var/folders/mz/rlwv61sj09b4rsswdgntc2nh0000gp/T/TelemetryUploadFilecom.microsoft.autoupdate.fba.txt</string>
     <key>Description</key>
     <string>Downloads the latest version of Microsoft Teams.</string>
     <key>Identifier</key>
@@ -20,10 +18,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>filename</key>
-                <string>0409TEAMS21-chk.plist</string>
                 <key>download_dir</key>
                 <string>%RECIPE_CACHE_DIR%/DOWNLOAD_XML</string>
+                <key>filename</key>
+                <string>0409TEAMS21-chk.plist</string>
                 <key>url</key>
                 <string>https://officecdnmac.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/0409TEAMS21-chk.xml</string>
             </dict>
@@ -47,10 +45,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>filename</key>
-                <string>%NAME%.pkg</string>
                 <key>download_dir</key>
                 <string>%RECIPE_CACHE_DIR%/downloads</string>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
                 <string>https://statics.teams.cdn.office.net/production-osx/%DOWNLOAD_VERSION%/MicrosoftTeams.pkg</string>
             </dict>
@@ -77,5 +75,7 @@
             <string>CodeSignatureVerifier</string>
         </dict>
     </array>
+    <key>comment</key>
+    <string>MAU Auto Update Feed XML found in this file: /private/var/folders/mz/rlwv61sj09b4rsswdgntc2nh0000gp/T/TelemetryUploadFilecom.microsoft.autoupdate.fba.txt</string>
 </dict>
 </plist>

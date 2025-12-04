@@ -61,7 +61,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>system\.version\.ProductVersion, &apos;([A-Za-z0-9]+.*)&apos;</string>
+                <string>system\.version\.ProductVersion, '([A-Za-z0-9]+.*)'</string>
                 <key>result_output_var_name</key>
                 <string>min_os_ver</string>
                 <key>url</key>
@@ -83,15 +83,15 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-        <key>Processor</key>
-        <string>MunkiImporter</string>
-        <key>Arguments</key>
+            <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
             <key>Arguments</key>

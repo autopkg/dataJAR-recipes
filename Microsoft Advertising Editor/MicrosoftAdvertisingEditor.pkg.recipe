@@ -20,8 +20,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkgdirs</key>
@@ -32,10 +30,10 @@
                 <key>pkgroot</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_root</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -43,19 +41,19 @@
                 <key>source_path</key>
                 <string>%pathname%/Microsoft Advertising Editor.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>AppDmgVersioner</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>AppDmgVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -83,6 +81,8 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
     </array>
 </dict>

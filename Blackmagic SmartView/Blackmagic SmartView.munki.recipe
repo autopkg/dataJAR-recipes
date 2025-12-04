@@ -30,6 +30,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>Blackmagic SmartView</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -59,10 +63,6 @@ else
     echo "Uninstallation failed with error code: $RESULT"
     exit 1
 fi</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -92,8 +92,8 @@ fi</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        <key>Processor</key>
-        <string>FlatPkgUnpacker</string>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -137,14 +137,14 @@ fi</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Blackmagic SmartView/SmartView Setup.app</string>
                 </array>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
@@ -213,7 +213,6 @@ fi</string>
             <key>Processor</key>
             <string>PathDeleter</string>
         </dict>
-
     </array>
 </dict>
 </plist>

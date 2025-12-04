@@ -10,16 +10,21 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.EndNote21</string>
     <key>Input</key>
     <dict>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>DEFAULT_CATALOG</key>
         <string>testing</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>EndNote 21</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Word</string>
+                <string>EndNote 21</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>%DEFAULT_CATALOG%</string>
@@ -34,13 +39,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>EndNote 21</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>blocking_applications</key>
-            <array>
-                <string>Microsoft Word</string>
-                <string>EndNote 21</string>
-            </array>
             <key>postinstall_script</key>
             <string>#!/bin/zsh
 DIR="EndNote CWYW Word 16.bundle"
@@ -85,6 +83,8 @@ for i in $bundles; do
     echo "Proceeding with installation"
   fi
 done</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -94,21 +94,19 @@ done</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/Install EndNote 21.app/Contents/Resources/EndNote.zip</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/EndNote.zip</string>
                 <key>purge_destination</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/Install EndNote 21.app/Contents/Resources/EndNote.zip</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -118,10 +116,10 @@ done</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileMover</string>
             <key>Arguments</key>
             <dict>
                 <key>source</key>
@@ -129,12 +127,14 @@ done</string>
                 <key>target</key>
                 <string>%RECIPE_CACHE_DIR%/Applications/EndNote 21</string>
             </dict>
+            <key>Processor</key>
+            <string>FileMover</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
@@ -143,26 +143,24 @@ done</string>
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -171,6 +169,8 @@ done</string>
                     <string>%RECIPE_CACHE_DIR%/EndNote.zip</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

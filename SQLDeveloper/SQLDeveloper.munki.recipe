@@ -11,24 +11,24 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <string>com.github.dataJAR-recipes.munki.SQLDeveloper</string>
     <key>Input</key>
     <dict>
-        <key>SUPPORTED_ARCH</key>
-        <string>arm64</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>SQLDeveloper</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
-            <key>developer</key>
-            <string>Oracle</string>
             <key>description</key>
             <string>Oracle SQLDeveloper is a free, integrated development environment that simplifies the development and management of Oracle Database in both traditional and Cloud deployments.
 
 SQLDeveloper offers complete end-to-end development of your PL/SQL applications, a worksheet for running queries and scripts, a DBA console for managing the database, a reports interface, a complete data modeling solution, and a migration platform for moving your 3rd party databases to Oracle.</string>
+            <key>developer</key>
+            <string>Oracle</string>
             <key>display_name</key>
             <string>SQLDeveloper</string>
             <key>name</key>
@@ -37,6 +37,10 @@ SQLDeveloper offers complete end-to-end development of your PL/SQL applications,
             <array>
                 <string>%SUPPORTED_ARCH%</string>
             </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -56,10 +60,6 @@ else
     echo "SQLDeveloper.app not found in /Applications"
     exit 0
 fi</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -90,14 +90,10 @@ fi</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>installcheck_script</key>
                     <string>#!/bin/bash
 
@@ -171,8 +167,12 @@ else
     log "Exit code 1: Installation not needed"
     exit 1
 fi</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>

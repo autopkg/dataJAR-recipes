@@ -6,16 +6,12 @@
     <string>Downloads the latest version of OverSight and imports into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.OverSight</string>
-    <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.OverSight</string>
-    <key>MinimumVersion</key>
-    <string>0.6.0</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>OverSight</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>OverSight</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -99,25 +95,27 @@ else
 fi</string>
         </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.OverSight</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
                     <string>0775</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -125,10 +123,10 @@ fi</string>
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/OverSight Installer.app/Contents/Resources/OverSight.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -138,14 +136,14 @@ fi</string>
                     <string>/Applications/OverSight.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -153,10 +151,10 @@ fi</string>
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -164,10 +162,10 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -176,6 +174,8 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

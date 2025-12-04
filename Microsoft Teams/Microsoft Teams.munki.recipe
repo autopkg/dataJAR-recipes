@@ -18,6 +18,11 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <string>MicrosoftTeams</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Teams (work or school)</string>
+                <string>Microsoft Teams</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -34,11 +39,6 @@ Your modern workplace at home, in the office, and on the go</string>
             <string>%NAME%</string>
             <key>unattended_install</key>
             <false/>
-            <key>blocking_applications</key>
-            <array>
-                <string>Microsoft Teams (work or school)</string>
-                <string>Microsoft Teams</string>
-            </array>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -76,10 +76,10 @@ Your modern workplace at home, in the office, and on the go</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Microsoft Teams.app</string>

@@ -11,10 +11,10 @@ To download Intel use: "/x64" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.download.CuePilot</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>CuePilot</string>
         <key>DOWNLOAD_ARCH</key>
         <string></string>
+        <key>NAME</key>
+        <string>CuePilot</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

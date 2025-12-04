@@ -8,12 +8,12 @@
     <string>com.github.dataJAR-recipes.munki.Spyder</string>
     <key>Input</key>
     <dict>
+        <key>ARCH</key>
+        <string>arm64</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Spyder</string>
-        <key>ARCH</key>
-        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -28,12 +28,12 @@
             <string>Spyder</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
             <key>supported_architectures</key>
             <array>
                 <string>%ARCH%</string>
             </array>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -59,7 +59,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>id=&quot;org\.spyder-ide\.Spyder\.pkg\.prepare_installation&quot; version=&quot;([0-9]+(\.[0-9]+)+)&quot;</string>
+                <string>id="org\.spyder-ide\.Spyder\.pkg\.prepare_installation" version="([0-9]+(\.[0-9]+)+)"</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
@@ -73,8 +73,6 @@
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>installs</key>
                     <array>
                         <dict>
@@ -94,14 +92,14 @@
                             <string>CFBundleShortVersionString</string>
                         </dict>
                     </array>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -109,6 +107,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

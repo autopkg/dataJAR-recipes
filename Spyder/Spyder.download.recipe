@@ -12,20 +12,18 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Spyder</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
-        <key>NAME</key>
-        <string>Spyder</string>
         <key>ARCH</key>
         <string>arm64</string>
+        <key>NAME</key>
+        <string>Spyder</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
@@ -35,6 +33,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -47,14 +47,14 @@ i.e.: `-k PRERELEASE=yes`</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: NumFOCUS, Inc. (2YJ64GUAVW)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

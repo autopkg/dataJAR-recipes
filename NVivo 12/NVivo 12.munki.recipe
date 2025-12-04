@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.NVivo 12</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>NVivo12</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>NVivo12</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -33,7 +33,7 @@
 # http://techcenter.qsrinternational.com/desktop/nm12/nm12_mass_deployment.htm
 #
 
-activationFile="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;
+activationFile="&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
 &lt;Activation&gt;
   &lt;Request&gt;
     &lt;FirstName&gt;John&lt;/FirstName&gt;
@@ -81,8 +81,6 @@ fi
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -90,6 +88,8 @@ fi
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

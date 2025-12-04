@@ -45,17 +45,15 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%pathname%/*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -65,10 +63,10 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -78,10 +76,10 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
             <key>Arguments</key>
             <dict>
                 <key>find</key>
@@ -91,10 +89,10 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                 <key>replace</key>
                 <string>%20</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -104,10 +102,10 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                 <key>url</key>
                 <string>%output_string%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -116,10 +114,10 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                     <string>%min_os_ver%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -129,14 +127,14 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                     <string>/Applications/Adobe DNG Converter.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -144,23 +142,23 @@ Applications that support Adobe DNG Converter include Photoshop, Photoshop Eleme
                 <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%version%</string>
                 <key>index</key>
                 <integer>0</integer>
                 <key>split_on</key>
                 <string>f</string>
+                <key>version</key>
+                <string>%version%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -232,14 +230,14 @@ fi</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -247,10 +245,10 @@ fi</string>
                 <key>source_path</key>
                 <string>%pathname%/%dmg_found_filename%</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -260,10 +258,10 @@ fi</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -272,6 +270,8 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/payload</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

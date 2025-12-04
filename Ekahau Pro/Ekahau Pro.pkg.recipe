@@ -10,22 +10,12 @@
     <string>com.github.dataJAR-recipes.pkg.Ekahau Pro</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Ekahau Pro</string>
+        <key>Comment</key>
+        <string>"ja" for Japanese / 日本人</string>
         <key>LANGUAGE</key>
         <string>en</string>
-        <key>Comment</key>
-        <string>This will set the lanugaue for Ekahau Pro to avoid one ofthe two PPPC prompts</string>
-        <key>Comment</key>
-        <string>Acceptable values for this are:</string>
-        <key>Comment</key>
-        <string>&quot;en&quot; for English</string>
-        <key>Comment</key>
-        <string>&quot;fr&quot; for French / Française</string>
-        <key>Comment</key>
-        <string>&quot;de&quot; for German / Deutsche</string>
-        <key>Comment</key>
-        <string>&quot;ja&quot; for Japanese / 日本人</string>
+        <key>NAME</key>
+        <string>Ekahau Pro</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -34,38 +24,34 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%url%</string>
                 <key>index</key>
                 <integer>1</integer>
                 <key>split_on</key>
                 <string>-</string>
+                <key>version</key>
+                <string>%url%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%version%</string>
                 <key>index</key>
                 <integer>0</integer>
                 <key>split_on</key>
                 <string>.dmg</string>
+                <key>version</key>
+                <string>%version%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
@@ -73,11 +59,13 @@
                     <key>Scripts</key>
                     <string>0775</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileMover</string>
             <key>Arguments</key>
             <dict>
                 <key>source</key>
@@ -85,16 +73,12 @@
                 <key>target</key>
                 <string>%RECIPE_CACHE_DIR%/Scripts</string>
             </dict>
+            <key>Processor</key>
+            <string>FileMover</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>file_path</key>
-                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
-                <key>file_mode</key>
-                <string>0755</string>
                 <key>file_content</key>
                 <string>#!/bin/bash
 
@@ -265,24 +249,28 @@ then
 else
     finish
 fi</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/postinstall</string>
             </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/Ekahau Pro.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/Ekahau Pro.app</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/Ekahau Pro.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -293,16 +281,14 @@ fi</string>
                     <string>bundleid</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%LANGUAGE%-%version%</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -318,18 +304,20 @@ fi</string>
                     <string>%bundleid%</string>
                     <key>pkgdir</key>
                     <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%LANGUAGE%-%version%</string>
                     <key>pkgroot</key>
                     <string>%pkgroot%</string>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>scripts</key>
                     <string>Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -338,6 +326,8 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/Scripts</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

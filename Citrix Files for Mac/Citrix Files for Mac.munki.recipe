@@ -10,12 +10,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.Citrix Files for Mac</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Citrix Files for Mac</string>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -45,8 +45,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -56,21 +54,21 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -80,10 +78,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>derive_minimum_os_version</key>
@@ -95,23 +93,23 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>/Applications/Citrix Files.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/Applications/Citrix Files.app/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -120,10 +118,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -131,18 +129,20 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
                 <array>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/application_payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

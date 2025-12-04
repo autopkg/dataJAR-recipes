@@ -12,19 +12,19 @@
         <string>BlackmagicSmartView</string>
         <key>PRODUCT_NAME_PATTERN</key>
         <string>SmartView (?P&lt;version&gt;[0-9]+(\.[0-9]+)+)</string>
+        <key>REG_CITY</key>
+        <string></string>
+        <key>REG_COUNTRY</key>
+        <string></string>
+        <key>REG_EMAIL</key>
+        <string></string>
         <key>REG_FIRSTNAME</key>
         <string></string>
         <key>REG_LASTNAME</key>
         <string></string>
-        <key>REG_EMAIL</key>
-        <string></string>
         <key>REG_PHONE</key>
         <string></string>
-        <key>REG_CITY</key>
-        <string></string>
         <key>REG_STATE</key>
-        <string></string>
-        <key>REG_COUNTRY</key>
         <string></string>
     </dict>
     <key>MinimumVersion</key>
@@ -34,24 +34,24 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>product_name_pattern</key>
-                <string>%PRODUCT_NAME_PATTERN%</string>
                 <key>product_name</key>
                 <string>SmartView</string>
+                <key>product_name_pattern</key>
+                <string>%PRODUCT_NAME_PATTERN%</string>
                 <key>registration_info</key>
                 <dict>
-                    <key>firstname</key>
-                    <string>%REG_FIRSTNAME%</string>
-                    <key>lastname</key>
-                    <string>%REG_LASTNAME%</string>
-                    <key>email</key>
-                    <string>%REG_EMAIL%</string>
-                    <key>phone</key>
-                    <string>%REG_PHONE%</string>
                     <key>city</key>
                     <string>%REG_CITY%</string>
                     <key>country</key>
                     <string>%REG_COUNTRY%</string>
+                    <key>email</key>
+                    <string>%REG_EMAIL%</string>
+                    <key>firstname</key>
+                    <string>%REG_FIRSTNAME%</string>
+                    <key>lastname</key>
+                    <string>%REG_LASTNAME%</string>
+                    <key>phone</key>
+                    <string>%REG_PHONE%</string>
                     <key>state</key>
                     <string>%REG_STATE%</string>
                 </dict>
