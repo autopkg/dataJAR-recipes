@@ -18,15 +18,15 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>request_headers</key>
-                <dict>
-                    <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
-                    <key>Referer</key>
-                    <string>https://meeting.samsung.net/;auto</string>
-                </dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Referer</key>
+                    <string>https://meeting.samsung.net/;auto</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                </dict>
                 <key>url</key>
                 <string>https://meeting.samsung.net/statics/client/mac/meeting/KnoxMeetingInstaller.dmg</string>
             </dict>

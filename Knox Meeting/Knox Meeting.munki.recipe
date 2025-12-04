@@ -43,10 +43,10 @@
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/meeting.zip</string>
-                <key>source_path</key>
-                <string>%pathname%/Knox Meeting Installer.app/Contents/Resources/meeting.zip</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/Knox Meeting Installer.app/Contents/Resources/meeting.zip</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>

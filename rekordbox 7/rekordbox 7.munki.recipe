@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of rekordbox 7 and imports into Munki
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of rekordbox 7 and imports into Munki
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.rekordbox 7</string>
-        <key>Input</key>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.rekordbox 7</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>rekordbox7</string>
+        <key>pkginfo</key>
         <dict>
-            <key>NAME</key>
-            <string>rekordbox7</string>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>DERIVE_MIN_OS</key>
-            <string>YES</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>rekordbox is complete DJ software, from cloud music management to creative performance capabilities. Sync your library on multiple devices.</string>
-                <key>display_name</key>
-                <string>rekordbox 7</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>postinstall_script</key>
-                <string>#!/bin/bash
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>rekordbox is complete DJ software, from cloud music management to creative performance capabilities. Sync your library on multiple devices.</string>
+            <key>display_name</key>
+            <string>rekordbox 7</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
 
 # Create directories and set permissions needed to stop admin prompt on launch
 /bin/mkdir -p /private/var/slmdata ; /bin/chmod 777 /private/var/slmdata
@@ -38,14 +38,14 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
 /bin/mkdir -p /private/var/.slmauth ; /bin/chmod 777 /private/var/.slmauth
 
 exit</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-                <key>uninstall_method</key>
-                <string>uninstall_script</string>
-                <key>uninstall_script</key>
-                <string>#!/bin/bash
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/bash
 filePaths=('/Applications/rekordbox 7’)
 for filePath in "${filePaths[@]}"
 do
@@ -55,93 +55,93 @@ do
         /bin/rm -rf "${filePath}"
     fi
 done</string>
-            </dict>
         </dict>
-        <key>MinimumVersion</key>
-        <string>2.7</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.rekordbox 7</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Processor</key>
-                <string>FlatPkgUnpacker</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>flat_pkg_path</key>
-                    <string>%found_filename%</string>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PkgRootCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkgroot</key>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
-                    <key>pkgdirs</key>
-                    <dict>
-                        <key>Applications/rekordbox 7</key>
-                        <string>0755</string>
-                    </dict>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PkgPayloadUnpacker</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/rekordbox 7</string>
-                    <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unpack/rekordbox.pkg/Payload</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiInstallsItemsCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>faux_root</key>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                    <key>installs_item_paths</key>
-                    <array>
-                        <string>/Applications/rekordbox 7/rekordbox.app</string>
-                    </array>
-                    <key>derive_minimum_os_version</key>
-                    <string>%DERIVE_MIN_OS%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%input_path%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PathDeleter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <array>
-                        <string>%RECIPE_CACHE_DIR%/pkgroot</string>
-                        <string>%RECIPE_CACHE_DIR%/unpack</string>
-                        <string>%RECIPE_CACHE_DIR%/unzip</string>
-                    </array>
-                </dict>
-            </dict>
-        </array>
     </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.rekordbox 7</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications/rekordbox 7</key>
+                    <string>0755</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/rekordbox 7</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/rekordbox.pkg/Payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/rekordbox 7/rekordbox.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%input_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/unzip</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

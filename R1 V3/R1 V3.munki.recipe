@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.R1 V3</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>R1V3</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>NAME</key>
+        <string>R1V3</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -45,8 +45,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -56,10 +54,10 @@
                 <key>source_path</key>
                 <string>%pathname%/R1 V3.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -67,10 +65,10 @@
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -80,10 +78,10 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -91,6 +89,8 @@
                     <string>%RECIPE_CACHE_DIR%/Applications/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

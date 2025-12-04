@@ -11,10 +11,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <string>com.github.dataJAR-recipes.pkg.SoapUI</string>
     <key>Input</key>
     <dict>
-        <key>SUPPORTED_ARCH</key>
-        <string></string>
         <key>NAME</key>
         <string>SoapUI</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

@@ -16,13 +16,13 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>SparkleUpdateInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>appcast_url</key>
                 <string>https://downloads.thesaurussoftware.com/mac/sparkle/BrightPay-UKM-2021-22.xml</string>
             </dict>
+            <key>Processor</key>
+            <string>SparkleUpdateInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -33,8 +33,6 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -44,10 +42,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -55,6 +53,8 @@
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.thesaurussoftware.BrightPay-UK-2021-22" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "963FKU52U4")</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -14,12 +14,12 @@
         <string>Rectangle</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array/>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
-            <key>blocking_applications</key>
-            <array/>
             <key>description</key>
             <string>Move and resize windows on macOS with keyboard shortcuts and snap areas.</string>
             <key>developer</key>

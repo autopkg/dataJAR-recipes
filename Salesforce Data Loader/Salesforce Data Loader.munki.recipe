@@ -20,10 +20,6 @@ Please note Java version 17 or above is required for a successful install.</stri
             <array>
                 <string>testing</string>
             </array>
-            <key>requires</key>
-            <array>
-                <string>AmazonCoretto24</string>
-            </array>
             <key>description</key>
             <string>Client application for the bulk import or export of Salesforce data.
 
@@ -34,6 +30,14 @@ Use it to insert, update, delete, or export Salesforce records.</string>
             <string>Salesforce Data Loader</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>requires</key>
+            <array>
+                <string>AmazonCoretto24</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -47,10 +51,6 @@ Use it to insert, update, delete, or export Salesforce records.</string>
 /usr/sbin/pkgutil --forget com.SaleforceDataLoader.installer.pkg
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>

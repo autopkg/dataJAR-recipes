@@ -30,12 +30,12 @@
             <string>Lens</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
             <key>supported_architectures</key>
             <array>
                 <string>%MUNKI_ARCHITECTURE%</string>
             </array>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -58,14 +58,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-            <key>dmg_path</key>
-            <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-            <key>dmg_root</key>
-            <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                <key>dmg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+            </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
-        <key>Processor</key>
-        <string>DmgCreator</string>
-    </dict>
         <dict>
             <key>Arguments</key>
             <dict>

@@ -18,13 +18,13 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
-            <key>pattern</key>
+                <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -47,7 +47,7 @@
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack/FreeFileSync.pkg/Payload</string>
                 <key>purge_destination</key>
-                <true />
+                <true/>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
@@ -64,15 +64,15 @@
             <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                <key>source_pkg</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/FreeFileSync*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
     </array>
 </dict>

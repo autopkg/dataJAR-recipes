@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Figma</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Figma</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Figma</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -20,10 +20,10 @@
             </array>
             <key>category</key>
             <string>Applications</string>
-            <key>developer</key>
-            <string>Figma</string>
             <key>description</key>
             <string>Design, prototype, and gather feedback all in one place with Figma.</string>
+            <key>developer</key>
+            <string>Figma</string>
             <key>display_name</key>
             <string>Figma</string>
             <key>name</key>
@@ -39,17 +39,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_megabytes</key>
                 <string>1000</string>
-                <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
             <key>Arguments</key>

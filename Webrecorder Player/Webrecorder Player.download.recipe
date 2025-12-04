@@ -11,42 +11,42 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Webrecorder Player</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
         <key>NAME</key>
         <string>WebrecorderPlayer</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>WebArchivePlayer was replaced by webrecorderplayer in 2018, which has been replaced by ArchiveWeb.page. Recipes for ArchiveWeb.page can be found at: https://github.com/autopkg/dataJAR-recipes/tree/master/ArchiveWeb.page.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>[\S]+\.dmg</string>
                 <key>github_repo</key>
                 <string>webrecorder/webrecorder-player</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>[\S]+\.dmg</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
@@ -65,8 +65,6 @@ i.e.: `-k PRERELEASE=yes`</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -74,6 +72,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>requirement</key>
                 <string>identifier "org.webrecorder.webrecorderplayer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = NBPRTCWAX7</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

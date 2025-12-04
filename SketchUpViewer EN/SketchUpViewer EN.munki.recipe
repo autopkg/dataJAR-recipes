@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.SketchUpViewer-EN</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>SketchUpViewer-EN</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>SketchUpViewer-EN</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -20,10 +20,10 @@
             </array>
             <key>description</key>
             <string>SketchUp Viewer. Your models. Anywhere you are..</string>
-            <key>display_name</key>
-            <string>SketchUp Viewer</string>
             <key>developer</key>
             <string>Trimble Navigation Ltd</string>
+            <key>display_name</key>
+            <string>SketchUp Viewer</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -51,10 +49,10 @@
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -63,10 +61,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -76,6 +74,8 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

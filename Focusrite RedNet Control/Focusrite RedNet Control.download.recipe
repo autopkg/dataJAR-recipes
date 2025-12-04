@@ -16,39 +16,37 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>This titles download now require you to login.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://customer.novationmusic.com/en/support/downloads?brand=Focusrite+Pro&amp;product_by_range=575&amp;download_type=all</string>
                 <key>re_pattern</key>
                 <string>https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/RedNet_Control_(\S.*)\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
+                <key>url</key>
+                <string>https://customer.novationmusic.com/en/support/downloads?brand=Focusrite+Pro&amp;product_by_range=575&amp;download_type=all</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -56,25 +54,27 @@
                 <key>url</key>
                 <string>https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/RedNet_Control_%version%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/RedNet_Control_*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Focusrite Audio Engineering Ltd. (7VYBQV3T2Q)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/RedNet_Control_*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

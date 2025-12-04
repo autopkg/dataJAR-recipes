@@ -14,44 +14,42 @@ Set ARCHITECTURE to "-arm64" to download for Apple Silicon. Leave blank for Inte
     <string>com.github.dataJAR-recipes.download.Axure RP 10-Trial</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AxureRP10-Trial</string>
         <key>ARCHITECTURE</key>
         <string>-arm64</string>
+        <key>NAME</key>
+        <string>AxureRP10-Trial</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.axure.com/release-history/rp10</string>
                 <key>re_pattern</key>
                 <string>https://axure.cachefly.net/versions/10-0/AxureRP-Setup%ARCHITECTURE%-[\d+]+\.dmg</string>
+                <key>url</key>
+                <string>https://www.axure.com/release-history/rp10</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -59,6 +57,8 @@ Set ARCHITECTURE to "-arm64" to download for Apple Silicon. Leave blank for Inte
                 <key>requirement</key>
                 <string>identifier "com.axure.AxureRP10" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = HUMW6UU796</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

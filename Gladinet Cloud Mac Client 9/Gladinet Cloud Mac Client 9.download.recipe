@@ -8,28 +8,28 @@
     <string>com.github.dataJAR-recipes.download.Gladinet Cloud Mac Client 9</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Gladinet Cloud Mac Client 9</string>
-        <key>SEARCH_URL</key>
-        <string>https://www.centrestack.com/management1/releases/latestdownloads.aspx</string>
-        <key>SEARCH_PATTERN</key>
-        <string>[0-9a-z\.]+\/gladinet/MacClient.9_[0-9a-z\.]+\.dmg</string>
         <key>DOWNLOAD_URL</key>
         <string>https://s3.amazonaws.com/gladinetsupport</string>
+        <key>NAME</key>
+        <string>Gladinet Cloud Mac Client 9</string>
+        <key>SEARCH_PATTERN</key>
+        <string>[0-9a-z\.]+\/gladinet/MacClient.9_[0-9a-z\.]+\.dmg</string>
+        <key>SEARCH_URL</key>
+        <string>https://www.centrestack.com/management1/releases/latestdownloads.aspx</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>For Gladinet Cloud Drive Mac Client 9: https://github.com/autopkg/dataJAR-recipes/tree/master/Gladinet%20Cloud%20Mac%20Client%209, for
                 Gladinet Cloud Mac Client 12: https://github.com/autopkg/dataJAR-recipes/tree/master/Gladinet%20Cloud%20Mac%20Client%2012</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
     </array>
 </dict>

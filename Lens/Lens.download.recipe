@@ -12,10 +12,10 @@
     <dict>
         <key>ARCHITECTURE</key>
         <string></string>
-        <key>NAME</key>
-        <string>Lens</string>
         <key>CHECK_PAGE_URL</key>
         <string>https://downloads.k8slens.dev/ide/latest-mac.yml</string>
+        <key>NAME</key>
+        <string>Lens</string>
         <key>USER_AGENT</key>
         <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36</string>
     </dict>
@@ -24,37 +24,37 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%CHECK_PAGE_URL%</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
-                <key>re_pattern</key>
-                <string>(Lens-[0-9]*\.[0-9]+[0-9]*\.[0-9]+-latest%ARCHITECTURE%-mac\.zip)</string>
                 <key>re_flags</key>
                 <array>
                     <string>IGNORECASE</string>
                 </array>
+                <key>re_pattern</key>
+                <string>(Lens-[0-9]*\.[0-9]+[0-9]*\.[0-9]+-latest%ARCHITECTURE%-mac\.zip)</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
                     <string>%USER_AGENT%</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>version</string>
+                <key>url</key>
+                <string>%CHECK_PAGE_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://downloads.k8slens.dev/ide/%version%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://downloads.k8slens.dev/ide/%version%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -68,7 +68,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
             <key>Processor</key>
             <string>Unarchiver</string>

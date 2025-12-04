@@ -1,53 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the current release version of OpenJDK and builds a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.OpenJDK</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the current release version of OpenJDK and builds a package.</string>
-        <key>Identifier</key>
-      <string>com.github.dataJAR-recipes.pkg.OpenJDK</string>
-        <key>Input</key>
-        <dict>
         <key>NAME</key>
-         <string>OpenJDK</string>
-        </dict>
-        <key>ParentRecipe</key>
-      <string>com.github.dataJAR-recipes.download.OpenJDK</string>
-        <key>MinimumVersion</key>
-      <string>1.0.0</string>
-        <key>Process</key>
-        <array>
+        <string>OpenJDK</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.OpenJDK</string>
+    <key>Process</key>
+    <array>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-               <string>%pkgroot%/Library/Java/JavaVirtualMachines/jdk*/Contents/Info.plist</string>
+                <string>%pkgroot%/Library/Java/JavaVirtualMachines/jdk*/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-               <string>%found_filename%</string>
+                <string>%found_filename%</string>
                 <key>plist_version_key</key>
-               <string>CFBundleShortVersionString</string>
+                <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>file_path</key>
-               <string>%RECIPE_CACHE_DIR%/Scripts/preinstall</string>
-                <key>file_mode</key>
-               <string>0755</string>
                 <key>file_content</key>
-               <string>#!/bin/bash
+                <string>#!/bin/bash
 
 # Remove existing OpenJDK %version% installation
 
@@ -59,54 +53,59 @@ if [[ -d "$java_directory" ]]; then
 fi
 
 exit 0</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/preinstall</string>
             </dict>
-        </dict>
-
-        <dict>
             <key>Processor</key>
-            <string>PkgCreator</string>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                  <string>OpenJDK-%version%</string>
-                    <key>version</key>
-                  <string>%version%</string>
-                    <key>id</key>
-                  <string>net.java.openjdk</string>
-                    <key>scripts</key>
-                  <string>Scripts</string>
                     <key>chown</key>
                     <array>
-                    <dict>
-                        <key>path</key>
-                        <string>Library</string>
-                        <key>user</key>
-                        <string>root</string>
-                        <key>group</key>
-                        <string>wheel</string>
-                    </dict>
-                    <dict>
-                        <key>path</key>
-                        <string>Library/Java</string>
-                        <key>user</key>
-                        <string>root</string>
-                        <key>group</key>
-                        <string>wheel</string>
-                    </dict>
-                    <dict>
-                        <key>path</key>
-                        <string>Library/Java/JavaVirtualMachines</string>
-                        <key>user</key>
-                        <string>root</string>
-                        <key>group</key>
-                        <string>wheel</string>
-                    </dict>
+                        <dict>
+                            <key>path</key>
+                            <string>Library</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>wheel</string>
+                        </dict>
+                        <dict>
+                            <key>path</key>
+                            <string>Library/Java</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>wheel</string>
+                        </dict>
+                        <dict>
+                            <key>path</key>
+                            <string>Library/Java/JavaVirtualMachines</string>
+                            <key>user</key>
+                            <string>root</string>
+                            <key>group</key>
+                            <string>wheel</string>
+                        </dict>
                     </array>
+                    <key>id</key>
+                    <string>net.java.openjdk</string>
+                    <key>pkgname</key>
+                    <string>OpenJDK-%version%</string>
+                    <key>scripts</key>
+                    <string>Scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
-        </array>
-    </dict>
+    </array>
+</dict>
 </plist>

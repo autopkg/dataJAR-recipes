@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Download recipe for Final Draft 11.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.FinalDraft11</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Download recipe for Final Draft 11.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.download.FinalDraft11</string>
-        <key>Input</key>
-        <dict>
-            <key>NAME</key>
-            <string>FinalDraft11</string>
-        </dict>
-        <key>MinimumVersion</key>
-        <string>1.1.1</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Processor</key>
-                <string>URLTextSearcher</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>url</key>
-                    <string>https://www.finaldraft.com/support/install-final-draft/install-final-draft-11-macintosh/</string>
-                    <key>re_pattern</key>
-                    <string>(\/\S*Mac.zip)</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>filename</key>
-                    <string>%NAME%.zip</string>
-                    <key>url</key>
-                    <string>https://www.finaldraft.com%match%</string>
-                </dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>EndOfCheckPhase</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>Unarchiver</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unzip</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>input_path</key>
-                    <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
-                    <key>expected_authority_names</key>
-                    <array>
-                        <string>Developer ID Installer: Cast &amp; Crew Production Software, LLC (7XUZ8R5736)</string>
-                        <string>Developer ID Certification Authority</string>
-                        <string>Apple Root CA</string>
-                    </array>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PathDeleter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <string>%RECIPE_CACHE_DIR%/unzip</string>
-                </dict>
-            </dict>
-        </array>
+        <key>NAME</key>
+        <string>FinalDraft11</string>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(\/\S*Mac.zip)</string>
+                <key>url</key>
+                <string>https://www.finaldraft.com/support/install-final-draft/install-final-draft-11-macintosh/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://www.finaldraft.com%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Cast &amp; Crew Production Software, LLC (7XUZ8R5736)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <string>%RECIPE_CACHE_DIR%/unzip</string>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

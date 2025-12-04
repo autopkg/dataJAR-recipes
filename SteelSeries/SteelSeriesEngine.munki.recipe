@@ -8,7 +8,7 @@
     <string>Downloads the latest version of Steel Series Engine and imports it into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Steel Series Engine</string>
-        <key>Input</key>
+    <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
@@ -22,10 +22,10 @@
             </array>
             <key>category</key>
             <string>Productivity</string>
-            <key>developer</key>
-            <string>Steel Series</string>
             <key>description</key>
             <string>SteelSeries Engine 3 software for the best gaming experience on Windows and Mac.</string>
+            <key>developer</key>
+            <string>Steel Series</string>
             <key>display_name</key>
             <string>Steel Series Engine</string>
             <key>name</key>
@@ -41,8 +41,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -51,10 +49,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -64,10 +62,10 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -76,6 +74,8 @@
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

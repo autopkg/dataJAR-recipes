@@ -20,16 +20,16 @@
             <array>
                 <string>testing</string>
             </array>
+            <key>category</key>
+            <string>Development</string>
             <key>description</key>
             <string>The Lego Mindstorms series of kits contain software and hardware to create customizable, programmable robots. They include an intelligent brick computer that controls the system, a set of modular sensors and motors, and Lego parts from the Technic line to create the mechanical systems.</string>
+            <key>developer</key>
+            <string>LEGO</string>
             <key>display_name</key>
             <string>LEGO MINDSTORMS Education EV3</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>developer</key>
-            <string>LEGO</string>
-            <key>category</key>
-            <string>Development</string>
             <key>unattended_install</key>
             <true/>
         </dict>
@@ -63,47 +63,43 @@
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-            <key>Arguments</key>
-                <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-                <key>pkgdirs</key>
-                <dict/>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
+                <key>pkgdirs</key>
+                <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
-            <key>Comment</key>
-            <string>LEGO Mindstorms' receipts lead to an install loop, so there has to be an installs array, but the .app bundle version seems to always be 1, so we're going to make an installs array out of the executable.</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -113,25 +109,27 @@
                     <string>/Applications/LEGO MINDSTORMS Education EV3.app/Contents/MacOS/MindstormsEV3</string>
                 </array>
             </dict>
+            <key>Comment</key>
+            <string>LEGO Mindstorms' receipts lead to an install loop, so there has to be an installs array, but the .app bundle version seems to always be 1, so we're going to make an installs array out of the executable.</string>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
-            <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-            </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -140,6 +138,8 @@
                     <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

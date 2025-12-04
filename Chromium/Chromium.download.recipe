@@ -11,10 +11,10 @@ To download Intel use: "Mac" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.download.Chromium</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Chromium</string>
         <key>DOWNLOAD_ARCH</key>
         <string>Mac</string>
+        <key>NAME</key>
+        <string>Chromium</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -23,29 +23,29 @@ To download Intel use: "Mac" in the DOWNLOAD_ARCH variable</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>\{"content":"(?P&lt;BUILDREVISION&gt;[0-9]+)",</string>
                 <key>request_headers</key>
                 <dict>
-                    <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
-                    <key>Referer</key>
-                    <string>https://download-chromium.appspot.com/?platform=%DOWNLOAD_ARCH%&amp;type=snapshots;auto</string>
-                    <key>Sec-Fetch-Site</key>
-                    <string>same-origin</string>
                     <key>Accept</key>
                     <string>*/*</string>
+                    <key>Accept-Encoding</key>
+                    <string>gzip, deflate, br</string>
+                    <key>Accept-Language</key>
+                    <string>en-GB,en;q=0.9</string>
+                    <key>Priority</key>
+                    <string>u=3, i</string>
+                    <key>Referer</key>
+                    <string>https://download-chromium.appspot.com/?platform=%DOWNLOAD_ARCH%&amp;type=snapshots;auto</string>
                     <key>Sec-Fetch-Dest</key>
                     <string>empty</string>
                     <key>Sec-Fetch-Mode</key>
                     <string>cors</string>
-                    <key>Priority</key>
-                    <string>u=3, i</string>
-                    <key>Accept-Language</key>
-                    <string>en-GB,en;q=0.9</string>
-                    <key>Accept-Encoding</key>
-                    <string>gzip, deflate, br</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>same-origin</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
                 </dict>
-                <key>re_pattern</key>
-                <string>\{"content":"(?P&lt;BUILDREVISION&gt;[0-9]+)",</string>
                 <key>url</key>
                 <string>https://download-chromium.appspot.com/rev/%DOWNLOAD_ARCH%?type=snapshots</string>
             </dict>

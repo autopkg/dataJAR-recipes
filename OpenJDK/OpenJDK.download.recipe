@@ -10,68 +10,64 @@
     <string>com.github.dataJAR-recipes.download.OpenJDK</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>OpenJDK</string>
         <key>ARCHITECTURE</key>
         <string>x64</string>
+        <key>NAME</key>
+        <string>OpenJDK</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>&lt;h1 class=\"gap\"&gt;Ready for use: &lt;a href=\"/(\d*)/\"&gt;JDK \d*&lt;/a&gt;</string>
                 <key>url</key>
                 <string>https://jdk.java.net</string>
-                <key>re_pattern</key>
-                <string>&lt;h1 class=\&quot;gap\&quot;&gt;Ready for use: &lt;a href=\&quot;/(\d*)/\&quot;&gt;JDK \d*&lt;/a&gt;</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://jdk.java.net/%match%/index.html</string>
-                <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-%ARCHITECTURE%_bin\.tar\.gz)</string>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(?P&lt;url&gt;https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-%ARCHITECTURE%_bin\.tar\.gz)</string>
+                <key>url</key>
+                <string>https://jdk.java.net/%match%/index.html</string>
+            </dict>
             <key>Processor</key>
-            <string>URLDownloader</string>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>%url%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/Scripts</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Library</key>
@@ -81,24 +77,26 @@
                     <key>Library/Java/JavaVirtualMachines</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
-               <string>%pathname%</string>
+                <string>%pathname%</string>
                 <key>destination_path</key>
-               <string>%pkgroot%/Library/Java/JavaVirtualMachines</string>
+                <string>%pkgroot%/Library/Java/JavaVirtualMachines</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -106,6 +104,8 @@
                 <key>requirement</key>
                 <string>identifier "net.java.openjdk.jdk" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = VB5E2TV963</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

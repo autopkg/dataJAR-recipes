@@ -16,12 +16,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.JumpCloud Agent</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>JumpCloud Agent</string>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -58,6 +58,10 @@ else
     }
     EOF
 fi</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/bash
 # Script downloaded from: https://support.jumpcloud.com/customer/portal/articles/2426853--all-oses-how-to-uninstall-the-jumpcloud-agent
@@ -81,7 +85,7 @@ rm /Library/LaunchDaemons/com.jumpcloud.darwin-agent.plist
 sw_vers -productVersion | cut -d'.' -f1-2  | grep '^10.9$' &amp;&gt; /dev/null
 if [[ $? -ne 0 ]]; then
     security authorizationdb read system.login.console | \
-        sed 's# &lt;string>jumpcloud-loginwindow:invoke &lt;/string>#&lt;string>loginwindow:login&lt;/string>;#' | \
+        sed 's# &lt;string&gt;jumpcloud-loginwindow:invoke &lt;/string&gt;#&lt;string&gt;loginwindow:login&lt;/string&gt;;#' | \
         security authorizationdb write system.login.console
 fi
 
@@ -104,10 +108,6 @@ done
 # then delete the app plist and app folder
 rm /Library/LaunchAgents/com.jumpcloud.jcagent-tray.plist
 rm -rf /Applications/Jumpcloud.app</string>
-            <key>uninstall_method</key>
-            <string>uninstall_script</string>
-            <key>unattended_install</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -117,8 +117,6 @@ rm -rf /Applications/Jumpcloud.app</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -128,10 +126,10 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -141,29 +139,29 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/payload/</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Jumpcloud.app</string>
                 </array>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -171,10 +169,10 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -183,10 +181,10 @@ rm -rf /Applications/Jumpcloud.app</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -196,10 +194,10 @@ rm -rf /Applications/Jumpcloud.app</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -208,6 +206,8 @@ rm -rf /Applications/Jumpcloud.app</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

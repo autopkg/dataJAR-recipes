@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.VMware Fusion 8</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>VMwareFusion8</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/VMware</string>
+        <key>NAME</key>
+        <string>VMwareFusion8</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -26,8 +26,6 @@
             <string>VMWare Fusion Pro 8</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
             <key>postinstall_script</key>
             <string>#!/bin/bash
 #
@@ -38,6 +36,8 @@ if [ -e /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fu
 then
         /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool set
 fi</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -47,19 +47,17 @@ fi</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>dmg_root</key>
-                <string>%pkgroot%/Applications</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%pkgroot%/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -67,10 +65,10 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -78,6 +76,8 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

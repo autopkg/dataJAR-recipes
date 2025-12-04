@@ -23,8 +23,6 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
             <string>PackageRequired</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -32,10 +30,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>requirement</key>
                 <string>identifier "com.ecamm.installer.callrecorder" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5EJH68M642"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -45,10 +43,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>source_path</key>
                 <string>%PKG%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -58,10 +56,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unarchive/Contents/Resources/contents.einstall</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -71,10 +69,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -82,10 +80,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkgdirs</key>
@@ -104,10 +102,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>pkgroot</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -115,10 +113,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unarchive_einstall/Ecamm Movie Tools.app</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -126,10 +124,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unarchive_einstall/EcammAudioLoader.plugin</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -137,10 +135,10 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unarchive_einstall/CallRecorder.plugin</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -176,6 +174,8 @@ copy of the "Install Call Recorder for Skype.app" to be supplied with the -p fla
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
     </array>
 </dict>

@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Google Chrome Universal</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps</string>
         <key>FORCE_MUNKIIMPORT</key>
         <string></string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
         <key>NAME</key>
         <string>Google Chrome</string>
         <key>pkginfo</key>
@@ -44,12 +44,12 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>force_munkiimport</key>
-                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
