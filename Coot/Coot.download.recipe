@@ -16,17 +16,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://scottlab.ucsc.edu/coot/stable</string>
                 <key>re_pattern</key>
                 <string>(coot_[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\_stable_[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.pkg.zip)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://scottlab.ucsc.edu/coot/stable</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -55,17 +55,17 @@
             <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%match%</string>
                 <key>index</key>
                 <integer>1</integer>
                 <key>split_on</key>
                 <string>_</string>
+                <key>version</key>
+                <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
         </dict>
     </array>
 </dict>

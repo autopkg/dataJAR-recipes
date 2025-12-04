@@ -24,8 +24,6 @@ i.e.: `-k PRERELEASE=yes`</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
@@ -35,23 +33,23 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -59,6 +57,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>requirement</key>
                 <string>identifier "org.musescore.MuseScore" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6EPAF2X3PR"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

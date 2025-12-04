@@ -22,28 +22,26 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/LogMeIn Installer *.app</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -53,19 +51,19 @@
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%pkgroot%/Applications/Toolkit.app/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -91,10 +89,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -103,6 +101,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

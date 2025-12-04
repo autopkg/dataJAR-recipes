@@ -14,10 +14,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.OpenLens</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>OpenLens</string>
         <key>ARCH</key>
         <string></string>
+        <key>NAME</key>
+        <string>OpenLens</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

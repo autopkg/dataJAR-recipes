@@ -38,29 +38,19 @@ Also see: https://ngrok.com/blog-post/tcp-endpoints-require-verification for inf
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>ngrokVersioner</string>
             <key>Arguments</key>
             <dict>
                 <key>binary_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/ngrok</string>
             </dict>
+            <key>Processor</key>
+            <string>ngrokVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>id</key>
-                    <string>com.ngrok.ngrok</string>
-                    <key>version</key>
-                    <string>%version%</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -72,12 +62,20 @@ Also see: https://ngrok.com/blog-post/tcp-endpoints-require-verification for inf
                             <string>wheel</string>
                         </dict>
                     </array>
+                    <key>id</key>
+                    <string>com.ngrok.ngrok</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -85,6 +83,8 @@ Also see: https://ngrok.com/blog-post/tcp-endpoints-require-verification for inf
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

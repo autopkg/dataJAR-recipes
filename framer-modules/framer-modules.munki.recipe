@@ -18,12 +18,12 @@
             <array>
                 <string>production</string>
             </array>
-                <key>category</key>
+            <key>category</key>
             <string>Productivity</string>
-            <key>developer</key>
-            <string>kysely</string>
             <key>description</key>
             <string>Tired of downloading and copying modules to the prototype on your own? We all are. That's why installing modules is now so easy even your grandma can do it.</string>
+            <key>developer</key>
+            <string>kysely</string>
             <key>display_name</key>
             <string>framer-modules</string>
             <key>name</key>
@@ -36,19 +36,19 @@
     <string>0.3.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.framer-modules</string>
-<key>Process</key>
-<array>
-    <dict>
-        <key>Arguments</key>
+    <key>Process</key>
+    <array>
         <dict>
-            <key>pkg_path</key>
-            <string>%pathname%</string>
-            <key>repo_subdirectory</key>
-            <string>%MUNKI_REPO_SUBDIR%</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
-        <key>Processor</key>
-        <string>MunkiImporter</string>
-    </dict>
-</array>
+    </array>
 </dict>
 </plist>

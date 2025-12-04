@@ -11,10 +11,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.framer-modules</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
         <key>NAME</key>
         <string>framer-modules</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>

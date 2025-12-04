@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Autodesk EAGLE</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Autodesk EAGLE</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Autodesk EAGLE</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -48,6 +46,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

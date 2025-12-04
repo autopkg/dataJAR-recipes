@@ -18,8 +18,6 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -29,10 +27,10 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
                 <key>url</key>
                 <string>https://ftp.osuosl.org/pub/musescore-nightlies/macos/3x/stable/?C=M;O=D</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -40,14 +38,14 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
                 <key>url</key>
                 <string>https://ftp.osuosl.org/pub/musescore-nightlies/macos/3x/stable/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -55,6 +53,8 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
                 <key>requirement</key>
                 <string>identifier "org.musescore.MuseScore" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6EPAF2X3PR"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

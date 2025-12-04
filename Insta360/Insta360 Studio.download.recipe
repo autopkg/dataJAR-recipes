@@ -16,8 +16,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>SparkleUpdateInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>appcast_url</key>
@@ -25,6 +23,8 @@
                 <key>urlencode_path_component</key>
                 <false/>
             </dict>
+            <key>Processor</key>
+            <string>SparkleUpdateInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -48,8 +48,6 @@
             <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -61,6 +59,8 @@
                 <key>input_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Insta360*.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

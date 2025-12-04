@@ -61,13 +61,13 @@ exit</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
             <key>Arguments</key>
             <dict>
                 <key>quarantined_files_path</key>
                 <string>%RECIPE_CACHE_DIR%/unzip/Final Draft 13.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/QuarantineRemover</string>
         </dict>
         <dict>
             <key>Arguments</key>

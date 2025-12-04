@@ -6,16 +6,12 @@
     <string>Downloads the latest version of BlockBlock and imports into Munki.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.BlockBlock</string>
-    <key>ParentRecipe</key>
-    <string>com.github.zentralpro.download.blockblock</string>
-    <key>MinimumVersion</key>
-    <string>0.6.0</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>BlockBlock</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>BlockBlock</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -68,21 +64,21 @@ else
 fi</string>
             <key>unattended_install</key>
             <true/>
-            <key>uninstall_method</key>
-            <string>uninstall_package</string>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_package</string>
         </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.6.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.zentralpro.download.blockblock</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Library/Objective-See/BlockBlock</key>
@@ -90,22 +86,24 @@ fi</string>
                     <key>tmp</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpacked/BlockBlock Installer.app/Contents/Resources/BlockBlock.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Library/Objective-See/BlockBlock/BlockBlock.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/BlockBlock Installer.app/Contents/Resources/BlockBlock.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -115,14 +113,14 @@ fi</string>
                     <string>/Library/Objective-See/BlockBlock/BlockBlock.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -130,10 +128,10 @@ fi</string>
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -148,10 +146,10 @@ fi</string>
                     <string>minimum_os_version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -159,10 +157,10 @@ fi</string>
                 <key>source_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked/BlockBlock Installer.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -170,27 +168,23 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/pkgroot/Library</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/scripts</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/scripts</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>file_path</key>
-                <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
-                <key>file_mode</key>
-                <string>0755</string>
                 <key>file_content</key>
                 <string>#!/bin/bash
 #
@@ -216,11 +210,15 @@ else
     /bin/echo "ERROR: Cannot locate ${installerAppPath}, exiting..."
     exit 1
 fi</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/scripts/postinstall</string>
             </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>force_pkg_build</key>
@@ -241,10 +239,10 @@ fi</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -254,10 +252,10 @@ fi</string>
                 <key>uninstaller_pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-uninstaller-%version%.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -267,6 +265,8 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

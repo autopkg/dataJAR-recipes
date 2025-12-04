@@ -24,10 +24,10 @@
             </array>
             <key>category</key>
             <string>Utilities</string>
-            <key>developer</key>
-            <string>LogMeIn Installer</string>
             <key>description</key>
             <string>The #1 most reliable remote access tool.</string>
+            <key>developer</key>
+            <string>LogMeIn Installer</string>
             <key>display_name</key>
             <string>LogMeIn Installer</string>
             <key>name</key>
@@ -43,28 +43,26 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/LogMeIn Installer *.app</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -74,10 +72,10 @@
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -87,6 +85,8 @@
                     <string>/Applications/Toolkit.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -114,8 +114,6 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -123,10 +121,10 @@
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -134,10 +132,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -146,8 +144,9 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
-
     </array>
 </dict>
 </plist>

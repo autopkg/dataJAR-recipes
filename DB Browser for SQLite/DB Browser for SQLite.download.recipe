@@ -14,27 +14,27 @@ To download Intel use: "" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.download.DB Browser for SQLite</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
         <key>NAME</key>
         <string>DBBrowserforSQLite</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>DB\.Browser\.for\.SQLite-.*?\.dmg</string>
                 <key>github_repo</key>
                 <string>sqlitebrowser/sqlitebrowser</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>DB\.Browser\.for\.SQLite-.*?\.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -50,8 +50,6 @@ To download Intel use: "" in the DOWNLOAD_ARCH variable</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -59,6 +57,8 @@ To download Intel use: "" in the DOWNLOAD_ARCH variable</string>
                 <key>requirement</key>
                 <string>identifier "net.sourceforge.sqlitebrowser" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = C34AV33YLK</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -69,8 +69,6 @@
             <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -78,10 +76,10 @@
                     <string>%RECIPE_CACHE_DIR%/pkgroot</string>
                 </array>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>PathDeleter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -89,6 +87,8 @@
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

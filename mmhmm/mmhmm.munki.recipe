@@ -10,10 +10,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.mmhmm</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>mmhmm</string>
         <key>pkginfo</key>
@@ -81,10 +81,10 @@ When you’re giving a presentation that matters, be understood with mmhmm</stri
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/mmhmm.app</string>

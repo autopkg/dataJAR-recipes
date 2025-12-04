@@ -18,45 +18,35 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
                     <string>0775</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/UNetbootin.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/UNetbootin.app</string>
+                <key>source_path</key>
+                <string>%pathname%/UNetbootin.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
-                    <key>pkgdirs</key>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/</string>
-                    <key>version</key>
-                    <string>%version%</string>
-                    <key>id</key>
-                    <string>com.github.gkovacs.unetbootin</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -68,12 +58,20 @@
                             <string>admin</string>
                         </dict>
                     </array>
+                    <key>id</key>
+                    <string>com.github.gkovacs.unetbootin</string>
+                    <key>pkgdirs</key>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -81,6 +79,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -13,10 +13,10 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
     <string>com.github.dataJAR-recipes.munki.Anaconda 3</string>
     <key>Input</key>
     <dict>
+        <key>DISPLAY_NAME</key>
+        <string>Anaconda 3</string>
         <key>INSTALLER_TYPE</key>
         <string>pkg</string>
-        <key>PYTHON_MAJOR_VERSION</key>
-        <string>3</string>
         <key>MUNKI_CATALOGS</key>
         <string>testing</string>
         <key>MUNKI_CATEGORY</key>
@@ -27,8 +27,8 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
         <string>apps/%NAME%/</string>
         <key>NAME</key>
         <string>Anaconda3</string>
-        <key>DISPLAY_NAME</key>
-        <string>Anaconda 3</string>
+        <key>PYTHON_MAJOR_VERSION</key>
+        <string>3</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -48,12 +48,12 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
             <key>postuninstall_script</key>
             <string>#!/bin/bash
 rm -rf "/Applications/Anaconda-Navigator.app"</string>
-            <key>uninstall_method</key>
-            <string>removepackages</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>removepackages</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -81,34 +81,32 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
-                 <key>flat_pkg_path</key>
+                <key>flat_pkg_path</key>
                 <string>%pathname%</string>
-                 <key>purge_destination</key>
+                <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/tmp/</string>
-                 <key>pkg_payload_path</key>
+                <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/prepare_installation.pkg/Payload</string>
-                 <key>purge_destination</key>
+                <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -118,19 +116,19 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/tar/pkgs/anaconda-*.tar.bz2</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_format</key>
@@ -142,10 +140,10 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/JSONFileReader</string>
             <key>Arguments</key>
             <dict>
                 <key>json_key</key>
@@ -153,10 +151,10 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>json_path</key>
                 <string>%RECIPE_CACHE_DIR%/info/info/about.json</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/JSONFileReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -164,10 +162,10 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -178,6 +176,8 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

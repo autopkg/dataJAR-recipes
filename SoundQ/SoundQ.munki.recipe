@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.SoundQ</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>SoundQ</string>
         <key>pkginfo</key>
@@ -75,14 +75,14 @@ SoundQ is sound library software that integrates with your editor of choice. You
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/SoundQ.app</string>
                 </array>
-                <key>derive_minimum_os_version</key>
-                <string>%DERIVE_MIN_OS%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>

@@ -13,10 +13,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>SUPPORTED_ARCH</key>
-        <string>arm64</string>
         <key>NAME</key>
         <string>Pandoc</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -50,41 +50,39 @@ Pandoc is a Haskell library for converting from one markup format to another, an
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/pandoc.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/pandoc.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PandocVersioner</string>
             <key>Arguments</key>
             <dict>
                 <key>binary_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/pandoc</string>
             </dict>
+            <key>Processor</key>
+            <string>PandocVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -144,10 +142,10 @@ fi</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -155,10 +153,10 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -167,6 +165,8 @@ fi</string>
                     <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

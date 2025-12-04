@@ -16,45 +16,45 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.activsoftware.co.uk/update/Inspire/updatemac.txt</string>
                 <key>re_pattern</key>
                 <string>http:\/\/www\.activsoftware\.co\.uk\/update\/Inspire\/update\/mac\/ActivInspire_Application_v[\S].*_MAC\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>https://www.activsoftware.co.uk/update/Inspire/updatemac.txt</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%/ActivInspire_Application_*_MAC.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Promethean (PQ96WVYU2E)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%/ActivInspire_Application_*_MAC.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
