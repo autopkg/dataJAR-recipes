@@ -10,10 +10,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.NDI Suite</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>NDISuite</string>
         <key>pkginfo</key>
@@ -138,10 +138,10 @@ Designed to introduce anyone, from end users to professional installers, to the 
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/NDI Access Manager.app</string>

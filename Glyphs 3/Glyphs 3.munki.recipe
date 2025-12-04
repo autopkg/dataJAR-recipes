@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Glyphs 3</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Glyphs3</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Glyphs3</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -39,8 +39,6 @@ Create, produce and release font families, icon systems or just logos with ease 
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -48,10 +46,10 @@ Create, produce and release font families, icon systems or just logos with ease 
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -61,10 +59,10 @@ Create, produce and release font families, icon systems or just logos with ease 
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -72,6 +70,8 @@ Create, produce and release font families, icon systems or just logos with ease 
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

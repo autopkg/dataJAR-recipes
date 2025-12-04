@@ -18,12 +18,12 @@
             <array>
                 <string>testing</string>
             </array>
-                <key>category</key>
+            <key>category</key>
             <string>Programming</string>
-            <key>developer</key>
-            <string>MIT</string>
             <key>description</key>
             <string>Scratch is a free programming language and online community where you can create your own interactive stories, games, and animations.</string>
+            <key>developer</key>
+            <string>MIT</string>
             <key>display_name</key>
             <string>Scratch 3</string>
             <key>name</key>

@@ -16,8 +16,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -25,23 +23,23 @@
                 <key>url</key>
                 <string>https://zevrix.com</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://zevrix.com/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -49,10 +47,10 @@
                 <key>requirement</key>
                 <string>identifier "com.zevrix.LinkOptimizer6" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8L6S43KNS9"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -65,17 +63,19 @@
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Comment</key>
-            <string>If the bundleid != com.zevrix.LinkOptimizer6, then the recipe will stop here</string>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>%bundleid% = "com.zevrix.LinkOptimizer6"</string>
             </dict>
+            <key>Comment</key>
+            <string>If the bundleid != com.zevrix.LinkOptimizer6, then the recipe will stop here</string>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
     </array>
 </dict>

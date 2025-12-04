@@ -11,10 +11,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Fritzing</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string>true</string>
         <key>NAME</key>
         <string>Fritzing</string>
+        <key>PRERELEASE</key>
+        <string>true</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -43,12 +43,12 @@ Please see the related issue for further details: https://github.com/autopkg/dat
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>[\S]+\.mojave\.[\S]+\.dmg</string>
                 <key>github_repo</key>
                 <string>fritzing/fritzing-app</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>[\S]+\.mojave\.[\S]+\.dmg</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>

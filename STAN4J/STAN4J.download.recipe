@@ -16,33 +16,33 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://stan4j.com/download/app/</string>
                 <key>re_pattern</key>
                 <string>download.stan4j.com/app/stan-[^"]+macosx.cocoa.x86_64.zip</string>
-                <key>result_output_var_name</key>
-                <string>match</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>match</string>
+                <key>url</key>
+                <string>https://stan4j.com/download/app/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%match%</string>
                 <key>CHECK_FILESIZE_ONLY</key>
                 <true/>
+                <key>url</key>
+                <string>%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>

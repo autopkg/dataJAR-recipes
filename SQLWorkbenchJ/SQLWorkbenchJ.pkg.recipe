@@ -18,18 +18,18 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
                     <string>0775</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -49,14 +49,6 @@
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%VERSION%</string>
-                    <key>version</key>
-                    <string>%VERSION%</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <key>id</key>
-                    <string>com.Thomas Kellerer.%NAME%</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -68,6 +60,14 @@
                             <string>admin</string>
                         </dict>
                     </array>
+                    <key>id</key>
+                    <string>com.Thomas Kellerer.%NAME%</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%VERSION%</string>
+                    <key>version</key>
+                    <string>%VERSION%</string>
                 </dict>
             </dict>
             <key>Processor</key>

@@ -18,37 +18,35 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/GDevelop 5.app</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleVersion</key>
-                    <string>version</string>
                     <key>CFBundleIdentifier</key>
                     <string>bundleid</string>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>index</key>
+                <integer>0</integer>
+                <key>split_on</key>
+                <string>-</string>
+                <key>version</key>
+                <string>%version%</string>
+            </dict>
             <key>Processor</key>
             <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
-            <key>Arguments</key>
-                <dict>
-                    <key>version</key>
-                    <string>%version%</string>
-                    <key>index</key>
-                    <integer>0</integer>
-                    <key>split_on</key>
-                    <string>-</string>
-                </dict>
-            </dict>
+        </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -74,10 +72,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -85,6 +83,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

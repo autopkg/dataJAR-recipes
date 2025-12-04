@@ -20,23 +20,23 @@
             <dict>
                 <key>re_pattern</key>
                 <string>adsklicensinginstaller-mac-([0-9]+(.[0-9]+)+).tar.gz</string>
-                <key>result_output_var_name</key>
-                <string>VERSION</string>
                 <key>request_headers</key>
                 <dict>
-                    <key>User-Agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15</string>
                     <key>Accept</key>
                     <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
                     <key>Accept-Language</key>
                     <string>en-US,en;q=0.9</string>
-                    <key>Sec-Fetch-Site</key>
-                    <string>none</string>
-                    <key>Sec-Fetch-Mode</key>
-                    <string>navigate</string>
                     <key>Sec-Fetch-Dest</key>
                     <string>document</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>navigate</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>none</string>
+                    <key>User-Agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>VERSION</string>
                 <key>url</key>
                 <string>https://www.autodesk.com/support/technical/article/caas/tsarticles/ts/f5IhBc15i0kOwzBb8lcEN.html</string>
             </dict>
@@ -48,17 +48,17 @@
             <dict>
                 <key>filename</key>
                 <string>%NAME%.tar.gz</string>
-                <key>url</key>
-                <string>https://damassets.autodesk.net/content/dam/autodesk/www/files/adsklicensinginstaller-mac-%VERSION%.tar.gz</string>
                 <key>request_headers</key>
                 <dict>
-                    <key>User-Agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15</string>
                     <key>Accept</key>
                     <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
                     <key>Accept-Language</key>
                     <string>en-US,en;q=0.9</string>
+                    <key>User-Agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15</string>
                 </dict>
+                <key>url</key>
+                <string>https://damassets.autodesk.net/content/dam/autodesk/www/files/adsklicensinginstaller-mac-%VERSION%.tar.gz</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -83,14 +83,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/adsklicensinginstaller/AdskLicensing-%VERSION%-mac-installer.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Autodesk (XXKJ396S2Y)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/adsklicensinginstaller/AdskLicensing-%VERSION%-mac-installer.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

@@ -14,10 +14,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Pulsar</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Pulsar</string>
         <key>ARCH_TYPE</key>
         <string>Intel</string>
+        <key>NAME</key>
+        <string>Pulsar</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>

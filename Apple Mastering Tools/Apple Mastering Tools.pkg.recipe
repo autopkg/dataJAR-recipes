@@ -21,28 +21,24 @@ NOTE:
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
                 <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Install Audio Tools.app/Contents/Info.plist</string>
                 <key>plist_keys</key>
                 <dict>
-                    <key>CFBundleShortVersionString</key>
-                    <string>version</string>
                     <key>CFBundleIdentifier</key>
                     <string>bundleid</string>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Applications</key>
@@ -56,57 +52,59 @@ NOTE:
                     <key>usr/local/bin</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Droplets/Audio to WAVE 96K Droplet.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%Applications/Utilities/Audio to WAVE 96K Droplet.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Droplets/Audio to WAVE 96K Droplet.app</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Droplets/Audio to WAVE Droplet.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%Applications/Utilities/Audio to WAVE Droplet.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Droplets/Audio to WAVE Droplet.app</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Droplets/Master for iTunes Droplet.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%Applications/Utilities/Master for iTunes Droplet.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Droplets/Master for iTunes Droplet.app</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
-            <key>Arguments</key>
-            <dict>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Extras/afclip</string>
-                <key>destination_path</key>
-                <string>%pkgroot%usr/local/bin/afclip</string>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%usr/local/bin/afclip</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/extract/Apple Audio Mastering Tools.dmg/Extras/afclip</string>
+            </dict>
             <key>Processor</key>
-            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
+            <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -114,10 +112,10 @@ NOTE:
                 <key>mode</key>
                 <string>a+x</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.jessepeterson.munki.UniversalTypeClient6/ModeChanger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
@@ -132,6 +130,8 @@ NOTE:
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
     </array>
 </dict>

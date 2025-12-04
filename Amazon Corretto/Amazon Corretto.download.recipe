@@ -13,12 +13,12 @@ Set MAJOR_VERSION to the major version you wish to download. Currently: 8, 11, 1
     <string>com.github.dataJAR-recipes.download.Amazon Corretto</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AmazonCorretto%MAJOR_VERSION%</string>
         <key>DOWNLOAD_ARCH</key>
         <string></string>
         <key>MAJOR_VERSION</key>
         <string></string>
+        <key>NAME</key>
+        <string>AmazonCorretto%MAJOR_VERSION%</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -40,19 +40,19 @@ Set MAJOR_VERSION to the major version you wish to download. Currently: 8, 11, 1
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: AMZN Mobile LLC (94KV3E626L)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

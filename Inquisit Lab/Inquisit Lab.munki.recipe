@@ -60,7 +60,7 @@ then
 fi</string>
         </dict>
     </dict>
-        <key>MinimumVersion</key>
+    <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Inquisit Lab</string>
@@ -104,10 +104,10 @@ fi</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Inquisit %MAJOR_VERSION%.app</string>
@@ -144,8 +144,6 @@ fi</string>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -153,6 +151,8 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
             <key>Arguments</key>

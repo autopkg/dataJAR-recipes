@@ -18,30 +18,28 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://download.lifesizecloud.com/download</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
                     <string>%USER_AGENT%</string>
                 </dict>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://download.lifesizecloud.com/download</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -49,6 +47,8 @@
                 <key>requirement</key>
                 <string>identifier "com.lifesize.cloud" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = L57M4NT7Y7</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

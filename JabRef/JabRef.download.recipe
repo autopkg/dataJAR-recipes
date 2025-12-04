@@ -15,10 +15,10 @@ i.e.: `-k PRERELEASE=yes</string>
     <string>com.github.dataJAR-recipes.download.JabRef</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>JabRef</string>
         <key>DOWNLOAD_ARCH</key>
         <string></string>
+        <key>NAME</key>
+        <string>JabRef</string>
         <key>PRERELEASE</key>
         <string></string>
     </dict>
@@ -27,17 +27,17 @@ i.e.: `-k PRERELEASE=yes</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
-                <key>include_prereleases</key>
-                <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
                 <string>JabRef-.*?%DOWNLOAD_ARCH%.pkg</string>
                 <key>github_repo</key>
                 <string>JabRef/jabref</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -48,19 +48,19 @@ i.e.: `-k PRERELEASE=yes</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: JabRef e.V. (6792V39SK3)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

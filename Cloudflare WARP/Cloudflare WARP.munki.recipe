@@ -10,12 +10,12 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <string>com.github.dataJAR-recipes.munki.Cloudflare WARP</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>CloudflareWARP</string>
-        <key>DERIVE_MIN_OS</key>
-        <string>YES</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -34,6 +34,10 @@ The WARP client sits between your device and the Internet, and has several conne
             <string>Cloudflare WARP</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -44,10 +48,6 @@ The WARP client sits between your device and the Internet, and has several conne
 cd /Applications/Cloudflare\ WARP.app/Contents/Resources ; ./uninstall.sh -f
 
 exit</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -94,10 +94,10 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Cloudflare WARP.app</string>

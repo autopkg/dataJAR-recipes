@@ -12,10 +12,10 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
     <string>com.github.dataJAR-recipes.Firefox-locale</string>
     <key>Input</key>
     <dict>
-        <key>LOCALE</key>
-        <string>en-GB</string>
         <key>FORCE_MUNKIIMPORT</key>
         <string>YES!</string>
+        <key>LOCALE</key>
+        <string>en-GB</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/firefox</string>
         <key>NAME</key>
@@ -28,12 +28,12 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
             </array>
             <key>description</key>
             <string>Mozilla Firefox is a free and open source web browser.</string>
+            <key>developer</key>
+            <string>Mozilla</string>
             <key>display_name</key>
             <string>Mozilla Firefox</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>developer</key>
-            <string>Mozilla</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -47,8 +47,6 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/FirefoxGetLocaleAndVersion</string>
             <key>Arguments</key>
             <dict>
                 <key>choosen_locale</key>
@@ -56,16 +54,14 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
                 <key>dmg_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/FirefoxGetLocaleAndVersion</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%app_version%</string>
                     <key>installcheck_script</key>
                     <string>#!/bin/zsh
 
@@ -174,21 +170,25 @@ fi
 
 if __name__ == '__main__':
     main()</string>
+                    <key>version</key>
+                    <string>%app_version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>force_munkiimport</key>
-                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

@@ -11,8 +11,6 @@
         <key>NAME</key>
         <string>tsh</string>
     </dict>
-    <key>MiniumumVersion</key>
-    <string>1.1</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
@@ -44,26 +42,26 @@ Recipes for Teleport can be found here: https://github.com/williamtheaker/autopk
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://goteleport.com/docs/installation/#macos</string>
                 <key>re_pattern</key>
                 <string>href=(https://cdn\.teleport\.dev/tsh-([0-9]+(\.[0-9]+)+)\.pkg)</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://goteleport.com/docs/installation/#macos</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
-            </dict>
+        </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -72,18 +70,20 @@ Recipes for Teleport can be found here: https://github.com/williamtheaker/autopk
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Gravitational Inc. (QH8AA5B8UP)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
         </dict>
     </array>
+    <key>MiniumumVersion</key>
+    <string>1.1</string>
 </dict>
 </plist>

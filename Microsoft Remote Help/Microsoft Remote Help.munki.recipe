@@ -30,83 +30,83 @@ With this connection, support staff can remotely connect to a device and view th
             <string>Microsoft Corporation</string>
             <key>display_name</key>
             <string>Microsoft Remote Help</string>
-            <key>name</key>
-            <string>%NAME%</string>
             <key>installer_choices_xml</key>
             <array>
                 <dict>
-                <key>attributeSetting</key>
-                <true/>
-                <key>choiceAttribute</key>
-                <string>visible</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.remotehelp</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <false/>
-                <key>choiceAttribute</key>
-                <string>enabled</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.remotehelp</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <integer>1</integer>
-                <key>choiceAttribute</key>
-                <string>selected</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.remotehelp</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <false/>
-                <key>choiceAttribute</key>
-                <string>visible</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.autoupdate</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <false/>
-                <key>choiceAttribute</key>
-                <string>enabled</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.autoupdate</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <integer>0</integer>
-                <key>choiceAttribute</key>
-                <string>selected</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.autoupdate</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <false/>
-                <key>choiceAttribute</key>
-                <string>visible</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.remotehelp.scripts</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <true/>
-                <key>choiceAttribute</key>
-                <string>enabled</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.remotehelp.scripts</string>
-            </dict>
-            <dict>
-                <key>attributeSetting</key>
-                <integer>1</integer>
-                <key>choiceAttribute</key>
-                <string>selected</string>
-                <key>choiceIdentifier</key>
-                <string>com.microsoft.remotehelp.scripts</string>
-            </dict>
+                    <key>attributeSetting</key>
+                    <true/>
+                    <key>choiceAttribute</key>
+                    <string>visible</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.remotehelp</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <false/>
+                    <key>choiceAttribute</key>
+                    <string>enabled</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.remotehelp</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <integer>1</integer>
+                    <key>choiceAttribute</key>
+                    <string>selected</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.remotehelp</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <false/>
+                    <key>choiceAttribute</key>
+                    <string>visible</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.autoupdate</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <false/>
+                    <key>choiceAttribute</key>
+                    <string>enabled</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.autoupdate</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <integer>0</integer>
+                    <key>choiceAttribute</key>
+                    <string>selected</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.autoupdate</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <false/>
+                    <key>choiceAttribute</key>
+                    <string>visible</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.remotehelp.scripts</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <true/>
+                    <key>choiceAttribute</key>
+                    <string>enabled</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.remotehelp.scripts</string>
+                </dict>
+                <dict>
+                    <key>attributeSetting</key>
+                    <integer>1</integer>
+                    <key>choiceAttribute</key>
+                    <string>selected</string>
+                    <key>choiceIdentifier</key>
+                    <string>com.microsoft.remotehelp.scripts</string>
+                </dict>
             </array>
+            <key>name</key>
+            <string>%NAME%</string>
             <key>unattended_install</key>
             <false/>
             <key>unattended_uninstall</key>
@@ -148,16 +148,16 @@ With this connection, support staff can remotely connect to a device and view th
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Applications/Microsoft Remote Help.app</string>
                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
             <key>Processor</key>
             <string>MunkiInstallsItemsCreator</string>
@@ -178,8 +178,6 @@ With this connection, support staff can remotely connect to a device and view th
             <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -188,6 +186,8 @@ With this connection, support staff can remotely connect to a device and view th
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>

@@ -26,6 +26,10 @@
             <string>Blackmagic Audio Monitor</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
@@ -55,10 +59,6 @@ else
     echo "Uninstallation failed with error code: $RESULT"
     exit 1
 fi</string>
-            <key>unattended_install</key>
-            <true/>
-            <key>unattended_uninstall</key>
-            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -88,8 +88,8 @@ fi</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        <key>Processor</key>
-        <string>FlatPkgUnpacker</string>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
             <key>Arguments</key>

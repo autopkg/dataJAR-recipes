@@ -13,40 +13,34 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>re_pattern</key>
-                <string>{\&quot;name\&quot;:\&quot;VMware Fusion 12.*\&quot;,\&quot;dlgList\&quot;:\[{\&quot;.*\&quot;,\&quot;code\&quot;:\&quot;(?P&lt;download_group&gt;FUS-\d.*)\&quot;,\&quot;releaseDate\&quot;:\&quot;.*\&quot;,\&quot;productId\&quot;:\&quot;.*\&quot;,\&quot;releasePackageId\&quot;:\&quot;.*\&quot;,\&quot;isFirmwareImage\&quot;:.*,\&quot;orderId\&quot;:.*}</string>
-                <key>Comment</key>
-                <string>Example for 12.x: {&quot;name&quot;:&quot;VMware Fusion 12.0.0 (for Intel-based Macs)&quot;,&quot;code&quot;:&quot;FUS-1200&quot;,&quot;releaseDate&quot;:&quot;2020-09-14T07:00:00Z&quot;,&quot;productId&quot;:&quot;1040&quot;,&quot;releasePackageId&quot;:&quot;52084&quot;,&quot;orderId&quot;:1}</string>
-                <key>url</key>
-                <string>https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY</string>
                 <key>Comment</key>
                 <string>Example for 12.x: https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY</string>
+                <key>re_pattern</key>
+                <string>{\"name\":\"VMware Fusion 12.*\",\"dlgList\":\[{\".*\",\"code\":\"(?P&lt;download_group&gt;FUS-\d.*)\",\"releaseDate\":\".*\",\"productId\":\".*\",\"releasePackageId\":\".*\",\"isFirmwareImage\":.*,\"orderId\":.*}</string>
+                <key>url</key>
+                <string>https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
+                <key>Comment</key>
+                <string>Example for 11.x: https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY&amp;downloadGroup=FUS-1200</string>
                 <key>re_pattern</key>
                 <string>VMware-Fusion-.*\.dmg</string>
-                <key>Comment</key>
-                <string>Example for 12.x: VMware-Fusion-12.0.0-16880131.dmg</string>
                 <key>result_output_var_name</key>
                 <string>dmg_url</string>
                 <key>url</key>
                 <string>https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY&amp;downloadGroup=%download_group%</string>
-                <key>Comment</key>
-                <string>Example for 11.x: https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&amp;category=desktop_end_user_computing&amp;product=vmware_fusion&amp;version=12_0&amp;dlgType=PRODUCT_BINARY&amp;downloadGroup=FUS-1200</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
             <key>Arguments</key>
             <dict>
                 <key>find</key>
@@ -56,12 +50,14 @@
                 <key>replace</key>
                 <string>New</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
+                <key>Comment</key>
+                <string>Example for 12.x: https://download3.vmware.com/software/FUS-1223-New/VMware-Fusion-12.2.3-19436697_x86.dmg</string>
                 <key>prefetch_filename</key>
                 <true/>
                 <key>request_headers</key>
@@ -73,17 +69,15 @@
                 </dict>
                 <key>url</key>
                 <string>https://download3.vmware.com/software/%output_string%/%dmg_url%</string>
-                <key>Comment</key>
-                <string>Example for 12.x: https://download3.vmware.com/software/FUS-1223-New/VMware-Fusion-12.2.3-19436697_x86.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -91,6 +85,8 @@
                 <key>requirement</key>
                 <string>identifier "com.vmware.fusion" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EG7KH642X6</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

@@ -23,8 +23,6 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -32,14 +30,14 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
                 <key>url</key>
                 <string>https://www.sketchup.com/sketchup/2020/SketchUpPro-dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -47,10 +45,10 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
                 <key>requirement</key>
                 <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -58,10 +56,10 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
                 <key>requirement</key>
                 <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -69,6 +67,8 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
                 <key>requirement</key>
                 <string>anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

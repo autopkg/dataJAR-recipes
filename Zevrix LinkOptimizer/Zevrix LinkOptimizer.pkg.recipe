@@ -20,45 +20,35 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>private/tmp/LinkOptimizer</key>
                     <string>0775</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/LinkOptimizer Installer.app/Contents/Resources/appPackage/LinkOptimizer.app</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/private/tmp/LinkOptimizer/LinkOptimizer.app</string>
+                <key>source_path</key>
+                <string>%pathname%/LinkOptimizer Installer.app/Contents/Resources/appPackage/LinkOptimizer.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>id</key>
-                    <string>%BUNDLE_ID%</string>
-                    <key>scripts</key>
-                    <string>LinkOptimizer_Scripts</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -70,12 +60,20 @@
                             <string>admin</string>
                         </dict>
                     </array>
+                    <key>id</key>
+                    <string>%BUNDLE_ID%</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>scripts</key>
+                    <string>LinkOptimizer_Scripts</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -83,6 +81,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -16,47 +16,45 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://www.apple.com/apple-music/apple-digital-masters/docs/apple_audio_mastering_tools_v10.9_greater.zip</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/extract/</string>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/extract/</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
+                <key>archive_format</key>
+                <string>zip</string>
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%pkgroot%</string>
                 <key>purge_destination</key>
                 <true/>
-                <key>archive_format</key>
-                <string>zip</string>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -64,10 +62,10 @@
                 <key>requirement</key>
                 <string>identifier "com.apple.itunes.AudiotoWAVE96kdroplet" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "292CA77D2D"</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -75,10 +73,10 @@
                 <key>requirement</key>
                 <string>identifier "com.apple.itunes.AudiotoWAVEdroplet" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "292CA77D2D"</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -86,6 +84,8 @@
                 <key>requirement</key>
                 <string>identifier "com.apple.itunes.masterforitunesdroplet" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "292CA77D2D"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

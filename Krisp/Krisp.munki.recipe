@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of krisp and imports into Munki.
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of krisp and imports into Munki.
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.
 
 For Intel use: "x86_64" in the SUPPORTED_ARCH variable
 For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.krisp</string>
-        <key>Input</key>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.krisp</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>krisp</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>x86_64</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Mute background noise in any communication app.</string>
+            <key>developer</key>
+            <string>Krisp Technologies</string>
+            <key>display_name</key>
             <string>krisp</string>
-            <key>DERIVE_MIN_OS</key>
-            <string>YES</string>
-            <key>SUPPORTED_ARCH</key>
-            <string>x86_64</string>
-            <key>pkginfo</key>
+            <key>installer_environment</key>
             <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Mute background noise in any communication app.</string>
-                <key>developer</key>
-                <string>Krisp Technologies</string>
-                <key>display_name</key>
-                <string>krisp</string>
-                <key>installer_environment</key>
-                <dict>
-                    <key>LOGNAME</key>
-                    <string>root</string>
-                </dict>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>postinstall_script</key>
-                <string>#!/bin/bash
+                <key>LOGNAME</key>
+                <string>root</string>
+            </dict>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
 pkill krisp
 chown -R root:wheel /Applications/krisp.app
 chown -R root:wheel /Library/Audio/Plug-Ins/HAL/KrispAudio.driver</string>
-                <key>supported_architectures</key>
-                <array>
-                    <string>%SUPPORTED_ARCH%</string>
-                </array>
-                <key>uninstall_method</key>
-                <string>uninstall_script</string>
-                <key>uninstall_script</key>
-                <string>#!/bin/zsh
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/zsh
 # Built from the uninstall scripts in the installer package
 
 # Setup logging
@@ -225,120 +229,116 @@ fi
 
 log "Krisp uninstallation completed successfully"
 exit</string>
-                <key>unattended_install</key>
-                <true/>
-                <key>unattended_uninstall</key>
-                <true/>
-            </dict>
         </dict>
-        <key>MinimumVersion</key>
-        <string>2.7</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.krisp</string>
-        <key>Process</key>
-        <array>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.krisp</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>FlatPkgUnpacker</string>
-                <key>Arguments</key>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/krisp-app*.pkg/Scripts/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/krisp.app.pkg/Payload</string>
+                <key>purge_destination</key>
+                <string>true</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/app_unpack</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/krisp.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/app_unpack/Applications/krisp.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
                 <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
-                    <key>flat_pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>purge_destination</key>
-                    <string>true</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>FileFinder</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>pattern</key>
-                    <string>%RECIPE_CACHE_DIR%/installer_unpack/krisp-app*.pkg/Scripts/*.pkg</string>
-                </dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
-            <dict>
-                <key>Processor</key>
-                <string>FlatPkgUnpacker</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
-                    <key>flat_pkg_path</key>
-                    <string>%found_filename%</string>
-                    <key>purge_destination</key>
-                    <string>true</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>PkgPayloadUnpacker</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>destination_path</key>
-                    <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
-                    <key>pkg_payload_path</key>
-                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/krisp.app.pkg/Payload</string>
-                    <key>purge_destination</key>
-                    <string>true</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiInstallsItemsCreator</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>faux_root</key>
-                    <string>%RECIPE_CACHE_DIR%/app_unpack</string>
-                    <key>installs_item_paths</key>
-                    <array>
-                        <string>/Applications/krisp.app</string>
-                    </array>
-                    <key>derive_minimum_os_version</key>
-                    <string>%DERIVE_MIN_OS%</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>Versioner</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>input_plist_path</key>
-                    <string>%RECIPE_CACHE_DIR%/app_unpack/Applications/krisp.app/Contents/Info.plist</string>
-                    <key>plist_version_key</key>
-                    <string>CFBundleShortVersionString</string>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>additional_pkginfo</key>
-                    <dict>
-                        <key>version</key>
-                        <string>%version%</string>
-                    </dict>
-                </dict>
-            </dict>
-            <dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-            </dict>
-            <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>mode</key>
@@ -349,19 +349,19 @@ exit</string>
             <key>Processor</key>
             <string>com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner</string>
         </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>PathDeleter</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>path_list</key>
-                    <array>
-                        <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
-                        <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
-                        <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
-                    </array>
-                </dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/embedded_installer_unpack/</string>
+                    <string>%RECIPE_CACHE_DIR%/app_unpack/</string>
+                </array>
             </dict>
-        </array>
-    </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

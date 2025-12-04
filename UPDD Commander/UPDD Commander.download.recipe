@@ -16,36 +16,34 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.legamaster.com/support/software</string>
                 <key>re_pattern</key>
                 <string>href="(/fileadmin/user_upload/Software/All_in_one_Mac_Driver/Legamaster_all_in_one_UPDD_([0-9]+(_[0-9]+)+).dmg\.zip)"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://www.legamaster.com/support/software</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.legamaster.com%DOWNLOAD_URL%</string>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>url</key>
+                <string>https://www.legamaster.com%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -55,27 +53,29 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/unzip/UPDD*.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%found_filename%/UPDD*.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Touch-Base Ltd (U86H28HG4S)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%found_filename%/UPDD*.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

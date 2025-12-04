@@ -70,8 +70,6 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
             <string>StopProcessingIf</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -81,19 +79,19 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
                 <key>source_path</key>
                 <string>%pathname%/Screencast-O-Matic v2.0.app</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/TempFileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/Screencast-O-Matic v2.0.app/Contents/app/AppMain-*.jar</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/TempFileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
             <key>Arguments</key>
             <dict>
                 <key>index</key>
@@ -103,10 +101,10 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
                 <key>version</key>
                 <string>%found_basename%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>index</key>
@@ -116,10 +114,10 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
                 <key>version</key>
                 <string>%version%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -129,14 +127,14 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
                     <string>/Applications/Screencast-O-Matic v2.0.app/Contents/app/%found_basename%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -144,10 +142,10 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -155,6 +153,8 @@ See: https://screenpal.com/blog/screenpal-announcement/ for further details</str
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

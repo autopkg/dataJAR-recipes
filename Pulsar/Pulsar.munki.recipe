@@ -10,12 +10,12 @@ For the SUPPORTED_ARCH variable use "x86_64" for Intel and "arm64" for Silicon</
     <string>com.github.dataJAR-recipes.munki.Pulsar</string>
     <key>Input</key>
     <dict>
-        <key>SUPPORTED_ARCH</key>
-        <string>x86_64</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Pulsar</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>x86_64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -30,10 +30,6 @@ For the SUPPORTED_ARCH variable use "x86_64" for Intel and "arm64" for Silicon</
             <string>Pulsar</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>supported_architectures</key>
-            <array>
-                <string>%SUPPORTED_ARCH%</string>
-            </array>
             <key>postinstall_script</key>
             <string>#!/bin/bash
 
@@ -56,6 +52,10 @@ then
 else
   /bin/echo "Command Line Tools for Xcode found. Proceeding with Install..."
 fi</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>

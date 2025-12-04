@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.Amazon Corretto</string>
     <key>Description</key>
     <string>Downloads the current release version of Amazon Coretto and imports it into Munki.
 
@@ -19,20 +17,22 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable
 Set VERSION_DESTINATION_PATH to "/Library/Java/JavaVirtualMachines" for Versions 8, 11, 17, 18, 19, 20, 21, 22 and 23.
 
 Leave empty for 15 and 16</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Amazon Corretto</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AmazonCoretto%MAJOR_VERSION%</string>
-        <key>MAJOR_VERSION</key>
-        <string></string>
-        <key>SUPPORTED_ARCH</key>
-        <string></string>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
-        <key>VERSION_DESTINATION_PATH</key>
-        <string>/Library/Java/JavaVirtualMachines</string>
+        <key>MAJOR_VERSION</key>
+        <string></string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>AmazonCoretto%MAJOR_VERSION%</string>
+        <key>SUPPORTED_ARCH</key>
+        <string></string>
+        <key>VERSION_DESTINATION_PATH</key>
+        <string>/Library/Java/JavaVirtualMachines</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -68,8 +68,6 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -79,10 +77,10 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -92,23 +90,25 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>version_comparison_key</key>
-                <string>CFBundleVersion</string>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>installs_item_paths</key>
                 <array>
                     <string>/Library/Java/JavaVirtualMachines/amazon-corretto-%MAJOR_VERSION%.jdk</string>
                 </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -146,8 +146,6 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
             <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -156,10 +154,10 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -167,10 +165,10 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -179,6 +177,8 @@ No-cost, multiplatform, production-ready distribution of OpenJDK</string>
                     <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

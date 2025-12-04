@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.VMware Fusion 12</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>VMwareFusion12</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/VMware</string>
+        <key>NAME</key>
+        <string>VMwareFusion12</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -26,8 +26,6 @@
             <string>VMWare Fusion Pro 12</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>unattended_install</key>
-            <true/>
             <key>postinstall_script</key>
             <string>#!/bin/bash
 #
@@ -38,6 +36,8 @@ if [ -e /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fu
 then
         /Applications/VMware\ Fusion.app/Contents/Library/Initialize\ VMware\ Fusion.tool set
 fi</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -47,8 +47,6 @@ fi</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -56,6 +54,8 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

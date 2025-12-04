@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ScreenPal 3</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.ScreenPal 3</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of ScreenPal 3</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.download.ScreenPal 3</string>
-        <key>Input</key>
-        <dict>
-            <key>NAME</key>
-            <string>ScreenPal3</string>
-            <key>DOWNLOAD_URL</key>
-            <string>https://screenpal.com/getappdownload?platform=mac</string>
-        </dict>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>Process</key>
-        <array>
+        <key>DOWNLOAD_URL</key>
+        <string>https://screenpal.com/getappdownload?platform=mac</string>
+        <key>NAME</key>
+        <string>ScreenPal3</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
         <dict>
             <key>Arguments</key>
             <dict>
@@ -37,36 +37,36 @@ Please also see: https://github.com/autopkg/dataJAR-recipes/pull/311</string>
             <key>Processor</key>
             <string>StopProcessingIf</string>
         </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>URLDownloader</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>url</key>
-                    <string>%DOWNLOAD_URL%</string>
-                    <key>filename</key>
-                    <string>%NAME%.pkg</string>
-                </dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
             <dict>
-                <key>Processor</key>
-                <string>EndOfCheckPhase</string>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Big Nerd Software, LLC (48Z4QVLCS5)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
-            <dict>
-                <key>Processor</key>
-                <string>CodeSignatureVerifier</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>input_path</key>
-                    <string>%pathname%</string>
-                    <key>expected_authority_names</key>
-                    <array>
-                        <string>Developer ID Installer: Big Nerd Software, LLC (48Z4QVLCS5)</string>
-                        <string>Developer ID Certification Authority</string>
-                        <string>Apple Root CA</string>
-                    </array>
-                </dict>
-            </dict>
-        </array>
-    </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
 </plist>

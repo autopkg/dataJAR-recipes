@@ -20,10 +20,10 @@
             </array>
             <key>description</key>
             <string>Vectoraster is a graphics utility for creating vector-based raster patterns and halftones based on images or gradients.</string>
-            <key>display_name</key>
-            <string>Vectoraster 8</string>
             <key>developer</key>
             <string>Lars Gafvert</string>
+            <key>display_name</key>
+            <string>Vectoraster 8</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
@@ -39,8 +39,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -48,6 +46,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

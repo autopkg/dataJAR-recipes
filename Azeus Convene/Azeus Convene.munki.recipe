@@ -51,8 +51,8 @@ Convene allows you to control the whole meeting process effortlessly.</string>
     <string>com.github.dataJAR-recipes.download.Azeus Convene</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Arguments</key>
+        <dict>
+            <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
@@ -89,8 +89,6 @@ Convene allows you to control the whole meeting process effortlessly.</string>
             <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -99,10 +97,10 @@ Convene allows you to control the whole meeting process effortlessly.</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -112,6 +110,8 @@ Convene allows you to control the whole meeting process effortlessly.</string>
                     <string>/Applications/Convene.app</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>

@@ -10,18 +10,16 @@ Specify MAJOR_VERSION to limit to the latest update to a specific major release 
     <string>com.github.dataJAR-recipes.download.Inquisit Lab</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>InquisitLab</string>
         <key>MAJOR_VERSION</key>
         <string>7</string>
+        <key>NAME</key>
+        <string>InquisitLab</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -31,6 +29,8 @@ Specify MAJOR_VERSION to limit to the latest update to a specific major release 
                 <key>url</key>
                 <string>https://www.millisecond.com/download/releases</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -41,19 +41,19 @@ Specify MAJOR_VERSION to limit to the latest update to a specific major release 
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Millisecond Software, LLC (J9JYE5M476)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

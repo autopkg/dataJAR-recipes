@@ -8,22 +8,22 @@
     <string>com.github.dataJAR-recipes.munki.Lifesize</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Lifesize</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>NAME</key>
+        <string>Lifesize</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
-                <key>category</key>
+            <key>category</key>
             <string>Applications</string>
-            <key>developer</key>
-            <string>Lifesize</string>
             <key>description</key>
             <string>Work smarter with award-winning video conferencing that goes everywhere you do.</string>
+            <key>developer</key>
+            <string>Lifesize</string>
             <key>display_name</key>
             <string>Lifesize</string>
             <key>name</key>

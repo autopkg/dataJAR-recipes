@@ -21,8 +21,6 @@ To download Intel use: "[Ii]ntel" in the DOWNLOAD_ARCH varia</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -32,6 +30,8 @@ To download Intel use: "[Ii]ntel" in the DOWNLOAD_ARCH varia</string>
                 <key>url</key>
                 <string>https://eassessment-admin.ibo.org/player/mac/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -47,19 +47,19 @@ To download Intel use: "[Ii]ntel" in the DOWNLOAD_ARCH varia</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Krankikom GmbH (G2CDZF4J34)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>
