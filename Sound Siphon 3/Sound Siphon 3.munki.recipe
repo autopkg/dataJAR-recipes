@@ -66,9 +66,9 @@ fi</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.Sound Siphon 3</string>
+    <string>com.github.vmiller.download.SoundSiphon</string>
     <key>Process</key>
     <array>
         <dict>
