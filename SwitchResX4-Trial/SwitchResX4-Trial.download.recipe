@@ -65,7 +65,7 @@
                 <key>overwrite</key>
                 <true/>
                 <key>source_path</key>
-                <string>%destination_path%/SwitchResX Installer.app/Contents/PlugIns/SwitchResX.prefPane</string>
+                <string>%RECIPE_CACHE_DIR%/unzip/SwitchResX Installer.app/Contents/PlugIns/SwitchResX.prefPane</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
