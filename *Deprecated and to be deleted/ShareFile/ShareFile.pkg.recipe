@@ -89,7 +89,7 @@ autopkg repo-add jessepeterson-recipes</string>
                 <string>MD5</string>
                 <key>checksum</key>
                 <string>f7fa45b370314a1e70c21a99b6adfcc2</string>
-                <key>pathname</key>
+                <key>checksum_pathname</key>
                 <string>%RECIPE_CACHE_DIR%/unpack/ShareFile.pkg/Scripts/preinstall</string>
             </dict>
             <key>Comment</key>

@@ -68,7 +68,7 @@ Add required repositories:
                 <string>MD5</string>
                 <key>checksum</key>
                 <string>3fb197b2d0d38c1dbf591525e7d730c3</string>
-                <key>pathname</key>
+                <key>checksum_pathname</key>
                 <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Audinate/DanteVia/Resources/DanteViaInstall.command</string>
             </dict>
             <key>Comment</key>
@@ -131,7 +131,7 @@ Add required repositories:
                 <string>MD5</string>
                 <key>checksum</key>
                 <string>4d57c5f4b49e7525c6db0441d1fa73ce</string>
-                <key>pathname</key>
+                <key>checksum_pathname</key>
                 <string>%RECIPE_CACHE_DIR%/pkg_unpack/Dante_Via.pkg/Scripts/preinstall</string>
             </dict>
             <key>Comment</key>
