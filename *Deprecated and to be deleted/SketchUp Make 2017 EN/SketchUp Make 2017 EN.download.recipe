@@ -34,6 +34,15 @@ Main changes are non-overridable year, removed superfluous CodeSignatureVerifica
             <string>DeprecationWarning</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>

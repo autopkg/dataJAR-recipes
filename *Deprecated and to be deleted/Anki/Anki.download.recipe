@@ -38,6 +38,15 @@ i.e.: `-k PRERELEASE=yes`</string>
             <string>DeprecationWarning</string>
         </dict>
         <dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
