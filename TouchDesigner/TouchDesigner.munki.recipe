@@ -25,7 +25,7 @@ For Apple Silicon downloads use arm64 for the "SUPPORTED_ARCH" variable</string>
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string> </string>
+            <string>TouchDesigner for macOS is a powerful, node-based visual programming tool for real-time interactive media, offering deep creative control for artists and developers</string>
             <key>developer</key>
             <string>Derivative</string>
             <key>display_name</key>

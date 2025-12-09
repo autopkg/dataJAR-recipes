@@ -19,7 +19,9 @@
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string> </string>
+            <string>Say goodbye to online JSON formatters.
+
+JSON Viewer is a native Mac app to visualize, validate and format JSON datasets in a clean and snappy interface.</string>
             <key>developer</key>
             <string>Alveole Montreal Inc</string>
             <key>display_name</key>
