@@ -12,7 +12,7 @@
         <string>GarminVIRBEdit</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
@@ -84,9 +84,9 @@
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/payload_unpack/</string>
+                <string>%RECIPE_CACHE_DIR%/payload_unpack</string>
                 <key>pkg_payload_path</key>
-                <string>%destination_path%/Garmin_VIRB_Edit.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/Garmin_VIRB_Edit.pkg/Payload</string>
                 <key>purge_destination</key>
                 <string>true</string>
             </dict>
@@ -97,7 +97,7 @@
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%destination_path%Applications/Garmin VIRB Edit.app/Contents/Info.plist</string>
+                <string>%RECIPE_CACHE_DIR%/payload_unpack/Applications/Garmin VIRB Edit.app/Contents/Info.plist</string>
             </dict>
             <key>Processor</key>
             <string>Versioner</string>
