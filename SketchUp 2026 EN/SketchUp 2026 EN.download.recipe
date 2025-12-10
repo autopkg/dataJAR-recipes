@@ -10,24 +10,13 @@
     <dict>
         <key>NAME</key>
         <string>SketchUp2026-EN</string>
+        <key>DOWNLOAD_URL</key>
+        <string>https://sketchup.trimble.com/sketchup/2026/SketchUpPro-dmg</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>(https://download.sketchup.com/SketchUp-2026-([0-9]+(-[0-9]+)+).dmg)</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
-                <key>url</key>
-                <string>https://sketchup.trimble.com/en/download/all</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
