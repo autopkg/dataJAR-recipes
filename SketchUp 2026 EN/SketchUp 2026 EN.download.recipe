@@ -8,8 +8,6 @@
     <string>com.github.dataJAR-recipes.download.SketchUp 2026 EN</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOAD_URL</key>
-        <string>https://sketchup.trimble.com/sketchup/2026/SketchUpPro-dmg</string>
         <key>NAME</key>
         <string>SketchUp2026-EN</string>
     </dict>
@@ -28,7 +26,7 @@
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
                 </dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://sketchup.trimble.com/sketchup/2026/SketchUpPro-dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
