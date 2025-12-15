@@ -46,19 +46,32 @@ Save time, stay organized, and write faster with EndNote 2025. Trust your ideas 
 
 # https://support.clarivate.com/Endnote/s/article/EndNote-X8-Mac-and-EndNote-online-Mac-CWYW-tools-in-Microsoft-Word-2016-Troubleshooting-guide?language=en_US
 
-DIR="EndNote CWYW Word 16.bundle"
-PATH_SRC="/Applications/EndNote 2025/Cite While You Write/$DIR"
-PATH_DEST="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/"
+endnote_bundle_2016="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/EndNote CWYW Word 16.bundle"
 
-[[ -d "$PATH_DEST" ]] || mkdir -p "$PATH_DEST"
-if [ -d "$PATH_SRC" ]
-then
-    echo "Copying $DIR to $PATH_DEST"
-    cp -r "$PATH_SRC" "$PATH_DEST"
-else
-    echo "Error: Directory $PATH_SRC does not exists."
+# Remove existing bundle if present to avoid copy conflicts
+if [ -d "$endnote_bundle_2016" ]; then
+    echo "Removing existing EndNote CWYW Word 16.bundle"
+    rm -rf "$endnote_bundle_2016"
 fi
-            </string>
+
+# Check if Microsoft Office directory structure exists
+office_word_dir="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word"
+if [ ! -d "$office_word_dir" ]; then
+    echo "Microsoft Word directory not found. Skipping CWYW bundle installation."
+    echo "EndNote will still work, but Word integration may need manual setup."
+    exit 0
+fi
+
+# Copy the new bundle
+echo "Copying EndNote CWYW Word 16.bundle to $office_word_dir/"
+cp -R "/Applications/EndNote 2025/Cite While You Write/EndNote CWYW Word 16.bundle" "$office_word_dir/"
+
+if [ $? -eq 0 ]; then
+    echo "Successfully installed EndNote CWYW Word 16.bundle"
+else
+    echo "Failed to install EndNote CWYW Word 16.bundle"
+    exit 1
+fi</string>
             <key>postuninstall_script</key>
             <string>#!/bin/zsh
 DIR="EndNote CWYW Word 16.bundle"
@@ -72,6 +85,34 @@ fi
             </string>
             <key>preinstall_script</key>
             <string>#!/bin/zsh
+
+# Check if EndNote 2025 folder exists and delete it
+if [ -d "/Applications/EndNote 2025" ]; then
+    echo "Found EndNote 2025 folder. Deleting..."
+    # Remove extended attributes first (including on .DS_Store)
+    echo "Clearing extended attributes..."
+    xattr -cr "/Applications/EndNote 2025" 2&gt;/dev/null
+    # Clear any flags that might prevent deletion
+    echo "Clearing file flags..."
+    chflags -R nouchg,nouappnd "/Applications/EndNote 2025" 2&gt;/dev/null
+    # Set full permissions on the folder and its contents
+    echo "Setting permissions to 777..."
+    chmod -R 777 "/Applications/EndNote 2025" 2&gt;/dev/null
+    # Force remove all contents first
+    echo "Removing all contents..."
+    rm -rf "/Applications/EndNote 2025"/* 2&gt;/dev/null
+    rm -rf "/Applications/EndNote 2025"/.[!.]* 2&gt;/dev/null
+    # Then remove the folder itself
+    rmdir "/Applications/EndNote 2025" 2&gt;/dev/null || rm -rf "/Applications/EndNote 2025"
+    if [ ! -d "/Applications/EndNote 2025" ]; then
+        echo "Successfully deleted EndNote 2025 folder."
+    else
+        echo "Failed to delete EndNote 2025 folder."
+        exit 1
+    fi
+else
+    echo "EndNote 2025 folder not found. Proceeding with installation."
+fi
 
 # https://support.clarivate.com/Endnote/s/article/EndNote-X8-Mac-and-EndNote-online-Mac-CWYW-tools-in-Microsoft-Word-2016-Troubleshooting-guide?language=en_US
 
