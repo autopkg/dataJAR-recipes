@@ -24,7 +24,7 @@ To download Intel use: "x86_64" in the DOWNLOAD_ARCH variable</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://cdn\.spring\.io/spring-tools/release/STS4/([0-9]+(\.[0-9]+)+)\.RELEASE/dist/([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/spring-tools-for-eclipse-([0-9]+(\.[0-9]+)+)\.RELEASE-([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-macosx\.cocoa\.%DOWNLOAD_ARCH%\.dmg)</string>
+                <string>(https://cdn.spring.io/spring-tools/release/dist/([0-9]+(.[0-9]+)+).RELEASE/([A-Za-z0-9]+(.[A-Za-z0-9]+)+)/spring-tools-for-eclipse-([0-9]+(.[0-9]+)+).RELEASE-([A-Za-z0-9]+(.[A-Za-z0-9]+)+)-macosx.cocoa.%DOWNLOAD_ARCH%.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
@@ -54,7 +54,7 @@ To download Intel use: "x86_64" in the DOWNLOAD_ARCH variable</string>
                 <key>input_path</key>
                 <string>%pathname%/SpringToolsForEclipse.app</string>
                 <key>requirement</key>
-                <string>identifier "org.springframework.boot.ide.branding.sts4" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4NBHJ75BA6"</string>
+                <string>identifier "org.springframework.boot.ide.branding.springtools" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4NBHJ75BA6"</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
