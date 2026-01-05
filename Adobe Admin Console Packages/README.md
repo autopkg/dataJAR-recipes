@@ -111,9 +111,9 @@ For information on how these recipes came about (and why), please click [here.](
 |:---:|:---:|:---:|:---:|
 |AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
 ||AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
-||AdobeAnimate2024|AdobeAnimate2023|
+||AdobeAnimate2024|AdobeAnimate2023||
 ||AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
-||AdobeBridge2026|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
+|AdobeBridge2026|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
 ||AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
 ||AdobeDimension|AdobeDimension|AdobeDimension|
 ||AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
