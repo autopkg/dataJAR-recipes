@@ -13,7 +13,7 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/Jamf Connect Sync</string>
         <key>NAME</key>
-        <string>Jamf Connect Sync</string>
+        <string>JamfConnectSync</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

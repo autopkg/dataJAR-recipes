@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Blue Jeans Scheduler for Mac</string>
+        <string>BlueJeansSchedulerforMac</string>
         <key>SPARKLE_FEED_URL</key>
         <string>https://swdl.bluejeans.com/bluejeansformac/appcast.xml</string>
     </dict>

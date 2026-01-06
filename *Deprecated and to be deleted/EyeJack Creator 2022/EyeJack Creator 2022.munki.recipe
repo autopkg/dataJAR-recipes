@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.EyeJack Creator 2022</string>
     <key>Input</key>
     <dict>
+        <key>NAME</key>
+        <string>EyeJackCreator2022</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>EyeJack Creator 2022</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

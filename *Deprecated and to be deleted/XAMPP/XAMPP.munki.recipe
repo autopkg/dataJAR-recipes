@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of XAMPP and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.XAMPP</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of XAMPP and imports into Munki</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.XAMPP</string>
-        <key>Input</key>
+        <key>NAME</key>
+        <string>XAMPP</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>XAMPP is a completely free, easy to install Apache distribution containing MariaDB, PHP, and Perl. The XAMPP open source package has been set up to be incredibly easy to install and to use.</string>
+            <key>developer</key>
+            <string>Apache Friends</string>
+            <key>display_name</key>
             <string>XAMPP</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>XAMPP is a completely free, easy to install Apache distribution containing MariaDB, PHP, and Perl. The XAMPP open source package has been set up to be incredibly easy to install and to use.</string>
-                <key>developer</key>
-                <string>Apache Friends</string>
-                <key>display_name</key>
-                <string>XAMPP</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true></true>
-                <key>unattended_uninstall</key>
-                <true></true>
-            </dict>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.XAMPP</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>warning_message</key>
-                    <string>This recipe has been deprecated. The XAMPP VM App is no longer availabe from the vendor. Please remove from your runs.</string>
-                </dict>
-                <key>Processor</key>
-                <string>DeprecationWarning</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>predicate</key>
-                    <string>TRUEPREDICATE</string>
-                </dict>
-                <key>Processor</key>
-                <string>StopProcessingIf</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-            </dict>
-        </array>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.XAMPP</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The XAMPP VM App is no longer availabe from the vendor. Please remove from your runs.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

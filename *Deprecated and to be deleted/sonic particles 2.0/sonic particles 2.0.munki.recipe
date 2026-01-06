@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.sonic particles 2.0</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>sonicparticles2.0</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -47,13 +47,13 @@
             <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Arguments</key>

@@ -10,10 +10,10 @@ This recipe has been deprecated. Please use the new recipes located here: https:
     <string>com.github.dataJAR-recipes.munki.Code42-arm64</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Code42</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

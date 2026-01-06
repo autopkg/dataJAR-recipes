@@ -14,10 +14,10 @@ More Details on the Admin installer: https://support.bluejeans.com/s/article/Blu
     <dict>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>BlueJeansAdminInstaller</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

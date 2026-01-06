@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Sawgrass Print Manager</string>
+        <string>SawgrassPrintManager</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

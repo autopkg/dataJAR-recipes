@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>RingCentral Classic</string>
+        <string>RingCentralClassic</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -25,13 +25,13 @@
             <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
                 <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
             <key>Arguments</key>

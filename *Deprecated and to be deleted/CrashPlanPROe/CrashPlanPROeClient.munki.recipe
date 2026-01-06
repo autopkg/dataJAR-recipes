@@ -10,10 +10,10 @@
     <dict>
         <key>DOWNLOAD_URL</key>
         <string>https://download.crashplan.com/installs/mac/install/CrashPlanPROe/</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>CrashPlanPROeClient</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SEARCH_PATTERN</key>
         <string>cp.download.CPPROE_CLIENT_VERSION = \'(?P&lt;version&gt;.*?)\';</string>
         <key>SEARCH_URL</key>

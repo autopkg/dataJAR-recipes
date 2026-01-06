@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of FabFilter Pro-Q 3 and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.FabFilter Pro-Q 3</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of FabFilter Pro-Q 3 and imports into Munki</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.FabFilter Pro-Q 3</string>
-        <key>Input</key>
+        <key>NAME</key>
+        <string>FabFilterPro-Q3</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>High-quality equalizer plug-in</string>
+            <key>developer</key>
+            <string>FabFilter</string>
+            <key>display_name</key>
             <string>FabFilter Pro-Q 3</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>High-quality equalizer plug-in</string>
-                <key>developer</key>
-                <string>FabFilter</string>
-                <key>display_name</key>
-                <string>FabFilter Pro-Q 3</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true></true>
-                <key>unattended_uninstall</key>
-                <true></true>
-            </dict>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.FabFilter Pro-Q 3</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>warning_message</key>
-                    <string>This recipe has been deprecated. Please use new ones located here: https://github.com/autopkg/dataJAR-recipes/tree/master/FabFilter%20Pro-Q%204</string>
-                </dict>
-                <key>Processor</key>
-                <string>DeprecationWarning</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>predicate</key>
-                    <string>TRUEPREDICATE</string>
-                </dict>
-                <key>Processor</key>
-                <string>StopProcessingIf</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-            </dict>
-        </array>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.FabFilter Pro-Q 3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Please use new ones located here: https://github.com/autopkg/dataJAR-recipes/tree/master/FabFilter%20Pro-Q%204</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.WaveLab LE 9.5</string>
     <key>Input</key>
     <dict>
+        <key>NAME</key>
+        <string>WaveLabLE9.5</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>WaveLabLE 9.5</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.BBC iPlayer Downloads</string>
     <key>Input</key>
     <dict>
+        <key>NAME</key>
+        <string>BBCiPlayerDownloads</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>NAME</key>
-        <string>BBC iPlayer Downloads</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

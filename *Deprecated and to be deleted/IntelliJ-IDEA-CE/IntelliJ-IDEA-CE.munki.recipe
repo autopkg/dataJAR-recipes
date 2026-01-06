@@ -11,7 +11,7 @@
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/intellij</string>
         <key>NAME</key>
-        <string>IntelliJ IDEA Community Edition</string>
+        <string>IntelliJIDEACommunityEdition</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

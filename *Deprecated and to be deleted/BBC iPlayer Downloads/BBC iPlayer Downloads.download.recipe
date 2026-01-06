@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>BBC iPlayer Downloads</string>
+        <string>BBCiPlayerDownloads</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

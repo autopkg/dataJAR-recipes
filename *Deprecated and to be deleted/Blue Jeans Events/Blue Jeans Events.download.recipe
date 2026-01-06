@@ -11,7 +11,7 @@
         <key>DOWNLOAD_URL</key>
         <string>https://swdl.bluejeans.com/events/release/beta/downloads/BlueJeans_Events.pkg</string>
         <key>NAME</key>
-        <string>Blue Jeans Events</string>
+        <string>BlueJeansEvents</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
