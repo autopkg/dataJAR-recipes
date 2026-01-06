@@ -17,10 +17,10 @@ https://github.com/autopkg/dataJAR-test-recipes./blob/master/Adobe%20Admin%20Con
         <string>Adobe</string>
         <key>MUNKI_DISPLAY_NAME</key>
         <string>%aacp_application_display_name%</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
         <key>NAME</key>
         <string>%aacp_name%</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
