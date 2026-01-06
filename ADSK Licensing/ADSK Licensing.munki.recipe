@@ -59,7 +59,7 @@ fi
 exit</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_install</key>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>

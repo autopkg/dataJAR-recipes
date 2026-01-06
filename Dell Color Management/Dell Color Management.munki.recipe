@@ -36,7 +36,7 @@ DELL Color Management software allows quick selection of the color spaces stored
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_install</key>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>

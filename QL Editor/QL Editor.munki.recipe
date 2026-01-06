@@ -30,7 +30,7 @@ In addition to full Selected Channel and Overview display operation, the QL Edit
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_install</key>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>
