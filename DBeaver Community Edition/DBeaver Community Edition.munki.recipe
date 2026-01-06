@@ -10,10 +10,10 @@
     <dict>
         <key>APP_FILENAME</key>
         <string>DBeaver</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>DBeaver Community Edition</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>os</key>
         <string>macos</string>
         <key>pkginfo</key>

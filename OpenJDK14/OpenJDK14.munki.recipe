@@ -10,8 +10,6 @@
     <dict>
         <key>MAJOR_VERSION</key>
         <string>14</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>%VENDOR%</string>
         <key>NAME</key>
         <string>OpenJDK 14</string>
         <key>SOFTWARETITLE</key>
@@ -20,6 +18,8 @@
         <string>JDK</string>
         <key>VENDOR</key>
         <string>OpenJDK</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>%VENDOR%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

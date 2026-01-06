@@ -10,10 +10,10 @@
     <string>com.github.dataJAR-recipes.munki.DotNet 7</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>DotNet7</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
         <string></string>
         <key>pkginfo</key>

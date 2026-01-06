@@ -13,10 +13,10 @@ To download the arm64 version use "arm" in the DOWNLOAD_ARCH variable.</string>
     <dict>
         <key>INSTALL_ARCH</key>
         <string></string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Transcribe!</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

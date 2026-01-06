@@ -21,10 +21,10 @@ Acceptable values for this are:
 "ja" for Japanese / 日本人s</string>
         <key>LANGUAGE</key>
         <string>en</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Ekahau Pro</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

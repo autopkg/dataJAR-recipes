@@ -25,10 +25,10 @@ Leave empty for 15 and 16</string>
         <string>YES</string>
         <key>MAJOR_VERSION</key>
         <string></string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>AmazonCoretto%MAJOR_VERSION%</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
         <string></string>
         <key>VERSION_DESTINATION_PATH</key>

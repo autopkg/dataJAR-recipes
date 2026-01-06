@@ -14,16 +14,16 @@
     <string>com.github.dataJAR-recipes.munki.Microsoft Word 2016 Standalone</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOADURL</key>
-        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         <key>MINIMUM_OS_VERSION</key>
         <string>10.10.0</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Microsoft Word 2016 Standalone</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>PRODUCTID</key>
         <string>871748</string>
+        <key>DOWNLOADURL</key>
+        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

@@ -10,10 +10,10 @@
     <dict>
         <key>FORCE_MUNKIIMPORT</key>
         <string>YES!</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>CrashPlan</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

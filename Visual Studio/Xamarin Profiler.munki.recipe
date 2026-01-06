@@ -10,10 +10,10 @@
     <string>com.github.dataJAR-recipes.munki.Xamarin Profiler</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>XamarinProfiler</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -63,7 +63,7 @@ The Xamarin Profiler is a graphical interface for the Mono log profiler, and sup
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked/com.xamarin.profiler.pkg/Payload</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>

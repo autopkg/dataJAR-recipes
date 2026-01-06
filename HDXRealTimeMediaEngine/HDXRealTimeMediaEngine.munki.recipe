@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.HDXRealTimeMediaEngine</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>HDXRealTimeMediaEngine</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -31,9 +31,7 @@
             <key>unattended_uninstall</key>
             <true/>
             <key>uninstall_method</key>
-
             <string>uninstall_script</string>
-
             <key>uninstall_script</key>
             <string>#!/bin/sh
 
@@ -82,7 +80,7 @@ See https://www.citrix.com/downloads/citrix-receiver/additional-client-software/
                 <key>flat_pkg_path</key>
                 <string>%pathname%/Install HDXRealTimeMediaEngine.pkg</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
@@ -95,7 +93,7 @@ See https://www.citrix.com/downloads/citrix-receiver/additional-client-software/
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/payload/HDXRTME-m32g.pkg/Payload</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>

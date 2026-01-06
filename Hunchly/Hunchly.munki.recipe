@@ -15,10 +15,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <dict>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Hunchly</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
         <string></string>
         <key>pkginfo</key>

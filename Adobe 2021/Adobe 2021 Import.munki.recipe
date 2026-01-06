@@ -20,10 +20,10 @@
         <string>Adobe</string>
         <key>MUNKI_NAME</key>
         <string>SomeAdobe2021Title</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
         <key>NAME</key>
         <string>SomeAdobe2021Title - must match package name</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>%MUNKI_CATEGORY%/%MUNKI_DEVELOPER%/%NAME%</string>
         <key>force_munkiimport</key>
         <true/>
         <key>pkginfo</key>

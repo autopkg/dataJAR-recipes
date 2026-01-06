@@ -11,12 +11,12 @@ For arm64 use "2279415" in PRODUCTID variable.</string>
     <string>com.github.dataJAR-recipes.download.MicrosoftAzureStorageExplorer</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOADURL</key>
-        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         <key>NAME</key>
         <string>Microsoft Azure Storage Explorer</string>
         <key>PRODUCTID</key>
         <string>2279415</string>
+        <key>DOWNLOADURL</key>
+        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

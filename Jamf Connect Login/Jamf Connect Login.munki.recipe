@@ -14,10 +14,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <string>YES</string>
         <key>MUNKI_CATEGORY</key>
         <string>Utilities</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>JamfConnectLogin</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

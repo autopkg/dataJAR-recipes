@@ -15,10 +15,10 @@ i.e.: `-k PRERELEASE=yes</string>
     <string>com.github.dataJAR-recipes.munki.JabRef</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>JabRef</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
         <string>x86_64</string>
         <key>pkginfo</key>

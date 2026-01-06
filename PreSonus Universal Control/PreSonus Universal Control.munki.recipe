@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of PreSonus Universal Control and imports into Munki</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.PreSonus Universal Control</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest version of PreSonus Universal Control and imports into Munki</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.PreSonus Universal Control</string>
-        <key>Input</key>
+        <key>NAME</key>
+        <string>PreSonusUniversalControl</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/%NAME%</string>
-            <key>NAME</key>
-            <string>PreSonusUniversalControl</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>description</key>
-                <string>Universal Control provides the foundation upon which all FireStudio interfaces and Studio Live Mixers operate when connected to your Mac or PC.</string>
-                <key>developer</key>
-                <string>PreSonus</string>
-                <key>display_name</key>
-                <string>PreSonus Universal Control</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true></true>
-                <key>unattended_uninstall</key>
-                <true></true>
-            </dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Universal Control provides the foundation upon which all FireStudio interfaces and Studio Live Mixers operate when connected to your Mac or PC.</string>
+            <key>developer</key>
+            <string>PreSonus</string>
+            <key>display_name</key>
+            <string>PreSonus Universal Control</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
         </dict>
-        <key>MinimumVersion</key>
-        <string>0.5.0</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.PreSonus Universal Control</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%RECIPE_CACHE_DIR%/PreSonus Universal Control.pkg</string>
-                    <key>source_pkg</key>
-                    <string>%pathname%/PreSonus Universal Control.pkg</string>
-                </dict>
-                <key>Processor</key>
-                <string>PkgCopier</string>
-            </dict>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-            </dict>
-        </array>
     </dict>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.PreSonus Universal Control</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/PreSonus Universal Control.pkg</string>
+                <key>source_pkg</key>
+                <string>%pathname%/PreSonus Universal Control.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

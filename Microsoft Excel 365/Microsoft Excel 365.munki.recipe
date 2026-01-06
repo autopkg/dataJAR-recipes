@@ -12,16 +12,16 @@
     <string>com.github.dataJAR-recipes.munki.Microsoft Excel 365</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOADURL</key>
-        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         <key>MINIMUM_OS_VERSION</key>
         <string>11.0</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Microsoft Excel 365</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>PRODUCTID</key>
         <string>525135</string>
+        <key>DOWNLOADURL</key>
+        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>

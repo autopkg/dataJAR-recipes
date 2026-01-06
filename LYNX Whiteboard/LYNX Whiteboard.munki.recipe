@@ -12,10 +12,10 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
     <dict>
         <key>DERIVE_MIN_OS</key>
         <string>YES</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>LYNXWhiteboard</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -47,7 +47,7 @@ Create engaging content for collaboration.</string>
     <key>Process</key>
     <array>
         <dict>
-        <key>Arguments</key>
+            <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>

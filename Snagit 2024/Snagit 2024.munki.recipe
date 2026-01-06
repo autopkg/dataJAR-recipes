@@ -10,10 +10,10 @@ Add your Snagit 2024 licence key to the SNAGIT_2024_LICENCE_KEY variable. </stri
     <string>com.github.dataJAR-recipes.munki.Snagit 2024</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Snagit2024</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SNAGIT_2024_LICENCE_KEY</key>
         <string></string>
         <key>pkginfo</key>

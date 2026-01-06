@@ -23,10 +23,10 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
         <string>Science</string>
         <key>MUNKI_DEVELOPER</key>
         <string>Continuum</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%/</string>
         <key>NAME</key>
         <string>Anaconda3</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%/</string>
         <key>PYTHON_MAJOR_VERSION</key>
         <string>3</string>
         <key>pkginfo</key>

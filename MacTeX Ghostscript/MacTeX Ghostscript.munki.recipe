@@ -10,10 +10,10 @@
     <dict>
         <key>FORCE_MUNKIIMPORT</key>
         <string></string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>MacTeXGhostscript</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

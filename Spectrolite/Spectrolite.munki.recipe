@@ -11,10 +11,10 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <string>com.github.dataJAR-recipes.munki.Spectrolite</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Spectrolite</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
         <string>arm64</string>
         <key>pkginfo</key>

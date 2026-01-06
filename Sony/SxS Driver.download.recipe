@@ -10,12 +10,12 @@
     <dict>
         <key>DEVELOPER</key>
         <string>Sony</string>
-        <key>DOWNLOADURL</key>
-        <string>https://www.sonycreativesoftware.com/download/link?id=%PRODUCTID%</string>
         <key>NAME</key>
         <string>SxSDriver</string>
         <key>PRODUCTID</key>
         <string>11297.0</string>
+        <key>DOWNLOADURL</key>
+        <string>https://www.sonycreativesoftware.com/download/link?id=%PRODUCTID%</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>

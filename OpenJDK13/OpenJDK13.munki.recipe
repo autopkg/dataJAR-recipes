@@ -8,8 +8,6 @@
     <string>com.github.dataJAR-recipes.munki.OpenJDK13</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>%VENDOR%</string>
         <key>NAME</key>
         <string>OpenJDK 13</string>
         <key>SOFTWARETITLE</key>
@@ -18,6 +16,8 @@
         <string>JDK</string>
         <key>VENDOR</key>
         <string>OpenJDK</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>%VENDOR%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
