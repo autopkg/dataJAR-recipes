@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Comment</key>
+    <string>Recipe Notes:
+
+We have to manually create the installs array due it being an App Installer. Luckily the version number of the App installer matches with what ends up being installed on disk.
+
+Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
+
+Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The  installcheck_script checks for a logged in user and bails if there isnt.</string>
     <key>Description</key>
     <string>Downloads the latest version of LogiOptionsPlus and imports it into Munki.</string>
     <key>Identifier</key>
@@ -199,13 +207,5 @@ fi</string>
             <string>PathDeleter</string>
         </dict>
     </array>
-    <key>comments</key>
-    <string>Recipe Notes:
-
-We have to manually create the installs array due it being an App Installer. Luckily the version number of the App installer matches with what ends up being installed on disk.
-
-Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
-
-Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The  installcheck_script checks for a logged in user and bails if there isnt.</string>
 </dict>
 </plist>
