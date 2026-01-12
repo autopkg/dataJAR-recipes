@@ -29,7 +29,7 @@ Version 8: 8
                 <key>re_pattern</key>
                 <string>{\"name\":\"Omnissa Horizon Client for macOS\",\"code\":\"(?P&lt;downloadGroup&gt;(?P&lt;clientGroup&gt;CART.*?)_MAC_.*?)\",\"releaseDate\":\".*\",\"productId\":\".*\",\"releasePackageId\":\".*\",\"isFirmwareImage\":.*,\"orderId\":.*}</string>
                 <key>url</key>
-                <string>https://customerconnect.omnissa.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=desktop_end_user_computing&amp;product=omnissa_horizon_clients&amp;version=%HORIZON_MAJOR_VERSION%&amp;dlgType=PRODUCT_BINARY</string>
+                <string>https://customerconnect.omnissa.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&amp;category=virtual_desktop_and_apps&amp;product=omnissa_horizon_clients&amp;version=%HORIZON_MAJOR_VERSION%&amp;dlgType=PRODUCT_BINARY</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
