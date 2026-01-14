@@ -35,7 +35,7 @@ Be the closest you could ever be to reality</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Soundvision</string>
     <key>Process</key>
@@ -44,23 +44,12 @@ Be the closest you could ever be to reality</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/Soundvision_%version%_%month%_%year%_MAC/LA_Soundvision_Installer_%version%.dmg</string>
+                <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>path_list</key>
-                <array>
-                    <string>%RECIPE_CACHE_DIR%/unzip</string>
-                </array>
-            </dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

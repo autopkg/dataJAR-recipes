@@ -12,14 +12,14 @@
         <string>Soundvision</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href="(?P&lt;DOWNLOAD_URL&gt;https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/(?P&lt;version&gt;[0-9]+(.[0-9]+)+)/Soundvision_([0-9]+(.[0-9]+)+)_(?P&lt;month&gt;[A-Za-z]+)_(?P&lt;year&gt;[0-9]+)_MAC.zip)"</string>
+                <string>href="(?P&lt;DOWNLOAD_URL&gt;https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/([0-9]+(.[0-9]+)+)/LA_Soundvision_Installer_([0-9]+(.[0-9]+)+).dmg)"</string>
                 <key>url</key>
                 <string>https://www.l-acoustics.com/products/soundvision/#</string>
             </dict>
@@ -30,7 +30,7 @@
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.zip</string>
+                <string>%NAME%.dmg</string>
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
@@ -49,21 +49,8 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/Soundvision_%version%_%month%_%year%_MAC/LA_Soundvision_Installer_%version%.dmg/Soundvision.app</string>
+                <string>%pathname%/Soundvision.app</string>
                 <key>requirement</key>
                 <string>anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4WPJ48N2K4"</string>
             </dict>
