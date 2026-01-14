@@ -42,7 +42,7 @@ Save time, stay organized, and write faster with EndNote 2025. Trust your ideas 
             <key>name</key>
             <string>%NAME%</string>
             <key>postinstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 
 # https://support.clarivate.com/Endnote/s/article/EndNote-X8-Mac-and-EndNote-online-Mac-CWYW-tools-in-Microsoft-Word-2016-Troubleshooting-guide?language=en_US
 
@@ -73,7 +73,7 @@ else
     exit 1
 fi</string>
             <key>postuninstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 DIR="EndNote CWYW Word 16.bundle"
 PATH_DEST="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/$DIR"
 
@@ -84,7 +84,7 @@ then
 fi
             </string>
             <key>preinstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 
 # Check if EndNote 2025 folder exists and delete it
 if [ -d "/Applications/EndNote 2025" ]; then

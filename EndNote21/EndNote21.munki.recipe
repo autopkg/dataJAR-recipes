@@ -40,7 +40,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>name</key>
             <string>%NAME%</string>
             <key>postinstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 DIR="EndNote CWYW Word 16.bundle"
 PATH_SRC="/Applications/EndNote 21/Cite While You Write/$DIR"
 PATH_DEST="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/"
@@ -55,7 +55,7 @@ else
 fi
             </string>
             <key>postuninstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 DIR="EndNote CWYW Word 16.bundle"
 PATH_DEST="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/$DIR"
 
@@ -66,7 +66,7 @@ then
 fi
             </string>
             <key>preinstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 endnote_bundle_2008="/Applications/Microsoft Office 2008/Office/Startup/Word/EndNote CWYW Word 2008.bundle"
 endnote_bundle_2011="/Applications/Microsoft Office 2011/Office/Startup/Word/EndNote CWYW Word 2011.bundle"
 endnote_bundle_2016="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/EndNote CWYW Word 2016.bundle"

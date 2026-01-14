@@ -32,7 +32,7 @@
             <key>name</key>
             <string>%NAME%</string>
             <key>postinstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 
 echo "fixing i1profiler permissions"
 

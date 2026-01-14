@@ -62,7 +62,7 @@ Also see: https://ngrok.com/blog-post/tcp-endpoints-require-verification for inf
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/bin/zsh
+                    <string>#!/bin/zsh --no-rcs
 
 # Copyright 2025, Jamf Software, LLC.
 

@@ -56,7 +56,7 @@ chown -R root:wheel /Library/Audio/Plug-Ins/HAL/KrispAudio.driver</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 # Built from the uninstall scripts in the installer package
 
 # Setup logging

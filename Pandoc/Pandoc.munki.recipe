@@ -88,7 +88,7 @@ Pandoc is a Haskell library for converting from one markup format to another, an
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/bin/zsh
+                    <string>#!/bin/zsh --no-rcs
 
 # Copyright 2025, Jamf Software, LLC.
 

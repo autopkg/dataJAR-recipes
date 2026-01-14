@@ -63,7 +63,7 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/bin/zsh
+                    <string>#!/bin/zsh --no-rcs
 
 # Copyright 2025, Jamf Software, LLC.
 

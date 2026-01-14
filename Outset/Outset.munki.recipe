@@ -37,7 +37,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 
 # Script amended from the pkg preinstall with reference to https://github.com/macadmins/outset/wiki/FAQ#removing-outset
 #

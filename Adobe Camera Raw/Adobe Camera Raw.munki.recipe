@@ -182,7 +182,7 @@ Applications that support Adobe Camera Raw include Photoshop, Photoshop Elements
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/bin/zsh
+                    <string>#!/bin/zsh --no-rcs
 # Copyright 2025, Jamf Software, LLC.
 
 # DESCRIPTION

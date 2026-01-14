@@ -40,7 +40,7 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/zsh
+            <string>#!/bin/zsh --no-rcs
 
 # Remove the Application
 rm -rf /Applications/SoapUI*.app
