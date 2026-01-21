@@ -19,9 +19,9 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(http://www.alfanet.it/squared5/MPEG_Streamclip_+[0-9a-z\.]+\.[0-9a-z\.]+\.[0-9a-z\.]+\.dmg)</string>
+                <string>http://www.alfanet.it/squared5/MPEG_Streamclip_([0-9]+(.[0-9]+)+).dmg</string>
                 <key>result_output_var_name</key>
-                <string>url</string>
+                <string>VERSION</string>
                 <key>url</key>
                 <string>http://www.squared5.com/svideo/mpeg-streamclip-mac.html</string>
             </dict>
@@ -33,6 +33,8 @@
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://www.alfanet.it/squared5/MPEG_Streamclip_%VERSION%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
