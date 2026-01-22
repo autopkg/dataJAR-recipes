@@ -12,7 +12,7 @@ To download Intel use: "x86_64" in the ARCH variable</string>
     <key>Input</key>
     <dict>
         <key>ARCH</key>
-        <string>arm64</string>
+        <string>x86_64</string>
         <key>NAME</key>
         <string>FreeCAD</string>
     </dict>
