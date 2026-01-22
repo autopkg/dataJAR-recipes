@@ -4,42 +4,42 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of FreeCAD.
-Set PRERELEASE to a non-empty string to download prereleases, either
-via Input in an override or via the -k option,
-i.e.: `-k PRERELEASE=yes`</string>
+
+To download Apple Silicon use: "arm64" in the ARCH variable
+To download Intel use: "x86_64" in the ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.FreeCAD</string>
     <key>Input</key>
     <dict>
         <key>ARCH</key>
-        <string>x86_64</string>
+        <string>arm64</string>
         <key>NAME</key>
         <string>FreeCAD</string>
-        <key>PRERELEASE</key>
-        <string></string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>asset_regex</key>
-                <string>FreeCAD_([0-9]+(\.[0-9]+)+)-conda-macOS-%ARCH%-py[0-9]+\.dmg$</string>
-                <key>github_repo</key>
-                <string>FreeCAD/FreeCAD</string>
-                <key>include_prereleases</key>
-                <string>%PRERELEASE%</string>
+                <key>re_pattern</key>
+                <string>href="(https://github.com/FreeCAD/FreeCAD/releases/download/([0-9]+(.[0-9]+)+)/FreeCAD_([0-9]+(.[0-9]+)+)-conda-macOS-%ARCH%-py[0-9]+.dmg)"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://www.freecad.org/downloads.php?lang=en</string>
             </dict>
             <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%.dmg</string>
+                <string>%NAME%-%ARCH%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
