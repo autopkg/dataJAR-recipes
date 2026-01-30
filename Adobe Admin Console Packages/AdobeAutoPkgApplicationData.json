@@ -29,6 +29,12 @@
             "aacp_application_sap_code": "AEFT",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeAfterEffects2026": {
+            "aacp_application_full_path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app",
+            "aacp_application_display_name": "Adobe After Effects 2026",
+            "aacp_application_sap_code": "AEFT",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeAnimate2023": {
             "aacp_application_full_path": "/Applications/Adobe Animate 2023/Adobe Animate 2023.app",
             "aacp_application_display_name": "Adobe Animate 2023",
@@ -56,6 +62,12 @@
     "AdobeAudition2025": {
             "aacp_application_full_path": "/Applications/Adobe Audition 2025/Adobe Audition 2025.app",
             "aacp_application_display_name": "Adobe Audition 2025",
+            "aacp_application_sap_code": "AUDT",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
+    "AdobeAudition2026": {
+            "aacp_application_full_path": "/Applications/Adobe Audition 2026/Adobe Audition 2026.app",
+            "aacp_application_display_name": "Adobe Audition 2026",
             "aacp_application_sap_code": "AUDT",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
@@ -92,6 +104,12 @@
     "AdobeCharacterAnimator2024": {
             "aacp_application_full_path": "/Applications/Adobe Character Animator 2024/Adobe Character Animator 2024.app",
             "aacp_application_display_name":  "Adobe Character Animator 2024",
+            "aacp_application_sap_code": "CHAR",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeCharacterAnimator2026": {
+            "aacp_application_full_path": "/Applications/Adobe Character Animator 2026/Adobe Character Animator 2026.app",
+            "aacp_application_display_name":  "Adobe Character Animator 2026",
             "aacp_application_sap_code": "CHAR",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
@@ -203,6 +221,12 @@
             "aacp_application_sap_code": "AME",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeMediaEncoder2026": {
+            "aacp_application_full_path": "/Applications/Adobe Media Encoder 2026/Adobe Media Encoder 2026.app",
+            "aacp_application_display_name": "Adobe Media Encoder 2026",
+            "aacp_application_sap_code": "AME",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeMediaEncoder2024": {
             "aacp_application_full_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
             "aacp_application_display_name": "Adobe Media Encoder 2024",
@@ -237,6 +261,12 @@
             "aacp_application_full_path": "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026.app",
             "aacp_application_display_name": "Adobe Photoshop 2026",
             "aacp_application_sap_code": "PHSP",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobePremierePro2026": {
+            "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2026/Adobe Premiere Pro 2026.app",
+            "aacp_application_display_name": "Adobe Premiere Pro 2026",
+            "aacp_application_sap_code": "PPRO",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
     "AdobePremierePro2023": {

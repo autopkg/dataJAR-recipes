@@ -110,11 +110,11 @@ For information on how these recipes came about (and why), please click [here.](
 |Adobe CC 2026|Adobe CC 2025|Adobe CC 2024|Adobe CC 2023|
 |:---:|:---:|:---:|:---:|
 |AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
-||AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
+|AdobeAfterEffects2026|AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
 ||AdobeAnimate2024|AdobeAnimate2023||
-||AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
+|AdobeAudition2026|AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
 |AdobeBridge2026|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
-||AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
+|AdobeCharacterAnimator2026|AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
 ||AdobeDimension|AdobeDimension|AdobeDimension|
 ||AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
 |AdobeIllustrator2026|AdobeIllustrator2025|AdobeIllustrator2024|AdobeIllustrator2023|
@@ -122,9 +122,9 @@ For information on how these recipes came about (and why), please click [here.](
 |AdobeInDesign2026|AdobeInDesign2025|AdobeInDesign2024|AdobeInDesign2023|
 |AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|
 |AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|
-||AdobeMediaEncoder2025|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
+|AdobeMediaEncoder2026|AdobeMediaEncoder2025|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
 |AdobePhotoshop2026|AdobePhotoshop2025|AdobePhotoshop2024|AdobePhotoshop2023|
-||AdobePremierePro2025|AdobePremierePro2024|AdobePremierePro2023|
+|AdobePremierePro2026|AdobePremierePro2025|AdobePremierePro2024|AdobePremierePro2023|
 |AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|
 |AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
 |AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
