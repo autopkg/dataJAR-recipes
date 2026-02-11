@@ -20,6 +20,17 @@
             <dict>
                 <key>re_pattern</key>
                 <string>href=\"(/files/download/software/[A-Za-z0-9]+/[A-Za-z0-9]+/ql_edt[0-9]+_mac\.zip)\"</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Accept</key>
+                    <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>navigate</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>none</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                </dict>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
@@ -33,6 +44,21 @@
             <dict>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Accept</key>
+                    <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
+                    <key>Referer</key>
+                    <string>https://usa.yamaha.com/support/updates/ql_edt_mac.html</string>
+                    <key>Sec-Fetch-Dest</key>
+                    <string>document</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>navigate</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>same-origin</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15</string>
+                </dict>
                 <key>url</key>
                 <string>https://usa.yamaha.com%DOWNLOAD_URL%</string>
             </dict>
