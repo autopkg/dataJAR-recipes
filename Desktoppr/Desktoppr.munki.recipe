@@ -33,7 +33,7 @@
     <key>MinimumVersion</key>
     <string>0.1.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.moofit-recipes.pkg.Desktoppr</string>
+    <string>com.github.moofit-recipes.download.Desktoppr</string>
     <key>Process</key>
     <array>
         <dict>
