@@ -31,7 +31,7 @@ To download the Community title use: "community" in the DOWNLOAD_TITLE variable<
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Professional / Community Edition ([0-9]+(\.[0-9]+)+)</string>
+                <string>Professional / Community ([0-9]+(\.[0-9]+)+)</string>
                 <key>result_output_var_name</key>
                 <string>VERSION</string>
                 <key>url</key>
