@@ -46,7 +46,7 @@ Instantly capture and optimize workflows so your team works smarter and faster.<
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.download.Scribe Desktop</string>
+    <string>com.github.dataJAR-recipes.download.Scribe Desktop</string>
     <key>Process</key>
     <array>
         <dict>

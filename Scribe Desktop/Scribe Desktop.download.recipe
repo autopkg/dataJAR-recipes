@@ -8,7 +8,7 @@
 To download Apple Silicon leave DOWNLOAD_ARCH empty
 To download Intel use: "-intel" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.download.Scribe Desktop</string>
+    <string>com.github.dataJAR-recipes.download.Scribe Desktop</string>
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_ARCH</key>

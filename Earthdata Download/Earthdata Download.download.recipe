@@ -8,7 +8,7 @@
 To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
 To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.download.Earthdata Download</string>
+    <string>com.github.dataJAR-recipes.download.Earthdata Download</string>
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_ARCH</key>
