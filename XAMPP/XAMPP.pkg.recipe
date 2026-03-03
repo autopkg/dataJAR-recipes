@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of XAMPP and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-test-recipes.pkg.XAMPP</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>XAMPP</string>
+        <key>PKG_ID</key>
+        <string>com.XAMPP.XAMPP</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-test-recipes.download.XAMPP</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/*.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%pathname%/%found_basename%/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>root/private/tmp</key>
+                    <string>0777</string>
+                    <key>scripts</key>
+                    <string>0755</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%/root/private/tmp/%NAME%-installer.app</string>
+                <key>source_path</key>
+                <string>%pathname%/%found_basename%</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#!/bin/zsh --no-rcs
+
+# Runs the XAMPP InstallBuilder-based installer from /tmp
+
+# Define installer paths
+app_name="XAMPP-installer.app"
+installer_bin="/tmp/${app_name}/Contents/MacOS/installbuilder.sh"
+
+# Run the installer in unattended mode
+if [ -x "$installer_bin" ]; then
+    "$installer_bin" --mode unattended --unattendedmodeui none
+    result=$?
+else
+    echo "Installer not found or not executable: $installer_bin" &gt;&amp;2
+    rm -rf "/tmp/${app_name}"
+    exit 1
+fi
+
+# Remove the installer .app from /tmp
+rm -rf "/tmp/${app_name}"
+
+# If installer failed, exit now
+if [ $result -ne 0 ]; then
+    exit $result
+fi</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/scripts/postinstall</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>id</key>
+                    <string>%PKG_ID%</string>
+                    <key>pkgname</key>
+                    <string>XAMPP-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/root</string>
+                    <key>scripts</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+    </array>
+</dict>
+</plist>

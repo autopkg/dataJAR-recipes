@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of XAMPP and imports into Munki</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.XAMPP</string>
+    <string>com.github.dataJAR-test-recipes.munki.XAMPP</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -30,37 +30,35 @@
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+
+            <string>uninstall_script</string>
+
+            <key>uninstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Remove XAMPP application
+if [ -d "/Applications/XAMPP" ]; then
+    rm -rf "/Applications/XAMPP"
+fi
+
+# Forget the package receipt
+pkgutil --forget "%PKG_ID%" 2&gt;/dev/null
+
+exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.XAMPP</string>
+    <string>com.github.dataJAR-test-recipes.pkg.XAMPP</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. The XAMPP VM App is no longer availabe from the vendor. Please remove from your runs.</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%RECIPE_CACHE_DIR%/XAMPP-%version%.pkg</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
