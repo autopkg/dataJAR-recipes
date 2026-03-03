@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of XAMPP and creates a package.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.pkg.XAMPP</string>
+    <string>com.github.dataJAR-recipes.pkg.XAMPP</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -16,7 +16,7 @@
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.download.XAMPP</string>
+    <string>com.github.dataJAR-recipes.download.XAMPP</string>
     <key>Process</key>
     <array>
         <dict>

@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of XAMPP and imports into Munki</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-test-recipes.munki.XAMPP</string>
+    <string>com.github.dataJAR-recipes.munki.XAMPP</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -51,7 +51,7 @@ exit 0</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-test-recipes.pkg.XAMPP</string>
+    <string>com.github.dataJAR-recipes.pkg.XAMPP</string>
     <key>Process</key>
     <array>
         <dict>
