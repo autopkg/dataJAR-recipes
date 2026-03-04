@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ShowReady and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.ShowReady</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ShowReady</string>
+        <key>PKG_ID</key>
+        <string>com.pkg.ShowReady</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.ShowReady</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>root/Applications</key>
+                    <string>0777</string>
+                    <key>scripts</key>
+                    <string>0755</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%/root/Applications/Show|Ready.app</string>
+                <key>source_path</key>
+                <string>%pathname%/Show|Ready.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>id</key>
+                    <string>%PKG_ID%</string>
+                    <key>pkgname</key>
+                    <string>ShowReady-%VERSION%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/root</string>
+                    <key>version</key>
+                    <string>%VERSION%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+    </array>
+</dict>
+</plist>
