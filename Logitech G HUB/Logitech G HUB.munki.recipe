@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Logitech G HUB and imports it into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Logitech G HUB</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>LogitechGHUB</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>ASSIGN. TUNE. IMMERSE. PLAY.
+
+Where the community connects with endless possibilities.</string>
+            <key>developer</key>
+            <string>Logitech Inc.</string>
+            <key>display_name</key>
+            <string>Logitech G HUB</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.grahampugh.recipes.pkg.LogitechGHUB</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
