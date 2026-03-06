@@ -32,6 +32,43 @@ Where the community connects with endless possibilities.</string>
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Uninstall Logitech G HUB
+# Vendors documentation: https://support.logi.com/hc/en-us/articles/360023192454-G-HUB-Install-Uninstall-Update-Troubleshooting
+
+# Remove application
+if [ -e "/Applications/lghub.app" ]; then
+    /bin/rm -rf "/Applications/lghub.app"
+fi
+
+# Remove shared data
+if [ -e "/Users/Shared/LGHUB" ]; then
+    /bin/rm -rf "/Users/Shared/LGHUB"
+fi
+
+# Remove application support
+if [ -e "/Library/Application Support/LGHUB" ]; then
+    /bin/rm -rf "/Library/Application Support/LGHUB"
+fi
+
+# Remove launch agents
+if [ -e "/Library/LaunchAgents/com.logi.ghub.plist" ]; then
+    /bin/rm -f "/Library/LaunchAgents/com.logi.ghub.plist"
+fi
+
+# Remove launch daemons
+if [ -e "/Library/LaunchDaemons/com.logi.ghub.updater.plist" ]; then
+    /bin/rm -f "/Library/LaunchDaemons/com.logi.ghub.updater.plist"
+fi
+
+# Forget package receipt
+/usr/sbin/pkgutil --forget "com.logi.ghub"
+
+exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
