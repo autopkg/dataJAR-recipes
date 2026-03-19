@@ -155,7 +155,7 @@ fi</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>os-version min="[^"]*"</string>
+                <string>os-version min="([^"]+)"</string>
                 <key>result_output_var_name</key>
                 <string>min_os_ver</string>
                 <key>url</key>
