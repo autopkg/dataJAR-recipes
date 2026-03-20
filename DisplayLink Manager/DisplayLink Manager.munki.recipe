@@ -265,7 +265,7 @@ exit</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.smithjw.download.DisplayLink_Manager1</string>
+    <string>com.github.smithjw.download.DisplayLink_Manager</string>
     <key>Process</key>
     <array>
         <dict>
