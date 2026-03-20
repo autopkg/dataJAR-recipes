@@ -265,27 +265,16 @@ exit</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.smithjw.pkg.DisplayLink_Manager</string>
+    <string>com.github.smithjw.download.DisplayLink_Manager1</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack</string>
-                <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/DisplayLink_Manager-%version%.pkg</string>
-            </dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/ComponentPkgPayloadUnpacker</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/expanded_pkg/Scripts/%SOFTWARE_TITLE%-%version%.pkg</string>
+                <string>%pathname%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -356,7 +345,7 @@ exit</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/DisplayLink_Manager-%version%.pkg</string>
+                <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
@@ -369,7 +358,6 @@ exit</string>
                 <key>path_list</key>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                    <string>%RECIPE_CACHE_DIR%/unpack</string>
                     <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 </array>
             </dict>
