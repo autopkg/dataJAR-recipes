@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_URL</key>
-        <string>http://pencil.evolus.vn</string>
+        <string>https://pencil.evolus.vn</string>
         <key>NAME</key>
         <string>Pencil</string>
     </dict>
