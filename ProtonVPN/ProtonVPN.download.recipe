@@ -23,7 +23,7 @@
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://protonvpn.com/download/macos-update4.xml</string>
+                <string>https://protonvpn.com/download/macos-update5.xml</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
