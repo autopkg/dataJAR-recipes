@@ -14,18 +14,10 @@
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
-            <key>blocking_applications_quit_script</key>
-            <string>#!/bin/bash
-
-while read -r user; do
-    uid=$( id -u "$user" )
-    launchctl bootout "gui/$uid/com.displaylink.CrashRestartHelper" 2&gt;/dev/null
-    launchctl bootout "gui/$uid/com.displaylink.XpcService" 2&gt;/dev/null
-done &lt; &lt;( ps auxww | grep '[D]isplayLink' | cut -d' ' -f1 )
-pkill -f "DisplayLink Manager"
-
-exit 0
-</string>
+            <key>blocking_applications</key>
+            <array>
+                <string>/Applications/DisplayLink Manager.app/Contents/MacOS/DisplayLinkUserAgent</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
