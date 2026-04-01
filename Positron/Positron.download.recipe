@@ -3,11 +3,16 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Positron.</string>
+    <string>Downloads the latest version of Positron.
+
+To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Positron</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>arm64</string>
         <key>NAME</key>
         <string>Positron</string>
     </dict>
@@ -19,7 +24,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(https://cdn\.posit\.co/positron/releases/mac/universal/Positron-([0-9]+(\.[0-9]+)+)-[0-9]+-universal\.dmg)\"</string>
+                <string>href=\"(https://cdn\.posit\.co/positron/releases/mac/%DOWNLOAD_ARCH%/Positron-([0-9]+(\.[0-9]+)+)-[0-9]+-%DOWNLOAD_ARCH%\.dmg)\"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
