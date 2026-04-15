@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>TestApp</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>algorithm</key>
+                <string>SHA256</string>
+                <key>checksum</key>
+                <string>abc123</string>
+                <key>checksum_pathname</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>io.github.hjuutilainen.SharedProcessors/ChecksumVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source_script</key>
+                <string>#!/bin/zsh --no-rcs
+echo "Testing zsh script"
+exit 0</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.grahampugh.recipes.postprocessors/LastRecipeRunResult</string>
+        </dict>
+    </array>
+</dict>
+</plist>
