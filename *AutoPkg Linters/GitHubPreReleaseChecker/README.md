@@ -46,14 +46,14 @@ The script modifies recipes to:
 
 - **AutoPkg**: Must be installed with its bundled Python environment at `/usr/local/autopkg/python`
 - **Python 3**: Included with AutoPkg installation
-- **Required Python modules**: `plistlib`, `yaml` (standard library)
+- **Required Python modules**: `plistlib` (standard library), `PyYAML` (bundled with AutoPkg)
 
 ## Installation
 
-1. Download `GItHubPreReleaseChecker.py` to a convenient location
+1. Download `GitHubPreReleaseChecker.py` to a convenient location
 2. Make the script executable (optional):
    ```bash
-   chmod +x GItHubPreReleaseChecker.py
+   chmod +x GitHubPreReleaseChecker.py
    ```
 
 ## Usage
@@ -63,7 +63,7 @@ The script modifies recipes to:
 Execute the script using AutoPkg's Python installation:
 
 ```bash
-/usr/local/autopkg/python GItHubPreReleaseChecker.py
+/usr/local/autopkg/python GitHubPreReleaseChecker.py
 ```
 
 ### Interactive Prompt
@@ -158,7 +158,7 @@ The script provides:
 
 **Solution**: Use the full path to AutoPkg's Python:
 ```bash
-/usr/local/autopkg/python GItHubPreReleaseChecker.py
+/usr/local/autopkg/python GitHubPreReleaseChecker.py
 ```
 
 ### Changes Not Appearing in Git

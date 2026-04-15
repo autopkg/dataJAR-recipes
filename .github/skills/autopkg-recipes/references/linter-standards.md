@@ -89,7 +89,7 @@ Setup:
 - Child paths are filtered (if parent path included, child is redundant)
 - Only applies to munki recipes
 
-### GitHubReleasesInfoProvider (GItHubPreReleaseChecker)
+### GitHubReleasesInfoProvider (GitHubPreReleaseChecker)
 - Must include `include_prereleases` key with `%PRERELEASE%` value
 - PRERELEASE input variable must exist (empty string by default)
 - Description must include PRERELEASE usage instructions

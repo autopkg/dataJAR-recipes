@@ -70,8 +70,8 @@ def get_available_linters():
     script_dir = get_script_dir()
 
     linters = [
-        (1, "GitHubPreReleaseChecker", "GItHubPreReleaseChecker",
-         "GItHubPreReleaseChecker.py",
+        (1, "GitHubPreReleaseChecker", "GitHubPreReleaseChecker",
+         "GitHubPreReleaseChecker.py",
          "Add include_prereleases support to GitHub recipes"),
         (2, "DeprecationChecker", "DeprecationChecker",
          "DeprecationChecker.py",
@@ -177,7 +177,7 @@ def _get_bulk_response(call_num, linter_name, prompt,
     prompt_lower = prompt.lower()
 
     # Special handling for OverridePkgReceiptChecker (needs private-recipes path)
-    # Call 1: overrides directory (handled by call_num == 1 below)
+    # Call 1: overrides directory (handled by call_num == 1 above)
     # Call 2: private-recipes directory (handled here)
     if linter_name == "OverridePkgReceiptChecker" and call_num == 2:
         # Try to find private-recipes as a sibling directory
@@ -190,7 +190,7 @@ def _get_bulk_response(call_num, linter_name, prompt,
         if private_recipes.exists() and private_recipes.is_dir():
             return str(private_recipes)
 
-        # If not found, print warning and exit
+        # If not found, print warning and skip this linter
         print("\n" + "=" * 70)
         print("⚠️  WARNING: Could not auto-locate private-recipes directory")
         print(f"    Looked for: {private_recipes}")
@@ -198,9 +198,10 @@ def _get_bulk_response(call_num, linter_name, prompt,
         print("    Please re-run with interactive mode (option 1) or")
         print("    run this linter standalone with both paths.")
         print("=" * 70)
-        # Exit gracefully
-        import sys
-        sys.exit(1)
+        # Raise to skip linter rather than calling sys.exit
+        # (sys.exit is mocked and would be caught by the
+        # linter's own exception handler instead of ours)
+        raise _LinterExit(1)
 
     # Batch mode selection (RecipeAlphabetiser)
     is_alphabetiser = (
@@ -235,8 +236,12 @@ def _get_bulk_response(call_num, linter_name, prompt,
     return "n"
 
 
-class _LinterExit(Exception):
-    """Raised when a linter calls sys.exit()."""
+class _LinterExit(BaseException):
+    """Raised when a linter calls sys.exit().
+
+    Extends BaseException (like SystemExit) so it is not caught
+    by generic 'except Exception' handlers within linter scripts.
+    """
 
     def __init__(self, code):
         self.code = code
