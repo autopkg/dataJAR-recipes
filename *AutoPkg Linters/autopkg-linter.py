@@ -177,7 +177,7 @@ def _get_bulk_response(call_num, linter_name, prompt,
     prompt_lower = prompt.lower()
 
     # Special handling for OverridePkgReceiptChecker (needs private-recipes path)
-    # Call 1: overrides directory (handled by call_num == 1 above)
+    # Call 1: overrides directory (handled by call_num == 1 below)
     # Call 2: private-recipes directory (handled here)
     if linter_name == "OverridePkgReceiptChecker" and call_num == 2:
         # Try to find private-recipes as a sibling directory
@@ -190,7 +190,7 @@ def _get_bulk_response(call_num, linter_name, prompt,
         if private_recipes.exists() and private_recipes.is_dir():
             return str(private_recipes)
 
-        # If not found, print warning and skip this linter
+        # If not found, print warning and exit
         print("\n" + "=" * 70)
         print("⚠️  WARNING: Could not auto-locate private-recipes directory")
         print(f"    Looked for: {private_recipes}")
@@ -198,9 +198,8 @@ def _get_bulk_response(call_num, linter_name, prompt,
         print("    Please re-run with interactive mode (option 1) or")
         print("    run this linter standalone with both paths.")
         print("=" * 70)
-        # Raise to skip linter rather than calling sys.exit
-        # (sys.exit is mocked and would be caught by the
-        # linter's own exception handler instead of ours)
+        # Raise directly so this cannot be caught by a
+        # linter's own except Exception handler
         raise _LinterExit(1)
 
     # Batch mode selection (RecipeAlphabetiser)

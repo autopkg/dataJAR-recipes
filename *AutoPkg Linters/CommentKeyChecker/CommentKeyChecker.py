@@ -232,9 +232,11 @@ def convert_yaml_comments(content):
                 comment_text.startswith(('- ', '* ')) or
                 '"' in comment_text or '\\' in comment_text):
             # Escape backslashes first, then double quotes
-            escaped = comment_text.replace('\\', '\\\\').replace('"', '\\"')
+            escaped_comment_text = (
+                comment_text.replace('\\', '\\\\').replace('"', '\\"')
+            )
             # Quote the string if it contains special characters
-            result = f'{indent}Comment: "{escaped}"'
+            result = f'{indent}Comment: "{escaped_comment_text}"'
         else:
             result = f'{indent}Comment: {comment_text}'
 

@@ -46,7 +46,7 @@ The script modifies recipes to:
 
 - **AutoPkg**: Must be installed with its bundled Python environment at `/usr/local/autopkg/python`
 - **Python 3**: Included with AutoPkg installation
-- **Required Python modules**: `plistlib` (standard library), `PyYAML` (bundled with AutoPkg)
+- **Required Python modules**: `plistlib` (standard library), `yaml` (provided by `PyYAML` in the AutoPkg environment)
 
 ## Installation
 

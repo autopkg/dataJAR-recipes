@@ -421,7 +421,8 @@ def main():
                     print(f"  - {change}")
             else:
                 print(
-                    f"Skipping {recipe_path.name} - no changes needed"
+                    f"Skipping {recipe_path.name} - ChecksumVerifier "
+                    f"already has checksum_pathname"
                 )
 
         print(f"\n{'=' * 50}")
