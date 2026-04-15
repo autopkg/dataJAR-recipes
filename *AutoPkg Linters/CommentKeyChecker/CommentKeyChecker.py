@@ -229,12 +229,9 @@ def convert_yaml_comments(content):
         # Convert to YAML Comment key-value pair
         # Escape any special YAML characters in the comment
         if (':' in comment_text or '#' in comment_text or
-                comment_text.startswith(('- ', '* ')) or
-                '"' in comment_text or '\\' in comment_text):
-            # Escape backslashes first, then double quotes
-            escaped = comment_text.replace('\\', '\\\\').replace('"', '\\"')
+                comment_text.startswith(('- ', '* '))):
             # Quote the string if it contains special characters
-            result = f'{indent}Comment: "{escaped}"'
+            result = f'{indent}Comment: "{comment_text}"'
         else:
             result = f'{indent}Comment: {comment_text}'
 

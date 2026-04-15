@@ -37,144 +37,52 @@ def modify_yaml_recipe(content):
     """Modify yaml recipe content while preserving formatting."""
     print("DEBUG: Processing YAML recipe")
     recipe = yaml.safe_load(content)
-    needs_modification = False
+    modified = False
 
-    # Check if modification is needed using parsed YAML
     if 'Process' in recipe:
         for process_step in recipe['Process']:
-            if process_step.get('Processor') == (
-                    'GitHubReleasesInfoProvider'):
+            if process_step.get('Processor') == 'GitHubReleasesInfoProvider':
                 print(
                     "DEBUG: Found GitHubReleasesInfoProvider processor "
                     "in YAML recipe")
-                args = process_step.get('Arguments', {})
-                if 'include_prereleases' not in args:
-                    print("DEBUG: include_prereleases key missing")
-                    needs_modification = True
+                if 'Arguments' not in process_step:
+                    process_step['Arguments'] = {}
+                if ('include_prereleases' not in
+                        process_step['Arguments']):
+                    print("DEBUG: Adding include_prereleases key")
+                    process_step['Arguments']['include_prereleases'] = (
+                        '%PRERELEASE%')
+                    modified = True
 
-    if not needs_modification:
-        return content, False
+    if modified:
+        print("DEBUG: YAML recipe was modified")
+        if 'Input' not in recipe:
+            recipe['Input'] = {}
+        if 'PRERELEASE' not in recipe['Input']:
+            recipe['Input']['PRERELEASE'] = ''
 
-    print("DEBUG: YAML recipe needs modification")
-    lines = content.splitlines()
-    modified_lines = list(lines)
+        lines = content.splitlines()
+        for i, line in enumerate(lines):
+            if 'Description: |' in line or 'Description:' in line:
+                current_desc = line.split('Description:', 1)[1].strip()
+                indent = re.match(r'^\s*', line).group()
+                desc_indent = indent + '  '
 
-    # 1. Add include_prereleases to GitHubReleasesInfoProvider
-    #    Find the Arguments block under GitHubReleasesInfoProvider
-    i = 0
-    while i < len(modified_lines):
-        line = modified_lines[i]
-        stripped = line.strip()
-        if stripped == 'Processor: GitHubReleasesInfoProvider':
-            indent = re.match(r'^\s*', line).group()
-            # Look for Arguments in this processor dict
-            # (could be before or after Processor key)
-            # Search backwards for Arguments:
-            args_found = False
-            for j in range(max(0, i - 10), i):
-                if modified_lines[j].strip() == 'Arguments:':
-                    args_indent = re.match(
-                        r'^\s*', modified_lines[j]).group()
-                    entry_indent = args_indent + '  '
-                    insert_line = (
-                        f'{entry_indent}include_prereleases: '
-                        f'"%PRERELEASE%"')
-                    modified_lines.insert(
-                        j + 1, insert_line)
-                    args_found = True
-                    break
-            if not args_found:
-                # Search forward for Arguments:
-                for j in range(i + 1,
-                               min(len(modified_lines), i + 10)):
-                    if modified_lines[j].strip() == 'Arguments:':
-                        args_indent = re.match(
-                            r'^\s*', modified_lines[j]).group()
-                        entry_indent = args_indent + '  '
-                        insert_line = (
-                            f'{entry_indent}include_prereleases: '
-                            f'"%PRERELEASE%"')
-                        modified_lines.insert(
-                            j + 1, insert_line)
-                        args_found = True
-                        break
-            if not args_found:
-                # No Arguments block, add one before Processor
-                entry_indent = indent + '  '
-                modified_lines.insert(
-                    i, f'{indent}Arguments:')
-                modified_lines.insert(
-                    i + 1,
-                    f'{entry_indent}include_prereleases: '
-                    f'"%PRERELEASE%"')
-            break
-        i += 1
-
-    # 2. Add PRERELEASE to Input section if missing
-    has_prerelease_input = False
-    for line in modified_lines:
-        if line.strip() == 'PRERELEASE:' or (
-                line.strip().startswith('PRERELEASE:')):
-            has_prerelease_input = True
-            break
-
-    if not has_prerelease_input:
-        for i, line in enumerate(modified_lines):
-            if line.strip() == 'Input:':
-                input_indent = re.match(
-                    r'^\s*', line).group()
-                entry_indent = input_indent + '  '
-                modified_lines.insert(
-                    i + 1,
-                    f'{entry_indent}PRERELEASE: ""')
-                break
-
-    # 3. Update Description with PRERELEASE instructions
-    has_prerelease_desc = any(
-        'PRERELEASE' in line for line in modified_lines)
-    if not has_prerelease_desc:
-        for i, line in enumerate(modified_lines):
-            stripped = line.strip()
-            if not stripped.startswith('Description:'):
-                continue
-            indent = re.match(r'^\s*', line).group()
-            desc_indent = indent + '  '
-            desc_value = stripped.split('Description:', 1)[1].strip()
-
-            if desc_value == '|' or desc_value == '>':
-                # Block scalar — find the last continuation line
-                j = i + 1
-                while (j < len(modified_lines) and
-                       (modified_lines[j].startswith(desc_indent) or
-                        modified_lines[j].strip() == '')):
-                    j += 1
-                # Insert prerelease text before end of block
-                prerelease_lines = [
-                    '',
-                    (f'{desc_indent}Set PRERELEASE to a non-empty '
-                     f'string to download prereleases, either'),
-                    (f'{desc_indent}via Input in an override or '
-                     f'via the -k option,'),
-                    f'{desc_indent}i.e.: `-k PRERELEASE=yes`',
-                ]
-                for k, pl in enumerate(prerelease_lines):
-                    modified_lines.insert(j + k, pl)
-            else:
-                # Inline description — convert to block scalar
                 new_desc = [
-                    f'{indent}Description: |',
-                    f'{desc_indent}{desc_value}',
-                    '',
-                    (f'{desc_indent}Set PRERELEASE to a non-empty '
-                     f'string to download prereleases, either'),
-                    (f'{desc_indent}via Input in an override or '
-                     f'via the -k option,'),
-                    f'{desc_indent}i.e.: `-k PRERELEASE=yes`',
+                    f"{indent}Description: |",
+                    f"{desc_indent}{current_desc}",
+                    "",
+                    (f"{desc_indent}Set PRERELEASE to a non-empty string "
+                     f"to download prereleases, either"),
+                    (f"{desc_indent}via Input in an override or via the "
+                     f"-k option,"),
+                    f"{desc_indent}i.e.: `-k PRERELEASE=yes`"
                 ]
-                modified_lines[i:i + 1] = new_desc
-            break
 
-    return '\n'.join(modified_lines) + '\n', True
+                new_lines = lines[:i] + new_desc + lines[i+1:]
+                return '\n'.join(new_lines) + '\n', True
+
+    return content, False
 
 
 def modify_plist_content(content):

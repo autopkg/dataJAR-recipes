@@ -4,7 +4,7 @@ A comprehensive command-line tool for validating and fixing AutoPkg recipes. Run
 
 ## Features
 
-- **Unified Interface**: Run all 16 linters through one command
+- **Unified Interface**: Run all 18 linters through one command
 - **Flexible Execution**: Run all linters at once or select specific ones
 - **Interactive Mode**: Easy-to-use menu for selecting linters
 - **Batch Processing**: Process entire recipe repositories efficiently
@@ -12,12 +12,12 @@ A comprehensive command-line tool for validating and fixing AutoPkg recipes. Run
 
 ## Available Linters
 
-The suite includes 16 specialized linters:
+The suite includes 18 specialized linters:
 
 1. **GitHubPreReleaseChecker** - Add `include_prereleases` support to GitHub recipes
 2. **DeprecationChecker** - Validate deprecated recipe configuration
-3. **DetabChecker** - Convert tabs to spaces and fix whitespace issues
-4. **CommentKeyChecker** - Convert HTML comments to proper Comment keys
+3. **DetabChecker** - Convert tabs to spaces and fix whitespace
+4. **CommentKeyChecker** - Convert HTML comments to Comment keys
 5. **UninstallScriptChecker** - Validate `uninstall_script` configuration
 6. **MinimumVersionChecker** - Set correct MinimumVersion based on processors
 7. **DeprecatedRecipeMover** - Move old deprecated recipes to archive folder
@@ -25,11 +25,13 @@ The suite includes 16 specialized linters:
 9. **MunkiPathDeleterChecker** - Ensure PathDeleter cleanup for unpacking
 10. **MunkiInstallsItemsCreatorChecker** - Validate MunkiInstallsItemsCreator configuration
 11. **FindAndReplaceChecker** - Convert shared FindAndReplace to core processor
-12. **AutoPkgXMLEscapeChecker** - Ensure proper XML character escaping
-13. **ChecksumVerifierChanger** - Update ChecksumVerifier pathname argument
+12. **AutoPkgXMLEscapeChecker** - Ensure proper XML character escaping (&, <, >)
+13. **ChecksumVerifierChanger** - Change pathname to checksum_pathname in ChecksumVerifier
 14. **NAMEChecker** - Remove spaces from NAME input variable values
-15. **MissingKeyValueChecker** - Check for empty values in pkginfo dict
-16. **DuplicateKeyChecker** - Detect duplicate keys and auto-fix duplicate unattended_install
+15. **MissingKeyValueChecker** - Check for empty values in pkginfo dict (.munki recipes)
+16. **DuplicateKeyChecker** - Detect duplicate keys and fix duplicate unattended_install
+17. **zshChecker** - Ensure zsh shebangs include --no-rcs flag
+18. **OverridePkgReceiptChecker** - Ensure uninstall scripts forget pkg receipts from EAs
 
 ## Installation
 
@@ -41,8 +43,8 @@ Directory structure:
 ```
 AutoPkg Linters/
 ├── autopkg-linter.py                    # Main suite runner
-├── GitHubPreReleaseChecker/
-│   ├── GitHubPreReleaseChecker.py
+├── GItHubPreReleaseChecker/
+│   ├── GItHubPreReleaseChecker.py
 │   └── README.md
 ├── DeprecationChecker/
 │   ├── DeprecationChecker.py
@@ -89,8 +91,11 @@ AutoPkg Linters/
 ├── DuplicateKeyChecker/
 │   ├── DuplicateKeyChecker.py
 │   └── README.md
-└── zshChecker/
-    ├── zshChecker.py
+├── zshChecker/
+│   ├── zshChecker.py
+│   └── README.md
+└── OverridePkgReceiptChecker/
+    ├── OverridePkgReceiptChecker.py
     └── README.md
 ```
 
@@ -213,9 +218,17 @@ For best results, run linters in this recommended order:
 5. **GitHubPreReleaseChecker** (1) - Add pre-release support
 6. **UninstallScriptChecker** (5) - Validate uninstall config
 7. **MunkiPathDeleterChecker** (9) - Add PathDeleter cleanup
-8. **MunkiInstallsItemsCreator** (10) - Validate installs creator
-9. **RecipeAlphabetiser** (8) - Alphabetize keys (run last)
-10. **DeprecatedRecipeMover** (7) - Archive old recipes (manual)
+8. **MunkiInstallsItemsCreatorChecker** (10) - Validate installs creator
+9. **FindAndReplaceChecker** (11) - Convert shared FindAndReplace
+10. **AutoPkgXMLEscapeChecker** (12) - Ensure proper XML escaping
+11. **ChecksumVerifierChanger** (13) - Update ChecksumVerifier pathname
+12. **NAMEChecker** (14) - Remove spaces from NAME values
+13. **MissingKeyValueChecker** (15) - Check for empty pkginfo values
+14. **DuplicateKeyChecker** (16) - Detect and fix duplicate keys
+15. **zshChecker** (17) - Ensure zsh --no-rcs flag
+16. **OverridePkgReceiptChecker** (18) - Validate pkg receipt handling
+17. **RecipeAlphabetiser** (8) - Alphabetize keys (run last)
+18. **DeprecatedRecipeMover** (7) - Archive old recipes (manual)
 
 The suite runs linters in the order specified, so you can control the sequence.
 
@@ -439,7 +452,7 @@ Performance tips:
 
 Each linter has detailed documentation in its own README:
 
-- [GitHubPreReleaseChecker/README.md](GitHubPreReleaseChecker/README.md)
+- [GitHubPreReleaseChecker/README.md](GItHubPreReleaseChecker/README.md)
 - [DeprecationChecker/README.md](DeprecationChecker/README.md)
 - [DetabChecker/README.md](DetabChecker/README.md)
 - [CommentKeyChecker/README.md](CommentKeyChecker/README.md)
@@ -456,6 +469,7 @@ Each linter has detailed documentation in its own README:
 - [MissingKeyValueChecker/README.md](MissingKeyValueChecker/README.md)
 - [DuplicateKeyChecker/README.md](DuplicateKeyChecker/README.md)
 - [zshChecker/README.md](zshChecker/README.md)
+- [OverridePkgReceiptChecker/README.md](OverridePkgReceiptChecker/README.md)
 
 ## Contributing
 
