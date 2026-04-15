@@ -43,8 +43,8 @@ Directory structure:
 ```
 AutoPkg Linters/
 ├── autopkg-linter.py                    # Main suite runner
-├── GItHubPreReleaseChecker/
-│   ├── GItHubPreReleaseChecker.py
+├── GitHubPreReleaseChecker/
+│   ├── GitHubPreReleaseChecker.py
 │   └── README.md
 ├── DeprecationChecker/
 │   ├── DeprecationChecker.py
@@ -452,7 +452,7 @@ Performance tips:
 
 Each linter has detailed documentation in its own README:
 
-- [GitHubPreReleaseChecker/README.md](GItHubPreReleaseChecker/README.md)
+- [GitHubPreReleaseChecker/README.md](GitHubPreReleaseChecker/README.md)
 - [DeprecationChecker/README.md](DeprecationChecker/README.md)
 - [DetabChecker/README.md](DetabChecker/README.md)
 - [CommentKeyChecker/README.md](CommentKeyChecker/README.md)

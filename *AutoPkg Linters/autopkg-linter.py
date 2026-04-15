@@ -70,8 +70,8 @@ def get_available_linters():
     script_dir = get_script_dir()
 
     linters = [
-        (1, "GitHubPreReleaseChecker", "GItHubPreReleaseChecker",
-         "GItHubPreReleaseChecker.py",
+        (1, "GitHubPreReleaseChecker", "GitHubPreReleaseChecker",
+         "GitHubPreReleaseChecker.py",
          "Add include_prereleases support to GitHub recipes"),
         (2, "DeprecationChecker", "DeprecationChecker",
          "DeprecationChecker.py",
@@ -198,9 +198,9 @@ def _get_bulk_response(call_num, linter_name, prompt,
         print("    Please re-run with interactive mode (option 1) or")
         print("    run this linter standalone with both paths.")
         print("=" * 70)
-        # Exit gracefully
-        import sys
-        sys.exit(1)
+        # Raise directly so this cannot be caught by a
+        # linter's own except Exception handler
+        raise _LinterExit(1)
 
     # Batch mode selection (RecipeAlphabetiser)
     is_alphabetiser = (
@@ -235,8 +235,12 @@ def _get_bulk_response(call_num, linter_name, prompt,
     return "n"
 
 
-class _LinterExit(Exception):
-    """Raised when a linter calls sys.exit()."""
+class _LinterExit(BaseException):
+    """Raised when a linter calls sys.exit().
+
+    Extends BaseException (like SystemExit) so it is not caught
+    by generic 'except Exception' handlers within linter scripts.
+    """
 
     def __init__(self, code):
         self.code = code
