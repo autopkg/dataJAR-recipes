@@ -24,7 +24,7 @@ To download Intel use: "x86_64" in the ARCH variable</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href="(https://github.com/FreeCAD/FreeCAD/releases/download/([0-9]+(.[0-9]+)+)/FreeCAD_([0-9]+(.[0-9]+)+)-conda-macOS-%ARCH%-py[0-9]+.dmg)"</string>
+                <string>href="(https://github.com/FreeCAD/FreeCAD/releases/download/([0-9]+(.[0-9]+)+)/FreeCAD_([0-9]+(.[0-9]+)+)-macOS-%ARCH%-py[0-9]+.dmg)"</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
