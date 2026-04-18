@@ -3,19 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of UssAgent and imports into Munki.</string>
+    <string>Downloads the latest version of UssAgent and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.UssAgent</string>
     <key>Input</key>
     <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>NAME</key>
         <string>UssAgent</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
-            <key>RestartAction</key>
-            <string>RequireLogout</string>
             <key>blocking_applications</key>
             <array>
                 <string>Firefox</string>
@@ -41,6 +43,8 @@
             <array>
                 <string>Firefox</string>
             </array>
+            <key>RestartAction</key>
+            <string>RequireLogout</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -109,7 +113,7 @@ unset IFS
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.UssAgent</string>
     <key>Process</key>
@@ -129,6 +133,8 @@ unset IFS
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/</string>
                 <key>installs_item_paths</key>
