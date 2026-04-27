@@ -5,9 +5,9 @@
     <key>Description</key>
     <string>Downloads the latest version of Microsoft PowerPoint 2019 and imports it into Munki.
 
-These can have a volume license applied using appropriate pkg downloadable from Microsofts VLSC.
+These can have a volume license applied using appropriate pkg downloadable from Microsoft's VLSC.
 
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7. Please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Microsoft PowerPoint 2019</string>
     <key>Input</key>
