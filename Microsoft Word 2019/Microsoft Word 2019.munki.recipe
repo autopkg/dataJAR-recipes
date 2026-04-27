@@ -3,27 +3,21 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>This recipe downloads and imports the full installer pkg for Microsoft Word 2019 into Munki
+    <string>Downloads the latest version of Microsoft Word 2019 and imports it into Munki.
 
-    This is accomplished via the Office 365 recipes from rtrouton-recipes.
+These can have a volume license applied using appropriate pkg downloadable from Microsofts VLSC.
 
-    These in turn, utilise the fwlink's found on macadmins.software
-
-    These can have a volume license applied using appropriate pkg downloadable from Microsofts VLSC</string>
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Microsoft Word 2019</string>
     <key>Input</key>
     <dict>
-        <key>MINIMUM_OS_VERSION</key>
-        <string>10.14.0</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>NAME</key>
         <string>Microsoft Word 2019</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
-        <key>PRODUCTID</key>
-        <string>525134</string>
-        <key>DOWNLOADURL</key>
-        <string>https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%</string>
         <key>pkg_ids_set_optional_true</key>
         <array/>
         <key>pkginfo</key>
@@ -53,16 +47,83 @@
     <key>MinimumVersion</key>
     <string>2.7</string>
     <key>ParentRecipe</key>
-    <string>com.github.rtrouton.pkg.microsoftword365</string>
+    <string>com.github.rtrouton.download.microsoftword365</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/*Word*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%found_filename%/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Microsoft Word.app</string>
+                </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Microsoft Word.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>minimum_os_version</key>
-                    <string>%MINIMUM_OS_VERSION%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
             <key>Processor</key>
@@ -72,7 +133,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
@@ -84,6 +145,18 @@
             <string>Uses pkg_ids_set_optional_true from Input</string>
             <key>Processor</key>
             <string>MunkiOptionalReceiptEditor</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
