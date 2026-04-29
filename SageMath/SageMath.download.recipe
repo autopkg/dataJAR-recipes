@@ -16,7 +16,7 @@ i.e.: `-k PRERELEASE=yes</string>
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_ARCH</key>
-        <string>x86_64</string>
+        <string>arm64</string>
         <key>NAME</key>
         <string>SageMath</string>
         <key>PRERELEASE</key>
