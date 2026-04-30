@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of PreSonus Universal Control and imports into Munki</string>
+    <string>Downloads the latest version of PreSonus Universal Control and imports into Munki.
+
+This recipe has been deprecated. PreSonus Universal Control has been renamed to Fender Universal Control v5. See https://support.presonus.com/hc/en-us/articles/42636356381709-PreSonus-Universal-Control-is-now-called-Fender-Universal-Control-v5-for-Mac-and-PC for more details.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.PreSonus Universal Control</string>
     <key>Input</key>
@@ -33,11 +35,29 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.PreSonus Universal Control</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. PreSonus Universal Control has been renamed to Fender Universal Control v5. See https://support.presonus.com/hc/en-us/articles/42636356381709-PreSonus-Universal-Control-is-now-called-Fender-Universal-Control-v5-for-Mac-and-PC for more details.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
