@@ -3,15 +3,20 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Audinate Dante Controller.</string>
+    <string>Downloads latest version of Audinate Dante Controller.
+
+To download Apple Silicon use: "apple_silicon" in the DOWNLOAD_ARCH variable
+To download Intel use: "apple_intel" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Audinate Dante Controller</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Audinate Dante Controller</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>apple_silicon</string>
         <key>SPARKLE_FEED_URL</key>
-        <string>https://software-updates.audinate.com/DanteController/appcast/DanteController-OSX.xml</string>
+        <string>https://software-updates.audinate.com/DanteController/appcast/DanteController-%DOWNLOAD_ARCH%.xml</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1.1</string>
