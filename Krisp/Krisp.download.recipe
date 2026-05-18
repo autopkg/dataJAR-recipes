@@ -15,8 +15,8 @@ To download from the "standard" (Free, Pro) release channel
 
 To download from the "enterprise" release channel
 - SEARCH_URL "https://whatsnew.krisp.ai/?categories=cat_NXgxKYuCvTpF4"
-- RELEASE_CHANNEL1 "enterprise"
-- RELEASE_CHANNEL2 "_Enterprise"</string>
+- RELEASE_CHANNEL1 "_Enterprise"
+- RELEASE_CHANNEL2 "_cx"</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.krisp</string>
     <key>Input</key>
