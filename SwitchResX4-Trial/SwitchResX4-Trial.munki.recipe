@@ -35,72 +35,20 @@
     <key>MinimumVersion</key>
     <string>0.6.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.pkg.SwitchResX4-Trial</string>
+    <string>com.github.dataJAR-recipes.download.SwitchResX4-Trial</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>info_path</key>
-                <string>%pkgroot%/Library/PreferencePanes/SwitchResX.prefPane</string>
-                <key>plist_keys</key>
-                <dict>
-                    <key>LSMinimumSystemVersion</key>
-                    <string>min_os_ver</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>minimum_os_version</key>
-                    <string>%min_os_ver%</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>faux_root</key>
-                <string>%pkgroot%</string>
-                <key>installs_item_paths</key>
-                <array>
-                    <string>/Library/PreferencePanes/SwitchResX.prefPane</string>
-                </array>
-            </dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>changes</key>
-                <array>
-                    <dict>
-                        <key>path</key>
-                        <string>/Library/PreferencePanes/SwitchResX.prefPane</string>
-                        <key>CFBundleIdentifier</key>
-                        <string>fr.madrau.switchresx.prefpane</string>
-                    </dict>
-                </array>
-            </dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/InstallsArrayCFBundleIdentifierChanger</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>dmg_path</key>
+				<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+				<key>dmg_root</key>
+				<string>%RECIPE_CACHE_DIR%/unzip/</string>
+			</dict>
+			<key>Processor</key>
+			<string>DmgCreator</string>
+		</dict>
         <dict>
             <key>Arguments</key>
             <dict>
@@ -117,7 +65,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%pkg_path%</string>
+                <string>%dmg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
