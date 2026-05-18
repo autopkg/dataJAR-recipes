@@ -19,11 +19,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href=\"(https://download\.steinberg\.net/automated_updates/sda_downloads/([0-9]+([a-zA-Z][0-9]+)+)-....-[0-9]+-....-[0-9]+/Retrologue_([+-]?(?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:[eE]([+-]?\d+))?_Installer_mac\.dmg)\" title=\"Download\" target=\"_blank\" class=\"external-link-new-window\"> ⬇ macOS</string>
+                <string>(https://download\.steinberg\.net/automated_updates/sda_downloads/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/Retrologue_[0-9]*\.[0-9]+_Installer_mac\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
-                <string>https://o.steinberg.net/en/support/downloads/cubase_12/cubase_pro_12.html</string>
+                <string>https://o.steinberg.net/en/support/downloads/cubase_14.html</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>

@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.ApacheNetBeans15</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Apache NetBeans 15</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -40,18 +40,18 @@ Development Environment, Tooling Platform and Application Framework.</string>
     <string>com.github.dataJAR-recipes.download.ApacheNetBeans15</string>
     <key>Process</key>
     <array>
-    <dict>
-        <key>Arguments</key>
         <dict>
-            <key>destination_path</key>
-            <string>%RECIPE_CACHE_DIR%/unpack</string>
-            <key>flat_pkg_path</key>
-            <string>%pathname%/Apache NetBeans 15.pkg</string>
-            <key>purge_destination</key>
-            <true/>
-        </dict>
-        <key>Processor</key>
-        <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/Apache NetBeans 15.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
             <key>Arguments</key>

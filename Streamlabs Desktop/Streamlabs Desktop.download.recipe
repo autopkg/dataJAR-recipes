@@ -11,10 +11,10 @@ To download the Apple Silicon version add "&amp;arm64=true" the ARCH_TYPE variab
     <string>com.github.dataJAR-recipes.download.Streamlabs Desktop</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>StreamlabsDesktop</string>
         <key>ARCH_TYPE</key>
         <string></string>
+        <key>NAME</key>
+        <string>StreamlabsDesktop</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

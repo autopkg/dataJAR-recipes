@@ -12,10 +12,10 @@ For Apple Silicon downloads use arm64 for the "SUPPORTED_ARCH" variable</string>
     <string>com.github.dataJAR-recipes.munki.TouchDesigner</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>TouchDesigner</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
         <string>x86_64</string>
         <key>pkginfo</key>
@@ -25,17 +25,13 @@ For Apple Silicon downloads use arm64 for the "SUPPORTED_ARCH" variable</string>
                 <string>testing</string>
             </array>
             <key>description</key>
-            <string> </string>
+            <string>TouchDesigner for macOS is a powerful, node-based visual programming tool for real-time interactive media, offering deep creative control for artists and developers</string>
             <key>developer</key>
             <string>Derivative</string>
             <key>display_name</key>
             <string>TouchDesigner</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>supported_architectures</key>
-            <array>
-                <string>%SUPPORTED_ARCH%</string>
-            </array>
             <key>preinstall_script</key>
             <string>#!/bin/bash
 
@@ -46,6 +42,10 @@ For Apple Silicon downloads use arm64 for the "SUPPORTED_ARCH" variable</string>
 /usr/bin/chgrp -R admin "/Library/Application Support/ca.derivative"
 
 exit</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -55,7 +55,7 @@ exit</string>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.TouchDesigner</string>
+    <string>com.github.moofit-recipes.download.touchdesigner</string>
     <key>Process</key>
     <array>
         <dict>

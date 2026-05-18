@@ -4,82 +4,102 @@
 <dict>
     <key>Description</key>
     <string>Downloads the latest version of LEGO MINDSTORMS Education EV3 and imports it into Munki.
-    
+
     Based on: https://github.com/autopkg/aysiu-recipes/blob/master/LegoMindstorms/LegoMindstorms.munki.recipe</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.LEGO MINDSTORMS Education EV3</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>LEGO MINDSTORMS Education EV3</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
+            <key>category</key>
+            <string>Development</string>
             <key>description</key>
             <string>The Lego Mindstorms series of kits contain software and hardware to create customizable, programmable robots. They include an intelligent brick computer that controls the system, a set of modular sensors and motors, and Lego parts from the Technic line to create the mechanical systems.</string>
+            <key>developer</key>
+            <string>LEGO</string>
             <key>display_name</key>
             <string>LEGO MINDSTORMS Education EV3</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>developer</key>
-            <string>LEGO</string>
-            <key>category</key>
-            <string>Development</string>
             <key>unattended_install</key>
             <true/>
         </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.sebtomasi.download.LegoMindstormsEducation</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated to match the Parent Recipe.
+
+        "The sebtomasi-recipes repo, which includes this recipe, is deprecated and will be removed in the future (details: https://github.com/autopkg/sebtomasi-recipes/issues/26).
+
+        Please search for alternative recipes at autopkgweb.com. If you host a recipe repo in the AutoPkg org and want to take ownership of this recipe, please comment in the issue linked above."</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-			<dict>
-				<key>flat_pkg_path</key>
-				<string>%pathname%/LEGO MINDSTORMS Education EV3.pkg</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
-                <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+            <dict>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-			<dict>
-				<key>pkg_payload_path</key>
-				<string>%RECIPE_CACHE_DIR%/pkg_unpack/EV3_EDU_Core.pkg/Payload</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
-				<key>purge_destination</key>
-				<true/>
-			</dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
-            <key>Comment</key>
-            <string>LEGO Mindstorms' receipts lead to an install loop, so there has to be an installs array, but the .app bundle version seems to always be 1, so we're going to make an installs array out of the executable.</string>
             <key>Arguments</key>
             <dict>
                 <key>faux_root</key>
@@ -89,21 +109,37 @@
                     <string>/Applications/LEGO MINDSTORMS Education EV3.app/Contents/MacOS/MindstormsEV3</string>
                 </array>
             </dict>
+            <key>Comment</key>
+            <string>LEGO Mindstorms' receipts lead to an install loop, so there has to be an installs array, but the .app bundle version seems to always be 1, so we're going to make an installs array out of the executable.</string>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/pkg_unpack</string>
+                    <string>%RECIPE_CACHE_DIR%/application_payload/Applications</string>
+                </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

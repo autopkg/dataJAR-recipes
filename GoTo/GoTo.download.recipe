@@ -11,10 +11,10 @@ To download the Intel Version leave the ARCH_TYPE variable empty.</string>
     <string>com.github.dataJAR-recipes.download.GoTo</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>GoTo</string>
         <key>ARCH_TYPE</key>
         <string></string>
+        <key>NAME</key>
+        <string>GoTo</string>
     </dict>
     <key>MinimumVersion</key>
     <string>2.7</string>

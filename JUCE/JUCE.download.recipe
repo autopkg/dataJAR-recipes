@@ -3,13 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of JUCE.</string>
+    <string>Downloads the latest version of JUCE.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.JUCE</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>JUCE</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -22,6 +28,8 @@
                 <string>juce-([0-9]+(\.[0-9]+)+)-osx\.zip$</string>
                 <key>github_repo</key>
                 <string>juce-framework/JUCE</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>

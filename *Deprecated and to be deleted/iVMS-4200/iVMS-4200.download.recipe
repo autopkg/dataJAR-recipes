@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of iVMS-4200.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.iVMS-4200</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>iVMS4200</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The Vendor has discontinued the software.
+
+Please see: https://www.hikvision.com/content/dam/hikvision/en/support/notice/Product-Discontinuation-Notice--of-iVMS-4200-VS.pdf for more details.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>data-link=\"/(content/dam/hikvision/en/support/download/vms/ivms4200-series/software-download/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/iVMS-4200-([0-9]+(\.[0-9]+)+)\.pkg\.zip)\"</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://www.hikvision.com/us-en/support/download/software/ivms4200-series/</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.zip</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Referer</key>
+                    <string>https://www.hikvision.com/;auto</string>
+                    <key>User-Agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3.1 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://www.hikvision.com/%DOWNLOAD_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>

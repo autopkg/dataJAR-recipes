@@ -12,10 +12,10 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
     <string>com.github.dataJAR-recipes.Firefox-locale</string>
     <key>Input</key>
     <dict>
-        <key>LOCALE</key>
-        <string>en-GB</string>
         <key>FORCE_MUNKIIMPORT</key>
         <string>YES!</string>
+        <key>LOCALE</key>
+        <string>en-GB</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/firefox</string>
         <key>NAME</key>
@@ -28,12 +28,12 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
             </array>
             <key>description</key>
             <string>Mozilla Firefox is a free and open source web browser.</string>
+            <key>developer</key>
+            <string>Mozilla</string>
             <key>display_name</key>
             <string>Mozilla Firefox</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>developer</key>
-            <string>Mozilla</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -47,8 +47,6 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/FirefoxGetLocaleAndVersion</string>
             <key>Arguments</key>
             <dict>
                 <key>choosen_locale</key>
@@ -56,163 +54,141 @@ List of available locale codes here: https://ftp.mozilla.org/pub/firefox/release
                 <key>dmg_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/FirefoxGetLocaleAndVersion</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
-                    <key>version</key>
-                    <string>%app_version%</string>
                     <key>installcheck_script</key>
-                    <string>#!/usr/local/munki/munki-python
-# pylint: disable = invalid-name
+                    <string>#!/bin/zsh --no-rcs
 
-'''
-Copyright (c) 2023, dataJAR Ltd.  All rights reserved.
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-             * Redistributions of source code must retain the above copyright
-               notice, this list of conditions and the following disclaimer.
-             * Redistributions in binary form must reproduce the above copyright
-               notice, this list of conditions and the following disclaimer in the
-               documentation and/or other materials provided with the distribution.
-             * Neither data JAR Ltd nor the names of its contributors may be used to
-               endorse or promote products derived from this software without specific
-               prior written permission.
-     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
-     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-SUPPORT FOR THIS PROGRAM
-    This program is distributed 'as is' by DATA JAR LTD.
-    For more information or support, please utilise the following resources:
-            http://www.datajar.co.uk
+# Copyright 2025, Jamf Software, LLC.
 
-DESCRIPTION
+#
+# DESCRIPTION
+#
+# Checks Firefox locale and version. Exits 0 to install if Firefox is not installed,
+# locale cannot be determined, or version is older with matching locale. Exits 1 to
+# cancel if locales don't match or version is same/newer with matching locale.
+#
+# Uses unzip command to extract locale information from omni.ja file.
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1936505
 
-See docstring in main()
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
 
-'''
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
 
-# Standard imports
-import configparser
-import os
-import plistlib
-import sys
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
 
+# Function to extract locale from omni.ja file
+get_firefox_locale() {
+    local firefox_path="$1"
+    local omni_path="$firefox_path/Contents/Resources/omni.ja"
 
-def main():
-    '''
-        Get locale and version of Firefox.app, (if installed)
+    if [[ ! -f "$omni_path" ]]; then
+        echo "Cannot find $omni_path"
+        return 1
+    fi
 
-        Exit 1 if Firefox.app is installed with the same locale and newer than what we have in Munki
+    # Extract locale using unzip
+    local locale=$(unzip -p "$omni_path" default.locale 2&gt;/dev/null | tr -d '\r\n')
 
-        Exit 1 if Firefox.app is installed with a different locale
+    if [[ -z "$locale" ]]; then
+        echo "Empty locale returned from omni.ja"
+        return 1
+    fi
 
-    '''
+    echo "$locale"
+    return 0
+}
 
-    # Var declaration
-    firefox_path = '/Applications/Firefox.app'
-    firefox_locale_ini = os.path.join(firefox_path, 'Contents/Resources/locale.ini')
-    firefox_info_plist = os.path.join(firefox_path, 'Contents/Info.plist')
-    firefox_locale = '%app_locale%'
-    firefox_version = '%app_version%'
+# Variable declaration
+firefox_path="/Applications/Firefox.app"
+firefox_info_plist="$firefox_path/Contents/Info.plist"
+firefox_locale="%app_locale%"
+firefox_version="%app_version%"
 
-    # If Firefox.app is installed, proceed.. else exit 0 so we can install
-    if not os.path.exists(firefox_path):
-        print(f"{firefox_path} not installed, exiting install_check script to install...")
-        sys.exit(0)
+# If Firefox.app is not installed, proceed with installation
+if [[ ! -d "$firefox_path" ]]; then
+    echo "$firefox_path not installed, proceeding with installation..."
+    exit 0
+fi
 
-    # If firefox_locale_ini exists, and this installation isn't for en-US or firefox_locale_ini
-    # exists and this installation IS for en-US
-    if (os.path.exists(firefox_locale_ini) and firefox_locale != 'en-US' or
-        os.path.exists(firefox_locale_ini) and firefox_locale == 'en-US'):
-        # Try Read in the locale, raise if cannot be parsed
-        try:
-            # Create confgparser object
-            app_config = configparser.ConfigParser()
-            app_config.read(firefox_locale_ini)
-            # Setting app_locale
-            app_locale  = app_config['locale']['locale']
-            # If we don't match
-            if not app_locale == firefox_locale:
-                print(f"Installed locale ({app_locale}), differs to the locale of this "
-                      f"installation ({firefox_locale}). cancelling installation...")
-                sys.exit(1)
-            else:
-                print(f"Local installations locale ({app_locale}) matches the locale of this "
-                      f"installation ({firefox_locale}), proceeding...")
-        # Raise if app_locale cannot be retrieved from firefox_locale_ini
-        # pylint: disable = broad-except
-        except Exception:
-            print(f"Encountered an error when trying to parse {firefox_locale_ini}...")
-            sys.exit(1)
-    # If there is no firefox_locale_ini, but this is a non-en-US install
-    elif not os.path.exists(firefox_locale_ini) and firefox_locale != 'en-US':
-        print(f"Locale {firefox_locale} passed, but {firefox_locale_ini} is missing... "
-              f"So current installation is a different locale: en-US...")
-        sys.exit(1)
-    # If no firefox_locale_ini, and this is a en-US install
-    elif not os.path.exists(firefox_locale_ini) and firefox_locale == 'en-US':
-        print(f"{firefox_locale_ini} is missing, as such local is determined as: en-US.")
+# Get installed Firefox locale
+if installed_locale=$(get_firefox_locale "$firefox_path"); then
+    echo "Installed locale: $installed_locale"
+    echo "Package locale: $firefox_locale"
 
-    # If the info.plist exists
-    if os.path.exists(firefox_info_plist):
-        # Try to read in firefox_info_plist, raise if cannot be parsed
-        try:
-            # Read in the plist
-            with open(firefox_info_plist, "rb") as plist_file:
-                parsed_plist = plistlib.load(plist_file)
-            # Get version from info.plist
-            installed_version = parsed_plist['CFBundleShortVersionString']
-            print(f"{firefox_path} version {installed_version}, installed...")
-        # Raising if plist cannot be parsed or version determined from plist
-        # pylint: disable = broad-except
-        except Exception:
-            print(f"Encountered an error when trying to parse {firefox_info_plist}...")
-            sys.exit(1)
-        # Compare the installed version with this installations
-        if LooseVersion(installed_version) &lt; LooseVersion(firefox_version):
-            # Local version older, proceed with installation
-            print(f"Older version of {firefox_path} located, proceeding with installation...")
-            sys.exit(0)
-        else:
-            # Local version newer, cancelling installation
-            print(f"Newer or the same version of {firefox_path} located, cancelling installation...")
-            sys.exit(1)
-    # Raise if we can't find firefox_info_plist
-    else:
-        print("Cannot locate {firefox_info_plist}, proceeding with installation...")
-        sys.exit(0)
+    # If locales don't match, cancel installation
+    if [[ "$installed_locale" != "$firefox_locale" ]]; then
+        echo "Installed locale ($installed_locale) differs from package locale ($firefox_locale)"
+        echo "Cancelling installation..."
+        exit 1
+    fi
+else
+    echo "Could not determine installed Firefox locale, proceeding with installation..."
+    exit 0
+fi
+
+# Locales match, check version
+if [[ -f "$firefox_info_plist" ]]; then
+    # Extract version from Info.plist using plutil
+    if installed_version=$(plutil -extract CFBundleShortVersionString raw "$firefox_info_plist" 2&gt;/dev/null); then
+        echo "Installed version: $installed_version"
+        echo "Package version: $firefox_version"
+
+        if compare_versions "$installed_version" "$firefox_version"; then
+            echo "Installed version is older, proceeding with installation..."
+            exit 0
+        else
+            echo "Installed version is same or newer, cancelling installation..."
+            exit 1
+        fi
+    else
+        echo "Error reading version info, proceeding with installation..."
+        exit 0
+    fi
+else
+    echo "Cannot find $firefox_info_plist, proceeding with installation..."
+    exit 0
+fi
+
 
 if __name__ == '__main__':
     main()</string>
+                    <key>version</key>
+                    <string>%app_version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>force_munkiimport</key>
-                <string>%FORCE_MUNKIIMPORT%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

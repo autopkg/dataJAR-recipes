@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest trial version of Adobe Camera Raw and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Adobe Camera Raw</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/adobe</string>
+        <key>NAME</key>
+        <string>AdobeCameraRaw</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Adobe After Effects</string>
+                <string>Adobe Animate</string>
+                <string>Adobe Bridge</string>
+                <string>Adobe Photoshop</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Adobe Camera Raw, which lets you import and enhance raw images, has been a must-have tool for professional photographers right since it was first released in 2003.
+
+Applications that support Adobe Camera Raw include Photoshop, Photoshop Elements, After Effects, and Bridge. Additionally, Adobe Lightroom is built upon the same powerful raw image processing technology that powers Adobe Camera Raw.</string>
+            <key>developer</key>
+            <string>Adobe</string>
+            <key>display_name</key>
+            <string>Adobe Camera Raw</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <false/>
+            <key>uninstallable</key>
+            <false/>
+            <key>update_for</key>
+            <array>
+                <string>AdobeAfterEffects2024</string>
+                <string>AdobeAnimate2024</string>
+                <string>AdobeBridge2024</string>
+                <string>AdobePhotoshop2024</string>
+                <string>AdobeAfterEffects2023</string>
+                <string>AdobeAnimate2023</string>
+                <string>AdobeBridge2023</string>
+                <string>AdobePhotoshop2023</string>
+            </array>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Adobe Camera Raw</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/%dmg_found_filename%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Adobe/Plug-Ins/CC/File Formats</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/CameraRawPlugin.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>find</key>
+                <string> </string>
+                <key>input_string</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution</string>
+                <key>replace</key>
+                <string>%20</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>os-version min=\"([0-9]+(\.[0-9]+)+)\"</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>%output_string%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Library/Application Support/Adobe/Plug-Ins/CC/File Formats/Camera Raw.plugin</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Library/Application Support/Adobe/Plug-Ins/CC/File Formats/Camera Raw.plugin/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>index</key>
+                <integer>0</integer>
+                <key>split_on</key>
+                <string>f</string>
+                <key>version</key>
+                <string>%version%</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh --no-rcs
+# Copyright 2025, Jamf Software, LLC.
+
+# DESCRIPTION
+#
+# Get the version of bundle_path, (if installed). This is achieved by splitting
+# the value from the CFBundleVersion, using the version before the `f`.
+# Exit 1 if bundle_path is installed and newer than what we have in Munki
+
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
+
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
+
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
+
+# Variable declaration
+bundle_path="/Library/Application Support/Adobe/Plug-Ins/CC/File Formats/Camera Raw.plugin"
+bundle_info_plist="$bundle_path/Contents/Info.plist"
+munki_version="%version%"
+
+# If bundle_path is not installed, proceed.. else exit 0 so we can install
+if [[ ! -d "$bundle_path" ]]; then
+    echo "$bundle_path not installed, exiting install_check script to install..."
+    exit 0
+fi
+
+# If the info.plist exists
+if [[ -f "$bundle_info_plist" ]]; then
+    # Get version from info.plist using plutil
+    if installed_version=$(plutil -extract CFBundleVersion raw "$bundle_info_plist" 2&gt;/dev/null); then
+        echo "$bundle_path version $installed_version, installed..."
+
+        # Compare the installed version with this installations
+        if compare_versions "$installed_version" "$munki_version"; then
+            # Local version older, proceed with installation
+            echo "Older version of $bundle_path located, proceeding with installation..."
+            exit 0
+        else
+            # Local version newer, cancelling installation
+            echo "Newer or the same version of $bundle_path located, cancelling installation..."
+            exit 1
+        fi
+    else
+        echo "Encountered an error when trying to parse $bundle_info_plist..."
+        exit 1
+    fi
+else
+    # Raise if we can't find bundle_info_plist
+    echo "Cannot locate $bundle_info_plist, proceeding with installation..."
+    exit 0
+fi</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>source_path</key>
+                <string>%pathname%/%dmg_found_filename%</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

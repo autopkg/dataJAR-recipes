@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Moving Light Assistant.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.MovingLightAssistant</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>MovingLightAssistant</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.html</string>
+                <key>url</key>
+                <string>https://www.movinglightassistant.com/wp_folder/?page_id=82</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>Moving Light Assistant v[0-9]*\.[0-9]+ for macOS \(Universal\)&lt;/p&gt;\s+&lt;/div&gt;&lt;div class=\&quot;sdm_download_link\&quot;&gt;&lt;span class=\&quot;sdm_download_button\&quot;&gt;&lt;a href=\&quot;(https://www\.movinglightassistant\.com/\?sdm_process_download=1&amp;download_id=[0-9]+)\&quot;</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/downloads/%NAME%.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Moving Light Assistant*/Moving Light Assistant.app</string>
+                <key>requirement</key>
+                <string>identifier "com.avld.movinglightassistant" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = AV8J3J9F4Q</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

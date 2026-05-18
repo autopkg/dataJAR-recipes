@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ExpressVPN and creates a package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.ExpressVPN</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ExpressVPN</string>
+        <key>PKG_ID</key>
+        <string>com.pkg.express.vpn</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.ExpressVPN</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/ExpressVPN Installer.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>root/private/tmp</key>
+                    <string>0777</string>
+                    <key>scripts</key>
+                    <string>0755</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%pkgroot%/root/private/tmp/ExpressVPN Installer.app</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/ExpressVPN Installer.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#!/bin/zsh --no-rcs
+
+# Runs the ExpressVPN Installer installer from /tmp
+
+# Define installer paths
+app_name="ExpressVPN Installer.app"
+installer_bin="/tmp/${app_name}/Contents/MacOS/ExpressVPN"
+
+# Run the installer in quiet mode
+if [ -x "$installer_bin" ]; then
+    "$installer_bin" --quiet
+    result=$?
+else
+    echo "Installer not found or not executable: $installer_bin" &gt;&amp;2
+    rm -rf "/tmp/${app_name}"
+    exit 1
+fi
+
+# Remove the installer .app from /tmp
+rm -rf "/tmp/${app_name}"
+
+# If installer failed, exit now
+if [ $result -ne 0 ]; then
+    exit $result
+fi</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/scripts/postinstall</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_request</key>
+                <dict>
+                    <key>id</key>
+                    <string>%PKG_ID%</string>
+                    <key>pkgname</key>
+                    <string>ExpressVPN-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/root</string>
+                    <key>scripts</key>
+                    <string>%RECIPE_CACHE_DIR%/payload/scripts</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+    </array>
+</dict>
+</plist>

@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo "Running pre-install script in $2"
+
+# Comment out user dialog section to enable silent installation
+# Check if user allows restarting coreaudiod
+#ALERT_RESULT=$(display_alert "'messageText' 'Core Audio will be restarted' 'informativeText' 'The Core Audio background process (coreaudiod) will be restarted, and audio will be interrupted.\n\nContinue with the installation?' 'alertStyle' 1 'firstButtonTitle' 'Continue' 'secondButtonTitle' 'Cancel' 'icon' 'dvs-3.icns'")
+#if [[ "$ALERT_RESULT" == "0" ]]; then
+#	syslog -s -l error "Dante Virtual Soundcard Installer: User cancelled installation (through coreaudiod restart prompt)"
+#	delete_silent_install_file
+#	exit 1
+#fi
+
+# Unload manager
+launchctl unload -w /Library/LaunchDaemons/com.audinate.dante.DanteVirtualSoundcard.plist > /dev/null 2>&1
+
+# Unload driver if exists
+if [ $(kextstat | grep -c com.audinate.dante.driver.NetworkAudioDriver) -ne 0 ]; then
+    kextunload -b com.audinate.dante.driver.NetworkAudioDriver > /dev/null 2>&1
+fi
+
+if [ $(kextstat | grep -c com.audinate.dante.driver.DanteVirtualSoundcard) -ne 0 ]; then
+    kextunload -b com.audinate.dante.driver.DanteVirtualSoundcard > /dev/null 2>&1
+fi
+
+# Remove DVS Audio PlugIn
+rm -rf /Library/Audio/Plug-Ins/HAL/DvsAudioPlugIn.driver
+
+# Remove DVS apps
+rm -rf /Library/Application\ Support/Audinate/DanteVirtualSoundcard
+rm -rf /Applications/Dante\ Virtual\ Soundcard*
+
+# Force quit DVS if it's already running
+killall "Dante Virtual Soundcard"
+
+exit 0

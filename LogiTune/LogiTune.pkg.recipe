@@ -3,28 +3,48 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of LogiTune and creates a package.</string>
+    <string>Downloads the latest version of Logi Tune and creates a package.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.LogiTune</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>LogiTune</string>
-         <key>INSTALL_SCRIPT</key>
+        <key>INSTALL_SCRIPT</key>
         <string>#!/bin/bash
 
 # Silently install LogiTune
 
-LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller -silent
+LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No
 
 exit</string>
+        <key>NAME</key>
+        <string>LogiTune</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>ParentRecipe</key>
-    <string>com.github.dataJAR-recipes.download.LogiTune</string>
+    <string>com.github.ahousseini-recipes.download.LogiTune</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. It is no longer possible to guarantee a safe install though management tooling.
+
+For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
@@ -41,10 +61,10 @@ exit</string>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-                <key>source_path</key>
-                <string>%pathname%/LogiTuneInstaller.app/Contents/Resources/Applications</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/LogiTuneInstaller.app/Contents/Resources/Applications</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -68,7 +88,7 @@ exit</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/Applications/LogiTune.app/Contents/Info.plist</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/Logi Tune.app/Contents/Info.plist</string>
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
@@ -80,10 +100,10 @@ exit</string>
             <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/Scripts/LogiTuneInstaller.app</string>
-                <key>source_path</key>
-                <string>%pathname%/LogiTuneInstaller.app</string>
                 <key>overwrite</key>
                 <true/>
+                <key>source_path</key>
+                <string>%pathname%/LogiTuneInstaller.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -120,8 +140,6 @@ exit</string>
                     <string>Scripts</string>
                     <key>version</key>
                     <string>%version%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                 </dict>
             </dict>
             <key>Processor</key>

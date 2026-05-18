@@ -11,10 +11,10 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Rectangle</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
         <key>NAME</key>
         <string>Rectangle</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.6.1</string>
@@ -23,12 +23,12 @@ i.e.: `-k PRERELEASE=yes`</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>asset_regex</key>
+                <string>[\S]+\.dmg</string>
                 <key>github_repo</key>
                 <string>rxhanson/Rectangle</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
-                <key>asset_regex</key>
-                <string>[\S]+\.dmg</string>
             </dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
@@ -47,8 +47,6 @@ i.e.: `-k PRERELEASE=yes`</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -56,6 +54,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>requirement</key>
                 <string>anchor apple generic and identifier "com.knollsoft.Rectangle" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XSYZ3E4B7D)</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

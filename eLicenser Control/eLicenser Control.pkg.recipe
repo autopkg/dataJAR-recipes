@@ -68,7 +68,7 @@
             <dict>
                 <key>file_content</key>
                 <string>#!/bin/bash
-                
+
 # Determine working directory
 installDir=$(dirname $0)
 

@@ -11,10 +11,10 @@ To download the Apple Silicon version set ARCH_TYPE to "aarch64.v"</string>
     <string>com.github.dataJAR-recipes.download.Azeus Convene</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AzeusConvene</string>
         <key>ARCH_TYPE</key>
         <string>v</string>
+        <key>NAME</key>
+        <string>AzeusConvene</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -25,10 +25,6 @@ To download the Apple Silicon version set ARCH_TYPE to "aarch64.v"</string>
             <dict>
                 <key>re_pattern</key>
                 <string>Latest Version: v([0-9]+(\.[0-9]+)+)</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_VERSION</string>
-                <key>url</key>
-                <string>https://www.azeusconvene.com/downloads</string>
                 <key>request_headers</key>
                 <dict>
                     <key>Referer</key>
@@ -36,19 +32,19 @@ To download the Apple Silicon version set ARCH_TYPE to "aarch64.v"</string>
                     <key>User-Agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1.2 Safari/605.1.15</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_VERSION</string>
+                <key>url</key>
+                <string>https://www.azeusconvene.com/downloads</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
-                <key>url</key>
-                <string>https://www.azeusconvene.com/installers/macos/standard/Azeus%20Convene.%ARCH_TYPE%%DOWNLOAD_VERSION%.dmg</string>
                 <key>request_headers</key>
                 <dict>
                     <key>Referer</key>
@@ -56,15 +52,17 @@ To download the Apple Silicon version set ARCH_TYPE to "aarch64.v"</string>
                     <key>User-Agent</key>
                     <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1.2 Safari/605.1.15</string>
                 </dict>
+                <key>url</key>
+                <string>https://www.azeusconvene.com/installers/macos/standard/Azeus%20Convene.%ARCH_TYPE%%DOWNLOAD_VERSION%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -76,6 +74,8 @@ To download the Apple Silicon version set ARCH_TYPE to "aarch64.v"</string>
                 <key>input_path</key>
                 <string>%pathname%/Convene Installer.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

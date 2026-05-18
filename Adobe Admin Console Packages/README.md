@@ -1,188 +1,188 @@
+<details>
+<summary>Licensed under the Apache License, Version 2.0 </summary>
+Copyright 2024 Jamf LTD
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+</details>
+
 # Adobe Admin Console Packages
+<p align="center"><img width="256" alt="Alert" src="https://github.com/user-attachments/assets/3166e0a9-3c2d-4dfd-8599-a30d26d663ad">
 
-## About  
-Since 2021, more and more of the Adobe Admin Console Packages have had signed/encrypted payloads.
+## About
 
-This means that we cannot pull apart the PKG's to retrieve the needed metadata for AutoPkg recipes.
+For information on how these recipes came about (and why), please click [here.](https://macmule.com/2024/09/09/adobe-admin-console-packages-3-0/)
 
-The prior iterations of our Adobe Versioner would work around this issue by having the data within the Versioner itself, but this then needed annual updates.
+## Quick start guide
+> [!IMPORTANT]
+> As of v3+, `AdobeAdminConsolePackagesImporter.py` needs sudo to run, this is due to the fact that `AdobeAdminConsolePackagesImporter.py` v3+ installs the titles locally to retrieve the needed metadata.
+> 
+> The naming of the packages in the Adobe Admin Console has to match a name within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
 
-The [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor, utilises the file: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to generate the needed metadata.
 
-The idea is that we can update [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as needed. And not need to create a new processor.
-
-Data within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), as well as the PKG's `optionXML.xml` and `Application.json` is used to create the metadata needed for the title.
-
-The processor [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py), generates a large about output variables. These are detailed in the table at the end of this README, and are to be used for folks to write their own recipes.
-
-## Usage
-1. Naming is important to the recipes, to start with you'll need to create [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html) with one of the below names in the [Adobe Admin Console](https://adminconsole.adobe.com):
-
-|||||
-|:---:|:---:|:---:|:---:
-|AdobeAcrobatDC| AdobeCharacterAnimator2021| AdobeInDesign2024| AdobePremiereRush|
-|AdobeAfterEffects2021| AdobeCharacterAnimator2022| AdobeLightroomCC| AdobePremiereRush2.0|
-|AdobeAfterEffects2022| AdobeCharacterAnimator2023| AdobeLightroomClassic| AdobeSubstance3DDesigner|
-|AdobeAfterEffects2023| AdobeCharacterAnimator2024| AdobeMediaEncoder2021| AdobeSubstance3DPainter|
-|AdobeAfterEffects2024|AdobeDimension| AdobeMediaEncoder2022| AdobeSubstance3DSampler|
-|AdobeAnimate2021| AdobeDreamweaver2021| AdobeMediaEncoder2023| AdobeSubstance3DStager|
-|AdobeAnimate2022| AdobeIllustrator2021| AdobeMediaEncoder2024| AdobeXD|
-|AdobeAnimate2023| AdobeIllustrator2022| AdobePhotoshop2021| |
-|AdobeAnimate2024| AdobeIllustrator2023| AdobePhotoshop2022| |
-|AdobeAudition2021| AdobeIllustrator2024| AdobePhotoshop2023|
-|AdobeAudition2022| AdobeInCopy2021| AdobePhotoshop2024| |
-|AdobeAudition2023| AdobeInCopy2022| AdobePrelude2021| |
-|AdobeAudition2024| AdobeInCopy2023|AdobePrelude2022| |
-|AdobeBridge2021| AdobeInCopy2024| AdobePremierePro2021| |
-|AdobeBridge2022| AdobeInDesign2021| AdobePremierePro2022| |
-|AdobeBridge2023| AdobeInDesign2022| AdobePremierePro2023| |
-|AdobeBridge2024| AdobeInDesign2023| AdobePremierePro2024|
-2. Download the DMG from the [Adobe Admin Console](https://adminconsole.adobe.com)
-3. Load the .app
-4. Download the title to your ~/Downloads
-5. Unzip the zip file
-6. An override is needed for each title, Munki recipes are supplied here. The override needs to start with the a name from the list above, and contain the recipe type. For example, `AdobeAcrobatDC.munki.recipe`
-9. With the above in place, call with the recipe "type" [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py). For example: `./AdobeAdminConsolePackagesImporter.py munki`
+1. For each Adobe title you want to import:
+   1. Download one or more DMG from the [Adobe Admin Console](https://adminconsole.adobe.com), making sure that the name is prefixed with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
+   1. Load the .app.
+   1. Download the title.
+   1. If the download is a .zip, unzip it.
+1. Create an override for each title, from the recipes in this directory.
+   1. Make sure that the override is prefixed the same as per the name choosen in step 1.
+   1. Make sure that the override type is included included within the name, such as `munki`.
+   1. If the pkg is an Apple silicon pkg, add arm64 to the override name.
+   1. Both plist/xml and yml/yaml overrides are supported.
+1. Run `sudo ./AdobeAdminConsolePackagesImporter.py`, found within the same directory as this README, authenticating as sudo and passing at least the type key (see below for examples):
+   1. `./AdobeAdminConsolePackagesImporter.py munki` - This will look within ~/Downloads/ for Adobe installers and match with .munki overrides.
+   1. `./AdobeAdminConsolePackagesImporter.py jamf /Users/Shared/adobe/` - This will look within Users/Shared/adobe/ for Adobe installers and match with jamf overrides.
+   1. The `--extract-icons` flag will extract any imported titles Icon file to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`.
+   1. the `--uninstall` this will uninstall the tile from the Mac running `AdobeAdminConsolePackagesImporter.py`, once it has gathered the needed metadata.
 
 ## Process
-1. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) will create a [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) at: ~/Downloads/adobe_admin_console_recipes_list.txt  
-2. [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py) next checks ~/Downloads for any folders that begin with Adobe  
-3. Next, these are checked to see if they contain the *_Install.pkg and *_Uninstall.pkg PKG's, (these will be present if a [Managed Package](https://helpx.adobe.com/uk/enterprise/using/manage-packages.html)).  
-4. If the above steps pass, then the [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-Overrides#recipe-override-directories) searched. If an override is found which starts with the name of the title (as per the table above), and contains the recipe type as passed to [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py), it's identifier is added to the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists)  
-5. If any matching overrides are found, AutoPkg will run the recipes in the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists), generating a report at: ~/Downloads/adobe_admin_console_recipes_report.txt
-6. When the recipes are ran, the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor will check that both the *_Install.pkg and *_Uninstall.pkg PKG's exist with the titles folder within ~/Downloads, before proceeding.
-7. Next, the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor will look for the `optionXML.xml` file, located at: `*_Install.pkg/Contents/Resources/optionXML.xml`. This file is read in if exists, and exception is raised if missing or cannot be read.
-8. From the `optionXML.xml` the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor will derive the values for the following variables (for more details see the Variables table below):
-• aacp_application_install_lang
-• aacp_application_architecture_type
-• aacp_application_sap_code
-• aacp_application_major_version
-• aacp_target_folder
-10. If Acrobat, as this is still using the older RIBS installation method, the `proxy.xml` file, located at: `*_Install.pkg/Contents/Resources/Setup/aacp_target_folder/proxy.xml`, (for how `aacp_target_folder` is generated, see the Variables table below), is read in if exists, and exception is raised if missing or cannot be read. For Acrobat, this file contains the version. For all other installers, the `Application.json` located at: `*_Install.pkg/Contents/Resources/HD/aacp_target_folder/Application.json`, (for how `aacp_target_folder` is generated, see the Variables table below), is read in if exists, and exception is raised if missing or cannot be read. From the `Application.json`, the following variables values are derived:
-• aacp_application_description
-• aacp_blocking_applications
-11. Next, the [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) is read in and parsed. The step here is looking for the entry for the title, via the `aacp_application_sap_code` and `aacp_application_major_version`. If a match isn't found, an exception is raised. If a match is found, the details within the matched json are then used to populate the additional variables as needed.
-12. Finally, when the titles are processed via the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor the recipe proceeds to it's next step, and will be able to access all the variables as mentioned in the Variables table below.
+1. Adobe Admin Console
+   1. Create a package including just a single title and Creative Cloud Desktop app.
+   1. Prefix the package with one of the names listed within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
+   1. Finish creating the package selecting, [flat packages](https://helpx.adobe.com/uk/enterprise/using/create-flat-packages.html). Bundle package support has been removed from these recipes as they will not install on macOS15+.
+   1. Download the DMG.
+   1. Load the .app.
+   1. Download the title.
+   1. If the download is a .zip, unzip it.
+1. Create an override for each title, from the recipes in this directory.
+   1. Make sure that the override is prefixed the same as per the name choosen in step 1.
+   1. Make sure that the override type is included included within the name, such as `munki`.
+   1. If the pkg is an Apple silicon pkg, add arm64 to the override name.
+1. Run `sudo ./AdobeAdminConsolePackagesImporter.py`, found within the same directory as this README, authenticating as sudo and passing at least the type key.
+   1. The minimum arguments `AdobeAdminConsolePackagesImporter.py` needs is the recipe type: `AdobeAdminConsolePackagesImporter.py munki` (for munki recipes).
+   1. Optionally, pass the root directory containing the Adobe installers downloaded from the Adobe Admin Console (if this is omitted then `~/Downloads/` is used, for example `AdobeAdminConsolePackagesImporter.py /Users/Shared/adobe/`.
+   1. Optionally, add the flag `--extract-icons`, this will extract any imported titles Icon file to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`.
+   1. Optionally, add the flag `--uninstall` this will uninstall the title from the Mac running `AdobeAdminConsolePackagesImporter.py`, once it has gathered the needed metadata.
+   1. Confirms that the passed directory or the default directory exists, before proceeding.
+   1. Parses [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) to retrieve a list of titles names, (these are the same as found within the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names)). The json also contains:
+       1. `aacp_name` - the titles name, this will be a name from: [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names).
+       1. `aacp_application_full_path` - the titles full path when installed, used to get the titles Info.plist and to generate an installs array for the supplied .munki recipes.
+       1. `aacp_application_description` - Acrobat only, as the the description cannot be obtained from it's pkg itself.
+       1. `aacp_blocking_applications` - Acrobat only, as not obtained in the same way as the rest of the Adobe CC titles.
+       1. `aacp_application_display_name` - The titles display name, for example: `Adobe Animate 2024` vs `AdobeAnimate2024`
+       1. `aacp_application_sap_code` - required for the uninstall scripts within the supplied .munki recipes.
+       1. `aacp_version_comparison_key` - what version key, `CFBundleVersion` or `CFBundleShortVersionString` to use when comparing versions.
+   1. Recursively looks within the defined direcory for flat pkg files which start with one of the title names retrieved from the prior step. Recording the path to the variable `aacp_package_path`.
+   1. Prints a summary of found packages.
+   1. Retrieves a list of [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-overrides#recipe-override-directories) from AutoPkg's preference domain.
+   1. Looks within each of the defined [RECIPE_OVERRIDE_DIRS](https://github.com/autopkg/autopkg/wiki/Recipe-overrides#recipe-override-directories) for overrides that:
+       1. Start with the same name from the [application names table](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/README.md#application-names) as the located packages.
+       1. Contains the same recipe type that was passed to [AdobeAdminConsolePackagesImporter.py](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesImporter.py).
+       1. Optionally, if the pkg contains `MACARM` looks for `arm64` within the overrides file name.
+   1. For each package matched with an override:
+       1. The matched override's identifier is stored in the variable: `aacp_override_identifier`, and it's path is stored in the variable: `aacp_override_path`.
+       1. The package is expanded to a temp directory (the path to which is stored in the variable: `aacp_pkg_expand_dir`).
+       1. The packages `optionXML.XML`, located within the packages `Scripts` directory is parsed to retrieve the following:
+         1. `aacp_application_architecture_type` - the installers supported architecture, will be one of: arm64, macuniversal or x64.
+         1. `aacp_application_base_version` - required for the uninstall scripts within the supplied .munki recipes.
+         1. `aacp_application_install_lang` - the installers selected language, used to retrieve the languages description for the title from within it's `Application.json` file (except for Acrobat DC).
+         1. `aacp_target_folder` - this is the folder within the packages `Scripts` directory, that holds the installer package for the Adobe title itself (as opposed to ancilliary installers like Creative Cloud Desktop etc).
+         1. If the passed pkg is not an Adobe Acrobat installer, the following are then retrieved from the `Application.json` file. Found within a subfolder in the packages `Scripts` directory, named the value of: `aacp_target_folder`.
+           1. `aacp_application_description` - the value of `TagLine`, in the same langauge as: `aacp_application_install_lang`. This then used by default, as the description in the supplied Munki recipes.
+           1. `aacp_blocking_applications` - list of blocking applications. this list is later added to the overrides pkginfo dicts, (if exists).
+           1. `aacp_minimum_os` - the installers minimum OS. This might well differ from the actual titles Info.plist's LSMinimumSystemVersion, but if the title cannot be installed then the latter is a moot point.
+       1. The directory which the pkg was expanded into, `aacp_pkg_expand_dir`, is deleted.
+       1. For each matched package, the following steps occur:
+           1. If the pkg is can be installed on the Mac running the script:
+               1. The installed Adobe titles Info.plist is read in, the path of which made up of `aacp_application_full_path` + `Contents/Info.plist`. With the below variables being obtained from the Info.plist:
+                   1. `aacp_bundle_icon_file` - the value of `CFBundleIconFile`.
+                   1. `aacp_bundle_identifier` - the value of `CFBundleIdentifier`
+                   1. `aacp_bundle_short_version_string` - the value of `CFBundleShortVersionString`
+                   1. `aacp_bundle_version` - the value of `CFBundleVersion`
+                   1. `aacp_application_version` - the titles version, this will be either the value of `aacp_bundle_short_version_string` or `aacp_bundle_version`. Which one is dictated by the value of `aacp_version_comparison_key`.
+                   1. If `aacp_minimum_os` has not yet be defined. This is set to the value of: `LSMinimumSystemVersion`
+               1. If `--extract-icons` has been passed to `AdobeAdminConsolePackagesImporter.py`, the icon at: `aacp_application_full_path` + `Contents/Resources` + `aacp_bundle_icon_file` is copied to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`, and `aacp_icon_name` is set to the icons name in `%RECIPE_CACHE_DIR%`
+               1. If `--uninstall` has been passed to `AdobeAdminConsolePackagesImporter.py`, `AdobeAdminConsolePackagesImporter.py` will uninstall the application from the Mac that's running: `AdobeAdminConsolePackagesImporter.py`.
+           1. If the pkg is cannot be installed on the Mac running the script, the script looks in the list of Adobe installers for a pkg for the same title, that can be installed on the Mac running the script. If a matching pkg is found:
+               1. Various keys are checked with across both the pkg which can be installed on the Mac running the script, and the pkg which cannot be installed on the Mac the script.
+               1. If all of the keys match, the script will take some of the metadata from the pkg which can be installed on the Mac running the script, and add to the metadata of the the pkg which cannot be installed on the Mac the script.
+   1. The matched recipes overrides are updated, with each `aacp_` variable being written into the matched overrides Input dict. This allows these values to be used within the override as wanted. Additionally, if the overrides Input dict contains a pkginfo dict, (such as the case with .munki recipes), then:
+       1. `aacp_blocking_applications` then `blocking_applications` is created with the value of `aacp_blocking_applications`
+       1. If `aacp_application_architecture_type` is either arm64 or x64, then this `supported_architectures` is created with the value of `aacp_application_architecture_type`.
+   1. A [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) is created, containing the overrides identifiers for the overrides which have matched a downloaded Adobe Admin Console package in alphabetical order, within the passed/derived directory. (Examples: `~/Downloads/adobe_admin_console_recipes_list.txt`, `/Users/Shared/adobe/adobe_admin_console_recipes_list.txt`)
+   1. Runs the [recipe list](https://github.com/autopkg/autopkg/wiki/Running-Multiple-Recipes#recipe-lists) via AutoPkg , setting the [report path](https://github.com/autopkg/autopkg/wiki/Processor-Summary-Reporting) to `adobe_admin_console_recipes_report.plist`, within the passed/derived directory. (Examples: `~/Downloads/adobe_admin_console_recipes_report.plist`, `/Users/Shared/adobe/adobe_admin_console_recipes_report.plist`)
 
-## Icons
-If you're using the .munki recipes supplied here, you can simply drop the icons from the icons folder, into your Munki repos icons folder.. and [Munki will use the icons]|(https://github.com/munki/munki/wiki/Product-Icons#details), as the names match. 
+## Application names
+<div align="center">
 
-## Recipe Types
-Munki recipes are included in this repo only, as we use these recipes and as such can keep them updated as needed.
+|Adobe CC 2026|Adobe CC 2025|Adobe CC 2024|Adobe CC 2023|
+|:---:|:---:|:---:|:---:|
+|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|AdobeAcrobatDC|
+|AdobeAfterEffects2026|AdobeAfterEffects2025|AdobeAfterEffects2024|AdobeAfterEffects2023|
+||AdobeAnimate2024|AdobeAnimate2023||
+|AdobeAudition2026|AdobeAudition2025|AdobeAudition2024|AdobeAudition2023|
+|AdobeBridge2026|AdobeBridge2025|AdobeBridge2024|AdobeBridge2023|
+|AdobeCharacterAnimator2026|AdobeCharacterAnimator2025|AdobeCharacterAnimator2024|AdobeCharacterAnimator2023|
+||AdobeDimension|AdobeDimension|AdobeDimension|
+||AdobeDreamweaver2021|AdobeDreamweaver2021|AdobeDreamweaver2021|
+|AdobeIllustrator2026|AdobeIllustrator2025|AdobeIllustrator2024|AdobeIllustrator2023|
+|AdobeInCopy2026|AdobeInCopy2025|AdobeInCopy2024|AdobeInCopy2023|
+|AdobeInDesign2026|AdobeInDesign2025|AdobeInDesign2024|AdobeInDesign2023|
+|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|AdobeLightroomCC|
+|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|AdobeLightroomClassic|
+|AdobeMediaEncoder2026|AdobeMediaEncoder2025|AdobeMediaEncoder2024|AdobeMediaEncoder2023|
+|AdobePhotoshop2026|AdobePhotoshop2025|AdobePhotoshop2024|AdobePhotoshop2023|
+|AdobePremierePro2026|AdobePremierePro2025|AdobePremierePro2024|AdobePremierePro2023|
+|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|AdobePremiereRush2.0|
+|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|AdobeSubstance3DDesigner|
+|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|AdobeSubstance3DPainter|
+|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|AdobeSubstance3DSampler|
+|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|AdobeSubstance3DStager|
+|AdobeXD|AdobeXD|AdobeXD|AdobeXD|
 
-Other than the installs array, these included recipes auto-populate the below items. With values from either the [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) and the PKG's `optionXML.xml` and `Application.json` files
-
-• **blocking_applications** - see `aacp_blocking_applications`  in the Variables table below  
-• **description** - see `aacp_application_description` in the Variables table below  
-• **display_name** - from `display_name` for the titles version, within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)  
-• **installer_type** - set to `<string></string>`, due to: [https://dazwallace.wordpress.com/2021/03/27/adobe-installers-munki-and-error-82/](https://dazwallace.wordpress.com/2021/03/27/adobe-installers-munki-and-error-82/)  
-• **minimum_os_version** - from `[SystemRequirement][CheckCompatibility][Content]` from within `Application.json`, derived via the `minos_regex` found within titles version, within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json). With the exception of Acrobat, which it's just pulled from the titles version, within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)  
-
-If you don't want the above to be set as mentioned, then you'll need to create your own .munki recipes.
-
-You can then make changes to the second `MunkiPkginfoMerger` section, the which looks like the below, to override what it being set by the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor:
-
-```
-            <dict>
-                <key>Processor</key>
-                <string>MunkiPkginfoMerger</string>
-                <key>Arguments</key>
-                <dict>
-                    <key>additional_pkginfo</key>
-                    <dict>
-                        <key>installer_type</key>
-                        <string/>
-                        <key>version</key>
-                        <string>%version%</string>
-                    </dict>
-                </dict>
-            </dict>
-```
+</div>
 
 ## Variables
-The below are the output_variables from the [AdobeAdminConsolePackagesPkgInfoCreator](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAdminConsolePackagesPkgInfoCreator.py) processor, and how the values are derived.
+The below are written to the overrides Input dict, making them available to the recipe as wanted.
+
+With the exception of `aacp_application_architecture_type` and `aacp_blocking_applications`, which will be added to the overrides pkginfo dict, if present and as mentioed above.
 
 Hopefully this makes things easier to create your own recipes.
 
 | Variable | Generated How? | Usage |
-|:---:|:---:|---|
-|aacp_application_bundle|`aacp_installdir_maxpath` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
-|aacp_application_bundle_id|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Value of the titles CFBundleIdentifier.|
-|aacp_application_architecture_type|`optionXML.xml`, the value of the `ProcessorArchitecture` element.|Raises if not found or not either arm64, macuniversal nor x64. x64 is later converted to x86_64.|
-|aacp_application_description|`Application.json`, the short description found within ["ProductDescription"]["Tagline"]["Language"] where ["locale"] == `installLang`, failsover to the `app_description` key in `AdobeAutoPkgApplicationData.json`.|Description of title.|
-|aacp_application_display_name|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Display name of the title|
+|:---:|:---:|:---:|
+|aacp_application_architecture_type|`optionXML.xml`, the value of the `ProcessorArchitecture` element.|Will be one of: arm64, macuniversal or x64.|
+|aacp_application_base_version|`optionXML.xml`, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `baseVersion` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `ProdVersion` from the within the parent element.|The major version of a title the installer is for, required by the uninstall scripts for all except Adobe Acrobat.|
+|aacp_application_description|[The short description found within the titles `Application.json` file within ["ProductDescription"]["Tagline"]["Language"] where ["locale"] == `aacp_application_install_lang`, for all titles except Adobe Acrobat. With Adobe Acrobat's description being set to the value of `aacp_application_description` within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json).|Titles description.|
+|aacp_application_display_name|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Display name of the title.|
 |aacp_application_full_path|Manually set in [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Full path to titles .app.|
-|aacp_application_install_lang|optionXML.xml, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `installLang` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `installLang` from the within the parent element.|Used to pull the description for the title.|
-|aacp_application_json_path|Path to the tiles `Application.json` file.|Processed for metadata.|
-|aacp_application_major_version|`optionXML.xml`, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `baseVersion` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `ProdVersion` from the within the parent element.|The major version of a title the installer is for.|
-|aacp_application_path|`aacp_installdir_value` after regex applied to get the path alone.|Used to generate `aacp_application_full_path`|
-|aacp_application_sap_code|optionXML.xml, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `SAPCode` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `SAPCode` from the within the parent element.|Used to identify which title the installer is for.|
-|aacp_target_folder|optionXML.xml, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `TargetFolderName` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `TargetFolderName` from the within the parent element.|The name of the folder within the PKG to check additional files for metadata. Will be a folder within: ./Contents/Resources/HD  for a HD installer, and the following for a RIBS installer: ./Contents/Resources/Setup|
-|aacp_blocking_applications|A sorted set of the titles conflicting processes, collated from ['ConflictingProcesses']['ConflictingProcess'] within the `Application.json` where `forceKillAllowed` is `False`.|Used to identify which processes cannot be running during the titles installation.|
-|aacp_install_pkg_path|Full path to the `*_Install.pkg`|For import, and for checking files within for metadata.|
-|aacp_json_path|os.path.join(self.env['aacp_parent_dir'], 'AdobeAutoPkgApplicationData.json').|Contains details of items to read in per `aacp_sap_code`, per `aacp_base_version`. To be updated with new major releases to drive `AdobeAdminConsolePackagesPkgInfoCreator`|
-|aacp_option_xml_path|Path to the tiles `optionXML.xml` file.|Processed for metadata.|
-|aacp_parent_dir|Path to directory which the AdobeAdminConsolePackagesPkgInfoCreator exists.|To create the full path to `AdobeAutoPkgApplicationData.json`.|
-|aacp_proxy_xml_path|Acroabat only, path to the tiles `proxy.xml` file.|Processed for metadata.|
-|aacp_uninstall_pkg_path|Full path to the `*_Uninstall.pkg` |For importing.|
-|aacp_version_json|dict from `AdobeAutoPkgApplicationData.json`, which matches the `aacp_application_sap_code` and `aacp_application_major_version`.|More items for mmetadata.|
-|version|`Application.json`, the value is taken from the key defined by `app_json_version_key` within the `AdobeAutoPkgApplicationData.json` for the matching `aacp_sap_code` and `aacp_base_version`.|Titles version.|
+|aacp_application_install_lang|optionXML.xml, either: within .//HDMedias/HDMedia/ where MediaType = Product, then the value for `installLang` from the parent element. Or, if RIBS media. Then .//Medias/Media and the value for the `installLang` from the within the parent element.|Used to pull the description for the title, for all titles except Adobe Acrobat. See: `aacp_application_description`.|
+|aacp_application_minimum_os|Sourced from `[SystemRequirement][CheckCompatibility][Content]` within [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json). With the exception of Acrobat, which is pulled from: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json)|Lowest OS version with which the title is compatible.
+|aacp_application_sap_code|Taken from [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json).|Required by the uninstall scripts for all except Adobe Acrobat.|
+|aacp_application_version|The applications version, this will be either the value of `aacp_bundle_short_version_string` or `aacp_bundle_version`. Which one is dictated by the value of `aacp_version_comparison_key`.|The titles version.|
+|aacp_blocking_applications|A sorted set of the titles conflicting processes, collated from ['ConflictingProcesses']['ConflictingProcess'] within the `Application.json` file where `forceKillAllowed` is `False`, for all titles except Adobe Acrobat. With Adobe Acrobat's `aacp_blocking_applications` being set to it's vaule in: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json).|Used to identify which processes cannot be running during the titles installation.|
+|aacp_bundle_icon_file|Retrieved from the titles Info.plist.|Value of CFBundleIconFile.|
+|aacp_bundle_identifier|Retrieved from the titles Info.plist.|Value of CFBundleIdentifier|
+|acp_bundle_short_version_string|Retrieved from the titles Info.plist.|Value of CFBundleShortVersionString|
+|aacp_bundle_version|Retrieved from the titles Info.plist.|Value of CFBundleVersion|
+|aacp_icon_name|Name of the icon file, if it was set to be extracted, in: %RECIPE_CACHE_DIR%|
+|aacp_minimum_os|The installers minimum OS, for all titles except Adobe Acrobat. With Adobe Acrobat's being set to the value of LSMinimumSystemVersion from witin it's Info.plist.|The installers minimum OS.
+|aacp_name|The name of the title, as matched within: [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json).| Titles name.|
+|aacp_override_identifier|Name of the titles matched overrides identifier, retrieved from the override at: `aacp_override_path`.|Added to the recipe list.|
+|aacp_override_path|Path to the recipe override itself.|Used to update the overrides contents.|
+|aacp_pkg_expand_dir|Temp directory where the package was expanded.|Used within `AdobeAdminConsolePackagesImporter.py` to delete the temporary directory after checking it's contents as needed.|
+|aacp_target_folder| The folder within the packages `Scripts` directory, that holds the installer package for the Adobe title itself (as opposed to ancilliary installers like Creative Cloud Desktop etc).|To generate the path to the titles `Application.json`
+|aacp_version_compare_key|Taken from [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json), will be either `CFBundleVersion` or `CFBundleShortVersionString`.|The key which holds the applcations version within the titles info.plist.|
 
-## AdobeAutoPkgApplicationData.json structure
-The below details the structure and keys in the [AdobeAutoPkgApplicationData.json](https://github.com/autopkg/dataJAR-recipes/blob/master/Adobe%20Admin%20Console%20Packages/AdobeAutoPkgApplicationData.json) file.
+## FAQ
+**Q1:** Do these recipes also retrieve the applications icons?
 
-```
-{
-        "sap_code": "AME",
-        "versions": {
-            "15.0": {
-                "app_bundle_id": "com.adobe.ame.application.15",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2021/Adobe Media Encoder 2021.app",
-                "app_description": "Quickly output video files for virtually any screen.",
-                "display_name": "Adobe Media Encoder 2021",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "22.0": {
-                "app_bundle_id": "com.adobe.ame.application.22",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2022/Adobe Media Encoder 2022.app",
-                "app_description": "Quickly output video files for virtually any screen.",
-                "display_name": "Adobe Media Encoder 2022",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "23.0": {
-                "app_bundle_id": "com.adobe.ame.application.23",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2023/Adobe Media Encoder 2023.app",
-                "app_description": "Quickly output video files for virtually any screen.",
-                "display_name": "Adobe Media Encoder 2023",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            },
-            "24.0": {
-                "app_bundle_id": "com.adobe.ame.application.24",
-                "app_json_version_key": "CodexVersion",
-                "app_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
-                "app_description": "Quickly output video files for virtually any screen.",
-                "display_name": "Adobe Media Encoder 2024",
-                "minos_regex": "macChecks={minOSVersion:\\\"(.*?)\\\"",
-                "version_comparison_key": "CFBundleShortVersionString"
-            }
-        }
-    },
-```
+**A1:** ~~Sadly, no. The reason is that the full icon is within the encrypted payload. The icons we can access have low resolutions,such as 176 x 168.~~
+> [!TIP]
+> If you're using munki. Make sure that the icons your drop within Munki's icon folder are named the same as the munki name. Munki will then match the icons without you having to explicitly state the icons name within the overrride. As mentioned on this [wiki page](https://github.com/munki/munki/wiki/Product-Icons#details).
 
-• **sap_code** - required - see `aacp_application_sap_code` in the Variables table above, this is used to define which title the object covers.  
-• **versions** -  required - see `aacp_application_major_version` in the Variables table above, this is used to define which major version of the title the object covers.  
-• **additional_blocking_applications** - optional - Array of additional applications to add to the blocking_applications array. In the case of Acrobat, this is actually the blocking_applications array as cannot be retrieved via the same method as the older titles.  
-• **app_bundle_id** - required - see `aacp_application_bundle_id`in the Variables table above.title.  
-• **app_json_version_key** - required - the key within the `Application.json` which holds the titles version.  
-• **app_path** - required - see `aacp_application_full_path` in the Variables table above.  
-• **app_description** - required - see `aacp_application_description` in the Variables table above.  
-• **display_name** - required - see `aacp_display_name` in the Variables table above.  
-• **minos_regex** - required - regex pattern to use when looking to derive the minimum OS version from `[SystemRequirement][CheckCompatibility][Content]` from within `Application.json`.  
-• **unsupported_versions_dict** - optional - Array containg the versions of incompatible titles, and a reason why.  
-• **version_comparison_key** - required - the key in the titles info.plist to use for version comparisions.  
+With v3+, the titles icons can be extracted as per the `--extract-icons` flag.
+##
+**Q2:** Why does version 2+ of these recipes no longer need the *_Uninstall.pkg?
+
+**A1:** The flat packages do not include a *_Uninstall.pkg, as such the .munki recipes contain uninstallation scripts.. which are the same for all but Acrobat.
+##
+**Q3:** Why no bundle package support in v3+?
+
+**A3:** Support was dropped as Sequoia doesn't support bundle packages, and it simplifies the code somewhat.
+##
+**Q4:** What happens if one of the packages needs a different processor architecture than the pkg?
+
+**A4:** That should only apply to 3 of the Substance 3D titles, and hopefully their next releases will have universal packages.

@@ -12,21 +12,21 @@
         <string>FlashPrint</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.2.9</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Windows 32-bit installer&lt;/a&gt;, &lt;a href=\"(http://www\.jgoodies\.com/download/jdiskreport/jdiskreport-.*?-mac\.zip)\"&gt;Mac OS X</string>
+                <string>https://www.jgoodies.com/download/jdiskreport/jdiskreport-[\d_]+-mac.zip</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
                 <key>url</key>
                 <string>https://www.jgoodies.com/downloads/jdiskreport/</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>

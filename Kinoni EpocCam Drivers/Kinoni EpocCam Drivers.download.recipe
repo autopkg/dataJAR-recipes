@@ -16,32 +16,32 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
                 <string>href=\"(https://edge\.elgato\.com/egc/macos/epoccam/EpocCam_Installer_([0-9]+(_[0-9]+)+)\.pkg)\"</string>
-                <key>result_output_var_name</key>
-                <string>url</string>
                 <key>request_headers</key>
                 <dict>
-                    <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
-                    <key>Referer</key>
-                    <string>https://help.elgato.com/;auto</string>
-                    <key>Sec-Fetch-Site</key>
-                    <string>same-site</string>
                     <key>Accept</key>
                     <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
-                    <key>Sec-Fetch-Mode</key>
-                    <string>navigate</string>
+                    <key>Referer</key>
+                    <string>https://help.elgato.com/;auto</string>
                     <key>Sec-Fetch-Dest</key>
                     <string>document</string>
+                    <key>Sec-Fetch-Mode</key>
+                    <string>navigate</string>
+                    <key>Sec-Fetch-Site</key>
+                    <string>same-site</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
                 </dict>
+                <key>result_output_var_name</key>
+                <string>url</string>
                 <key>url</key>
                 <string>https://help.elgato.com/hc/en-us/articles/360052826852-EpocCam-Release-Notes-macOS</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -52,19 +52,19 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%pathname%</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Corsair Memory, Inc. (Y93VXCB8Q5)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

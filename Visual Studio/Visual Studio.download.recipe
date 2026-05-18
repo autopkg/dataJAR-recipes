@@ -12,10 +12,10 @@ For the ARCH_TYPE variable use "x64" for Intel or "arm64" for Apple Silicon</str
     <string>com.github.dataJAR-recipes.download.VisualStudio</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>VisualStudio</string>
         <key>ARCH_TYPE</key>
         <string>x64</string>
+        <key>NAME</key>
+        <string>VisualStudio</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

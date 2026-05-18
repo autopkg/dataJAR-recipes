@@ -9,18 +9,16 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
     <string>com.github.dataJAR-recipes.download.Azul Zulu OpenJDK 11 LTS</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>AzulZuluOpenJDK11LTS</string>
         <key>ARCHITECTURE</key>
         <string>x</string>
+        <key>NAME</key>
+        <string>AzulZuluOpenJDK11LTS</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -28,15 +26,17 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
                 <key>url</key>
                 <string>https://cdn.azul.com/zulu/bin/?C=M;O=D</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
                 <string>https://cdn.azul.com/zulu/bin/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -52,8 +52,6 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
             <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -65,6 +63,8 @@ Set the ARCHITECTURE key to "x" to download the Intel version or "aarch" for App
                 <key>input_path</key>
                 <string>%pathname%/%dmg_found_filename%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

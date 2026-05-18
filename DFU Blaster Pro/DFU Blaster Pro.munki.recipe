@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of DFU Blaster Pro and imports it into Munki.
+
+This differs from https://github.com/autopkg/kevinmcox-recipes/blob/master/Twocanoes%20Software/DFUBlaster.munki.recipe due to the use of an installcheck_script that combines CFBundleShortVersionString and CFBundleVersion to use for the comparison.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.DFU Blaster Pro</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>utilities/DFUBlaster</string>
+        <key>NAME</key>
+        <string>DFUBlasterPro</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Utilities</string>
+            <key>description</key>
+            <string>DFU Blaster Pro is the easiest way to put a Mac into DFU mode.</string>
+            <key>developer</key>
+            <string>Twocanoes Software</string>
+            <key>display_name</key>
+            <string>DFU Blaster Pro</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+# Uninstall script taken from the postinstall of the uninstaller package
+
+dir=`/usr/bin/mktemp -d ~/.Trash/DFU_Blaster.XXXXXX`
+    /bin/chmod ugo+rx "${dir}"
+
+if [ -d "/Applications/DFU Blaster.app" ] ; then
+    mv "/Applications/DFU Blaster.app" "${dir}";
+fi
+
+
+if [ -d "/Applications/DFU Blaster Pro.app" ] ; then
+    mv "/Applications/DFU Blaster Pro.app" "${dir}";
+fi
+
+
+if [ -e "/Library/LaunchDaemons/com.twocanoes.dfublasterhelper.plist" ] ; then
+    echo "removing prior DFU Blaster Helper LaunchDaemon"
+    cd "/Library/LaunchDaemons"
+    launchctl stop com.twocanoes.dfublasterhelper
+    launchctl unload com.twocanoes.dfublasterhelper.plist
+    rm com.twocanoes.dfublasterhelper.plist
+    echo "done removing prior DFU Blaster Helper LaunchDaemon"
+
+fi
+
+if [ -e "/Library/PrivilegedHelperTools/com.twocanoes.dfublasterhelper" ] ; then
+    echo "removing prior DFU Blaster Helper Tool"
+    rm "/Library/PrivilegedHelperTools/com.twocanoes.dfublasterhelper"
+    echo "done removing prior DFU Blaster Helper Tool"
+
+fi</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.kevinmcox.download.DFUBlaster</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/DFU Blaster Pro.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/DFU_Blaster_Pro.pkg/payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>app_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/CFBundleVersionCombiner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/DFU Blaster Pro.app</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>LSMinimumSystemVersion</key>
+                    <string>min_os_ver</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh --no-rcs
+
+# Copyright 2025, Jamf Software, LLC.
+
+# Munki installcheck_script for DFU Blaster Pro creates a composite version string for accurate comparison.
+# The script checks if DFU Blaster Pro.app exists at /Applications/DFU Blaster Pro.app
+# Extracts both version components from the Info.plist, combines them (e.g., "1.2.3" + "456" = "1.2.3.456")
+# Compares against the expected version to determine if installation or upgrade is needed.
+
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
+
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
+
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
+
+# Function to get combined version from DFU Blaster Pro.app
+get_combined_version() {
+    local app_path="/Applications/DFU Blaster Pro.app"
+    local info_plist="$app_path/Contents/Info.plist"
+
+    if [[ ! -f "$info_plist" ]]; then
+        echo "Info.plist not found at: $info_plist" &gt;&amp;2
+        return 1
+    fi
+
+    # Get short version and bundle version using plutil
+    local short_version=$(plutil -extract CFBundleShortVersionString raw "$info_plist" 2&gt;/dev/null)
+    local bundle_version=$(plutil -extract CFBundleVersion raw "$info_plist" 2&gt;/dev/null)
+
+    if [[ -z "$short_version" || -z "$bundle_version" ]]; then
+        echo "Error getting version components from plist" &gt;&amp;2
+        return 1
+    fi
+
+    local combined_version="$short_version.$bundle_version"
+    echo "Found combined version: $combined_version" &gt;&amp;2
+    echo "$combined_version"
+    return 0
+}
+
+# Expected version from CFBundleVersionCombiner
+expected_version="%version%"
+echo "Expected version: $expected_version"
+
+# Check if app exists
+if [[ ! -d "/Applications/DFU Blaster Pro.app" ]]; then
+    echo "DFU Blaster Pro.app not found"
+    exit 0
+fi
+
+# Get current version from app
+if current_version=$(get_combined_version); then
+    echo "Current version: $current_version"
+
+    # Compare versions - if they don't match, install
+    if [[ "$current_version" != "$expected_version" ]]; then
+        echo "Version mismatch - Expected: $expected_version, Current: $current_version"
+        exit 0
+    else
+        echo "Versions match"
+        # Everything is installed and versions match
+        # Exit 1 means no install/upgrade needed
+        echo "All checks passed - no installation needed"
+        exit 1
+    fi
+else
+    echo "Could not determine current version"
+    exit 0
+fi</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/payload/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

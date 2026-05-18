@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Kinoni EpocCam Drivers</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>KinoniEpocCamDrivers</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -95,8 +95,8 @@
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -121,8 +121,8 @@
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -135,8 +135,6 @@
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -144,6 +142,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
             <key>Arguments</key>

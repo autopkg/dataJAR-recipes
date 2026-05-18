@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Perimeter 81</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Perimeter81</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>NAME</key>
+        <string>Perimeter81</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -39,11 +39,31 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.1.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.pkg.Perimeter 81</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor has changed the name of the Application to Harmony SASE, please use the new recipes.
+
+- https://github.com/autopkg/dataJAR-recipes/tree/master/Harmony%20SASE</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
@@ -59,8 +79,8 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -88,8 +108,6 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -98,6 +116,8 @@ Incorporating the highest standards of Zero Trust Security, Perimeter 81 users c
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>

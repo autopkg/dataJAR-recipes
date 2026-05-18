@@ -23,7 +23,7 @@
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
-                <string>https://o.steinberg.net/en/support/downloads/cubase_12/cubase_pro_12.html</string>
+                <string>https://o.steinberg.net/index.php?id=15224&amp;L=1</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>

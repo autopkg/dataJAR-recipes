@@ -10,53 +10,76 @@
     <dict>
         <key>NAME</key>
         <string>RAWViewer</string>
-        <key>BASE_URL</key>
-        <string>https://www.sonycreativesoftware.com</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7.6</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%BASE_URL%/download/rawviewer</string>
-                <key>re_pattern</key>
-                <string>(\d+)">RAW Viewer \(RWV-10\) \| macOS</string>
-                <key>result_output_var_name</key>
-                <string>first_match</string>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. The vendor's site uses Java Script to generate the URL.</string>
             </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%BASE_URL%/download/rawviewer</string>
-                <key>re_pattern</key>
-                <string>id="dl_\S+_%first_match%" name="dl_\S+" href="(\/download\/link\?id=\S+)\"</string>
-                <key>result_output_var_name</key>
-                <string>second_match</string>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
             </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>\"(https:\\/\\/download\.pro\.sony\\/[0-9]+\\/[0-9]+\\/[A-Za-z0-9]+\\/RAW_Viewer_([0-9]+(_[0-9]+)+)_mac\.zip)\"</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                </dict>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+                <key>url</key>
+                <string>https://www.sony.co.uk/electronics/support/software/00339639</string>
+            </dict>
             <key>Processor</key>
-            <string>URLDownloader</string>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>find</key>
+                <string>\</string>
+                <key>input_string</key>
+                <string>%DOWNLOAD_URL%</string>
+                <key>replace</key>
+                <string></string>
+            </dict>
+            <key>Processor</key>
+            <string>FindAndReplace</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>%BASE_URL%/%second_match%</string>
+                <string>%output_string%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -66,58 +89,54 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
-                <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
+            <dict>
                 <key>pkgdirs</key>
                 <dict/>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/installer_pkg/</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%destination_path%*.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCopier</string>
             <key>Arguments</key>
             <dict>
-                <key>source_pkg</key>
-                <string>%found_filename%/RAW_Viewer.pkg</string>
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_pkg/%NAME%.pkg</string>
+                <key>source_pkg</key>
+                <string>%found_filename%/RAW_Viewer.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgCopier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>EndOfCheckPhase</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pkg_path%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pkg_path%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -127,10 +146,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -138,6 +157,8 @@
                 <key>requirement</key>
                 <string>identifier "RAW Viewer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = VH49J2FYHE</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

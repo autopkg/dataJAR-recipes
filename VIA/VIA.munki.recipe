@@ -52,9 +52,7 @@ fi</string>
     <string>com.github.dataJAR-recipes.pkg.VIA</string>
     <key>Process</key>
     <array>
-        <dict>  
-            <key>Processor</key>
-            <string>MunkiImporter</string>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -62,6 +60,8 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

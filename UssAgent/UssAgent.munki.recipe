@@ -3,15 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of UssAgent and imports into Munki.</string>
+    <string>Downloads the latest version of UssAgent and imports into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.UssAgent</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
         <key>NAME</key>
         <string>UssAgent</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -35,12 +39,12 @@
 #
 
 /Applications/UssAgent\ Installer.app/Contents/MacOS/UssAgent\ Installer -q -u -p -h -d</string>
-            <key>RestartAction</key>
-            <string>RequireLogout</string>
             <key>requires</key>
             <array>
                 <string>Firefox</string>
             </array>
+            <key>RestartAction</key>
+            <string>RequireLogout</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
@@ -67,7 +71,7 @@ USS_DAEMON_PLIST=com.censornet.${PRODUCTNAME}Proxy.plist
 USS_AGENT_ID="$LAUNCH_AGENTS_DIR"/"$USS_AGENT_PLIST"
 USS_DAEMON_ID="$LAUNCH_DAEMONS_DIR"/"$USS_DAEMON_PLIST"
 
-/bin/launchctl unload -F "$USS_DAEMON_ID" 2>/dev/null
+/bin/launchctl unload -F "$USS_DAEMON_ID" 2&gt;/dev/null
 
 # bundles
 /bin/rm -rf "$APPLICATION_DIR"/"$PRODUCTNAME".app
@@ -109,14 +113,12 @@ unset IFS
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>2.7</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.UssAgent</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -125,12 +127,14 @@ unset IFS
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/application_payload/</string>
                 <key>installs_item_paths</key>
@@ -140,14 +144,14 @@ unset IFS
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -155,10 +159,10 @@ unset IFS
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -167,6 +171,8 @@ unset IFS
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Suitcase Fusion 7</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>SuitcaseFusion7</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/Extensis/Suitcase</string>
+        <key>NAME</key>
+        <string>SuitcaseFusion7</string>
         <key>SPARKLE_FEED_URL</key>
         <string>https://sparkle.extensis.com/u/ST/EN/suitcase18en.xml</string>
         <key>pkginfo</key>
@@ -22,10 +22,10 @@
             </array>
             <key>category</key>
             <string>Productivity</string>
-            <key>developer</key>
-            <string>Extensis</string>
             <key>description</key>
             <string>Font management application</string>
+            <key>developer</key>
+            <string>Extensis</string>
             <key>display_name</key>
             <string>Suitcase Fusion 7</string>
             <key>name</key>
@@ -41,8 +41,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -52,25 +50,25 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>DmgCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>dmg_root</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+                <key>dmg_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -80,10 +78,10 @@
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -91,6 +89,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

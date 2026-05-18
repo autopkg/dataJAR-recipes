@@ -30,7 +30,7 @@
 # Copyright (c) 2020, dataJAR Ltd.  All rights reserved.
 #
 # v7: https://help.fontlab.com/fontlab/7/manual/FontLab-Multi-Seat-License-Setup/
-# 
+#
 # Set licenseServer &amp; licenseServerPort as needed
 
 licenseServer=""
@@ -43,8 +43,8 @@ prefPath="/Library/Preferences/"
 if [ -n "${licenseServer}" ] &amp;&amp; [ -n "${licenseServerPort}" ]
 then
     /bin/echo "Creating ${prefPath}${licenseFile}..."
-    /bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" > "${prefPath}""${licenseFile}"
-    /bin/echo -n "ISV fontlab" >> "${prefPath}""${licenseFile}"
+    /bin/echo "HOST ${licenseServer} ANY ${licenseServerPort}" &gt; "${prefPath}""${licenseFile}"
+    /bin/echo -n "ISV fontlab" &gt;&gt; "${prefPath}""${licenseFile}"
     /bin/echo "Making ${prefPath}${licenseFile} executable..."
     /bin/chmod +x "${prefPath}""${licenseFile}"
     /bin/echo "Setting permissions on ${prefPath}${licenseFile}..."
@@ -61,8 +61,6 @@ fi</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
@@ -70,10 +68,10 @@ fi</string>
                 <key>plist_version_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -82,10 +80,10 @@ fi</string>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -95,6 +93,8 @@ fi</string>
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

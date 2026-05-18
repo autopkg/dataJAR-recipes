@@ -5,6 +5,8 @@
     <key>Description</key>
     <string>Downloads the latest version of balenaEtcher.
 
+ARCHITECTURE can be either 'arm64' or 'x64'
+
 ** Please note it's advised to only use ONE of the below variables **
 
 Set PRERELEASE to a non-empty string to download prereleases, either
@@ -18,24 +20,24 @@ i.e.: `-k LATESTONLY=yes`</string>
     <string>com.github.dataJAR-recipes.download.balenaEtcher</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
+        <key>ARCHITECTURE</key>
+        <string>arm64</string>
         <key>LATESTONLY</key>
         <string></string>
         <key>NAME</key>
         <string>balenaEtcher</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>2.7.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>balenaEtcher-.*\.dmg</string>
+                <string>balenaEtcher-.*%ARCHITECTURE%\.dmg</string>
                 <key>github_repo</key>
                 <string>balena-io/etcher</string>
                 <key>include_prereleases</key>
@@ -43,6 +45,8 @@ i.e.: `-k LATESTONLY=yes`</string>
                 <key>latest_only</key>
                 <string>%LATESTONLY%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -53,8 +57,6 @@ i.e.: `-k LATESTONLY=yes`</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -62,6 +64,8 @@ i.e.: `-k LATESTONLY=yes`</string>
                 <key>requirement</key>
                 <string>identifier "io.balena.etcher" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "66H43P8FRG"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

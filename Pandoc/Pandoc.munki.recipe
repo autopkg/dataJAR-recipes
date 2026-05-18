@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Pandoc and imports it into Munki.
+
+For Intel use: "x86_64" in the SUPPORTED_ARCH variable
+For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Pandoc</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Pandoc</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The universal markup converter
+
+Pandoc is a Haskell library for converting from one markup format to another, and a command-line tool that uses this library.</string>
+            <key>developer</key>
+            <string>John Macfarlane</string>
+            <key>display_name</key>
+            <string>Pandoc</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.jleggat.download.pandoc</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/pandoc.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>binary_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/pandoc</string>
+            </dict>
+            <key>Processor</key>
+            <string>PandocVersioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh --no-rcs
+
+# Copyright 2025, Jamf Software, LLC.
+
+#
+# DESCRIPTION
+#
+# Returns the the version from the Pandoc binary
+# Exit 1 if Pandoc is installed and newer than what we have in Munki.
+
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
+
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
+
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
+
+binary_path="/usr/local/bin/pandoc"
+munki_version="%version%"
+
+# If binary exists
+if [[ -f "$binary_path" ]]; then
+    # Get binary version, from: https://github.com/jgm/pandoc/blob/58cc5cc57ee4721acde7c7ef99bf964252611805/doc/getting-started.md?plain=1#L303
+    if binary_version=$("$binary_path" --version 2&gt;/dev/null | head -n1 | awk '{print $2}'); then
+        # Check binary_version against munki_version
+        if compare_versions "$binary_version" "$munki_version"; then
+            echo "Older version of Pandoc, proceeding with install..."
+            exit 0
+        else
+            echo "Version of Pandoc same or newer than the munki version, skipping..."
+            exit 1
+        fi
+    else
+        echo "Encountered an error when ascertaining Pandoc version, proceeding with install..."
+        exit 0
+    fi
+else
+    echo "Cannot find $binary_path, proceeding with install..."
+    exit 0
+fi</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                    <string>%RECIPE_CACHE_DIR%/unpack/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

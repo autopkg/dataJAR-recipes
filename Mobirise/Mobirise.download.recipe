@@ -3,36 +3,37 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of Mobirise.</string>
+    <string>Download recipe for the latest version of Mobirise.
+
+To download Apple Silicon use: "-m" in the DOWNLOAD_ARCH variable
+To download Intel leave DOWNLOAD_ARCH variable empty</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Mobirise</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>-m</string>
         <key>NAME</key>
         <string>Mobirise</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://download.mobirise.com/MobiriseSetup.dmg</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://download.mobirise.com/MobiriseSetup%DOWNLOAD_ARCH%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -40,6 +41,8 @@
                 <key>requirement</key>
                 <string>identifier "com.mobirise.Mobirise" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UD4494E573</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

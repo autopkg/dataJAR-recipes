@@ -13,22 +13,22 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
     <string>com.github.dataJAR-recipes.munki.Anaconda 3</string>
     <key>Input</key>
     <dict>
+        <key>DISPLAY_NAME</key>
+        <string>Anaconda 3</string>
         <key>INSTALLER_TYPE</key>
         <string>pkg</string>
-        <key>PYTHON_MAJOR_VERSION</key>
-        <string>3</string>
         <key>MUNKI_CATALOGS</key>
         <string>testing</string>
         <key>MUNKI_CATEGORY</key>
         <string>Science</string>
         <key>MUNKI_DEVELOPER</key>
         <string>Continuum</string>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%/</string>
         <key>NAME</key>
         <string>Anaconda3</string>
-        <key>DISPLAY_NAME</key>
-        <string>Anaconda 3</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%/</string>
+        <key>PYTHON_MAJOR_VERSION</key>
+        <string>3</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -48,14 +48,16 @@ This is accomplished via our own custom processor (JSONFileReader) and an instal
             <key>postuninstall_script</key>
             <string>#!/bin/bash
 rm -rf "/Applications/Anaconda-Navigator.app"</string>
-            <key>uninstall_method</key>
-            <string>removepackages</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>removepackages</string>
         </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.hansen-m.download.Anaconda</string>
     <key>Process</key>
@@ -79,34 +81,32 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
             <string>StopProcessingIf</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                 <key>destination_path</key>
-                 <string>%RECIPE_CACHE_DIR%/unpack</string>
-                 <key>flat_pkg_path</key>
-                 <string>%pathname%</string>
-                 <key>purge_destination</key>
-                 <true/>
-            </dict>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/tmp/</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/prepare_installation.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                 <key>destination_path</key>
-                 <string>%RECIPE_CACHE_DIR%/tmp/</string>
-                 <key>pkg_payload_path</key>
-                 <string>%RECIPE_CACHE_DIR%/unpack/prepare_installation.pkg/Payload</string>
-                 <key>purge_destination</key>
-                 <true/>
-            </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
@@ -116,19 +116,19 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        </dict>
-         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-            <key>Arguments</key>
-            <dict>
-               <key>pattern</key>
-               <string>%RECIPE_CACHE_DIR%/tar/pkgs/anaconda-*.tar.bz2</string>
-            </dict>
-         </dict>
-        <dict>
             <key>Processor</key>
             <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/tar/pkgs/anaconda-*.tar.bz2</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>archive_format</key>
@@ -140,10 +140,10 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/JSONFileReader</string>
             <key>Arguments</key>
             <dict>
                 <key>json_key</key>
@@ -151,105 +151,10 @@ rm -rf "/Applications/Anaconda-Navigator.app"</string>
                 <key>json_path</key>
                 <string>%RECIPE_CACHE_DIR%/info/info/about.json</string>
             </dict>
+            <key>Processor</key>
+            <string>com.github.dataJAR-recipes.Shared Processors/JSONFileReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-            <key>Arguments</key>
-            <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>version</key>
-                    <string>%json_value%</string>
-                    <key>installcheck_script</key>
-                    <string>#!/usr/local/munki/munki-python
-# pylint: disable = invalid-name
-
-'''
-Copyright (c) 2021, dataJAR Ltd.  All rights reserved.
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-             * Redistributions of source code must retain the above copyright
-               notice, this list of conditions and the following disclaimer.
-             * Redistributions in binary form must reproduce the above copyright
-               notice, this list of conditions and the following disclaimer in the
-               documentation and/or other materials provided with the distribution.
-             * Neither data JAR Ltd nor the names of its contributors may be used to
-               endorse or promote products derived from this software without specific
-               prior written permission.
-     THIS SOFTWARE IS PROVIDED BY DATA JAR LTD 'AS IS' AND ANY
-     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-     DISCLAIMED. IN NO EVENT SHALL DATA JAR LTD BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-SUPPORT FOR THIS PROGRAM
-    This program is distributed 'as is' by DATA JAR LTD.
-    For more information or support, please utilise the following resources:
-            http://www.datajar.co.uk
-
-DESCRIPTION
-
-See docstring in main()
-
-'''
-
-import os
-import sys
-import subprocess
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
-
-def main():
-    '''
-        Get conda version (if installed)
-
-        Exit 1 if conda is installed and newer than what we have in Munki
-
-        Based on:
-        https://github.com/autopkg/andrewzirkel-recipes/blob/master/LightspeedRelaySmartAgent/LightspeedRelaySmartAgent.munki.recipe#L46
-    '''
-
-    conda_binary = '/opt/anaconda3/bin/conda'
-    munki_version = '%json_value%'
-
-    # If the binary exists
-    if os.path.isfile(conda_binary):
-
-        try:
-            installed_ver = subprocess.check_output([conda_binary, '-V']).split()[1].decode('utf-8')
-        except subprocess.CalledProcessError:
-            print("Encountered an error when ascertaining conda version, "
-                  "proceeding with install...")
-            sys.exit(0)
-
-        if LooseVersion(installed_ver) &lt; LooseVersion(munki_version):
-            # The Anaconda pkg will not install if it finds an existing install, so we'll use the binary
-            print("Older version of conda binary located, updating via binary...")
-            try:
-                subprocess.check_output([conda_binary, 'update', 'conda', '-y'])
-            except subprocess.CalledProcessError:
-                print("Encountered an error when update conda via binary...")
-            sys.exit(1)
-        print("Version of conda binary same or newer than the munki version, skipping...")
-        sys.exit(1)
-
-    print("Cannot locate conda binary, proceeding with install...")
-    sys.exit(0)
-
-if __name__ == '__main__':
-    main()
-</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -257,10 +162,10 @@ if __name__ == '__main__':
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -271,6 +176,8 @@ if __name__ == '__main__':
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

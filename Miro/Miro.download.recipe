@@ -13,18 +13,16 @@ arm64: https://desktop.miro.com/platforms/darwin-arm64/Install-Miro.dmg
     <string>com.github.dataJAR-recipes.download.Miro</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Miro</string>
         <key>DOWNLOAD_URL</key>
         <string>https://desktop.miro.com/platforms/darwin/Install-Miro.dmg</string>
+        <key>NAME</key>
+        <string>Miro</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -32,6 +30,8 @@ arm64: https://desktop.miro.com/platforms/darwin-arm64/Install-Miro.dmg
                 <key>url</key>
                 <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>

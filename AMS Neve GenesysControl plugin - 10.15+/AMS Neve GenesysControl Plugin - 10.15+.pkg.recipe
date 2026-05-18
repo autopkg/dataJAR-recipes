@@ -12,18 +12,14 @@
         <string>AMSNeveGenesysControlPlugin</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.2.5</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.AMS Neve GenesysControl Plugin - 10.15+</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>pkgdirs</key>
                 <dict>
                     <key>Library</key>
@@ -43,11 +39,13 @@
                     <key>Library/Audio/Plug-Ins/VST</key>
                     <string>0755</string>
                 </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
             </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Copier</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -55,10 +53,10 @@
                 <key>source_path</key>
                 <string>%found_filename%/GenesysControl.aaxplugin</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>Copier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -66,32 +64,30 @@
                 <key>source_path</key>
                 <string>%found_filename%/GenesysControl.aaxplugin</string>
             </dict>
+            <key>Processor</key>
+            <string>Copier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Library/Application Support/Avid/Audio/Plug-Ins/GenesysControl.aaxplugin/Contents/Info.plist</string>
                 <key>plist_keys</key>
                 <dict>
-                	<key>CFBundleIdentifier</key>
-                	<string>bundleid</string>
+                    <key>CFBundleIdentifier</key>
+                    <string>bundleid</string>
                     <key>CFBundleShortVersionString</key>
                     <string>version</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%-%version%</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -105,20 +101,20 @@
                     </array>
                     <key>id</key>
                     <string>%bundleid%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>pkgdir</key>
                     <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
                     <string>%pkgroot%</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -126,6 +122,8 @@
                     <string>%RECIPE_CACHE_DIR%/unzip</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

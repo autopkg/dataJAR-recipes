@@ -12,37 +12,45 @@
         <string>ngrok</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.ngrok</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is non functional and has been deprecated.
+
+Also see: https://ngrok.com/blog-post/tcp-endpoints-require-verification for information on VirusTotal Scans.</string>
+            </dict>
             <key>Processor</key>
-            <string>ngrokVersioner</string>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>binary_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/ngrok</string>
             </dict>
+            <key>Processor</key>
+            <string>ngrokVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PkgCreator</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_request</key>
                 <dict>
-                    <key>pkgname</key>
-                    <string>%NAME%</string>
-                    <key>pkgdir</key>
-                    <string>%RECIPE_CACHE_DIR%</string>
-                    <key>id</key>
-                    <string>com.ngrok.ngrok</string>
-                    <key>version</key>
-                    <string>%version%</string>
-                    <key>options</key>
-                    <string>purge_ds_store</string>
                     <key>chown</key>
                     <array>
                         <dict>
@@ -54,12 +62,20 @@
                             <string>wheel</string>
                         </dict>
                     </array>
+                    <key>id</key>
+                    <string>com.ngrok.ngrok</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%</string>
+                    <key>version</key>
+                    <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -67,6 +83,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

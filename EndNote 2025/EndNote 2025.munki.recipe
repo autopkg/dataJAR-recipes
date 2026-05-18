@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest Endnote 2025 and imports it into munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.EndNote 2025</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>EndNote2025</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Word</string>
+                <string>EndNote 2025</string>
+                <string>EndNote 20</string>
+                <string>EndNote 21</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Reference</string>
+            <key>description</key>
+            <string>Level up your research
+
+Save time, stay organized, and write faster with EndNote 2025. Trust your ideas to the leading reference and citation management software.</string>
+            <key>developer</key>
+            <string>Thomson Reuters</string>
+            <key>display_name</key>
+            <string>EndNote 2025</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# https://support.clarivate.com/Endnote/s/article/EndNote-X8-Mac-and-EndNote-online-Mac-CWYW-tools-in-Microsoft-Word-2016-Troubleshooting-guide?language=en_US
+
+endnote_bundle_2016="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/EndNote CWYW Word 16.bundle"
+
+# Remove existing bundle if present to avoid copy conflicts
+if [ -d "$endnote_bundle_2016" ]; then
+    echo "Removing existing EndNote CWYW Word 16.bundle"
+    rm -rf "$endnote_bundle_2016"
+fi
+
+# Check if Microsoft Office directory structure exists
+office_word_dir="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word"
+if [ ! -d "$office_word_dir" ]; then
+    echo "Microsoft Word directory not found. Skipping CWYW bundle installation."
+    echo "EndNote will still work, but Word integration may need manual setup."
+    exit 0
+fi
+
+# Copy the new bundle
+echo "Copying EndNote CWYW Word 16.bundle to $office_word_dir/"
+cp -R "/Applications/EndNote 2025/Cite While You Write/EndNote CWYW Word 16.bundle" "$office_word_dir/"
+
+if [ $? -eq 0 ]; then
+    echo "Successfully installed EndNote CWYW Word 16.bundle"
+else
+    echo "Failed to install EndNote CWYW Word 16.bundle"
+    exit 1
+fi</string>
+            <key>postuninstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+DIR="EndNote CWYW Word 16.bundle"
+PATH_DEST="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/$DIR"
+
+if [ -d "$PATH_DEST" ]
+then
+    echo "Removing $PATH_DEST"
+    rm -r "$PATH_DEST"
+fi
+            </string>
+            <key>preinstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Check if EndNote 2025 folder exists and delete it
+if [ -d "/Applications/EndNote 2025" ]; then
+    echo "Found EndNote 2025 folder. Deleting..."
+    # Remove extended attributes first (including on .DS_Store)
+    echo "Clearing extended attributes..."
+    xattr -cr "/Applications/EndNote 2025" 2&gt;/dev/null
+    # Clear any flags that might prevent deletion
+    echo "Clearing file flags..."
+    chflags -R nouchg,nouappnd "/Applications/EndNote 2025" 2&gt;/dev/null
+    # Set full permissions on the folder and its contents
+    echo "Setting permissions to 777..."
+    chmod -R 777 "/Applications/EndNote 2025" 2&gt;/dev/null
+    # Force remove all contents first
+    echo "Removing all contents..."
+    rm -rf "/Applications/EndNote 2025"/* 2&gt;/dev/null
+    rm -rf "/Applications/EndNote 2025"/.[!.]* 2&gt;/dev/null
+    # Then remove the folder itself
+    rmdir "/Applications/EndNote 2025" 2&gt;/dev/null || rm -rf "/Applications/EndNote 2025"
+    if [ ! -d "/Applications/EndNote 2025" ]; then
+        echo "Successfully deleted EndNote 2025 folder."
+    else
+        echo "Failed to delete EndNote 2025 folder."
+        exit 1
+    fi
+else
+    echo "EndNote 2025 folder not found. Proceeding with installation."
+fi
+
+# https://support.clarivate.com/Endnote/s/article/EndNote-X8-Mac-and-EndNote-online-Mac-CWYW-tools-in-Microsoft-Word-2016-Troubleshooting-guide?language=en_US
+
+endnote_bundle_2008="/Applications/Microsoft Office 2008/Office/Startup/Word/EndNote CWYW Word 2008.bundle"
+endnote_bundle_2011="/Applications/Microsoft Office 2011/Office/Startup/Word/EndNote CWYW Word 2011.bundle"
+endnote_bundle_2016="/Library/Application Support/Microsoft/Office365/User Content.localized/Startup.localized/Word/EndNote CWYW Word 2016.bundle"
+
+bundles=("$endnote_bundle_2008" "$endnote_bundle_2011" "$endnote_bundle_2016")
+
+for i in $bundles; do
+  if [ -d "$i" ]
+  then
+    echo "Removing old CWYW bundle $i"
+    rm -r "$i"
+  else
+    echo "$i is not installed"
+    echo "Proceeding with installation"
+  fi
+done</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.pkg.EndNote2025</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/EndNote.zip</string>
+                <key>purge_destination</key>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%/Install EndNote 2025.app/Contents/Resources/EndNote.zip</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/EndNote.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/EndNote</string>
+                <key>target</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/EndNote 2025</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/EndNote 2025/EndNote 2025.app</string>
+                </array>
+                <key>version_comparison_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/EndNote.zip</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

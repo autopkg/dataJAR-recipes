@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.freefilesync</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>FreeFileSync</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>NAME</key>
+        <string>FreeFileSync</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -42,37 +42,37 @@
     <string>com.github.dataJAR-recipes.pkg.freefilesync</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/installer_payload</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/FreeFileSync.app</string>
-				</array>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-    	<dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%version%</string>
-					<key>minosversion</key>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/FreeFileSync.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minosversion</key>
                     <string>10.10</string>
-				</dict>
-			</dict>
-		</dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of SQLWorkbenchJ.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.SQLWorkbenchJ</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SQLWorkbenchJ</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>href=\"(?P&lt;FILENAME&gt;Workbench-Build(?P&lt;VERSION&gt;[0-9]+)-Mac-with-optional-libs\.tgz)\"</string>
+                <key>url</key>
+                <string>https://www.sql-workbench.eu/downloads.html</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.tgz</string>
+                <key>url</key>
+                <string>https://www.sql-workbench.eu/%FILENAME%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>

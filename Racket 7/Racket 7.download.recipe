@@ -16,58 +16,56 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://download.racket-lang.org/all-versions.html</string>
                 <key>re_pattern</key>
                 <string>/racket-v7.\d.*.html</string>
                 <key>result_output_var_name</key>
                 <string>DownloadPage</string>
+                <key>url</key>
+                <string>https://download.racket-lang.org/all-versions.html</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://download.racket-lang.org%DownloadPage%</string>
                 <key>re_pattern</key>
                 <string>7.\d*/racket-7.\d*-x86_64-macosx.dmg</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://download.racket-lang.org%DownloadPage%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.cs.utah.edu/plt/installers/%match%</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://www.cs.utah.edu/plt/installers/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
                 <string>%pathname%/Racket v7.*/DrRacket.app</string>
             </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -75,19 +73,19 @@
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.DrRacket" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
                 <string>%pathname%/%dmg_found_filename%/Contents/Info.plist</string>
             </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -95,10 +93,10 @@
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.PLT Games" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -106,10 +104,10 @@
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.Racket Documentation" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -117,6 +115,8 @@
                 <key>requirement</key>
                 <string>identifier "org.racket-lang.Slideshow" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = MHDH6AFHDR</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

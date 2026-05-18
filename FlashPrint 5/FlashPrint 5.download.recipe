@@ -16,25 +16,23 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://en\.fss\.flashforge\.com/[\d]+/software/[\S]+\.zip)\"&gt;&lt;img src=\"//flashforge\.com/cdn/shop/files/apple\.png</string>
-                <key>result_output_var_name</key>
-                <string>DOWNLOAD_URL</string>
+                <string>(https://flashforge-resource.oss-us-east-1.aliyuncs.com/FlashPrint_([0-9]+(.[0-9]+)+)/FlashPrint_([0-9]+(.[0-9]+)+)_([A-Za-z0-9]+(%[A-Za-z0-9]+)+).zip)</string>
                 <key>url</key>
-                <string>https://flashforge.com/pages/software-flashprint</string>
+                <string>https://enterprise.flashforge.com/pages/flashprint</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%_mac.zip</string>
+                <string>%NAME%.zip</string>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>%match%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -42,6 +40,43 @@
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Zhejiang Flashforge 3D Technology Co.,Ltd. (2FJ94BTVV8)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%RECIPE_CACHE_DIR%/unzip/%found_basename%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

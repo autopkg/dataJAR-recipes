@@ -11,32 +11,54 @@
 #
 # DESCRIPTION
 # Returns version of Firefox.app installed, if locale matches the expected locale.
+# Uses omni.ja file to determine locale for all Firefox versions.
 #
 ####################################################################################################
 #
 # CHANGE LOG
 # 1.0 - Created
+# 2.0 - Updated to use omni.ja for locale detection
 #
 ####################################################################################################
 
+# Variables
 appLocale="en-GB"
-infoPlistPath="/Applications/Firefox.app/Contents/Info.plist"
-localeIniPath="/Applications/Firefox.app/Contents/Resources/locale.ini"
+firefoxPath="/Applications/Firefox.app"
+infoPlistPath="${firefoxPath}/Contents/Info.plist"
+omniPath="${firefoxPath}/Contents/Resources/omni.ja"
 versionKey="CFBundleShortVersionString"
 
-if [ -f "${localeIniPath}" ]
-then
-    installedLocale=$(/usr/bin/awk -F"=" '/locale=/{ print $2 }' < "${localeIniPath}")
-else
-    installedLocale="en-US"
+# Function to get Firefox locale from omni.ja
+get_firefox_locale() {
+    if [ -f "${omniPath}" ]; then
+        installedLocale=$(/usr/bin/unzip -p "${omniPath}" default.locale 2>/dev/null | /usr/bin/tr -d '\n\r')
+        echo "${installedLocale}"
+    else
+        echo ""
+    fi
+}
+
+# Check if Firefox is installed
+if [ ! -d "${firefoxPath}" ]; then
+    /bin/echo "<result></result>"
+    exit 0
 fi
 
-if [ "${appLocale}" != "${installedLocale}" ]
-then
+# Get installed locale
+installedLocale=$(get_firefox_locale)
+
+# Check if we got a valid locale
+if [ -z "${installedLocale}" ]; then
+    /bin/echo "<result></result>"
+    exit 0
+fi
+
+# Compare locales
+if [ "${appLocale}" != "${installedLocale}" ]; then
     /bin/echo "<result></result>"
 else
-    if [ -f "${infoPlistPath}" ]
-    then
+    # Get version if locales match
+    if [ -f "${infoPlistPath}" ]; then
         appVersion=$(/usr/bin/defaults read "${infoPlistPath}" "${versionKey}")
         /bin/echo "<result>${appVersion}</result>"
     else

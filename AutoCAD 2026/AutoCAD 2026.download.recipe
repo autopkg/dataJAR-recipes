@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of AutoCAD 2026.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.AutoCAD 2026</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>AutoCAD2026</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>https://trial2.autodesk.com/NetSWDLD/ODIS/prd/2026/ACDMAC/BAAF7F97-637D-3EEF-9938-6A054A5974D4/SFX/Autodesk_AutoCAD_2026_macOS.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Install Autodesk AutoCAD 2026 for Mac.app</string>
+                <key>requirement</key>
+                <string>identifier "com.autodesk.AutoCAD2026.installer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XXKJ396S2Y</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

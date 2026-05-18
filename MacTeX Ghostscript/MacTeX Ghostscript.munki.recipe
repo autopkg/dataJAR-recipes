@@ -8,10 +8,12 @@
     <string>com.github.dataJAR-recipes.munki.MacTeX Ghostscript</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
+        <key>FORCE_MUNKIIMPORT</key>
+        <string></string>
         <key>NAME</key>
         <string>MacTeXGhostscript</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -39,160 +41,155 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
-                <key>flat_pkg_path</key>
-                <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpack</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.VersionSplitter/VersionSplitter</string>
             <key>Arguments</key>
             <dict>
-                <key>version</key>
-                <string>%match%</string>
-                <key>index</key>
-                <integer>1</integer>
-                <key>split_on</key>
-                <string>-</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/Ghostscript-%version%-Start.pkg/Payload</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Ghostscript-%version%-Start.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>GhostscriptVersioner</string>
             <key>Arguments</key>
             <dict>
                 <key>binary_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/usr/local/bin/gs-noX11</string>
             </dict>
+            <key>Processor</key>
+            <string>GhostscriptVersioner</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>installcheck_script</key>
-                    <string>#!/usr/local/munki/munki-python
-# pylint: disable = invalid-name
+                    <string>#!/bin/zsh --no-rcs
 
-'''
-Copyright (c) 2021, databinary Ltd.  All rights reserved.
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-             * Redistributions of source code must retain the above copyright
-               notice, this list of conditions and the following disclaimer.
-             * Redistributions in binary form must reproduce the above copyright
-               notice, this list of conditions and the following disclaimer in the
-               documentation and/or other materials provided with the distribution.
-             * Neither data binary Ltd nor the names of its contributors may be used to
-               endorse or promote products derived from this software without specific
-               prior written permission.
-     THIS SOFTWARE IS PROVIDED BY DATA binary LTD 'AS IS' AND ANY
-     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-     DISCLAIMED. IN NO EVENT SHALL DATA binary LTD BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-SUPPORT FOR THIS PROGRAM
-    This program is distributed 'as is' by DATA binary LTD.
-    For more information or support, please utilise the following resources:
-            http://www.datajar.co.uk
+# Copyright 2025, Jamf Software, LLC.
 
-DESCRIPTION
+#
+# DESCRIPTION
+#
+# Returns the the version from the Ghostscript binary
+# Exit 1 if Ghostscript is installed and newer than what we have in Munki.
 
-See docstring in main()
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
 
-'''
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
 
-import os
-import subprocess
-import sys
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
 
+binary_path="/usr/local/bin/gs-noX11"
+munki_version="%version%"
 
-def main():
-    '''
-        Returns the the version from the Ghostscript binary
-
-        Exit 1 if Ghostscript is installed and newer than what we have in Munki.
-
-    '''
-
-    binary_path = '/usr/local/bin/gs-noX11'
-    munki_version = '%version%'
-    binary_version = None
-
-    # If binary exists
-    if os.path.isfile(binary_path):
-        # Get binary version, from: https://www.ghostscript.com/doc/9.54.0/Use.htm#Help_command
-        # raise if we error
-        try:
-            binary_version = subprocess.check_output([binary_path, '-v']
-                                                    ).split()[2].decode('utf-8')
-        except subprocess.CalledProcessError:
-            print("Encountered an error when ascertaining Ghostscript version, "
-                  "proceeding with install...")
-            sys.exit(0)
-    # If binary is missing
-    else:
-        print("Cannot find {}, proceeding with install...".format(binary_path))
-        sys.exit(0)
-
-    # Check binary_version against munki_version
-    if LooseVersion(binary_version) &lt; LooseVersion(munki_version):
-        print("Older version of Ghostscript,  proceeding with install...")
-        sys.exit(0)
-    print("Version of Ghostscript same or newer than the munki version, skipping...")
-    sys.exit(1)
-
-
-if __name__ == '__main__':
-    main()
-</string>
+# If binary exists
+if [[ -f "$binary_path" ]]; then
+    # Get binary version, from: https://www.ghostscript.com/doc/9.54.0/Use.htm#Help_command
+    if binary_version=$("$binary_path" -v 2&gt;/dev/null | head -1 | awk '{print $3}'); then
+        echo "Detected Ghostscript version: '$binary_version'"
+        echo "Expected Munki version: '$munki_version'"
+        # Check binary_version against munki_version
+        if compare_versions "$binary_version" "$munki_version"; then
+            echo "Older version of Ghostscript, proceeding with install..."
+            exit 0
+        else
+            echo "Version of Ghostscript same or newer than the munki version, skipping..."
+            exit 1
+        fi
+    else
+        echo "Encountered an error when ascertaining Ghostscript version, proceeding with install..."
+        exit 0
+    fi
+else
+    echo "Cannot find $binary_path, proceeding with install..."
+    exit 0
+fi</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
+                <key>find</key>
+                <string> </string>
+                <key>input_string</key>
+                <string>file://localhost/%RECIPE_CACHE_DIR%/unpack/Distribution</string>
+                <key>replace</key>
+                <string>%20</string>
+            </dict>
+            <key>Processor</key>
+            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>os-version min="([^"]+)"</string>
+                <key>result_output_var_name</key>
+                <string>min_os_ver</string>
+                <key>url</key>
+                <string>%output_string%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>minimum_os_version</key>
+                    <string>%min_os_ver%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>force_munkiimport</key>
+                <string>%FORCE_MUNKIIMPORT%</string>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -201,6 +198,8 @@ if __name__ == '__main__':
                     <string>%RECIPE_CACHE_DIR%/unpack/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

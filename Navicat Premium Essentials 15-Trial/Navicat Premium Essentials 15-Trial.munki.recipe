@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Navicat Premium Essentials 15-Trial</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>NavicatPremiumEssentials15</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -22,10 +22,10 @@
             <array>
                 <string>testing</string>
             </array>
-            <key>description</key>
-            <string>Navicat is a database administration tool that allows you to simultaneously connect to MySQL, MariaDB, SQL Server, Oracle, PostgreSQL, and SQLite databases from a single application.</string>
             <key>category</key>
             <string>Development</string>
+            <key>description</key>
+            <string>Navicat is a database administration tool that allows you to simultaneously connect to MySQL, MariaDB, SQL Server, Oracle, PostgreSQL, and SQLite databases from a single application.</string>
             <key>developer</key>
             <string>PremiumSoft CyberTech</string>
             <key>display_name</key>
@@ -37,14 +37,32 @@
         </dict>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.dataJAR-recipes.download.Navicat Premium Essentials 15-Trial</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>Navicat Premium Essentials 15 is no longer available from the vendor. This recipe has been deprecated.
+
+Please consider using the Navicat 17 recipes that are available here https://github.com/autopkg/dataJAR-recipes/tree/master/Navicat%2017%20Premium%20Lite</string>
+            </dict>
             <key>Processor</key>
-            <string>DmgCreator</string>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>dmg_path</key>
@@ -52,10 +70,10 @@
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/</string>
             </dict>
+            <key>Processor</key>
+            <string>DmgCreator</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -63,10 +81,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -74,6 +92,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

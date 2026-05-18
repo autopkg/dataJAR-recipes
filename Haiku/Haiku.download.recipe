@@ -3,21 +3,25 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Download recipe for the latest version of Haiku.</string>
+    <string>Download recipe for the latest version of Haiku.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Haiku</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>Haiku</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.2.0</string>
+    <string>0.5.0</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>github_repo</key>
@@ -25,10 +29,8 @@
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
-            <string>EndOfCheckPhase</string>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -36,7 +38,9 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -44,6 +48,8 @@
                 <key>requirement</key>
                 <string>identifier "com.Haiku.HaikuForDesignersAndEngineers" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "TWM39MH96F"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

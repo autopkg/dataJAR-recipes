@@ -11,18 +11,16 @@ To download the Apple Silicon version use "arm64" in DOWNLOAD_TYPE</string>
     <string>com.github.dataJAR-recipes.download.MongoDB Compass</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>MongoDB Compass</string>
         <key>DOWNLOAD_TYPE</key>
         <string>x64</string>
+        <key>NAME</key>
+        <string>MongoDB Compass</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
@@ -32,6 +30,8 @@ To download the Apple Silicon version use "arm64" in DOWNLOAD_TYPE</string>
                 <key>url</key>
                 <string>https://www.mongodb.com/try/download/compass</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -49,8 +49,6 @@ To download the Apple Silicon version use "arm64" in DOWNLOAD_TYPE</string>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -58,6 +56,8 @@ To download the Apple Silicon version use "arm64" in DOWNLOAD_TYPE</string>
                 <key>requirement</key>
                 <string>identifier "com.mongodb.compass" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4XWMY46275"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

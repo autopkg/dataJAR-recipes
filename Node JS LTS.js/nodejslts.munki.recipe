@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest LTS version of Node.js and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.nodejslts</string>
+    <key>Input</key>
     <dict>
-        <key>Description</key>
-        <string>Downloads the latest LTS version of Node.js and imports into Munki.</string>
-        <key>Identifier</key>
-        <string>com.github.dataJAR-recipes.munki.nodejslts</string>
-        <key>Input</key>
+        <key>DISPLAY_NAME</key>
+        <string>Node.js LTS</string>
+        <key>MUNKI_CATEGORY</key>
+        <string>Development</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/NodeLTS.js</string>
+        <key>NAME</key>
+        <string>nodelts</string>
+        <key>pkginfo</key>
         <dict>
-            <key>MUNKI_REPO_SUBDIR</key>
-            <string>apps/NodeLTS.js</string>
-            <key>MUNKI_CATEGORY</key>
-            <string>Development</string>
-            <key>NAME</key>
-            <string>nodelts</string>
-            <key>DISPLAY_NAME</key>
-            <string>Node.js LTS</string>
-            <key>pkginfo</key>
-            <dict>
-                <key>catalogs</key>
-                <array>
-                    <string>testing</string>
-                </array>
-                <key>blocking_applications</key>
-                <array>
-                    <string>node</string>
-                    <string>npm</string>
-                </array>
-                <key>category</key>
-                <string>%MUNKI_CATEGORY%</string>
-                <key>description</key>
-                <string>NodeLTS.js® is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications.</string>
-                <key>developer</key>
-                <string>Node.js Foundation</string>
-                <key>display_name</key>
-                <string>%DISPLAY_NAME%</string>
-                <key>name</key>
-                <string>%NAME%</string>
-                <key>unattended_install</key>
-                <true/>
-            </dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>node</string>
+                <string>npm</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>%MUNKI_CATEGORY%</string>
+            <key>description</key>
+            <string>NodeLTS.js® is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications.</string>
+            <key>developer</key>
+            <string>Node.js Foundation</string>
+            <key>display_name</key>
+            <string>%DISPLAY_NAME%</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
         </dict>
-        <key>MinimumVersion</key>
-        <string>1.1</string>
-        <key>ParentRecipe</key>
-        <string>com.github.dataJAR-recipes.download.nodejslts</string>
-        <key>Process</key>
-        <array>
-            <dict>
-                <key>Arguments</key>
-                <dict>
-                    <key>pkg_path</key>
-                    <string>%pathname%</string>
-                    <key>repo_subdirectory</key>
-                    <string>%MUNKI_REPO_SUBDIR%</string>
-                </dict>
-                <key>Processor</key>
-                <string>MunkiImporter</string>
-            </dict>
-        </array>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.nodejslts</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
 </plist>

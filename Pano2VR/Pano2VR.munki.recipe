@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Pano2VR</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Pano2VR</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -40,8 +40,6 @@ Whether you’re working on a single gigapixel panorama or a virtual tour with t
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>PlistReader</string>
             <key>Arguments</key>
             <dict>
                 <key>info_path</key>
@@ -54,12 +52,12 @@ Whether you’re working on a single gigapixel panorama or a virtual tour with t
                     <string>min_os_ver</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>
@@ -68,10 +66,10 @@ Whether you’re working on a single gigapixel panorama or a virtual tour with t
                     <string>%version%</string>
                 </dict>
             </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -81,6 +79,8 @@ Whether you’re working on a single gigapixel panorama or a virtual tour with t
                 <key>version_comparison_key</key>
                 <string>CFBundleVersion</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

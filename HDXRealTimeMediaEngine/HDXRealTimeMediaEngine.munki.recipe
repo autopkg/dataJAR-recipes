@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.HDXRealTimeMediaEngine</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>HDXRealTimeMediaEngine</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -30,6 +30,8 @@
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/sh
 
@@ -38,8 +40,8 @@
 rm -drf "/Library/Application Support/Citrix/PlugIns/HDXRTME-m32g"
 rm -rf "/Library/PreferencePanes/Citrix HDX RealTime Media Engine.prefPane"
 
-pkgutil --forget com.citrix.hdxrtme.HDXRTME-m32g.pkg > /dev/null 2&gt;&amp;1
-pkgutil --forget com.citrix.hdxrtme.MacRTMEVersion.pkg > /dev/null 2&gt;&amp;1
+pkgutil --forget com.citrix.hdxrtme.HDXRTME-m32g.pkg &gt; /dev/null 2&gt;&amp;1
+pkgutil --forget com.citrix.hdxrtme.MacRTMEVersion.pkg &gt; /dev/null 2&gt;&amp;1
 
 exit 0</string>
         </dict>
@@ -53,12 +55,32 @@ exit 0</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>This recipe is no longer functional and has been deprecated. Citrix Receiver is end of life.
+
+See https://www.citrix.com/downloads/citrix-receiver/additional-client-software/ for more info</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/payload</string>
                 <key>flat_pkg_path</key>
                 <string>%pathname%/Install HDXRealTimeMediaEngine.pkg</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
             <key>Processor</key>
             <string>FlatPkgUnpacker</string>
@@ -71,7 +93,7 @@ exit 0</string>
                 <key>pkg_payload_path</key>
                 <string>%RECIPE_CACHE_DIR%/payload/HDXRTME-m32g.pkg/Payload</string>
                 <key>purge_destination</key>
-                <true></true>
+                <true/>
             </dict>
             <key>Processor</key>
             <string>PkgPayloadUnpacker</string>

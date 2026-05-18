@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.NordVPN</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>NordVPN</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>blocking_applications</key>
@@ -33,7 +33,7 @@ Even if you think you have nothing to hide â€” no one likes to be watched. Thatâ
             <string>NordVPN</string>
             <key>name</key>
             <string>%NAME%</string>
-             <key>postuninstall_script</key>
+            <key>postuninstall_script</key>
             <string>#!/bin/bash
 #
 launchctl unload /Library/LaunchDaemons/com.nordvpn.macos.helper.plist
@@ -92,8 +92,8 @@ rm /Library/LaunchDaemons/com.nordvpn.macos.helper.plist</string>
             <string>PlistReader</string>
         </dict>
         <dict>
-             <key>Arguments</key>
-             <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>additional_pkginfo</key>
                 <dict>
                     <key>minimum_os_version</key>

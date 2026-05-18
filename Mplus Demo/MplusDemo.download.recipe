@@ -18,34 +18,21 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>/download/MplusDemo.*?\.pkg</string>
-                <key>url</key>
-                <string>https://www.statmodel.com/demo.shtml</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://www.statmodel.com%match%</string>
+                <string>https://www.statmodel.com/download/MplusDemo.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -55,10 +42,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
-        </dict>
-         <dict>
             <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
@@ -68,10 +55,10 @@
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -79,10 +66,10 @@
                 <key>requirement</key>
                 <string>identifier mpdemo64 and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = M5B3DVVRT2</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -91,6 +78,8 @@
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

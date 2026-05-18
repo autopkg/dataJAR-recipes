@@ -8,22 +8,22 @@
     <string>com.github.dataJAR-recipes.munki.Suitcase Fusion 22</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>SuitcaseFusion22</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/Extensis/Suitcase</string>
+        <key>NAME</key>
+        <string>SuitcaseFusion22</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
             </array>
-           	<key>category</key>
-			<string>Productivity</string>
-			<key>developer</key>
-			<string>Extensis</string>
+            <key>category</key>
+            <string>Productivity</string>
             <key>description</key>
             <string>You love fonts. But wrangling your font collection? Not so much. Welcome to Suitcase Fusion, the gold standard in font management for creative professionals.</string>
+            <key>developer</key>
+            <string>Extensis</string>
             <key>display_name</key>
             <string>Suitcase Fusion 22</string>
             <key>name</key>
@@ -39,7 +39,7 @@ pluginInstaller="/Applications/Suitcase Fusion.app/Contents/Resources/plugin-ins
 if [ -f "${pluginInstaller}" ]
 then
     /bin/echo "Found ${pluginInstaller}, running..."
-    "${pluginInstaller}" --install-all > /dev/null 2>&amp;1
+    "${pluginInstaller}" --install-all &gt; /dev/null 2&gt;&amp;1
 fi</string>
             <key>unattended_install</key>
             <true/>
@@ -50,12 +50,10 @@ fi</string>
     <key>MinimumVersion</key>
     <string>0.3.1</string>
     <key>ParentRecipe</key>
-	<string>com.github.dataJAR-recipes.download.Suitcase Fusion 22</string>
+    <string>com.github.dataJAR-recipes.download.Suitcase Fusion 22</string>
     <key>Process</key>
-	<array>
+    <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -63,6 +61,8 @@ fi</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

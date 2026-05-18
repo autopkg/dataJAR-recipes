@@ -12,64 +12,21 @@
         <string>Soundvision</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>1.0.0</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Current version: &lt;span class=\&quot;version\&quot;&gt;(.*?)&lt;/span&gt;,</string>
-                <key>result_output_var_name</key>
-                <string>version</string>
+                <string>href="(?P&lt;DOWNLOAD_URL&gt;https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/([0-9]+(.[0-9]+)+)/Soundvision_[0-9]*\.[0-9]+_[A-Za-z]+_[0-9]+_MAC\.zip)"</string>
                 <key>url</key>
-                <string>https://www.l-acoustics.com/products/soundvision/</string>
+                <string>https://www.l-acoustics.com/products/soundvision/#</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>Current version: &lt;span class=\&quot;version\&quot;&gt;%version%&lt;/span&gt;, &lt;span class=\&quot;release\&quot;&gt;(.*?)&lt;/span&gt;</string>
-                <key>result_output_var_name</key>
-                <string>date</string>
-                <key>url</key>
-                <string>https://www.l-acoustics.com/products/soundvision/</string>
-            </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/VarSlicer</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_string</key>
-                <string>%date%</string>
-                <key>slice_tuple_pattern</key>
-                <string>0, 3, None</string>
-                <key>sliced_string_name</key>
-                <string>month</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>com.github.dataJAR-recipes.Shared Processors/VarSlicer</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_string</key>
-                <string>%date%</string>
-                <key>slice_tuple_pattern</key>
-                <string>-4, None, None</string>
-                <key>sliced_string_name</key>
-                <string>year</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -77,39 +34,50 @@
                 <key>request_headers</key>
                 <dict>
                     <key>user-agent</key>
-                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0</string>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Safari/605.1.15</string>
                 </dict>
                 <key>url</key>
-                <string>https://www.l-acoustics.com/documentation/SOFTWARE/Soundvision/Soundvision/Mac/%version%/Soundvision_%version%_%month%_%year%_MAC.zip</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/*.dmg</string>
+            </dict>
             <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/unzip/Soundvision_%version%_%month%_%year%_MAC/LA_Soundvision_Installer_%version%.dmg/Soundvision.app</string>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/%found_basename%/Soundvision.app</string>
                 <key>requirement</key>
-                <string>identifier "com.l-acoustics.Soundvision%version%" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4WPJ48N2K4"</string>
+                <string>anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "4WPJ48N2K4"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

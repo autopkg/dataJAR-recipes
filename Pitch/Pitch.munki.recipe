@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Pitch</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Pitch</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
+        <key>NAME</key>
+        <string>Pitch</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -41,8 +41,6 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>MunkiImporter</string>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -50,6 +48,8 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

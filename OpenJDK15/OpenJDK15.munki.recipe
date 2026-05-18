@@ -2,16 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.munki.OpenJDK15</string>
     <key>Description</key>
     <string>Downloads the current release version of OpenJDK 15, builds a package and imports it to Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.OpenJDK15</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>OpenJDK 15</string>
         <key>MAJOR_VERSION</key>
         <string>15</string>
+        <key>NAME</key>
+        <string>OpenJDK 15</string>
         <key>SOFTWARETITLE</key>
         <string>Java</string>
         <key>SOFTWARETYPE</key>
@@ -42,38 +42,40 @@
             <true/>
             <key>uninstallable</key>
             <true/>
-        </dict>        
+        </dict>
     </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.rtrouton.pkg.OpenJDK13</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
             <key>Arguments</key>
             <dict>
                 <key>warning_message</key>
                 <string>This has been replaced by a recipe which should pull the latest version OpenJDK always. See https://github.com/autopkg/dataJAR-recipes/blob/master/OpenJDK/.</string>
             </dict>
-        </dict>
-        <dict>   
-            <key>Processor</key>   
-            <string>StopProcessingIf</string>   
-            <key>Arguments</key>   
-            <dict>   
-                <key>predicate</key>   
-                <string>TRUEPREDICATE</string>
-            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
         </dict>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
     </array>
 </dict>

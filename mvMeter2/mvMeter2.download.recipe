@@ -16,21 +16,19 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>https://www.tbproaudio.de/products/mvmeter2</string>
                 <key>re_pattern</key>
                 <string>download/mvMeter2_Installer_OSX_\S.*.zip</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
+                <key>url</key>
+                <string>https://www.tbproaudio.de/products/mvmeter2</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
@@ -38,40 +36,42 @@
                 <key>url</key>
                 <string>https://www.tbproaudio.de/assets/content/%match%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
+                <key>archive_format</key>
+                <string>zip</string>
                 <key>archive_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/pkg/</string>
                 <key>purge_destination</key>
                 <true/>
-                <key>archive_format</key>
-                <string>zip</string>
             </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
-                <key>input_path</key>
-                <string>%destination_path%mvMeter2 Installer_signed.pkg</string>
                 <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Thomas Baier (5NLLMV8QU7)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
+                <key>input_path</key>
+                <string>%destination_path%mvMeter2 Installer_signed.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

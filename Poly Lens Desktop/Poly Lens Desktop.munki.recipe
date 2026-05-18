@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>There is currently only an arm64 version provided by the developer</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Poly Lens Desktop and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.
+
+For a successful install, there needs to be a logged in user. To achieve this an installcheck_script is used.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Poly Lens Desktop</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>PolyLensDesktop</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Control at your fingertips
+
+A single app for customizing your personal devices to how you work, whether that’s in the home or office.</string>
+            <key>developer</key>
+            <string>Polycom</string>
+            <key>display_name</key>
+            <string>Poly Lens Desktop</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>arm64</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+
+# Script for uninstalling Poly Lens Desktop
+
+# Function to check if we're at the login window
+is_at_login_window() {
+    # Check if we can get a console user
+    local console_user
+    console_user=$(/usr/bin/stat -f%Su /dev/console)
+    [ "$console_user" = "root" ] || [ -z "$console_user" ]
+}
+
+HELPERS="LegacyHostApp LensControlService"
+
+if is_at_login_window; then
+    echo "Running in login window context"
+    # At login window - just remove the files
+    for helper in $HELPERS; do
+        laplist="/Library/LaunchAgents/com.poly.${helper}.plist"
+        if [ -r "$laplist" ]; then
+            echo "Removing $laplist"
+            sudo rm "$laplist"
+        fi
+    done
+else
+    echo "Running in user context"
+    # Get the logged in user information
+    LOGGED_IN_USER=$(/usr/bin/stat -f%Su /dev/console)
+    LOGGED_IN_UID=$(/usr/bin/id -u "$LOGGED_IN_USER")
+
+    # Unload LaunchAgents as the logged-in user
+    for helper in $HELPERS; do
+        laplist="/Library/LaunchAgents/com.poly.${helper}.plist"
+        if [ -r "$laplist" ]; then
+            echo "Unloading $laplist for user $LOGGED_IN_USER"
+            /bin/launchctl asuser "$LOGGED_IN_UID" /bin/launchctl unload "$laplist"
+            sudo rm "$laplist"
+        fi
+    done
+fi
+
+echo "Terminating any running Lens Desktop app instances"
+if is_at_login_window; then
+    # At login window - simple kill
+    pkill -f "/Applications/Lens Desktop.app/" || true
+    sleep 3
+    pkill -9 -f "/Applications/Lens Desktop.app/" || true
+else
+    # Kill processes as the logged-in user
+    /bin/launchctl asuser "$LOGGED_IN_UID" pkill -f "/Applications/Lens Desktop.app/" || true
+    sleep 3
+    /bin/launchctl asuser "$LOGGED_IN_UID" pkill -9 -f "/Applications/Lens Desktop.app/" || true
+fi
+
+if [ -d "/Applications/Lens Desktop.app" ]; then
+    echo "Removing Poly Lens Desktop app"
+    sudo rm -rf "/Applications/Lens Desktop.app"
+fi
+
+echo "Removing old data and logs"
+if [ -d "/Library/Application Support/Poly" ]; then
+    echo "Removing Poly Lens Desktop system data (registry)"
+    sudo rm -rf "/Library/Application Support/Poly"
+fi
+
+echo "Done"</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.download.polylens</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/%found_basename%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/LensDesktop.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Lens Desktop.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Lens Desktop.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh --no-rcs
+
+# Copyright 2025, Jamf Software, LLC.
+
+#
+# DESCRIPTION
+#
+# Exits with exit code 1 if:
+# - No one is logged in
+# - Info.plist exists and app version is newer than or equal to installation version
+# - Error occurs while parsing Info.plist
+#
+# Exits with exit code 0 if:
+# - Info.plist doesn't exist
+# - Info.plist exists and app version is older than installation version
+
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
+
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
+
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
+
+# Function to check if user is logged in
+user_logged_in() {
+    # Get the console user using scutil
+    local console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
+
+    # Check if someone is logged in and it's not loginwindow
+    if [[ -n "$console_user" &amp;&amp; "$console_user" != "loginwindow" ]]; then
+        return 0  # User is logged in
+    else
+        return 1  # No user logged in
+    fi
+}
+
+# Function to get installed version from Info.plist
+get_installed_version() {
+    local info_plist_path="$1"
+
+    if [[ ! -f "$info_plist_path" ]]; then
+        return 1
+    fi
+
+    # Get version from info.plist using plutil
+    local installed_version=$(plutil -extract CFBundleVersion raw "$info_plist_path" 2&gt;/dev/null)
+
+    if [[ -n "$installed_version" ]]; then
+        echo "$installed_version"
+        return 0
+    else
+        echo "Encountered an error when trying to parse $info_plist_path..."
+        return 1
+    fi
+}
+
+# Function to determine if app should be installed
+should_install() {
+    local app_path="$1"
+    local app_version="$2"
+    local info_plist_path="$3"
+
+    local installed_version
+    if installed_version=$(get_installed_version "$info_plist_path"); then
+        echo "$app_path version $installed_version, installed..."
+
+        if compare_versions "$installed_version" "$app_version"; then
+            echo "Older version of $app_path located, proceeding with installation..."
+            return 0  # Should install
+        else
+            echo "Newer or the same version of $app_path located, cancelling installation..."
+            return 1  # Should not install
+        fi
+    else
+        return 0  # Should install (error getting version or doesn't exist)
+    fi
+}
+
+# Main script variables
+app_path="/Applications/Lens Desktop.app/"
+app_version="%version%"
+info_plist_path="$app_path/Contents/Info.plist"
+
+# Check if user is logged in
+if ! user_logged_in; then
+    exit 1
+fi
+
+# Check if installation should proceed
+if should_install "$app_path" "$app_version" "$info_plist_path"; then
+    exit 0  # Proceed with installation
+else
+    exit 1  # Do not install
+fi</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>

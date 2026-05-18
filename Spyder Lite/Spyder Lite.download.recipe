@@ -11,18 +11,34 @@ i.e.: `-k PRERELEASE=yes`</string>
     <string>com.github.dataJAR-recipes.download.Spyder Lite</string>
     <key>Input</key>
     <dict>
-        <key>PRERELEASE</key>
-        <string></string>
         <key>NAME</key>
         <string>SpyderLite</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe has been deprecated. Spyder Lite is no longer available from the developer.</string>
+            </dict>
             <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
@@ -32,6 +48,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
             <key>Processor</key>

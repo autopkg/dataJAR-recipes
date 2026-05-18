@@ -12,26 +12,26 @@
         <string>MacTeXGhostscript</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.6.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>URLTextSearcher</string>
-			<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>https://pages.uoregon.edu/koch/</string>
-				<key>re_pattern</key>
-				<string>Ghostscript-+[0-9]+\.+[0-9]+\-Full.pkg</string>
-			</dict>
-		</dict>
         <dict>
-        	<key>Arguments</key>
-			<dict>
-				<key>url</key>
-				<string>%url%%match%</string>
-			</dict>
+            <key>Arguments</key>
+            <dict>
+                <key>base_url</key>
+                <string>https://pages.uoregon.edu/koch/</string>
+            </dict>
+            <key>Processor</key>
+            <string>MacTexGhostscriptDownloader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>url</key>
+                <string>%url%</string>
+            </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
         </dict>
@@ -40,8 +40,6 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -53,6 +51,8 @@
                 <key>input_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

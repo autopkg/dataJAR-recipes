@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.Apple Mastering Tools</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>Apple Mastering Tools</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -36,23 +36,23 @@
     <string>com.github.dataJAR-recipes.pkg.Apple Mastering Tools</string>
     <key>Process</key>
     <array>
-		<dict>
-			<key>Processor</key>
-			<string>MunkiInstallsItemsCreator</string>
-			<key>Arguments</key>
-			<dict>
-				<key>faux_root</key>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-				<key>installs_item_paths</key>
-				<array>
-					<string>/Applications/Utilities/Audio to WAVE 96K Droplet.app</string>
-					<string>/Applications/Utilities/Audio to WAVE Droplet.app</string>
-					<string>/Applications/Utilities/Master for iTunes Droplet.app</string>
-					<string>/usr/local/bin/afclip</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Utilities/Audio to WAVE 96K Droplet.app</string>
+                    <string>/Applications/Utilities/Audio to WAVE Droplet.app</string>
+                    <string>/Applications/Utilities/Master for iTunes Droplet.app</string>
+                    <string>/usr/local/bin/afclip</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>additional_pkginfo</key>
@@ -61,12 +61,10 @@
                     <string>%version%</string>
                 </dict>
             </dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-        <dict>
             <key>Processor</key>
-            <string>MunkiImporter</string>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
@@ -74,10 +72,10 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
             <key>Arguments</key>
             <dict>
                 <key>path_list</key>
@@ -86,6 +84,8 @@
                     <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 </array>
             </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>

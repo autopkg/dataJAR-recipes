@@ -20,17 +20,17 @@
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>url</key>
-                <string>%SEARCH_URL%</string>
                 <key>re_pattern</key>
                 <string>(https://sw\.ekahau\.com/download/pro/setup/EkahauPro-.*\.dmg)</string>
                 <key>result_output_var_name</key>
                 <string>url</string>
+                <key>url</key>
+                <string>%SEARCH_URL%</string>
             </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -41,8 +41,6 @@
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -50,6 +48,8 @@
                 <key>requirement</key>
                 <string>identifier "com.ekahau.wifidesign.ess" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "456L77HQ44"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

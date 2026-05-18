@@ -11,10 +11,10 @@ To download for Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable</string
     <string>com.github.dataJAR-recipes.download.Shift</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>Shift</string>
         <key>DOWNLOAD_ARCH</key>
         <string>x64</string>
+        <key>NAME</key>
+        <string>Shift</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>

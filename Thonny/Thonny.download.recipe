@@ -21,8 +21,6 @@ i.e.: `-k PRERELEASE=yes`</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>github_repo</key>
@@ -30,36 +28,36 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>include_prereleases</key>
                 <string>%PRERELEASE%</string>
             </dict>
-        </dict>
-        <dict>
             <key>Processor</key>
             <string>GitHubReleasesInfoProvider</string>
+        </dict>
+        <dict>
             <key>Arguments</key>
             <dict>
-                <key>github_repo</key>
-                <string>thonny/thonny</string>
-                <key>include_prereleases</key>
-                <string>%PRERELEASE%</string>
                 <key>asset_regex</key>
                 <string>thonny-%version%.pkg</string>
+                <key>github_repo</key>
+                <string>thonny/thonny</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%-%version%.pkg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>expected_authority_names</key>
@@ -71,6 +69,8 @@ i.e.: `-k PRERELEASE=yes`</string>
                 <key>input_path</key>
                 <string>%pathname%</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

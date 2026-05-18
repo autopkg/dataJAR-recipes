@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Splice INSTRUMENT.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Splice INSTRUMENT</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>SpliceINSTRUMENT</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>curl_opts</key>
+                <array>
+                    <string>--data</string>
+                    <string></string>
+                </array>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>Accept</key>
+                    <string>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</string>
+                    <key>Content-Type</key>
+                    <string>application/x-www-form-urlencoded</string>
+                    <key>Origin</key>
+                    <string>https://splice.com</string>
+                    <key>Referer</key>
+                    <string>https://splice.com/instrument/download</string>
+                    <key>user-agent</key>
+                    <string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15</string>
+                </dict>
+                <key>url</key>
+                <string>https://splice.com/instrument/download?/download</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Distributed Creation Inc (9962T6AKMH)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>

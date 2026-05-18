@@ -8,10 +8,10 @@
     <string>com.github.dataJAR-recipes.munki.QL Editor</string>
     <key>Input</key>
     <dict>
-        <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/%NAME%</string>
         <key>NAME</key>
         <string>QLEditor</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -30,7 +30,7 @@ In addition to full Selected Channel and Overview display operation, the QL Edit
             <string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
-            <key>unattended_install</key>
+            <key>unattended_uninstall</key>
             <true/>
         </dict>
     </dict>

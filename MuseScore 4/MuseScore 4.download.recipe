@@ -5,45 +5,51 @@
     <key>Description</key>
     <string>Downloads the latest version of MuseScore 4.
 
-These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master/MuseScore, as are version specific.</string>
+These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master/MuseScore, as are version specific.
+
+Set PRERELEASE to a non-empty string to download prereleases, either
+via Input in an override or via the -k option,
+i.e.: `-k PRERELEASE=yes`</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.MuseScore 4</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>MuseScore4</string>
+        <key>PRERELEASE</key>
+        <string></string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
     <key>Process</key>
     <array>
         <dict>
-            <key>Processor</key>
-            <string>GitHubReleasesInfoProvider</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
                 <string>.*?\.dmg</string>
                 <key>github_repo</key>
                 <string>musescore/MuseScore</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
             </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
             </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
         </dict>
         <dict>
             <key>Processor</key>
             <string>EndOfCheckPhase</string>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>CodeSignatureVerifier</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
@@ -51,6 +57,8 @@ These recipes differ from https://github.com/autopkg/jazzace-recipes/tree/master
                 <key>requirement</key>
                 <string>identifier "org.musescore.MuseScore" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6EPAF2X3PR"</string>
             </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
         </dict>
     </array>
 </dict>

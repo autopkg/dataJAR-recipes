@@ -16,12 +16,12 @@ To download the Community title use: "community" in the DOWNLOAD_TITLE variable<
     <string>com.github.dataJAR-recipes.download.Burp Suite Professional</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>BurpSuiteProfessional</string>
         <key>DOWNLOAD_ARCH</key>
         <string>MacOsx</string>
         <key>DOWNLOAD_TITLE</key>
         <string>pro</string>
+        <key>NAME</key>
+        <string>BurpSuiteProfessional</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -31,7 +31,7 @@ To download the Community title use: "community" in the DOWNLOAD_TITLE variable<
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Professional / Community ([0-9]+(\.[0-9]+)+)</string>
+                <string>Professional\s*/\s*Community(?:\s+Edition)?\s+([0-9]+(\.[0-9]+)+)</string>
                 <key>result_output_var_name</key>
                 <string>VERSION</string>
                 <key>url</key>
