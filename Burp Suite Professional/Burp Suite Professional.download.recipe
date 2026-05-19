@@ -3,15 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Burp Suite Professional or Community.
+    <string>Downloads the latest version of Burp Suite.
 
-Defaults to Professional
+As of Burp 2026.4 PortSwigger ships a single "desktop" installer for both
+Professional and Community Edition; the edition is selected at first launch
+via license activation (or by clicking "Use Community Edition").
 
 To download Apple Silicon use: "MacOsArm64" in the DOWNLOAD_ARCH variable
 To download Intel use: "MacOsx" in the DOWNLOAD_ARCH variable
 
-To download the Professional title use: "pro" in the DOWNLOAD_TITLE variable
-To download the Community title use: "community" in the DOWNLOAD_TITLE variable</string>
+DOWNLOAD_TITLE is retained for backwards compatibility with existing overrides
+but no longer affects which binary is downloaded.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Burp Suite Professional</string>
     <key>Input</key>
@@ -46,7 +48,7 @@ To download the Community title use: "community" in the DOWNLOAD_TITLE variable<
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://portswigger.net/burp/releases/startdownload?product=%DOWNLOAD_TITLE%&amp;version=%VERSION%&amp;type=%DOWNLOAD_ARCH%</string>
+                <string>https://portswigger.net/burp/releases/download?product=desktop&amp;version=%VERSION%&amp;type=%DOWNLOAD_ARCH%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
