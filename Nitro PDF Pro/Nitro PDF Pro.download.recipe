@@ -23,7 +23,7 @@
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
-                <string>https://www.gonitro.com/installers/mac/v14/dmg/download</string>
+                <string>https://www.gonitro.com/installers/mac/cv/dmg/download</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
