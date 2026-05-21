@@ -9,8 +9,7 @@ Use the ARCH input variable to specify the architecture to download.
 Values at the time of writing are:
 
 - "x64" (Intel, default)
-- "arm64" (Apple Silicon)
-    </string>
+- "arm64" (Apple Silicon)</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.4K Video DownloaderPlus</string>
     <key>Input</key>
