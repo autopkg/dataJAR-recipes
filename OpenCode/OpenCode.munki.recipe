@@ -16,7 +16,7 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
         <key>NAME</key>
         <string>OpenCode</string>
         <key>SUPPORTED_ARCH</key>
-        <string>x86_64</string>
+        <string>arm64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>

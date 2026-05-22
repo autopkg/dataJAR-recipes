@@ -12,7 +12,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
     <key>Input</key>
     <dict>
         <key>DOWNLOAD_ARCH</key>
-        <string>x64</string>
+        <string>aarch64</string>
         <key>NAME</key>
         <string>OpenCode</string>
     </dict>
@@ -26,7 +26,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://opencode.ai/download/darwin-%DOWNLOAD_ARCH%-dmg</string>
+                <string>https://opencode.ai/download/stable/darwin-%DOWNLOAD_ARCH%-dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
