@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Telepresence.
+
+To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "amd64" in the DOWNLOAD_ARCH variable
+
+Set the PRERELEASE variable to a non-empty string to download pre-release versions.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Telepresence</string>
+    <key>Input</key>
+    <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>amd64</string>
+        <key>NAME</key>
+        <string>Telepresence</string>
+        <key>PRERELEASE</key>
+        <string></string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>asset_regex</key>
+                <string>telepresence-darwin-%DOWNLOAD_ARCH%\.pkg$</string>
+                <key>github_repo</key>
+                <string>telepresenceio/telepresence</string>
+                <key>include_prereleases</key>
+                <string>%PRERELEASE%</string>
+            </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%version%-darwin-%DOWNLOAD_ARCH%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Tada AB (9L6JR94AHD)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
