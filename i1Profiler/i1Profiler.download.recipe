@@ -34,10 +34,13 @@
             <string>SparkleUpdateInfoProvider</string>
         </dict>
         <dict>
-            <key>request_headers</key>
+            <key>Arguments</key>
             <dict>
-                <key>user-agent</key>
-                <string>%USER_AGENT%</string>
+                <key>request_headers</key>
+                <dict>
+                    <key>user-agent</key>
+                    <string>%USER_AGENT%</string>
+                </dict>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
