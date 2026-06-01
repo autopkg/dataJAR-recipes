@@ -47,7 +47,7 @@ i.e.: `-k PRERELEASE=yes`</string>
             <dict>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Charles Teague (Y9A5TA7V7H)</string>
+                    <string>Developer ID Installer: RStudio Inc. (FYF2F5GFX4)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
