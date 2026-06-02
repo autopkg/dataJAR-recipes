@@ -41,7 +41,15 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>uninstall_script</key>
             <string>#!/bin/zsh --no-rcs
 
-/Applications/Mullvad\ VPN.app/Contents/Resources/uninstall.sh --yes</string>
+uninstaller_path="/Applications/Mullvad VPN.app/Contents/Resources/uninstall.sh"
+
+if [[ -x "$uninstaller_path" ]]; then
+    "$uninstaller_path" --yes
+    exit $?
+else
+    echo "Mullvad VPN uninstaller not found at: $uninstaller_path" &gt;&amp;2
+    exit 0
+fi</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
