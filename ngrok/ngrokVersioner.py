@@ -35,13 +35,10 @@ See docstring for ngrokVersioner class
 from __future__ import absolute_import
 import subprocess
 import os
-import sys
-sys.path.insert(0, '/usr/local/munki')
-from munkilib.pkgutils import MunkiLooseVersion as LooseVersion
 
 # AutoPkg imports
 # pylint: disable = import-error
-from autopkglib import Processor, ProcessorError
+from autopkglib import APLooseVersion as LooseVersion, Processor, ProcessorError
 
 
 __all__ = ['ngrokVersioner']
