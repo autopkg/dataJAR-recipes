@@ -3,15 +3,20 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of the Wondershare Filmora Mac.</string>
+    <string>Downloads latest version of the Wondershare Filmora Mac.
+
+To download arm64 use: "_arm" in the DOWNLOAD_ARCH variable
+To download x86_64 use: "" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Wondershare Filmora Mac</string>
     <key>Input</key>
     <dict>
-        <key>DOWNLOAD_URL</key>
-        <string>https://download.wondershare.com/cbs_down/filmora-mac_full14792.dmg</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string></string>
         <key>NAME</key>
         <string>WondershareFilmoraMac</string>
+        <key>SEARCH_URL</key>
+        <string>https://filmora.wondershare.com/</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -20,10 +25,21 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>re_pattern</key>
+                <string>filmora-mac_full(\d+)\.dmg</string>
+                <key>url</key>
+                <string>%SEARCH_URL%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https://download.wondershare.com/cbs_down/filmora-mac%DOWNLOAD_ARCH%_full%match%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
