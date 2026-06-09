@@ -87,7 +87,7 @@
             <dict>
                 <key>input_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/*/Install QL Editor*.pkg</string>
-                <key>requirement</key>
+                <key>expected_authority_names</key>
                 <array>
                     <string>Developer ID Installer: Yamaha Corporation (5LE7A8CF65)</string>
                     <string>Developer ID Certification Authority</string>
@@ -100,6 +100,8 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>expected_authority_names</key>
+                <array/>
                 <key>input_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%/*/Uninstall QL Editor.app</string>
                 <key>requirement</key>
