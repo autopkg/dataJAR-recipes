@@ -3,7 +3,10 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Wondershare Filmora Mac and imports into Munki.</string>
+    <string>Downloads the latest version of Wondershare Filmora Mac and imports into Munki.
+
+For x86_64 use: "x86_64" in the SUPPORTED_ARCH variable
+For arm64 use: "arm64" in the SUPPORTED_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Wondershare Filmora Mac</string>
     <key>Input</key>
@@ -12,6 +15,8 @@
         <string>WondershareFilmoraMac</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>x86_64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -24,6 +29,10 @@
             <string>Wondershare Filmora Mac</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
