@@ -54,7 +54,7 @@ To download Intel use: "Intel" in the DOWNLOAD_ARCH variable</string>
                 <key>input_path</key>
                 <string>%pathname%/Stage|Tracks.app</string>
                 <key>requirement</key>
-                <string>identifier "Stage|Tracks" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YW27Y3HK3T</string>
+                <string>identifier "com.rightoncueservices.desktop.stagetracks" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YW27Y3HK3T</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
