@@ -19,7 +19,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>href="(?P&lt;DOWNLOAD_URL&gt;https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/([0-9]+(.[0-9]+)+)/Soundvision_[0-9]*\.[0-9]+_[A-Za-z]+_[0-9]+_MAC\.zip)"</string>
+                <string>href="(?P&lt;DOWNLOAD_URL&gt;https://prdstglaxxwe001\.blob\.core\.windows\.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Soundvision/Mac/([0-9]+(\.[0-9]+)+)/Soundvision_([0-9]+(\.[0-9]+)+)_[A-Za-z]+_[A-Za-z0-9]+_MAC\.zip)"</string>
                 <key>url</key>
                 <string>https://www.l-acoustics.com/products/soundvision/#</string>
             </dict>
