@@ -261,6 +261,8 @@ if [[ ${uninstall_mode} == "full" ]]; then
   remove_application_scripts
 fi
 
+/usr/sbin/pkgutil --forget com.displaylink.displaylinkmanagerapp 2&gt;/dev/null || true
+
 echo -e "\n&gt; DisplayLink uninstall script done."
 
 exit</string>
