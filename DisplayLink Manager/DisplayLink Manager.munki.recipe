@@ -30,6 +30,19 @@
             <string>DisplayLink Manager</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Suppress the first-run configuration wizard introduced in DisplayLink Manager 16.0.
+# https://support.displaylink.com/knowledgebase/articles/1964491
+# Must be written to ~/Library/Preferences - does not work in /Library/Preferences
+CONSOLE_USER=$(stat -f "%Su" /dev/console)
+if [[ -n "$CONSOLE_USER" &amp;&amp; "$CONSOLE_USER" != "root" &amp;&amp; "$CONSOLE_USER" != "loginwindow" ]]; then
+    sudo -u "$CONSOLE_USER" /usr/bin/defaults write com.displaylink.DisplayLinkUserAgent SilentSetup -bool true
+fi
+
+exit 0
+</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
