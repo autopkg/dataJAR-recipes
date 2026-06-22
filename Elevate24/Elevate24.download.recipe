@@ -50,7 +50,7 @@ i.e.: `-k PRERELEASE=yes</string>
             <dict>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Developer ID Installer: Jigsaw Systems Ltd (BVDW99KYDU)</string>
+                    <string>Developer ID Installer: Jigsaw Systems Ltd (563MYW3H73)</string>
                     <string>Developer ID Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
