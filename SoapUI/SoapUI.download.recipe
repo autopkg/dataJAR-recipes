@@ -14,7 +14,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
         <key>DOWNLOAD_ARCH</key>
         <string>arm64</string>
         <key>NAME</key>
-        <string>SoapUIInstaller</string>
+        <string>SoapUI</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -24,7 +24,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
         <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>newVersion="(\d(\.\d)+)"</string>
+                <string>newVersion="(\d+(\.\d+)+)"</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
@@ -52,23 +52,12 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
             <key>Arguments</key>
             <dict>
                 <key>input_path</key>
-                <string>%pathname%/SoapUI %version% Installer.app</string>
+                <string>%pathname%/SoapUI-%version%.app</string>
                 <key>requirement</key>
                 <string>always</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%pathname%/SoapUI %version% Installer.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
-            </dict>
-            <key>Processor</key>
-            <string>Versioner</string>
         </dict>
     </array>
 </dict>
