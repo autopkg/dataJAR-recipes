@@ -14,6 +14,8 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
     <string>com.github.dataJAR-recipes.munki.SoapUI</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>arm64</string>
         <key>NAME</key>
         <string>SoapUI</string>
         <key>MUNKI_REPO_SUBDIR</key>
@@ -44,18 +46,20 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             </array>
             <key>unattended_install</key>
             <true/>
+            <key>unattended_uninstall</key>
+            <true/>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/zsh --no-rcs
 
-# Remove the Application
-/bin/rm -rf /Applications/SoapUI.app
+if [[ -d "/Applications/SoapUI.app" ]]; then
+    /bin/rm -rf "/Applications/SoapUI.app"
+fi
 
-# Forget the package receipt
-/usr/sbin/pkgutil --forget com.smartbear.SoapUI.pkg
-
-exit</string>
+if /usr/sbin/pkgutil --pkg-info "com.smartbear.SoapUI.pkg" &amp;&gt; /dev/null; then
+    /usr/sbin/pkgutil --forget "com.smartbear.SoapUI.pkg"
+fi</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>

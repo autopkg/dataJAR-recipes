@@ -21,7 +21,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
     <key>Process</key>
     <array>
         <dict>
-        <key>Arguments</key>
+            <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
                 <string>newVersion="(\d+(\.\d+)+)"</string>

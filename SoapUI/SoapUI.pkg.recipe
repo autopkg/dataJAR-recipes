@@ -11,6 +11,8 @@ For Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable</string>
     <string>com.github.dataJAR-recipes.pkg.SoapUI</string>
     <key>Input</key>
     <dict>
+        <key>DOWNLOAD_ARCH</key>
+        <string>arm64</string>
         <key>NAME</key>
         <string>SoapUI</string>
         <key>SUPPORTED_ARCH</key>
