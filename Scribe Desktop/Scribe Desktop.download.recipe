@@ -25,6 +25,8 @@ To download Intel use: "-intel" in the DOWNLOAD_ARCH variable</string>
             <dict>
                 <key>appcast_url</key>
                 <string>https://colony-labs-public.s3.us-east-2.amazonaws.com/macos%DOWNLOAD_ARCH%-updates/appcast.xml</string>
+                <key>urlencode_path_component</key>
+                <false/>
             </dict>
             <key>Processor</key>
             <string>SparkleUpdateInfoProvider</string>
@@ -32,23 +34,10 @@ To download Intel use: "-intel" in the DOWNLOAD_ARCH variable</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>find</key>
-                <string>%2520</string>
-                <key>input_string</key>
-                <string>%url%</string>
-                <key>replace</key>
-                <string>%20</string>
-            </dict>
-            <key>Processor</key>
-            <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>filename</key>
                 <string>%NAME%-%version%.dmg</string>
                 <key>url</key>
-                <string>%output_string%</string>
+                <string>%url%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
