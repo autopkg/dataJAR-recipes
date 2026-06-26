@@ -38,63 +38,128 @@
             <string>uninstall_script</string>
             <key>uninstall_script</key>
             <string>#!/bin/bash
-
-# uninstall mode: "full" (uninstall app and sandbox containers) or "partial", default "partial" for app pkg
-readonly uninstall_mode=${1:-full}
-
-echo "DisplayLink uninstall script"
+# Based on dluninstall from the DisplayLink Installation Cleaner for macOS
+# https://www.synaptics.com/products/displaylink-installation-cleaner-macos
 
 are_dl_processes_running()
 {
-    pgrep DisplayLink &amp;&gt; /dev/null
+    pgrep DisplayLink[^XpcService] &amp;&gt; /dev/null
 }
-
-echo -e "\n&gt; DisplayLink uninstaller running in \"${uninstall_mode}\" mode"
 
 get_users()
 {
   dscl . list /Users | grep -v -e '^_.*' -e daemon -e nobody
 }
 
-transfer_legacy_autostart_settings()
+remove_legacy_displaylink_useragents_and_daemons_for_all_users()
 {
-  local user=$1
-  local dlua_xml
-  dlua_xml="/Users/$user/Library/Group Containers/73YQY62QM3.com.displaylink.DisplayLinkShared/Library/Application Support/Logs/.dlua.xml"
-
-  local autostart
-  autostart=$(grep '&lt;value name="AutoStart"&gt;' "$dlua_xml" 2&gt; /dev/null | grep -o 'yes\|no') #read AutoStart value from dlua.xml
-  [ -z "$autostart" ] &amp;&amp; return
-  sed -i '' 's/\&lt;value name="AutoStart"\&gt;[a-z]\{2,3\}\&lt;\/value\&gt;//g' "$dlua_xml" 2&gt; /dev/null #delete AutoStart key from dlua.xml
-
-  autostart=$(echo "$autostart" | sed 's/yes/1/g;s/no/0/g') #replace "yes" with 1 and "no" with 0 for coherence in defaults
-  su -l "$user" -c "defaults write /Users/$user/Library/Containers/com.displaylink.DisplayLinkUserAgent/Data/Library/Preferences/com.displaylink.DisplayLinkUserAgent.plist AppAutostart $autostart" #transfer legacy value
-}
-
-remove_displaylink_useragents_and_daemons_for_all_users()
-{
-  echo -e "\n&gt; Removing DisplayLink user agents"
-  launchctl list | grep DisplayLink &amp;&gt; /dev/null
-  local had_deamons_installed=$?
+  echo -e "\n&gt; Removing legacy DisplayLink user agents"
 
   for user in $(get_users); do
-    su -l "$user" -c 'launchctl remove com.displaylink.useragent' # legacy useragent name
-    su -l "$user" -c 'launchctl remove com.displaylink.DisplayLink Manager' # legacy useragent name
-    su -l "$user" -c 'launchctl remove com.displaylink.DisplayLinkManager' # when running as appstore app this is user daemon
-    su -l "$user" -c 'launchctl remove com.displaylink.DisplayLinkLoginHelper' # when running as appstore app this is login helper
-    [ "${uninstall_mode}" == "full" ] &amp;&amp;  su -l "$user" -c 'launchctl remove com.displaylink.loginscreen' # pre-login agent for appstore app
-
-    [ "${uninstall_mode}" == "partial" ] &amp;&amp;  transfer_legacy_autostart_settings "$user"
-    [ "${uninstall_mode}" == "full" ] &amp;&amp;  su -l "$user" -c 'defaults delete com.displaylink.DisplayLinkUserAgent' # delete persistent settings
+    su -l "$user" -c 'launchctl remove com.displaylink.useragent'
+    su -l "$user" -c 'launchctl remove com.displaylink.DisplayLink Manager'
+    su -l "$user" -c 'launchctl remove com.displaylink.DisplayLinkManager'
+    su -l "$user" -c 'launchctl remove com.displaylink.DisplayLinkLoginHelper'
   done
 
   echo -e "\n&gt; Removing DisplayLink daemon"
-  launchctl remove com.displaylink.displaylinkmanager # legacy daemon name
+  launchctl remove com.displaylink.displaylinkmanager
   launchctl remove com.displaylink.DisplayLinkManager
+}
 
-  if [[ $had_deamons_installed -eq 0 ]]; then
-    wait_for_dl_processes_finished 10
-  fi
+remove_current_displaylink_useragents_and_daemons_for_all_users()
+{
+  echo -e "\n&gt; Removing current DisplayLink user agents"
+  for user in $(get_users); do
+    su -l "$user" -c 'launchctl remove com.displaylink.loginscreen'
+  done
+}
+
+remove_legacy_displaylink_software()
+{
+  echo -e "\n&gt; Removing legacy DisplayLink software"
+
+  files=(
+    "/Applications/DisplayLink"
+    "/Library/Application Support/DisplayLink"
+    "/Library/LaunchAgents/73YQY62QM3.com.displaylink.DisplayLinkAPServer.plist"
+    "/Library/LaunchAgents/com.displaylink.useragent-prelogin.plist"
+    "/Library/LaunchAgents/com.displaylink.useragent.plist"
+    "/Library/LaunchDaemons/com.displaylink.displaylinkmanager.plist"
+    "/Library/LaunchDaemons/com.displaylink.launchd.plist"
+    "/Library/Preferences/com.displaylink.plist"
+    "/Library/PrivilegedHelperTools/DisplayLink"
+    "/Library/Receipts/DisplayLink Software Installer.pkg"
+    "/Library/StartupItems/DisplayLinkAgent"
+    "/System/Library/Extensions/DisplayLinkGA.plugin"
+    "/System/Library/Extensions/DisplayLinkGA_10.6.plugin"
+    "/etc/asl/com.displaylink.windowserver"
+    "/var/db/receipts/com.displaylink*"
+    "/var/log/displaylink"
+  )
+
+  for f in "${files[@]}"
+  do
+    if [[ -e $f || -h $f ]]
+    then
+      echo "Removing $f..."
+      if ! rm -R "$f"
+      then
+        echo "ERROR: Unable to remove $f. Please remove manually."
+      fi
+      echo "$f successfully removed."
+    else
+      echo "$f not found, skipping."
+    fi
+  done
+}
+
+remove_current_displaylink_software()
+{
+  echo -e "\n&gt; Removing DisplayLink software"
+
+  files=(
+    "/Applications/DisplayLink Software Uninstaller.app"
+    "/Applications/DisplayLink Manager.app"
+  )
+
+  for f in "${files[@]}"
+  do
+    if [[ -e $f || -h $f ]]
+    then
+      echo "Removing $f..."
+      if ! rm -R "$f"
+      then
+        echo "ERROR: Unable to remove $f. Please remove manually."
+      fi
+      echo "$f successfully removed."
+    else
+      echo "$f not found, skipping."
+    fi
+  done
+}
+
+remove_login_screen_extension()
+{
+  echo -e "\n&gt; Removing login screen extension"
+  files=(
+    "/Library/LaunchAgents/com.displaylink.loginscreen.plist"
+  )
+
+  for f in "${files[@]}"
+  do
+    if [[ -e $f || -h $f ]]
+    then
+      echo "Removing $f..."
+      if ! rm -R "$f"
+      then
+        echo "ERROR: Unable to remove $f. Please remove manually."
+      fi
+      echo "$f successfully removed."
+    else
+      echo "$f not found, skipping."
+    fi
+  done
 }
 
 remove_sandbox_containers()
@@ -103,10 +168,10 @@ remove_sandbox_containers()
   for i in ~root /Users/*
   do
     echo "$i"
-    sudo rm -fr "$i/Library/Containers/com.displaylink.DisplayLink Manager"
-    sudo rm -fr "$i/Library/Containers/com.displaylink.DisplayLinkManager"
-    sudo rm -fr "$i/Library/Containers/com.displaylink.DisplayLinkLoginHelper"
-    sudo rm -fr "$i/Library/Containers/com.displaylink.DisplayLinkUserAgent"
+    rm -fr "$i/Library/Containers/com.displaylink.DisplayLink Manager"
+    rm -fr "$i/Library/Containers/com.displaylink.DisplayLinkManager"
+    rm -fr "$i/Library/Containers/com.displaylink.DisplayLinkLoginHelper"
+    rm -fr "$i/Library/Containers/com.displaylink.DisplayLinkUserAgent"
 
     rm -fr "$i/Library/Group Containers/73YQY62QM3.com.displaylink.DisplayLinkShared"
     rm -fr "$i/Library/Group Containers/com.displaylink.DisplayLinkShared"
@@ -116,12 +181,26 @@ remove_sandbox_containers()
 remove_application_scripts()
 {
   echo -e "\n&gt; Remove application scripts"
-  for i in ~root /Users/*
+  for user in ~root /Users/*
   do
-    sudo rm -fr "$i/Library/Application Scripts/com.displaylink.DisplayLinkLoginHelper"
-    sudo rm -fr "$i/Library/Application Scripts/com.displaylink.DisplayLinkManager"
-    sudo rm -fr "$i/Library/Application Scripts/com.displaylink.DisplayLinkUserAgent"
-    sudo rm -fr "$i/Library/Application Scripts/com.displaylink.DisplayLink_Manager"
+    rm -fr "$user/Library/Application Scripts/com.displaylink.DisplayLinkLoginHelper"
+    rm -fr "$user/Library/Application Scripts/com.displaylink.DisplayLinkManager"
+    rm -fr "$user/Library/Application Scripts/com.displaylink.DisplayLinkUserAgent"
+    rm -fr "$user/Library/Application Scripts/com.displaylink.DisplayLink_Manager"
+    rm -fr "$user/Library/Application Scripts/73YQY62QM3.com.displaylink.DisplayLinkShared"
+  done
+}
+
+remove_application_preferences()
+{
+  echo -e "\n&gt; Remove application preferences"
+  for user in $(get_users); do
+    su -l "$user" -c 'defaults delete com.displaylink.DisplayLinkUserAgent'
+  done
+
+  for user in ~root /Users/*
+  do
+    rm -fr "$user/Library/Preferences/73YQY62QM3.com.displaylink.DisplayLinkShared.plist"
   done
 }
 
@@ -129,18 +208,30 @@ terminate_any_remaining_dl_processes()
 {
   if are_dl_processes_running; then
     echo "Terminate remaining DisplayLink processes"
-    sudo killall -SIGTERM 'DisplayLink Manager'
-    sudo killall -SIGTERM DisplayLinkUserAgent
-    sudo killall -SIGTERM DisplayLinkManager
+    killall -q -SIGTERM 'DisplayLink Manager'
+    killall -q -SIGTERM DisplayLinkUserAgent
+    killall -q -SIGTERM DisplayLinkManager
   fi
 
   wait_for_dl_processes_finished 5
   if are_dl_processes_running; then
     echo "Kill remaining DisplayLink processes"
-    sudo killall -SIGKILL 'DisplayLink Manager'
-    sudo killall -SIGKILL DisplayLinkUserAgent
-    sudo killall -SIGKILL DisplayLinkManager
+    killall -q -SIGKILL 'DisplayLink Manager'
+    killall -q -SIGKILL DisplayLinkUserAgent
+    killall -q -SIGKILL DisplayLinkManager
   fi
+}
+
+terminate_crash_restart_helper()
+{
+  echo "Terminate CrashRestartHelper"
+  killall -q -SIGTERM CrashRestartHelper
+}
+
+terminate_xpc_service()
+{
+  echo "Terminate DisplayLinkXpcService"
+  killall -q -SIGTERM DisplayLinkXpcService
 }
 
 wait_for_dl_processes_finished()
@@ -154,7 +245,7 @@ wait_for_dl_processes_finished()
       break
     fi
 
-    echo "Wait for dl prcesses to finish"
+    echo "Wait for dl processes to finish"
     sleep 1
   done
 }
@@ -169,6 +260,8 @@ rebuildKextCache()
 
 removeKEXTs()
 {
+  echo -e "\n&gt; Removing KEXT driver"
+
   local kext_uninstall_flag=/tmp/dl_app_installer_requires_restart
 
   local kextfiles=(
@@ -203,63 +296,42 @@ removeKEXTs()
   fi
 }
 
-remove_displaylink_useragents_and_daemons_for_all_users
+remove_plist_from_user_directories()
+{
+  echo -e "\n&gt; Remove plists from user directories"
+  for i in ~root /Users/*
+  do
+    rm -vf "$i/Library/Preferences/com.displaylink.displaylinkmanager.plist"
+    rm -vf "$i/Library/Preferences/com.displaylink.airdisplaypriority.plist"
+  done
+}
+
+echo "DisplayLink uninstall script"
+
+launchctl list | grep DisplayLink &amp;&gt; /dev/null
+readonly had_daemons_installed=$?
+
+remove_legacy_displaylink_useragents_and_daemons_for_all_users
+remove_current_displaylink_useragents_and_daemons_for_all_users
+
+if [[ $had_daemons_installed -eq 0 ]]; then
+  wait_for_dl_processes_finished 10
+fi
+
+terminate_crash_restart_helper
 terminate_any_remaining_dl_processes
-
-files=(
-    "/Applications/DisplayLink"
-    "/Library/Application Support/DisplayLink"
-    "/Library/LaunchAgents/73YQY62QM3.com.displaylink.DisplayLinkAPServer.plist"
-    "/Library/LaunchAgents/com.displaylink.useragent-prelogin.plist"
-    "/Library/LaunchAgents/com.displaylink.useragent.plist"
-    "/Library/LaunchDaemons/com.displaylink.displaylinkmanager.plist"
-    "/Library/LaunchDaemons/com.displaylink.launchd.plist"
-    "/Library/Preferences/com.displaylink.plist"
-    "/Library/PrivilegedHelperTools/DisplayLink"
-    "/Library/Receipts/DisplayLink Software Installer.pkg"
-    "/Library/StartupItems/DisplayLinkAgent"
-    "/System/Library/Extensions/DisplayLinkGA.plugin"
-    "/System/Library/Extensions/DisplayLinkGA_10.6.plugin"
-    "/etc/asl/com.displaylink.windowserver"
-    "/var/db/receipts/com.displaylink*"
-    "/var/log/displaylink"
-)
-
-if [[ ${uninstall_mode} == "full" ]]
-then
-  files+=("/Applications/DisplayLink Software Uninstaller.app"
-        "/Applications/DisplayLink Manager.app"
-        "/Library/LaunchAgents/com.displaylink.loginscreen.plist")
-fi
-
-for f in "${files[@]}"
-do
-  if [[ -e $f || -h $f ]]
-  then
-    echo "Removing $f..."
-    if ! rm -R "$f"
-    then
-      echo "ERROR: Unable to remove $f. Please remove manually."
-    fi
-    echo "$f successfully removed."
-  else
-    echo "$f not found, skipping."
-  fi
-done
-
+remove_legacy_displaylink_software
+remove_current_displaylink_software
+terminate_xpc_service
 removeKEXTs
+remove_plist_from_user_directories
+remove_application_scripts
+remove_application_preferences
+remove_sandbox_containers
+remove_login_screen_extension
 
-echo -e "\n&gt; Remove plists from user directories"
-for i in ~root /Users/*
-do
-  rm -vf "$i/Library/Preferences/com.displaylink.displaylinkmanager.plist"
-  rm -vf "$i/Library/Preferences/com.displaylink.airdisplaypriority.plist"
-done
-
-if [[ ${uninstall_mode} == "full" ]]; then
-  remove_sandbox_containers
-  remove_application_scripts
-fi
+/usr/sbin/pkgutil --forget com.displaylink.displaylinkmanagerapp 2&gt;/dev/null || true
+/usr/sbin/pkgutil --forget com.displaylink.displaylinkloginscreenext 2&gt;/dev/null || true
 
 echo -e "\n&gt; DisplayLink uninstall script done."
 
