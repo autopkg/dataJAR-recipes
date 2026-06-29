@@ -2,14 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Comment</key>
+    <string>MAU CDN channel URLs documented at: https://learn.microsoft.com/en-us/microsoft-365-apps/mac/mau-configure-organization-specific-updates</string>
     <key>Description</key>
-    <string>Downloads the latest version of Microsoft Teams.</string>
+    <string>Downloads the latest version of Microsoft Teams.
+
+Set MAU_CHANNEL_URL (must end with a trailing slash) to use a different Microsoft AutoUpdate channel:
+- Current (default): https://res.public.onecdn.static.microsoft/mro1cdnstorage/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/
+- Preview: https://res.public.onecdn.static.microsoft/mro1cdnstorage/1ac37578-5a24-40fb-892e-b89d85b6dfaa/MacAutoupdate/
+- Beta: https://res.public.onecdn.static.microsoft/mro1cdnstorage/4B2D7701-0A4F-49C8-B4CB-0C2D4043F51F/MacAutoupdate/</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Microsoft Teams</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>MicrosoftTeams</string>
+        <key>MAU_CHANNEL_URL</key>
+        <string>https://res.public.onecdn.static.microsoft/mro1cdnstorage/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -23,7 +32,7 @@
                 <key>filename</key>
                 <string>0409TEAMS21-chk.plist</string>
                 <key>url</key>
-                <string>https://officecdnmac.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/0409TEAMS21-chk.xml</string>
+                <string>%MAU_CHANNEL_URL%0409TEAMS21-chk.xml</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -50,7 +59,7 @@
                 <key>filename</key>
                 <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://statics.teams.cdn.office.net/production-osx/%DOWNLOAD_VERSION%/MicrosoftTeams.pkg</string>
+                <string>https://teamsinstaller.public.onecdn.static.microsoft/production-osx/%DOWNLOAD_VERSION%/MicrosoftTeams.pkg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -75,7 +84,5 @@
             <string>CodeSignatureVerifier</string>
         </dict>
     </array>
-    <key>comment</key>
-    <string>MAU Auto Update Feed XML found in this file: /private/var/folders/mz/rlwv61sj09b4rsswdgntc2nh0000gp/T/TelemetryUploadFilecom.microsoft.autoupdate.fba.txt</string>
 </dict>
 </plist>
