@@ -7,7 +7,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Microsoft Teams.
 
-Set MAU_CHANNEL_URL to use a different Microsoft AutoUpdate channel:
+Set MAU_CHANNEL_URL (must end with a trailing slash) to use a different Microsoft AutoUpdate channel:
 - Current (default): https://res.public.onecdn.static.microsoft/mro1cdnstorage/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/
 - Preview: https://res.public.onecdn.static.microsoft/mro1cdnstorage/1ac37578-5a24-40fb-892e-b89d85b6dfaa/MacAutoupdate/
 - Beta: https://res.public.onecdn.static.microsoft/mro1cdnstorage/4B2D7701-0A4F-49C8-B4CB-0C2D4043F51F/MacAutoupdate/</string>
