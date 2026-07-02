@@ -26,6 +26,8 @@ To download Universal use: "universal" in the DOWNLOAD_ARCH variable</string>
             <dict>
                 <key>appcast_url</key>
                 <string>https://release-manager.us.gs.talon-sec.com/api/v1/appcast.xml?appid=%7Bdfef2477-4f0e-454b-bc0d-03ce61074e4c%7D&amp;platform=mac&amp;architecture=%DOWNLOAD_ARCH%&amp;channel=packaged</string>
+                <key>update_channel</key>
+                <string>stable</string>
                 <key>urlencode_path_component</key>
                 <false/>
             </dict>
