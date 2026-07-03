@@ -80,7 +80,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/WatchGuardMobileVPNwithSSL.dmg/WatchGuard Mobile VPN*.mpkg</string>
+                <string>%pathname%/WatchGuard Mobile VPN*.mpkg</string>
             </dict>
             <key>Processor</key>
             <string>FileFinder</string>
@@ -91,7 +91,7 @@
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%</string>
                 <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/WatchGuardMobileVPNwithSSL.dmg/%dmg_found_filename%</string>
+                <string>%pathname%/%dmg_found_filename%</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
