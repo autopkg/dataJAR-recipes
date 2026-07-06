@@ -23,7 +23,7 @@
                 <key>result_output_var_name</key>
                 <string>VERSION</string>
                 <key>url</key>
-                <string>https://portal.expressvpn.com/latest</string>
+                <string>https://main-kp-site-gateway-http.prodv2.pac.xvservice.net/api/v2/installers</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
