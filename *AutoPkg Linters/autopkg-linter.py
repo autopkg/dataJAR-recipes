@@ -205,8 +205,12 @@ def _get_bulk_response(call_num, linter_name, prompt,
     return "n"
 
 
-class _LinterExit(Exception):
-    """Raised when a linter calls sys.exit()."""
+class _LinterExit(BaseException):
+    """Raised when a linter calls sys.exit().
+
+    Extends BaseException (like SystemExit) so it is not caught
+    by generic 'except Exception' handlers within linter scripts.
+    """
 
     def __init__(self, code):
         self.code = code

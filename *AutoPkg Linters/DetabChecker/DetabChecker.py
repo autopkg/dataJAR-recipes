@@ -66,10 +66,10 @@ def remove_trailing_whitespace(content):
 
     for line in lines:
         # Remove trailing whitespace but preserve line ending
-        if line.endswith('\n'):
-            cleaned_lines.append(line.rstrip() + '\n')
-        elif line.endswith('\r\n'):
+        if line.endswith('\r\n'):
             cleaned_lines.append(line.rstrip() + '\r\n')
+        elif line.endswith('\n'):
+            cleaned_lines.append(line.rstrip() + '\n')
         else:
             cleaned_lines.append(line.rstrip())
 
