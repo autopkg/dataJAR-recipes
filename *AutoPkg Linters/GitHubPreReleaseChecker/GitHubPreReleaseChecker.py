@@ -43,7 +43,6 @@ def modify_yaml_recipe(content):
     recipe = yaml.safe_load(content)
     needs_modification = False
 
-    # Check if modification is needed using parsed YAML
     if 'Process' in recipe:
         for process_step in recipe['Process']:
             if process_step.get('Processor') == (
