@@ -7,11 +7,11 @@ Requires AutoPkg's Python installation.
 """
 
 import os
-import sys
-from pathlib import Path
 import re
+import sys
 import traceback
 import html
+from pathlib import Path
 
 
 def verify_environment():
@@ -37,6 +37,57 @@ def clean_path(path):
 def has_html_comments(content):
     """Check if content contains HTML-style comments."""
     return '<!--' in content and '-->' in content
+
+
+def has_wrongly_cased_comment_key(content: str, is_yaml: bool) -> bool:
+    """Return True only if a comment key exists with casing other than 'Comment'."""
+    if is_yaml:
+        matches = re.findall(r'^\s*(comment)\s*:', content,
+                             re.MULTILINE | re.IGNORECASE)
+        return any(m != 'Comment' for m in matches)
+    matches = re.findall(r'<key>(comment)</key>', content, re.IGNORECASE)
+    return any(m != 'Comment' for m in matches)
+
+
+def fix_comment_key_case(content: str, is_yaml: bool) -> tuple[str, bool, int]:
+    """Fix wrongly-cased 'comment' keys to 'Comment'.
+
+    Returns:
+        Tuple of (fixed_content, was_modified, fix_count)
+    """
+    fix_count = [0]
+
+    if is_yaml:
+        def yaml_replacer(match: re.Match) -> str:
+            """Replace wrongly-cased YAML comment key with 'Comment'."""
+            if match.group(2) != 'Comment':
+                fix_count[0] += 1
+                return match.group(1) + 'Comment' + match.group(3)
+            return match.group(0)
+
+        new_content = re.sub(
+            r'^(\s*)(comment)(\s*:)',
+            yaml_replacer,
+            content,
+            flags=re.MULTILINE | re.IGNORECASE
+        )
+    else:
+        def plist_replacer(match: re.Match) -> str:
+            """Replace wrongly-cased plist comment key with 'Comment'."""
+            if match.group(1) != 'Comment':
+                fix_count[0] += 1
+                return '<key>Comment</key>'
+            return match.group(0)
+
+        new_content = re.sub(
+            r'<key>(comment)</key>',
+            plist_replacer,
+            content,
+            flags=re.IGNORECASE
+        )
+
+    was_modified = fix_count[0] > 0
+    return new_content, was_modified, fix_count[0]
 
 
 def convert_plist_comments(content):
@@ -229,14 +280,9 @@ def convert_yaml_comments(content):
         # Convert to YAML Comment key-value pair
         # Escape any special YAML characters in the comment
         if (':' in comment_text or '#' in comment_text or
-                comment_text.startswith(('- ', '* ')) or
-                '"' in comment_text or '\\' in comment_text):
-            # Escape backslashes first, then double quotes
-            escaped_comment_text = (
-                comment_text.replace('\\', '\\\\').replace('"', '\\"')
-            )
+                comment_text.startswith(('- ', '* '))):
             # Quote the string if it contains special characters
-            result = f'{indent}Comment: "{escaped_comment_text}"'
+            result = f'{indent}Comment: "{comment_text}"'
         else:
             result = f'{indent}Comment: {comment_text}'
 
@@ -253,64 +299,85 @@ def convert_yaml_comments(content):
     return new_content, modified, comment_count
 
 
-def process_recipe(recipe_path):
+def _apply_fixes(recipe_path: Path, original_content: str,
+                 is_yaml: bool) -> tuple[str, int]:
+    """Apply HTML comment conversion and case fixes, returning (content, total_count)."""
+    modified_content = original_content
+    comment_count = 0
+
+    if has_html_comments(original_content):
+        print(f"\nFound HTML comments in: {recipe_path}")
+        if is_yaml:
+            modified_content, _, count = convert_yaml_comments(modified_content)
+        else:
+            modified_content, _, count = convert_plist_comments(modified_content)
+        comment_count += count
+
+    modified_content, case_fixed, fix_count = fix_comment_key_case(modified_content, is_yaml)
+    if case_fixed:
+        print(f"DEBUG: Fixed capitalisation on {fix_count} comment key(s)")
+
+    return modified_content, comment_count + fix_count
+
+
+def _commit_changes(recipe_path: Path, original_content: str,
+                    modified_content: str, total: int) -> tuple[bool, int]:
+    """Write changes if content differs and verify the result.
+
+    Returns (True, total) on success, (False, 0) if nothing changed or write fails.
+    On verification failure, restores the original content before returning.
+    """
+    if modified_content == original_content:
+        print(f"No modifications needed for: {recipe_path.name}")
+        return False, 0
+
+    print(f"DEBUG: Converted {total} comment(s)")
+    print(f"DEBUG: Writing changes to: {recipe_path}")
+    with open(recipe_path, 'w', encoding='utf-8') as file:
+        file.write(modified_content)
+
+    with open(recipe_path, 'r', encoding='utf-8') as file:
+        verified = file.read()
+
+    verification_failed = (verified != modified_content) or has_html_comments(verified)
+    if verification_failed:
+        if verified != modified_content:
+            print(f"❌ Warning: File write verification failed for {recipe_path}")
+        else:
+            print(f"❌ Warning: HTML comments still present after conversion in {recipe_path}")
+        try:
+            with open(recipe_path, 'w', encoding='utf-8') as file:
+                file.write(original_content)
+            print(f"DEBUG: Restored original content for {recipe_path}")
+        except OSError as restore_err:
+            print(f"❌ CRITICAL: Could not restore {recipe_path}: {restore_err}")
+            print("❌ File may be in a corrupt state. Manual review required.")
+        return False, 0
+
+    print(f"✓ Successfully converted {total} comment(s): {recipe_path}")
+    return True, total
+
+
+def process_recipe(recipe_path: Path) -> tuple[bool, int]:
     """Process a single recipe file and convert HTML comments."""
     try:
         is_yaml = recipe_path.suffix == '.yaml'
         print(f"\nDEBUG: Processing {recipe_path}")
         print(f"DEBUG: File type: {'YAML' if is_yaml else 'plist'}")
 
-        # Read original content
         with open(recipe_path, 'r', encoding='utf-8') as file:
             original_content = file.read()
             print(f"DEBUG: Original content length: {len(original_content)}")
 
-        # Check if file contains HTML comments
-        if not has_html_comments(original_content):
-            print(f"Skipping {recipe_path.name} - no HTML comments found")
+        if not has_html_comments(original_content) and \
+                not has_wrongly_cased_comment_key(original_content, is_yaml):
+            print(f"Skipping {recipe_path.name} - no HTML comments or capitalisation issues found")
             return False, 0
 
-        print(f"\nFound HTML comments in: {recipe_path}")
+        modified_content, total = _apply_fixes(recipe_path, original_content, is_yaml)
+        return _commit_changes(recipe_path, original_content, modified_content, total)
 
-        # Convert based on file type
-        if is_yaml:
-            modified_content, was_modified, comment_count = \
-                convert_yaml_comments(original_content)
-        else:
-            modified_content, was_modified, comment_count = \
-                convert_plist_comments(original_content)
-
-        if not was_modified:
-            print(f"No modifications needed for: {recipe_path.name}")
-            return False, 0
-
-        print(f"DEBUG: Converted {comment_count} comment(s)")
-
-        # Write the changes
-        print(f"DEBUG: Writing changes to: {recipe_path}")
-        with open(recipe_path, 'w', encoding='utf-8') as file:
-            file.write(modified_content)
-
-        # Verify the changes were written
-        with open(recipe_path, 'r', encoding='utf-8') as file:
-            verification_content = file.read()
-
-        if verification_content != modified_content:
-            print(f"❌ Warning: File write verification failed for "
-                  f"{recipe_path}")
-            return False, 0
-
-        # Verify no HTML comments remain
-        if has_html_comments(verification_content):
-            print(f"❌ Warning: HTML comments still present after "
-                  f"conversion in {recipe_path}")
-            return False, 0
-
-        print(f"✓ Successfully converted {comment_count} comment(s): "
-              f"{recipe_path}")
-        return True, comment_count
-
-    except Exception as e:
+    except (OSError, UnicodeDecodeError) as e:
         print(f"❌ Error processing {recipe_path}: {str(e)}")
         print("DEBUG: Full error details:")
         print(traceback.format_exc())
@@ -327,6 +394,7 @@ def main():
     print("2. Convert them to Comment key-string pairs")
     print("3. Use 4 spaces for indentation")
     print("4. Preserve comment location and formatting")
+    print("5. Fix wrongly-cased 'comment' keys to 'Comment'")
     print("=" * 50)
     print("\nEnter the path to your recipe directory")
     print("(You can drag and drop the folder here): ", end='', flush=True)

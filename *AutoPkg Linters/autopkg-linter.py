@@ -24,7 +24,6 @@ Available linters:
 15. MissingKeyValueChecker - Check for empty values in pkginfo dict
 16. DuplicateKeyChecker - Detect duplicate keys and fix duplicates
 17. zshChecker - Ensure zsh shebangs include --no-rcs flag
-18. OverridePkgReceiptChecker - Ensure uninstall scripts forget pkg receipts
 
 Usage:
     Run all linters:
@@ -81,7 +80,7 @@ def get_available_linters():
          "Convert tabs to spaces and fix whitespace"),
         (4, "CommentKeyChecker", "CommentKeyChecker",
          "CommentKeyChecker.py",
-         "Convert HTML comments to Comment keys"),
+         "Convert HTML comments to Comment keys and fix key capitalisation"),
         (5, "UninstallScriptChecker", "UninstallScriptChecker",
          "UninstallScriptChecker.py",
          "Validate uninstall_script configuration"),
@@ -122,9 +121,6 @@ def get_available_linters():
         (17, "zshChecker", "zshChecker",
          "zshChecker.py",
          "Ensure zsh shebangs include --no-rcs flag"),
-        (18, "OverridePkgReceiptChecker", "OverridePkgReceiptChecker",
-         "OverridePkgReceiptChecker.py",
-         "Ensure uninstall scripts forget pkg receipts from EAs"),
     ]
 
     # Verify each linter exists
@@ -176,32 +172,6 @@ def _get_bulk_response(call_num, linter_name, prompt,
 
     prompt_lower = prompt.lower()
 
-    # Special handling for OverridePkgReceiptChecker (needs private-recipes path)
-    # Call 1: overrides directory (handled by call_num == 1 below)
-    # Call 2: private-recipes directory (handled here)
-    if linter_name == "OverridePkgReceiptChecker" and call_num == 2:
-        # Try to find private-recipes as a sibling directory
-        from pathlib import Path
-        recipe_path = Path(recipe_dir)
-        parent_dir = recipe_path.parent
-
-        # Look for private-recipes in parent directory
-        private_recipes = parent_dir / "private-recipes"
-        if private_recipes.exists() and private_recipes.is_dir():
-            return str(private_recipes)
-
-        # If not found, print warning and exit
-        print("\n" + "=" * 70)
-        print("⚠️  WARNING: Could not auto-locate private-recipes directory")
-        print(f"    Looked for: {private_recipes}")
-        print("    This linter requires BOTH directories to function.")
-        print("    Please re-run with interactive mode (option 1) or")
-        print("    run this linter standalone with both paths.")
-        print("=" * 70)
-        # Raise directly so this cannot be caught by a
-        # linter's own except Exception handler
-        raise _LinterExit(1)
-
     # Batch mode selection (RecipeAlphabetiser)
     is_alphabetiser = (
         call_num == 2
@@ -235,12 +205,8 @@ def _get_bulk_response(call_num, linter_name, prompt,
     return "n"
 
 
-class _LinterExit(BaseException):
-    """Raised when a linter calls sys.exit().
-
-    Extends BaseException (like SystemExit) so it is not caught
-    by generic 'except Exception' handlers within linter scripts.
-    """
+class _LinterExit(Exception):
+    """Raised when a linter calls sys.exit()."""
 
     def __init__(self, code):
         self.code = code
