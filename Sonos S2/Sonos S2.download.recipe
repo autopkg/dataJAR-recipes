@@ -12,16 +12,29 @@
         <string>Sonos S2</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.3.1</string>
+    <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>(https://update-software\.sonos\.com/software/\w+/Sonos_[0-9.]+-[0-9]+\.dmg)</string>
+                <key>result_output_var_name</key>
+                <string>download_url</string>
+                <key>url</key>
+                <string>https://formulae.brew.sh/api/cask/sonos.json</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
                 <string>SonosDesktopController.dmg</string>
                 <key>url</key>
-                <string>https://www.sonos.com/redir/controller_software_mac2</string>
+                <string>%download_url%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
