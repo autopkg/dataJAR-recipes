@@ -9,7 +9,7 @@ We have to manually create the installs array due it being an App Installer. Luc
 
 Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
 
-Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The preinstall_script checks for a logged in user and defers install if there isn't.</string>
+Due to what we think is a bug, the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The preinstall_script checks for a logged in user and defers the install if there isn't one.</string>
     <key>Description</key>
     <string>Downloads the latest version of LogiOptionsPlus and imports it into Munki.</string>
     <key>Identifier</key>
@@ -41,11 +41,11 @@ Due to what we think is a bug the Logi Options+ Installer hangs at the Login Win
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/zsh --no-rcs
 #
 rm -Rf /Applications/logioptionsplus.app
 #
-exit</string>
+exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -131,20 +131,20 @@ fi</string>
                     <key>installs</key>
                     <array>
                         <dict>
-                            <key>type</key>
-                            <string>application</string>
                             <key>CFBundleIdentifier</key>
                             <string>com.logi.optionsplus</string>
                             <key>CFBundleName</key>
                             <string>logioptionsplus</string>
-                            <key>path</key>
-                            <string>/Applications/logioptionsplus.app</string>
                             <key>CFBundleShortVersionString</key>
                             <string>%CFBV%</string>
                             <key>CFBundleVersion</key>
                             <string>%CFBV%</string>
                             <key>minosversion</key>
                             <string>%min_os_ver%</string>
+                            <key>path</key>
+                            <string>/Applications/logioptionsplus.app</string>
+                            <key>type</key>
+                            <string>application</string>
                             <key>version_comparison_key</key>
                             <string>CFBundleShortVersionString</string>
                         </dict>
@@ -152,12 +152,12 @@ fi</string>
                     <key>minimum_os_version</key>
                     <string>%min_os_ver%</string>
                     <key>preinstall_script</key>
-					<string>#!/bin/zsh --no-rcs
+                    <string>#!/bin/zsh --no-rcs
 
 console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
 
-if [[ -z "$console_user" || "$console_user" == "loginwindow" ]]; then
-    echo "No user logged in, deferring Logi Options+ install."
+if [[ -z "$console_user" || "$console_user" == "loginwindow" || "$console_user" == "root" || "$console_user" == "_mbsetupuser" ]]; then
+    echo "Unsupported console user ('$console_user'), deferring Logi Options+ install."
     exit 1
 fi
 
