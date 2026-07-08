@@ -157,7 +157,7 @@ fi</string>
 console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
 
 if [[ -z "$console_user" || "$console_user" == "loginwindow" || "$console_user" == "root" || "$console_user" == "_mbsetupuser" ]]; then
-    echo "No user logged in, deferring Logi Options+ install."
+    echo "No standard console user session detected (console_user=$console_user), deferring Logi Options+ install."
     exit 1
 fi
 
