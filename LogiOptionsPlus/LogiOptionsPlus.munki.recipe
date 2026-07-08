@@ -9,7 +9,7 @@ We have to manually create the installs array due it being an App Installer. Luc
 
 Also the App mentioned at %RECIPE_CACHE_DIR%/pkg/root/private/tmp/logioptionsplus.app is actually just a renamed download of the Logi Options+ Installer.app
 
-Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The  installcheck_script checks for a logged in user and bails if there isnt.</string>
+Due to what we think is a bug the Logi Options+ Installer hangs at the Login Window resulting in the end user having to reboot their computer. The preinstall_script checks for a logged in user and defers install if there isn't.</string>
     <key>Description</key>
     <string>Downloads the latest version of LogiOptionsPlus and imports it into Munki.</string>
     <key>Identifier</key>
@@ -83,9 +83,9 @@ exit</string>
 #
 # DESCRIPTION
 #
-# Exits with exit code 1 if no-one is logged in.
 # If info_plist_path doesn't exist, proceeds with install.
 # If info_plist_path exists and is older than munki, proceeds with install.
+# If info_plist_path exists and is the same or newer, skips install.
 
 # Function to compare version strings using sort -V
 compare_versions() {
@@ -104,53 +104,29 @@ compare_versions() {
     fi
 }
 
-# Function to check if user is logged in
-user_logged_in() {
-    # Get the console user using system_profiler
-    local console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
-
-    # Check if someone is logged in and it's not loginwindow
-    if [[ -n "$console_user" &amp;&amp; "$console_user" != "loginwindow" ]]; then
-        return 0  # User is logged in
-    else
-        return 1  # No user logged in
-    fi
-}
-
 # App path and version
-app_path="/Applications/logioptionsplus.app/"
+app_path="/Applications/logioptionsplus.app"
 app_version="%version%"
 info_plist_path="$app_path/Contents/Info.plist"
 
-# Check if user is logged in
-if user_logged_in; then
-    # If the app exists
-    if [[ -f "$info_plist_path" ]]; then
-        # Get version from info.plist using plutil
-        if installed_version=$(plutil -extract CFBundleShortVersionString raw "$info_plist_path" 2&gt;/dev/null); then
-            echo "$app_path version $installed_version, installed..."
+if [[ -f "$info_plist_path" ]]; then
+    if installed_version=$(plutil -extract CFBundleShortVersionString raw "$info_plist_path" 2&gt;/dev/null); then
+        echo "$app_path version $installed_version, installed..."
 
-            # Compare the installed version with this installations
-            if compare_versions "$installed_version" "$app_version"; then
-                # Local version older, proceed with installation
-                echo "Older version of $app_path located, proceeding with installation..."
-                exit 0
-            else
-                # Local version newer, cancelling installation
-                echo "Newer or the same version of $app_path located, cancelling installation..."
-                exit 1
-            fi
+        if compare_versions "$installed_version" "$app_version"; then
+            echo "Older version of $app_path located, proceeding with installation..."
+            exit 0
         else
-            echo "Encountered an error when trying to parse $info_plist_path..."
+            echo "Newer or the same version of $app_path located, cancelling installation..."
             exit 1
         fi
     else
-        # App is not installed and user is logged in, proceed.
+        echo "Encountered an error when trying to parse $info_plist_path, proceeding with installation..."
         exit 0
     fi
 else
-    # Exit as no-one logged in
-    exit 1
+    echo "$app_path not found, proceeding with installation..."
+    exit 0
 fi</string>
                     <key>installs</key>
                     <array>
@@ -175,6 +151,17 @@ fi</string>
                     </array>
                     <key>minimum_os_version</key>
                     <string>%min_os_ver%</string>
+                    <key>preinstall_script</key>
+					<string>#!/bin/zsh --no-rcs
+
+console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
+
+if [[ -z "$console_user" || "$console_user" == "loginwindow" ]]; then
+    echo "No user logged in, deferring Logi Options+ install."
+    exit 1
+fi
+
+exit 0</string>
                     <key>version</key>
                     <string>%version%</string>
                 </dict>
