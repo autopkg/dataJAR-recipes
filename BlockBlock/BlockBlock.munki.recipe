@@ -73,7 +73,7 @@ fi</string>
     <key>MinimumVersion</key>
     <string>0.6.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.zentralpro.download.blockblock</string>
+    <string>com.github.dataJAR-recipes.download.BlockBlock</string>
     <key>Process</key>
     <array>
         <dict>
