@@ -16,6 +16,10 @@ This uses the same postinstall and uninstall scripts as the version agnostic rec
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>BBEdit.app</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -28,10 +32,6 @@ This uses the same postinstall and uninstall scripts as the version agnostic rec
             <string>BBEdit 16</string>
             <key>name</key>
             <string>%NAME%</string>
-            <key>blocking_applications</key>
-            <array>
-                <string>BBEdit.app</string>
-            </array>
             <key>postinstall_script</key>
             <string>#!/bin/zsh --no-rcs
 # Copy command-line tool resources out of .app bundle
