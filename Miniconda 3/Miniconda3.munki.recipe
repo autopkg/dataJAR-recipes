@@ -119,7 +119,7 @@ exit 0</string>
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>id=\"io\.continuum\.pkg\.prepare_installation\" version=\"(py[0-9]+_([0-9]+(\.[0-9]+)+)-[0-9]+)\"</string>
+                <string>id="com\.anaconda\.pkg\.prepare_installation" version="(py[0-9]+_([0-9]+(\.[0-9]+)+)-[0-9]+)"</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
