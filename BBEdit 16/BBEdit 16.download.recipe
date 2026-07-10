@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of BBEdit 15.</string>
+    <string>Downloads the latest version of BBEdit 16.</string>
     <key>Identifier</key>
-    <string>com.github.dataJAR-recipes.download.BBEdit 15</string>
+    <string>com.github.dataJAR-recipes.download.BBEdit 16</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>BBEdit15</string>
+        <string>BBEdit16</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -19,11 +19,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://s3\.amazonaws\.com/BBSW-download/BBEdit_15.*\.dmg</string>
+                <string>https://s3\.amazonaws\.com/BBSW-download/BBEdit_16.*\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://www.barebones.com/support/bbedit/updates.html</string>
+                <string>https://www.barebones.com/products/bbedit/download.html</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
