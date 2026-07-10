@@ -28,8 +28,12 @@ This uses the same postinstall and uninstall scripts as the version agnostic rec
             <string>BBEdit 16</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>blocking_applications</key>
+            <array>
+                <string>BBEdit.app</string>
+            </array>
             <key>postinstall_script</key>
-            <string>#!/bin/sh
+            <string>#!/bin/zsh --no-rcs
 # Copy command-line tool resources out of .app bundle
 CMD_TOOL_DIR=/usr/local/bin
 CMD_MAN_DIR=/usr/local/share/man/man1
@@ -50,7 +54,7 @@ done
 "$LN" -sf "$HELPER_MAN_SRC_DIR/bbedit.1" "$CMD_MAN_DIR/bbedit.1"
             </string>
             <key>postuninstall_script</key>
-            <string>#!/bin/sh
+            <string>#!/bin/zsh --no-rcs
 # Delete BBEdit command-line tool resources if they exist
 
 CMD_TOOL_DIR=/usr/local/bin
