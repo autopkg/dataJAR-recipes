@@ -329,7 +329,7 @@ compare_versions() {
         # installed (version1) >= app_version (version2), do not install
         return 1
     else
-        # installed (version1) < app_version (version2), should install
+        # installed (version1) &lt; app_version (version2), should install
         return 0
     fi
 }
