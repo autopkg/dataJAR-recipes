@@ -5,7 +5,7 @@
     <key>Comment</key>
     <string>There is currently only an arm64 version provided by the developer</string>
     <key>Description</key>
-    <string>Downloads the latest version of Poly Studio and imports it into Munki.
+    <string>Downloads the latest version of Poly Studio (arm64 only) and imports it into Munki.
 
 Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.
 
@@ -34,6 +34,10 @@ For a successful install, there needs to be a logged in user. To achieve this an
             <string>Poly Studio</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>arm64</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
