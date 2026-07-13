@@ -317,20 +317,20 @@ echo Done</string>
 # - Info.plist doesn't exist
 # - Info.plist exists and app version is older than installation version
 
-# Function to compare version strings using sort -V
+# Function to compare version strings
+# Returns 0 if version1 is strictly less than version2 (installed is older)
 compare_versions() {
     local version1="$1"
     local version2="$2"
 
-    # Use sort -V to compare versions
-    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
-
-    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
-        # version1 is strictly less than version2
-        return 0
-    else
-        # version1 is greater than or equal to version2
+    autoload is-at-least
+    # is-at-least minimum current — returns 0 if current >= minimum
+    if is-at-least "$version2" "$version1"; then
+        # installed (version1) >= app_version (version2), do not install
         return 1
+    else
+        # installed (version1) < app_version (version2), should install
+        return 0
     fi
 }
 
