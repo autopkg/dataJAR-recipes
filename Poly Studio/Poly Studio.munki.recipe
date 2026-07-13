@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>There is currently only an arm64 version provided by the developer</string>
+    <key>Description</key>
+    <string>Downloads the latest version of Poly Studio and imports it into Munki.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.
+
+For a successful install, there needs to be a logged in user. To achieve this an installcheck_script is used.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Poly Studio</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>PolyStudio</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The HP Poly Studio Desktop app (formerly Poly Lens Desktop) is a streamlined macOS tool designed to configure settings and update software for your Poly video and audio devices. It provides deep personalization and IT management features for a seamless collaborative experience</string>
+            <key>developer</key>
+            <string>HP</string>
+            <key>display_name</key>
+            <string>Poly Studio</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/sh
+
+if [ $EUID -ne 0 ];
+then
+   echo "This script must be run as root. Exiting."
+   exit -1
+fi
+
+##################
+# function definitions
+
+remove_dir_if_exists() {
+   DIR="$1"
+   printf "Looking for $DIR..."
+   if [ -d "$DIR" ];
+   then
+      echo "found, removing."
+      rm -rf "$DIR"
+   else
+      echo "not found."
+   fi
+}
+
+remove_file_if_exists() {
+   FILE="$1"
+   printf "Looking for $FILE..."
+   if [ -e "$FILE" ];
+   then
+      echo "found, removing."
+      rm -f "$FILE"
+   else
+      echo "not found."
+   fi
+}
+
+kill_gui() {
+   printf "Stopping Lens Desktop GUI..."
+   if [ ! -z "$(pgrep "lens-desktop")" ];
+   then
+      pkill "lens-desktop"
+      echo "done."
+   else
+      echo "not running."
+   fi
+
+   printf "Stopping Poly Studio GUI..."
+   if [ ! -z "$(pgrep "Poly Studio")" ];
+   then
+      pkill "Poly Studio"
+      echo "done."
+   else
+      echo "not running."
+   fi
+}
+
+####
+# find all users currently running our agents
+####
+remove_user_agents() {
+   USERS=$(users | sort | uniq)
+   for TMP_USER in $USERS
+   do
+      TMP_UID=$(id -u $TMP_USER)
+      for LAUNCH_AGENT in com.poly.LegacyHostApp com.poly.LensControlService com.poly.CallControlApp
+      do
+         printf "Looking for $LAUNCH_AGENT launch agent under user $TMP_USER..."
+         HELPERJOB=$(/bin/launchctl print gui/$TMP_UID/$LAUNCH_AGENT)
+         if [ ! -z "$HELPERJOB" ];
+         then
+            echo "found, removing."
+            /bin/launchctl bootout gui/$TMP_UID/$LAUNCH_AGENT
+         fi
+         # else if not found, launchctl will print the rest of the line
+      done
+   done
+}
+
+remove_user_artifacts() {
+   USERS=$(users | sort | uniq)
+   for TMP_USER in $USERS
+   do
+      TMP_USER_HOME=$(dscl . -read /users/$TMP_USER NFSHomeDirectory | awk '{print $2}')
+      if [ -z "$TMP_USER_HOME" ];
+      then
+         echo "error determining home directory of $TMP_USER. skipping."
+      else
+         for i in "$TMP_USER_HOME/Library/Application Support/"{Plantronics,Poly}
+         do
+            remove_dir_if_exists "$i"
+         done
+
+         remove_file_if_exists "$TMP_USER_HOME/Library/Preferences/com.poly.lens.client.app.plist"
+         remove_file_if_exists "$TMP_USER_HOME/Library/Preferences/com.hp.poly.polystudio.plist"
+      fi
+   done
+}
+
+remove_launch_agent_plists() {
+   # remove global launch agent plists
+   for LAUNCH_AGENT in com.poly.LegacyHostApp com.poly.LensControlService com.poly.PolyLauncher com.poly.CallControlApp
+   do
+      LA_PLIST="/Library/LaunchAgents/$LAUNCH_AGENT.plist"
+
+      printf "Looking for $LA_PLIST..."
+      if [ -r $LA_PLIST ];
+      then
+         echo "found, removing."
+         rm $LA_PLIST
+      else
+         echo "not found."
+      fi
+   done
+}
+
+
+kill_helpers() {
+   printf "Looking for remaining (Lens Desktop|Poly Studio) app or helper instances..."
+   KILLPIDS=$(ps ax | awk '/\/Applications\/(Lens Desktop|Poly Studio).app\// { print $1 }')
+   if [ ! -z "$KILLPIDS" ];
+   then
+      echo "found, terminating."
+      echo $KILLPIDS | xargs kill
+      echo "waiting 3 seconds..."
+      sleep 3
+      printf "Looking for stubborn (Lens Desktop|Poly Studio) app or helper instances..."
+      FORCEKILLPIDS=$(ps ax | awk '/\/Applications\/(Lens Desktop|Poly Studio).app\// { print $1 }')
+      if [ ! -z "$FORCEKILLPIDS" ];
+      then
+         echo "found, force-quitting."
+         echo $FORCEKILLPIDS | xargs kill -9
+      else
+         echo "not found."
+      fi
+   else
+      echo "not found."
+   fi
+}
+
+cleanup_system_dirs() {
+   # clean up directories
+   for DIR in \
+      "/Applications/Lens Desktop.app" \
+      "/Applications/Poly Studio.app" \
+      "/Library/Application Support/Poly"
+   do
+      remove_dir_if_exists "$DIR"
+   done
+}
+
+cleanup_permissions() {
+   tccutil reset Accessibility com.poly.PolyLauncher
+}
+##################
+
+kill_gui
+remove_launch_agent_plists
+remove_user_agents
+echo "waiting 5s for helpers to stop..."
+sleep 5
+kill_helpers
+remove_user_artifacts
+cleanup_system_dirs
+cleanup_permissions
+
+echo Done</string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.download.polylens</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%pathname%/*.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%pathname%/%found_basename%</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/PolyStudio.pkg/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Poly Studio.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/Poly Studio.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh --no-rcs
+
+# Copyright 2025, Jamf Software, LLC.
+
+#
+# DESCRIPTION
+#
+# Exits with exit code 1 if:
+# - No one is logged in
+# - Info.plist exists and app version is newer than or equal to installation version
+# - Error occurs while parsing Info.plist
+#
+# Exits with exit code 0 if:
+# - Info.plist doesn't exist
+# - Info.plist exists and app version is older than installation version
+
+# Function to compare version strings using sort -V
+compare_versions() {
+    local version1="$1"
+    local version2="$2"
+
+    # Use sort -V to compare versions
+    local sorted_first=$(printf '%s\n%s\n' "$version1" "$version2" | sort -V | head -n1)
+
+    if [[ "$sorted_first" == "$version1" ]] &amp;&amp; [[ "$version1" != "$version2" ]]; then
+        # version1 is strictly less than version2
+        return 0
+    else
+        # version1 is greater than or equal to version2
+        return 1
+    fi
+}
+
+# Function to check if user is logged in
+user_logged_in() {
+    # Get the console user using scutil
+    local console_user=$(scutil &lt;&lt;&lt; "show State:/Users/ConsoleUser" | awk '/Name :/ { print $3 }')
+
+    # Check if someone is logged in and it's not loginwindow
+    if [[ -n "$console_user" &amp;&amp; "$console_user" != "loginwindow" ]]; then
+        return 0  # User is logged in
+    else
+        return 1  # No user logged in
+    fi
+}
+
+# Function to get installed version from Info.plist
+get_installed_version() {
+    local info_plist_path="$1"
+
+    if [[ ! -f "$info_plist_path" ]]; then
+        return 1
+    fi
+
+    # Get version from info.plist using plutil
+    local installed_version=$(plutil -extract CFBundleVersion raw "$info_plist_path" 2&gt;/dev/null)
+
+    if [[ -n "$installed_version" ]]; then
+        echo "$installed_version"
+        return 0
+    else
+        echo "Encountered an error when trying to parse $info_plist_path..."
+        return 1
+    fi
+}
+
+# Function to determine if app should be installed
+should_install() {
+    local app_path="$1"
+    local app_version="$2"
+    local info_plist_path="$3"
+
+    local installed_version
+    if installed_version=$(get_installed_version "$info_plist_path"); then
+        echo "$app_path version $installed_version, installed..."
+
+        if compare_versions "$installed_version" "$app_version"; then
+            echo "Older version of $app_path located, proceeding with installation..."
+            return 0  # Should install
+        else
+            echo "Newer or the same version of $app_path located, cancelling installation..."
+            return 1  # Should not install
+        fi
+    else
+        return 0  # Should install (error getting version or doesn't exist)
+    fi
+}
+
+# Main script variables
+app_path="/Applications/Poly Studio.app/"
+app_version="%version%"
+info_plist_path="$app_path/Contents/Info.plist"
+
+# Check if user is logged in
+if ! user_logged_in; then
+    exit 1
+fi
+
+# Check if installation should proceed
+if should_install "$app_path" "$app_version" "$info_plist_path"; then
+    exit 0  # Proceed with installation
+else
+    exit 1  # Do not install
+fi</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>version_comparison_key</key>
+                <string>CFBundleVersion</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
