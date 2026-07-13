@@ -373,6 +373,10 @@ should_install() {
     local app_version="$2"
     local info_plist_path="$3"
 
+    if [[ ! -f "$info_plist_path" ]]; then
+        return 0  # Info.plist missing, proceed with installation
+    fi
+
     local installed_version
     if installed_version=$(get_installed_version "$info_plist_path"); then
         echo "$app_path version $installed_version, installed..."
@@ -385,7 +389,7 @@ should_install() {
             return 1  # Should not install
         fi
     else
-        return 0  # Should install (error getting version or doesn't exist)
+        return 2  # Parse error
     fi
 }
 
@@ -400,8 +404,12 @@ if ! user_logged_in; then
 fi
 
 # Check if installation should proceed
-if should_install "$app_path" "$app_version" "$info_plist_path"; then
+should_install "$app_path" "$app_version" "$info_plist_path"
+result=$?
+if [[ $result -eq 0 ]]; then
     exit 0  # Proceed with installation
+elif [[ $result -eq 2 ]]; then
+    exit 1  # Parse error, do not install
 else
     exit 1  # Do not install
 fi</string>
