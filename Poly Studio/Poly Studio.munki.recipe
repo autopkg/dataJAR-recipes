@@ -362,7 +362,7 @@ get_installed_version() {
         echo "$installed_version"
         return 0
     else
-        echo "Encountered an error when trying to parse $info_plist_path..." >&amp;2
+        echo "Encountered an error when trying to parse $info_plist_path..." &gt;&amp;2
         return 1
     fi
 }
