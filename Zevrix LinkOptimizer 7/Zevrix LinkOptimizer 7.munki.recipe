@@ -8,8 +8,6 @@
     <string>com.github.dataJAR-recipes.munki.Zevrix LinkOptimizer 7</string>
     <key>Input</key>
     <dict>
-        <key>NAME</key>
-        <string>ZevrixLinkOptimizer7</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
@@ -23,7 +21,7 @@
             <key>developer</key>
             <string>Zevrix</string>
             <key>display_name</key>
-            <string>LinkOptimizer</string>
+            <string>LinkOptimizer 7</string>
             <key>name</key>
             <string>%NAME%</string>
             <key>unattended_install</key>
