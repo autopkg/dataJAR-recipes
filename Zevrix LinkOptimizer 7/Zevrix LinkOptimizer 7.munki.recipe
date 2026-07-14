@@ -45,7 +45,7 @@ for dir in "${inDesignDirs[@]}"; do
         /bin/rm -rf "${dir}/Plug-Ins/Zevrix/LinkOptimizer.app"
     fi
 
-    if [[ -e "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" ]]; then
+    if [[ -e "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" || -L "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" ]]; then
         /bin/rm -rf "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt"
     fi
 done
