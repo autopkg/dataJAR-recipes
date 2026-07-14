@@ -10,9 +10,9 @@ IFS=$'\n'
 inDesignDirs=($(/usr/bin/mdfind -onlyin "/Applications" -name "Adobe InDesign" kind:folder))
 
 if [[ -z "${inDesignDirs}" ]]; then
-    /bin/echo "Adobe InDesign is not installed, skipping..."
+    /bin/echo "Adobe InDesign is not installed, exiting..."
     /bin/rm -rf "/private/tmp/LinkOptimizer"
-    exit 0
+    exit 1
 fi
 
 for dir in "${inDesignDirs[@]}"; do
