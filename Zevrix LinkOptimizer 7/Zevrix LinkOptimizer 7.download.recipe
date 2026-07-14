@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Zevrix LinkOptimizer 7.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Zevrix LinkOptimizer 7</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ZevrixLinkOptimizer7</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://zevrix.com/downloads/LinkOptimizer.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/LinkOptimizer Installer.app/Contents/Resources/appPackage/LinkOptimizer.app</string>
+                <key>requirement</key>
+                <string>identifier "com.zevrix.LinkOptimizer7" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "8L6S43KNS9"</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%pathname%/LinkOptimizer Installer.app/Contents/Resources/appPackage/LinkOptimizer.app/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleIdentifier</key>
+                    <string>bundleid</string>
+                    <key>CFBundleShortVersionString</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>%bundleid% = "com.zevrix.LinkOptimizer7"</string>
+            </dict>
+            <key>Comment</key>
+            <string>If the bundleid != com.zevrix.LinkOptimizer7, then the recipe will stop here</string>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+    </array>
+</dict>
+</plist>
