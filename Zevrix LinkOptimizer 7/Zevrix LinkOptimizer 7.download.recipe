@@ -59,7 +59,7 @@
             <key>Arguments</key>
             <dict>
                 <key>predicate</key>
-                <string>%bundleid% = "com.zevrix.LinkOptimizer7"</string>
+                <string>%bundleid% != "com.zevrix.LinkOptimizer7"</string>
             </dict>
             <key>Comment</key>
             <string>If the bundleid != com.zevrix.LinkOptimizer7, then the recipe will stop here</string>

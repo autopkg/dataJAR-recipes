@@ -11,6 +11,7 @@ inDesignDirs=($(/usr/bin/mdfind -onlyin "/Applications" -name "Adobe InDesign" k
 
 if [[ -z "${inDesignDirs}" ]]; then
     /bin/echo "Adobe InDesign is not installed, skipping..."
+    /bin/rm -rf "/private/tmp/LinkOptimizer"
     exit 0
 fi
 
@@ -29,8 +30,8 @@ for dir in "${inDesignDirs[@]}"; do
     
     /bin/cp -r "/private/tmp/LinkOptimizer/LinkOptimizer.app" "${dir}/Plug-Ins/Zevrix"
     
-    if [[ -L "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" ]]; then
-        /bin/echo "Symlink found, replacing: ${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt ..."
+    if [[ -e "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" ]]; then
+        /bin/echo "Existing path found, replacing: ${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt ..."
         /bin/rm -rf "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt"
     fi
     
@@ -43,5 +44,7 @@ for dir in "${inDesignDirs[@]}"; do
 done
 
 IFS=$OIFS
+
+/bin/rm -rf "/private/tmp/LinkOptimizer"
 
 /bin/echo "LinkOptimizer postinstall finished, exiting..."

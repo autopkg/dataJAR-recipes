@@ -30,6 +30,30 @@
             <true/>
             <key>unattended_uninstall</key>
             <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+OIFS=$IFS
+IFS=$'\n'
+inDesignDirs=($(/usr/bin/mdfind -onlyin "/Applications" -name "Adobe InDesign" kind:folder))
+IFS=$OIFS
+
+for dir in "${inDesignDirs[@]}"; do
+    if [[ -e "${dir}/Plug-Ins/Zevrix/LinkOptimizer.app" ]]; then
+        /bin/rm -rf "${dir}/Plug-Ins/Zevrix/LinkOptimizer.app"
+    fi
+
+    if [[ -e "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" ]]; then
+        /bin/rm -rf "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt"
+    fi
+done
+
+if /usr/sbin/pkgutil --pkg-info "com.zevrix.LinkOptimizer7" &amp;&gt; /dev/null; then
+    /usr/sbin/pkgutil --forget "com.zevrix.LinkOptimizer7"
+fi
+</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
