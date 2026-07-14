@@ -17,29 +17,29 @@ fi
 
 for dir in "${inDesignDirs[@]}"; do
     /bin/echo "Directory found, copying application and linking startup script: ${dir} ..."
-    
+
     if [[ -e "${dir}/Plug-Ins/Zevrix/LinkOptimizer.app" ]]; then
         /bin/echo "Application found, replacing: ${dir}/Plug-Ins/Zevrix/LinkOptimizer.app ..."
         /bin/rm -rf "${dir}/Plug-Ins/Zevrix/LinkOptimizer.app"
     fi
-    
+
     if [[ ! -e "${dir}/Plug-Ins/Zevrix" ]]; then
         /bin/echo "Directory not found, creating: ${dir}/Plug-Ins/Zevrix..."
         /bin/mkdir -p "${dir}/Plug-Ins/Zevrix"
     fi
-    
+
     /bin/cp -r "/private/tmp/LinkOptimizer/LinkOptimizer.app" "${dir}/Plug-Ins/Zevrix"
-    
+
     if [[ -e "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" || -L "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt" ]]; then
         /bin/echo "Existing path found, replacing: ${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt ..."
         /bin/rm -rf "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt"
     fi
-    
+
     if [[ ! -e "${dir}/Scripts/startup scripts" ]]; then
         /bin/echo "Directory not found, creating: ${dir}/Scripts/startup scripts ..."
         /bin/mkdir -p "${dir}/Scripts/startup scripts"
     fi
-    
+
     /bin/ln -s "${dir}/Plug-Ins/Zevrix/LinkOptimizer.app/Contents/Resources/LinkOptimizer.startup.scpt" "${dir}/Scripts/startup scripts/.LinkOptimizer.startup.scpt"
 done
 
