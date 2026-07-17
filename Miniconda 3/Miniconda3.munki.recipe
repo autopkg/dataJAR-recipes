@@ -52,11 +52,11 @@ MINICONDA_DIR="/opt/miniconda3"
 
 # Array of package receipts to remove (from distribution file)
 RECEIPTS=(
-    "io.continuum.pkg.prepare_installation"
-    "io.continuum.pkg.shortcuts"
-    "io.continuum.pkg.run_installation"
-    "io.continuum.pkg.user_post_install"
-    "io.continuum.pkg.pathupdate"
+    "com.anaconda.pkg.prepare_installation"
+    "com.anaconda.pkg.shortcuts"
+    "com.anaconda.pkg.run_installation"
+    "com.anaconda.pkg.user_post_install"
+    "com.anaconda.pkg.run_conda_init"
 )
 
 # Check if Miniconda is installed in the specified location
