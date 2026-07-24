@@ -42,57 +42,16 @@ For Apple Silicon use: "arm64" in the SUPPORTED_ARCH variable</string>
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/zsh --no-rcs
 
-# Uninstall script based on:
-# https://www.anaconda.com/docs/getting-started/miniconda/uninstall#mac-os-linux
+UNINSTALL_SCRIPT="/opt/miniconda3/uninstall.sh"
 
-# Define the main Miniconda directory
-MINICONDA_DIR="/opt/miniconda3"
-
-# Array of package receipts to remove (from distribution file)
-RECEIPTS=(
-    "io.continuum.pkg.prepare_installation"
-    "io.continuum.pkg.shortcuts"
-    "io.continuum.pkg.run_installation"
-    "io.continuum.pkg.run_conda_init"
-)
-
-# Check if Miniconda is installed in the specified location
-if [ ! -d "$MINICONDA_DIR" ]; then
-    echo "Miniconda3 installation not found in $MINICONDA_DIR"
+if [[ ! -f "${UNINSTALL_SCRIPT}" ]]; then
+    echo "Miniconda3 installation not found at /opt/miniconda3"
     exit 0
 fi
 
-# Remove the main Miniconda directory
-echo "Removing Miniconda3 installation..."
-sudo rm -rf "$MINICONDA_DIR"
-
-# Remove conda initialization from system-wide profile if it exists
-if [ -f "/etc/profile.d/conda.sh" ]; then
-    echo "Removing conda initialization script..."
-    sudo rm -f "/etc/profile.d/conda.sh"
-fi
-
-# Clean up any remaining conda-related files in system locations
-echo "Cleaning up additional conda files..."
-sudo rm -rf /etc/conda
-
-# Remove any system-wide conda configuration if it exists
-if [ -f "/etc/.condarc" ]; then
-    echo "Removing system-wide conda configuration..."
-    sudo rm -f "/etc/.condarc"
-fi
-
-# Forget package receipts
-echo "Forgetting package receipts..."
-for receipt in "${RECEIPTS[@]}"; do
-    echo "Forgetting receipt: $receipt"
-    pkgutil --forget "$receipt"
-done
-
-echo "Miniconda3 uninstallation complete"
-exit 0</string>
+"${UNINSTALL_SCRIPT}" -y</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
