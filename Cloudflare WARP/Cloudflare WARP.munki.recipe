@@ -45,9 +45,12 @@ The WARP client sits between your device and the Internet, and has several conne
 
 # Vendors documentation: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/remove-warp/#macos
 
-cd /Applications/Cloudflare\ WARP.app/Contents/Resources ; ./uninstall.sh -f
+UNINSTALLER="/Applications/Cloudflare WARP.app/Contents/Resources/uninstall.sh"
+if [[ -x "$UNINSTALLER" ]]; then
+    "$UNINSTALLER" -f
+fi
 
-exit</string>
+exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
