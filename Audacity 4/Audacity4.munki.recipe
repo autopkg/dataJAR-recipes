@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Audacity 4 and imports it into Munki
+
+Set the ARCHITECTURE variable to "x86_64" for Intel
+
+Set the ARCHITECTURE variable to "arm64" for Apple Silicone
+
+Set the ARCHITECTURE variable to "universal" for universal
+</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.Audacity4</string>
+    <key>Input</key>
+    <dict>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/Audacity4</string>
+        <key>NAME</key>
+        <string>Audacity4</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Audacity 4 rebuilds the application interface on Qt and introduces many new quality-of-life improvements, including a new clip-editing model. Most Audacity 3 workflows remain available, but some controls have moved or changed.</string>
+            <key>display_name</key>
+            <string>Audacity 4</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.9</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.Audacity4</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
