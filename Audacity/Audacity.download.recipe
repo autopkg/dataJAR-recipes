@@ -33,7 +33,7 @@ i.e.: `-k PRERELEASE=yes`</string>
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>audacity-macOS-(\d(\.\d)+)-%ARCHITECTURE%\.dmg</string>
+                <string>audacity-macOS-(3(\.\d)+)-%ARCHITECTURE%\.dmg</string>
                 <key>github_repo</key>
                 <string>audacity/audacity</string>
                 <key>include_prereleases</key>
