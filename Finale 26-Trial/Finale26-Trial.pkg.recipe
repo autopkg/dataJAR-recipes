@@ -288,12 +288,12 @@
 # Determine working directory
 install_dir=$(dirname $0)
 
-/usr/bin/hdiutil attach "${install_dir}/FinaleSetup.dmg" -nobrowse
+/usr/sbin/diskutil image attach "${install_dir}/FinaleSetup.dmg" -nobrowse
 /usr/sbin/installer -pkg "/Volumes/Finale/Install Finale.pkg" -tgt / -applyChoiceChangesXML "${install_dir}/silentInstallerChoices.plist"
 /usr/sbin/installer -pkg "/Volumes/Finale/External/Garritan_ARIA_Player.pkg" -tgt /
 /usr/sbin/installer -pkg "/Volumes/Finale/External/Garritan_Instruments_for_Finale.pkg" -tgt /
 /bin/sleep 10
-/usr/bin/hdiutil detach "/Volumes/Finale"</string>
+/usr/sbin/diskutil eject "/Volumes/Finale"</string>
                 <key>file_mode</key>
                 <string>0755</string>
                 <key>file_path</key>

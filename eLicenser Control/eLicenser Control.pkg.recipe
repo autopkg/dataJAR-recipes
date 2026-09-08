@@ -77,7 +77,7 @@ installDir=$(dirname $0)
 #
 
 # Mount the eLicenser Control disk image to /Volumes
-mountResult=$(/usr/bin/hdiutil attach "${installDir}/%NAME%-%version%.dmg" -nobrowse -noverify -noautoopen)
+mountResult=$(/usr/sbin/diskutil image attach "${installDir}/%NAME%-%version%.dmg" -nobrowse)
 mountPoint=$(/bin/echo "${mountResult}" | /usr/bin/grep Volumes | /usr/bin/awk '{print substr($0, index($0,$3))}')
 
 # Install the eLicenser Control software
@@ -86,7 +86,7 @@ mountPoint=$(/bin/echo "${mountResult}" | /usr/bin/grep Volumes | /usr/bin/awk '
 # Clean-up
 
 # Unmount the eLicenser Control disk image from /Volumes
-/usr/bin/hdiutil detach "${mountPoint}"
+/usr/sbin/diskutil eject "${mountPoint}"
 </string>
                 <key>file_mode</key>
                 <string>0755</string>

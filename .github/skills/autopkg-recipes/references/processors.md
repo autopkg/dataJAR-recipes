@@ -711,6 +711,33 @@ Add remaining apps found in payload to the `blocking_applications` pkginfo array
 </array>
 ```
 
+## DMG Mounting in Shell Scripts
+
+When pkg recipes use `FileCreator` to write shell scripts that mount DMGs, use `diskutil` — `hdiutil` subcommands (`attach`, `detach`, `eject`, etc.) are deprecated in macOS 27.
+
+**Mounting:**
+```sh
+/usr/sbin/diskutil image attach "${install_dir}/App.dmg" -nobrowse
+```
+
+**Ejecting by volume path (when volume name is known):**
+```sh
+/usr/sbin/diskutil eject "/Volumes/AppName"
+```
+
+**Ejecting a captured mount point (when volume name varies):**
+```sh
+mountResult=$(/usr/sbin/diskutil image attach "${installDir}/App.dmg" -nobrowse)
+mountPoint=$(/bin/echo "${mountResult}" | /usr/bin/grep Volumes | /usr/bin/awk '{print substr($0, index($0,$3))}')
+# ... use mountPoint ...
+/usr/sbin/diskutil eject "${mountPoint}"
+```
+
+**Notes:**
+- Drop `hdiutil`-only flags (`-noverify`, `-noautoopen`) — they have no `diskutil` equivalent
+- `-nobrowse` is still supported by `diskutil image attach`
+- The text output format of `diskutil image attach` is tab-separated (device, type, mount point), matching `hdiutil attach` without `-plist`, so existing grep/awk mount-point parsing continues to work
+
 ## Supported Bundle Types
 
 AutoPkg recipes can handle these bundle types with different installation destinations:
