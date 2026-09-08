@@ -73,7 +73,7 @@
 install_dir=$(dirname $0)
 
 # Install the Exposure X7 application using the Install binary's silent install mode
-/usr/bin/hdiutil attach "${install_dir}/Exposure X7 Installer.dmg" -nobrowse
+/usr/sbin/diskutil image attach "${install_dir}/Exposure X7 Installer.dmg" -nobrowse
 "/Volumes/Exposure X7 Installer/Exposure X7 Installer.app/Contents/MacOS/Exposure X7 Installer" -quiet</string>
                 <key>file_mode</key>
                 <string>0755</string>

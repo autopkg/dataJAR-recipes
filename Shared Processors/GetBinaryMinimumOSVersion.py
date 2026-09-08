@@ -39,34 +39,29 @@ class GetBinaryMinimumOSVersion(Processor):
     }
 
     def mount_dmg(self, dmg_path):
-        """
-        Mount DMG and return mount point.
-        """
+        """Mount DMG and return mount point."""
         try:
-            cmd = ['/usr/bin/hdiutil', 'attach', dmg_path, '-nobrowse', '-plist']
+            cmd = ['/usr/sbin/diskutil', 'image', 'attach', dmg_path, '-nobrowse']
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = proc.communicate()
 
             if proc.returncode:
-                raise ProcessorError(f"hdiutil attach failed with error: {stderr.decode()}")
+                raise ProcessorError(f"diskutil image attach failed with error: {stderr.decode()}")
 
-            # Find mount point from plist output
-            from plistlib import loads
-            plist = loads(stdout)
-            for entity in plist.get('system-entities', []):
-                if 'mount-point' in entity:
-                    return entity['mount-point']
+            for line in stdout.decode().splitlines():
+                for part in line.split('\t'):
+                    part = part.strip()
+                    if part.startswith('/Volumes/'):
+                        return part
 
-            raise ProcessorError("No mount point found in hdiutil output")
+            raise ProcessorError("No mount point found in diskutil image attach output")
         except Exception as e:
             raise ProcessorError(f"Error mounting DMG: {e}")
 
     def unmount_dmg(self, mount_point):
-        """
-        Unmount a DMG given its mount point.
-        """
+        """Unmount a DMG given its mount point."""
         try:
-            subprocess.check_call(['/usr/bin/hdiutil', 'detach', mount_point])
+            subprocess.check_call(['/usr/sbin/diskutil', 'eject', mount_point])
         except subprocess.CalledProcessError as e:
             raise ProcessorError(f"Error unmounting DMG: {e}")
 
