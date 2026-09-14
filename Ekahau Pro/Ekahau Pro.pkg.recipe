@@ -224,12 +224,12 @@ setLanguage ()
             /bin/echo "ERROR: The parameter 'language' is blank. Exiting..."
             exit 1
         else
-            /bin/echo "Creating /Applications/Ekahau Pro.app/Contents/Java, if missing..."
-            /bin/mkdir -p "/Applications/Ekahau Pro.app/Contents/Java"
-            /bin/echo "Creating /Applications/Ekahau Pro.app/Contents/Java/LANGUAGE, if missing..."
-            /usr/bin/touch "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
+            /bin/echo "Creating /Applications/Ekahau AI Pro.app/Contents/Java, if missing..."
+            /bin/mkdir -p "/Applications/Ekahau AI Pro.app/Contents/Java"
+            /bin/echo "Creating /Applications/Ekahau AI Pro.app/Contents/Java/LANGUAGE, if missing..."
+            /usr/bin/touch "/Applications/Ekahau AI Pro.app/Contents/Java/LANGUAGE"
             /bin/echo "Writing language to LANGUAGE..."
-            /bin/echo "${language}" &gt; "/Applications/Ekahau Pro.app/Contents/Java/LANGUAGE"
+            /bin/echo "${language}" &gt; "/Applications/Ekahau AI Pro.app/Contents/Java/LANGUAGE"
        fi
     } | /usr/bin/tee -a "${debugFile}"
 }
@@ -261,11 +261,11 @@ fi</string>
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications/Ekahau Pro.app</string>
+                <string>%pkgroot%/Applications/Ekahau AI Pro.app</string>
                 <key>overwrite</key>
                 <true/>
                 <key>source_path</key>
-                <string>%pathname%/Ekahau Pro.app</string>
+                <string>%pathname%/Ekahau AI Pro.app</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
