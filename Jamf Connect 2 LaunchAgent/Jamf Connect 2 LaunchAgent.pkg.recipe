@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Jamf Connect 2 LaunchAgent and extracts its package</string>
+    <string>DEPRECATED: The JamfConnectLaunchAgent.pkg has been removed from the Jamf Connect install media. Downloads the latest version of Jamf Connect 2 LaunchAgent and extracts its package</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.Jamf Connect 2 LaunchAgent</string>
     <key>Input</key>
@@ -12,11 +12,29 @@
         <string>Jamf Connect LaunchAgent</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.0</string>
+    <string>1.1</string>
     <key>ParentRecipe</key>
     <string>com.github.yohan460-recipes.download.JamfConnect</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>The JamfConnectLaunchAgent.pkg has been removed from the Jamf Connect install media. These recipes are no longer functional.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
