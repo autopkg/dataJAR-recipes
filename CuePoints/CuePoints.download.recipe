@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of CuePoints.</string>
+    <string>Downloads the latest version 1 of CuePoints.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.CuePoints</string>
     <key>Input</key>
@@ -19,11 +19,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>v([0-9]+(\.[0-9]+)+)</string>
+                <string>VERSION1/CuePoints%20v([0-9]+(\.[0-9]+)+)\.dmg</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
-                <string>https://docs.cuepoints.com/release-notes</string>
+                <string>https://cuepoints.com/download</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -34,7 +34,7 @@
                 <key>filename</key>
                 <string>%NAME%.dmg</string>
                 <key>url</key>
-                <string>https://download.cuepoints.com/CuePoints%20v%version%.dmg</string>
+                <string>https://cuepointsstaticfiles.blob.core.windows.net/latest-version/VERSION1/CuePoints%20v%version%.dmg</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
