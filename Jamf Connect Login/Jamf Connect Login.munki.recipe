@@ -126,7 +126,7 @@ then
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%pathname%/Resources/JamfConnectLaunchAgent.pkg</string>
+                <string>%pathname%/JamfConnectLogin.pkg</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
