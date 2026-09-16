@@ -19,11 +19,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>https://static\.perimeter81\.com/agents/mac/Harmony_SASE_([0-9]+(?:\.[0-9]+)+)\.pkg</string>
+                <string>(https://static\.perimeter81\.com/agents/mac/CheckPoint_SASE_[0-9]+(?:\.[0-9]+)+\.pkg)</string>
                 <key>result_output_var_name</key>
-                <string>version1</string>
+                <string>DOWNLOAD_URL</string>
                 <key>url</key>
-                <string>https://support.perimeter81.com/v1/docs/downloading-the-agent</string>
+                <string>https://sc1.checkpoint.com/documents/Infinity_Portal/WebAdminGuides/EN/SASE-Admin-Guide/SASE_Security/Topics/download/introduction_to_the_downloads_page.html</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -31,8 +31,10 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
                 <key>url</key>
-                <string>https://static.perimeter81.com/agents/mac/Harmony_SASE_%version1%.pkg</string>
+                <string>%DOWNLOAD_URL%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -51,7 +53,7 @@
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
