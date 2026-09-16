@@ -37,7 +37,7 @@
             <dict>
                 <key>expected_authority_names</key>
                 <array>
-                    <string>Software Update</string>
+                    <string>Development Update</string>
                     <string>Apple Software Update Certification Authority</string>
                     <string>Apple Root CA</string>
                 </array>
