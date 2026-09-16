@@ -41,7 +41,7 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/zsh --no-rcs
 
 # Vendor Documentation: https://support.perimeter81.com/v1/docs/uninstalling-the-agent#macos
 # Note - user space uninstall steps have been commented out
@@ -147,7 +147,7 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_unpack</string>
                 <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
+                <string>%pathname%</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -160,7 +160,7 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/installer_payload/Applications</string>
                 <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/installer_unpack/Harmony SASE_unsigned.pkg/Payload</string>
+                <string>%RECIPE_CACHE_DIR%/installer_unpack/Check Point SASE_unsigned.pkg/Payload</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
@@ -171,7 +171,7 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Harmony SASE.app/Contents/Info.plist</string>
+                <string>%RECIPE_CACHE_DIR%/installer_payload/Applications/Check Point SASE.app/Contents/Info.plist</string>
                 <key>plist_version_key</key>
                 <string>CFBundleShortVersionString</string>
             </dict>
@@ -184,7 +184,7 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
                 <key>pkg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
                 <key>source_pkg</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Harmony_SASE_%version1%.pkg</string>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>PkgCopier</string>
@@ -198,7 +198,7 @@ rm -rf "/var/root/Library/Application Support/Yarkon.sqlite"
                 <string>%RECIPE_CACHE_DIR%/installer_payload</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Applications/Harmony SASE.app</string>
+                    <string>/Applications/Check Point SASE.app</string>
                 </array>
             </dict>
             <key>Processor</key>
