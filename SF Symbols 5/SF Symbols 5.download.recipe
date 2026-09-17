@@ -18,6 +18,24 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>Following the release of SF Symbols 27, these recipes no longer work. For SF Symbols 27 recipes please see: https://github.com/autopkg/dataJAR-recipes/tree/master/SF%20Symbols%2027.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>re_pattern</key>
                 <string>href=\"(https://devimages-cdn\.apple\.com/design/resources/download/SF-Symbols-5.*\.dmg)\"</string>
                 <key>result_output_var_name</key>
