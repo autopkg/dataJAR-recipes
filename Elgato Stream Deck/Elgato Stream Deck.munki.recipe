@@ -87,6 +87,11 @@ rm -rf "$OBS_PLUGINS_DIR_V2/$PLUGIN_NAME.plugin"
 OBS_PLUGINS_DIR="/Library/Application Support/obs-studio/plugins"
 rm -rf "$OBS_PLUGINS_DIR/$PLUGIN_NAME"
 
+# forget the receipt
+if /usr/sbin/pkgutil --pkg-info com.elgato.StreamDeck &amp;&gt;/dev/null; then
+    /usr/sbin/pkgutil --forget com.elgato.StreamDeck
+fi
+
 exit 0</string>
         </dict>
     </dict>
