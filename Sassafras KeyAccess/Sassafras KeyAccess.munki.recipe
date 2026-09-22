@@ -119,28 +119,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref</string>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref.pkg/Payload</string>
-            </dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/pkgroot/Library/PreferencePanes/KeyAccessPref.prefPane</string>
-                <key>source_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/KeyAccessPref/PreferencePanes/KeyAccessPref.prefPane</string>
-            </dict>
-            <key>Processor</key>
-            <string>Copier</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>derive_minimum_os_version</key>
                 <string>%DERIVE_MIN_OS%</string>
                 <key>faux_root</key>
@@ -150,7 +128,6 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
                     <string>/Library/KeyAccess/KeyAccess.app</string>
                     <string>/Library/KeyAccess/KeyCheckout.app</string>
                     <string>/Library/KeyAccess/KeyVerify.app</string>
-                    <string>/Library/PreferencePanes/KeyAccessPref.prefPane</string>
                 </array>
                 <key>version_comparison_key</key>
                 <string>CFBundleShortVersionString</string>
