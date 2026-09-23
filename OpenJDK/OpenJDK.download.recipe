@@ -2,16 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Comment</key>
-    <string>Set ARCHITECTURE "x64" to download the Intel or "aarch64" for Apple Silicon.</string>
     <key>Description</key>
-    <string>Downloads the latest OpenJDK for macOS.</string>
+    <string>Downloads the latest OpenJDK for macOS (Apple Silicon).</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.OpenJDK</string>
     <key>Input</key>
     <dict>
         <key>ARCHITECTURE</key>
-        <string>x64</string>
+        <string>aarch64</string>
         <key>NAME</key>
         <string>OpenJDK</string>
     </dict>
