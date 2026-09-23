@@ -29,7 +29,7 @@ For information on how these recipes came about (and why), please click [here.](
 1. Create an override for each title, from the recipes in this directory.
    1. Make sure that the override is prefixed the same as per the name choosen in step 1.
    1. Make sure that the override type is included included within the name, such as `munki`.
-   1. If the pkg is an Apple silicon pkg, add arm64 to the override name.
+   1. If the pkg is an Apple silicon pkg (Adobe names these with `MACARM` in the filename, e.g. `AdobeCharacterAnimator2026_en_US_MACARM.pkg`), name the override with `-arm64` before the type suffix, e.g. `AdobeCharacterAnimator2026-arm64.munki.recipe`. The Intel/universal pkg (e.g. `AdobeCharacterAnimator2026_en_US_MAC.pkg`) uses the plain name, e.g. `AdobeCharacterAnimator2026.munki.recipe`.
    1. Both plist/xml and yml/yaml overrides are supported.
 1. Run `sudo ./AdobeAdminConsolePackagesImporter.py`, found within the same directory as this README, authenticating as sudo and passing at least the type key (see below for examples):
    1. `./AdobeAdminConsolePackagesImporter.py munki` - This will look within ~/Downloads/ for Adobe installers and match with .munki overrides.
@@ -49,7 +49,7 @@ For information on how these recipes came about (and why), please click [here.](
 1. Create an override for each title, from the recipes in this directory.
    1. Make sure that the override is prefixed the same as per the name choosen in step 1.
    1. Make sure that the override type is included included within the name, such as `munki`.
-   1. If the pkg is an Apple silicon pkg, add arm64 to the override name.
+   1. If the pkg is an Apple silicon pkg (Adobe names these with `MACARM` in the filename, e.g. `AdobeCharacterAnimator2026_en_US_MACARM.pkg`), name the override with `-arm64` before the type suffix, e.g. `AdobeCharacterAnimator2026-arm64.munki.recipe`. The Intel/universal pkg (e.g. `AdobeCharacterAnimator2026_en_US_MAC.pkg`) uses the plain name, e.g. `AdobeCharacterAnimator2026.munki.recipe`.
 1. Run `sudo ./AdobeAdminConsolePackagesImporter.py`, found within the same directory as this README, authenticating as sudo and passing at least the type key.
    1. The minimum arguments `AdobeAdminConsolePackagesImporter.py` needs is the recipe type: `AdobeAdminConsolePackagesImporter.py munki` (for munki recipes).
    1. Optionally, pass the root directory containing the Adobe installers downloaded from the Adobe Admin Console (if this is omitted then `~/Downloads/` is used, for example `AdobeAdminConsolePackagesImporter.py /Users/Shared/adobe/`.
