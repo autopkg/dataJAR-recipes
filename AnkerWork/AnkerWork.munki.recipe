@@ -12,6 +12,8 @@
         <string>AnkerWork</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
+        <key>MUNKI_SUPPORTED_ARCHITECTURE</key>
+        <string>x86_64</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -26,6 +28,10 @@
             <string>AnkerWork</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%MUNKI_SUPPORTED_ARCHITECTURE%</string>
+            </array>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
