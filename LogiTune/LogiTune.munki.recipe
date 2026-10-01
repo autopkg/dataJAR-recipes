@@ -37,12 +37,11 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <key>uninstall_method</key>
             <string>uninstall_script</string>
             <key>uninstall_script</key>
-            <string>#!/bin/sh
+            <string>#!/bin/zsh --no-rcs
 
-/bin/echo Running the Logi Tune uninstallation script...
 /Library/Application\ Support/logitune/uninstall_app.sh
 
-exit</string>
+exit 0</string>
         </dict>
     </dict>
     <key>MinimumVersion</key>
@@ -51,26 +50,6 @@ exit</string>
     <string>com.github.dataJAR-recipes.pkg.LogiTune</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. It is no longer possible to guarantee a safe install though management tooling.
-
-For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
@@ -107,9 +86,6 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
                 <key>path_list</key>
                 <array>
                     <string>%RECIPE_CACHE_DIR%/Applications/</string>
-                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
-                    <string>%RECIPE_CACHE_DIR%/Scripts/</string>
                 </array>
             </dict>
             <key>Processor</key>
