@@ -2,20 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Comment</key>
+    <string>Recipe Notes:
+
+LogiTuneInstaller.app bundles pre/postinstall scripts in Contents/Resources/application-scripts/
+and all required support files in Contents/Resources/. These are used directly as the pkg Scripts
+component, bypassing the GUI installer binary entirely.
+
+The postinstall script only launches Logi Tune for logged-in users when the touch file
+/tmp/com.logitech.pkg.logitune.run-app exists. By not creating this file the app never launches
+during install, avoiding the keychain reset prompt described in issue #467.</string>
     <key>Description</key>
     <string>Downloads the latest version of Logi Tune and creates a package.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.pkg.LogiTune</string>
     <key>Input</key>
     <dict>
-        <key>INSTALL_SCRIPT</key>
-        <string>#!/bin/bash
-
-# Silently install LogiTune
-
-LogiTuneInstaller.app/Contents/MacOS/LogiTuneInstaller --quiet --update No --analytics No --flow No
-
-exit</string>
         <key>NAME</key>
         <string>LogiTune</string>
     </dict>
@@ -28,28 +30,11 @@ exit</string>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>warning_message</key>
-                <string>This recipe has been deprecated. It is no longer possible to guarantee a safe install though management tooling.
-
-For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</string>
-            </dict>
-            <key>Processor</key>
-            <string>DeprecationWarning</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>predicate</key>
-                <string>TRUEPREDICATE</string>
-            </dict>
-            <key>Processor</key>
-            <string>StopProcessingIf</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>pkgdirs</key>
-                <dict/>
+                <dict>
+                    <key>root/Applications</key>
+                    <string>0755</string>
+                </dict>
                 <key>pkgroot</key>
                 <string>%RECIPE_CACHE_DIR%/pkgroot</string>
             </dict>
@@ -99,11 +84,24 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
             <key>Arguments</key>
             <dict>
                 <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/Scripts/LogiTuneInstaller.app</string>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/root/Applications/Logi Tune.app</string>
                 <key>overwrite</key>
                 <true/>
                 <key>source_path</key>
-                <string>%pathname%/LogiTuneInstaller.app</string>
+                <string>%RECIPE_CACHE_DIR%/Applications/Logi Tune.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts</string>
+                <key>overwrite</key>
+                <true/>
+                <key>source_path</key>
+                <string>%pathname%/LogiTuneInstaller.app/Contents/Resources</string>
             </dict>
             <key>Processor</key>
             <string>Copier</string>
@@ -112,7 +110,24 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
             <key>Arguments</key>
             <dict>
                 <key>file_content</key>
-                <string>%INSTALL_SCRIPT%</string>
+                <string>#!/bin/zsh --no-rcs
+chmod +x ./application-scripts/preinstall ./uninstall_app.sh
+./application-scripts/preinstall</string>
+                <key>file_mode</key>
+                <string>0755</string>
+                <key>file_path</key>
+                <string>%RECIPE_CACHE_DIR%/Scripts/preinstall</string>
+            </dict>
+            <key>Processor</key>
+            <string>FileCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>file_content</key>
+                <string>#!/bin/zsh --no-rcs
+chmod +x ./application-scripts/postinstall ./logitune-diagnostic-report.sh ./MigrationTool ./uninstall_app.sh ./uninstall_app_async.sh ./uninstall_rs.sh
+./application-scripts/postinstall</string>
                 <key>file_mode</key>
                 <string>0755</string>
                 <key>file_path</key>
@@ -133,7 +148,7 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
                     <key>pkgname</key>
                     <string>%NAME%-%version%</string>
                     <key>pkgroot</key>
-                    <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/root</string>
                     <key>pkgtype</key>
                     <string>flat</string>
                     <key>scripts</key>
@@ -144,6 +159,19 @@ For further detail see https://github.com/autopkg/dataJAR-recipes/issues/467</st
             </dict>
             <key>Processor</key>
             <string>PkgCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/</string>
+                    <string>%RECIPE_CACHE_DIR%/pkgroot/</string>
+                    <string>%RECIPE_CACHE_DIR%/Scripts/</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
         </dict>
     </array>
 </dict>
