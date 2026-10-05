@@ -37,6 +37,13 @@ To download Intel use: "" (empty string) in the DOWNLOAD_ARCH_SUFFIX variable</s
             <string>CreativeForce Hue</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Disables the built-in auto-updater prompt
+/bin/launchctl config user setenv CF_DISABLE_APP_AUTO_UPDATE True</string>
+            <key>RestartAction</key>
+            <string>RequireRestart</string>
             <key>supported_architectures</key>
             <array>
                 <string>arm64</string>
