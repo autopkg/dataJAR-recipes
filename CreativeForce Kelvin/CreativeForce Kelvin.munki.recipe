@@ -34,6 +34,13 @@ Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_versi
             <string>CreativeForce Kelvin</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Disables the built-in auto-updater prompt
+/bin/launchctl config user setenv CF_DISABLE_APP_AUTO_UPDATE True</string>
+            <key>RestartAction</key>
+            <string>RequireRestart</string>
             <key>supported_architectures</key>
             <array>
                 <string>arm64</string>
