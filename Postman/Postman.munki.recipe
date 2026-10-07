@@ -7,11 +7,15 @@
 
 For Intel set DOWNLOAD_ARCH to "64" and set SUPPORTED_ARCH to "x86_64" (default)
 
-For Apple Silicon set both DOWNLOAD_ARCH and SUPPORTED_ARCH to "arm64"</string>
+For Apple Silicon set both DOWNLOAD_ARCH and SUPPORTED_ARCH to "arm64"
+
+DMG_FILESYSTEM sets the filesystem of the created DMG (default "HFS+"). AutoPkg 3.0's DmgCreator now defaults to APFS, where hdiutil can under-size the image for large payloads like Postman and fail with "No space left on device".</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.postman</string>
     <key>Input</key>
     <dict>
+        <key>DMG_FILESYSTEM</key>
+        <string>HFS+</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>developer</string>
         <key>NAME</key>
@@ -53,6 +57,8 @@ For Apple Silicon set both DOWNLOAD_ARCH and SUPPORTED_ARCH to "arm64"</string>
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>dmg_filesystem</key>
+                <string>%DMG_FILESYSTEM%</string>
                 <key>dmg_path</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%-%SUPPORTED_ARCH%.dmg</string>
                 <key>dmg_root</key>
