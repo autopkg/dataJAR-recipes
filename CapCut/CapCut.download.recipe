@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>Downloads the latest stable CapCut release via the CapCut settings API.</string>
+    <key>Description</key>
+    <string>Downloads the latest stable CapCut DMG and verifies the code signature.
+
+The vendor download page only serves the CapCut Downloader app, so the
+DMG URL is taken from the lastest_stable_url field of the CapCut settings
+API instead. The beta URLs in the same response are ignored.
+
+REGION is passed to the settings API as the region parameter. Only GB has
+been tested; other countries are untested and may return a different build
+or no URL at all. Override it via Input in an override or via the -k option,
+i.e.: `-k REGION=US`</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.CapCut</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>CapCut</string>
+        <key>REGION</key>
+        <string>GB</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>"lastest_stable_url"\s*:\s*"(https://[^"]+/CapCut_[0-9_]+_capcutpc_0_creatortool\.dmg)"</string>
+                <key>result_output_var_name</key>
+                <string>url</string>
+                <key>url</key>
+                <string>https://editor-api-sg.capcutapi.com/service/settings/v3/?aid=359289&amp;device_platform=mac&amp;channel=capcutpc_0&amp;version_code=1&amp;os_version=26.4&amp;region=%REGION%&amp;traffic_type=release</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/CapCut.app</string>
+                <key>requirement</key>
+                <string>identifier "com.lemon.lvoverseas" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "22MMUN2RN5"</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
