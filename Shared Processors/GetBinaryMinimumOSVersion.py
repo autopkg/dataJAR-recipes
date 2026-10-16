@@ -8,7 +8,7 @@ Extracts the highest minimum OS version requirement from all binaries in an appl
 import os
 import subprocess
 from autopkglib import Processor, ProcessorError
-from distutils.version import LooseVersion
+from autopkglib import APLooseVersion as LooseVersion
 import glob
 
 __all__ = ["GetBinaryMinimumOSVersion"]

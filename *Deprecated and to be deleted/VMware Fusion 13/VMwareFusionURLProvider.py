@@ -20,11 +20,10 @@ from __future__ import absolute_import, print_function
 import gzip
 import os
 import re
-from distutils.version import LooseVersion
 from xml.etree import ElementTree
 from xml.parsers.expat import ExpatError
 
-from autopkglib import ProcessorError, URLGetter
+from autopkglib import APLooseVersion as LooseVersion, ProcessorError, URLGetter
 
 try:
     from urlparse import urljoin
