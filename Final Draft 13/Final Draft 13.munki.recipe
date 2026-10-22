@@ -33,14 +33,14 @@ Final Draft 13 is the most customizable version of the world’s bestselling scr
             <key>name</key>
             <string>%NAME%</string>
             <key>postinstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/zsh --no-rcs
 
 # Suppress Auto-Update.
 defaults write /Library/Preferences/com.finaldraft.finaldraft.v13 SUEnableAutomaticChecks -bool no
 
 exit</string>
             <key>postuninstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/zsh --no-rcs
 
 # Created from: https://kb.finaldraft.com/hc/en-us/articles/22490602849044-Thoroughly-uninstalling-Final-Draft-13-from-a-Mac
 
