@@ -12,7 +12,16 @@ import yaml
 from pathlib import Path
 import re
 import traceback
+from typing import TypeAlias
 import urllib.request
+
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
 # URL to fetch the latest processor versions from pre-commit-macadmin
@@ -81,28 +90,40 @@ FALLBACK_PROCESSOR_VERSIONS = {
 # Message constant
 FALLBACK_MESSAGE = "Using fallback processor versions"
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# A MinimumVersion value as read from a recipe. Plist gives a str or None;
+# YAML can give any type yaml.safe_load returns, such as a number or a dict
+VersionValue: TypeAlias = object
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
+def _parse_processor_versions(content: str) -> dict[str, str]:
+    """Parse processor _introduced_ versions from PROC_VERSIONS source.
+
+    Args:
+        content: Source of autopkg_processor_versions.py
+
+    Returns:
+        Dictionary of processor names to minimum versions
+    """
+    # Find each processor block: "ProcessorName": { ... "_introduced_": "x.y.z" ... }
+    processor_versions = {}
+    # Match processor name followed by its dict block
+    proc_block_pattern = re.compile(
+        r'"([A-Za-z][A-Za-z0-9]+)"\s*:\s*\{([^}]+)\}',
+        re.DOTALL
+    )
+    introduced_pattern = re.compile(r'"_introduced_"\s*:\s*"([^"]+)"')
+
+    for block_match in proc_block_pattern.finditer(content):
+        proc_name = block_match.group(1)
+        block_body = block_match.group(2)
+        intro_match = introduced_pattern.search(block_body)
+        if intro_match:
+            processor_versions[proc_name] = intro_match.group(1)
+
+    return processor_versions
 
 
-def fetch_processor_versions():
+def fetch_processor_versions() -> dict[str, str]:
     """Fetch the latest processor versions from pre-commit-macadmin.
 
     Parses PROC_VERSIONS from autopkg_processor_versions.py, extracting
@@ -114,31 +135,18 @@ def fetch_processor_versions():
     """
     print("\nFetching latest processor versions from GitHub...")
 
+    processor_versions = FALLBACK_PROCESSOR_VERSIONS
     try:
         with urllib.request.urlopen(
                 PROCESSOR_VERSIONS_URL, timeout=10) as response:
             content = response.read().decode('utf-8')
 
-        # Find each processor block: "ProcessorName": { ... "_introduced_": "x.y.z" ... }
-        processor_versions = {}
-        # Match processor name followed by its dict block
-        proc_block_pattern = re.compile(
-            r'"([A-Za-z][A-Za-z0-9]+)"\s*:\s*\{([^}]+)\}',
-            re.DOTALL
-        )
-        introduced_pattern = re.compile(r'"_introduced_"\s*:\s*"([^"]+)"')
+        fetched_versions = _parse_processor_versions(content)
 
-        for block_match in proc_block_pattern.finditer(content):
-            proc_name = block_match.group(1)
-            block_body = block_match.group(2)
-            intro_match = introduced_pattern.search(block_body)
-            if intro_match:
-                processor_versions[proc_name] = intro_match.group(1)
-
-        if processor_versions:
-            print(f"Successfully fetched {len(processor_versions)} "
+        if fetched_versions:
+            print(f"Successfully fetched {len(fetched_versions)} "
                   f"processor versions")
-            return processor_versions
+            processor_versions = fetched_versions
         else:
             print("Warning: Fetched source file contained no parseable "
                   "processor versions.")
@@ -146,20 +154,24 @@ def fetch_processor_versions():
                   "may have changed.")
             print(f"Warning: {FALLBACK_MESSAGE} — MinimumVersion results "
                   "may be outdated.")
-            return FALLBACK_PROCESSOR_VERSIONS
 
     except urllib.error.URLError as e:
         print(f"Warning: Failed to fetch processor versions from "
               f"{PROCESSOR_VERSIONS_URL}: {e}")
         print(FALLBACK_MESSAGE)
-        return FALLBACK_PROCESSOR_VERSIONS
     except Exception as e:
         print(f"Warning: Error parsing processor versions: {e}")
         print(FALLBACK_MESSAGE)
-        return FALLBACK_PROCESSOR_VERSIONS
+
+    return processor_versions
 
 
-def compare_versions(v1, v2):
+def _normalize_version(version: str) -> list[int]:
+    """Split a version string into integer parts, dropping non-digits."""
+    return [int(x) for x in re.sub(r'[^\d.]+', '', version).split('.')]
+
+
+def compare_versions(v1: str, v2: str) -> int:
     """Compare two version strings.
 
     Returns:
@@ -167,29 +179,24 @@ def compare_versions(v1, v2):
         -1 if v1 < v2
         0 if v1 == v2
     """
-    def normalize(v):
-        return [int(x) for x in re.sub(r'[^\d.]+', '', v).split('.')]
-
     try:
-        parts1 = normalize(v1)
-        parts2 = normalize(v2)
-
-        # Pad shorter version with zeros
-        max_len = max(len(parts1), len(parts2))
-        parts1.extend([0] * (max_len - len(parts1)))
-        parts2.extend([0] * (max_len - len(parts2)))
-
-        for p1, p2 in zip(parts1, parts2):
-            if p1 > p2:
-                return 1
-            elif p1 < p2:
-                return -1
-        return 0
+        parts1 = _normalize_version(v1)
+        parts2 = _normalize_version(v2)
     except (ValueError, AttributeError):
         return 0
 
+    # Pad shorter version with zeros
+    max_len = max(len(parts1), len(parts2))
+    parts1.extend([0] * (max_len - len(parts1)))
+    parts2.extend([0] * (max_len - len(parts2)))
 
-def get_highest_version(versions):
+    for p1, p2 in zip(parts1, parts2):
+        if p1 != p2:
+            return 1 if p1 > p2 else -1
+    return 0
+
+
+def get_highest_version(versions: list[str]) -> str | None:
     """Get the highest version from a list of version strings."""
     if not versions:
         return None
@@ -202,7 +209,7 @@ def get_highest_version(versions):
     return highest
 
 
-def extract_processors_from_yaml(content):
+def extract_processors_from_yaml(content: str) -> list[str]:
     """Extract all core processor names from YAML recipe content.
 
     Ignores shared/custom processors (those with slashes or domain patterns).
@@ -230,7 +237,7 @@ def extract_processors_from_yaml(content):
     return processors
 
 
-def extract_processors_from_plist(content):
+def extract_processors_from_plist(content: str) -> list[str]:
     """Extract all core processor names from plist recipe content.
 
     Ignores shared/custom processors (those with slashes or domain patterns).
@@ -256,25 +263,39 @@ def extract_processors_from_plist(content):
     return processors
 
 
-def get_current_minimum_version(content, is_yaml):
-    """Get the current MinimumVersion from recipe content."""
-    if is_yaml:
-        try:
-            recipe = yaml.safe_load(content)
-            return recipe.get('MinimumVersion', None)
-        except yaml.YAMLError:
-            return None
-    else:
-        # Extract from plist
-        pattern = (r'<key>MinimumVersion</key>\s*\n\s*'
-                   r'<string>(.*?)</string>')
-        match = re.search(pattern, content, re.DOTALL)
-        if match:
-            return match.group(1).strip()
+def _yaml_minimum_version(content: str) -> VersionValue:
+    """Get the current MinimumVersion from YAML recipe content.
+
+    The value is returned as YAML parsed it, so an unquoted version such
+    as ``MinimumVersion: 1.1`` comes back as a float. Content that is not
+    a YAML mapping raises AttributeError.
+    """
+    try:
+        recipe = yaml.safe_load(content)
+        return recipe.get('MinimumVersion', None)
+    except yaml.YAMLError:
         return None
 
 
-def update_yaml_minimum_version(content, new_version):
+def get_current_minimum_version(content: str,
+                                is_yaml: bool) -> VersionValue:
+    """Get the current MinimumVersion from recipe content.
+
+    Plist values are strings; YAML values are returned as parsed (see
+    _yaml_minimum_version).
+    """
+    if is_yaml:
+        return _yaml_minimum_version(content)
+
+    # Extract from plist
+    pattern = (r'<key>MinimumVersion</key>\s*\n\s*'
+               r'<string>(.*?)</string>')
+    match = re.search(pattern, content, re.DOTALL)
+    return match.group(1).strip() if match else None
+
+
+def update_yaml_minimum_version(content: str,
+                                new_version: str) -> tuple[str, bool]:
     """Update MinimumVersion in YAML content."""
     try:
         recipe = yaml.safe_load(content)
@@ -313,7 +334,62 @@ def update_yaml_minimum_version(content, new_version):
         return content, False
 
 
-def update_plist_minimum_version(content, new_version):
+def _insert_before_key(content: str, key: str,
+                       new_version: str) -> str | None:
+    """Insert a MinimumVersion key-string pair before a top-level key.
+
+    Args:
+        content: String content of the plist recipe
+        key: The key to insert MinimumVersion before
+        new_version: The MinimumVersion value
+
+    Returns:
+        Updated content, or None if the key was not found
+    """
+    # Match only the line with the key, capturing indent
+    key_match = re.search(rf'\n(\s*)<key>{key}</key>', content)
+    if not key_match:
+        return None
+
+    # Insert before the key (after the newline before it)
+    indent = key_match.group(1)
+    insertion = (f'{indent}<key>MinimumVersion</key>\n'
+                 f'{indent}<string>{new_version}</string>\n')
+    # Insert after the newline, before the indentation and key
+    # (+1 to skip the \n)
+    insert_pos = key_match.start() + 1
+    return content[:insert_pos] + insertion + content[insert_pos:]
+
+
+def _insert_after_dict(content: str, new_version: str) -> str | None:
+    """Insert a MinimumVersion key-string pair after the opening <dict>.
+
+    Args:
+        content: String content of the plist recipe
+        new_version: The MinimumVersion value
+
+    Returns:
+        Updated content, or None if the opening <dict> was not found
+    """
+    dict_pattern = (r'(<\?xml.*?>\s*<!DOCTYPE.*?>\s*'
+                    r'<plist.*?>\s*<dict>)')
+    dict_match = re.search(dict_pattern, content, re.DOTALL)
+
+    if not dict_match:
+        return None
+
+    indent = '    '
+    insertion = (f'\n{indent}<key>MinimumVersion</key>\n'
+                 f'{indent}<string>{new_version}</string>')
+
+    return content.replace(
+        dict_match.group(1),
+        dict_match.group(1) + insertion
+    )
+
+
+def update_plist_minimum_version(content: str,
+                                 new_version: str) -> tuple[str, bool]:
     """Update MinimumVersion in plist content."""
     # Pattern that captures the entire MinimumVersion key-value pair
     # preserving all whitespace
@@ -327,65 +403,188 @@ def update_plist_minimum_version(content, new_version):
         # Preserve everything up to and including whitespace before <string>
         prefix = match.group(1)
         replacement = prefix + f'<string>{new_version}</string>'
-        content = content.replace(match.group(0), replacement)
-        return content, True
-    else:
-        # Add MinimumVersion - position depends on recipe type
-        # Try to find ParentRecipe key first
-        # Match only the line with ParentRecipe, capturing indent
-        parent_pattern = r'\n(\s*)<key>ParentRecipe</key>'
-        parent_match = re.search(parent_pattern, content)
+        return content.replace(match.group(0), replacement), True
 
-        if parent_match:
-            # Insert before ParentRecipe (after the newline before it)
-            indent = parent_match.group(1)
-            insertion = (f'{indent}<key>MinimumVersion</key>\n'
-                         f'{indent}<string>{new_version}</string>\n')
-            # Insert after the newline, before the indentation and key
-            insert_pos = parent_match.start() + 1  # +1 to skip the \n
-            content = content[:insert_pos] + insertion + content[insert_pos:]
-            return content, True
+    # Add MinimumVersion - position depends on recipe type
+    # Try to find ParentRecipe key first
+    updated = _insert_before_key(content, 'ParentRecipe', new_version)
 
+    if updated is None:
         # No ParentRecipe, so likely a download recipe
         # Insert before Process key
-        process_pattern = r'\n(\s*)<key>Process</key>'
-        process_match = re.search(process_pattern, content)
+        updated = _insert_before_key(content, 'Process', new_version)
 
-        if process_match:
-            # Insert before Process (after the newline before it)
-            indent = process_match.group(1)
-            insertion = (f'{indent}<key>MinimumVersion</key>\n'
-                         f'{indent}<string>{new_version}</string>\n')
-            # Insert after the newline, before the indentation and key
-            insert_pos = process_match.start() + 1  # +1 to skip the \n
-            content = content[:insert_pos] + insertion + content[insert_pos:]
-            return content, True
+    if updated is None:
+        # Fallback for recipes with neither ParentRecipe nor Process:
+        # insert after the opening <dict>
+        updated = _insert_after_dict(content, new_version)
 
-        # Fallback: insert after opening <dict> (original behavior)
-        dict_pattern = (r'(<\?xml.*?>\s*<!DOCTYPE.*?>\s*'
-                        r'<plist.*?>\s*<dict>)')
-        dict_match = re.search(dict_pattern, content, re.DOTALL)
-
-        if dict_match:
-            indent = '    '
-            insertion = (f'\n{indent}<key>MinimumVersion</key>\n'
-                         f'{indent}<string>{new_version}</string>')
-
-            content = content.replace(
-                dict_match.group(1),
-                dict_match.group(1) + insertion
-            )
-            return content, True
-
-    return content, False
+    if updated is None:
+        return content, False
+    return updated, True
 
 
-def process_recipe(recipe_path, processor_versions):
+def _highest_required_version(
+    recipe_path: Path, content: str, is_yaml: bool,
+    processor_versions: dict[str, str],
+) -> str | None:
+    """Find the highest AutoPkg version a recipe's processors require.
+
+    Args:
+        recipe_path: Path to the recipe file
+        content: String content of the recipe
+        is_yaml: Whether the recipe is YAML
+        processor_versions: Dictionary of processor version requirements
+
+    Returns:
+        The highest required version, or None if there is none
+    """
+    # Extract processors
+    if is_yaml:
+        processors = extract_processors_from_yaml(content)
+    else:
+        processors = extract_processors_from_plist(content)
+
+    if not processors:
+        print(f"Skipping {recipe_path.name} - no processors found")
+        return None
+
+    print(
+        f"DEBUG: Found {len(processors)} processor(s): "
+        f"{', '.join(processors)}")
+
+    # Get required versions for all processors
+    required_versions = []
+    for processor in processors:
+        if processor in processor_versions:
+            version = processor_versions[processor]
+            required_versions.append(version)
+            print(f"DEBUG: {processor} requires version {version}")
+
+    if not required_versions:
+        print(
+            f"Skipping {recipe_path.name} - no version requirements "
+            f"found")
+        return None
+
+    # Get highest required version
+    highest_required = get_highest_version(required_versions)
+    print(f"DEBUG: Highest required version: {highest_required}")
+    return highest_required
+
+
+def _needs_update(current_version: VersionValue,
+                  highest_required: str, recipe_name: str) -> bool:
+    """Return True if MinimumVersion is missing, empty, a bool or too low.
+
+    YAML parses an unquoted MinimumVersion as an int or float, so those
+    are compared as strings. An unquoted 2.10 parses as 2.1; only quoting
+    it keeps 2.10. A dict, list or other non-scalar value returns False,
+    as the line-based YAML update would leave its child lines behind.
+    """
+    if current_version is None or isinstance(current_version, bool):
+        return True
+    if not isinstance(current_version, (str, int, float)):
+        print(f"⚠️ Skipping {recipe_name} - MinimumVersion is a "
+              f"{type(current_version).__name__}, not a version; "
+              f"fix it manually")
+        return False
+    version = str(current_version)
+    needs_update = (not version
+                    or compare_versions(version, highest_required) < 0)
+    if not needs_update:
+        print(
+            f"No modification needed - current version "
+            f"{version} >= required {highest_required}")
+    return needs_update
+
+
+def _write_and_verify(recipe_path: Path, modified_content: str,
+                      is_yaml: bool, highest_required: str) -> bool:
+    """Write updated content and verify the new MinimumVersion.
+
+    Args:
+        recipe_path: Path to the recipe file
+        modified_content: The updated content
+        is_yaml: Whether the recipe is YAML
+        highest_required: The MinimumVersion that should now be set
+
+    Returns:
+        True if the content was written and verified
+    """
+    # Write the changes
+    print(f"DEBUG: Writing changes to: {recipe_path}")
+    with open(recipe_path, 'w', encoding='utf-8') as file:
+        file.write(modified_content)
+
+    # Verify the changes
+    with open(recipe_path, 'r', encoding='utf-8') as file:
+        verification_content = file.read()
+
+    if verification_content != modified_content:
+        print(
+            f"❌ Warning: File write verification failed for "
+            f"{recipe_path}")
+        return False
+
+    # Verify new version is set correctly
+    new_version = get_current_minimum_version(verification_content,
+                                              is_yaml)
+    if new_version != highest_required:
+        print(
+            f"❌ Warning: Verification failed - MinimumVersion is "
+            f"{new_version}, expected {highest_required}")
+        return False
+
+    print(f"✓ Successfully updated MinimumVersion: {recipe_path}")
+    return True
+
+
+def _update_minimum_version(recipe_path: Path, content: str,
+                            is_yaml: bool, highest_required: str) -> bool:
+    """Set a recipe's MinimumVersion and write it to disk.
+
+    Args:
+        recipe_path: Path to the recipe file
+        content: String content of the recipe
+        is_yaml: Whether the recipe is YAML
+        highest_required: The MinimumVersion to set
+
+    Returns:
+        True if the recipe was updated
+    """
+    # Update MinimumVersion
+    print(f"DEBUG: Updating MinimumVersion to {highest_required}")
+
+    if is_yaml:
+        modified_content, was_modified = update_yaml_minimum_version(
+            content, highest_required)
+    else:
+        modified_content, was_modified = update_plist_minimum_version(
+            content, highest_required)
+
+    if not was_modified:
+        print(f"Failed to update MinimumVersion in {recipe_path.name}")
+        return False
+
+    return _write_and_verify(recipe_path, modified_content, is_yaml,
+                             highest_required)
+
+
+def process_recipe(
+    recipe_path: Path, processor_versions: dict[str, str],
+) -> tuple[bool, VersionValue, str | None]:
     """Process a single recipe file and check MinimumVersion.
 
     Args:
         recipe_path: Path to the recipe file
         processor_versions: Dictionary of processor version requirements
+
+    Returns:
+        Tuple of (modified, current_version, highest_required); both
+        versions are None if the recipe has no version requirement or
+        could not be processed, and current_version is also None when
+        the recipe sets no MinimumVersion
     """
     try:
         is_yaml = recipe_path.suffix == '.yaml'
@@ -397,37 +596,10 @@ def process_recipe(recipe_path, processor_versions):
             original_content = file.read()
             print(f"DEBUG: Original content length: {len(original_content)}")
 
-        # Extract processors
-        if is_yaml:
-            processors = extract_processors_from_yaml(original_content)
-        else:
-            processors = extract_processors_from_plist(original_content)
-
-        if not processors:
-            print(f"Skipping {recipe_path.name} - no processors found")
+        highest_required = _highest_required_version(
+            recipe_path, original_content, is_yaml, processor_versions)
+        if highest_required is None:
             return False, None, None
-
-        print(
-            f"DEBUG: Found {len(processors)} processor(s): "
-            f"{', '.join(processors)}")
-
-        # Get required versions for all processors
-        required_versions = []
-        for processor in processors:
-            if processor in processor_versions:
-                version = processor_versions[processor]
-                required_versions.append(version)
-                print(f"DEBUG: {processor} requires version {version}")
-
-        if not required_versions:
-            print(
-                f"Skipping {recipe_path.name} - no version requirements "
-                f"found")
-            return False, None, None
-
-        # Get highest required version
-        highest_required = get_highest_version(required_versions)
-        print(f"DEBUG: Highest required version: {highest_required}")
 
         # Get current MinimumVersion
         current_version = get_current_minimum_version(original_content,
@@ -435,54 +607,13 @@ def process_recipe(recipe_path, processor_versions):
         print(f"DEBUG: Current MinimumVersion: {current_version}")
 
         # Compare versions
-        if current_version:
-            comparison = compare_versions(current_version, highest_required)
-            if comparison >= 0:
-                print(
-                    f"No modification needed - current version "
-                    f"{current_version} >= required {highest_required}")
-                return False, current_version, highest_required
+        updated = False
+        if _needs_update(current_version, highest_required,
+                         recipe_path.name):
+            updated = _update_minimum_version(
+                recipe_path, original_content, is_yaml, highest_required)
 
-        # Update MinimumVersion
-        print(f"DEBUG: Updating MinimumVersion to {highest_required}")
-
-        if is_yaml:
-            modified_content, was_modified = update_yaml_minimum_version(
-                original_content, highest_required)
-        else:
-            modified_content, was_modified = update_plist_minimum_version(
-                original_content, highest_required)
-
-        if not was_modified:
-            print(f"Failed to update MinimumVersion in {recipe_path.name}")
-            return False, current_version, highest_required
-
-        # Write the changes
-        print(f"DEBUG: Writing changes to: {recipe_path}")
-        with open(recipe_path, 'w', encoding='utf-8') as file:
-            file.write(modified_content)
-
-        # Verify the changes
-        with open(recipe_path, 'r', encoding='utf-8') as file:
-            verification_content = file.read()
-
-        if verification_content != modified_content:
-            print(
-                f"❌ Warning: File write verification failed for "
-                f"{recipe_path}")
-            return False, current_version, highest_required
-
-        # Verify new version is set correctly
-        new_version = get_current_minimum_version(verification_content,
-                                                  is_yaml)
-        if new_version != highest_required:
-            print(
-                f"❌ Warning: Verification failed - MinimumVersion is "
-                f"{new_version}, expected {highest_required}")
-            return False, current_version, highest_required
-
-        print(f"✓ Successfully updated MinimumVersion: {recipe_path}")
-        return True, current_version, highest_required
+        return updated, current_version, highest_required
 
     except Exception as e:
         print(f"❌ Error processing {recipe_path}: {str(e)}")
@@ -491,7 +622,8 @@ def process_recipe(recipe_path, processor_versions):
         return False, None, None
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and set MinimumVersion in it."""
     verify_environment()
 
     print("MinimumVersionChecker - AutoPkg Recipe Version Validator")

@@ -25,28 +25,42 @@ from pathlib import Path
 import plistlib
 import re
 import traceback
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    import yaml
+
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
 class AutoPkgYAMLDumper:
     """Custom YAML dumper for AutoPkg recipes with proper indentation."""
 
     @staticmethod
-    def represent_none(dumper, _):
+    def represent_none(dumper: 'yaml.SafeDumper',
+                       _: None) -> 'yaml.ScalarNode':
         """Represent None as empty string instead of 'null'."""
         return dumper.represent_scalar('tag:yaml.org,2002:null', '')
 
     @staticmethod
-    def get_dumper():
+    def get_dumper() -> type['yaml.SafeDumper'] | None:
         """Get configured YAML dumper.
 
         Returns:
-            YAML Dumper class configured for AutoPkg recipes
+            YAML Dumper class configured for AutoPkg recipes, or None
+            if PyYAML is not available
         """
         try:
             import yaml
 
             class CustomDumper(yaml.SafeDumper):
-                pass
+                """SafeDumper that represents None as empty."""
 
             # Represent None as empty instead of 'null'
             CustomDumper.add_representer(
@@ -59,27 +73,9 @@ class AutoPkgYAMLDumper:
             return None
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
-
-
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def alphabetize_dict_with_processor_last(d):
+def alphabetize_dict_with_processor_last(
+    d: dict[str, Any],
+) -> dict[str, Any]:
     """Alphabetize dict keys, but keep 'Processor' key last.
 
     Args:
@@ -111,7 +107,9 @@ def alphabetize_dict_with_processor_last(d):
     return result
 
 
-def alphabetize_dict_with_processor_first(d):
+def alphabetize_dict_with_processor_first(
+    d: dict[str, Any],
+) -> dict[str, Any]:
     """Alphabetize dict keys, but keep 'Processor' key first.
 
     For YAML recipes, Processor must be first or the recipe is invalid.
@@ -144,7 +142,7 @@ def alphabetize_dict_with_processor_first(d):
     return result
 
 
-def alphabetize_dict(d):
+def alphabetize_dict(d: dict[str, Any]) -> dict[str, Any]:
     """Alphabetize dict keys recursively.
 
     Args:
@@ -168,7 +166,7 @@ def alphabetize_dict(d):
     return sorted_dict
 
 
-def extract_variable_references(value):
+def extract_variable_references(value: object) -> set[str]:
     """Extract AutoPkg variable references from a string value.
 
     Args:
@@ -186,7 +184,7 @@ def extract_variable_references(value):
     return set(matches)
 
 
-def topological_sort_input_keys(input_dict):
+def topological_sort_input_keys(input_dict: dict[str, Any]) -> list[str]:
     """Sort Input dict keys respecting variable dependencies.
 
     AutoPkg processes Input keys sequentially. If key A's value references
@@ -199,7 +197,8 @@ def topological_sort_input_keys(input_dict):
         List of keys in dependency-respecting order
     """
     # Build dependency graph
-    dependencies = {}  # key -> set of keys it depends on
+    # key -> set of keys it depends on
+    dependencies = {}
 
     for key, value in input_dict.items():
         deps = extract_variable_references(value)
@@ -248,7 +247,9 @@ def topological_sort_input_keys(input_dict):
     return result
 
 
-def _sort_input_section(original_input):
+def _sort_input_section(
+    original_input: dict[str, Any],
+) -> tuple[bool, list[str], dict[str, Any]]:
     """Sort Input section with dependency awareness.
 
     Args:
@@ -299,7 +300,27 @@ def _sort_input_section(original_input):
     return modified, changes, new_input
 
 
-def _sort_process_array(process_array, processor_position='last'):
+def _sort_processor_arguments(sorted_processor: dict[str, Any]) -> bool:
+    """Recursively alphabetize a processor's Arguments in place.
+
+    Args:
+        sorted_processor: Processor dict whose Arguments to sort
+
+    Returns:
+        True if the order of the Arguments keys changed
+    """
+    args_original = sorted_processor.get('Arguments')
+    if not isinstance(args_original, dict):
+        return False
+
+    args_sorted = alphabetize_dict(args_original)
+    sorted_processor['Arguments'] = args_sorted
+    return list(args_original.keys()) != list(args_sorted.keys())
+
+
+def _sort_process_array(
+    process_array: list[Any], processor_position: str = 'last',
+) -> tuple[bool, list[str]]:
     """Sort keys within each processor in Process array.
 
     Args:
@@ -336,24 +357,20 @@ def _sort_process_array(process_array, processor_position='last'):
             )
 
         # Recursively alphabetize Arguments if present
-        if 'Arguments' in sorted_processor:
-            args_original = sorted_processor['Arguments']
-            if isinstance(args_original, dict):
-                args_sorted = alphabetize_dict(args_original)
-                if (list(args_original.keys()) !=
-                        list(args_sorted.keys())):
-                    modified = True
-                    changes.append(
-                        f"Alphabetized Arguments in {processor_name}"
-                    )
-                sorted_processor['Arguments'] = args_sorted
+        if _sort_processor_arguments(sorted_processor):
+            modified = True
+            changes.append(
+                f"Alphabetized Arguments in {processor_name}"
+            )
 
         process_array[i] = sorted_processor
 
     return modified, changes
 
 
-def _build_ordered_recipe(recipe_data):
+def _build_ordered_recipe(
+    recipe_data: dict[str, Any],
+) -> dict[str, Any]:
     """Build recipe dict with standardized key order.
 
     Args:
@@ -388,7 +405,7 @@ def _build_ordered_recipe(recipe_data):
     return ordered_recipe
 
 
-def _detect_indentation(recipe_path):
+def _detect_indentation(recipe_path: Path) -> str:
     """Detect whether file uses tabs or spaces for indentation.
 
     Args:
@@ -412,7 +429,8 @@ def _detect_indentation(recipe_path):
     return 'spaces'
 
 
-def _fix_plist_formatting(recipe_path, original_indent_type='spaces'):
+def _fix_plist_formatting(recipe_path: Path,
+                          original_indent_type: str = 'spaces') -> None:
     """Fix HTML entities and preserve indentation format.
 
     Args:
@@ -446,7 +464,7 @@ def _fix_plist_formatting(recipe_path, original_indent_type='spaces'):
         f.writelines(converted_lines)
 
 
-def process_plist_recipe(recipe_path):
+def process_plist_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a plist recipe file and alphabetize appropriate sections.
 
     Args:
@@ -502,7 +520,7 @@ def process_plist_recipe(recipe_path):
         return False, []
 
 
-def process_yaml_recipe(recipe_path):
+def process_yaml_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a YAML recipe file and alphabetize appropriate sections.
 
     Args:
@@ -568,7 +586,7 @@ def process_yaml_recipe(recipe_path):
         return False, []
 
 
-def process_recipe(recipe_path):
+def process_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a recipe file based on its format.
 
     Args:
@@ -583,7 +601,7 @@ def process_recipe(recipe_path):
         return process_plist_recipe(recipe_path)
 
 
-def _collect_recipes(recipe_dir):
+def _collect_recipes(recipe_dir: str) -> list[Path]:
     """Collect all recipe files from directory.
 
     Args:
@@ -599,7 +617,7 @@ def _collect_recipes(recipe_dir):
     return all_recipes
 
 
-def _get_batch_size(all_recipes):
+def _get_batch_size(all_recipes: list[Path]) -> int:
     """Get batch size from user input.
 
     Args:
@@ -638,7 +656,9 @@ def _get_batch_size(all_recipes):
     return batch_size
 
 
-def _process_batch(batch, recipe_count):
+def _process_batch(
+    batch: list[Path], recipe_count: int,
+) -> tuple[int, list[tuple[Path, list[str]]]]:
     """Process a batch of recipes.
 
     Args:
@@ -668,7 +688,8 @@ def _process_batch(batch, recipe_count):
     return count, batch_modified
 
 
-def _print_summary(recipe_count, modified_count, modified_files):
+def _print_summary(recipe_count: int, modified_count: int,
+                   modified_files: list[tuple[Path, list[str]]]) -> None:
     """Print final summary of processing.
 
     Args:
@@ -697,7 +718,8 @@ def _print_summary(recipe_count, modified_count, modified_files):
         print("\n✓ All recipes are already properly alphabetized!")
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and alphabetize its recipes."""
     verify_environment()
 
     print("RecipeAlphabetiser - AutoPkg Recipe Key Sorter")

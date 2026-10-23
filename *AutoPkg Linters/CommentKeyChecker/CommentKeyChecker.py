@@ -13,28 +13,16 @@ import traceback
 import html
 from pathlib import Path
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def has_html_comments(content):
+def has_html_comments(content: str) -> bool:
     """Check if content contains HTML-style comments."""
     return '<!--' in content and '-->' in content
 
@@ -90,7 +78,44 @@ def fix_comment_key_case(content: str, is_yaml: bool) -> tuple[str, bool, int]:
     return new_content, was_modified, fix_count[0]
 
 
-def convert_plist_comments(content):
+def _contains_xml_structure(comment_text: str) -> bool:
+    """Return True if a comment holds XML/plist structure.
+
+    Such comments are likely commented-out code blocks, not actual
+    comments.
+    """
+    return ('<dict>' in comment_text or '<key>' in comment_text or
+            '<array>' in comment_text or '<string>' in comment_text)
+
+
+def _dedent_lines(comment_lines: list[str]) -> list[str]:
+    """Remove the common leading whitespace from comment lines."""
+    indents = [
+        len(line) - len(line.lstrip())
+        for line in comment_lines if line.strip()
+    ]
+    if not indents:
+        return comment_lines
+    min_indent = min(indents)
+    return [
+        line[min_indent:] if len(line) > min_indent
+        else line.strip() for line in comment_lines
+    ]
+
+
+def _flatten_comment(comment_text: str) -> str:
+    """Join a multi-line comment into one line, dedenting it first."""
+    comment_lines = comment_text.split('\n')
+    if len(comment_lines) > 1:
+        comment_lines = _dedent_lines(comment_lines)
+
+    return ' '.join(
+        line.strip() for line in comment_lines
+        if line.strip()
+    )
+
+
+def convert_plist_comments(content: str) -> tuple[str, bool, int]:
     """Convert HTML comments to Comment key-string pairs in plist format.
 
     Args:
@@ -107,7 +132,8 @@ def convert_plist_comments(content):
     comment_before_dict_pattern = (r'^(\s*)<!--(.*?)-->\s*\n'
                                    r'(\s*)<dict>\s*\n')
 
-    def replace_comment_before_dict(match):
+    def replace_comment_before_dict(match: re.Match[str]) -> str:
+        """Move a comment before a dict into it as a Comment key."""
         nonlocal modified, comment_count
         comment_text = match.group(2)
         dict_indent = match.group(3)
@@ -117,32 +143,14 @@ def convert_plist_comments(content):
 
         # Skip comments that contain XML/plist structure
         # These are likely commented-out code blocks, not actual comments
-        if ('<dict>' in comment_text or '<key>' in comment_text or
-                '<array>' in comment_text or '<string>' in comment_text):
+        if _contains_xml_structure(comment_text):
             print("DEBUG: Skipping comment containing XML structure "
                   "(likely commented-out code)")
             # Return the original match unchanged
             return match.group(0)
 
         # For multi-line comments, join lines with spaces
-        comment_lines = comment_text.split('\n')
-        if len(comment_lines) > 1:
-            min_indent = float('inf')
-            for line in comment_lines:
-                if line.strip():
-                    leading = len(line) - len(line.lstrip())
-                    min_indent = min(min_indent, leading)
-
-            if min_indent != float('inf'):
-                comment_lines = [
-                    line[min_indent:] if len(line) > min_indent
-                    else line.strip() for line in comment_lines
-                ]
-
-        comment_text = ' '.join(
-            line.strip() for line in comment_lines
-            if line.strip()
-        )
+        comment_text = _flatten_comment(comment_text)
 
         # XML-escape the comment text
         comment_text = html.escape(comment_text)
@@ -170,7 +178,8 @@ def convert_plist_comments(content):
     # Second pass: handle standalone comments (not before dicts)
     standalone_pattern = r'^(\s*)<!--(.*?)-->\s*$'
 
-    def replace_standalone_comment(match):
+    def replace_standalone_comment(match: re.Match[str]) -> str:
+        """Replace a standalone comment with a Comment key."""
         nonlocal modified, comment_count
         indent = match.group(1)
         comment_text = match.group(2)
@@ -180,32 +189,13 @@ def convert_plist_comments(content):
 
         # Skip comments that contain XML/plist structure
         # These are likely commented-out code blocks, not actual comments
-        if ('<dict>' in comment_text or '<key>' in comment_text or
-                '<array>' in comment_text or '<string>' in comment_text):
+        if _contains_xml_structure(comment_text):
             print("DEBUG: Skipping standalone comment containing XML "
                   "structure (likely commented-out code)")
             # Return the original match unchanged
             return match.group(0)
 
-        comment_lines = comment_text.split('\n')
-
-        if len(comment_lines) > 1:
-            min_indent = float('inf')
-            for line in comment_lines:
-                if line.strip():
-                    leading = len(line) - len(line.lstrip())
-                    min_indent = min(min_indent, leading)
-
-            if min_indent != float('inf'):
-                comment_lines = [
-                    line[min_indent:] if len(line) > min_indent
-                    else line.strip() for line in comment_lines
-                ]
-
-        comment_text = ' '.join(
-            line.strip() for line in comment_lines
-            if line.strip()
-        )
+        comment_text = _flatten_comment(comment_text)
 
         # XML-escape the comment text
         comment_text = html.escape(comment_text)
@@ -229,7 +219,7 @@ def convert_plist_comments(content):
     return new_content, modified, comment_count
 
 
-def convert_yaml_comments(content):
+def convert_yaml_comments(content: str) -> tuple[str, bool, int]:
     """Convert HTML comments to Comment key-value pairs in YAML format.
 
     Args:
@@ -244,7 +234,8 @@ def convert_yaml_comments(content):
     # Pattern to match multi-line HTML comments
     multiline_pattern = r'^(\s*)<!--(.*?)-->\s*$'
 
-    def replace_multiline_comment(match):
+    def replace_multiline_comment(match: re.Match[str]) -> str:
+        """Replace a comment with a YAML Comment key."""
         nonlocal modified, comment_count
         indent = match.group(1)
         comment_text = match.group(2)
@@ -252,27 +243,9 @@ def convert_yaml_comments(content):
         # Clean up the comment text
         comment_text = comment_text.strip()
 
-        # For multi-line comments, join lines with spaces
-        comment_lines = comment_text.split('\n')
-        # Remove common leading whitespace from all lines
-        if len(comment_lines) > 1:
-            min_indent = float('inf')
-            for line in comment_lines:
-                if line.strip():
-                    leading = len(line) - len(line.lstrip())
-                    min_indent = min(min_indent, leading)
-
-            if min_indent != float('inf'):
-                comment_lines = [
-                    line[min_indent:] if len(line) > min_indent
-                    else line.strip()
-                    for line in comment_lines
-                ]
-
-        # Join lines with a single space
-        comment_text = ' '.join(
-            line.strip() for line in comment_lines if line.strip()
-        )
+        # For multi-line comments, remove common leading whitespace and
+        # join lines with a single space
+        comment_text = _flatten_comment(comment_text)
 
         # Ensure we're using spaces, not tabs
         indent = indent.replace('\t', '    ')
@@ -325,10 +298,11 @@ def _apply_fixes(recipe_path: Path, original_content: str,
 
 
 def _commit_changes(recipe_path: Path, original_content: str,
-                    modified_content: str, total: int) -> tuple[bool, int]:
+                    modified_content: str, total: int) -> tuple[bool | None, int]:
     """Write changes if content differs and verify the result.
 
-    Returns (True, total) on success, (False, 0) if nothing changed or write fails.
+    Returns (True, total) on success, (False, 0) if nothing changed,
+    (None, 0) if write/verification failed.
     On verification failure, restores the original content before returning.
     """
     if modified_content == original_content:
@@ -356,14 +330,18 @@ def _commit_changes(recipe_path: Path, original_content: str,
         except OSError as restore_err:
             print(f"❌ CRITICAL: Could not restore {recipe_path}: {restore_err}")
             print("❌ File may be in a corrupt state. Manual review required.")
-        return False, 0
+        return None, 0
 
     print(f"✓ Successfully converted {total} comment(s): {recipe_path}")
     return True, total
 
 
-def process_recipe(recipe_path: Path) -> tuple[bool, int]:
-    """Process a single recipe file and convert HTML comments."""
+def process_recipe(recipe_path: Path) -> tuple[bool | None, int]:
+    """Process a single recipe file and convert HTML comments.
+
+    Returns (True, count) if the recipe was fixed, (False, 0) if it needed
+    no changes, and (None, 0) if it couldn't be read, written or verified.
+    """
     try:
         is_yaml = recipe_path.suffix == '.yaml'
         print(f"\nDEBUG: Processing {recipe_path}")
@@ -385,10 +363,39 @@ def process_recipe(recipe_path: Path) -> tuple[bool, int]:
         print(f"❌ Error processing {recipe_path}: {str(e)}")
         print("DEBUG: Full error details:")
         print(traceback.format_exc())
-        return False, 0
+        return None, 0
 
 
-def main():
+def _print_summary(recipe_count: int,
+                   modified_files: list[tuple[Path, int]],
+                   failed_files: list[Path],
+                   total_comments_converted: int) -> None:
+    """Print the results of a CommentKeyChecker run."""
+    print(f"\n{'=' * 50}")
+    print("Processing complete!")
+    print(f"Recipes processed: {recipe_count}")
+    print(f"Recipes modified: {len(modified_files)}")
+    if failed_files:
+        print(f"❌ Recipes that failed: {len(failed_files)}")
+    print(f"Total comments converted: {total_comments_converted}")
+    print("=" * 50)
+
+    if modified_files:
+        print("\nModified files:")
+        for file, comment_count in modified_files:
+            print(f"  ✓ {file} ({comment_count} comment(s) converted)")
+
+        print("\nPlease verify these files in your version control "
+              "system.")
+
+    if failed_files:
+        print("\n❌ Files that failed (manual review required):")
+        for file in failed_files:
+            print(f"  ❌ {file}")
+
+
+def main() -> None:
+    """Prompt for a recipe directory and convert comments in it."""
     verify_environment()
 
     print("CommentKeyChecker - AutoPkg Recipe Comment Converter")
@@ -415,9 +422,9 @@ def main():
 
         print(f"\nScanning recipes in: {recipe_dir}")
 
-        modified_count = 0
         recipe_count = 0
         modified_files = []
+        failed_files = []
         total_comments_converted = 0
 
         # Process all recipe files
@@ -425,25 +432,14 @@ def main():
             if recipe_path.suffix in ['.recipe', '.yaml']:
                 recipe_count += 1
                 success, comment_count = process_recipe(recipe_path)
-                if success:
-                    modified_count += 1
+                if success is True:
                     modified_files.append((recipe_path, comment_count))
                     total_comments_converted += comment_count
+                elif success is None:
+                    failed_files.append(recipe_path)
 
-        print(f"\n{'=' * 50}")
-        print("Processing complete!")
-        print(f"Recipes processed: {recipe_count}")
-        print(f"Recipes modified: {modified_count}")
-        print(f"Total comments converted: {total_comments_converted}")
-        print("=" * 50)
-
-        if modified_files:
-            print("\nModified files:")
-            for file, comment_count in modified_files:
-                print(f"  ✓ {file} ({comment_count} comment(s) converted)")
-
-            print("\nPlease verify these files in your version control "
-                  "system.")
+        _print_summary(recipe_count, modified_files, failed_files,
+                       total_comments_converted)
 
     except KeyboardInterrupt:
         print("\n\nOperation cancelled by user")

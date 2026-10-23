@@ -15,28 +15,16 @@ from pathlib import Path
 import re
 import traceback
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def compare_versions(v1, v2):
+def compare_versions(v1: str, v2: str) -> int:
     """Compare two version strings.
 
     Returns:
@@ -44,7 +32,8 @@ def compare_versions(v1, v2):
         -1 if v1 < v2
         0 if v1 == v2
     """
-    def normalize(v):
+    def normalize(v: str) -> list[int]:
+        """Split a version string into its integer parts."""
         return [int(x) for x in re.sub(r'[^\d.]+', '', v).split('.')]
 
     try:
@@ -56,17 +45,13 @@ def compare_versions(v1, v2):
         parts1.extend([0] * (max_len - len(parts1)))
         parts2.extend([0] * (max_len - len(parts2)))
 
-        for p1, p2 in zip(parts1, parts2):
-            if p1 > p2:
-                return 1
-            elif p1 < p2:
-                return -1
-        return 0
+        # Lists of equal length compare element by element
+        return (parts1 > parts2) - (parts1 < parts2)
     except (ValueError, AttributeError):
         return 0
 
 
-def has_shared_findandreplace(content):
+def has_shared_findandreplace(content: str) -> bool:
     """Check if content has the shared FindAndReplace processor."""
     patterns = [
         'com.github.homebysix.FindAndReplace/FindAndReplace',
@@ -75,7 +60,7 @@ def has_shared_findandreplace(content):
     return any(pattern in content for pattern in patterns)
 
 
-def modify_yaml_recipe(content):
+def modify_yaml_recipe(content: str) -> tuple[str, bool]:
     """Modify yaml recipe content to use core FindAndReplace."""
     try:
         recipe = yaml.safe_load(content)
@@ -114,7 +99,7 @@ def modify_yaml_recipe(content):
     return content, False
 
 
-def modify_plist_content(content):
+def modify_plist_content(content: str) -> tuple[str, bool]:
     """Modify plist recipe content to use core FindAndReplace."""
     modified = False
 
@@ -173,7 +158,43 @@ def modify_plist_content(content):
     return content, modified
 
 
-def process_recipe(recipe_path):
+def _apply_changes(recipe_path: Path, original_content: str,
+                   is_yaml: bool) -> bool:
+    """Convert a recipe's shared FindAndReplace and write the result.
+
+    Returns:
+        True if the recipe was modified and the write verified
+    """
+    print(f"\nFound shared FindAndReplace in: {recipe_path}")
+
+    if is_yaml:
+        modified_content, was_modified = modify_yaml_recipe(
+            original_content)
+    else:
+        modified_content, was_modified = modify_plist_content(
+            original_content)
+
+    if not was_modified:
+        print(f"No modifications needed for: {recipe_path.name}")
+        return False
+
+    print(f"DEBUG: Writing changes to: {recipe_path}")
+    with open(recipe_path, 'w', encoding='utf-8') as file:
+        file.write(modified_content)
+
+    # Verify the changes were written
+    with open(recipe_path, 'r', encoding='utf-8') as file:
+        verification_content = file.read()
+
+    if verification_content != modified_content:
+        print(f"❌ Warning: File write verification failed for "
+              f"{recipe_path}")
+        return False
+    print(f"✓ Successfully modified: {recipe_path}")
+    return True
+
+
+def process_recipe(recipe_path: Path) -> bool:
     """Process a single recipe file and update FindAndReplace references."""
     try:
         is_yaml = recipe_path.suffix == '.yaml'
@@ -191,34 +212,7 @@ def process_recipe(recipe_path):
                   f"found")
             return False
 
-        print(f"\nFound shared FindAndReplace in: {recipe_path}")
-
-        if is_yaml:
-            modified_content, was_modified = modify_yaml_recipe(
-                original_content)
-        else:
-            modified_content, was_modified = modify_plist_content(
-                original_content)
-
-        if was_modified:
-            print(f"DEBUG: Writing changes to: {recipe_path}")
-            with open(recipe_path, 'w', encoding='utf-8') as file:
-                file.write(modified_content)
-
-            # Verify the changes were written
-            with open(recipe_path, 'r', encoding='utf-8') as file:
-                verification_content = file.read()
-
-            if verification_content != modified_content:
-                print(f"❌ Warning: File write verification failed for "
-                      f"{recipe_path}")
-                return False
-            else:
-                print(f"✓ Successfully modified: {recipe_path}")
-                return True
-        else:
-            print(f"No modifications needed for: {recipe_path.name}")
-            return False
+        return _apply_changes(recipe_path, original_content, is_yaml)
 
     except Exception as e:
         print(f"❌ Error processing {recipe_path}: {str(e)}")
@@ -227,7 +221,8 @@ def process_recipe(recipe_path):
         return False
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and convert shared FindAndReplace."""
     verify_environment()
 
     print("FindAndReplaceChecker - AutoPkg Recipe Updater")

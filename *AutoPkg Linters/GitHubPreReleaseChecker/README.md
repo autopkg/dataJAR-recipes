@@ -83,7 +83,7 @@ The script will:
 1. Scan the directory (including subdirectories) for `.download.recipe` and `.download.recipe.yaml` files
 2. Check each recipe for `GitHubReleasesInfoProvider` processor
 3. Add pre-release support if not already present
-4. Display a summary of modified files
+4. Display a summary of modified files, and of failed files that need checking by hand
 
 ### Example Session
 
@@ -99,10 +99,20 @@ Found GitHubReleasesInfoProvider in: /Users/username/autopkg/recipes/App.downloa
 Processing complete!
 Recipes processed: 5
 Recipes modified: 1
+Recipes failed: 0
 
 Modified files:
-- /Users/username/autopkg/recipes/App.download.recipe
+  ✓ /Users/username/autopkg/recipes/App.download.recipe
 ```
+
+### Failed Recipes and Exit Status
+
+A recipe is listed under "Failed files, which need checking by hand" if:
+- Its edits couldn't be completed, so it needs a manual edit
+- Writing it failed, or it resolves outside the recipe directory
+- It couldn't be read or processed
+
+A failed recipe is left as it was. The script exits with status 1 if any recipe failed, or if the scan didn't complete (an invalid directory, a cancel or an error). The summary is still printed after a cancel or error during the scan, headed "Processing stopped early!".
 
 ## Using Pre-Release Features
 
@@ -137,7 +147,7 @@ When `PRERELEASE` is empty (default), only stable releases are downloaded, maint
 
 - **Non-Destructive**: Only modifies recipes that need changes
 - **Skip Logic**: Automatically skips recipes that already have pre-release support
-- **Verification**: Reads back modified files to ensure changes were written correctly
+- **Verification**: Writes each recipe to a temporary file and reads it back before replacing the recipe, so a failed write leaves it as it was
 - **Environment Check**: Validates that it's running in AutoPkg's Python environment
 - **Error Handling**: Comprehensive error messages and debugging output
 

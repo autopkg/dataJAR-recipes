@@ -14,33 +14,29 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import re
 import traceback
+from typing import TypedDict
+
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 # Constants
 YAML_EXTENSION = '.yaml'
 DEPRECATED_FOLDER_NAME = '*Deprecated and to be deleted'
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+class ScanResults(TypedDict):
+    """Recipes and folders found to move."""
+
+    recipes: list[tuple[Path, str, datetime | None]]
+    folders: list[tuple[Path, int]]
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def is_git_repository(path):
+def is_git_repository(path: str) -> bool:
     """Check if the path is within a git repository."""
     try:
         result = subprocess.run(
@@ -55,7 +51,8 @@ def is_git_repository(path):
         return False
 
 
-def get_last_commit_date(file_path, repo_path):
+def get_last_commit_date(file_path: Path,
+                         repo_path: str) -> datetime | None:
     """Get the last commit date for a specific file.
 
     Args:
@@ -83,7 +80,7 @@ def get_last_commit_date(file_path, repo_path):
         return None
 
 
-def has_deprecation_warning_plist(content):
+def has_deprecation_warning_plist(content: str) -> bool:
     """Check if plist recipe has DeprecationWarning processor."""
     try:
         # Look for DeprecationWarning processor in the Process array
@@ -93,7 +90,7 @@ def has_deprecation_warning_plist(content):
         return False
 
 
-def has_deprecation_warning_yaml(content):
+def has_deprecation_warning_yaml(content: str) -> bool:
     """Check if YAML recipe has DeprecationWarning processor."""
     try:
         # Look for Processor: DeprecationWarning
@@ -103,7 +100,7 @@ def has_deprecation_warning_yaml(content):
         return False
 
 
-def has_deprecation_warning(file_path):
+def has_deprecation_warning(file_path: Path) -> bool:
     """Check if recipe has DeprecationWarning processor.
 
     Args:
@@ -125,7 +122,7 @@ def has_deprecation_warning(file_path):
         return False
 
 
-def get_time_period_choice():
+def get_time_period_choice() -> int | None:
     """Prompt user to select a time period for deprecation age."""
     print("\nSelect deprecation age threshold:")
     print("1. 1 month")
@@ -135,36 +132,32 @@ def get_time_period_choice():
     print("5. Custom (enter number of months)")
     print("\nEnter your choice (1-5): ", end='', flush=True)
 
+    # Months for each preset choice
+    preset_months = {'1': 1, '2': 3, '3': 6, '4': 12}
+    months = None
     try:
         choice = input().strip()
 
-        if choice == '1':
-            return 1
-        elif choice == '2':
-            return 3
-        elif choice == '3':
-            return 6
-        elif choice == '4':
-            return 12
+        if choice in preset_months:
+            months = preset_months[choice]
         elif choice == '5':
             print("Enter number of months: ", end='', flush=True)
             months = int(input().strip())
             if months < 1:
                 print("Error: Must be at least 1 month")
-                return None
-            return months
+                months = None
         else:
             print("Error: Invalid choice")
-            return None
     except ValueError:
         print("Error: Invalid input")
-        return None
     except KeyboardInterrupt:
         print("\nOperation cancelled by user")
-        return None
+    return months
 
 
-def should_move_recipe(file_path, repo_path, months_threshold):
+def should_move_recipe(
+        file_path: Path, repo_path: str,
+        months_threshold: int) -> tuple[bool, str, datetime | None]:
     """Determine if a recipe should be moved.
 
     Args:
@@ -173,7 +166,8 @@ def should_move_recipe(file_path, repo_path, months_threshold):
         months_threshold: Number of months for deprecation threshold
 
     Returns:
-        Tuple of (should_move: bool, reason: str, commit_date: datetime)
+        Tuple of (should_move: bool, reason: str,
+        commit_date: datetime | None)
     """
     # Check if recipe has DeprecationWarning
     if not has_deprecation_warning(file_path):
@@ -188,15 +182,14 @@ def should_move_recipe(file_path, repo_path, months_threshold):
     age = datetime.now() - commit_date
     threshold = timedelta(days=months_threshold * 30)
 
-    if age >= threshold:
-        months_old = age.days // 30
-        return True, f"Deprecated for {months_old} months", commit_date
-    else:
-        months_old = age.days // 30
-        return False, f"Only deprecated for {months_old} months", commit_date
+    months_old = age.days // 30
+    should_move = age >= threshold
+    reason = (f"Deprecated for {months_old} months" if should_move
+              else f"Only deprecated for {months_old} months")
+    return should_move, reason, commit_date
 
 
-def get_all_recipes_in_folder(folder_path):
+def get_all_recipes_in_folder(folder_path: Path) -> list[Path]:
     """Get all recipe files in a folder (non-recursive).
 
     Args:
@@ -212,7 +205,8 @@ def get_all_recipes_in_folder(folder_path):
     return recipes
 
 
-def should_move_folder(folder_path, repo_path, months_threshold):
+def should_move_folder(folder_path: Path, repo_path: str,
+                       months_threshold: int) -> tuple[bool, int]:
     """Check if entire folder should be moved (all recipes deprecated).
 
     Args:
@@ -240,7 +234,7 @@ def should_move_folder(folder_path, repo_path, months_threshold):
     return all_should_move, len(recipes)
 
 
-def move_recipe(recipe_path, repo_path):
+def move_recipe(recipe_path: Path, repo_path: str) -> Path | None:
     """Move a recipe to '*Deprecated and to be deleted' folder
     maintaining structure.
 
@@ -271,7 +265,7 @@ def move_recipe(recipe_path, repo_path):
         return None
 
 
-def move_folder(folder_path, repo_path):
+def move_folder(folder_path: Path, repo_path: str) -> Path | None:
     """Move an entire folder to '*Deprecated and to be deleted'
     maintaining structure.
 
@@ -299,7 +293,7 @@ def move_folder(folder_path, repo_path):
         return None
 
 
-def scan_recipes(repo_path, months_threshold):
+def scan_recipes(repo_path: str, months_threshold: int) -> ScanResults:
     """Scan repository for deprecated recipes to move.
 
     Args:
@@ -307,7 +301,7 @@ def scan_recipes(repo_path, months_threshold):
         months_threshold: Number of months for deprecation threshold
 
     Returns:
-        Dict with recipes_to_move, folders_to_move lists
+        ScanResults with 'recipes' and 'folders' lists
     """
     recipes_to_move = []
     folders_to_move = []
@@ -350,7 +344,8 @@ def scan_recipes(repo_path, months_threshold):
     }
 
 
-def confirm_moves(recipes, folders):
+def confirm_moves(recipes: list[tuple[Path, str, datetime | None]],
+                  folders: list[tuple[Path, int]]) -> bool:
     """Ask user to confirm the moves.
 
     Args:
@@ -401,7 +396,35 @@ def confirm_moves(recipes, folders):
         return False
 
 
-def main():
+def _get_months_threshold(repo_path: str) -> int | None:
+    """Check repo_path is a directory and a git repository, then ask
+    for the age threshold.
+
+    Returns:
+        Number of months, or None if the path is invalid or no valid
+        choice was made
+    """
+    if not os.path.isdir(repo_path):
+        print(f"Error: '{repo_path}' is not a valid directory")
+        print("Make sure the path exists and you have permission "
+              "to access it.")
+        return None
+
+    # Verify this is a git repository
+    if not is_git_repository(repo_path):
+        print(f"\nError: '{repo_path}' is not a git repository")
+        print("This script requires git history to determine "
+              "deprecation age.")
+        return None
+
+    print(f"\n✓ Git repository found: {repo_path}")
+
+    # Get time period selection
+    return get_time_period_choice()
+
+
+def main() -> None:
+    """Prompt for a repository and move long-deprecated recipes."""
     verify_environment()
 
     print("DeprecatedRecipeMover - AutoPkg Recipe Organizer")
@@ -419,23 +442,7 @@ def main():
         repo_path = clean_path(input())
         repo_path = os.path.abspath(repo_path)
 
-        if not os.path.isdir(repo_path):
-            print(f"Error: '{repo_path}' is not a valid directory")
-            print("Make sure the path exists and you have permission "
-                  "to access it.")
-            return
-
-        # Verify this is a git repository
-        if not is_git_repository(repo_path):
-            print(f"\nError: '{repo_path}' is not a git repository")
-            print("This script requires git history to determine "
-                  "deprecation age.")
-            return
-
-        print(f"\n✓ Git repository found: {repo_path}")
-
-        # Get time period selection
-        months = get_time_period_choice()
+        months = _get_months_threshold(repo_path)
         if months is None:
             return
 

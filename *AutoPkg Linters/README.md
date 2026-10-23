@@ -4,7 +4,7 @@ A comprehensive command-line tool for validating and fixing AutoPkg recipes. Run
 
 ## Features
 
-- **Unified Interface**: Run all 18 linters through one command
+- **Unified Interface**: Run all 17 recipe linters through one command
 - **Flexible Execution**: Run all linters at once or select specific ones
 - **Interactive Mode**: Easy-to-use menu for selecting linters
 - **Batch Processing**: Process entire recipe repositories efficiently
@@ -12,7 +12,7 @@ A comprehensive command-line tool for validating and fixing AutoPkg recipes. Run
 
 ## Available Linters
 
-The suite includes 18 specialized linters:
+The suite runner includes 17 recipe linters:
 
 1. **GitHubPreReleaseChecker** - Add `include_prereleases` support to GitHub recipes
 2. **DeprecationChecker** - Validate deprecated recipe configuration
@@ -31,18 +31,21 @@ The suite includes 18 specialized linters:
 15. **MissingKeyValueChecker** - Check for empty values in pkginfo dict (.munki recipes)
 16. **DuplicateKeyChecker** - Detect duplicate keys and fix duplicate unattended_install
 17. **zshChecker** - Ensure zsh shebangs include --no-rcs flag
-18. **OverridePkgReceiptChecker** - Ensure uninstall scripts forget pkg receipts from EAs
+
+**OverridePkgReceiptChecker** ensures uninstall scripts forget pkg receipts from EAs. It checks recipe overrides, not recipes, so `autopkg-linter.py` doesn't run it. Run it directly (see [OverridePkgReceiptChecker/README.md](OverridePkgReceiptChecker/README.md)).
 
 ## Installation
 
 1. Ensure AutoPkg is installed with Python at `/usr/local/autopkg/python`
 2. Place all linter directories in the same parent folder
 3. Place `autopkg-linter.py` in the parent folder alongside the linter directories
+4. Place `linter_common.py` in the same parent folder. Every linter imports its shared helpers from it, so a linter run without it fails with `ModuleNotFoundError: No module named 'linter_common'`
 
 Directory structure:
 ```
 AutoPkg Linters/
 ├── autopkg-linter.py                    # Main suite runner
+├── linter_common.py                     # Helpers shared by every linter
 ├── GitHubPreReleaseChecker/
 │   ├── GitHubPreReleaseChecker.py
 │   └── README.md
@@ -226,9 +229,8 @@ For best results, run linters in this recommended order:
 13. **MissingKeyValueChecker** (15) - Check for empty pkginfo values
 14. **DuplicateKeyChecker** (16) - Detect and fix duplicate keys
 15. **zshChecker** (17) - Ensure zsh --no-rcs flag
-16. **OverridePkgReceiptChecker** (18) - Validate pkg receipt handling
-17. **RecipeAlphabetiser** (8) - Alphabetize keys (run last)
-18. **DeprecatedRecipeMover** (7) - Archive old recipes (manual)
+16. **RecipeAlphabetiser** (8) - Alphabetize keys (run last)
+17. **DeprecatedRecipeMover** (7) - Archive old recipes (manual)
 
 The suite runs linters in the order specified, so you can control the sequence.
 

@@ -22,28 +22,16 @@ import re
 from pathlib import Path
 import traceback
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def escape_xml_characters(content):
+def escape_xml_characters(content: str) -> tuple[str, list[int]]:
     """Escape &, <, > characters within <string> tags.
 
     Args:
@@ -57,7 +45,7 @@ def escape_xml_characters(content):
     string_pattern = re.compile(r'(<string>)(.*?)(</string>)', re.DOTALL)
     changes = []
 
-    def escape_string_content(match):
+    def escape_string_content(match: re.Match[str]) -> str:
         """Escape special characters within a string tag."""
         opening = match.group(1)
         string_content = match.group(2)
@@ -85,10 +73,13 @@ def escape_xml_characters(content):
 
     modified_content = string_pattern.sub(escape_string_content, content)
 
-    return modified_content, list(set(changes))  # Remove duplicates
+    # Remove duplicates
+    return modified_content, list(set(changes))
 
 
-def process_plist_recipe(recipe_path):
+def process_plist_recipe(
+    recipe_path: Path,
+) -> tuple[bool, list[str]]:
     """Process a plist recipe file and escape XML characters.
 
     Args:
@@ -125,7 +116,7 @@ def process_plist_recipe(recipe_path):
         return False, []
 
 
-def process_yaml_recipe(_):
+def process_yaml_recipe(_: Path) -> tuple[bool, list[str]]:
     """Process a YAML recipe file.
 
     YAML recipes don't need XML escaping as they use YAML syntax.
@@ -140,7 +131,7 @@ def process_yaml_recipe(_):
     return False, []
 
 
-def process_recipe(recipe_path):
+def process_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a recipe file based on its format.
 
     Args:
@@ -155,7 +146,43 @@ def process_recipe(recipe_path):
         return process_plist_recipe(recipe_path)
 
 
-def main():
+def _process_recipes(
+    recipe_dir: str,
+) -> tuple[int, list[tuple[Path, list[str]]]]:
+    """Escape XML characters in every recipe under recipe_dir.
+
+    Args:
+        recipe_dir: Path to the recipe directory
+
+    Returns:
+        Tuple of (recipe_count, modified_files) where modified_files is a
+        list of (recipe_path, changes) tuples
+    """
+    recipe_count = 0
+    modified_files = []
+
+    # Process all recipe files
+    for recipe_path in Path(recipe_dir).rglob("*.recipe*"):
+        if recipe_path.suffix not in ['.recipe', '.yaml']:
+            continue
+
+        recipe_count += 1
+
+        modified, changes = process_recipe(recipe_path)
+
+        if modified:
+            modified_files.append((recipe_path, changes))
+            print(f"\n✓ Fixed {recipe_path.name}")
+            for change in changes:
+                print(f"  - {change}")
+        else:
+            print(f"Skipping {recipe_path.name} - no issues found")
+
+    return recipe_count, modified_files
+
+
+def main() -> None:
+    """Prompt for a recipe directory and escape XML characters in it."""
     verify_environment()
 
     print("AutoPkgXMLEscapeChecker - XML Character Escape Validator")
@@ -180,27 +207,8 @@ def main():
 
         print(f"\nScanning recipes in: {recipe_dir}")
 
-        modified_count = 0
-        recipe_count = 0
-        modified_files = []
-
-        # Process all recipe files
-        for recipe_path in Path(recipe_dir).rglob("*.recipe*"):
-            if recipe_path.suffix not in ['.recipe', '.yaml']:
-                continue
-
-            recipe_count += 1
-
-            modified, changes = process_recipe(recipe_path)
-
-            if modified:
-                modified_count += 1
-                modified_files.append((recipe_path, changes))
-                print(f"\n✓ Fixed {recipe_path.name}")
-                for change in changes:
-                    print(f"  - {change}")
-            else:
-                print(f"Skipping {recipe_path.name} - no issues found")
+        recipe_count, modified_files = _process_recipes(recipe_dir)
+        modified_count = len(modified_files)
 
         print(f"\n{'=' * 50}")
         print("Processing complete!")

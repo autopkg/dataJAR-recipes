@@ -14,28 +14,16 @@ from pathlib import Path
 import re
 import yaml
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def has_name_with_spaces_plist(content):
+def has_name_with_spaces_plist(content: str) -> bool:
     """Check if plist has NAME variable with spaces in value.
 
     Args:
@@ -58,7 +46,8 @@ def has_name_with_spaces_plist(content):
     return False
 
 
-def fix_name_spaces_plist(content):
+def fix_name_spaces_plist(
+        content: str) -> tuple[str, bool, str | None, str | None]:
     """Remove spaces from NAME value in plist recipe.
 
     Args:
@@ -95,7 +84,7 @@ def fix_name_spaces_plist(content):
     return new_content, True, old_value, new_value
 
 
-def has_name_with_spaces_yaml(content):
+def has_name_with_spaces_yaml(content: str) -> bool:
     """Check if YAML has NAME variable with spaces in value.
 
     Args:
@@ -115,7 +104,7 @@ def has_name_with_spaces_yaml(content):
     return False
 
 
-def _is_input_section_start(line):
+def _is_input_section_start(line: str) -> bool:
     """Check if line starts the Input section in YAML.
 
     Args:
@@ -127,7 +116,7 @@ def _is_input_section_start(line):
     return line.strip().startswith('Input:')
 
 
-def _is_section_end(line, in_input):
+def _is_section_end(line: str, in_input: bool) -> bool:
     """Check if we've left the Input section in YAML.
 
     Args:
@@ -137,10 +126,11 @@ def _is_section_end(line, in_input):
     Returns:
         Boolean indicating if we've left Input section
     """
-    return in_input and line and not line[0].isspace() and ':' in line
+    return bool(
+        in_input and line and not line[0].isspace() and ':' in line)
 
 
-def _extract_name_value(line):
+def _extract_name_value(line: str) -> tuple[str | None, str | None]:
     """Extract NAME value from YAML line.
 
     Args:
@@ -155,7 +145,8 @@ def _extract_name_value(line):
     return None, None
 
 
-def _process_quoted_value(value):
+def _process_quoted_value(
+        value: str) -> tuple[str | None, str | None, str | None]:
     """Process quoted NAME value by removing spaces.
 
     Args:
@@ -173,7 +164,8 @@ def _process_quoted_value(value):
     return None, None, None
 
 
-def _build_name_line(indent_and_key, new_value, quote_char=None):
+def _build_name_line(indent_and_key: str, new_value: str,
+                     quote_char: str | None = None) -> str:
     """Build updated NAME line.
 
     Args:
@@ -189,7 +181,7 @@ def _build_name_line(indent_and_key, new_value, quote_char=None):
     return f'{indent_and_key}{new_value}'
 
 
-def _process_name_line(line):
+def _process_name_line(line: str) -> tuple[str, bool, str | None, str | None]:
     """Process a NAME line and return updated line if needed.
 
     Args:
@@ -198,26 +190,26 @@ def _process_name_line(line):
     Returns:
         Tuple of (new_line, modified, old_value, new_value)
     """
+    result: tuple[str, bool, str | None, str | None] = (
+        line, False, None, None)
     indent_and_key, value = _extract_name_value(line)
-    if not indent_and_key:
-        return line, False, None, None
+    if indent_and_key:
+        # Try processing as quoted value
+        old_val, new_val, quote_char = _process_quoted_value(value)
+        if old_val:
+            new_line = _build_name_line(indent_and_key, new_val, quote_char)
+            result = (new_line, True, old_val, new_val)
+        # Unquoted value with spaces
+        elif ' ' in value:
+            new_val = value.replace(' ', '')
+            new_line = _build_name_line(indent_and_key, new_val)
+            result = (new_line, True, value, new_val)
 
-    # Try processing as quoted value
-    old_val, new_val, quote_char = _process_quoted_value(value)
-    if old_val:
-        new_line = _build_name_line(indent_and_key, new_val, quote_char)
-        return new_line, True, old_val, new_val
-
-    # Unquoted value with spaces
-    if ' ' in value:
-        new_val = value.replace(' ', '')
-        new_line = _build_name_line(indent_and_key, new_val)
-        return new_line, True, value, new_val
-
-    return line, False, None, None
+    return result
 
 
-def fix_name_spaces_yaml(content):
+def fix_name_spaces_yaml(
+        content: str) -> tuple[str, bool, str | None, str | None]:
     """Remove spaces from NAME value in YAML recipe.
 
     Args:
@@ -257,15 +249,18 @@ def fix_name_spaces_yaml(content):
     return content, False, None, None
 
 
-def process_recipe(recipe_path):
+def process_recipe(
+        recipe_path: Path) -> tuple[bool, str | None, str | None]:
     """Process a recipe file and fix NAME spaces if needed.
 
     Args:
         recipe_path: Path to the recipe file
 
     Returns:
-        Tuple of (modified: bool, old_value: str, new_value: str)
+        Tuple of (modified: bool, old_value: str | None,
+        new_value: str | None)
     """
+    result: tuple[bool, str | None, str | None] = (False, None, None)
     try:
         with open(recipe_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -276,32 +271,28 @@ def process_recipe(recipe_path):
         # Check if NAME has spaces
         if is_yaml:
             has_spaces = has_name_with_spaces_yaml(content)
-            if not has_spaces:
-                return False, None, None
-
-            new_content, modified, old_value, new_value = \
-                fix_name_spaces_yaml(content)
+            fix_name_spaces = fix_name_spaces_yaml
         else:
             has_spaces = has_name_with_spaces_plist(content)
-            if not has_spaces:
-                return False, None, None
+            fix_name_spaces = fix_name_spaces_plist
 
+        if has_spaces:
             new_content, modified, old_value, new_value = \
-                fix_name_spaces_plist(content)
+                fix_name_spaces(content)
 
-        if modified:
-            with open(recipe_path, 'w', encoding='utf-8') as f:
-                f.write(new_content)
-            return True, old_value, new_value
-
-        return False, None, None
+            if modified:
+                with open(recipe_path, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+                result = (True, old_value, new_value)
 
     except Exception as e:
         print(f"Error processing {recipe_path}: {e}")
-        return False, None, None
+
+    return result
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and remove spaces from NAME values."""
     verify_environment()
 
     print("NAMEChecker - Recipe NAME Variable Validator")

@@ -25,6 +25,9 @@ Available linters:
 16. DuplicateKeyChecker - Detect duplicate keys and fix duplicates
 17. zshChecker - Ensure zsh shebangs include --no-rcs flag
 
+OverridePkgReceiptChecker isn't registered here: it checks recipe overrides,
+not recipes, so run it directly.
+
 Usage:
     Run all linters:
         /usr/local/autopkg/python autopkg-linter.py --all /path/to/recipes
@@ -42,25 +45,27 @@ import sys
 import argparse
 from pathlib import Path
 import importlib.util
+from types import ModuleType
+from typing import NoReturn
+
+# Make linter_common importable. This only matters when sys.path[0]
+# isn't this script's directory (e.g. under -I). Kept as one
+# if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.abspath(__file__))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import verify_environment
+
+# (number, name, directory, script_file, description)
+LinterInfo = tuple[int, str, str, str, str]
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
-
-
-def get_script_dir():
+def get_script_dir() -> Path:
     """Get the directory where this script is located."""
     return Path(__file__).parent.absolute()
 
 
-def get_available_linters():
+def get_available_linters() -> list[LinterInfo]:
     """Get list of available linters with their details.
 
     Returns:
@@ -135,7 +140,7 @@ def get_available_linters():
     return available
 
 
-def load_linter_module(linter_path):
+def load_linter_module(linter_path: Path) -> ModuleType | None:
     """Load a linter module dynamically.
 
     Args:
@@ -154,8 +159,8 @@ def load_linter_module(linter_path):
         return None
 
 
-def _get_bulk_response(call_num, linter_name, prompt,
-                       recipe_dir):
+def _get_bulk_response(call_num: int, linter_name: str, prompt: str,
+                       recipe_dir: str) -> str:
     """Determine automatic response for bulk mode.
 
     Args:
@@ -177,16 +182,12 @@ def _get_bulk_response(call_num, linter_name, prompt,
         call_num == 2
         and linter_name == "RecipeAlphabetiser"
     )
-    if is_alphabetiser or "(1-2)" in prompt:
-        return "1"
 
     # Threshold choice (DeprecatedRecipeMover)
     is_mover_threshold = (
         call_num == 2
         and linter_name == "DeprecatedRecipeMover"
     )
-    if is_mover_threshold or "choice (1-5)" in prompt_lower:
-        return "3"
 
     # Confirmation prompts
     is_mover_confirm = (
@@ -197,27 +198,37 @@ def _get_bulk_response(call_num, linter_name, prompt,
         "proceed" in prompt_lower
         and "(y/n)" in prompt_lower
     )
-    if (is_mover_confirm or is_proceed
+
+    # 1 = batch mode, 3 = 6 months, y = confirm, n = skip
+    if is_alphabetiser or "(1-2)" in prompt:
+        response = "1"
+    elif is_mover_threshold or "choice (1-5)" in prompt_lower:
+        response = "3"
+    elif (is_mover_confirm or is_proceed
             or "stopprocessingif" in prompt_lower):
-        return "y"
+        response = "y"
+    else:
+        # Default: skip optional operations
+        response = "n"
+    return response
 
-    # Default: skip optional operations
-    return "n"
 
-
-class _LinterExit(BaseException):
+class _LinterExit(Exception):
     """Raised when a linter calls sys.exit().
 
-    Extends BaseException (like SystemExit) so it is not caught
-    by generic 'except Exception' handlers within linter scripts.
+    It subclasses Exception, as Sonar S5709 forbids subclassing
+    BaseException, so a generic 'except Exception' catches it. A linter
+    must therefore not call sys.exit(), directly or through a helper,
+    inside a try guarded by one, or this would be swallowed before
+    _execute_linter sees it.
     """
 
-    def __init__(self, code):
+    def __init__(self, code: int | str | None) -> None:
         self.code = code
         super().__init__(code)
 
 
-def _execute_linter(module, name):
+def _execute_linter(module: ModuleType, name: str) -> bool:
     """Execute a linter module's main function.
 
     Temporarily overrides sys.exit to avoid catching
@@ -232,40 +243,68 @@ def _execute_linter(module, name):
     """
     original_exit = sys.exit
 
-    def _mock_exit(code=0):
+    def _mock_exit(code: int | str | None = None) -> NoReturn:
+        """Raise _LinterExit in place of exiting."""
         raise _LinterExit(code)
 
     sys.exit = _mock_exit
+    success = False
     try:
         module.main()
-        print(
-            f"\n✓ {name} completed successfully"
-        )
-        return True
+        success = True
     except _LinterExit as e:
-        if e.code == 0:
+        # As with sys.exit, None means success
+        if e.code is None or e.code == 0:
+            success = True
+        else:
             print(
-                f"\n✓ {name} completed "
-                "successfully"
+                f"\n✗ {name} exited with "
+                f"code {e.code}"
             )
-            return True
-        print(
-            f"\n✗ {name} exited with "
-            f"code {e.code}"
-        )
-        return False
     except Exception as e:
         print(
             f"\n✗ {name} failed with error: {e}"
         )
         import traceback
         traceback.print_exc()
-        return False
     finally:
         sys.exit = original_exit
 
+    if success:
+        print(
+            f"\n✓ {name} completed successfully"
+        )
+    return success
 
-def run_linter(linter_info, recipe_dir, run_mode='bulk'):
+
+def _load_runnable_linter(linter_path: Path,
+                          name: str) -> ModuleType | None:
+    """Load a linter module and check it has a main() function.
+
+    Args:
+        linter_path: Path to the linter script
+        name: Name of the linter
+
+    Returns:
+        Loaded module, or None if it failed to load or has no main()
+    """
+    module = load_linter_module(linter_path)
+    if not module:
+        print(f"✗ Failed to load {name}")
+        return None
+
+    if not hasattr(module, 'main'):
+        print(
+            f"✗ {name} does not have a main() "
+            "function"
+        )
+        return None
+
+    return module
+
+
+def run_linter(linter_info: LinterInfo, recipe_dir: str,
+               run_mode: str = 'bulk') -> bool:
     """Run a single linter.
 
     Args:
@@ -286,16 +325,8 @@ def run_linter(linter_info, recipe_dir, run_mode='bulk'):
     print("=" * 70)
 
     try:
-        module = load_linter_module(linter_path)
-        if not module:
-            print(f"✗ Failed to load {name}")
-            return False
-
-        if not hasattr(module, 'main'):
-            print(
-                f"✗ {name} does not have a main() "
-                "function"
-            )
+        module = _load_runnable_linter(linter_path, name)
+        if module is None:
             return False
 
         original_argv = sys.argv
@@ -305,7 +336,8 @@ def run_linter(linter_info, recipe_dir, run_mode='bulk'):
         if run_mode == 'bulk':
             input_calls = [0]
 
-            def mock_input(prompt=""):
+            def mock_input(prompt: str = "") -> str:
+                """Print the prompt and answer it automatically."""
                 print(prompt, end='', flush=True)
                 input_calls[0] += 1
                 response = _get_bulk_response(
@@ -319,7 +351,8 @@ def run_linter(linter_info, recipe_dir, run_mode='bulk'):
         else:
             input_calls = [0]
 
-            def partial_mock_input(prompt=""):
+            def partial_mock_input(prompt: str = "") -> str:
+                """Answer the first prompt, then defer to real input."""
                 print(prompt, end='', flush=True)
                 input_calls[0] += 1
                 if input_calls[0] == 1:
@@ -346,7 +379,7 @@ def run_linter(linter_info, recipe_dir, run_mode='bulk'):
         return False
 
 
-def display_linter_menu(linters):
+def display_linter_menu(linters: list[LinterInfo]) -> None:
     """Display available linters in a menu.
 
     Args:
@@ -360,7 +393,7 @@ def display_linter_menu(linters):
     print("=" * 70)
 
 
-def _clean_recipe_dir(raw_path):
+def _clean_recipe_dir(raw_path: str) -> str:
     """Clean and validate a recipe directory path.
 
     Args:
@@ -383,7 +416,8 @@ def _clean_recipe_dir(raw_path):
     return path
 
 
-def _parse_linter_numbers(text, linters):
+def _parse_linter_numbers(
+        text: str, linters: list[LinterInfo]) -> list[LinterInfo] | None:
     """Parse comma-separated linter numbers.
 
     Args:
@@ -391,7 +425,8 @@ def _parse_linter_numbers(text, linters):
         linters: Available linter list
 
     Returns:
-        List of selected linter tuples
+        List of selected linter tuples, or None if the text isn't
+        valid numbers or selects no linters
     """
     try:
         nums = [
@@ -407,8 +442,8 @@ def _parse_linter_numbers(text, linters):
     return selected if selected else None
 
 
-def _run_and_summarize(selected_linters, recipe_dir,
-                       run_mode):
+def _run_and_summarize(selected_linters: list[LinterInfo], recipe_dir: str,
+                       run_mode: str) -> None:
     """Run linters and display summary.
 
     Args:
@@ -444,7 +479,7 @@ def _run_and_summarize(selected_linters, recipe_dir,
         sys.exit(1)
 
 
-def _ask_run_mode():
+def _ask_run_mode() -> str:
     """Ask user for run mode preference.
 
     Returns:
@@ -463,7 +498,7 @@ def _ask_run_mode():
     return 'bulk'
 
 
-def interactive_mode():
+def interactive_mode() -> None:
     """Run in interactive mode."""
     verify_environment()
 
@@ -526,7 +561,7 @@ def interactive_mode():
     )
 
 
-def command_line_mode(args):
+def command_line_mode(args: argparse.Namespace) -> None:
     """Run in command line mode with arguments.
 
     Args:
@@ -576,7 +611,7 @@ def command_line_mode(args):
     )
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     parser = argparse.ArgumentParser(
         description=(

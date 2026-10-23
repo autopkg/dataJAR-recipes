@@ -12,29 +12,18 @@ import yaml
 from pathlib import Path
 import re
 import traceback
+from typing import Any
+
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
-
-
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def _check_yaml_input(recipe):
+def _check_yaml_input(recipe: dict[str, Any]) -> tuple[bool, bool, bool]:
     """Check Input section of a parsed YAML recipe.
 
     Args:
@@ -74,7 +63,7 @@ def _check_yaml_input(recipe):
     return has_script, has_method, method_correct
 
 
-def _make_method_line(line):
+def _make_method_line(line: str) -> str:
     """Build an uninstall_method YAML line matching indent.
 
     Args:
@@ -90,7 +79,7 @@ def _make_method_line(line):
     )
 
 
-def _is_input_boundary(line, in_input):
+def _is_input_boundary(line: str, in_input: bool) -> bool:
     """Determine if line is an Input section boundary.
 
     Args:
@@ -107,7 +96,8 @@ def _is_input_boundary(line, in_input):
     return in_input
 
 
-def _fix_yaml_lines(content, has_method, method_correct):
+def _fix_yaml_lines(content: str, has_method: bool,
+                    method_correct: bool) -> tuple[str, bool]:
     """Fix uninstall_method in YAML content lines.
 
     Args:
@@ -154,7 +144,7 @@ def _fix_yaml_lines(content, has_method, method_correct):
     return content, False
 
 
-def check_yaml_recipe(content):
+def check_yaml_recipe(content: str) -> tuple[str, bool]:
     """Check YAML recipe for uninstall_script and uninstall_method.
 
     Returns:
@@ -170,10 +160,7 @@ def check_yaml_recipe(content):
         _check_yaml_input(recipe)
     )
 
-    if not has_script:
-        return content, False
-
-    if has_method and method_correct:
+    if not has_script or (has_method and method_correct):
         return content, False
 
     print("DEBUG: Adding/correcting uninstall_method key")
@@ -182,7 +169,7 @@ def check_yaml_recipe(content):
     )
 
 
-def check_plist_recipe(content):
+def check_plist_recipe(content: str) -> tuple[str, bool]:
     """Check plist recipe for uninstall_script and uninstall_method.
 
     Returns:
@@ -263,7 +250,71 @@ def check_plist_recipe(content):
     return content, modified
 
 
-def process_recipe(recipe_path):
+def _verify_written(recipe_path: Path, is_yaml: bool,
+                    modified_content: str) -> bool:
+    """Re-read a written recipe and check uninstall_method is set.
+
+    Returns:
+        True if the write and uninstall_method both verified
+    """
+    # Verify the changes were written
+    with open(recipe_path, 'r', encoding='utf-8') as file:
+        verification_content = file.read()
+
+    if verification_content != modified_content:
+        print(f"❌ Warning: File write verification failed for "
+              f"{recipe_path}")
+        return False
+
+    # Verify uninstall_method is now present and correct
+    if is_yaml:
+        verify_recipe = yaml.safe_load(verification_content)
+        verified = (verify_recipe.get('Input', {}).get('uninstall_method')
+                    == 'uninstall_script')
+        if not verified:
+            print(f"❌ Warning: Verification failed - uninstall_method "
+                  f"not correct in {recipe_path}")
+    else:
+        verified = '<key>uninstall_method</key>' in verification_content
+        if not verified:
+            print(f"❌ Warning: Verification failed - uninstall_method "
+                  f"not found in {recipe_path}")
+
+    if verified:
+        print(f"✓ Successfully configured uninstall_method: {recipe_path}")
+    return verified
+
+
+def _apply_fix(recipe_path: Path, is_yaml: bool,
+               original_content: str) -> bool:
+    """Fix a recipe's uninstall_method, then write and verify it.
+
+    Returns:
+        True if the recipe was modified and verified
+    """
+    print(f"\nFound uninstall_script in: {recipe_path}")
+
+    # Process based on file type
+    if is_yaml:
+        modified_content, was_modified = check_yaml_recipe(
+            original_content)
+    else:
+        modified_content, was_modified = check_plist_recipe(
+            original_content)
+
+    if not was_modified:
+        print(f"No modifications needed for: {recipe_path.name}")
+        return False
+
+    # Write the changes
+    print(f"DEBUG: Writing changes to: {recipe_path}")
+    with open(recipe_path, 'w', encoding='utf-8') as file:
+        file.write(modified_content)
+
+    return _verify_written(recipe_path, is_yaml, modified_content)
+
+
+def process_recipe(recipe_path: Path) -> bool:
     """Process a single recipe file and check uninstall configuration."""
     try:
         is_yaml = recipe_path.suffix == '.yaml'
@@ -281,50 +332,7 @@ def process_recipe(recipe_path):
                   f"found")
             return False
 
-        print(f"\nFound uninstall_script in: {recipe_path}")
-
-        # Process based on file type
-        if is_yaml:
-            modified_content, was_modified = check_yaml_recipe(
-                original_content)
-        else:
-            modified_content, was_modified = check_plist_recipe(
-                original_content)
-
-        if not was_modified:
-            print(f"No modifications needed for: {recipe_path.name}")
-            return False
-
-        # Write the changes
-        print(f"DEBUG: Writing changes to: {recipe_path}")
-        with open(recipe_path, 'w', encoding='utf-8') as file:
-            file.write(modified_content)
-
-        # Verify the changes were written
-        with open(recipe_path, 'r', encoding='utf-8') as file:
-            verification_content = file.read()
-
-        if verification_content != modified_content:
-            print(f"❌ Warning: File write verification failed for "
-                  f"{recipe_path}")
-            return False
-
-        # Verify uninstall_method is now present and correct
-        if is_yaml:
-            verify_recipe = yaml.safe_load(verification_content)
-            if verify_recipe.get('Input', {}).get('uninstall_method') != \
-               'uninstall_script':
-                print(f"❌ Warning: Verification failed - uninstall_method "
-                      f"not correct in {recipe_path}")
-                return False
-        else:
-            if '<key>uninstall_method</key>' not in verification_content:
-                print(f"❌ Warning: Verification failed - uninstall_method "
-                      f"not found in {recipe_path}")
-                return False
-
-        print(f"✓ Successfully configured uninstall_method: {recipe_path}")
-        return True
+        return _apply_fix(recipe_path, is_yaml, original_content)
 
     except Exception as e:
         print(f"❌ Error processing {recipe_path}: {str(e)}")
@@ -333,7 +341,8 @@ def process_recipe(recipe_path):
         return False
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and set uninstall_method where needed."""
     verify_environment()
 
     print("UninstallScriptChecker - AutoPkg Recipe Uninstall Validator")
