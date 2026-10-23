@@ -86,20 +86,9 @@ You'll be prompted for:
 
 The linter automatically fixes any issues it finds.
 
-### Via Suite Runner
+### Not in the Suite Runner
 
-Run via the linter suite as linter #18:
-
-```bash
-# Interactive mode (recommended) - you'll be prompted for both directories
-/usr/local/autopkg/python autopkg-linter.py --linters 18 /path/to/overrides
-
-# Bulk mode - auto-locates private-recipes as a sibling directory
-/usr/local/autopkg/python autopkg-linter.py --linters 18 /path/to/overrides
-# In bulk mode, expects: parent_folder/recipe_overrides and parent_folder/private-recipes
-```
-
-**Note:** Bulk mode requires `private-recipes` to exist in the same parent directory as your overrides folder. If not found, use interactive mode (option 1) or run standalone.
+`autopkg-linter.py` doesn't run this linter, because it checks recipe overrides rather than recipes. Use standalone mode.
 
 ## Example Output
 

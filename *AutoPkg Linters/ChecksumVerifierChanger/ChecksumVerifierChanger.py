@@ -17,6 +17,14 @@ import re
 from pathlib import Path
 import traceback
 
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
+
 
 # Constants
 DICT_TAG = '<dict>'
@@ -25,27 +33,57 @@ PATHNAME_KEY = '<key>pathname</key>'
 CHECKSUM_PATHNAME_KEY = '<key>checksum_pathname</key>'
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+def _find_matching_dict_close(content: str, dict_start: int) -> int:
+    """Find the </dict> that closes the <dict> at dict_start.
+
+    Uses depth counting so nested dicts are skipped.
+
+    Args:
+        content: String content of the recipe
+        dict_start: Position of the opening <dict>
+
+    Returns:
+        Position of the matching </dict>, or -1 if there is none
+    """
+    depth = 1
+    search_pos = dict_start + 6
+
+    while search_pos < len(content):
+        if content[search_pos:search_pos+6] == DICT_TAG:
+            depth += 1
+            search_pos += 6
+        elif content[search_pos:search_pos+7] == DICT_CLOSE_TAG:
+            depth -= 1
+            if depth == 0:
+                return search_pos
+            search_pos += 7
+        else:
+            search_pos += 1
+
+    return -1
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
+def _processor_dict_bounds(content: str,
+                           processor_pos: int) -> tuple[int, int]:
+    """Find the processor dict around a Processor key.
+
+    Args:
+        content: String content of the recipe
+        processor_pos: Position of the processor's <key>Processor</key>
+
+    Returns:
+        Tuple of (dict_start, dict_close), where dict_close is the
+        position of the closing </dict>, or -1 if the dict is not found
+    """
+    # Search backwards to find the opening <dict> for this processor
+    dict_start = content.rfind(DICT_TAG, 0, processor_pos)
+    if dict_start == -1:
+        return -1, -1
+
+    return dict_start, _find_matching_dict_close(content, dict_start)
 
 
-def has_checksum_verifier_needing_update(content):
+def has_checksum_verifier_needing_update(content: str) -> bool:
     """Check if recipe has ChecksumVerifier processor needing updates.
 
     Args:
@@ -58,60 +96,135 @@ def has_checksum_verifier_needing_update(content):
     if 'ChecksumVerifier</string>' not in content:
         return False
 
-    # Look for pathname key (but not checksum_pathname) OR missing
-    # checksum_pathname. Need to check it's within a ChecksumVerifier
-    # processor's Arguments
+    # Check each ChecksumVerifier processor dict for checksum_pathname
     checksum_verifier_pattern = (
         r'<key>Processor</key>\s*<string>[^<]*'
         r'ChecksumVerifier</string>'
     )
-    matches = list(re.finditer(checksum_verifier_pattern, content))
-
-    if not matches:
-        return False
 
     # For each ChecksumVerifier, check if it needs updates
-    for match in matches:
-        # Find the start of this processor dict
-        processor_pos = match.start()
-
-        # Search backwards to find the opening <dict> for this processor
-        dict_start = content.rfind(DICT_TAG, 0, processor_pos)
-        if dict_start == -1:
+    for match in re.finditer(checksum_verifier_pattern, content):
+        dict_start, dict_close = _processor_dict_bounds(
+            content, match.start()
+        )
+        if dict_close == -1:
             continue
 
-        # Find the matching closing </dict> using depth counting
-        depth = 1
-        search_pos = dict_start + 6
+        processor_dict = content[dict_start:dict_close+7]
 
-        while depth > 0 and search_pos < len(content):
-            if content[search_pos:search_pos+6] == DICT_TAG:
-                depth += 1
-                search_pos += 6
-            elif content[search_pos:search_pos+7] == DICT_CLOSE_TAG:
-                depth -= 1
-                if depth == 0:
-                    break
-                search_pos += 7
-            else:
-                search_pos += 1
-
-        if depth == 0:
-            processor_dict = content[dict_start:search_pos+7]
-
-            # Check if processor dict has pathname (needs rename)
-            if (PATHNAME_KEY in processor_dict and
-                    CHECKSUM_PATHNAME_KEY not in processor_dict):
-                return True
-
-            # Check if processor dict missing checksum_pathname
-            if CHECKSUM_PATHNAME_KEY not in processor_dict:
-                return True
+        # A dict with pathname needs a rename, and one without
+        # checksum_pathname needs it adding; both lack checksum_pathname
+        if CHECKSUM_PATHNAME_KEY not in processor_dict:
+            return True
 
     return False
 
 
-def update_checksum_verifier_arguments(content):
+def _arguments_indent(args_content: str, closing_indent: str) -> str:
+    """Work out the indent for a new key in an Arguments dict.
+
+    Args:
+        args_content: Content of the Arguments dict
+        closing_indent: Indent before the Arguments dict's </dict>
+
+    Returns:
+        Indent string for the new key
+    """
+    # Look for last key in Arguments dict to match indentation
+    last_key_match = None
+    for key_match in re.finditer(
+            r'\n(\s*)<key>[^<]+</key>', args_content):
+        last_key_match = key_match
+
+    if last_key_match:
+        return last_key_match.group(1)
+
+    # Fallback: Use closing_indent + one level
+    if '\t' in closing_indent:
+        return closing_indent + '\t'
+
+    # Assume 4 spaces per indent level
+    return closing_indent + '    '
+
+
+def _add_checksum_pathname(processor_dict: str) -> str | None:
+    """Add checksum_pathname to the end of a processor's Arguments dict.
+
+    Args:
+        processor_dict: Content of the processor dict
+
+    Returns:
+        Updated processor dict, or None if it has no Arguments dict
+    """
+    # Find the Arguments dict within this processor
+    args_match = re.search(
+        r'<key>Arguments</key>\s*\n\s*<dict>(.*?)\n'
+        r'(\s*)</dict>',
+        processor_dict, re.DOTALL
+    )
+
+    if not args_match:
+        return None
+
+    args_content = args_match.group(1)
+    # Capture the indent before </dict>
+    closing_indent = args_match.group(2)
+    args_start = args_match.start(1)
+
+    # Detect indentation from existing content
+    indent = _arguments_indent(args_content, closing_indent)
+
+    # Add checksum_pathname at end of Arguments dict
+    new_key = (
+        f'\n{indent}<key>checksum_pathname</key>\n'
+        f'{indent}<string>%pathname%</string>'
+    )
+
+    # Trim trailing whitespace from args_content
+    trimmed_args = args_content.rstrip('\n\t ')
+
+    # Build the new args content with proper spacing
+    new_args_content = trimmed_args + new_key
+
+    # Replace Arguments content in the processor dict
+    return (
+        processor_dict[:args_start] +
+        new_args_content + '\n' +
+        closing_indent + DICT_CLOSE_TAG +
+        processor_dict[args_match.end():]
+    )
+
+
+def _update_processor_dict(processor_dict: str) -> tuple[str, int, int]:
+    """Update one ChecksumVerifier processor dict.
+
+    Args:
+        processor_dict: Content of the processor dict
+
+    Returns:
+        Tuple of (updated_dict, rename_count, added_count)
+    """
+    # Case 1: Has pathname, needs to be renamed
+    if (PATHNAME_KEY in processor_dict and
+            CHECKSUM_PATHNAME_KEY not in processor_dict):
+        renamed_dict = processor_dict.replace(
+            PATHNAME_KEY, CHECKSUM_PATHNAME_KEY
+        )
+        return renamed_dict, 1, 0
+
+    # Case 2: Missing checksum_pathname entirely, add it
+    updated_dict: str | None = None
+    if CHECKSUM_PATHNAME_KEY not in processor_dict:
+        updated_dict = _add_checksum_pathname(processor_dict)
+
+    if updated_dict is None:
+        return processor_dict, 0, 0
+    return updated_dict, 0, 1
+
+
+def update_checksum_verifier_arguments(
+    content: str,
+) -> tuple[str, int, int]:
     """Update ChecksumVerifier processors to use checksum_pathname.
 
     This function:
@@ -133,112 +246,73 @@ def update_checksum_verifier_arguments(content):
     )
     matches = list(re.finditer(checksum_verifier_pattern, content))
 
-    if not matches:
-        return content, 0, 0
-
     # Process matches in reverse order to maintain positions
     for match in reversed(matches):
-        # Find the start of this processor dict
-        processor_pos = match.start()
-
-        # Search backwards to find the opening <dict> for processor
-        dict_start = content.rfind(DICT_TAG, 0, processor_pos)
-        if dict_start == -1:
+        dict_start, dict_close = _processor_dict_bounds(
+            content, match.start()
+        )
+        if dict_close == -1:
             continue
 
-        # Find the matching closing </dict> using depth counting
-        depth = 1
-        search_pos = dict_start + 6
+        processor_dict = content[dict_start:dict_close+7]
+        updated_dict, renamed, added = _update_processor_dict(
+            processor_dict
+        )
+        rename_count += renamed
+        added_count += added
 
-        while depth > 0 and search_pos < len(content):
-            if content[search_pos:search_pos+6] == DICT_TAG:
-                depth += 1
-                search_pos += 6
-            elif content[search_pos:search_pos+7] == DICT_CLOSE_TAG:
-                depth -= 1
-                if depth == 0:
-                    break
-                search_pos += 7
-            else:
-                search_pos += 1
-
-        if depth == 0:
-            processor_dict = content[dict_start:search_pos+7]
-            updated_dict = processor_dict
-
-            # Case 1: Has pathname, needs to be renamed
-            if (PATHNAME_KEY in processor_dict and
-                    CHECKSUM_PATHNAME_KEY not in processor_dict):
-                updated_dict = updated_dict.replace(
-                    PATHNAME_KEY, CHECKSUM_PATHNAME_KEY
-                )
-                rename_count += 1
-
-            # Case 2: Missing checksum_pathname entirely, add it
-            elif CHECKSUM_PATHNAME_KEY not in processor_dict:
-                # Find the Arguments dict within this processor
-                args_match = re.search(
-                    r'<key>Arguments</key>\s*\n\s*<dict>(.*?)\n'
-                    r'(\s*)</dict>',
-                    updated_dict, re.DOTALL
-                )
-
-                if args_match:
-                    args_content = args_match.group(1)
-                    # Capture the indent before </dict>
-                    closing_indent = args_match.group(2)
-                    args_start = args_match.start(1)
-
-                    # Detect indentation from existing content
-                    # Look for last key in Arguments dict to match
-                    # indentation
-                    last_key_match = None
-                    for key_match in re.finditer(
-                            r'\n(\s*)<key>[^<]+</key>', args_content):
-                        last_key_match = key_match
-
-                    if last_key_match:
-                        indent = last_key_match.group(1)
-                    else:
-                        # Fallback: Use closing_indent + one level
-                        if '\t' in closing_indent:
-                            indent = closing_indent + '\t'
-                        else:
-                            # Assume 4 spaces per indent level
-                            indent = closing_indent + '    '
-
-                    # Add checksum_pathname at end of Arguments dict
-                    new_key = (
-                        f'\n{indent}<key>checksum_pathname</key>\n'
-                        f'{indent}<string>%pathname%</string>'
-                    )
-
-                    # Trim trailing whitespace from args_content
-                    trimmed_args = args_content.rstrip('\n\t ')
-
-                    # Build the new args content with proper spacing
-                    new_args_content = trimmed_args + new_key
-
-                    # Replace Arguments content in updated_dict
-                    updated_dict = (
-                        updated_dict[:args_start] +
-                        new_args_content + '\n' +
-                        closing_indent + DICT_CLOSE_TAG +
-                        updated_dict[args_match.end():]
-                    )
-                    added_count += 1
-
-            # Replace in content if changed
-            if updated_dict != processor_dict:
-                content = (
-                    content[:dict_start] + updated_dict +
-                    content[search_pos+7:]
-                )
+        # Replace in content if changed
+        if updated_dict != processor_dict:
+            content = (
+                content[:dict_start] + updated_dict +
+                content[dict_close+7:]
+            )
 
     return content, rename_count, added_count
 
 
-def process_plist_recipe(recipe_path):
+def _update_plist_content(recipe_path: Path,
+                          original_content: str) -> list[str]:
+    """Update a plist recipe's ChecksumVerifier processors on disk.
+
+    Args:
+        recipe_path: Path to the recipe file
+        original_content: String content of the recipe
+
+    Returns:
+        List of changes made, empty if the recipe was not modified
+    """
+    # Check if changes are needed
+    if not has_checksum_verifier_needing_update(original_content):
+        return []
+
+    # Update the ChecksumVerifier processors
+    modified_content, rename_count, added_count = (
+        update_checksum_verifier_arguments(original_content)
+    )
+
+    if rename_count == 0 and added_count == 0:
+        return []
+
+    # Write changes
+    with open(recipe_path, 'w', encoding='utf-8') as f:
+        f.write(modified_content)
+
+    changes = []
+    if rename_count > 0:
+        changes.append(
+            f"Renamed pathname → checksum_pathname in "
+            f"{rename_count} processor(s)"
+        )
+    if added_count > 0:
+        changes.append(
+            f"Added checksum_pathname to {added_count} processor(s)"
+        )
+
+    return changes
+
+
+def process_plist_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a plist recipe file.
 
     Args:
@@ -252,34 +326,8 @@ def process_plist_recipe(recipe_path):
         with open(recipe_path, 'r', encoding='utf-8') as f:
             original_content = f.read()
 
-        # Check if changes are needed
-        if not has_checksum_verifier_needing_update(original_content):
-            return False, []
-
-        # Update the ChecksumVerifier processors
-        modified_content, rename_count, added_count = (
-            update_checksum_verifier_arguments(original_content)
-        )
-
-        if rename_count == 0 and added_count == 0:
-            return False, []
-
-        # Write changes
-        with open(recipe_path, 'w', encoding='utf-8') as f:
-            f.write(modified_content)
-
-        changes = []
-        if rename_count > 0:
-            changes.append(
-                f"Renamed pathname → checksum_pathname in "
-                f"{rename_count} processor(s)"
-            )
-        if added_count > 0:
-            changes.append(
-                f"Added checksum_pathname to {added_count} processor(s)"
-            )
-
-        return True, changes
+        changes = _update_plist_content(recipe_path, original_content)
+        return bool(changes), changes
 
     except Exception as e:
         print(f"Error processing {recipe_path}: {e}")
@@ -287,7 +335,52 @@ def process_plist_recipe(recipe_path):
         return False, []
 
 
-def process_yaml_recipe(recipe_path):
+def _update_yaml_processors(processors: list[object]) -> list[str]:
+    """Update ChecksumVerifier processors in a YAML Process array.
+
+    Args:
+        processors: The recipe's Process array
+
+    Returns:
+        List of changes made
+    """
+    changes = []
+
+    # Check each processor in the Process array
+    for processor in processors:
+        if not isinstance(processor, dict):
+            continue
+
+        processor_name = processor.get('Processor', '')
+
+        # Check if this is a ChecksumVerifier processor
+        if 'ChecksumVerifier' not in processor_name:
+            continue
+
+        arguments = processor.get('Arguments', {})
+
+        # Case 1: Has pathname, needs to be renamed
+        if ('pathname' in arguments and
+                'checksum_pathname' not in arguments):
+            arguments['checksum_pathname'] = (
+                arguments.pop('pathname')
+            )
+            changes.append(
+                "Renamed pathname → checksum_pathname"
+            )
+
+        # Case 2: Missing checksum_pathname entirely, add it
+        elif 'checksum_pathname' not in arguments:
+            arguments['checksum_pathname'] = '%pathname%'
+            changes.append(
+                "Added checksum_pathname with default value "
+                "%pathname%"
+            )
+
+    return changes
+
+
+def process_yaml_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a YAML recipe file.
 
     Args:
@@ -302,44 +395,13 @@ def process_yaml_recipe(recipe_path):
         with open(recipe_path, 'r', encoding='utf-8') as f:
             recipe_data = yaml.safe_load(f)
 
-        if not recipe_data or 'Process' not in recipe_data:
-            return False, []
-
         changes = []
-        modified = False
+        if recipe_data and 'Process' in recipe_data:
+            changes = _update_yaml_processors(
+                recipe_data.get('Process', [])
+            )
 
-        # Check each processor in the Process array
-        for processor in recipe_data.get('Process', []):
-            if not isinstance(processor, dict):
-                continue
-
-            processor_name = processor.get('Processor', '')
-
-            # Check if this is a ChecksumVerifier processor
-            if 'ChecksumVerifier' in processor_name:
-                arguments = processor.get('Arguments', {})
-
-                # Case 1: Has pathname, needs to be renamed
-                if ('pathname' in arguments and
-                        'checksum_pathname' not in arguments):
-                    arguments['checksum_pathname'] = (
-                        arguments.pop('pathname')
-                    )
-                    modified = True
-                    changes.append(
-                        "Renamed pathname → checksum_pathname"
-                    )
-
-                # Case 2: Missing checksum_pathname entirely, add it
-                elif 'checksum_pathname' not in arguments:
-                    arguments['checksum_pathname'] = '%pathname%'
-                    modified = True
-                    changes.append(
-                        "Added checksum_pathname with default value "
-                        "%pathname%"
-                    )
-
-        if modified:
+        if changes:
             # Write back to file
             with open(recipe_path, 'w', encoding='utf-8') as f:
                 yaml.dump(recipe_data, f,
@@ -348,7 +410,7 @@ def process_yaml_recipe(recipe_path):
                           sort_keys=False,
                           width=70)
 
-        return modified, changes
+        return bool(changes), changes
 
     except ImportError:
         print(f"Error: PyYAML not available for processing {recipe_path}")
@@ -359,7 +421,7 @@ def process_yaml_recipe(recipe_path):
         return False, []
 
 
-def process_recipe(recipe_path):
+def process_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a recipe file based on its format.
 
     Args:
@@ -374,7 +436,46 @@ def process_recipe(recipe_path):
         return process_plist_recipe(recipe_path)
 
 
-def main():
+def _process_recipes(
+    recipe_dir: str,
+) -> tuple[int, list[tuple[Path, list[str]]]]:
+    """Update ChecksumVerifier processors in each recipe under recipe_dir.
+
+    Args:
+        recipe_dir: Path to the recipe directory
+
+    Returns:
+        Tuple of (recipe_count, modified_files) where modified_files is a
+        list of (recipe_path, changes) tuples
+    """
+    recipe_count = 0
+    modified_files = []
+
+    # Process all recipe files
+    for recipe_path in Path(recipe_dir).rglob("*.recipe*"):
+        if recipe_path.suffix not in ['.recipe', '.yaml']:
+            continue
+
+        recipe_count += 1
+
+        modified, changes = process_recipe(recipe_path)
+
+        if modified:
+            modified_files.append((recipe_path, changes))
+            print(f"\n✓ Updated {recipe_path.name}")
+            for change in changes:
+                print(f"  - {change}")
+        else:
+            print(
+                f"Skipping {recipe_path.name} - ChecksumVerifier "
+                f"already has checksum_pathname"
+            )
+
+    return recipe_count, modified_files
+
+
+def main() -> None:
+    """Prompt for a recipe directory and update its ChecksumVerifiers."""
     verify_environment()
 
     print("ChecksumVerifierChanger - Update ChecksumVerifier Arguments")
@@ -400,30 +501,8 @@ def main():
 
         print(f"\nScanning recipes in: {recipe_dir}")
 
-        modified_count = 0
-        recipe_count = 0
-        modified_files = []
-
-        # Process all recipe files
-        for recipe_path in Path(recipe_dir).rglob("*.recipe*"):
-            if recipe_path.suffix not in ['.recipe', '.yaml']:
-                continue
-
-            recipe_count += 1
-
-            modified, changes = process_recipe(recipe_path)
-
-            if modified:
-                modified_count += 1
-                modified_files.append((recipe_path, changes))
-                print(f"\n✓ Updated {recipe_path.name}")
-                for change in changes:
-                    print(f"  - {change}")
-            else:
-                print(
-                    f"Skipping {recipe_path.name} - ChecksumVerifier "
-                    f"already has checksum_pathname"
-                )
+        recipe_count, modified_files = _process_recipes(recipe_dir)
+        modified_count = len(modified_files)
 
         print(f"\n{'=' * 50}")
         print("Processing complete!")

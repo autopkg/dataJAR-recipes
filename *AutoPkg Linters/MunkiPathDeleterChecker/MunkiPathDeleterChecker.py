@@ -15,33 +15,21 @@ from pathlib import Path
 import re
 import traceback
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def get_unpack_processors():
+def get_unpack_processors() -> list[str]:
     """Get list of processor names that unpack files."""
     return ['FlatPkgUnpacker', 'PkgPayloadUnpacker', 'Unarchiver']
 
 
-def normalize_path(path):
+def normalize_path(path: str) -> str:
     """Normalize a path for comparison.
 
     Args:
@@ -56,7 +44,7 @@ def normalize_path(path):
     return path
 
 
-def is_redundant_path(path, existing_paths):
+def is_redundant_path(path: str, existing_paths: list[str]) -> bool:
     """Check if a path is redundant given existing paths.
 
     A path is redundant if:
@@ -86,7 +74,7 @@ def is_redundant_path(path, existing_paths):
     return False
 
 
-def extract_destination_paths_plist(content):
+def extract_destination_paths_plist(content: str) -> list[str]:
     """Extract destination_path values from unpacking processors in plist.
 
     Args:
@@ -128,7 +116,7 @@ def extract_destination_paths_plist(content):
     return destination_paths
 
 
-def extract_path_deleter_paths_plist(content):
+def extract_path_deleter_paths_plist(content: str) -> list[str] | None:
     """Extract existing paths from PathDeleter in plist.
 
     Args:
@@ -165,7 +153,8 @@ def extract_path_deleter_paths_plist(content):
     return paths
 
 
-def update_path_deleter_plist(content, new_paths, existing_paths):
+def update_path_deleter_plist(content: str, new_paths: list[str],
+                              existing_paths: list[str]) -> tuple[str, bool]:
     """Update PathDeleter processor in plist content.
 
     Args:
@@ -176,9 +165,6 @@ def update_path_deleter_plist(content, new_paths, existing_paths):
     Returns:
         Tuple of (updated_content, was_modified)
     """
-    if not new_paths:
-        return content, False
-
     # Filter out redundant paths
     paths_to_add = [
         p for p in new_paths
@@ -216,7 +202,8 @@ def update_path_deleter_plist(content, new_paths, existing_paths):
             base_indent = block_indent_match.group(1)
             indent = base_indent + '    '
         else:
-            indent = '                    '  # Default fallback
+            # Default fallback
+            indent = '                    '
 
     # Build new string entries
     new_entries = []
@@ -228,7 +215,8 @@ def update_path_deleter_plist(content, new_paths, existing_paths):
         r'(<key>path_list</key>\s*\n\s*<array>.*?)(</array>)'
     )
 
-    def replace_array(match):
+    def replace_array(match: re.Match[str]) -> str:
+        """Append the new entries before the path_list closing tag."""
         indent_parent = indent.rsplit('    ', 1)[0]
         return (
             match.group(1) + ''.join(new_entries) + '\n' +
@@ -242,7 +230,8 @@ def update_path_deleter_plist(content, new_paths, existing_paths):
     return content, True
 
 
-def add_path_deleter_plist(content, paths):
+def add_path_deleter_plist(content: str,
+                           paths: list[str]) -> tuple[str, bool]:
     """Add PathDeleter processor to plist content.
 
     Args:
@@ -328,7 +317,7 @@ def add_path_deleter_plist(content, paths):
     return content, False
 
 
-def _is_munki_recipe(recipe_path, content):
+def _is_munki_recipe(recipe_path: Path, content: str) -> bool:
     """Check if recipe is a munki recipe.
 
     Args:
@@ -339,9 +328,8 @@ def _is_munki_recipe(recipe_path, content):
         Boolean indicating if this is a munki recipe
     """
     # Check filename
-    is_munki_file = (
-        recipe_path.name.endswith('.munki.recipe') or
-        recipe_path.name.endswith('.munki.yaml')
+    is_munki_file = recipe_path.name.endswith(
+        ('.munki.recipe', '.munki.yaml')
     )
     if not is_munki_file:
         return False
@@ -356,13 +344,11 @@ def _is_munki_recipe(recipe_path, content):
         return False
 
     # Skip deprecated recipes
-    if 'DeprecationWarning' in content:
-        return False
-
-    return True
+    return 'DeprecationWarning' not in content
 
 
-def _add_path_deleter_and_log(content, destination_paths, changes):
+def _add_path_deleter_and_log(content: str, destination_paths: list[str],
+                              changes: list[str]) -> tuple[str, bool]:
     """Add PathDeleter and log changes.
 
     Args:
@@ -388,8 +374,9 @@ def _add_path_deleter_and_log(content, destination_paths, changes):
 
 
 def _update_path_deleter_and_log(
-    content, destination_paths, existing_paths, changes
-):
+    content: str, destination_paths: list[str], existing_paths: list[str],
+    changes: list[str]
+) -> tuple[str, bool]:
     """Update PathDeleter and log changes.
 
     Args:
@@ -421,7 +408,7 @@ def _update_path_deleter_and_log(
     return modified_content, was_modified
 
 
-def process_plist_recipe(recipe_path):
+def process_plist_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a plist recipe file and check/add PathDeleter.
 
     Args:
@@ -435,14 +422,13 @@ def process_plist_recipe(recipe_path):
         with open(recipe_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        changes = []
+        changes: list[str] = []
+        destination_paths: list[str] = []
 
         # Check if this is a munki recipe
-        if not _is_munki_recipe(recipe_path, content):
-            return False, []
-
-        # Extract destination paths from unpacking processors
-        destination_paths = extract_destination_paths_plist(content)
+        if _is_munki_recipe(recipe_path, content):
+            # Extract destination paths from unpacking processors
+            destination_paths = extract_destination_paths_plist(content)
 
         if not destination_paths:
             return False, []
@@ -476,7 +462,7 @@ def process_plist_recipe(recipe_path):
         return False, []
 
 
-def process_recipe(recipe_path):
+def process_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a recipe file based on its format.
 
     Args:
@@ -495,7 +481,8 @@ def process_recipe(recipe_path):
         return process_plist_recipe(recipe_path)
 
 
-def _process_recipe_file(recipe_path):
+def _process_recipe_file(
+        recipe_path: Path) -> tuple[bool, bool, list[str]]:
     """Process a single recipe file and check if it's munki.
 
     Args:
@@ -518,8 +505,9 @@ def _process_recipe_file(recipe_path):
 
 
 def _print_summary(
-    recipe_count, skipped_non_munki, modified_count, skipped_no_unpack
-):
+    recipe_count: int, skipped_non_munki: int, modified_count: int,
+    skipped_no_unpack: int
+) -> None:
     """Print processing summary.
 
     Args:
@@ -538,7 +526,8 @@ def _print_summary(
     print("=" * 50)
 
 
-def _print_modified_files(modified_files):
+def _print_modified_files(
+        modified_files: list[tuple[Path, list[str]]]) -> None:
     """Print list of modified files with changes.
 
     Args:
@@ -562,7 +551,8 @@ def _print_modified_files(modified_files):
         )
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and add missing PathDeleter paths."""
     verify_environment()
 
     print("MunkiPathDeleterChecker - AutoPkg Recipe Cleanup Validator")

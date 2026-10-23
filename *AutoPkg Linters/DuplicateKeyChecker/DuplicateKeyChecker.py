@@ -16,28 +16,18 @@ import re
 from pathlib import Path
 import traceback
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def find_duplicate_keys_in_dict(content, start_pos=0):
+def find_duplicate_keys_in_dict(
+    content: str, start_pos: int = 0,
+) -> list[tuple[str, list[int], int, int]]:
     """Find duplicate keys within a <dict> section of plist content.
 
     Args:
@@ -77,7 +67,7 @@ def find_duplicate_keys_in_dict(content, start_pos=0):
     return duplicates
 
 
-def check_unattended_keys(content):
+def check_unattended_keys(content: str) -> tuple[bool, bool]:
     """Check if unattended_install and unattended_uninstall keys exist.
 
     Args:
@@ -91,7 +81,7 @@ def check_unattended_keys(content):
     return has_install, has_uninstall
 
 
-def fix_duplicate_unattended_install(content):
+def fix_duplicate_unattended_install(content: str) -> tuple[str, bool]:
     """Fix duplicate unattended_install keys when unattended_uninstall
     is missing.
 
@@ -130,7 +120,35 @@ def fix_duplicate_unattended_install(content):
     return modified_content, True
 
 
-def process_plist_recipe(recipe_path):
+def _duplicate_warning(key_name: str, positions: list[int],
+                       content: str) -> str:
+    """Build the warning for a duplicate plist key.
+
+    Args:
+        key_name: The duplicated key
+        positions: Positions of each occurrence of the key
+        content: String content of the plist file
+
+    Returns:
+        Warning string, noting when the duplicate will be auto-fixed
+    """
+    if key_name == 'unattended_install':
+        # Check if we can auto-fix
+        _, has_uninstall = check_unattended_keys(content)
+        if not has_uninstall and len(positions) == 2:
+            return (
+                f"Found duplicate '{key_name}' key "
+                f"(will attempt to fix)"
+            )
+    return (
+        f"Found duplicate '{key_name}' key "
+        f"({len(positions)} occurrences)"
+    )
+
+
+def process_plist_recipe(
+    recipe_path: Path,
+) -> tuple[bool, list[str], list[str]]:
     """Process a plist recipe file and check for duplicate keys.
 
     Args:
@@ -151,29 +169,11 @@ def process_plist_recipe(recipe_path):
         # Find all duplicate keys
         duplicates = find_duplicate_keys_in_dict(original_content)
 
-        # Check for duplicates
-        if duplicates:
-            for key_name, positions, _, _ in duplicates:
-                if key_name == 'unattended_install':
-                    # Check if we can auto-fix
-                    _, has_uninstall = check_unattended_keys(
-                        original_content
-                    )
-                    if not has_uninstall and len(positions) == 2:
-                        warnings.append(
-                            f"Found duplicate '{key_name}' key "
-                            f"(will attempt to fix)"
-                        )
-                    else:
-                        warnings.append(
-                            f"Found duplicate '{key_name}' key "
-                            f"({len(positions)} occurrences)"
-                        )
-                else:
-                    warnings.append(
-                        f"Found duplicate '{key_name}' key "
-                        f"({len(positions)} occurrences)"
-                    )
+        # Warn about each duplicate key
+        for key_name, positions, _, _ in duplicates:
+            warnings.append(
+                _duplicate_warning(key_name, positions, original_content)
+            )
 
         # Try to fix duplicate unattended_install
         modified_content, fixed = fix_duplicate_unattended_install(
@@ -198,7 +198,9 @@ def process_plist_recipe(recipe_path):
         return False, [], [f"Error: {e}"]
 
 
-def process_yaml_recipe(recipe_path):
+def process_yaml_recipe(
+    recipe_path: Path,
+) -> tuple[bool, list[str], list[str]]:
     """Process a YAML recipe file and check for duplicate keys.
 
     YAML parsers typically handle duplicate keys by using the last value,
@@ -261,7 +263,9 @@ def process_yaml_recipe(recipe_path):
         return False, [], [f"Error: {e}"]
 
 
-def process_recipe(recipe_path):
+def process_recipe(
+    recipe_path: Path,
+) -> tuple[bool, list[str], list[str]]:
     """Process a recipe file based on its format.
 
     Args:
@@ -276,7 +280,100 @@ def process_recipe(recipe_path):
         return process_plist_recipe(recipe_path)
 
 
-def main():
+def _find_recipe_files(recipe_dir: str) -> list[Path]:
+    """Find all recipe files under recipe_dir.
+
+    Args:
+        recipe_dir: Path to the recipe directory
+
+    Returns:
+        List of recipe file paths
+    """
+    recipe_files = []
+    for root, _, files in os.walk(recipe_dir):
+        for file in files:
+            if file.endswith(('.recipe', '.yaml')):
+                recipe_files.append(Path(root) / file)
+    return recipe_files
+
+
+def _scan_recipes(
+    recipe_dir: str, recipe_files: list[Path]
+) -> tuple[list[tuple[Path, list[str], list[str]]],
+           list[tuple[Path, list[str]]]]:
+    """Process each recipe, printing its warnings and changes.
+
+    Args:
+        recipe_dir: Path to the recipe directory
+        recipe_files: List of recipe file paths
+
+    Returns:
+        Tuple of (recipes_with_issues, recipes_fixed)
+    """
+    recipes_with_issues = []
+    recipes_fixed = []
+
+    for recipe_path in sorted(recipe_files):
+        relative_path = recipe_path.relative_to(recipe_dir)
+        modified, changes, warnings = process_recipe(recipe_path)
+
+        if not (warnings or changes):
+            continue
+
+        print(f"\n{'✓' if modified else '⚠'} {relative_path}")
+
+        for warning in warnings:
+            print(f"  ⚠ {warning}")
+
+        for change in changes:
+            print(f"  ✓ {change}")
+
+        if warnings:
+            recipes_with_issues.append((relative_path, warnings, changes))
+        if modified:
+            recipes_fixed.append((relative_path, changes))
+
+    return recipes_with_issues, recipes_fixed
+
+
+def _print_fixed(recipes_fixed: list[tuple[Path, list[str]]]) -> None:
+    """Print the files that were fixed.
+
+    Args:
+        recipes_fixed: List of (recipe_path, changes) tuples
+    """
+    print("\nFixed files:")
+    for recipe_path, changes in recipes_fixed:
+        print(f"\n  ✓ {recipe_path}:")
+        for change in changes:
+            print(f"    - {change}")
+
+
+def _print_unfixed(
+    recipes_with_issues: list[tuple[Path, list[str], list[str]]],
+    recipes_fixed: list[tuple[Path, list[str]]],
+) -> None:
+    """Print warnings for recipes that were not auto-fixed.
+
+    Args:
+        recipes_with_issues: List of (recipe_path, warnings, changes) tuples
+        recipes_fixed: List of (recipe_path, changes) tuples
+    """
+    unfixed = [r for r in recipes_with_issues if r[0] not in
+               [f[0] for f in recipes_fixed]]
+    if not unfixed:
+        return
+
+    print("\nWarnings (not auto-fixed):")
+    for recipe_path, warnings, _ in unfixed:
+        print(f"\n  ⚠ {recipe_path}:")
+        for warning in warnings:
+            print(f"    - {warning}")
+
+    print("\nPlease review and manually fix recipes with warnings.")
+
+
+def main() -> None:
     """Main function."""
     verify_environment()
 
@@ -302,11 +399,7 @@ def main():
     print(f"\nScanning recipes in: {recipe_dir}")
 
     # Find all recipe files
-    recipe_files = []
-    for root, dirs, files in os.walk(recipe_dir):
-        for file in files:
-            if file.endswith(('.recipe', '.yaml')):
-                recipe_files.append(Path(root) / file)
+    recipe_files = _find_recipe_files(recipe_dir)
 
     if not recipe_files:
         print("\nNo recipe files found!")
@@ -315,26 +408,9 @@ def main():
     print(f"Found {len(recipe_files)} recipe file(s)\n")
 
     # Process each recipe
-    recipes_with_issues = []
-    recipes_fixed = []
-
-    for recipe_path in sorted(recipe_files):
-        relative_path = recipe_path.relative_to(recipe_dir)
-        modified, changes, warnings = process_recipe(recipe_path)
-
-        if warnings or changes:
-            print(f"\n{'✓' if modified else '⚠'} {relative_path}")
-
-            for warning in warnings:
-                print(f"  ⚠ {warning}")
-
-            for change in changes:
-                print(f"  ✓ {change}")
-
-            if warnings:
-                recipes_with_issues.append((relative_path, warnings, changes))
-            if modified:
-                recipes_fixed.append((relative_path, changes))
+    recipes_with_issues, recipes_fixed = _scan_recipes(
+        recipe_dir, recipe_files
+    )
 
     # Summary
     print("\n" + "=" * 70)
@@ -345,23 +421,10 @@ def main():
     print("=" * 70)
 
     if recipes_fixed:
-        print("\nFixed files:")
-        for recipe_path, changes in recipes_fixed:
-            print(f"\n  ✓ {recipe_path}:")
-            for change in changes:
-                print(f"    - {change}")
+        _print_fixed(recipes_fixed)
 
     if recipes_with_issues:
-        unfixed = [r for r in recipes_with_issues if r[0] not in
-                   [f[0] for f in recipes_fixed]]
-        if unfixed:
-            print("\nWarnings (not auto-fixed):")
-            for recipe_path, warnings, _ in unfixed:
-                print(f"\n  ⚠ {recipe_path}:")
-                for warning in warnings:
-                    print(f"    - {warning}")
-
-            print("\nPlease review and manually fix recipes with warnings.")
+        _print_unfixed(recipes_with_issues, recipes_fixed)
 
     if recipes_fixed:
         print("\nPlease verify fixed files in your version control system.")

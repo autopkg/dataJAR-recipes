@@ -12,34 +12,23 @@ import os
 import sys
 from pathlib import Path
 import traceback
+from typing import NamedTuple
+
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
-
-
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def has_tabs(content):
+def has_tabs(content: str) -> bool:
     """Check if content contains any tab characters."""
     return '\t' in content
 
 
-def convert_tabs_to_spaces(content, spaces_per_tab=4):
+def convert_tabs_to_spaces(content: str, spaces_per_tab: int = 4) -> str:
     """Convert all tabs to spaces in content.
 
     Args:
@@ -52,7 +41,7 @@ def convert_tabs_to_spaces(content, spaces_per_tab=4):
     return content.replace('\t', ' ' * spaces_per_tab)
 
 
-def remove_trailing_whitespace(content):
+def remove_trailing_whitespace(content: str) -> str:
     """Remove trailing whitespace from each line.
 
     Args:
@@ -76,7 +65,7 @@ def remove_trailing_whitespace(content):
     return ''.join(cleaned_lines)
 
 
-def ensure_final_newline(content):
+def ensure_final_newline(content: str) -> str:
     """Ensure content ends with a single newline.
 
     Args:
@@ -95,7 +84,66 @@ def ensure_final_newline(content):
     return content + '\n'
 
 
-def check_indentation(content):
+def _string_ranges(content: str) -> list[tuple[int, int]]:
+    """Find the ranges of all <string>...</string> blocks.
+
+    Args:
+        content: String content to scan
+
+    Returns:
+        List of (start, end) character ranges, end exclusive
+    """
+    string_ranges = []
+    pos = 0
+    while True:
+        start = content.find('<string>', pos)
+        if start == -1:
+            break
+        end = content.find('</string>', start)
+        if end == -1:
+            break
+        # Store the range of content to exclude
+        string_ranges.append((start, end + 9))
+        pos = end + 9
+    return string_ranges
+
+
+def _is_in_ranges(char_pos: int,
+                  string_ranges: list[tuple[int, int]]) -> bool:
+    """Check if a character position falls within any of the ranges."""
+    return any(start <= char_pos < end for start, end in string_ranges)
+
+
+def _misaligned_indent(line: str) -> int:
+    """Return a line's leading space count if not a multiple of 4.
+
+    Empty lines, whitespace-only lines and lines that don't start with
+    a space are never misaligned.
+
+    Args:
+        line: The line to check
+
+    Returns:
+        Number of leading spaces, or 0 if the indentation is fine
+    """
+    if not line.strip():
+        return 0
+
+    # Count leading spaces
+    leading_spaces = len(line) - len(line.lstrip(' '))
+    if leading_spaces % 4 != 0:
+        return leading_spaces
+    return 0
+
+
+def _expected_indent(leading_spaces: int) -> int:
+    """Round an indent to the nearest multiple of 4 spaces."""
+    return ((leading_spaces + 2) // 4) * 4
+
+
+def check_indentation(
+    content: str,
+) -> tuple[bool, list[tuple[int, int, int]]]:
     """Check if indentation is consistent (multiples of 4 spaces).
     Ignores content within <string> tags as those may contain scripts.
 
@@ -107,61 +155,28 @@ def check_indentation(content):
         (line_number, current_indent, expected_indent) tuples
     """
     # Find all <string>...</string> blocks to exclude from checking
-    string_ranges = []
-    pos = 0
-    while True:
-        start = content.find('<string>', pos)
-        if start == -1:
-            break
-        end = content.find('</string>', start)
-        if end == -1:
-            break
-        # Store the range of content to exclude
-        string_ranges.append((start, end + 9))
-        pos = end + 9
-
-    def is_in_string_tag(char_pos):
-        """Check if a character position is within a <string> tag."""
-        for start, end in string_ranges:
-            if start <= char_pos < end:
-                return True
-        return False
+    string_ranges = _string_ranges(content)
 
     lines = content.splitlines(keepends=True)
     issues = []
     char_pos = 0
 
     for line_num, line in enumerate(lines, 1):
-        # Check if this line is within a <string> tag
-        if is_in_string_tag(char_pos):
-            char_pos += len(line)
-            continue
-
-        # Skip empty lines and lines with only whitespace
-        if not line.strip():
-            char_pos += len(line)
-            continue
-
-        # Count leading spaces
-        leading_spaces = len(line) - len(line.lstrip(' '))
-
-        # Skip lines that don't start with spaces
-        if leading_spaces == 0 or line[0] != ' ':
-            char_pos += len(line)
-            continue
-
-        # Check if indentation is a multiple of 4
-        if leading_spaces % 4 != 0:
-            # Calculate what it should be (round to nearest multiple of 4)
-            expected = ((leading_spaces + 2) // 4) * 4
-            issues.append((line_num, leading_spaces, expected))
+        # Lines within a <string> tag are not checked
+        if not _is_in_ranges(char_pos, string_ranges):
+            leading_spaces = _misaligned_indent(line)
+            if leading_spaces:
+                issues.append(
+                    (line_num, leading_spaces,
+                     _expected_indent(leading_spaces))
+                )
 
         char_pos += len(line)
 
     return len(issues) > 0, issues
 
 
-def fix_indentation(content):
+def fix_indentation(content: str) -> str:
     """Fix inconsistent indentation to be multiples of 4 spaces.
     Ignores content within <string> tags as those may contain scripts.
 
@@ -172,58 +187,21 @@ def fix_indentation(content):
         Content with corrected indentation
     """
     # Find all <string>...</string> blocks to exclude from fixing
-    string_ranges = []
-    pos = 0
-    while True:
-        start = content.find('<string>', pos)
-        if start == -1:
-            break
-        end = content.find('</string>', start)
-        if end == -1:
-            break
-        # Store the range of content to exclude
-        string_ranges.append((start, end + 9))
-        pos = end + 9
-
-    def is_in_string_tag(char_pos):
-        """Check if a character position is within a <string> tag."""
-        for start, end in string_ranges:
-            if start <= char_pos < end:
-                return True
-        return False
+    string_ranges = _string_ranges(content)
 
     lines = content.splitlines(keepends=True)
     fixed_lines = []
     char_pos = 0
 
     for line in lines:
-        # Check if this line is within a <string> tag
-        if is_in_string_tag(char_pos):
-            fixed_lines.append(line)
-            char_pos += len(line)
-            continue
-
-        # Skip empty lines and lines with only whitespace
-        if not line.strip():
-            fixed_lines.append(line)
-            char_pos += len(line)
-            continue
-
-        # Count leading spaces
-        leading_spaces = len(line) - len(line.lstrip(' '))
-
-        # Skip lines that don't start with spaces
-        if leading_spaces == 0 or line[0] != ' ':
-            fixed_lines.append(line)
-            char_pos += len(line)
-            continue
-
-        # Check if indentation is a multiple of 4
-        if leading_spaces % 4 != 0:
-            # Calculate what it should be (round to nearest multiple of 4)
-            expected = ((leading_spaces + 2) // 4) * 4
-            # Replace the indentation
-            line = (' ' * expected) + line.lstrip(' ')
+        # Lines within a <string> tag are left alone
+        if not _is_in_ranges(char_pos, string_ranges):
+            leading_spaces = _misaligned_indent(line)
+            if leading_spaces:
+                # Replace the indentation
+                line = (
+                    ' ' * _expected_indent(leading_spaces)
+                ) + line.lstrip(' ')
 
         fixed_lines.append(line)
         char_pos += len(line)
@@ -231,102 +209,166 @@ def fix_indentation(content):
     return ''.join(fixed_lines)
 
 
-def process_recipe(recipe_path):
-    """Process a single recipe file and convert tabs to spaces."""
+class _Issues(NamedTuple):
+    """Whitespace issues found in a recipe."""
+
+    tab_count: int
+    trailing_whitespace: bool
+    final_newline: bool
+    indent_issues: list[tuple[int, int, int]]
+
+    def has_any(self) -> bool:
+        """Return True if any issue was found."""
+        return bool(self.tab_count or self.trailing_whitespace or
+                    self.final_newline or self.indent_issues)
+
+
+def _find_issues(content: str) -> _Issues:
+    """Find the whitespace issues in recipe content.
+
+    Args:
+        content: String content of the recipe
+
+    Returns:
+        The issues found
+    """
+    has_trailing_whitespace = any(
+        line.rstrip('\n\r') != line.rstrip('\n\r').rstrip()
+        for line in content.splitlines(keepends=True)
+    )
+    needs_final_newline = bool(content) and not content.endswith('\n')
+    _, indent_issues = check_indentation(content)
+    return _Issues(content.count('\t'), has_trailing_whitespace,
+                   needs_final_newline, indent_issues)
+
+
+def _describe_issues(issues: _Issues) -> list[str]:
+    """Describe the issues found, for reporting before fixing."""
+    descriptions = []
+    if issues.tab_count:
+        descriptions.append(f"{issues.tab_count} tab(s)")
+    if issues.trailing_whitespace:
+        descriptions.append("trailing whitespace")
+    if issues.final_newline:
+        descriptions.append("missing final newline")
+    if issues.indent_issues:
+        descriptions.append(
+            f"{len(issues.indent_issues)} indentation error(s)"
+        )
+    return descriptions
+
+
+def _describe_fixes(issues: _Issues) -> list[str]:
+    """Describe the fixes made for the issues found."""
+    fixes = []
+    if issues.tab_count:
+        fixes.append(f"converted {issues.tab_count} tab(s) to spaces")
+    if issues.trailing_whitespace:
+        fixes.append("removed trailing whitespace")
+    if issues.final_newline:
+        fixes.append("added final newline")
+    if issues.indent_issues:
+        fixes.append(
+            f"fixed {len(issues.indent_issues)} indentation error(s)"
+        )
+    return fixes
+
+
+def _apply_fixes(content: str, issues: _Issues) -> str:
+    """Apply the fixes for the issues found.
+
+    Args:
+        content: String content of the recipe
+        issues: The issues found in content
+
+    Returns:
+        The fixed content
+    """
+    # Convert tabs to spaces
+    if issues.tab_count:
+        content = convert_tabs_to_spaces(content)
+
+    # Remove trailing whitespace
+    if issues.trailing_whitespace:
+        content = remove_trailing_whitespace(content)
+
+    # Fix indentation
+    if issues.indent_issues:
+        content = fix_indentation(content)
+
+    # Ensure final newline
+    if issues.final_newline:
+        content = ensure_final_newline(content)
+
+    return content
+
+
+def _write_fixes(recipe_path: Path, modified_content: str) -> bool:
+    """Write fixed content to a recipe and verify the write.
+
+    Args:
+        recipe_path: Path to the recipe file
+        modified_content: The fixed content
+
+    Returns:
+        True if the content was written and verified
+    """
+    # Verify all fixes were applied
+    if '\t' in modified_content:
+        print(f"❌ Warning: Tabs still present after conversion in "
+              f"{recipe_path}")
+        return False
+
+    # Write the changes
+    with open(recipe_path, 'w', encoding='utf-8') as file:
+        file.write(modified_content)
+
+    # Verify the changes were written
+    with open(recipe_path, 'r', encoding='utf-8') as file:
+        verification_content = file.read()
+
+    if verification_content != modified_content:
+        print(f"❌ Warning: File write verification failed for "
+              f"{recipe_path}")
+        return False
+    return True
+
+
+def process_recipe(recipe_path: Path) -> bool:
+    """Process a single recipe file and fix its whitespace issues.
+
+    Args:
+        recipe_path: Path to the recipe file
+
+    Returns:
+        True if the recipe was fixed and the write verified
+    """
     try:
         # Read original content
         with open(recipe_path, 'r', encoding='utf-8') as file:
             original_content = file.read()
 
         # Track what changes are needed
-        has_tabs = '\t' in original_content
-        has_trailing_whitespace = any(
-            line.rstrip('\n\r') != line.rstrip('\n\r').rstrip()
-            for line in original_content.splitlines(keepends=True)
-        )
-        needs_final_newline = (
-            original_content and not original_content.endswith('\n')
-        )
-        has_indent_issues, indent_issues = check_indentation(original_content)
+        issues = _find_issues(original_content)
 
-        no_issues = (
-            not has_tabs and
-            not has_trailing_whitespace and
-            not needs_final_newline and
-            not has_indent_issues
-        )
-        if no_issues:
+        if not issues.has_any():
             print(f"Skipping {recipe_path.name} - no issues found")
             return False
 
-        issues = []
-        if has_tabs:
-            tab_count = original_content.count('\t')
-            issues.append(f"{tab_count} tab(s)")
-        if has_trailing_whitespace:
-            issues.append("trailing whitespace")
-        if needs_final_newline:
-            issues.append("missing final newline")
-        if has_indent_issues:
-            issues.append(f"{len(indent_issues)} indentation error(s)")
-
-        print(f"\nFound issues in {recipe_path}: {', '.join(issues)}")
+        print(f"\nFound issues in {recipe_path}: "
+              f"{', '.join(_describe_issues(issues))}")
 
         # Apply all fixes
-        modified_content = original_content
+        modified_content = _apply_fixes(original_content, issues)
 
-        # Convert tabs to spaces
-        if has_tabs:
-            modified_content = convert_tabs_to_spaces(modified_content)
-
-        # Remove trailing whitespace
-        if has_trailing_whitespace:
-            modified_content = remove_trailing_whitespace(modified_content)
-
-        # Fix indentation
-        if has_indent_issues:
-            modified_content = fix_indentation(modified_content)
-
-        # Ensure final newline
-        if needs_final_newline:
-            modified_content = ensure_final_newline(modified_content)
-
-        # Verify all fixes were applied
-        if '\t' in modified_content:
-            print(f"❌ Warning: Tabs still present after conversion in "
-                  f"{recipe_path}")
-            return False
-
-        # Write the changes
-        with open(recipe_path, 'w', encoding='utf-8') as file:
-            file.write(modified_content)
-
-        # Verify the changes were written
-        with open(recipe_path, 'r', encoding='utf-8') as file:
-            verification_content = file.read()
-
-        if verification_content != modified_content:
-            print(f"❌ Warning: File write verification failed for "
-                  f"{recipe_path}")
-            return False
-        else:
+        fixed = _write_fixes(recipe_path, modified_content)
+        if fixed:
             # Report what was fixed
-            fixed = []
-            if has_tabs:
-                fixed.append(f"converted {tab_count} tab(s) to spaces")
-            if has_trailing_whitespace:
-                fixed.append("removed trailing whitespace")
-            if needs_final_newline:
-                fixed.append("added final newline")
-            if has_indent_issues:
-                fixed.append(
-                    f"fixed {len(indent_issues)} indentation error(s)"
-                )
-
             print(
-                f"✓ Fixed {recipe_path.name}: {', '.join(fixed)}"
+                f"✓ Fixed {recipe_path.name}: "
+                f"{', '.join(_describe_fixes(issues))}"
             )
-            return True
+        return fixed
 
     except Exception as e:
         print(f"❌ Error processing {recipe_path}: {str(e)}")
@@ -334,7 +376,43 @@ def process_recipe(recipe_path):
         return False
 
 
-def main():
+def _process_recipes(recipe_dir: str) -> tuple[int, list[tuple[Path, str]]]:
+    """Fix whitespace in every recipe under recipe_dir.
+
+    Args:
+        recipe_dir: Path to the recipe directory
+
+    Returns:
+        Tuple of (recipe_count, modified_files) where modified_files is a
+        list of (recipe_path, fix_description) tuples
+    """
+    recipe_count = 0
+    modified_files = []
+
+    # Process all recipe files
+    for recipe_path in Path(recipe_dir).rglob("*.recipe*"):
+        if recipe_path.suffix not in ['.recipe', '.yaml']:
+            continue
+
+        recipe_count += 1
+
+        # Read to collect issue details before processing
+        with open(recipe_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Track what issues exist
+        issues = _find_issues(content)
+
+        if process_recipe(recipe_path):
+            # Build fix description
+            fixes = _describe_fixes(issues)
+            modified_files.append((recipe_path, ', '.join(fixes)))
+
+    return recipe_count, modified_files
+
+
+def main() -> None:
+    """Prompt for a recipe directory and fix whitespace in its recipes."""
     verify_environment()
 
     print("DetabChecker - AutoPkg Recipe Whitespace Fixer")
@@ -361,49 +439,12 @@ def main():
 
         print(f"\nScanning recipes in: {recipe_dir}")
 
-        modified_count = 0
-        recipe_count = 0
-        modified_files = []
-
-        # Process all recipe files
-        for recipe_path in Path(recipe_dir).rglob("*.recipe*"):
-            if recipe_path.suffix in ['.recipe', '.yaml']:
-                recipe_count += 1
-
-                # Read to collect issue details before processing
-                with open(recipe_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
-
-                # Track what issues exist
-                has_tabs = '\t' in content
-                has_trailing_ws = any(
-                    line.rstrip('\n\r') != line.rstrip('\n\r').rstrip()
-                    for line in content.splitlines(keepends=True)
-                )
-                needs_newline = content and not content.endswith('\n')
-                has_indent_issues, indent_issues = check_indentation(content)
-
-                if process_recipe(recipe_path):
-                    modified_count += 1
-                    # Build fix description
-                    fixes = []
-                    if has_tabs:
-                        tab_count = content.count('\t')
-                        fixes.append(f"converted {tab_count} tab(s) to spaces")
-                    if has_trailing_ws:
-                        fixes.append("removed trailing whitespace")
-                    if needs_newline:
-                        fixes.append("added final newline")
-                    if has_indent_issues:
-                        fixes.append(
-                            f"fixed {len(indent_issues)} indentation error(s)"
-                        )
-                    modified_files.append((recipe_path, ', '.join(fixes)))
+        recipe_count, modified_files = _process_recipes(recipe_dir)
 
         print(f"\n{'=' * 50}")
         print("Processing complete!")
         print(f"Recipes processed: {recipe_count}")
-        print(f"Recipes modified: {modified_count}")
+        print(f"Recipes modified: {len(modified_files)}")
         print("=" * 50)
 
         if modified_files:

@@ -10,30 +10,19 @@ import os
 import sys
 from pathlib import Path
 import re
+from typing import Any
 import yaml
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def check_plist_pkginfo(content):
+def check_plist_pkginfo(content: str) -> list[tuple[str, int]]:
     """Check pkginfo dict in plist recipe for empty values.
 
     Args:
@@ -72,7 +61,8 @@ def check_plist_pkginfo(content):
     return empty_keys
 
 
-def _get_pkginfo_from_yaml(recipe):
+def _get_pkginfo_from_yaml(
+        recipe: dict[str, Any]) -> dict[str, Any] | None:
     """Extract pkginfo dict from YAML recipe.
 
     Args:
@@ -92,7 +82,7 @@ def _get_pkginfo_from_yaml(recipe):
     return pkginfo
 
 
-def _find_yaml_key_line_number(key, lines):
+def _find_yaml_key_line_number(key: str, lines: list[str]) -> int | None:
     """Find line number for a key in YAML content.
 
     Args:
@@ -109,7 +99,8 @@ def _find_yaml_key_line_number(key, lines):
     return None
 
 
-def _check_empty_keys(pkginfo, lines):
+def _check_empty_keys(pkginfo: dict[str, Any],
+                      lines: list[str]) -> list[tuple[str, int]]:
     """Check pkginfo dict for empty keys and find their line numbers.
 
     Args:
@@ -134,7 +125,7 @@ def _check_empty_keys(pkginfo, lines):
     return empty_keys
 
 
-def check_yaml_pkginfo(content):
+def check_yaml_pkginfo(content: str) -> list[tuple[str, int]]:
     """Check pkginfo dict in YAML recipe for empty values.
 
     Args:
@@ -158,7 +149,7 @@ def check_yaml_pkginfo(content):
         return []
 
 
-def process_recipe(recipe_path):
+def process_recipe(recipe_path: Path) -> list[tuple[str, int]]:
     """Process a recipe file and check for empty pkginfo values.
 
     Args:
@@ -167,32 +158,33 @@ def process_recipe(recipe_path):
     Returns:
         List of tuples (key_name, line_number)
     """
+    empty_keys: list[tuple[str, int]] = []
+
     # Only check .munki recipes
     if '.munki' not in recipe_path.name.lower():
-        return []
+        return empty_keys
 
     try:
         with open(recipe_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
         # Check if recipe has pkginfo
-        if 'pkginfo' not in content:
-            return []
+        if 'pkginfo' in content:
+            # Determine format
+            is_yaml = recipe_path.suffix == '.yaml'
 
-        # Determine format
-        is_yaml = recipe_path.suffix == '.yaml'
-
-        if is_yaml:
-            return check_yaml_pkginfo(content)
-        else:
-            return check_plist_pkginfo(content)
+            if is_yaml:
+                empty_keys = check_yaml_pkginfo(content)
+            else:
+                empty_keys = check_plist_pkginfo(content)
 
     except Exception as e:
         print(f"Error processing {recipe_path}: {e}")
-        return []
+
+    return empty_keys
 
 
-def _print_banner():
+def _print_banner() -> None:
     """Print introductory banner."""
     print("MissingKeyValueChecker - Recipe pkginfo Validator")
     print("=" * 50)
@@ -204,7 +196,7 @@ def _print_banner():
     print()
 
 
-def _get_recipe_directory():
+def _get_recipe_directory() -> str:
     """Get and validate recipe directory from user input.
 
     Returns:
@@ -224,7 +216,7 @@ def _get_recipe_directory():
     return recipe_dir
 
 
-def _find_munki_recipes(recipe_dir):
+def _find_munki_recipes(recipe_dir: str) -> list[Path]:
     """Find all .munki recipe files in directory.
 
     Args:
@@ -241,7 +233,8 @@ def _find_munki_recipes(recipe_dir):
     return [p for p in recipe_paths if '.munki' in p.name.lower()]
 
 
-def _process_recipes(munki_recipes):
+def _process_recipes(
+        munki_recipes: list[Path]) -> dict[str, list[tuple[str, int]]]:
     """Process all recipes and collect issues.
 
     Args:
@@ -265,7 +258,8 @@ def _process_recipes(munki_recipes):
     return issues_found
 
 
-def _print_summary(munki_recipes, issues_found):
+def _print_summary(munki_recipes: list[Path],
+                   issues_found: dict[str, list[tuple[str, int]]]) -> None:
     """Print processing summary and detailed report.
 
     Args:
@@ -290,7 +284,8 @@ def _print_summary(munki_recipes, issues_found):
         print("\n✓ All pkginfo keys have values!")
 
 
-def main():
+def main() -> None:
+    """Prompt for a recipe directory and report empty pkginfo values."""
     verify_environment()
 
     _print_banner()

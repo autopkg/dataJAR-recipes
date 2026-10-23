@@ -4,7 +4,7 @@
 
 This is a suite of Python linters for validating and fixing [AutoPkg](https://github.com/autopkg/autopkg) recipes. AutoPkg recipes are XML plist or YAML files that automate software packaging for macOS. Each linter is a standalone script in its own directory that detects and fixes specific issues in recipe files.
 
-**Architecture**: Unified CLI runner (`autopkg-linter.py`) + 16 independent linter modules, each following the same pattern.
+**Architecture**: Unified CLI runner (`autopkg-linter.py`) + 17 independent linter modules (plus OverridePkgReceiptChecker, which runs standalone), each following the same pattern.
 
 ## Critical Environment Requirement
 
@@ -26,8 +26,8 @@ LinterName/
 
 Every linter script contains:
 1. **Shebang**: `#!/usr/local/autopkg/python`
-2. **verify_environment()**: Validates Python path
-3. **clean_path()**: Handles drag-and-drop paths with escaped spaces
+2. **verify_environment()**: Validates Python path (imported from `linter_common`)
+3. **clean_path()**: Handles drag-and-drop paths with escaped spaces (imported from `linter_common`)
 4. **process_plist_recipe()**: Logic for XML plist recipes
 5. **process_yaml_recipe()**: Logic for YAML recipes (if applicable)
 6. **main()**: Interactive prompt for recipe directory, then scans/processes files
@@ -55,7 +55,7 @@ Every linter script contains:
 Edit `get_available_linters()` in [autopkg-linter.py](autopkg-linter.py):
 ```python
 linters = [
-    (16, "NewLinterName", "NewLinterDirectory",
+    (18, "NewLinterName", "NewLinterDirectory",
      "NewLinterScript.py",
      "Brief description of what it does"),
     # ... existing linters
@@ -66,15 +66,16 @@ Numbers should be sequential, directory must exist, script must have `main()` fu
 
 ## Common Patterns
 
-### Path Handling
+### Shared Helpers
+`clean_path()` (handles drag-and-drop paths with backslash-escaped spaces) and `verify_environment()` live once in [linter_common.py](linter_common.py), in the linters root. Don't copy them into a linter. Import them with the same shim every linter uses, placed right after the other imports:
 ```python
-def clean_path(path):
-    """Handles drag-and-drop paths with backslash-escaped spaces"""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 ```
 
 ### Recipe Discovery
@@ -147,9 +148,6 @@ cd DetabChecker
 # List available
 /usr/local/autopkg/python autopkg-linter.py --list
 ```
-
-### Test Recipe
-[test-comp.recipe](test-comp.recipe) exists for testing purposes.
 
 ## Naming Conventions
 

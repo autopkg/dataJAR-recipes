@@ -19,6 +19,14 @@ from pathlib import Path
 import re
 import traceback
 
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
+
 
 # XML tag constants
 TAG_DICT_OPEN = '<dict>'
@@ -26,27 +34,7 @@ TAG_DICT_CLOSE = '</dict>'
 TAG_ARGUMENTS_KEY = '<key>Arguments</key>'
 
 
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
-
-
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def compare_versions(version1, version2):
+def compare_versions(version1: str, version2: str) -> int:
     """Compare two version strings.
 
     Args:
@@ -73,7 +61,7 @@ def compare_versions(version1, version2):
     return 0
 
 
-def _find_matching_dict_end(content, dict_start):
+def _find_matching_dict_end(content: str, dict_start: int) -> int:
     """Find matching </dict> tag by counting depth.
 
     Args:
@@ -105,7 +93,7 @@ def _find_matching_dict_end(content, dict_start):
     return -1
 
 
-def _is_munki_installs_creator(dict_content):
+def _is_munki_installs_creator(dict_content: str) -> bool:
     """Check if dict is MunkiInstallsItemsCreator processor.
 
     Args:
@@ -119,7 +107,7 @@ def _is_munki_installs_creator(dict_content):
             in dict_content)
 
 
-def has_derive_minimum_os_version(content):
+def has_derive_minimum_os_version(content: str) -> bool:
     """Check if MunkiInstallsItemsCreator has derive_minimum_os_version.
 
     Args:
@@ -156,7 +144,7 @@ def has_derive_minimum_os_version(content):
     return False
 
 
-def _find_process_array_content(content):
+def _find_process_array_content(content: str) -> tuple[str | None, bool]:
     """Find and extract Process array content.
 
     Args:
@@ -166,17 +154,18 @@ def _find_process_array_content(content):
         Tuple of (process_content, success)
     """
     process_key_pos = content.find('<key>Process</key>')
-    if process_key_pos == -1:
-        return None, False
+    array_start = -1
+    if process_key_pos != -1:
+        # Find <array> after Process key
+        array_start = content.find('<array>', process_key_pos)
 
-    # Find <array> after Process key
-    array_start = content.find('<array>', process_key_pos)
     if array_start == -1:
         return None, False
 
     # Use depth counting to find matching </array>
     depth = 1
-    search_pos = array_start + 7  # After '<array>'
+    # After '<array>'
+    search_pos = array_start + 7
     while depth > 0 and search_pos < len(content):
         if content[search_pos:search_pos+7] == '<array>':
             depth += 1
@@ -195,7 +184,8 @@ def _find_process_array_content(content):
     return content[array_start+7:search_pos], True
 
 
-def _find_matching_close_for_dict(process_content, dict_pos):
+def _find_matching_close_for_dict(process_content: str,
+                                  dict_pos: int) -> str | None:
     """Find matching </dict> for dict at given position.
 
     Args:
@@ -225,7 +215,7 @@ def _find_matching_close_for_dict(process_content, dict_pos):
     return None
 
 
-def _find_creator_dict_in_process(process_content):
+def _find_creator_dict_in_process(process_content: str) -> str | None:
     """Find MunkiInstallsItemsCreator dict in Process array.
 
     Args:
@@ -253,7 +243,9 @@ def _find_creator_dict_in_process(process_content):
     return None
 
 
-def _find_arguments_dict(creator_dict):
+def _find_arguments_dict(
+        creator_dict: str
+) -> tuple[str, int, int] | tuple[None, None, None]:
     """Find and extract Arguments dict from creator dict.
 
     Args:
@@ -264,10 +256,10 @@ def _find_arguments_dict(creator_dict):
         (None, None, None)
     """
     args_start = creator_dict.find(TAG_ARGUMENTS_KEY)
-    if args_start == -1:
-        return None, None, None
+    dict_after_args = -1
+    if args_start != -1:
+        dict_after_args = creator_dict.find(TAG_DICT_OPEN, args_start)
 
-    dict_after_args = creator_dict.find(TAG_DICT_OPEN, args_start)
     if dict_after_args == -1:
         return None, None, None
 
@@ -298,7 +290,8 @@ def _find_arguments_dict(creator_dict):
     return args_dict, args_content_start, args_end
 
 
-def _get_argument_indentation(creator_dict, args_content_start, args_end):
+def _get_argument_indentation(creator_dict: str, args_content_start: int,
+                              args_end: int) -> tuple[str, str]:
     """Get indentation for Arguments keys.
 
     Args:
@@ -337,7 +330,7 @@ def _get_argument_indentation(creator_dict, args_content_start, args_end):
     return indent, closing_indent
 
 
-def add_derive_minimum_os_version(content):
+def add_derive_minimum_os_version(content: str) -> tuple[str, bool]:
     """Add derive_minimum_os_version to MunkiInstallsItemsCreator Arguments.
 
     Args:
@@ -348,11 +341,11 @@ def add_derive_minimum_os_version(content):
     """
     # Find Process array content
     process_content, success = _find_process_array_content(content)
-    if not success:
-        return content, False
+    creator_dict = None
+    if success:
+        # Find MunkiInstallsItemsCreator dict
+        creator_dict = _find_creator_dict_in_process(process_content)
 
-    # Find MunkiInstallsItemsCreator dict
-    creator_dict = _find_creator_dict_in_process(process_content)
     if not creator_dict:
         return content, False
 
@@ -392,7 +385,7 @@ def add_derive_minimum_os_version(content):
     return content, True
 
 
-def has_pkginfo_merger_after(content):
+def has_pkginfo_merger_after(content: str) -> bool:
     """Check if MunkiPkginfoMerger immediately follows
     MunkiInstallsItemsCreator.
 
@@ -422,15 +415,12 @@ def has_pkginfo_merger_after(content):
         return False
 
     # Check if it's MunkiPkginfoMerger within the next 500 characters
-    if next_processor_pos - installer_pos < 500:
-        next_section = content[next_processor_pos:next_processor_pos + 200]
-        if '<string>MunkiPkginfoMerger</string>' in next_section:
-            return True
-
-    return False
+    next_section = content[next_processor_pos:next_processor_pos + 200]
+    return (next_processor_pos - installer_pos < 500 and
+            '<string>MunkiPkginfoMerger</string>' in next_section)
 
 
-def add_pkginfo_merger(content):
+def add_pkginfo_merger(content: str) -> tuple[str, bool]:
     """Add empty MunkiPkginfoMerger after MunkiInstallsItemsCreator.
 
     Args:
@@ -468,7 +458,7 @@ def add_pkginfo_merger(content):
     return content, True
 
 
-def has_derive_min_os_input(content):
+def has_derive_min_os_input(content: str) -> bool:
     """Check if DERIVE_MIN_OS exists in Input dict with a
     non-empty value.
 
@@ -487,7 +477,7 @@ def has_derive_min_os_input(content):
     return match is not None and match.group(1).strip() != ''
 
 
-def add_derive_min_os_input(content):
+def add_derive_min_os_input(content: str) -> tuple[str, bool]:
     """Add DERIVE_MIN_OS to Input dict in alphabetical order,
     or fix empty value.
 
@@ -511,6 +501,18 @@ def add_derive_min_os_input(content):
         )
         return content, True
 
+    return _add_derive_min_os_key(content)
+
+
+def _add_derive_min_os_key(content: str) -> tuple[str, bool]:
+    """Add the DERIVE_MIN_OS key to Input dict in alphabetical order.
+
+    Args:
+        content: Recipe file content
+
+    Returns:
+        Tuple of (updated_content, was_modified)
+    """
     # Find Input dict
     input_pattern = r'<key>Input</key>\s*\n\s*<dict>(.*?)</dict>'
     input_match = re.search(input_pattern, content, re.DOTALL)
@@ -524,12 +526,13 @@ def add_derive_min_os_input(content):
     key_pattern = r'<key>([^<]+)</key>'
     existing_keys = re.findall(key_pattern, input_content)
 
+    if 'DERIVE_MIN_OS' in existing_keys:
+        # Key already present; empty values are handled by the caller
+        return content, False
+
     # Add DERIVE_MIN_OS and sort
-    if 'DERIVE_MIN_OS' not in existing_keys:
-        existing_keys.append('DERIVE_MIN_OS')
-        existing_keys.sort()
-    else:
-        return content, False  # Already exists (with non-empty value)
+    existing_keys.append('DERIVE_MIN_OS')
+    existing_keys.sort()
 
     # Find position to insert (after the key that comes before it
     # alphabetically)
@@ -540,7 +543,8 @@ def add_derive_min_os_input(content):
     if indent_match:
         indent = indent_match.group(1)
     else:
-        indent = '        '  # Default fallback
+        # Default fallback
+        indent = '        '
 
     new_entry = (
         f'{indent}<key>DERIVE_MIN_OS</key>\n'
@@ -573,7 +577,7 @@ def add_derive_min_os_input(content):
     return content, True
 
 
-def has_derive_min_os_description(content):
+def has_derive_min_os_description(content: str) -> bool:
     """Check if Description includes DERIVE_MIN_OS instructions.
 
     Args:
@@ -593,7 +597,7 @@ def has_derive_min_os_description(content):
     return 'DERIVE_MIN_OS' in desc_match.group(1)
 
 
-def add_derive_min_os_description(content):
+def add_derive_min_os_description(content: str) -> tuple[str, bool]:
     """Add DERIVE_MIN_OS instructions to Description.
 
     Args:
@@ -626,7 +630,7 @@ def add_derive_min_os_description(content):
     return content, True
 
 
-def get_current_minimum_version(content):
+def get_current_minimum_version(content: str) -> str | None:
     """Get current MinimumVersion from recipe.
 
     Args:
@@ -643,7 +647,8 @@ def get_current_minimum_version(content):
     return None
 
 
-def update_minimum_version(content, new_version):
+def update_minimum_version(content: str,
+                           new_version: str) -> tuple[str, bool]:
     """Update MinimumVersion in recipe.
 
     Args:
@@ -669,38 +674,40 @@ def update_minimum_version(content, new_version):
             content
         )
         return content, True
-    else:
-        # Add MinimumVersion before ParentRecipe or Process
-        parent_pattern = r'\n(\s*)<key>ParentRecipe</key>'
-        parent_match = re.search(parent_pattern, content)
 
-        if parent_match:
-            indent = parent_match.group(1)
+    return _insert_minimum_version(content, new_version)
+
+
+def _insert_minimum_version(content: str,
+                            new_version: str) -> tuple[str, bool]:
+    """Add MinimumVersion to a recipe that has none.
+
+    Args:
+        content: Recipe file content
+        new_version: New version string
+
+    Returns:
+        Tuple of (updated_content, was_modified)
+    """
+    # Add MinimumVersion before ParentRecipe or Process
+    for key_pattern in (r'\n(\s*)<key>ParentRecipe</key>',
+                        r'\n(\s*)<key>Process</key>'):
+        key_match = re.search(key_pattern, content)
+
+        if key_match:
+            indent = key_match.group(1)
             insertion = (
                 f'{indent}<key>MinimumVersion</key>\n'
                 f'{indent}<string>{new_version}</string>\n'
             )
-            insert_pos = parent_match.start() + 1
-            content = content[:insert_pos] + insertion + content[insert_pos:]
-            return content, True
-
-        process_pattern = r'\n(\s*)<key>Process</key>'
-        process_match = re.search(process_pattern, content)
-
-        if process_match:
-            indent = process_match.group(1)
-            insertion = (
-                f'{indent}<key>MinimumVersion</key>\n'
-                f'{indent}<string>{new_version}</string>\n'
-            )
-            insert_pos = process_match.start() + 1
+            insert_pos = key_match.start() + 1
             content = content[:insert_pos] + insertion + content[insert_pos:]
             return content, True
 
     return content, False
 
 
-def _should_process_recipe(content):
+def _should_process_recipe(content: str) -> bool:
     """Check if recipe should be processed.
 
     Args:
@@ -716,7 +723,7 @@ def _should_process_recipe(content):
     return True
 
 
-def _check_derive_minimum_os(content):
+def _check_derive_minimum_os(content: str) -> tuple[str, str | None]:
     """Check and add derive_minimum_os_version if needed.
 
     Returns:
@@ -736,7 +743,7 @@ def _check_derive_minimum_os(content):
     return content, None
 
 
-def _check_pkginfo_merger(content):
+def _check_pkginfo_merger(content: str) -> tuple[str, str | None]:
     """Check and add MunkiPkginfoMerger if needed.
 
     Returns:
@@ -754,7 +761,7 @@ def _check_pkginfo_merger(content):
     return content, None
 
 
-def _check_derive_min_os_input(content):
+def _check_derive_min_os_input(content: str) -> tuple[str, str | None]:
     """Check and add DERIVE_MIN_OS to Input if needed.
 
     Returns:
@@ -770,7 +777,7 @@ def _check_derive_min_os_input(content):
     return content, None
 
 
-def _check_description(content):
+def _check_description(content: str) -> tuple[str, str | None]:
     """Check and add DERIVE_MIN_OS instructions to Description.
 
     Returns:
@@ -789,7 +796,7 @@ def _check_description(content):
     return content, None
 
 
-def _check_minimum_version(content):
+def _check_minimum_version(content: str) -> tuple[str, str | None]:
     """Check and update MinimumVersion if needed.
 
     Returns:
@@ -814,7 +821,7 @@ def _check_minimum_version(content):
     return content, None
 
 
-def _perform_checks_and_updates(content):
+def _perform_checks_and_updates(content: str) -> tuple[str, list[str]]:
     """Perform all 5 checks and update content as needed.
 
     Args:
@@ -854,7 +861,7 @@ def _perform_checks_and_updates(content):
     return modified_content, changes
 
 
-def process_plist_recipe(recipe_path):
+def process_plist_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a plist recipe file and validate MunkiInstallsItemsCreator.
 
     Args:
@@ -888,7 +895,7 @@ def process_plist_recipe(recipe_path):
         return False, []
 
 
-def process_recipe(recipe_path):
+def process_recipe(recipe_path: Path) -> tuple[bool, list[str]]:
     """Process a recipe file based on its format.
 
     Args:
@@ -904,7 +911,7 @@ def process_recipe(recipe_path):
         return process_plist_recipe(recipe_path)
 
 
-def _print_banner():
+def _print_banner() -> None:
     """Print introductory banner."""
     print(
         "MunkiInstallsItemsCreatorChecker - Recipe Configuration "
@@ -922,7 +929,7 @@ def _print_banner():
     print("=" * 50)
 
 
-def _get_recipe_directory():
+def _get_recipe_directory() -> str | None:
     """Get and validate recipe directory from user input.
 
     Returns:
@@ -946,7 +953,8 @@ def _get_recipe_directory():
     return recipe_dir
 
 
-def _process_all_recipes(recipe_dir):
+def _process_all_recipes(
+        recipe_dir: str) -> tuple[int, int, list[tuple[Path, list[str]]]]:
     """Process all recipes in directory.
 
     Args:
@@ -986,7 +994,8 @@ def _process_all_recipes(recipe_dir):
     return recipe_count, modified_count, modified_files
 
 
-def _print_summary(recipe_count, modified_count, modified_files):
+def _print_summary(recipe_count: int, modified_count: int,
+                   modified_files: list[tuple[Path, list[str]]]) -> None:
     """Print processing summary.
 
     Args:
@@ -1018,7 +1027,8 @@ def _print_summary(recipe_count, modified_count, modified_files):
         )
 
 
-def main():
+def main() -> None:
+    """Prompt for recipes and fix their MunkiInstallsItemsCreator setup."""
     verify_environment()
 
     _print_banner()

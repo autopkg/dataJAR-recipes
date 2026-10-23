@@ -17,28 +17,16 @@ import re
 from pathlib import Path
 import traceback
 
-
-def verify_environment():
-    """Verify we're running in AutoPkg's Python environment."""
-    autopkg_python = '/usr/local/autopkg/python'
-    if not sys.executable.startswith('/usr/local/autopkg'):
-        print("Error: This script should be run using AutoPkg's "
-              "Python installation.")
-        print(f"Please run this script using: {autopkg_python} "
-              "<script_name.py>")
-        sys.exit(1)
+# Make linter_common importable when run directly (a no-op under
+# autopkg-linter.py, which already has this directory on sys.path).
+# Kept as one if-statement so the import below isn't flagged E402.
+if (_LINTERS_DIR := os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))) not in sys.path:
+    sys.path.insert(0, _LINTERS_DIR)
+from linter_common import clean_path, verify_environment
 
 
-def clean_path(path):
-    """Clean up path from drag and drop or manual entry."""
-    path = path.strip().strip('"').strip("'")
-    path = path.replace(r'\ ', ' ')
-    path = path.rstrip(' ').rstrip('/')
-    path = os.path.expanduser(path)
-    return path
-
-
-def fix_zsh_shebangs(content):
+def fix_zsh_shebangs(content: str) -> tuple[str, list[int]]:
     """Fix zsh shebangs to include --no-rcs flag.
 
     Args:
@@ -84,7 +72,7 @@ def fix_zsh_shebangs(content):
     return content, []
 
 
-def process_plist_recipe(recipe_path):
+def process_plist_recipe(recipe_path: Path) -> tuple[bool, list[int]]:
     """Process a plist format recipe file.
 
     Args:
@@ -114,7 +102,7 @@ def process_plist_recipe(recipe_path):
         return False, []
 
 
-def process_yaml_recipe(recipe_path):
+def process_yaml_recipe(recipe_path: Path) -> tuple[bool, list[int]]:
     """Process a YAML format recipe file.
 
     Args:
@@ -129,7 +117,8 @@ def process_yaml_recipe(recipe_path):
     return process_plist_recipe(recipe_path)
 
 
-def _scan_recipes(recipe_dir):
+def _scan_recipes(
+        recipe_dir: str) -> tuple[int, list[tuple[Path, list[int]]]]:
     """Scan and process all recipe files.
 
     Args:
@@ -163,7 +152,7 @@ def _scan_recipes(recipe_dir):
     return recipe_count, modified_files
 
 
-def main():
+def main() -> None:
     """Main function to run the zsh shebang checker."""
     verify_environment()
 
