@@ -18,7 +18,7 @@ The minimum_os_version is read from the JavaVM:JVMMinimumSystemVersion key of th
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>MicrosoftBuildOfOpenJDK</string>
+        <string>MicrosoftBuildOfOpenJDK%MAJOR_VERSION%</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/%NAME%</string>
         <key>SUPPORTED_ARCH</key>
