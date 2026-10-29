@@ -3,17 +3,20 @@
 <plist version="1.0">
 <dict>
     <key>Comment</key>
-    <string>manifest URL obtained from this thread on Jamf Nation: https://community.jamf.com/t5/jamf-pro/visual-studio-for-mac-deployment/m-p/292547/highlight/true#M260110</string>
+    <string>Download links scraped from the Microsoft Build of OpenJDK download page: https://learn.microsoft.com/en-gb/java/openjdk/download</string>
     <key>Description</key>
-    <string>Downloads the latest version of Microsoft Build Of OpenJDK for Visual Studio.
+    <string>Downloads the latest version of Microsoft Build Of OpenJDK for the major version set in the MAJOR_VERSION variable (e.g. "11", "17", "21" or "25").
 
-For the ARCH_TYPE variable use "x64" for Intel or "aarch64" for Apple Silicon</string>
+To download Apple Silicon use: "aarch64" in the DOWNLOAD_ARCH variable
+To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Microsoft Build Of OpenJDK</string>
     <key>Input</key>
     <dict>
-        <key>ARCH_TYPE</key>
-        <string>x64</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>aarch64</string>
+        <key>MAJOR_VERSION</key>
+        <string>25</string>
         <key>NAME</key>
         <string>MicrosoftBuildOfOpenJDK</string>
     </dict>
@@ -25,24 +28,11 @@ For the ARCH_TYPE variable use "x64" for Intel or "aarch64" for Apple Silicon</s
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/microsoft-jdk-([0-9]+(\.[0-9]+)+)-macos-%ARCH_TYPE%\.pkg)</string>
+                <string>(https://aka\.ms/download-jdk/microsoft-jdk-(?P&lt;jdk_version&gt;%MAJOR_VERSION%(\.[0-9]+)+)-macos-%DOWNLOAD_ARCH%\.pkg)</string>
                 <key>result_output_var_name</key>
-                <string>MicrosoftBuildOfOpenJDK_URL</string>
+                <string>jdk_url</string>
                 <key>url</key>
-                <string>https://aka.ms/vsmac/manifest/17-stable</string>
-            </dict>
-            <key>Processor</key>
-            <string>URLTextSearcher</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>re_pattern</key>
-                <string>https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/microsoft-jdk-(([0-9]+(\.[0-9]+)+))-macos-%ARCH_TYPE%\.pkg</string>
-                <key>result_output_var_name</key>
-                <string>MicrosoftBuildOfOpenJDK_VERSION</string>
-                <key>url</key>
-                <string>https://aka.ms/vsmac/manifest/17-stable</string>
+                <string>https://learn.microsoft.com/en-gb/java/openjdk/download</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
@@ -51,9 +41,9 @@ For the ARCH_TYPE variable use "x64" for Intel or "aarch64" for Apple Silicon</s
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>microsoft-jdk-%MicrosoftBuildOfOpenJDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
+                <string>microsoft-jdk-macos-%DOWNLOAD_ARCH%-%jdk_version%.pkg</string>
                 <key>url</key>
-                <string>%MicrosoftBuildOfOpenJDK_URL%</string>
+                <string>%jdk_url%</string>
             </dict>
             <key>Processor</key>
             <string>URLDownloader</string>
@@ -72,7 +62,7 @@ For the ARCH_TYPE variable use "x64" for Intel or "aarch64" for Apple Silicon</s
                     <string>Apple Root CA</string>
                 </array>
                 <key>input_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/microsoft-jdk-%MicrosoftBuildOfOpenJDK_VERSION%-osx-%ARCH_TYPE%.pkg</string>
+                <string>%pathname%</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>

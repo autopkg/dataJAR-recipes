@@ -1,5 +1,9 @@
 # Microsoft Visual Studio for Mac
 
+> **Deprecated:** Visual Studio for Mac was retired by Microsoft on August 31, 2024 and replaced with Visual Studio Code. These recipes no longer work and are kept for reference only. See [Microsoft's announcement](https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2022-for-mac).
+>
+> The Microsoft Build Of OpenJDK recipes have moved to their own [Microsoft Build Of OpenJDK](../Microsoft%20Build%20Of%20OpenJDK) folder and remain supported.
+
 ## About
 
 [Visual Studio](https://visualstudio.microsoft.com/vs/mac/) is a development suite for .NET
@@ -26,7 +30,7 @@ Optional installs are:
 - Xamarin.Mac
 - Xamarin Profiler
 - Eclipse Temurin JDK
-- Microsoft Build Of OpenJDK
+- Microsoft Build Of OpenJDK (now in its own folder)
 - Android SDK
 
 Some Optional installs also have dependancies which are listed in the `installationmanifest.json` - please refer to this for an updated list when deciding what to include.
