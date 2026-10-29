@@ -338,6 +338,47 @@ Copies and modifies pkginfo files.
 </dict>
 ```
 
+### PlistNestedKeyReader
+Reads a value from a nested key in a plist. The core `PlistReader` processor can only read top-level keys.
+
+#### Input Variables
+- **plist_path**
+  - **Required**: Yes
+  - **Description**: Path to the plist file to read.
+- **key_path**
+  - **Required**: Yes
+  - **Description**: Colon separated path to the key, e.g. `JavaVM:JVMMinimumSystemVersion`.
+- **normalize_version**
+  - **Required**: No
+  - **Description**: If set to a true value (`true`, `yes`, `y` or `1`), leading zeros are removed from each numeric component of the dotted version, e.g. `11.00.00` becomes `11.0.0`. Non-numeric components are left as they are.
+- **result_output_var_name**
+  - **Required**: No
+  - **Default**: `plist_value`
+  - **Description**: Name of the output variable.
+
+#### Output Variables
+- **plist_value**
+  - **Description**: The value found at `key_path`. The variable name can be changed with `result_output_var_name`.
+
+#### Example Usage
+```xml
+<dict>
+    <key>Arguments</key>
+    <dict>
+        <key>key_path</key>
+        <string>JavaVM:JVMMinimumSystemVersion</string>
+        <key>normalize_version</key>
+        <string>YES</string>
+        <key>plist_path</key>
+        <string>%RECIPE_CACHE_DIR%/payload/Library/Java/JavaVirtualMachines/microsoft-25.jdk/Contents/Info.plist</string>
+        <key>result_output_var_name</key>
+        <string>min_os_ver</string>
+    </dict>
+    <key>Processor</key>
+    <string>com.github.dataJAR-recipes.Shared Processors/PlistNestedKeyReader</string>
+</dict>
+```
+
 ### QuarantineRemover
 Removes quarantine attributes from files.
 

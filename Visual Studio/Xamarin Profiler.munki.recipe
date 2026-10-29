@@ -45,6 +45,24 @@ The Xamarin Profiler is a graphical interface for the Mono log profiler, and sup
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>warning_message</key>
+                <string>Visual Studio for Mac was retired by Microsoft on August 31, 2024 and replaced with Visual Studio Code. These recipes no longer work. For more information see: https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2022-for-mac</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
                 <key>destination_path</key>
                 <string>%RECIPE_CACHE_DIR%/unpacked</string>
                 <key>flat_pkg_path</key>
