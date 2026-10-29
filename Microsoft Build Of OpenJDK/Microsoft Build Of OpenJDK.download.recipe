@@ -18,7 +18,7 @@ To download Intel use: "x64" in the DOWNLOAD_ARCH variable</string>
         <key>MAJOR_VERSION</key>
         <string>25</string>
         <key>NAME</key>
-        <string>MicrosoftBuildOfOpenJDK</string>
+        <string>MicrosoftBuildOfOpenJDK%MAJOR_VERSION%</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
