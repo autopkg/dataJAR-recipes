@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>Imports Duik Angela for Adobe After Effects 2026 into Munki.</string>
+    <key>Description</key>
+    <string>Imports the Duik Angela package for Adobe After Effects 2026 into Munki with an installs array covering every Duik script, ScriptUI panel and DuSI.jsx in /Applications/Adobe After Effects 2026/Scripts. Requires AdobeAfterEffects2026 and blocks while After Effects 2026 is running. Uninstalls with removepackages, which removes only the files in the package receipt and forgets the receipt.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.DuikAngelaForAfterEffects2026</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>DuikAngelaForAfterEffects2026</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>Adobe After Effects 2026.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Creative Tools</string>
+            <key>description</key>
+            <string>Duik Angela is a comprehensive character animation and rigging toolset for Adobe After Effects. It provides tools for creating complex character rigs, constraints, and automation to streamline the animation workflow.</string>
+            <key>developer</key>
+            <string>RxLaboratory</string>
+            <key>display_name</key>
+            <string>Duik Angela for Adobe After Effects 2026</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>requires</key>
+            <array>
+                <string>AdobeAfterEffects2026</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.pkg.DuikAngelaForAfterEffects2026</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Adobe After Effects 2026</key>
+                    <string>0755</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/Applications</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Adobe After Effects 2026/Scripts</string>
+                <key>overwrite</key>
+                <string>true</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Scripts</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/Applications/Adobe After Effects 2026/Scripts/DuSI.jsx</string>
+                <key>overwrite</key>
+                <string>true</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Tools/DuSI.jsx</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/DuSI.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_addAdjustmentLayer.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_addNull.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_addSolid.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_autoParent.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_copyAnimation.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_cutAnimation.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_editExpression.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_pasteAnimation.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/Duik_reloadExpressions.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/DuCop.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Angela.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Animation Library.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Animation.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Automation and expressions.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Bones.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Camera.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Cmd.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Constraints.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Controllers.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Layer Manager.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Notes.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik OCO.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Rigging.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Script Editor.jsx</string>
+                    <string>/Applications/Adobe After Effects 2026/Scripts/ScriptUI Panels/Duik Script Library.jsx</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pkg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/Applications</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                    <string>%RECIPE_CACHE_DIR%/pkg_root</string>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
