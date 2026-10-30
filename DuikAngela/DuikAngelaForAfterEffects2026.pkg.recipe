@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>Creates a macOS installer package for Duik Angela for Adobe After Effects 2026.</string>
+    <key>Description</key>
+    <string>Creates a macOS installer package that installs the Duik Angela scripts and ScriptUI panels, plus DuSI.jsx, directly into /Applications/Adobe After Effects 2026/Scripts. This follows the vendor's manual install method, copying the ScriptUI Panels to the main After Effects Scripts folder: https://duik.org/guide/Angela/getting-started/install.html
+
+Restart After Effects after installing. On first run each user must enable "Allow Scripts to Write Files and Access Network" in the After Effects scripting preferences and choose a language; neither can be set from this package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.pkg.DuikAngelaForAfterEffects2026</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>DuikAngelaForAfterEffects2026</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>ParentRecipe</key>
+    <string>com.github.dataJAR-recipes.download.DuikAngela</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications/Adobe After Effects 2026</key>
+                    <string>0755</string>
+                </dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_root</string>
+            </dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_root/Applications/Adobe After Effects 2026/Scripts</string>
+                <key>overwrite</key>
+                <string>true</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Scripts</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg_root/Applications/Adobe After Effects 2026/Scripts/DuSI.jsx</string>
+                <key>overwrite</key>
+                <string>true</string>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Tools/DuSI.jsx</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>force_pkg_build</key>
+                <string>true</string>
+                <key>install_location</key>
+                <string>/</string>
+                <key>pkg_request</key>
+                <dict>
+                    <key>chown</key>
+                    <array>
+                        <dict>
+                            <key>group</key>
+                            <string>admin</string>
+                            <key>mode</key>
+                            <string>0755</string>
+                            <key>path</key>
+                            <string>Applications</string>
+                            <key>user</key>
+                            <string>root</string>
+                        </dict>
+                    </array>
+                    <key>id</key>
+                    <string>io.rxlaboratory.duik.angela.ae2026</string>
+                    <key>options</key>
+                    <string>purge_ds_store</string>
+                    <key>pkgdir</key>
+                    <string>%RECIPE_CACHE_DIR%</string>
+                    <key>pkgname</key>
+                    <string>%NAME%-%version%</string>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkg_root</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+        </dict>
+    </array>
+</dict>
+</plist>
