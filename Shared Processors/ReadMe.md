@@ -162,17 +162,21 @@ Analyzes all binaries within an application bundle to determine the highest mini
 #### Input Variables
 - **app_path**
   - **Required**: Yes
-  - **Description**: Path to the application bundle or binary to analyze. Can be a path within a DMG.
+  - **Description**: Path to the application bundle, binary or directory to analyze. Can be a path within a DMG, or a DMG itself, in which case the single `.app` at the top of the volume is analyzed (the DMG is mounted read-only and ejected afterwards). A binary given directly is analyzed on its own.
 - **search_path**
   - **Required**: No
-  - **Description**: Specific path within the app bundle to search for binaries.
-  - **Default**: Contents/MacOS
+  - **Description**: Specific path within `app_path` to search for binaries. A leading slash is ignored.
+  - **Default**: Contents/MacOS for an `.app` (or any bundle that has that folder), otherwise `app_path` itself
+- **recursive**
+  - **Required**: No
+  - **Description**: Also search subdirectories of the search path. Accepts `true`/`false` (or `yes`/`no`).
+  - **Default**: False (top level only)
 
 #### Output Variables
 - **min_os_ver**
-  - **Description**: The highest (most restrictive) minimum OS version found across all binaries.
+  - **Description**: The highest (most restrictive) minimum OS version found across all binaries. For universal binaries every slice counts, so the highest slice wins. Both `LC_BUILD_VERSION` (macOS platform only) and `LC_VERSION_MIN_MACOSX` are read.
 - **analyzed_binaries**
-  - **Description**: Dictionary of all analyzed binaries and their respective minimum OS versions.
+  - **Description**: Dictionary of all analyzed binaries (names relative to the search path) and their respective minimum OS versions.
 
 #### Example Usage
 ```xml
