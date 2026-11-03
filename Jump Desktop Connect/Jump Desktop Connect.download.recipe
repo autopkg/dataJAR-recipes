@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>JumpDesktopConnect</string>
         <key>SPARKLE_FEED_URL</key>
-        <string>https://s3.amazonaws.com/jumpdesktop.com/downloads/connect/connect-mac.xml</string>
+        <string>https://mirror.jumpdesktop.com/downloads/connect/connect-mac-prod-relmgr.xml</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1.1</string>
