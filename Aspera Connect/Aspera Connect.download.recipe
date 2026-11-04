@@ -3,13 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Aspera Connect.</string>
+    <string>Downloads the latest version of Aspera Connect.
+
+To download Apple Silicon use: "arm64" in the DOWNLOAD_ARCH variable
+To download Intel use: "x86_64" in the DOWNLOAD_ARCH variable</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Aspera Connect</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>AsperaConnect</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>x86_64</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.1</string>
@@ -19,7 +24,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg)</string>
+                <string>(bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)(?:-HEAD)?_macOS_%DOWNLOAD_ARCH%\.pkg)</string>
                 <key>result_output_var_name</key>
                 <string>match</string>
                 <key>url</key>
@@ -32,7 +37,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)-HEAD_macOS_x86_64\.pkg</string>
+                <string>bin/ibm-aspera-connect_([0-9]+(\.[0-9]+)+)(?:-HEAD)?_macOS_%DOWNLOAD_ARCH%\.pkg</string>
                 <key>result_output_var_name</key>
                 <string>version</string>
                 <key>url</key>
