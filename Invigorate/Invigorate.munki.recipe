@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest version of Invigorate and imports it into Munki.
 
-Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator.</string>
+The minimum_os_version is derived via MunkiInstallsItemsCreator by default, which requires a minimum AutoPkg version of 2.7 please update if you're not already running it. Set the DERIVE_MIN_OS variable to an empty string to disable this.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.munki.Invigorate</string>
     <key>Input</key>
