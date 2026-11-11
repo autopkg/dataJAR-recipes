@@ -35,6 +35,12 @@
             "aacp_application_sap_code": "AEFT",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeAfterEffects2027": {
+            "aacp_application_full_path": "/Applications/Adobe After Effects 2027/Adobe After Effects 2027.app",
+            "aacp_application_display_name": "Adobe After Effects 2027",
+            "aacp_application_sap_code": "AEFT",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeAnimate2023": {
             "aacp_application_full_path": "/Applications/Adobe Animate 2023/Adobe Animate 2023.app",
             "aacp_application_display_name": "Adobe Animate 2023",
@@ -44,6 +50,12 @@
     "AdobeAnimate2024": {
             "aacp_application_full_path": "/Applications/Adobe Animate 2024/Adobe Animate 2024.app",
             "aacp_application_display_name": "Adobe Animate 2024",
+            "aacp_application_sap_code": "FLPR",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
+    "AdobeAnimate2027": {
+            "aacp_application_full_path": "/Applications/Adobe Animate 2027/Adobe Animate 2027.app",
+            "aacp_application_display_name": "Adobe Animate 2027",
             "aacp_application_sap_code": "FLPR",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
@@ -71,6 +83,12 @@
             "aacp_application_sap_code": "AUDT",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
+    "AdobeAudition2027": {
+            "aacp_application_full_path": "/Applications/Adobe Audition 2027/Adobe Audition 2027.app",
+            "aacp_application_display_name": "Adobe Audition 2027",
+            "aacp_application_sap_code": "AUDT",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
     "AdobeBridge2023": {
             "aacp_application_full_path": "/Applications/Adobe Bridge 2023/Adobe Bridge 2023.app",
             "aacp_application_display_name": "Adobe Bridge 2023",
@@ -92,6 +110,12 @@
     "AdobeBridge2026": {
             "aacp_application_full_path": "/Applications/Adobe Bridge 2026/Adobe Bridge 2026.app",
             "aacp_application_display_name": "Adobe Bridge 2026",
+            "aacp_application_sap_code": "KBRG",
+            "aacp_version_comparison_key": "CFBundleVersion"
+    },
+    "AdobeBridge2027": {
+            "aacp_application_full_path": "/Applications/Adobe Bridge 2027/Adobe Bridge 2027.app",
+            "aacp_application_display_name": "Adobe Bridge 2027",
             "aacp_application_sap_code": "KBRG",
             "aacp_version_comparison_key": "CFBundleVersion"
     },
@@ -155,6 +179,12 @@
             "aacp_application_sap_code": "ILST",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeIllustrator2027": {
+            "aacp_application_full_path": "/Applications/Adobe Illustrator 2027/Adobe Illustrator.app",
+            "aacp_application_display_name": "Adobe Illustrator 2027",
+            "aacp_application_sap_code": "ILST",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeInCopy2023": {
             "aacp_application_full_path": "/Applications/Adobe InCopy 2023/Adobe InCopy 2023.app",
             "aacp_application_display_name": "Adobe InCopy 2023",
@@ -176,6 +206,12 @@
     "AdobeInCopy2026": {
             "aacp_application_full_path": "/Applications/Adobe InCopy 2026/Adobe InCopy 2026.app",
             "aacp_application_display_name": "Adobe InCopy 2026",
+            "aacp_application_sap_code": "AICY",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeInCopy2027": {
+            "aacp_application_full_path": "/Applications/Adobe InCopy 2027/Adobe InCopy 2027.app",
+            "aacp_application_display_name": "Adobe InCopy 2027",
             "aacp_application_sap_code": "AICY",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
@@ -203,6 +239,12 @@
             "aacp_application_sap_code": "IDSN",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
+    "AdobeInDesign2027": {
+            "aacp_application_full_path": "/Applications/Adobe InDesign 2027/Adobe InDesign 2027.app",
+            "aacp_application_display_name": "Adobe InDesign 2027",
+            "aacp_application_sap_code": "IDSN",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
     "AdobeLightroomCC": {
             "aacp_application_full_path": "/Applications/Adobe Lightroom CC/Adobe Lightroom.app",
             "aacp_application_display_name": "Adobe Lightroom CC",
@@ -221,12 +263,6 @@
             "aacp_application_sap_code": "AME",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
-    "AdobeMediaEncoder2026": {
-            "aacp_application_full_path": "/Applications/Adobe Media Encoder 2026/Adobe Media Encoder 2026.app",
-            "aacp_application_display_name": "Adobe Media Encoder 2026",
-            "aacp_application_sap_code": "AME",
-            "aacp_version_comparison_key": "CFBundleShortVersionString"
-    },
     "AdobeMediaEncoder2024": {
             "aacp_application_full_path": "/Applications/Adobe Media Encoder 2024/Adobe Media Encoder 2024.app",
             "aacp_application_display_name": "Adobe Media Encoder 2024",
@@ -236,6 +272,18 @@
     "AdobeMediaEncoder2025": {
             "aacp_application_full_path": "/Applications/Adobe Media Encoder 2025/Adobe Media Encoder 2025.app",
             "aacp_application_display_name": "Adobe Media Encoder 2025",
+            "aacp_application_sap_code": "AME",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeMediaEncoder2026": {
+            "aacp_application_full_path": "/Applications/Adobe Media Encoder 2026/Adobe Media Encoder 2026.app",
+            "aacp_application_display_name": "Adobe Media Encoder 2026",
+            "aacp_application_sap_code": "AME",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobeMediaEncoder2027": {
+            "aacp_application_full_path": "/Applications/Adobe Media Encoder 2027/Adobe Media Encoder 2027.app",
+            "aacp_application_display_name": "Adobe Media Encoder 2027",
             "aacp_application_sap_code": "AME",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
@@ -263,10 +311,10 @@
             "aacp_application_sap_code": "PHSP",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
-    "AdobePremierePro2026": {
-            "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2026/Adobe Premiere Pro 2026.app",
-            "aacp_application_display_name": "Adobe Premiere Pro 2026",
-            "aacp_application_sap_code": "PPRO",
+    "AdobePhotoshop2027": {
+            "aacp_application_full_path": "/Applications/Adobe Photoshop 2027/Adobe Photoshop 2027.app",
+            "aacp_application_display_name": "Adobe Photoshop 2027",
+            "aacp_application_sap_code": "PHSP",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
     "AdobePremierePro2023": {
@@ -284,6 +332,18 @@
     "AdobePremierePro2025": {
             "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2025/Adobe Premiere Pro 2025.app",
             "aacp_application_display_name": "Adobe Premiere Pro 2025",
+            "aacp_application_sap_code": "PPRO",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobePremierePro2026": {
+            "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2026/Adobe Premiere Pro 2026.app",
+            "aacp_application_display_name": "Adobe Premiere Pro 2026",
+            "aacp_application_sap_code": "PPRO",
+            "aacp_version_comparison_key": "CFBundleShortVersionString"
+    },
+    "AdobePremierePro2027": {
+            "aacp_application_full_path": "/Applications/Adobe Premiere Pro 2027/Adobe Premiere Pro 2027.app",
+            "aacp_application_display_name": "Adobe Premiere Pro 2027",
             "aacp_application_sap_code": "PPRO",
             "aacp_version_comparison_key": "CFBundleShortVersionString"
     },
