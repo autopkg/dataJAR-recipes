@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest version of Invigorate.</string>
+    <string>Downloads the latest version of Invigorate. The vendor ships a signed and notarized distribution pkg inside the DMG, so CodeSignatureVerifier uses expected_authority_names (pkgutil --check-signature). Team ID 3D7FTVTH7L is enforced via the Developer ID Installer authority name. Before 1.5.5 the DMG contained an InstallBuilder app instead.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Invigorate</string>
     <key>Input</key>
@@ -34,7 +34,7 @@
             <key>Arguments</key>
             <dict>
                 <key>pattern</key>
-                <string>%pathname%/*.app</string>
+                <string>%pathname%/*.pkg</string>
             </dict>
             <key>Processor</key>
             <string>FileFinder</string>
@@ -42,10 +42,14 @@
         <dict>
             <key>Arguments</key>
             <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Orthogonal Art and Science, LLC (3D7FTVTH7L)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
                 <key>input_path</key>
                 <string>%pathname%/%found_basename%</string>
-                <key>requirement</key>
-                <string>identifier "com.newfangledaudio.Invigorate" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3D7FTVTH7L"</string>
             </dict>
             <key>Processor</key>
             <string>CodeSignatureVerifier</string>
