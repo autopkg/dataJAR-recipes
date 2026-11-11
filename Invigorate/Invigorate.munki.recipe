@@ -80,7 +80,12 @@ done
 # Forget the package receipts (the vendor's installer receipts and the receipt created by the earlier
 # recipe-built pkg) so receipt-based Extension Attributes stop reporting a version once Invigorate is
 # gone. The shared A.L. licensing receipt (com.newfangledaudio.libal.pkg) is intentionally kept.
-installed_receipts=$(/usr/sbin/pkgutil --pkgs | /usr/bin/grep -E '^(com\.newfangledaudio\.pkg\.invigorate\.|com\.Eventide\.Invigorate$)')
+# Listing the receipts is a separate step so a pkgutil failure isn't mistaken for "no matching receipts".
+if ! all_receipts=$(/usr/sbin/pkgutil --pkgs); then
+    echo "Error: Failed to list package receipts"
+    exit_status=1
+fi
+installed_receipts=$(echo "${all_receipts}" | /usr/bin/grep -E '^(com\.newfangledaudio\.pkg\.invigorate\.|com\.Eventide\.Invigorate$)')
 
 for receipt_id in ${(f)installed_receipts}; do
     echo "Forgetting receipt: ${receipt_id}"
