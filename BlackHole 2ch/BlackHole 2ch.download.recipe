@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Comment</key>
+    <string>BlackHole releases on GitHub carry no assets, so the version is read from the latest release tag (scraped from the GitHub releases/latest page rather than the API, which is rate limited to 60 unauthenticated requests/hour per IP) and used to build the versioned pkg URL hosted by Existential Audio. If a tag is published before the pkg is live, the download fails with a 404 and succeeds on a later run. This is version detection in a download recipe because the version is needed to build the download URL.</string>
+    <key>Description</key>
+    <string>Downloads the latest version of the BlackHole 2ch virtual audio driver and verifies the code signature of the installer package.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.BlackHole 2ch</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>BlackHole2ch</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>releases/tag/v(?P&lt;version&gt;[0-9]+(?:\.[0-9]+)+)"</string>
+                <key>url</key>
+                <string>https://github.com/ExistentialAudio/BlackHole/releases/latest</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%version%.pkg</string>
+                <key>url</key>
+                <string>https://existential.audio/downloads/BlackHole2ch-%version%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Existential Audio Inc. (Q5C99V536K)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
