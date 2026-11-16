@@ -374,7 +374,7 @@ Point `installs_item_paths` at the **bundle directory**, not at its `Contents/In
     <string>MunkiPkginfoMerger</string>
 </dict>
 ```
-`faux_root` must be a directory that already contains the install path (here `root/Library/Audio/Plug-Ins/HAL/Name.driver`). Populate it earlier in the recipe, e.g. with `PkgPayloadUnpacker` unpacking the pkg payload into `%RECIPE_CACHE_DIR%/root/Library/Audio/Plug-Ins/HAL`.
+`faux_root` must be a directory that already contains the install path (here `root/Library/Audio/Plug-Ins/HAL/Name.driver`). Populate it earlier in the recipe so the bundle lands at `<faux_root>/<install path>`: `FlatPkgUnpacker` runs first to expose the `Payload`, then `PkgPayloadUnpacker` unpacks it. The `destination_path` depends on how the payload is rooted: use `%RECIPE_CACHE_DIR%/root` if the payload already has full paths, or `%RECIPE_CACHE_DIR%/root/Library/Audio/Plug-Ins/HAL` if the bundle sits at the payload's top level (as in the BlackHole 2ch pkg). See Approach 2 in `munki-recipe.md`.
 
 After a run, confirm the log shows `Created installs item for ...` and the merged pkginfo contains a non-empty `installs` array. A wrong `faux_root` or path only produces a warning and leaves the installs array empty.
 
