@@ -344,6 +344,16 @@ The `%version_hyphenated%` variable can then be fed to `FindAndReplace` to produ
 </dict>
 ```
 
+### For drivers and other non-app bundles (.driver, .kext, .plugin)
+Point `installs_item_paths` at the **bundle directory**, not at its `Contents/Info.plist`. MunkiInstallsItemsCreator generates the installs array correctly from the bundle; hand-picking the plist is unnecessary and wrong.
+```xml
+<key>installs_item_paths</key>
+<array>
+    <string>/Library/Audio/Plug-Ins/HAL/BlackHole2ch.driver</string>
+</array>
+```
+(`faux_root` is the unpacked payload root, e.g. `%RECIPE_CACHE_DIR%/root`. Versioner may still read `Contents/Info.plist` for the version.)
+
 **Rules:**
 - Primary application must be first in installs_item_paths
 - Use plist items, not bundle items (for .definitions support)

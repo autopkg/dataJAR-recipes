@@ -464,7 +464,7 @@ See [processor reference](./references/processors.md) for:
 6. **Never put versioning in download recipes** — version detection belongs in munki recipes
 7. **Never use tabs** — always 4 spaces
 8. **Never use DOWNLOAD_URL in INPUT** unless needed for architecture variants
-9. **Never use bundle items** in installs arrays — use plist items for .definitions support
+9. **Never use bundle items** in installs arrays for apps — use plist items for .definitions support. **Exception: drivers and other non-app bundles** (`.driver`, `.kext`, `.plugin`, etc.) — point `installs_item_paths` at the bundle directory itself (e.g. `/Library/Audio/Plug-Ins/HAL/Name.driver`), never at its `Contents/Info.plist`; MunkiInstallsItemsCreator generates the installs array correctly from the bundle
 10. **Never use bash or sh** — all scripts must use `#!/bin/zsh --no-rcs`, never `#!/bin/bash`, `#!/bin/sh`, or `#!/bin/zsh` without `--no-rcs`
 11. **Never use HTML comments** — use Comment key pairs instead
 12. **Never use generic asset_regex** — for GitHubReleasesInfoProvider, use as much of the actual filename as possible, replacing only the version with a capture group. Never use `.*\.dmg$` or similar broad patterns
