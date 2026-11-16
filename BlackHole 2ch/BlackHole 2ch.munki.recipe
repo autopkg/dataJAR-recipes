@@ -84,7 +84,7 @@ exit 0
                 <string>%RECIPE_CACHE_DIR%/root</string>
                 <key>installs_item_paths</key>
                 <array>
-                    <string>/Library/Audio/Plug-Ins/HAL/BlackHole2ch.driver/Contents/Info.plist</string>
+                    <string>/Library/Audio/Plug-Ins/HAL/BlackHole2ch.driver</string>
                 </array>
             </dict>
             <key>Processor</key>

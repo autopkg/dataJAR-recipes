@@ -346,10 +346,37 @@ The `%version_hyphenated%` variable can then be fed to `FindAndReplace` to produ
 
 **Rules:**
 - Primary application must be first in installs_item_paths
-- Use plist items, not bundle items (for .definitions support)
+- For apps, use plist items, not bundle items (for .definitions support); `.driver` bundles are the exception — see below
 - Avoid file items (require hash generation)
 - MunkiPkginfoMerger must immediately follow
 - Never use placeholder names — examine actual package contents
+
+### For drivers (.driver)
+Point `installs_item_paths` at the **bundle directory**, not at its `Contents/Info.plist`. For a `.driver` this produces a `type: bundle` installs item carrying `CFBundleIdentifier`, `CFBundleShortVersionString`, `CFBundleVersion`, `minosversion` and `version_comparison_key`, which is what Munki needs to detect the installed driver. The no-bundle-items rule is about apps. This is validated for `.driver` only, with a full Munki run of the BlackHole 2ch recipe in dataJAR-recipes; it is untested for other bundle types (`.kext`, `.plugin`), so verify the generated installs item before relying on it there.
+```xml
+<dict>
+    <key>Arguments</key>
+    <dict>
+        <key>derive_minimum_os_version</key>
+        <string>%DERIVE_MIN_OS%</string>
+        <key>faux_root</key>
+        <string>%RECIPE_CACHE_DIR%/root</string>
+        <key>installs_item_paths</key>
+        <array>
+            <string>/Library/Audio/Plug-Ins/HAL/Name.driver</string>
+        </array>
+    </dict>
+    <key>Processor</key>
+    <string>MunkiInstallsItemsCreator</string>
+</dict>
+<dict>
+    <key>Processor</key>
+    <string>MunkiPkginfoMerger</string>
+</dict>
+```
+`faux_root` must be a directory that already contains the install path (here `root/Library/Audio/Plug-Ins/HAL/Name.driver`). Populate it earlier in the recipe so the bundle lands at `<faux_root>/<install path>`: `FlatPkgUnpacker` runs first to expose the `Payload`, then `PkgPayloadUnpacker` unpacks it. The `destination_path` depends on how the payload is rooted: use `%RECIPE_CACHE_DIR%/root` if the payload already has full paths, or `%RECIPE_CACHE_DIR%/root/Library/Audio/Plug-Ins/HAL` if the bundle sits at the payload's top level (as in the BlackHole 2ch pkg). See Approach 2 in `munki-recipe.md`.
+
+After a run, confirm the log shows `Created installs item for ...` and the merged pkginfo contains a non-empty `installs` array. A wrong `faux_root` or path only produces a warning and leaves the installs array empty.
 
 ## Minimum OS Version Detection
 
