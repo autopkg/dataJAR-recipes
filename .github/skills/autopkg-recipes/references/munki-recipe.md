@@ -596,6 +596,8 @@ All remaining user-facing apps found in the payload should be listed as blocking
 
 ## Non-App Bundle Types
 
+For the installs array of drivers, see "Installs Array Generation" in `processors.md` (point at the `.driver` bundle, not its `Info.plist`).
+
 For preference panes, plugins, screen savers, and other non-app bundles, MunkiImporter needs `additional_makepkginfo_options` to specify the item name and destination:
 
 ```xml

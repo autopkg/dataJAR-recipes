@@ -344,22 +344,37 @@ The `%version_hyphenated%` variable can then be fed to `FindAndReplace` to produ
 </dict>
 ```
 
-### For drivers and other non-app bundles (.driver, .kext, .plugin)
-Point `installs_item_paths` at the **bundle directory**, not at its `Contents/Info.plist`. MunkiInstallsItemsCreator generates the installs array correctly from the bundle; hand-picking the plist is unnecessary and wrong.
-```xml
-<key>installs_item_paths</key>
-<array>
-    <string>/Library/Audio/Plug-Ins/HAL/BlackHole2ch.driver</string>
-</array>
-```
-(`faux_root` is the unpacked payload root, e.g. `%RECIPE_CACHE_DIR%/root`. Versioner may still read `Contents/Info.plist` for the version.)
-
 **Rules:**
 - Primary application must be first in installs_item_paths
-- Use plist items, not bundle items (for .definitions support)
+- For apps, use plist items, not bundle items (for .definitions support); drivers and other non-app bundles are the exception — see below
 - Avoid file items (require hash generation)
 - MunkiPkginfoMerger must immediately follow
 - Never use placeholder names — examine actual package contents
+
+### For drivers and other non-app bundles (.driver)
+Point `installs_item_paths` at the **bundle directory**, not at its `Contents/Info.plist`. For a `.driver` this produces a `type: bundle` installs item carrying `CFBundleIdentifier`, `CFBundleShortVersionString`, `CFBundleVersion`, `minosversion` and `version_comparison_key`, which is what Munki needs to detect the installed driver. The no-bundle-items rule is about apps; tested working with a full Munki run for BlackHole 2ch. This is verified for `.driver` only; check other bundle types (`.kext`, `.plugin`) the same way.
+```xml
+<dict>
+    <key>Arguments</key>
+    <dict>
+        <key>derive_minimum_os_version</key>
+        <string>%DERIVE_MIN_OS%</string>
+        <key>faux_root</key>
+        <string>%RECIPE_CACHE_DIR%/root</string>
+        <key>installs_item_paths</key>
+        <array>
+            <string>/Library/Audio/Plug-Ins/HAL/Name.driver</string>
+        </array>
+    </dict>
+    <key>Processor</key>
+    <string>MunkiInstallsItemsCreator</string>
+</dict>
+<dict>
+    <key>Processor</key>
+    <string>MunkiPkginfoMerger</string>
+</dict>
+```
+After a run, confirm the log shows `Created installs item for ...` and the merged pkginfo contains a non-empty `installs` array. A wrong `faux_root` or path only produces a warning and leaves the installs array empty.
 
 ## Minimum OS Version Detection
 
