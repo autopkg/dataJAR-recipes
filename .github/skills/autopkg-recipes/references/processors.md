@@ -346,13 +346,13 @@ The `%version_hyphenated%` variable can then be fed to `FindAndReplace` to produ
 
 **Rules:**
 - Primary application must be first in installs_item_paths
-- For apps, use plist items, not bundle items (for .definitions support); drivers and other non-app bundles are the exception — see below
+- For apps, use plist items, not bundle items (for .definitions support); `.driver` bundles are the exception — see below
 - Avoid file items (require hash generation)
 - MunkiPkginfoMerger must immediately follow
 - Never use placeholder names — examine actual package contents
 
-### For drivers and other non-app bundles (.driver)
-Point `installs_item_paths` at the **bundle directory**, not at its `Contents/Info.plist`. For a `.driver` this produces a `type: bundle` installs item carrying `CFBundleIdentifier`, `CFBundleShortVersionString`, `CFBundleVersion`, `minosversion` and `version_comparison_key`, which is what Munki needs to detect the installed driver. The no-bundle-items rule is about apps; tested working with a full Munki run for BlackHole 2ch. This is verified for `.driver` only; check other bundle types (`.kext`, `.plugin`) the same way.
+### For drivers (.driver)
+Point `installs_item_paths` at the **bundle directory**, not at its `Contents/Info.plist`. For a `.driver` this produces a `type: bundle` installs item carrying `CFBundleIdentifier`, `CFBundleShortVersionString`, `CFBundleVersion`, `minosversion` and `version_comparison_key`, which is what Munki needs to detect the installed driver. The no-bundle-items rule is about apps. This is validated for `.driver` only, with a full Munki run of the BlackHole 2ch recipe in dataJAR-recipes; it is untested for other bundle types (`.kext`, `.plugin`), so verify the generated installs item before relying on it there.
 ```xml
 <dict>
     <key>Arguments</key>
@@ -374,6 +374,8 @@ Point `installs_item_paths` at the **bundle directory**, not at its `Contents/In
     <string>MunkiPkginfoMerger</string>
 </dict>
 ```
+`faux_root` must be a directory that already contains the install path (here `root/Library/Audio/Plug-Ins/HAL/Name.driver`). Populate it earlier in the recipe, e.g. with `PkgPayloadUnpacker` unpacking the pkg payload into `%RECIPE_CACHE_DIR%/root/Library/Audio/Plug-Ins/HAL`.
+
 After a run, confirm the log shows `Created installs item for ...` and the merged pkginfo contains a non-empty `installs` array. A wrong `faux_root` or path only produces a warning and leaves the installs array empty.
 
 ## Minimum OS Version Detection
