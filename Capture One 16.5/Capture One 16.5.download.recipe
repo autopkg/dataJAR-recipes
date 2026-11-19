@@ -19,11 +19,11 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>Name\":\"(https://downloads\.captureone\.pro/d/mac/[A-Za-z0-9]+/CaptureOne\.Mac\.16.5.([0-9]+(\.[0-9]+)+)\.dmg)\"</string>
+                <string>enclosure url="(https://downloads\.captureone\.pro/d/mac/[0-9a-f]+/CaptureOne\.Mac\.16\.5\.[0-9.]+\.dmg)"</string>
                 <key>result_output_var_name</key>
                 <string>DOWLOAD_URL</string>
                 <key>url</key>
-                <string>https://www.captureone.com/en/account/download-trial</string>
+                <string>https://www.captureone.com/update/capture-one-mac.xml</string>
             </dict>
             <key>Processor</key>
             <string>URLTextSearcher</string>
