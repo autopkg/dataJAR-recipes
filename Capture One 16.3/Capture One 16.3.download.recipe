@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the latest perpetual version of Capture One 16.3.</string>
+    <string>Deprecated: Capture One 16.3 can no longer be found from a public source. This recipe used to download the latest perpetual version of Capture One 16.3.</string>
     <key>Identifier</key>
     <string>com.github.dataJAR-recipes.download.Capture One 16.3</string>
     <key>Input</key>
@@ -15,6 +15,24 @@
     <string>1.1</string>
     <key>Process</key>
     <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>warning_message</key>
+                <string>This recipe is deprecated. The Capture One 16.3 download links are no longer published on a public page and the Capture One update feed does not list 16.3. Please remove this recipe from your workflows.</string>
+            </dict>
+            <key>Processor</key>
+            <string>DeprecationWarning</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>predicate</key>
+                <string>TRUEPREDICATE</string>
+            </dict>
+            <key>Processor</key>
+            <string>StopProcessingIf</string>
+        </dict>
         <dict>
             <key>Arguments</key>
             <dict>
