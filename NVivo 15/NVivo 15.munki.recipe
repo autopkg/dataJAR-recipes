@@ -14,6 +14,11 @@
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>NVivo 15.app</string>
+                <string>NVivo.app</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -58,6 +63,15 @@ activationFile="&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
 &lt;/Activation&gt;"
 
 licenseKey=""
+
+# NVivo 15 was renamed from "NVivo 15.app" to "NVivo.app". Munki's copy_from_dmg does not
+# remove the old item, so delete it now the new app is in place. A stale bundle is harmless,
+# so don't fail the install if it can't be removed.
+if [ -d "/Applications/NVivo 15.app" ]
+then
+    /bin/echo "Removing old /Applications/NVivo 15.app..."
+    /bin/rm -rf "/Applications/NVivo 15.app" || /bin/echo "WARNING: could not remove /Applications/NVivo 15.app"
+fi
 
 # Proceed only if variable(s) have a value
 if [ -n "${licenseKey}" ]
