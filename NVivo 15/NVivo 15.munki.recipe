@@ -14,6 +14,11 @@
         <string>apps/%NAME%</string>
         <key>pkginfo</key>
         <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>NVivo</string>
+                <string>NVivo 15</string>
+            </array>
             <key>catalogs</key>
             <array>
                 <string>testing</string>
@@ -72,6 +77,20 @@ fi
 /bin/echo "Disabling Automatic updates..."
 /usr/bin/defaults write /Library/Preferences/com.qsrinternational.NVivo-15.plist SUEnableAutomaticChecks -bool NO
 /usr/bin/defaults write /Library/Preferences/com.qsrinternational.NVivo-15.plist SUAutomaticallyUpdate -bool NO</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/bash
+#
+# Copyright (c) 2025, dataJAR Ltd.  All rights reserved.
+#
+# NVivo 15 was renamed from "NVivo 15.app" to "NVivo.app". Munki's copy_from_dmg
+# does not remove the old item, so delete it to avoid a stale copy being left behind.
+#
+
+if [ -d "/Applications/NVivo 15.app" ]
+then
+    /bin/echo "Removing old /Applications/NVivo 15.app..."
+    /bin/rm -rf "/Applications/NVivo 15.app"
+fi</string>
             <key>unattended_install</key>
             <true/>
             <key>unattended_uninstall</key>
