@@ -26,6 +26,7 @@ For information on how these recipes came about (and why), please click [here.](
    1. Load the .app.
    1. Download the title.
    1. If the download is a .zip, unzip it.
+   1. Downloading many titles? See [Downloading many titles at once](#downloading-many-titles-at-once) to do steps 1 to 3 for every downloader DMG in one go.
 1. Create an override for each title, from the recipes in this directory.
    1. Make sure that the override is prefixed the same as per the name choosen in step 1.
    1. Make sure that the override type is included included within the name, such as `munki`.
@@ -34,8 +35,25 @@ For information on how these recipes came about (and why), please click [here.](
 1. Run `sudo ./AdobeAdminConsolePackagesImporter.py`, found within the same directory as this README, authenticating as sudo and passing at least the type key (see below for examples):
    1. `./AdobeAdminConsolePackagesImporter.py munki` - This will look within ~/Downloads/ for Adobe installers and match with .munki overrides.
    1. `./AdobeAdminConsolePackagesImporter.py jamf /Users/Shared/adobe/` - This will look within Users/Shared/adobe/ for Adobe installers and match with jamf overrides.
-   1. The `--extract-icons` flag will extract any imported titles Icon file to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`.
+   1. The `--extract-icons` flag will extract any imported titles Icon file to: `%RECIPE_CACHE_DIR%/%aacp_name%.icns`. This is the AutoPkg cache directory for the override, within the `CACHE_DIR` set in AutoPkg's preferences (or `~/Library/AutoPkg/Cache` if `CACHE_DIR` is not set).
    1. the `--uninstall` this will uninstall the tile from the Mac running `AdobeAdminConsolePackagesImporter.py`, once it has gathered the needed metadata.
+
+## Downloading many titles at once
+Downloading each title by hand from the Adobe Package Downloader gets slow when there are many. `AdobeCCMassDownloader.sh`, found within the same directory as this README, mounts every Adobe Admin Console downloader disk image in a folder, opens each downloader and presses its **Continue** button for you, so that all of the downloads run in parallel.
+
+### Requirements
+* One or more Adobe Admin Console downloader disk images (named `*_Downloader.dmg`) in a single folder, for example `~/Downloads`. See [Quick start guide](#quick-start-guide), step 1, for downloading these from the Adobe Admin Console.
+* Xcode Command Line Tools (`xcode-select --install`), as the script builds a small helper with `swiftc` to press **Continue**. If the helper cannot be built, the script tells you and you click **Continue** in each downloader window yourself.
+* Accessibility permission for the app running the script (such as Terminal), in System Settings > Privacy & Security > Accessibility, so the helper can press **Continue**. Without it the script warns you and you click **Continue** yourself.
+
+### Usage
+1. Run `./AdobeCCMassDownloader.sh` (no sudo needed).
+1. When asked, drag in the folder containing the downloader disk images and press Return, or press Return to use `~/Downloads`.
+1. The script mounts the disk images and opens a downloader for each one. If the number of mounted volumes does not match the number of disk images it asks whether to continue.
+1. Once every downloader window has loaded, answer `y`. The script then presses **Continue** in each window.
+1. **Wait for every download to finish, then press Return.** Pressing Return early ends the downloaders mid-download, leaving incomplete `.pkg` files that fail when imported (`pkgutil` reports `Could not open package for expansion`). While a download is running the `.pkg` already shows its full size, so check the downloader windows rather than the file size.
+1. The script quits only the downloaders it started, ejects the disk images, and offers to delete the `*_Downloader.dmg` files.
+1. Carry on from step 2 of the [Quick start guide](#quick-start-guide): create the overrides, then run `AdobeAdminConsolePackagesImporter.py`.
 
 ## Process
 1. Adobe Admin Console
