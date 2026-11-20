@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest Capture One 16.9 build.
+
+The download URL is found in the Capture One Sparkle appcast (https://www.captureone.com/update/capture-one-mac.xml), which lists builds newest first with a hash-pinned download path, so the first 16.9.x enclosure is the latest 16.9 build.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.download.Capture One 16.9</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>CaptureOne16.9</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string>enclosure url="(https://downloads\.captureone\.pro/d/mac/[0-9a-f]+/CaptureOne\.Mac\.16\.9\.[0-9.]+\.dmg)"</string>
+                <key>url</key>
+                <string>https://www.captureone.com/update/capture-one-mac.xml</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+                <key>url</key>
+                <string>%match%</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Capture One.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and identifier "com.captureone.captureone16" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5WTDB5F65L")</string>
+            </dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+    </array>
+</dict>
+</plist>
