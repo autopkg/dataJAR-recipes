@@ -8,7 +8,7 @@ See main() docstring for more information,
 
 
 # Version
-__version__ = '3.1.4'
+__version__ = '3.1.5'
 
 
 # Standard Imports
@@ -95,7 +95,7 @@ def main():
         # Print
         print(f"\t{adobe_installer}")
 
-    # Get RECIPE_CACHE_DIR and RECIPE_OVERRIDE_DIRS from com.github.autopkg.plist
+    # Get CACHE_DIR and RECIPE_OVERRIDE_DIRS from com.github.autopkg.plist
     override_dirs, recipe_cache_dir = get_autopkg_dirs(user_name)
 
     # Progress notification
@@ -151,7 +151,7 @@ def main():
 def copy_icons_to_cache_dirs(icon_path: str, destination_path: str, recipe_cache_path: str,
     user_name: str):
     """
-    Copies the application icons to "RECIPE_CACHE_DIR" or to the default dir of:
+    Copies the application icons to the AutoPkg "CACHE_DIR" preference or to the default dir of:
     ~Library/AutoPkg/Cache/<override identifier>/
 
     Parameters
@@ -436,7 +436,7 @@ def get_adobe_overrides(application_data: dict, override_dirs: list, recipe_type
 
 def get_autopkg_dirs(user_name: str) -> (list, str):
     """
-    Checks AutoPkg's pref domain for "RECIPE_CACHE_DIR" and "RECIPE_OVERRIDE_DIRS"
+    Checks AutoPkg's pref domain for "CACHE_DIR" and "RECIPE_OVERRIDE_DIRS"
 
     Parameters
     ----------
@@ -459,19 +459,19 @@ def get_autopkg_dirs(user_name: str) -> (list, str):
     autopkg_preferences = read_plist_file(autopkg_plist)
 
     # Progress notification
-    print("Retrieving RECIPE_CACHE_DIR...")
+    print("Retrieving CACHE_DIR...")
 
-    # If "RECIPE_CACHE_DIR" is defined within "autopkg_preferences"
-    if 'RECIPE_CACHE_DIR' in autopkg_preferences:
-        # Set "recipe_cache_dir" to the "RECIPE_CACHE_DIR"
-        recipe_cache_dir = os.path.expanduser(autopkg_preferences['RECIPE_CACHE_DIR'])
+    # If "CACHE_DIR" is defined within "autopkg_preferences"
+    if 'CACHE_DIR' in autopkg_preferences:
+        # Set "recipe_cache_dir" to the "CACHE_DIR"
+        recipe_cache_dir = os.path.expanduser(autopkg_preferences['CACHE_DIR'])
     # If not defined
     else:
         # Set to the default path
         recipe_cache_dir = os.path.expanduser('~/Library/AutoPkg/Cache')
 
     # Progress notification
-    print(f"\tRECIPE_CACHE_DIR = {recipe_cache_dir}")
+    print(f"\tCACHE_DIR = {recipe_cache_dir}")
 
     # Progress notification
     print("Retrieving RECIPE_OVERRIDE_DIRS...")
