@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest PsychoPy Standalone with bundled Python 3.11 and imports it into Munki.
+
+PsychoPy ships a build per bundled Python version with an identical app name, bundle ID and version, so an installcheck_script compares both the app version and the bundled Python version.
+
+PY_VERS must stay 3.11 for this recipe: the name, identifier and file name are PsychoPy3-Python3.11. Use a separate PsychoPy3-Python3.10 recipe for Python 3.10.
+
+The parent recipe comes from bochoven-recipes (autopkg repo-add bochoven-recipes).
+
+Valid values for DOWNLOAD_ARCH:
+- arm64
+- x86_64
+
+The installcheck_script compares CFBundleShortVersionString only, so a vendor rebuild that keeps the same version is not detected as an update.
+
+Do not manage the 3.10 and 3.11 titles of PsychoPy on the same Mac (for example both in one manifest): they install the same app path, so Munki would swap the app on every run.
+
+As of 2026-11, the x86_64 Python 3.10 build of 2026.2.5post1 does not launch (malformed pandas extension, see psychopy/psychopy-app#82). Python 3.11 works on both architectures.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.PsychoPy3-Python3.11</string>
+    <key>Input</key>
+    <dict>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>DOWNLOAD_ARCH</key>
+        <string>arm64</string>
+        <key>NAME</key>
+        <string>PsychoPy3-Python3.11</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>PY_VERS</key>
+        <string>3.11</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>PsychoPy.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>category</key>
+            <string>Scientific Software</string>
+            <key>description</key>
+            <string>For running psychology and neuroscience experiments. Bundles Python %PY_VERS%.</string>
+            <key>developer</key>
+            <string>Open Science Tools Ltd</string>
+            <key>display_name</key>
+            <string>PsychoPy (Python %PY_VERS%)</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%DOWNLOAD_ARCH%</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.bochoven.recipes.download.PsychoPy3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/PsychoPy.app</string>
+                <key>source_path</key>
+                <string>%pathname%/PsychoPy.app</string>
+            </dict>
+            <key>Processor</key>
+            <string>Copier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/PsychoPy.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%/Applications/PsychoPy.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>installcheck_script</key>
+                    <string>#!/bin/zsh --no-rcs
+#
+# Munki installcheck_script for PsychoPy Standalone.
+#
+# PsychoPy ships one app per bundled Python version (3.10, 3.11). The app name,
+# bundle ID and CFBundleShortVersionString are identical across them, so the
+# installs array cannot tell them apart. This script compares both the app
+# version and the bundled Python version against the pkginfo.
+#
+# Munki runs installcheck_script instead of the installs array, so this must
+# cover both checks. Exit 0 = install needed, non-zero = already installed.
+#
+# AutoPkg substitutes %version% and %PY_VERS% when the pkginfo is built.
+
+app="/Applications/PsychoPy.app"
+wanted_version="%version%"
+wanted_python="%PY_VERS%"
+
+# Not installed
+if [[ ! -d "$app" ]]; then
+    print "PsychoPy installcheck: not installed"
+    exit 0
+fi
+
+installed_version=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$app/Contents/Info.plist" 2&gt;/dev/null)
+
+# Unreadable version: reinstall
+if [[ -z "$installed_version" ]]; then
+    print "PsychoPy installcheck: installed version unreadable"
+    exit 0
+fi
+
+# A different bundled Python is replaced regardless of the installed version
+# ("Current" is a symlink, so test the numbered directory)
+if [[ ! -d "$app/Contents/Frameworks/Python.framework/Versions/$wanted_python" ]]; then
+    print "PsychoPy installcheck: bundled Python $wanted_python not found"
+    exit 0
+fi
+
+# Same Python: up to date when installed version &gt;= wanted (never downgrade within a Python variant)
+if ! autoload -Uz +X is-at-least; then
+    print -u2 "zsh is-at-least function unavailable"
+    exit 0
+fi
+if is-at-least "$wanted_version" "$installed_version"; then
+    exit 1
+fi
+print "PsychoPy installcheck: installed $installed_version is older than $wanted_version"
+exit 0</string>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
