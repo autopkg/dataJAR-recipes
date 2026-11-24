@@ -30,15 +30,6 @@ Merge the `allow` entries into an existing `permissions.allow` array rather than
       "Bash(lsbom *)",
       "Bash(hdiutil attach *)",
       "Bash(hdiutil detach *)",
-      "Bash(git status *)",
-      "Bash(git log *)",
-      "Bash(git show *)",
-      "Bash(git branch --list *)",
-      "Bash(git diff)",
-      "Bash(git diff origin/main...HEAD)",
-      "Bash(git diff origin/master...HEAD)",
-      "Bash(git diff --stat *)",
-      "Bash(git diff --name-only *)",
       "Bash(gh pr view *)",
       "Bash(gh pr list *)",
       "Bash(gh pr diff *)",
@@ -47,7 +38,7 @@ Merge the `allow` entries into an existing `permissions.allow` array rather than
       "Bash(gh run view *)",
       "Bash(curl -s \"https://raw.githubusercontent.com/autopkg/index/main/v1/index.json\" -o /tmp/autopkg-index.json)",
       "Read(//tmp/autopkg-index.json)",
-      "Read(~/Library/AutoPkg/**)",
+      "Read(~/Library/AutoPkg/Cache/**)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:api.github.com)",
@@ -65,11 +56,11 @@ What each group is for:
 | `autopkg run/search/info` | Running and testing recipes, checking for existing recipes |
 | `autopkg-linter.py` | The mandatory lint step. The rule matches the quoted form the skill runs (`python "*AutoPkg Linters/autopkg-linter.py" --all ...`) |
 | `plutil -p/-lint`, `defaults read`, `codesign -d`, `pkgutil`, `lsbom`, `hdiutil` | Inspecting downloaded apps and packages (Info.plist, signing requirements, payloads) |
-| `git` read forms, `gh pr view/list/diff/checks`, `gh run` | Reviewing branches, PRs and CI |
+| `gh pr view/list/diff/checks`, `gh run` | Reviewing branches, PRs and CI |
 | `curl ... index.json` | The AutoPkg index lookup that gates recipe creation (exact command from the skill) |
 | `Read(...)`, `WebFetch(...)` | The downloaded index file, the AutoPkg cache, and vendor/docs lookups. Add `Read(~/Downloads/**)` yourself only if you inspect downloads there |
 
-Bash rules use prefix matching with `*`. The relative paths in rules only match when Claude runs from the repo root. If your install path differs (for example the linter folder), adjust that rule. Make sure `.claude/settings.local.json` is git-ignored so you don't commit your settings.
+Bash rules use prefix matching with `*`. The relative paths in rules only match when Claude runs from the repo root. Commands must be run exactly as written, from the repo root, to match: absolute paths, `cd dir && ...` and worktrees prompt. Only `/usr/local/autopkg/python` is install-specific. Make sure `.claude/settings.local.json` is git-ignored so you don't commit your settings.
 
 ## These rules are not all read-only
 
@@ -77,7 +68,10 @@ Know what you are approving:
 
 - **`autopkg run *`** executes a recipe's processors and any embedded scripts, and downloads from the recipe's URLs. Only keep this rule if you run recipes you have reviewed. For unreviewed recipes, delete it and approve each run.
 - **`pkgutil --expand`** writes the expanded package to the directory you give it; **`hdiutil attach`** mounts a disk image from a download. Both act on untrusted files by design.
-- **`plutil -p/-lint`** and **`git branch --list`** are the read-only forms; `plutil -replace/-insert` and `git branch -D` are deliberately not matched. `git log *` and `git show *` still accept options such as `--output=<file>`, which writes a file: keep that in mind or drop the rule.
+- **The linter rule** runs `autopkg-linter.py`, whose linters rewrite and move files. Run it on one recipe folder, never the repo root, and review `git diff` afterwards. The leading `*` in the rule is a wildcard that also absorbs the literal `*` in the `*AutoPkg Linters` folder name, so it matches a linter at any path: only keep it if you trust the repo you open.
+- **`plutil -p/-lint`** are the read-only forms; `plutil -replace/-insert` is deliberately not matched.
+- **Git:** read-only `git status`, `diff`, `log` and `show` are normally auto-approved by Claude Code, so there are no rules for them. If you are prompted for them, add your own rule and remember options such as `--output=<file>` write files.
+- **Bash index reads:** only the Read tool is covered for `/tmp/autopkg-index.json`. The skill's `python3` step that reads it, and `/tmp/<App>-expanded` inspection, still prompt: `python3` is deliberately not allowed.
 
 ## Deliberately not in the list
 
@@ -90,4 +84,4 @@ Do not add these, even though they save prompts. Each lets a mistaken or prompt-
 - `Bash(gh pr create*)`, `Bash(git push*)`, `Bash(git commit*)`: outward-facing. Approve these each time.
 - Any rule containing a token or password. If a command needs `SONAR_TOKEN=...`, an API token or similar, keep it in your Keychain or environment: rule text is stored in plain text.
 
-Check your own settings for the last case: `grep -nE 'token|TOKEN|squ_|ghp_|password' ~/.claude/settings*.json .claude/settings*.json`.
+Check your own settings for the last case: `grep -nE 'squ_|ghp_|password|[A-Za-z0-9_]{32,}' ~/.claude/settings*.json .claude/settings*.json`.
