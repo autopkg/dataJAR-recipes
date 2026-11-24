@@ -2,26 +2,26 @@
 
 Elegant and powerful Apple services for education and business. https://www.datajar.co.uk
 
-## Creating Recipes with GitHub Copilot
+## Creating Recipes with Claude Code
 
-This repository includes a [GitHub Copilot skill](.github/skills/autopkg-recipes/SKILL.md) that provides structured guidance for creating AutoPkg recipes. When you ask Copilot to create a download, munki, or pkg recipe, it automatically follows dataJAR conventions and linting standards.
+This repository includes a [Claude Code skill](.claude/skills/autopkg-recipes/SKILL.md) that provides structured guidance for creating AutoPkg recipes. When you ask Claude Code to create a download, munki, or pkg recipe, it automatically follows dataJAR conventions and linting standards.
 
 ### Prerequisites
 
-- **VS Code** with the GitHub Copilot extension
+- **Claude Code** (CLI, desktop app or IDE extension)
 - **AutoPkg** installed and configured
 - **pre-commit** installed (`brew install pre-commit` then `pre-commit install`)
 - Basic understanding of AutoPkg recipe structure
 
 ### Usage
 
-1. Open this repository in VS Code
-2. Open GitHub Copilot Chat
-3. Ask Copilot to create a recipe, for example:
+1. Open this repository in Claude Code
+2. Start a session (the skill loads from `.claude/skills/` automatically)
+3. Ask Claude to create a recipe, for example:
    - *"Create a download and munki recipe for AppName"*
    - *"Create a download recipe for AppName that uses Sparkle"*
    - *"Create a pkg recipe for AppName"*
-4. Copilot will use the skill to generate recipes following repository conventions
+4. Claude will use the skill to generate recipes following repository conventions
 5. Test with `autopkg run -v RecipeName.download`
 6. Verify with `pre-commit run --files <recipe files>`
 
@@ -37,13 +37,13 @@ This repository includes a [GitHub Copilot skill](.github/skills/autopkg-recipes
 
 | File | Contents |
 |------|----------|
-| [SKILL.md](.github/skills/autopkg-recipes/SKILL.md) | Main entry point and recipe creation workflow |
-| [download-recipe.md](.github/skills/autopkg-recipes/references/download-recipe.md) | Download recipe templates and patterns |
-| [munki-recipe.md](.github/skills/autopkg-recipes/references/munki-recipe.md) | Munki recipe approaches and pkginfo keys |
-| [pkg-recipe.md](.github/skills/autopkg-recipes/references/pkg-recipe.md) | Pkg recipe patterns |
-| [processors.md](.github/skills/autopkg-recipes/references/processors.md) | Processor reference with version requirements |
-| [architecture.md](.github/skills/autopkg-recipes/references/architecture.md) | Architecture-specific download patterns |
-| [linter-standards.md](.github/skills/autopkg-recipes/references/linter-standards.md) | Formatting and linting rules |
+| [SKILL.md](.claude/skills/autopkg-recipes/SKILL.md) | Main entry point and recipe creation workflow |
+| [download-recipe.md](.claude/skills/autopkg-recipes/references/download-recipe.md) | Download recipe templates and patterns |
+| [munki-recipe.md](.claude/skills/autopkg-recipes/references/munki-recipe.md) | Munki recipe approaches and pkginfo keys |
+| [pkg-recipe.md](.claude/skills/autopkg-recipes/references/pkg-recipe.md) | Pkg recipe patterns |
+| [processors.md](.claude/skills/autopkg-recipes/references/processors.md) | Processor reference with version requirements |
+| [architecture.md](.claude/skills/autopkg-recipes/references/architecture.md) | Architecture-specific download patterns |
+| [linter-standards.md](.claude/skills/autopkg-recipes/references/linter-standards.md) | Formatting and linting rules |
 
 ## Related Resources
 

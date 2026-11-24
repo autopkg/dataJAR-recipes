@@ -5,3 +5,6 @@
 
 renpy 6/renpy 6.download.recipe
 .pre-commit-config.yaml
+
+# Per-user Claude Code settings
+.claude/settings.local.json
