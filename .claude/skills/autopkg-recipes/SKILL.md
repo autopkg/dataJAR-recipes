@@ -15,6 +15,11 @@ Create, review, and fix AutoPkg recipes following dataJAR-recipes conventions.
 - Adding architecture support to existing recipes
 - Adding minimum OS version detection to munki recipes
 
+## Prerequisites
+
+- AutoPkg installed, with `/usr/local/autopkg/python` available for the linter.
+- Claude Code permission rules for the routine commands these skills run (inspection, linting, read-only git/gh). Without them you will be prompted for each command. Copy the list from [references/permissions.md](references/permissions.md) into your settings before you start.
+
 ## Information Gathering
 
 Before creating recipes, collect these details from the user:
@@ -337,6 +342,8 @@ Apply all rules from the [linter standards reference](./references/linter-standa
 
 Run the linter against the created recipes:
 ```zsh
+# From the root of your clone (the linter path below is relative to it)
+cd "$(git rev-parse --show-toplevel)"
 /usr/local/autopkg/python "*AutoPkg Linters/autopkg-linter.py"
 ```
 
