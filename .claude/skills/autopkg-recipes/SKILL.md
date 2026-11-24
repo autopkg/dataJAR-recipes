@@ -343,7 +343,7 @@ Apply all rules from the [linter standards reference](./references/linter-standa
 Run the linter against the created recipes:
 ```zsh
 # From the root of your clone (the linter path below is relative to it)
-cd "$(git rev-parse --show-toplevel)"
+cd "$(git rev-parse --show-toplevel)" || exit 1
 /usr/local/autopkg/python "*AutoPkg Linters/autopkg-linter.py"
 ```
 
