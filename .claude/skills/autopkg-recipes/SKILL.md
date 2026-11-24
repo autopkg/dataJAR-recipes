@@ -18,7 +18,7 @@ Create, review, and fix AutoPkg recipes following dataJAR-recipes conventions.
 ## Prerequisites
 
 - AutoPkg installed, with `/usr/local/autopkg/python` available for the linter.
-- Claude Code permission rules for the routine commands these skills run (inspection, linting, read-only git/gh). Without them you will be prompted for each command. Copy the list from [references/permissions.md](references/permissions.md) into your settings before you start.
+- Claude Code permission rules for the routine commands these skills run (inspection, linting, read-only `gh`; git reads need no rule). Without them you will be prompted for each command. Copy the list from [references/permissions.md](references/permissions.md) into your settings before you start.
 
 ## Information Gathering
 
@@ -116,7 +116,7 @@ Create a proper folder structure for the recipe(s) in the repository root (the c
 
 ```zsh
 mkdir -p "App Name"
-cd "App Name"
+cd "App Name" || exit 1
 ```
 
 **If using an existing parent recipe:**
@@ -443,7 +443,7 @@ When using `CFBundleVersion`, add `version_comparison_key` to MunkiImporter and 
 ### Identifying Blocking Applications
 For pkg-based installs, expand the package to find user-facing apps:
 ```zsh
-/usr/sbin/pkgutil --expand "/path/to/package.pkg" /tmp/expanded_pkg
+pkgutil --expand "/path/to/package.pkg" /tmp/expanded_pkg
 find /tmp/expanded_pkg -name "*.app" -maxdepth 4
 ```
 Exclude utility apps (Autoupdate.app, Install.app, Uninstaller.app).
