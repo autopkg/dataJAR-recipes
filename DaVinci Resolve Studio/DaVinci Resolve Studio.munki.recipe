@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of DaVinci Resolve Studio and imports it into Munki.
+
+The download is provided by the davidbpirie-recipes and timsutton-recipes repositories, add both with autopkg repo-add before running this recipe.
+
+This edition does not require registration, leave the REG_ variables empty.
+
+The DMG is imported as-is because the installer's scripts expect to run from the mounted DMG. The installer unpacks and installs about 14 GB, so the recipe cache needs roughly 25 GB free while the installs array is generated.
+
+This is the Studio edition. The free DaVinci Resolve edition is not covered by this recipe because Blackmagic Design requires registration details to download it. The free edition installs /Applications/DaVinci Resolve/DaVinci Resolve.app with the same bundle identifier as Studio, so only one of the two can be installed on a Mac and installing one replaces the other.
+
+Blackmagic Design's own uninstaller is GUI only, so the pkginfo includes an uninstall_script that mirrors it and also removes what it leaves behind: Blackmagic RAW, the control panel support files and the global DaVinci Resolve Application Support folder. Per-user preferences, databases and projects in each user's home folder are left in place. The removal is silent and covers system-wide folders, so anything an administrator added to /Library/Application Support/Blackmagic Design/DaVinci Resolve (such as LUTs or templates) or to /Applications/Blackmagic RAW is deleted as well. Some of these locations are shared with the free DaVinci Resolve edition and other Blackmagic RAW tools, so removing Studio removes them too.
+
+The installer's postflight script configures per-user settings for the user that owns /dev/console, so installing while a user is logged in or at the login window gives different results.
+
+APP_PKG_NAME is the name of the component package inside the installer that holds the application, Manifest.pkg for this edition.
+
+PRODUCT_MAJOR_VERSION is a regular expression for the major version. The default of [0-9]+ always selects the newest major version Blackmagic Design publishes, set it to a number such as 21 to pin a major version.
+
+Set the DERIVE_MIN_OS variable to a non-empty string to set the minimum_os_version via MunkiInstallsItemsCreator. This requires a minimum AutoPkg version of 2.7 please update if you're not already running it.</string>
+    <key>Identifier</key>
+    <string>com.github.dataJAR-recipes.munki.DaVinci Resolve Studio</string>
+    <key>Input</key>
+    <dict>
+        <key>APP_PKG_NAME</key>
+        <string>Manifest.pkg</string>
+        <key>DERIVE_MIN_OS</key>
+        <string>YES</string>
+        <key>NAME</key>
+        <string>DaVinciResolveStudio</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>PRODUCT_MAJOR_VERSION</key>
+        <string>[0-9]+</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>blocking_applications</key>
+            <array>
+                <string>DaVinci Resolve.app</string>
+                <string>Blackmagic Remote Monitor.app</string>
+                <string>Blackmagic Proxy Generator.app</string>
+                <string>Blackmagic RAW Player.app</string>
+                <string>Blackmagic RAW Speed Test.app</string>
+            </array>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>The full version of DaVinci Resolve with the Studio only tools, extra GPU acceleration, noise reduction and AI features, for professional video editing, color correction, visual effects, motion graphics and audio post production.</string>
+            <key>developer</key>
+            <string>Blackmagic Design</string>
+            <key>display_name</key>
+            <string>DaVinci Resolve Studio</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+            <key>uninstall_method</key>
+            <string>uninstall_script</string>
+            <key>uninstall_script</key>
+            <string>#!/bin/zsh --no-rcs
+
+# Blackmagic Design's "Uninstall Resolve.app" is GUI only (modal dialog and admin prompt, no silent option),
+# so this mirrors the script embedded in it and also removes what that script leaves behind.
+# Per-user preferences, databases and projects in each user's home folder are not touched.
+
+daemon_label="com.blackmagic-design.DaVinciResolveBMDPanelDaemon"
+daemon_plist="/Library/LaunchAgents/${daemon_label}.plist"
+
+# Stop the panel daemon. The plist is a per-user LaunchAgent, so target the GUI domain of every user with a
+# GUI session (each has a loginwindow process, which also covers fast user switching). With nobody logged in
+# the daemon is not expected to be running. A bootout error is ignored here because "not loaded" is the normal
+# case, so the check after the bootout is what decides whether the stop worked.
+gui_uids=($(/bin/ps -axo uid=,comm= | /usr/bin/awk '$2 ~ /\/loginwindow$/ &amp;&amp; $1 &gt; 0 {print $1}' | /usr/bin/sort -u))
+for gui_uid in "${gui_uids[@]}"; do
+    /bin/launchctl bootout "gui/${gui_uid}/${daemon_label}" &amp;&gt; /dev/null
+done
+
+# Wait up to 5 seconds for the daemon to unload. If it is still loaded, stop before deleting anything so
+# the machine is left intact and Munki can retry.
+for gui_uid in "${gui_uids[@]}"; do
+    for attempt in 1 2 3 4 5; do
+        /bin/launchctl print "gui/${gui_uid}/${daemon_label}" &amp;&gt; /dev/null || break
+        /bin/sleep 1
+    done
+    if /bin/launchctl print "gui/${gui_uid}/${daemon_label}" &amp;&gt; /dev/null; then
+        echo "Panel daemon is still loaded for uid ${gui_uid}, nothing was removed" &gt;&amp;2
+        exit 1
+    fi
+done
+
+failed=0
+
+paths_to_remove=(
+    "${daemon_plist}"
+    "/var/tmp/davinci_socket"
+    "/Applications/Blackmagic Proxy Generator.app"
+    "/Applications/Blackmagic RAW"
+    "/Applications/DaVinci Resolve"
+    "/Library/Application Support/Blackmagic Design/DaVinci Control Panels"
+    "/Library/Application Support/Blackmagic Design/DaVinci Resolve"
+    "/Library/Application Support/Blackmagic Design/DaVinci Resolve Advanced Panel"
+    "/Library/Application Support/Blackmagic Design/DaVinci Resolve Panels"
+    "/Library/Frameworks/DaVinciPanelAPI.framework"
+    "/Library/Frameworks/FairlightPanelAPI.framework"
+    "/Library/OFX/Plugins/DaVinci Resolve Renderer.ofx.bundle"
+)
+for path_to_remove in "${paths_to_remove[@]}"; do
+    if [[ -e "${path_to_remove}" || -L "${path_to_remove}" ]]; then
+        /bin/rm -rf "${path_to_remove}"
+        if [[ -e "${path_to_remove}" || -L "${path_to_remove}" ]]; then
+            echo "Failed to remove ${path_to_remove}" &gt;&amp;2
+            failed=1
+        fi
+    fi
+done
+
+# Keep the receipts and report failure so Munki does not record an incomplete removal as complete
+if [[ "${failed}" -ne 0 ]]; then
+    exit 1
+fi
+
+# Remove the vendor folder only if nothing else is using it
+/bin/rmdir "/Library/Application Support/Blackmagic Design" &amp;&gt; /dev/null
+
+# Forget the receipts. Only receipts that exist are forgotten, as pkgutil --forget fails on a missing one,
+# and a failure on an existing receipt is reported. The IDs are the identifiers in the installer's PackageInfo files.
+for receipt in \
+    com.blackmagic-design.BlackmagicRaw_resolve \
+    com.blackmagic-design.DaVinciKeyboards \
+    com.blackmagic-design.DaVinciPanels \
+    com.blackmagic-design.FairlightPanels \
+    com.blackmagic-design.Manifest \
+    com.blackmagic-design.ManifestBlackmagicRawPlayer \
+    com.blackmagic-design.ManifestFairlightAudioAccelerator \
+    com.blackmagic-design.ManifestPanels \
+    com.blackmagic-design.ManifestPlugin; do
+    if /usr/sbin/pkgutil --pkg-info "${receipt}" &amp;&gt; /dev/null; then
+        /usr/sbin/pkgutil --forget "${receipt}" &amp;&gt; /dev/null || echo "Failed to forget receipt ${receipt}" &gt;&amp;2
+    fi
+done
+
+exit 0
+</string>
+            <key>uninstallable</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.7</string>
+    <key>ParentRecipe</key>
+    <string>com.github.davidbpirie.download.BlackmagicDaVinciResolveStudio</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                <key>flat_pkg_path</key>
+                <string>%found_filename%/*.pkg</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpacked/%APP_PKG_NAME%/Payload</string>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>derive_minimum_os_version</key>
+                <string>%DERIVE_MIN_OS%</string>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/payload</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/DaVinci Resolve/DaVinci Resolve.app</string>
+                    <string>/Applications/Blackmagic Proxy Generator.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/Applications/DaVinci Resolve/DaVinci Resolve.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>path_list</key>
+                <array>
+                    <string>%RECIPE_CACHE_DIR%/unpacked</string>
+                    <string>%RECIPE_CACHE_DIR%/payload</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>PathDeleter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
